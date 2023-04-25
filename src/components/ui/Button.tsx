@@ -181,12 +181,17 @@ const StyledButton = styled.a`
   border-radius: 10px;
   cursor: pointer;
   border: none;
+  transition: 0.2s ease;
 
   &.disabled {
     cursor: unset;
     background: ${({ theme }) =>
       theme.colors.button.disabled.background} !important;
-    color: ${({ theme }) => theme.colors.button.disabled.text};
+    color: ${({ theme }) => theme.colors.button.disabled.text} !important;
+
+    svg path {
+      fill: ${({ theme }) => theme.colors.button.disabled.text} !important;
+    }
   }
 
   &.Button_regular {
@@ -213,11 +218,15 @@ const StyledButton = styled.a`
 
   &.Button_secondary {
     background: ${({ theme }) => theme.colors.grey["default"]};
+    color: ${({ theme }) => theme.colors.black};
   }
 
   &.Button_tertiary {
     background: ${({ theme }) => theme.colors.transparent};
     color: ${({ theme }) => theme.colors.black};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.black} !important;
+    }
   }
 
   &.Button_request {
@@ -242,11 +251,18 @@ const StyledButton = styled.a`
   &.Button_secondary:hover {
     background: ${({ theme }) => theme.colors.grey["hover"]};
     color: ${({ theme }) => theme.colors.blue["hover"]};
+
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]};
+    }
   }
 
   &.Button_tertiary:hover {
     background: ${({ theme }) => theme.colors.transparent};
     color: ${({ theme }) => theme.colors.blue["hover"]};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]} !important;
+    }
   }
 
   &.Button_request:hover {
@@ -264,10 +280,16 @@ const StyledButton = styled.a`
   &.Button_secondary:active {
     background: ${({ theme }) => theme.colors.grey["active"]};
     color: ${({ theme }) => theme.colors.blue["default"]};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]};
+    }
   }
 
   &.Button_tertiary:active {
     background: ${({ theme }) => theme.colors.grey["active"]};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]} !important;
+    }
   }
 
   &.Button_request:active {
@@ -287,12 +309,18 @@ const StyledButton = styled.a`
     background: ${({ theme }) => theme.colors.grey["focused"]};
     color: ${({ theme }) => theme.colors.blue["default"]};
     outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]};
+    }
   }
 
   &.Button_tertiary:focus-visible {
     background: ${({ theme }) => theme.colors.transparent};
     color: ${({ theme }) => theme.colors.blue["default"]};
     outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]} !important;
+    }
   }
 
   &.Button_request:focus-visible {
@@ -329,14 +357,15 @@ const StyledButton = styled.a`
   }
 
   &.Button_primary {
-    .Button__iconContainer svg {
+    .Button__iconContainer svg path {
       fill: ${({ theme }) => theme.colors.white};
     }
   }
 
   &.Button_secondary {
-    .Button__iconContainer svg {
-      fill: ${({ theme }) => theme.colors.white};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.black};
+      transition: 0.2s ease;
     }
   }
 
