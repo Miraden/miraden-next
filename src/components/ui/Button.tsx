@@ -19,6 +19,7 @@ interface Props {
   ariaLabel?: string;
   prefetch?: boolean;
   children?: ReactNode;
+  disabled?: boolean;
 }
 
 const Button: FC<Props> = ({
@@ -36,6 +37,7 @@ const Button: FC<Props> = ({
   leftIcon,
   rightIcon,
   ariaLabel,
+  disabled,
   prefetch = true,
 }) => {
   if (!href) {
@@ -54,6 +56,7 @@ const Button: FC<Props> = ({
           Button_compact: compact,
           Button_narrow: narrow,
           Button_withoutLabel: !children,
+          disabled: disabled,
         })}
         type={type}
       >
@@ -87,6 +90,40 @@ const Button: FC<Props> = ({
           Button_compact: compact,
           Button_narrow: narrow,
           Button_withoutLabel: !children,
+          disabled: disabled,
+        })}
+      >
+        {leftIcon && (
+          <div className="[ Button__iconContainer Button__leftIconContainer ]">
+            {leftIcon}
+          </div>
+        )}
+        {children && <span className="[ Button__label ]">{children}</span>}
+        {rightIcon && (
+          <div className="[ Button__iconContainer Button__rightIconContainer ]">
+            {rightIcon}
+          </div>
+        )}
+      </StyledButton>
+    );
+  }
+
+  if (disabled) {
+    return (
+      <StyledButton
+        href={href}
+        onClick={onClick}
+        className={cn(`${className} Font_16_20`, {
+          Button_primary: !secondary,
+          Button_secondary: secondary,
+          Button_tertiary: tertiary,
+          Button_request: request,
+          Button_header: header,
+          Button_regular: !compact,
+          Button_compact: compact,
+          Button_narrow: narrow,
+          Button_withoutLabel: !children,
+          disabled: disabled,
         })}
       >
         {leftIcon && (
@@ -118,6 +155,7 @@ const Button: FC<Props> = ({
           Button_compact: compact,
           Button_narrow: narrow,
           Button_withoutLabel: !children,
+          disabled: disabled,
         })}
       >
         {leftIcon && (
@@ -143,6 +181,18 @@ const StyledButton = styled.a`
   border-radius: 10px;
   cursor: pointer;
   border: none;
+  transition: 0.2s ease;
+
+  &.disabled {
+    cursor: unset;
+    background: ${({ theme }) =>
+      theme.colors.button.disabled.background} !important;
+    color: ${({ theme }) => theme.colors.button.disabled.text} !important;
+
+    svg path {
+      fill: ${({ theme }) => theme.colors.button.disabled.text} !important;
+    }
+  }
 
   &.Button_regular {
     padding: 15px 36px;
@@ -168,11 +218,15 @@ const StyledButton = styled.a`
 
   &.Button_secondary {
     background: ${({ theme }) => theme.colors.grey["default"]};
+    color: ${({ theme }) => theme.colors.black};
   }
 
   &.Button_tertiary {
     background: ${({ theme }) => theme.colors.transparent};
     color: ${({ theme }) => theme.colors.black};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.black} !important;
+    }
   }
 
   &.Button_request {
@@ -197,11 +251,18 @@ const StyledButton = styled.a`
   &.Button_secondary:hover {
     background: ${({ theme }) => theme.colors.grey["hover"]};
     color: ${({ theme }) => theme.colors.blue["hover"]};
+
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]};
+    }
   }
 
   &.Button_tertiary:hover {
     background: ${({ theme }) => theme.colors.transparent};
     color: ${({ theme }) => theme.colors.blue["hover"]};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]} !important;
+    }
   }
 
   &.Button_request:hover {
@@ -219,10 +280,16 @@ const StyledButton = styled.a`
   &.Button_secondary:active {
     background: ${({ theme }) => theme.colors.grey["active"]};
     color: ${({ theme }) => theme.colors.blue["default"]};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]};
+    }
   }
 
   &.Button_tertiary:active {
     background: ${({ theme }) => theme.colors.grey["active"]};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]} !important;
+    }
   }
 
   &.Button_request:active {
@@ -242,12 +309,18 @@ const StyledButton = styled.a`
     background: ${({ theme }) => theme.colors.grey["focused"]};
     color: ${({ theme }) => theme.colors.blue["default"]};
     outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]};
+    }
   }
 
   &.Button_tertiary:focus-visible {
     background: ${({ theme }) => theme.colors.transparent};
     color: ${({ theme }) => theme.colors.blue["default"]};
     outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.blue["default"]} !important;
+    }
   }
 
   &.Button_request:focus-visible {
@@ -284,14 +357,15 @@ const StyledButton = styled.a`
   }
 
   &.Button_primary {
-    .Button__iconContainer svg {
+    .Button__iconContainer svg path {
       fill: ${({ theme }) => theme.colors.white};
     }
   }
 
   &.Button_secondary {
-    .Button__iconContainer svg {
-      fill: ${({ theme }) => theme.colors.white};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.black};
+      transition: 0.2s ease;
     }
   }
 
