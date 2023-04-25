@@ -1,4 +1,4 @@
-import { Button, PayButton } from "@/components/ui";
+import { Button, PayButton, RequestButton } from "@/components/ui";
 import { StarIcon, VisaIcon } from "@/icons";
 import { Inter } from "next/font/google";
 import Head from "next/head";
@@ -80,10 +80,8 @@ export default function ButtonsPage() {
           <Button tertiary compact>
             Button
           </Button>
-          <Button request>Button</Button>
-          <Button request compact>
-            Button
-          </Button>
+          <RequestButton>Button</RequestButton>
+          <RequestButton compact>Button</RequestButton>
           <div className="PayButtons">
             <Button header>Button</Button>
             <Button header leftIcon={<StarIcon />}>
