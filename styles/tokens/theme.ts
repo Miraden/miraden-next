@@ -1,5 +1,34 @@
 const theme = {
   colors: {
+    button: {
+      primary: {
+        default: "#4E6AF3",
+        hover: "#3E56D0",
+        focused: "#3E56D0",
+        active: "#0F2BB5",
+      },
+      secondary: {
+        default: "#F1F7FF",
+        hover: "#F1F7FF",
+        focused: "#F1F7FF",
+        active: "#E1EDFD",
+      },
+      tertiary: {
+        active: "#F1F7FF",
+      },
+      request: {
+        default: "#F1F7FF",
+        hover: "#E1EDFD",
+        focused: "#E1EDFD",
+        active: "#CFE2FC",
+      },
+      header: {
+        default: "#F1F7FF",
+        hover: "#414D65",
+        focused: "#414D65",
+        active: "#343F56",
+      },
+    },
     blue: {
       default: "#4E6AF3",
       hover: "#3E56D0",
@@ -13,10 +42,12 @@ const theme = {
       focused: "#F1F7FF",
       active: "#E1EDFD",
     },
+    transparent: "transparent",
     white: "#FFFFFF",
     warning: "#FFD64C",
     error: "#F34942",
     success: "#0AB258",
+    black: "#2A344A",
 
     stroke: {
       purple: "#F845FC",

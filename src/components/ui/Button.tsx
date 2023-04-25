@@ -9,6 +9,9 @@ interface Props {
   href?: string;
   type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
   secondary?: boolean;
+  tertiary?: boolean;
+  request?: boolean;
+  header?: boolean;
   compact?: boolean;
   narrow?: boolean;
   leftIcon?: ReactNode;
@@ -25,6 +28,9 @@ const Button: FC<Props> = ({
   href,
   type,
   secondary,
+  tertiary,
+  request,
+  header,
   compact,
   narrow,
   leftIcon,
@@ -41,6 +47,9 @@ const Button: FC<Props> = ({
         className={cn(`${className} Font_16_20`, {
           Button_primary: !secondary,
           Button_secondary: secondary,
+          Button_tertiary: tertiary,
+          Button_request: request,
+          Button_header: header,
           Button_regular: !compact,
           Button_compact: compact,
           Button_narrow: narrow,
@@ -68,9 +77,12 @@ const Button: FC<Props> = ({
       <StyledButton
         href={href}
         onClick={onClick}
-        className={cn(`${className} Font_18_26_600`, {
+        className={cn(`${className} Font_16_20`, {
           Button_primary: !secondary,
           Button_secondary: secondary,
+          Button_tertiary: tertiary,
+          Button_request: request,
+          Button_header: header,
           Button_regular: !compact,
           Button_compact: compact,
           Button_narrow: narrow,
@@ -96,9 +108,12 @@ const Button: FC<Props> = ({
     <NextLink href={href} passHref>
       <StyledButton
         onClick={onClick}
-        className={cn(`${className} Font_18_26_600`, {
+        className={cn(`${className} Font_16_20`, {
           Button_primary: !secondary,
           Button_secondary: secondary,
+          Button_tertiary: tertiary,
+          Button_request: request,
+          Button_header: header,
           Button_regular: !compact,
           Button_compact: compact,
           Button_narrow: narrow,
@@ -134,16 +149,39 @@ const StyledButton = styled.a`
   }
 
   &.Button_compact {
-    padding: 7px 24px;
+    padding: 10px 24px;
+  }
+
+  &.Button_header {
+    padding: 11px 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-size: 12px;
+    line-height: 16px;
+    font-weight: 600;
   }
 
   &.Button_primary {
-    background: ${({ theme }) => theme.colors.blue["default"]};
+    background: ${({ theme }) => theme.colors.button.primary["default"]};
     color: ${({ theme }) => theme.colors.white};
   }
 
   &.Button_secondary {
     background: ${({ theme }) => theme.colors.grey["default"]};
+  }
+
+  &.Button_tertiary {
+    background: ${({ theme }) => theme.colors.transparent};
+    color: ${({ theme }) => theme.colors.black};
+  }
+
+  &.Button_request {
+    background: ${({ theme }) => theme.colors.button.request["default"]};
+    color: ${({ theme }) => theme.colors.black};
+  }
+
+  &.Button_header {
+    background: ${({ theme }) => theme.colors.transparent};
     color: ${({ theme }) => theme.colors.white};
   }
 
@@ -153,27 +191,73 @@ const StyledButton = styled.a`
   }
 
   &.Button_primary:hover {
-    background: ${({ theme }) => theme.colors.blue["hover"]};
+    background: ${({ theme }) => theme.colors.button.primary["hover"]};
   }
 
   &.Button_secondary:hover {
     background: ${({ theme }) => theme.colors.grey["hover"]};
+    color: ${({ theme }) => theme.colors.blue["hover"]};
+  }
+
+  &.Button_tertiary:hover {
+    background: ${({ theme }) => theme.colors.transparent};
+    color: ${({ theme }) => theme.colors.blue["hover"]};
+  }
+
+  &.Button_request:hover {
+    background: ${({ theme }) => theme.colors.button.request["hover"]};
+  }
+
+  &.Button_header:hover {
+    background: ${({ theme }) => theme.colors.button.header["hover"]};
   }
 
   &.Button_primary:active {
-    background: ${({ theme }) => theme.colors.blue["active"]};
+    background: ${({ theme }) => theme.colors.button.primary["active"]};
   }
 
   &.Button_secondary:active {
     background: ${({ theme }) => theme.colors.grey["active"]};
+    color: ${({ theme }) => theme.colors.blue["default"]};
+  }
+
+  &.Button_tertiary:active {
+    background: ${({ theme }) => theme.colors.grey["active"]};
+  }
+
+  &.Button_request:active {
+    background: ${({ theme }) => theme.colors.button.request["active"]};
+  }
+
+  &.Button_header:active {
+    background: ${({ theme }) => theme.colors.button.header["active"]};
   }
 
   &.Button_primary:focus-visible {
-    background: ${({ theme }) => theme.colors.blue["focused"]};
+    background: ${({ theme }) => theme.colors.button.primary["focused"]};
+    outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
   }
 
   &.Button_secondary:focus-visible {
     background: ${({ theme }) => theme.colors.grey["focused"]};
+    color: ${({ theme }) => theme.colors.blue["default"]};
+    outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+  }
+
+  &.Button_tertiary:focus-visible {
+    background: ${({ theme }) => theme.colors.transparent};
+    color: ${({ theme }) => theme.colors.blue["default"]};
+    outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+  }
+
+  &.Button_request:focus-visible {
+    background: ${({ theme }) => theme.colors.button.request["focused"]};
+    outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+  }
+
+  &.Button_header:focus-visible {
+    background: ${({ theme }) => theme.colors.button.header["focused"]};
+    outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
   }
 
   .Button__label {
@@ -187,16 +271,16 @@ const StyledButton = styled.a`
   }
 
   .Button__rightIconContainer {
-    margin-left: 8px;
+    margin-left: 10px;
   }
 
   .Button__leftIconContainer {
-    margin-right: 8px;
+    margin-right: 10px;
   }
 
   .Button__iconContainer svg {
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
   }
 
   &.Button_primary {
