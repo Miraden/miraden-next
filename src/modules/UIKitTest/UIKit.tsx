@@ -17,13 +17,10 @@ const UIKit = ({ className }: UIKitProps) => {
         <Link type="button" href="/ui-kit/icons">
           Icons
         </Link>
+        <Link type="button" href="/ui-kit/checkboxes">
+          Checkboxes
+        </Link>
       </div>
-
-      {/* <div>
-        <Checkbox />
-        <Checkbox error />
-        <Checkbox disabled />
-      </div> */}
     </StyledUIKit>
   );
 };

@@ -1,112 +1,105 @@
-import React, { useState } from "react";
-import styled, { css } from "styled-components";
+import cn from "classnames";
+import { useState } from "react";
+import styled from "styled-components";
+import { CheckboxIcon } from "../../icons";
 
-type CheckboxProps = {
-  label?: string;
-  defaultChecked?: boolean;
-  disabled?: boolean;
+interface CheckboxProps {
   error?: boolean;
-};
+}
 
-const Checkbox = ({
-  label,
-  defaultChecked = false,
-  disabled = false,
-  error = false,
-}: CheckboxProps) => {
-  const [isChecked, setIsChecked] = useState(defaultChecked);
-
-  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsChecked(event.target.checked);
-  };
+const Checkbox = ({ error }: CheckboxProps) => {
+  const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <CheckboxContainer disabled={disabled} error={error}>
-      <CheckboxInput
+    <StyledModalCheckbox className={cn("", {})}>
+      <input
+        className="[ Checkbox__input ]"
         type="checkbox"
+        onClick={() => {
+          setIsChecked(!isChecked);
+        }}
         checked={isChecked}
-        onChange={handleCheckboxChange}
-        disabled={disabled}
       />
-      <CheckboxBox checked={isChecked} disabled={disabled} error={error}>
-        {isChecked && (
-          <svg width="14" height="11" viewBox="0 0 14 11">
-            <path
-              fill="none"
-              stroke="#FFF"
-              strokeWidth="3"
-              d="M1 5.6L4.6 9.2L13 1"
-            />
-          </svg>
-        )}
-      </CheckboxBox>
-      <CheckboxLabel>{label}</CheckboxLabel>
-    </CheckboxContainer>
+
+      <span
+        className={cn("[ Checkbox__iconContainer ]", { ErrorCheckbox: error })}
+      >
+        <CheckboxIcon
+          className={cn("[ Checkbox__icon ]", { hidden: !isChecked })}
+        />
+      </span>
+    </StyledModalCheckbox>
   );
 };
 
-const CheckboxContainer = styled.label<{ disabled?: boolean; error?: boolean }>`
+const StyledModalCheckbox = styled.label`
   display: flex;
   align-items: center;
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
-  opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-  ${(props) =>
-    props.error &&
-    css`
-      color: red;
-    `}
-`;
+  cursor: pointer;
+  width: fit-content;
 
-const CheckboxInput = styled.input<{ disabled?: boolean }>`
-  opacity: 0;
-  position: absolute;
-  pointer-events: none;
-`;
+  .Checkbox__input {
+    width: 0;
+    height: 0;
+    opacity: 0;
+    margin: 0;
+    padding: 0;
+  }
 
-const CheckboxBox = styled.div<{
-  checked: boolean;
-  disabled?: boolean;
-  error?: boolean;
-}>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  border: 2px solid
-    ${(props) =>
-      props.disabled ? `${({ theme }: any) => theme.colors.error}` : "#C7D2E9"};
-  border-radius: 5px;
-  transition: border-color 0.2s ease;
-  ${(props) =>
-    props.checked &&
-    css`
-      background-color: ${({ theme }) => theme.colors.blue.default};
-    `}
-  ${(props) =>
-    !props.disabled &&
-    css`
-      &:hover {
-        border-color: ${({ theme }) => theme.colors.blue.default};
-      }
-      &:focus-within {
-        outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
-      }
-    `}
-    ${(props) =>
-    props.disabled &&
-    css`
-      opacity: 0.5;
-    `}
-    ${(props) =>
-    props.error &&
-    css`
-      border-color: red;
-    `}
-`;
+  .Checkbox__iconContainer {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #c7d2e9;
+    border-radius: 5px;
+    background: white;
+    transition: 0.15s ease;
 
-const CheckboxLabel = styled.span`
-  margin-left: 10px;
+    :hover {
+      border: 2px solid ${({ theme }) => theme.colors.blue["default"]};
+    }
+  }
+
+  .Checkbox__input:checked + .Checkbox__iconContainer {
+    border: 2px solid ${({ theme }) => theme.colors.blue["default"]};
+    background: ${({ theme }) => theme.colors.blue["default"]};
+  }
+
+  .Checkbox__input:disabled + .Checkbox__iconContainer {
+    border: 1px solid #c3c2c1;
+    background: #c3c2c1;
+  }
+
+  &.Checkbox__valid {
+    .Checkbox__iconContainer {
+      width: 18px;
+      height: 18px;
+      display: flex;
+      flex-shrink: 0;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #b91a1e;
+      border-radius: 4px;
+      background: white;
+    }
+  }
+
+  .Checkbox__icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .Checkbox__label {
+    display: inline;
+    margin-left: 8px;
+
+    * {
+      display: inline;
+    }
+  }
 `;
 
 export { Checkbox };

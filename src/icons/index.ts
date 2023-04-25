@@ -1,5 +1,6 @@
 export { ApplePayIcon } from "./ApplePayIcon";
 export { ArrowIcon } from "./ArrowIcon";
+export { CheckboxIcon } from "./CheckboxIcon";
 export { CreditCardArrowIcon } from "./CreditCardArrowIcon";
 export { CreditCardPlusIcon } from "./CreditCardPlusIcon";
 export { CyprusIcon } from "./CyprusIcon";
