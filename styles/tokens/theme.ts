@@ -28,6 +28,12 @@ const theme = {
         focused: "#414D65",
         active: "#343F56",
       },
+      pay: {
+        default: "#FFFFFF",
+        hover: "#F1F7FF",
+        focused: "#F1F7FF",
+        active: "#CFE2FC",
+      },
       disabled: {
         background: "#EFF3FB",
         text: "#B8C6E3",
@@ -40,11 +46,10 @@ const theme = {
       active: "#0F2BB5",
     },
     grey: {
+      textGrey: "#7786A5",
       lightBlue: "#F1F7FF",
       default: "#F1F7FF",
-      hover: "#F1F7FF",
-      focused: "#F1F7FF",
-      active: "#E1EDFD",
+      disabled: "#B8C6E3",
     },
     transparent: "transparent",
     white: "#FFFFFF",

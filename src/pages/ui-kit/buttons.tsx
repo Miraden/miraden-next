@@ -1,12 +1,13 @@
-import { Button } from "@/components/ui";
-import { StarIcon } from "@/icons";
+import { Button, PayButton } from "@/components/ui";
+import { StarIcon, VisaIcon } from "@/icons";
 import { Inter } from "next/font/google";
 import Head from "next/head";
+import Link from "next/link";
 import styled from "styled-components";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function UIKitPage() {
+export default function ButtonsPage() {
   return (
     <>
       <Head>
@@ -23,7 +24,7 @@ export default function UIKitPage() {
         />
       </Head>
       <main className="Container">
-        <Button href="/ui-kit">Go back</Button>
+        <Link href="/ui-kit">Go back</Link>
         <h1 className="Font_52_120">Кнопки</h1>
         <StyledButtons>
           <Button>Button</Button>
@@ -83,8 +84,15 @@ export default function UIKitPage() {
           <Button request compact>
             Button
           </Button>
-          <div className="Header__buttons">
+          <div className="PayButtons">
             <Button header>Button</Button>
+            <Button header leftIcon={<StarIcon />}>
+              Button
+            </Button>
+            <PayButton leftIcon={<VisaIcon />}>Банковская карта</PayButton>
+            <PayButton disabled leftIcon={<VisaIcon />}>
+              Банковская карта
+            </PayButton>
           </div>
         </StyledButtons>
       </main>
@@ -95,5 +103,13 @@ export default function UIKitPage() {
 const StyledButtons = styled.div`
   button:not(:first-child) {
     margin-top: 12px;
+  }
+
+  .PayButtons {
+    padding: 30px;
+    background-color: #2a344a;
+    a {
+      margin-top: 20px;
+    }
   }
 `;

@@ -111,8 +111,6 @@ const Button: FC<Props> = ({
   if (disabled) {
     return (
       <StyledButton
-        href={href}
-        onClick={onClick}
         className={cn(`${className} Font_16_20`, {
           Button_primary: !secondary,
           Button_secondary: secondary,
@@ -286,7 +284,7 @@ const StyledButton = styled.a`
   }
 
   &.Button_tertiary:active {
-    background: ${({ theme }) => theme.colors.grey["active"]};
+    background: ${({ theme }) => theme.colors.button.tertiary["active"]};
     .Button__iconContainer svg path {
       fill: ${({ theme }) => theme.colors.blue["default"]} !important;
     }
