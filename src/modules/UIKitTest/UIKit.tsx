@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui";
 import cn from "classnames";
+import Link from "next/link";
 import styled from "styled-components";
 
 interface UIKitProps {
@@ -11,9 +11,12 @@ const UIKit = ({ className }: UIKitProps) => {
     <StyledUIKit className={cn(className, "Container")}>
       <h1 className="Font_52_120">UI kit components</h1>
       <div className="UIKit__buttons">
-        <Button type="button" href="/ui-kit/buttons">
+        <Link type="button" href="/ui-kit/buttons">
           Buttons
-        </Button>
+        </Link>
+        <Link type="button" href="/ui-kit/icons">
+          Icons
+        </Link>
       </div>
 
       {/* <div>
@@ -27,7 +30,14 @@ const UIKit = ({ className }: UIKitProps) => {
 
 const StyledUIKit = styled.section`
   .UIKit__buttons {
-    width: fit-content;
+    display: flex;
+    flex-direction: column;
+
+    a {
+      background-color: #d4d8e1;
+      margin-top: 20px;
+      width: fit-content;
+    }
   }
 `;
 
