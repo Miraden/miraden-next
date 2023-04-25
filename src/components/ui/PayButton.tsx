@@ -1,14 +1,8 @@
 import cn from "classnames";
-import {
-  ButtonHTMLAttributes,
-  FC,
-  MouseEvent,
-  ReactNode,
-  useState,
-} from "react";
+import { ButtonHTMLAttributes, MouseEvent, ReactNode, useState } from "react";
 import styled from "styled-components";
 
-interface Props {
+interface PayButtonProps {
   className?: string;
   onClick?: (e: MouseEvent<HTMLElement>) => void;
   href?: string;
@@ -19,7 +13,7 @@ interface Props {
   disabled?: boolean;
 }
 
-const PayButton: FC<Props> = ({
+const PayButton = ({
   className,
   onClick,
   children,
@@ -28,7 +22,7 @@ const PayButton: FC<Props> = ({
   leftIcon,
   ariaLabel,
   disabled,
-}) => {
+}: PayButtonProps) => {
   const [isActive, setIsActive] = useState(false);
 
   const handleActive = () => {
@@ -140,4 +134,4 @@ const StyledButton = styled.a`
 `;
 
 export { PayButton };
-export type { Props as ButtonProps };
+export type { PayButtonProps as ButtonProps };

@@ -21,6 +21,7 @@ const theme = {
         hover: "#E1EDFD",
         focused: "#E1EDFD",
         active: "#CFE2FC",
+        isActive: "#2A344A",
       },
       header: {
         default: "#F1F7FF",
