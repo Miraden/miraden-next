@@ -1,9 +1,10 @@
+import { UIKit } from "@/modules/UIKitTest";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+export default function UIKitPage() {
   return (
     <>
       <Head>
@@ -19,7 +20,9 @@ export default function Home() {
           rel="stylesheet"
         />
       </Head>
-      <main>Miraden Next app</main>
+      <main>
+        <UIKit />
+      </main>
     </>
   );
 }
