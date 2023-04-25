@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui";
 import cn from "classnames";
 import styled from "styled-components";
 
@@ -9,10 +10,20 @@ const UIKit = ({ className }: UIKitProps) => {
   return (
     <StyledUIKit className={cn(className, "Container")}>
       <h1 className="Font_52_120">UI kit components</h1>
+      <div>
+        <Button>Button</Button>
+        <Button secondary className="UIKit__buttonSecondary">
+          Button
+        </Button>
+      </div>
     </StyledUIKit>
   );
 };
 
-const StyledUIKit = styled.section``;
+const StyledUIKit = styled.section`
+  .UIKit__buttonSecondary {
+    margin-top: 20px;
+  }
+`;
 
 export { UIKit };
