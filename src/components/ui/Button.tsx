@@ -19,6 +19,7 @@ interface Props {
   ariaLabel?: string;
   prefetch?: boolean;
   children?: ReactNode;
+  disabled?: boolean;
 }
 
 const Button: FC<Props> = ({
@@ -36,6 +37,7 @@ const Button: FC<Props> = ({
   leftIcon,
   rightIcon,
   ariaLabel,
+  disabled,
   prefetch = true,
 }) => {
   if (!href) {
@@ -54,6 +56,7 @@ const Button: FC<Props> = ({
           Button_compact: compact,
           Button_narrow: narrow,
           Button_withoutLabel: !children,
+          disabled: disabled,
         })}
         type={type}
       >
@@ -87,6 +90,40 @@ const Button: FC<Props> = ({
           Button_compact: compact,
           Button_narrow: narrow,
           Button_withoutLabel: !children,
+          disabled: disabled,
+        })}
+      >
+        {leftIcon && (
+          <div className="[ Button__iconContainer Button__leftIconContainer ]">
+            {leftIcon}
+          </div>
+        )}
+        {children && <span className="[ Button__label ]">{children}</span>}
+        {rightIcon && (
+          <div className="[ Button__iconContainer Button__rightIconContainer ]">
+            {rightIcon}
+          </div>
+        )}
+      </StyledButton>
+    );
+  }
+
+  if (disabled) {
+    return (
+      <StyledButton
+        href={href}
+        onClick={onClick}
+        className={cn(`${className} Font_16_20`, {
+          Button_primary: !secondary,
+          Button_secondary: secondary,
+          Button_tertiary: tertiary,
+          Button_request: request,
+          Button_header: header,
+          Button_regular: !compact,
+          Button_compact: compact,
+          Button_narrow: narrow,
+          Button_withoutLabel: !children,
+          disabled: disabled,
         })}
       >
         {leftIcon && (
@@ -118,6 +155,7 @@ const Button: FC<Props> = ({
           Button_compact: compact,
           Button_narrow: narrow,
           Button_withoutLabel: !children,
+          disabled: disabled,
         })}
       >
         {leftIcon && (
@@ -143,6 +181,13 @@ const StyledButton = styled.a`
   border-radius: 10px;
   cursor: pointer;
   border: none;
+
+  &.disabled {
+    cursor: unset;
+    background: ${({ theme }) =>
+      theme.colors.button.disabled.background} !important;
+    color: ${({ theme }) => theme.colors.button.disabled.text};
+  }
 
   &.Button_regular {
     padding: 15px 36px;

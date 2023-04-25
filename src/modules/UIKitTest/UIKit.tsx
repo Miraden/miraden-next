@@ -14,6 +14,7 @@ const UIKit = ({ className }: UIKitProps) => {
         <div>
           <Button>Button</Button>
           <Button compact>Button</Button>
+          <Button disabled>Button</Button>
         </div>
         <div>
           <Button secondary className="UIKit__buttonSecondary">

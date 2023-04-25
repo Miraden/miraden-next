@@ -28,6 +28,10 @@ const theme = {
         focused: "#414D65",
         active: "#343F56",
       },
+      disabled: {
+        background: "#EFF3FB",
+        text: "#B8C6E3",
+      },
     },
     blue: {
       default: "#4E6AF3",
