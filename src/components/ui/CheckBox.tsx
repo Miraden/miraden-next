@@ -11,7 +11,7 @@ const Checkbox = ({ error }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
-    <StyledModalCheckbox className={cn("", {})}>
+    <StyledModalCheckbox className={cn("", { ErrorCheckbox: error })}>
       <input
         className="[ Checkbox__input ]"
         type="checkbox"
@@ -20,6 +20,7 @@ const Checkbox = ({ error }: CheckboxProps) => {
           e.currentTarget.blur(); // Убираем фокус с элемента после клика
         }}
         checked={isChecked}
+        tabIndex={0} // Добавляем tabIndex
       />
 
       <span
@@ -39,12 +40,22 @@ const StyledModalCheckbox = styled.label`
   cursor: pointer;
   width: fit-content;
 
+  .ErrorCheckbox {
+    border-color: ${({ theme }) => theme.colors.error};
+    background-color: ${({ theme }) => theme.colors.error};
+  }
+
   .Checkbox__input {
     width: 0;
     height: 0;
     opacity: 0;
     margin: 0;
     padding: 0;
+  }
+
+  .ErrorCheckbox {
+    border-color: ${({ theme }) => theme.colors.error};
+    background-color: ${({ theme }) => theme.colors.error};
   }
 
   .Checkbox__iconContainer {
@@ -104,6 +115,13 @@ const StyledModalCheckbox = styled.label`
 
     * {
       display: inline;
+    }
+  }
+
+  &.ErrorCheckbox {
+    .Checkbox__input:checked + .Checkbox__iconContainer {
+      border-color: ${({ theme }) => theme.colors.error};
+      background-color: ${({ theme }) => theme.colors.error};
     }
   }
 `;

@@ -20,6 +20,7 @@ export default function CheckboxesPage() {
         <h1 className="Font_52_120">Чекбоксы</h1>
         <StyledCheckboxes>
           <Checkbox />
+          <Checkbox />
           <Checkbox error />
         </StyledCheckboxes>
       </main>
