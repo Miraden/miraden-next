@@ -1,4 +1,4 @@
-import { Checkbox, Radio, ToggleButton } from "@/components/ui";
+import { Link as CustomLink } from "@/components/ui";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function CheckboxesPage() {
+export default function LinksPage() {
   return (
     <>
       <Head>
@@ -17,18 +17,15 @@ export default function CheckboxesPage() {
       </Head>
       <main className="Container">
         <Link href="/ui-kit">Go back</Link>
-        <h1 className="Font_52_120">Чекбоксы</h1>
+        <h1 className="Font_52_120">Линки</h1>
         <StyledCheckboxes>
-          <Checkbox />
-          <Checkbox error />
-          <Checkbox disabled />
-
-          <Radio />
-          <Radio error />
-          <Radio disabled />
-
-          <ToggleButton />
-          <ToggleButton disabled />
+          <CustomLink href="/">Link</CustomLink>
+          <CustomLink href="/" underlined>
+            Link
+          </CustomLink>
+          <CustomLink href="/" disabled>
+            Link
+          </CustomLink>
         </StyledCheckboxes>
       </main>
     </>
