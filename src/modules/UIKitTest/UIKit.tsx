@@ -20,6 +20,9 @@ const UIKit = ({ className }: UIKitProps) => {
         <Link type="button" href="/ui-kit/checkboxes">
           Checkboxes
         </Link>
+        <Link type="button" href="/ui-kit/links">
+          Links
+        </Link>
       </div>
     </StyledUIKit>
   );
