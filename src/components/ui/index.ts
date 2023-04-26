@@ -6,4 +6,5 @@ export { Link } from "./Link";
 export { PayButton } from "./PayButton";
 export { Radio } from "./Radio";
 export { RequestButton } from "./RequestButton";
+export { TextAreaInput } from "./TextAreaInput";
 export { ToggleButton } from "./ToggleButton";

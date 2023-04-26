@@ -1,4 +1,4 @@
-import { FieldInput } from "@/components/ui";
+import { FieldInput, TextAreaInput } from "@/components/ui";
 import { PenIcon } from "@/icons";
 import { Inter } from "next/font/google";
 import Head from "next/head";
@@ -24,6 +24,8 @@ export default function FieldsPage() {
           <FieldInput icon={<PenIcon />} />
           <FieldInput warning />
           <FieldInput error />
+
+          <TextAreaInput maxLength={500} />
         </StyledCheckboxes>
       </main>
     </>
