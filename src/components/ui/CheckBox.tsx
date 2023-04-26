@@ -5,9 +5,10 @@ import { CheckboxIcon } from "../../icons";
 
 interface CheckboxProps {
   error?: boolean;
+  disabled?: boolean;
 }
 
-const Checkbox = ({ error }: CheckboxProps) => {
+const Checkbox = ({ error, disabled }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
@@ -20,15 +21,18 @@ const Checkbox = ({ error }: CheckboxProps) => {
           e.currentTarget.blur(); // Убираем фокус с элемента после клика
         }}
         checked={isChecked}
-        tabIndex={0} // Добавляем tabIndex
+        tabIndex={0}
+        disabled={disabled}
       />
 
       <span
         className={cn("[ Checkbox__iconContainer ]", { ErrorCheckbox: error })}
       >
-        <CheckboxIcon
-          className={cn("[ Checkbox__icon ]", { hidden: !isChecked })}
-        />
+        {disabled ? null : (
+          <CheckboxIcon
+            className={cn("[ Checkbox__icon ]", { hidden: !isChecked })}
+          />
+        )}
       </span>
     </StyledModalCheckbox>
   );
@@ -86,8 +90,8 @@ const StyledModalCheckbox = styled.label`
   }
 
   .Checkbox__input:disabled + .Checkbox__iconContainer {
-    border: 1px solid #c3c2c1;
-    background: #c3c2c1;
+    border: 2px solid #eff3fb;
+    background: #eff3fb;
   }
 
   &.Checkbox__valid {
