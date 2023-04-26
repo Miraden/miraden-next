@@ -15,8 +15,9 @@ const Checkbox = ({ error }: CheckboxProps) => {
       <input
         className="[ Checkbox__input ]"
         type="checkbox"
-        onClick={() => {
+        onClick={(e: React.MouseEvent<HTMLInputElement>) => {
           setIsChecked(!isChecked);
+          e.currentTarget.blur(); // Убираем фокус с элемента после клика
         }}
         checked={isChecked}
       />
@@ -66,6 +67,11 @@ const StyledModalCheckbox = styled.label`
   .Checkbox__input:checked + .Checkbox__iconContainer {
     border: 2px solid ${({ theme }) => theme.colors.blue["default"]};
     background: ${({ theme }) => theme.colors.blue["default"]};
+  }
+
+  .Checkbox__input:focus + .Checkbox__iconContainer {
+    outline: 2px solid ${({ theme }) => theme.colors.stroke["purple"]};
+    border: 2px solid ${({ theme }) => theme.colors.blue["default"]};
   }
 
   .Checkbox__input:disabled + .Checkbox__iconContainer {
