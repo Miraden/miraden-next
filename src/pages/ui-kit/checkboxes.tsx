@@ -21,6 +21,7 @@ export default function CheckboxesPage() {
         <StyledCheckboxes>
           <Checkbox />
           <Checkbox error />
+          <Checkbox disabled />
         </StyledCheckboxes>
       </main>
     </>
