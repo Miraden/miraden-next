@@ -23,6 +23,9 @@ const UIKit = ({ className }: UIKitProps) => {
         <Link type="button" href="/ui-kit/links">
           Links
         </Link>
+        <Link type="button" href="/ui-kit/fields">
+          Fields
+        </Link>
       </div>
     </StyledUIKit>
   );
