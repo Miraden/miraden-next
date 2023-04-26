@@ -1,4 +1,4 @@
-import { Checkbox } from "@/components/ui";
+import { Checkbox, Radio } from "@/components/ui";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import Link from "next/link";
@@ -22,6 +22,10 @@ export default function CheckboxesPage() {
           <Checkbox />
           <Checkbox error />
           <Checkbox disabled />
+
+          <Radio />
+          <Radio error />
+          <Radio disabled />
         </StyledCheckboxes>
       </main>
     </>

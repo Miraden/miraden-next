@@ -92,6 +92,7 @@ const StyledModalCheckbox = styled.label`
   .Checkbox__input:disabled + .Checkbox__iconContainer {
     border: 2px solid #eff3fb;
     background: #eff3fb;
+    cursor: not-allowed;
   }
 
   &.Checkbox__valid {
