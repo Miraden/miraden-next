@@ -7,6 +7,7 @@ export { CyprusIcon } from "./CyprusIcon";
 export { KebabIcon } from "./KebabIcon";
 export { MinusIcon } from "./MinusIcon";
 export { MontenegroIcon } from "./MontenegroIcon";
+export { PenIcon } from "./PenIcon";
 export { PlusIcon } from "./PlusIcon";
 export { QiwiIcon } from "./QiwiIcon";
 export { RussiaIcon } from "./RussiaIcon";

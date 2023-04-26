@@ -1,4 +1,5 @@
 import { FieldInput } from "@/components/ui";
+import { PenIcon } from "@/icons";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import Link from "next/link";
@@ -20,6 +21,7 @@ export default function FieldsPage() {
         <h1 className="Font_52_120">Fields</h1>
         <StyledCheckboxes>
           <FieldInput />
+          <FieldInput icon={<PenIcon />} />
           <FieldInput warning />
           <FieldInput error />
         </StyledCheckboxes>

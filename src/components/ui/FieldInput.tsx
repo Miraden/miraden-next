@@ -1,15 +1,17 @@
 import { useFormField } from "@/hooks/useFormField";
 import { WarningIcon } from "@/icons";
 import cn from "classnames";
+import { ReactNode } from "react";
 import styled from "styled-components";
 import { Input } from "./Input";
 
 interface Props {
   warning?: boolean;
   error?: boolean;
+  icon?: ReactNode;
 }
 
-const FieldInput = ({ warning, error }: Props) => {
+const FieldInput = ({ warning, error, icon }: Props) => {
   const text = useFormField({ initialValue: "" });
 
   return (
@@ -39,6 +41,7 @@ const FieldInput = ({ warning, error }: Props) => {
           onBlur={text.onBlur}
           className="[ FieldInput__input ] [ Text_16_24 ]"
         />
+        {icon && <div className="Icon__container">{icon}</div>}
       </div>
       {warning && (
         <div className="Warning__message">
@@ -53,6 +56,14 @@ const FieldInput = ({ warning, error }: Props) => {
 
 const StyledFieldInput = styled.div`
   max-width: 300px;
+
+  .Icon__container {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 20px;
+    top: calc(50% - 8px);
+  }
 
   .Warning__message {
     display: flex;
