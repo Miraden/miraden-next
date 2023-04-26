@@ -11,6 +11,7 @@ export { PenIcon } from "./PenIcon";
 export { PlusIcon } from "./PlusIcon";
 export { QiwiIcon } from "./QiwiIcon";
 export { RussiaIcon } from "./RussiaIcon";
+export { ShowPassIcon } from "./ShowPassIcon";
 export { StarIcon } from "./StarIcon";
 export { TelegramIcon } from "./TelegramIcon";
 export { TurkeyIcon } from "./TurkeyIcon";

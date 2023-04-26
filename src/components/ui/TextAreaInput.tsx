@@ -21,8 +21,8 @@ const TextAreaInput = ({ maxLength }: Props) => {
     setIsFocused(true);
   };
 
-  const handleBlur = () => {
-    setIsFocused(false);
+  const handleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+    setIsFocused(!!event.target.value);
   };
 
   return (
@@ -65,6 +65,9 @@ const StyledTextAreaField = styled.div`
 `;
 
 const StyledTextAreaInput = styled.textarea`
+  max-width: 300px;
+  min-width: 300px;
+  min-height: 60px;
   position: relative;
   border: none;
   box-shadow: 0 0 0 2px #e1edfd inset;
@@ -72,12 +75,14 @@ const StyledTextAreaInput = styled.textarea`
   padding: 26px 20px 10px 20px;
   font-size: 16px;
   line-height: 24px;
-  resize: none;
   height: 150px;
   outline: none;
   transition: 0.1s;
   &:focus {
     box-shadow: 0 0 0 2px #4e6af3 inset;
+  }
+  &:hover {
+    box-shadow: 0 0 0 2px #cddef4 inset;
   }
 `;
 
