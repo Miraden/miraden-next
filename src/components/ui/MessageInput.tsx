@@ -65,6 +65,10 @@ const InputWrapper = styled.div`
   align-items: center;
   position: relative;
   flex: 1;
+
+  svg {
+    flex-shrink: 0;
+  }
 `;
 
 const Input = styled.input`
