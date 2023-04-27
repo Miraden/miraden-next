@@ -29,6 +29,9 @@ const UIKit = ({ className }: UIKitProps) => {
         <Link type="button" href="/ui-kit/notifications">
           Notifications
         </Link>
+        <Link type="button" href="/ui-kit/dropzone">
+          Dropzone
+        </Link>
       </div>
     </StyledUIKit>
   );

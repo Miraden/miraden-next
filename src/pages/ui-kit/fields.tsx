@@ -1,4 +1,9 @@
-import { PasswordInput, Search, TextAreaInput } from "@/components/ui";
+import {
+  MessageInput,
+  PasswordInput,
+  Search,
+  TextAreaInput,
+} from "@/components/ui";
 import { DropdownInput } from "@/components/ui/DropdownInput";
 import { TextInput } from "@/components/ui/TextInput";
 import { PenIcon, ShowPassIcon } from "@/icons";
@@ -44,6 +49,8 @@ export default function FieldsPage() {
           <DropdownInput warning />
           <DropdownInput error />
           <DropdownInput disabled />
+          <MessageInput />
+          <MessageInput />
         </StyledCheckboxes>
       </main>
     </>
