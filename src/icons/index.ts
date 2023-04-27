@@ -5,6 +5,7 @@ export { CreditCardArrowIcon } from "./CreditCardArrowIcon";
 export { CreditCardPlusIcon } from "./CreditCardPlusIcon";
 export { CrossIcon } from "./CrossIcon";
 export { CyprusIcon } from "./CyprusIcon";
+export { DropzoneIcon } from "./DropzoneIcon";
 export { KebabIcon } from "./KebabIcon";
 export { MinusIcon } from "./MinusIcon";
 export { MontenegroIcon } from "./MontenegroIcon";
