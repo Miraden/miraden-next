@@ -1,6 +1,7 @@
 export { Button } from "./Button";
 export { Checkbox } from "./CheckBox";
 export { Link } from "./Link";
+export { MessageInput } from "./MessageInput";
 export { Notification } from "./Notification";
 export { PasswordInput } from "./PasswordInput";
 export { PayButton } from "./PayButton";
