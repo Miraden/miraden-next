@@ -1,11 +1,16 @@
+import { WarningIcon } from "@/icons";
+import cn from "classnames";
 import React, { useState } from "react";
 import styled from "styled-components";
 
 interface Props {
   maxLength?: number;
+  disabled?: boolean;
+  warning?: boolean;
+  error?: boolean;
 }
 
-const TextAreaInput = ({ maxLength }: Props) => {
+const TextAreaInput = ({ maxLength, disabled, warning, error }: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
@@ -27,7 +32,13 @@ const TextAreaInput = ({ maxLength }: Props) => {
 
   return (
     <StyledTextArea>
-      <StyledTextAreaField>
+      <StyledTextAreaField
+        className={cn({
+          Disabled_area: disabled,
+          TextArea_warning: warning,
+          TextArea_error: error,
+        })}
+      >
         {maxLength && (
           <StyledTextAreaCounter>
             {value.length}/{maxLength}
@@ -39,9 +50,20 @@ const TextAreaInput = ({ maxLength }: Props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           maxLength={maxLength}
+          disabled={disabled}
         />
         <StyledTextAreaLabel isFocused={isFocused}>Text</StyledTextAreaLabel>
       </StyledTextAreaField>
+      {warning && (
+        <div className="Warning__message Text_12_16">
+          <div>
+            <WarningIcon />
+            <span>Warning</span>
+          </div>
+          <span>Description</span>
+        </div>
+      )}
+      {error && <div className="Error__message Text_12_16">Error</div>}
       {maxLength && (
         <StyledTextAreaCounter>
           {value.length}/{maxLength}
@@ -52,6 +74,73 @@ const TextAreaInput = ({ maxLength }: Props) => {
 };
 
 const StyledTextArea = styled.div`
+  .TextArea_warning {
+    textarea {
+      box-shadow: 0px 0px 0px 2px #ffeac1 inset !important;
+      background-color: #fffbf4;
+    }
+  }
+
+  .TextArea_error {
+    textarea {
+      box-shadow: 0px 0px 0px 2px #ffd8d8 inset;
+      background-color: #fff5f5;
+    }
+  }
+
+  .Warning__message {
+    display: flex;
+    margin-top: 4px;
+    align-items: center;
+    justify-content: space-between;
+    div {
+      display: flex;
+      align-items: center;
+    }
+    span {
+      margin-left: 8px;
+      color: #94a5ca;
+    }
+  }
+
+  .Error__message {
+    margin-top: 4px;
+    color: ${({ theme }) => theme.colors.error};
+  }
+
+  .FieldInput__labelWarning {
+    input {
+      box-shadow: 0px 0px 0px 2px #ffeac1 inset !important;
+      background-color: #fffbf4;
+    }
+  }
+
+  .FieldInput__labelError {
+    input {
+      box-shadow: 0px 0px 0px 2px #ffd8d8 inset;
+      background-color: #fff5f5;
+    }
+  }
+
+  .Disabled_area {
+    textarea {
+      background: #eff3fb !important;
+      box-shadow: none;
+      pointer-events: none;
+      color: #b8c6e3 !important;
+    }
+    label {
+      color: #b8c6e3 !important;
+      pointer-events: none;
+      user-select: none;
+    }
+    div {
+      pointer-events: none;
+      color: #b8c6e3 !important;
+      user-select: none;
+    }
+  }
+
   max-width: 300px;
   position: relative;
   display: flex;
@@ -77,6 +166,7 @@ const StyledTextAreaInput = styled.textarea`
   line-height: 24px;
   height: 150px;
   outline: none;
+
   transition: 0.1s;
   &:focus {
     box-shadow: 0 0 0 2px #4e6af3 inset;

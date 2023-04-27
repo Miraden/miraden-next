@@ -115,6 +115,7 @@ const StyledTextInput = styled.div`
   .Warning__message {
     display: flex;
     margin-top: 4px;
+    align-items: center;
     span {
       margin-left: 8px;
       color: #94a5ca;

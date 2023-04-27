@@ -32,6 +32,9 @@ export default function FieldsPage() {
           <TextInput maxLength={40} warning />
           <TextInput maxLength={40} error />
           <TextAreaInput maxLength={500} />
+          <TextAreaInput maxLength={500} warning />
+          <TextAreaInput maxLength={500} error />
+          <TextAreaInput maxLength={500} disabled />
           <PasswordInput icon={<ShowPassIcon />} />
           <PasswordInput icon={<ShowPassIcon />} disabled />
           <Search options={options} />
