@@ -24,11 +24,15 @@ const TextInput = ({ maxLength, warning, error, icon, disabled }: Props) => {
   };
 
   const handleFocus = () => {
-    setIsFocused(true);
+    if (!disabled) {
+      setIsFocused(true);
+    }
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocused(!!event.target.value);
+    if (!disabled) {
+      setIsFocused(!!event.target.value);
+    }
   };
 
   return (
@@ -51,6 +55,7 @@ const TextInput = ({ maxLength, warning, error, icon, disabled }: Props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           maxLength={maxLength}
+          disabled={disabled}
         />
         {icon && <div className="Icon__container">{icon}</div>}
         <StyledTextInputLabel isFocused={isFocused}>Text</StyledTextInputLabel>
@@ -110,6 +115,7 @@ const StyledTextInput = styled.div`
   .Warning__message {
     display: flex;
     margin-top: 4px;
+    align-items: center;
     span {
       margin-left: 8px;
       color: #94a5ca;
@@ -148,7 +154,7 @@ const StyledTextInputInput = styled.input`
   border: none;
   box-shadow: 0 0 0 2px #e1edfd inset;
   border-radius: 10px;
-  padding: 18px 20px;
+  padding: 18px 58px 18px 20px;
   font-size: 16px;
   line-height: 24px;
   height: 60px;

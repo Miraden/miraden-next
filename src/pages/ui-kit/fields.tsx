@@ -1,4 +1,5 @@
-import { PasswordInput, TextAreaInput } from "@/components/ui";
+import { PasswordInput, Search, TextAreaInput } from "@/components/ui";
+import { DropdownInput } from "@/components/ui/DropdownInput";
 import { TextInput } from "@/components/ui/TextInput";
 import { PenIcon, ShowPassIcon } from "@/icons";
 import { Inter } from "next/font/google";
@@ -7,6 +8,8 @@ import Link from "next/link";
 import styled from "styled-components";
 
 const inter = Inter({ subsets: ["latin"] });
+
+const options = ["Select 1", "Select 2", "Select 3", "Select 4"];
 
 export default function FieldsPage() {
   return (
@@ -30,8 +33,15 @@ export default function FieldsPage() {
           <TextInput maxLength={40} warning />
           <TextInput maxLength={40} error />
           <TextAreaInput maxLength={500} />
+          <TextAreaInput maxLength={500} warning />
+          <TextAreaInput maxLength={500} error />
+          <TextAreaInput maxLength={500} disabled />
           <PasswordInput icon={<ShowPassIcon />} />
           <PasswordInput icon={<ShowPassIcon />} disabled />
+          <Search options={options} />
+          <Search options={options} disabled />
+          <DropdownInput />
+          <DropdownInput disabled />
         </StyledCheckboxes>
       </main>
     </>

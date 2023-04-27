@@ -23,11 +23,15 @@ const PasswordInput = ({ warning, error, icon, disabled }: Props) => {
   };
 
   const handleFocus = () => {
-    setIsFocused(true);
+    if (!disabled) {
+      setIsFocused(true);
+    }
   };
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    setIsFocused(!!event.target.value);
+    if (!disabled) {
+      setIsFocused(!!event.target.value);
+    }
   };
 
   const togglePassword = () => {
@@ -49,6 +53,7 @@ const PasswordInput = ({ warning, error, icon, disabled }: Props) => {
           onFocus={handleFocus}
           onBlur={handleBlur}
           type={showPassword ? "text" : "password"}
+          disabled={disabled}
         />
         {icon && (
           <button onClick={togglePassword} className="Icon__container">
@@ -170,7 +175,7 @@ const StyledPasswordInputInput = styled.input`
   border: none;
   box-shadow: 0 0 0 2px #e1edfd inset;
   border-radius: 10px;
-  padding: 18px 20px;
+  padding: 18px 58px 18px 20px;
   font-size: 16px;
   line-height: 24px;
   height: 60px;
