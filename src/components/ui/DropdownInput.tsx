@@ -1,0 +1,170 @@
+import { ArrowIcon } from "@/icons";
+import cn from "classnames";
+import { FC, useState } from "react";
+import styled from "styled-components";
+import { Dropdown } from "./Dropdown";
+
+interface Props {
+  className?: string;
+  disabled?: boolean;
+  warning?: boolean;
+  error?: boolean;
+}
+
+const DropdownInput: FC<Props> = ({ className, disabled, warning, error }) => {
+  const [showDropDown, setShowDropDown] = useState<boolean>(false);
+  const [selectOption, setSelectOption] = useState<string>("");
+  const options = () => {
+    return [
+      "Select 1",
+      "Select 2",
+      "Select 3",
+      "Select 4",
+      "Select 5",
+      "Select 6",
+      "Select 7",
+      "Select 8",
+      "Select 9",
+      "Select 10",
+      "Select 11",
+      "Select 12",
+    ];
+  };
+
+  const toggleDropDown = () => {
+    setShowDropDown(!showDropDown);
+  };
+
+  const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
+    if (event.currentTarget === event.target) {
+      setShowDropDown(false);
+    }
+  };
+
+  const optionSelection = (option: string): void => {
+    setSelectOption(option);
+  };
+
+  return (
+    <StyledDropdownInput
+      className={cn({ className, Dropdown_disabled: disabled })}
+      disabled={disabled}
+    >
+      <button
+        className={
+          showDropDown ? `DropdownInput_select_active` : `DropdownInput_select`
+        }
+        onClick={(): void => toggleDropDown()}
+        onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
+          dismissHandler(e)
+        }
+        tabIndex={disabled ? -1 : undefined}
+      >
+        <div className="DropdownInput_selectLabel Text_16_24">
+          {selectOption ? selectOption : "Text"}
+          <ArrowIcon />
+        </div>
+        {showDropDown && (
+          <Dropdown
+            className="DropdownInput_selectContainer"
+            options={options()}
+            showDropDown={false}
+            toggleDropDown={(): void => toggleDropDown()}
+            optionSelection={optionSelection}
+          />
+        )}{" "}
+      </button>
+    </StyledDropdownInput>
+  );
+};
+
+const StyledDropdownInput = styled.div<Props>`
+  max-width: 300px;
+  pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
+
+  .DropdownInput_selectContainer {
+    position: relative;
+    background: #fff;
+    border-radius: 10px;
+  }
+
+  .DropdownInput_select_active {
+    width: 100%;
+    max-width: 300px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px 20px;
+    border: none;
+    transition: 0.15s ease-in;
+    box-shadow: 0 0 0 2px #e1edfd inset;
+
+    div {
+      svg {
+        transition: 0.15s ease-in;
+        path {
+          stroke: #7786a5;
+        }
+      }
+    }
+  }
+
+  .DropdownInput_select {
+    &:focus {
+      box-shadow: 0 0 0 2px #4e6af3 inset;
+      div {
+        color: #2a344a;
+      }
+    }
+    &:hover {
+      box-shadow: 0 0 0 2px #cddef4 inset;
+    }
+    outline: none;
+    width: 100%;
+    max-width: 300px;
+    padding: 18px 20px;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: ${(props) =>
+      props.disabled ? "none" : "0 0 0 2px #e1edfd inset"};
+    background: ${(props) => (props.disabled ? "#EFF3FB" : "auto")};
+
+    div {
+      width: 100%;
+      svg {
+        transition: 0.2s ease-in;
+        transform: rotate(-180deg);
+        path {
+          stroke: ${(props) => (props.disabled ? "#B8C6E3" : "#7786a5")};
+        }
+      }
+    }
+  }
+
+  .DropdownInput_selectLabel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: ${(props) => (props.disabled ? "#B8C6E3" : "#7786a5")};
+    font-size: 16px;
+  }
+
+  .DropdownInput_inputContainer {
+    position: relative;
+  }
+
+  .DropdownInput_inputContainer_label {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .DropdownInput_input {
+    width: 100%;
+    padding: 11px 10px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 3px;
+  }
+`;
+
+export { DropdownInput };

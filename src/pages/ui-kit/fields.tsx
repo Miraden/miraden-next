@@ -1,4 +1,5 @@
 import { PasswordInput, Search, TextAreaInput } from "@/components/ui";
+import { DropdownInput } from "@/components/ui/DropdownInput";
 import { TextInput } from "@/components/ui/TextInput";
 import { PenIcon, ShowPassIcon } from "@/icons";
 import { Inter } from "next/font/google";
@@ -39,6 +40,8 @@ export default function FieldsPage() {
           <PasswordInput icon={<ShowPassIcon />} disabled />
           <Search options={options} />
           <Search options={options} disabled />
+          <DropdownInput />
+          <DropdownInput disabled />
         </StyledCheckboxes>
       </main>
     </>
