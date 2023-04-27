@@ -26,6 +26,9 @@ const UIKit = ({ className }: UIKitProps) => {
         <Link type="button" href="/ui-kit/fields">
           Fields
         </Link>
+        <Link type="button" href="/ui-kit/notifications">
+          Notifications
+        </Link>
       </div>
     </StyledUIKit>
   );

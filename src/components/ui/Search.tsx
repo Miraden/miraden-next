@@ -125,7 +125,7 @@ const SearchContainer = styled.div`
     height: 18px;
     top: 22px;
     right: 20px;
-    z-index: 20;
+    z-index: 21;
     opacity: 0;
     path {
       fill: #2a344a !important;
@@ -138,7 +138,7 @@ const SearchContainer = styled.div`
     height: 18px;
     top: 22px;
     left: 20px;
-    z-index: 20;
+    z-index: 21;
   }
 
   :focus-within .Search__crossIcon {
@@ -156,7 +156,7 @@ const Input = styled.input`
   border-radius: 10px;
   width: 100%;
   background: #fff;
-  z-index: 10;
+  z-index: 20;
 
   &::placeholder {
     color: #7786a5;
@@ -178,10 +178,11 @@ const Input = styled.input`
 
 const OptionsContainer = styled.ul`
   position: absolute;
+  z-index: 19;
   top: 48px;
   left: 0;
   right: 0;
-  background-color: transparent;
+  background-color: white;
   border-radius: 0 0px 10px 10px;
   box-shadow: 0 0 0 2px #e1edfd inset;
   list-style: none;

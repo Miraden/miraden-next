@@ -41,6 +41,8 @@ export default function FieldsPage() {
           <Search options={options} />
           <Search options={options} disabled />
           <DropdownInput />
+          <DropdownInput warning />
+          <DropdownInput error />
           <DropdownInput disabled />
         </StyledCheckboxes>
       </main>
