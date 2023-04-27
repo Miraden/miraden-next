@@ -5,5 +5,6 @@ export { PasswordInput } from "./PasswordInput";
 export { PayButton } from "./PayButton";
 export { Radio } from "./Radio";
 export { RequestButton } from "./RequestButton";
+export { Search } from "./Search";
 export { TextAreaInput } from "./TextAreaInput";
 export { ToggleButton } from "./ToggleButton";
