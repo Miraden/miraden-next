@@ -1,12 +1,15 @@
 import { CrossIcon, SearchIcon } from "@/icons";
+import cn from "classnames";
 import React, { useState } from "react";
 import styled from "styled-components";
 
 interface SearchProps {
   options: string[];
+  disabled?: boolean;
+  className?: string;
 }
 
-const Search = ({ options }: SearchProps) => {
+const Search = ({ options, disabled, className }: SearchProps) => {
   const [searchValue, setSearchValue] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>(options);
@@ -42,7 +45,9 @@ const Search = ({ options }: SearchProps) => {
   };
 
   return (
-    <SearchContainer>
+    <SearchContainer
+      className={cn("", { className, Search_disabled: disabled })}
+    >
       <SearchIcon className="Search__searchIcon" />
       <CrossIcon
         className="Search__crossIcon"
@@ -56,8 +61,9 @@ const Search = ({ options }: SearchProps) => {
         value={searchValue}
         onChange={handleSearchChange}
         onBlur={handleBlur}
-        onFocus={() => setIsOptionsOpen(true)}
-        className="Text_16_24"
+        onFocus={() => !disabled && setIsOptionsOpen(true)}
+        className={cn("Text_16_24", { Search_disabled: disabled })}
+        disabled={disabled}
       />
 
       {isOptionsOpen && searchValue && (
@@ -86,6 +92,32 @@ const Search = ({ options }: SearchProps) => {
 const SearchContainer = styled.div`
   position: relative;
   max-width: 300px;
+
+  .Search_disabled .Search__searchIcon {
+    svg path {
+      fill: red !important;
+    }
+  }
+
+  .Search_disabled {
+    background: #eff3fb !important;
+    box-shadow: none;
+    pointer-events: none;
+    color: "#B8C6E3" !important;
+    :focus-within {
+      pointer-events: none;
+    }
+
+    &::placeholder {
+      color: #b8c6e3;
+    }
+
+    .Search__searchIcon {
+      svg path {
+        fill: #b8c6e3 !important;
+      }
+    }
+  }
 
   .Search__crossIcon {
     position: absolute;
@@ -126,6 +158,10 @@ const Input = styled.input`
   background: #fff;
   z-index: 10;
 
+  &::placeholder {
+    color: #7786a5;
+  }
+
   &:hover {
     box-shadow: 0 0 0 2px #cddef4 inset;
   }
@@ -133,6 +169,10 @@ const Input = styled.input`
   &:focus {
     outline: none;
     box-shadow: 0 0 0 2px #4e6af3 inset;
+
+    &::placeholder {
+      color: #2a344a;
+    }
   }
 `;
 

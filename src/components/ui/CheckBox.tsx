@@ -24,7 +24,6 @@ const Checkbox = ({ error, disabled }: CheckboxProps) => {
         tabIndex={0}
         disabled={disabled}
       />
-
       <span
         className={cn("[ Checkbox__iconContainer ]", { ErrorCheckbox: error })}
       >

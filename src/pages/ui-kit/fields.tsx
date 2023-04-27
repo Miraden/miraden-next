@@ -35,6 +35,7 @@ export default function FieldsPage() {
           <PasswordInput icon={<ShowPassIcon />} />
           <PasswordInput icon={<ShowPassIcon />} disabled />
           <Search options={options} />
+          <Search options={options} disabled />
         </StyledCheckboxes>
       </main>
     </>
