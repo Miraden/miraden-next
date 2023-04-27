@@ -1,4 +1,4 @@
-import { ArrowIcon } from "@/icons";
+import { ArrowIcon, WarningIcon } from "@/icons";
 import cn from "classnames";
 import { FC, useState } from "react";
 import styled from "styled-components";
@@ -47,8 +47,13 @@ const DropdownInput: FC<Props> = ({ className, disabled, warning, error }) => {
 
   return (
     <StyledDropdownInput
-      className={cn({ className, Dropdown_disabled: disabled })}
+      className={cn({
+        className,
+        Dropdown_disabled: disabled,
+      })}
       disabled={disabled}
+      error={error}
+      warning={warning}
     >
       <button
         className={
@@ -74,6 +79,13 @@ const DropdownInput: FC<Props> = ({ className, disabled, warning, error }) => {
           />
         )}{" "}
       </button>
+      {warning && (
+        <div className="Warning__message Text_12_16">
+          <WarningIcon />
+          <span>Warning</span>
+        </div>
+      )}
+      {error && <div className="Error__message Text_12_16">Error</div>}
     </StyledDropdownInput>
   );
 };
@@ -81,6 +93,25 @@ const DropdownInput: FC<Props> = ({ className, disabled, warning, error }) => {
 const StyledDropdownInput = styled.div<Props>`
   max-width: 300px;
   pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
+
+  .Warning__message {
+    display: flex;
+    margin-top: 4px;
+    align-items: center;
+    div {
+      display: flex;
+      align-items: center;
+    }
+    span {
+      margin-left: 8px;
+      color: #94a5ca;
+    }
+  }
+
+  .Error__message {
+    margin-top: 4px;
+    color: ${({ theme }) => theme.colors.error};
+  }
 
   .DropdownInput_selectContainer {
     position: relative;
@@ -125,8 +156,15 @@ const StyledDropdownInput = styled.div<Props>`
     border: none;
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 0 0 2px #e1edfd inset;
+    box-shadow: ${(props) =>
+      props.error ? "0 0 0 2px #FFD8D8 inset !important" : "none"};
+    box-shadow: ${(props) =>
+      props.warning ? "0 0 0 2px #FFEAC1 inset !important" : "none"};
     box-shadow: ${(props) =>
       props.disabled ? "none" : "0 0 0 2px #e1edfd inset"};
+    background: ${(props) => (props.error ? "#FFF5F5" : "auto")};
+    background: ${(props) => (props.warning ? "#FFFBF4" : "auto")};
     background: ${(props) => (props.disabled ? "#EFF3FB" : "auto")};
 
     div {
