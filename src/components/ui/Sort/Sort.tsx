@@ -11,7 +11,7 @@ interface Props {
 const Sort: FC<Props> = ({ className }) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const [selectOption, setSelectOption] = useState<string>("");
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number>(-1);
+  const [selectedOption, setSelectedOption] = useState<string>("");
   const options = () => {
     return [
       "Select 1",
@@ -39,8 +39,8 @@ const Sort: FC<Props> = ({ className }) => {
     }
   };
   const optionSelection = (option: string, index: number): void => {
+    setSelectedOption(option);
     setSelectOption(option);
-    setSelectedOptionIndex(index);
   };
 
   return (
@@ -65,6 +65,8 @@ const Sort: FC<Props> = ({ className }) => {
         {showDropDown && (
           <SortDropdown
             className="DropdownInput_selectContainer"
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
             optionSelection={optionSelection}
             showDropDown={true}
             toggleDropDown={(): void => toggleDropDown()}
