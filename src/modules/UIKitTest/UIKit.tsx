@@ -17,6 +17,9 @@ const UIKit = ({ className }: UIKitProps) => {
         <Link type="button" href="/ui-kit/icons">
           Icons
         </Link>
+        <Link type="button" href="/ui-kit/stickers">
+          Stickers
+        </Link>
         <Link type="button" href="/ui-kit/checkboxes">
           Checkboxes
         </Link>
