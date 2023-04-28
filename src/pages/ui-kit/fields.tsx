@@ -5,6 +5,7 @@ import {
   TextAreaInput,
 } from "@/components/ui";
 import { DropdownInput } from "@/components/ui/DropdownInput";
+import { DropdownInputCheckbox } from "@/components/ui/DropdownInputCheckbox";
 import { TextInput } from "@/components/ui/TextInput";
 import { PenIcon, ShowPassIcon } from "@/icons";
 import { Inter } from "next/font/google";
@@ -15,6 +16,12 @@ import styled from "styled-components";
 const inter = Inter({ subsets: ["latin"] });
 
 const options = ["Select 1", "Select 2", "Select 3", "Select 4"];
+
+const options2 = [
+  { label: "Option 1", value: "option1" },
+  { label: "Option 2", value: "option2" },
+  { label: "Option 3", value: "option3" },
+];
 
 export default function FieldsPage() {
   return (
@@ -28,7 +35,7 @@ export default function FieldsPage() {
       <main className="Container">
         <Link href="/ui-kit">Go back</Link>
         <h1 className="Font_52_120">Fields</h1>
-        <StyledCheckboxes className="Fields">
+        <StyledFields className="Fields">
           <TextInput />
           <TextInput disabled />
           <TextInput maxLength={40} />
@@ -50,15 +57,15 @@ export default function FieldsPage() {
           <DropdownInput error />
           <DropdownInput disabled />
           <MessageInput />
-          <MessageInput />
-        </StyledCheckboxes>
+          <DropdownInputCheckbox options={options2} />
+        </StyledFields>
       </main>
     </>
   );
 }
 
-const StyledCheckboxes = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+const StyledFields = styled.div`
+  display: grid;
+  grid-template-columns: repeat(4, 300px);
+  grid-gap: 20px;
 `;

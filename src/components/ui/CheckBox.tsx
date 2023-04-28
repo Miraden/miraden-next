@@ -1,31 +1,53 @@
 import cn from "classnames";
-import { useState } from "react";
+import { MouseEvent, useState } from "react";
 import styled from "styled-components";
 import { CheckboxIcon } from "../../icons";
 
 interface CheckboxProps {
+  key?: string;
   error?: boolean;
   disabled?: boolean;
+  checked?: boolean;
+  label?: string;
+  onClick?: (e: MouseEvent<HTMLElement>) => void;
+  isSelected?: any;
+  onChange?: () => void;
 }
 
-const Checkbox = ({ error, disabled }: CheckboxProps) => {
-  const [isChecked, setIsChecked] = useState(false);
+const Checkbox = ({
+  error,
+  disabled,
+  checked,
+  label,
+  onClick,
+  isSelected,
+  onChange,
+  key,
+}: CheckboxProps) => {
+  const [isChecked, setIsChecked] = useState(checked || false);
 
   return (
-    <StyledModalCheckbox className={cn("", { ErrorCheckbox: error })}>
+    <StyledModalCheckbox
+      className={cn("", { ErrorCheckbox: error })}
+      htmlFor={key}
+    >
       <input
+        key={key}
         className="[ Checkbox__input ]"
         type="checkbox"
         onClick={(e: React.MouseEvent<HTMLInputElement>) => {
           setIsChecked(!isChecked);
           e.currentTarget.blur(); // Убираем фокус с элемента после клика
         }}
-        checked={isChecked}
+        onChange={onChange}
+        checked={checked}
         tabIndex={0}
         disabled={disabled}
       />
       <span
-        className={cn("[ Checkbox__iconContainer ]", { ErrorCheckbox: error })}
+        className={cn("[ Checkbox__iconContainer ]", {
+          ErrorCheckbox: error,
+        })}
       >
         {disabled ? null : (
           <CheckboxIcon
@@ -33,6 +55,7 @@ const Checkbox = ({ error, disabled }: CheckboxProps) => {
           />
         )}
       </span>
+      <span className="Checkbox__label">{label}</span>
     </StyledModalCheckbox>
   );
 };
@@ -42,6 +65,10 @@ const StyledModalCheckbox = styled.label`
   align-items: center;
   cursor: pointer;
   width: fit-content;
+
+  .Checkbox__label {
+    margin-left: 8px;
+  }
 
   .ErrorCheckbox {
     border-color: ${({ theme }) => theme.colors.error};
