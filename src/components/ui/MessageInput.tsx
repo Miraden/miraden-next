@@ -6,26 +6,35 @@ import styled from "styled-components";
 import { Button } from "./Button";
 
 const MessageInput = () => {
-  const [value, setValue] = useState("");
-  const handleChange = (e: any) => {
+  const [value, setValue] = useState<string>("");
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
   };
 
-  const textareaRef = useRef(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {
     const textarea = textareaRef.current;
 
     const adjustTextareaHeight = () => {
-      textarea.style.height = "auto";
-      textarea.style.height = `${textarea.scrollHeight + 2}px`;
+      if (textarea && textarea.value.length === 0) {
+        textarea.style.height = "24px";
+        return;
+      }
+      if (textarea) {
+        textarea.style.height = "auto";
+        textarea.style.height = `${textarea.scrollHeight + 2}px`;
+      }
     };
 
-    textarea.addEventListener("input", adjustTextareaHeight);
+    if (textarea) {
+      textarea.addEventListener("input", adjustTextareaHeight);
 
-    return () => {
-      textarea.removeEventListener("input", adjustTextareaHeight);
-    };
-  }, []);
+      return () => {
+        textarea.removeEventListener("input", adjustTextareaHeight);
+      };
+    }
+  }, [textareaRef]);
+
   return (
     <StyledMessageInput>
       <InputWrapper>
