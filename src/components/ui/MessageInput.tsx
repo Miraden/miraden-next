@@ -1,7 +1,7 @@
 import { PenIcon, PlusIcon } from "@/icons";
 import { PaperclipIcon } from "@/icons/PaperclipIcon";
 import { SendMessageIcon } from "@/icons/SendMessageIcon";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Button } from "./Button";
 
@@ -11,15 +11,30 @@ const MessageInput = () => {
     setValue(e.target.value);
   };
 
+  const textareaRef = useRef(null);
+  useEffect(() => {
+    const textarea = textareaRef.current;
+
+    const adjustTextareaHeight = () => {
+      textarea.style.height = "auto";
+      textarea.style.height = `${textarea.scrollHeight + 2}px`;
+    };
+
+    textarea.addEventListener("input", adjustTextareaHeight);
+
+    return () => {
+      textarea.removeEventListener("input", adjustTextareaHeight);
+    };
+  }, []);
   return (
     <StyledMessageInput>
       <InputWrapper>
         {value.length === 0 ? <PenIcon /> : null}
         <Input
-          type="text"
           placeholder="Text"
           value={value}
           onChange={handleChange}
+          ref={textareaRef}
         />
         {value.length === 0 && <Placeholder></Placeholder>}
       </InputWrapper>
@@ -71,14 +86,16 @@ const InputWrapper = styled.div`
   }
 `;
 
-const Input = styled.input`
+const Input = styled.textarea`
   border: none;
   background-color: transparent;
   outline: none;
   font-size: 16px;
   width: 100%;
-  padding: 8px;
-  white-space: pre-wrap;
+  padding-left: 8px;
+  white-space: normal;
+  resize: none;
+  height: 24px;
 `;
 
 const Placeholder = styled.span`
@@ -94,6 +111,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-left: 12px;
+  align-self: flex-end;
 
   .MessageInput__button_default {
     padding: 10px 24px;
