@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Checkbox } from "./CheckBox";
 
@@ -15,6 +15,22 @@ interface Props {
 const DropdownInputCheckbox: React.FC<Props> = ({ options, placeholder }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (event: Event) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("click", handleOutsideClick);
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, [containerRef]);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -33,7 +49,7 @@ const DropdownInputCheckbox: React.FC<Props> = ({ options, placeholder }) => {
   };
 
   return (
-    <Container>
+    <Container ref={containerRef}>
       <Input
         type="text"
         placeholder="Select"
@@ -78,7 +94,7 @@ const Input = styled.input`
 
 const Dropdown = styled.div`
   position: absolute;
-  top: 100%;
+  top: calc(100% + 2px);
   left: 0;
   width: 100%;
   border: none;

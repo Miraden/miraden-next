@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { CheckboxIcon } from "../../icons";
 
 interface CheckboxProps {
-  key?: string;
   error?: boolean;
   disabled?: boolean;
   checked?: boolean;
@@ -22,17 +21,12 @@ const Checkbox = ({
   onClick,
   isSelected,
   onChange,
-  key,
 }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(checked || false);
 
   return (
-    <StyledModalCheckbox
-      className={cn("", { ErrorCheckbox: error })}
-      htmlFor={key}
-    >
+    <StyledModalCheckbox className={cn("", { ErrorCheckbox: error })}>
       <input
-        key={key}
         className="[ Checkbox__input ]"
         type="checkbox"
         onClick={(e: React.MouseEvent<HTMLInputElement>) => {
@@ -68,6 +62,7 @@ const StyledModalCheckbox = styled.label`
 
   .Checkbox__label {
     margin-left: 8px;
+    color: #2a344a;
   }
 
   .ErrorCheckbox {
