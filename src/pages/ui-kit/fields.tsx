@@ -6,6 +6,7 @@ import {
 } from "@/components/ui";
 import { DropdownInput } from "@/components/ui/DropdownInput";
 import { DropdownInputCheckbox } from "@/components/ui/DropdownInputCheckbox";
+import { Sort } from "@/components/ui/Sort/Sort";
 import { TextInput } from "@/components/ui/TextInput";
 import { PenIcon, ShowPassIcon } from "@/icons";
 import { Inter } from "next/font/google";
@@ -58,6 +59,7 @@ export default function FieldsPage() {
           <DropdownInput disabled />
           <MessageInput />
           <DropdownInputCheckbox options={options2} />
+          <Sort />
         </StyledFields>
       </main>
     </>

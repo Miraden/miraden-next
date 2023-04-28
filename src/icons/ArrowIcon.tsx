@@ -3,8 +3,9 @@ import { FC, SVGAttributes } from "react";
 const ArrowIcon: FC<SVGAttributes<SVGElement>> = (props) => {
   return (
     <svg
-      width="18"
-      height="18"
+      width="0"
+      height="0"
+      viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
