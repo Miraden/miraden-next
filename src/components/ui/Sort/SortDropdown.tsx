@@ -1,7 +1,11 @@
-import { FC, useState } from "react";
+import { CheckIcon } from "@/icons/CheckIcon";
+import cn from "classnames";
+import { FC } from "react";
 import styled from "styled-components";
 
 type Props = {
+  selectedOption: string;
+  setSelectedOption: (option: string) => void;
   options: string[];
   showDropDown: boolean;
   toggleDropDown: Function;
@@ -10,18 +14,13 @@ type Props = {
 };
 
 const SortDropdown: FC<Props> = ({
+  selectedOption,
+  setSelectedOption,
   options,
   optionSelection,
   showDropDown,
   className,
 }: Props): JSX.Element => {
-  const [selectedOption, setSelectedOption] = useState<string>("");
-
-  const onClickHandler = (option: string): void => {
-    setSelectedOption(option);
-    optionSelection(option);
-  };
-
   return (
     <StyledDropdown className={className}>
       <div
@@ -29,15 +28,24 @@ const SortDropdown: FC<Props> = ({
       >
         {options.map((option: string, index: number): JSX.Element => {
           return (
-            <p
+            <div
               key={index}
               onClick={(): void => {
-                onClickHandler(option);
+                setSelectedOption(option);
               }}
-              className={selectedOption === option ? "selected" : ""}
+              className={cn(`${selectedOption === option ? "selected" : ""}`)}
             >
-              {option}
-            </p>
+              <span className="Dropdown__menuItem">
+                <p>{option}</p>
+                <CheckIcon
+                  className={
+                    selectedOption === option
+                      ? "CheckIcon_selected"
+                      : "CheckIcon"
+                  }
+                />
+              </span>
+            </div>
           );
         })}
       </div>
@@ -57,7 +65,6 @@ const StyledDropdown = styled.div`
 
   .Dropdown__menu_active {
     box-shadow: 0 0 0 2px #e1edfd inset;
-
     position: absolute;
     z-index: 2;
     top: 10px;
@@ -70,21 +77,40 @@ const StyledDropdown = styled.div`
     font-size: 14px;
     line-height: 140%;
     cursor: pointer;
-    p {
+
+    div {
       display: flex;
-      flex-direction: column;
       align-items: start;
       padding: 10px 15px;
       color: #2a344a;
     }
 
-    p:hover {
+    div:hover {
       color: #4e6af3;
       background: #f1f7ff;
     }
 
+    .Dropdown__menuItem {
+      display: flex;
+      width: fit-content;
+
+      span {
+        word-break: normal;
+      }
+    }
+
     .selected {
-      color: red !important;
+      color: #4e6af3;
+      display: flex !important;
+      flex-wrap: nowrap;
+    }
+    .CheckIcon_selected {
+      display: flex;
+      flex-shrink: 0;
+    }
+
+    .CheckIcon {
+      display: none;
     }
   }
 `;
