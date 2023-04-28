@@ -11,7 +11,7 @@ interface Props {
 const Sort: FC<Props> = ({ className }) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const [selectOption, setSelectOption] = useState<string>("");
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number>(-1); // 1. Добавляем состояние selectedOptionIndex
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number>(-1);
   const options = () => {
     return [
       "Select 1",
@@ -28,6 +28,7 @@ const Sort: FC<Props> = ({ className }) => {
       "Select 12",
     ];
   };
+
   const toggleDropDown = () => {
     setShowDropDown(!showDropDown);
   };
@@ -38,10 +39,10 @@ const Sort: FC<Props> = ({ className }) => {
     }
   };
   const optionSelection = (option: string, index: number): void => {
-    // 2. Обновляем состояние selectedOptionIndex
     setSelectOption(option);
     setSelectedOptionIndex(index);
   };
+
   return (
     <StyledDropdownInput
       className={cn({
@@ -65,7 +66,7 @@ const Sort: FC<Props> = ({ className }) => {
           <SortDropdown
             className="DropdownInput_selectContainer"
             optionSelection={optionSelection}
-            showDropDown={false}
+            showDropDown={true}
             toggleDropDown={(): void => toggleDropDown()}
             options={options()}
           />

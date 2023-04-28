@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
 
 type Props = {
@@ -12,9 +12,9 @@ type Props = {
 const SortDropdown: FC<Props> = ({
   options,
   optionSelection,
+  showDropDown,
   className,
 }: Props): JSX.Element => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const [selectedOption, setSelectedOption] = useState<string>("");
 
   const onClickHandler = (option: string): void => {
@@ -22,14 +22,10 @@ const SortDropdown: FC<Props> = ({
     optionSelection(option);
   };
 
-  useEffect(() => {
-    setShowDropDown(showDropDown);
-  }, [showDropDown]);
-
   return (
     <StyledDropdown className={className}>
       <div
-        className={showDropDown ? `Dropdown__menu` : `Dropdown__menu_active`}
+        className={showDropDown ? "Dropdown__menu_active" : "Dropdown__menu"}
       >
         {options.map((option: string, index: number): JSX.Element => {
           return (
@@ -53,6 +49,10 @@ const StyledDropdown = styled.div`
   .Order__form_dropdownMenu {
     position: relative;
     cursor: pointer;
+  }
+
+  .Dropdown__menu {
+    display: none;
   }
 
   .Dropdown__menu_active {
@@ -84,7 +84,7 @@ const StyledDropdown = styled.div`
     }
 
     .selected {
-      color: red;
+      color: red !important;
     }
   }
 `;
