@@ -1,4 +1,4 @@
-import { Button, PayButton, RequestButton } from "@/components/ui";
+import { Button, PayButton, RequestButton, TabButtons } from "@/components/ui";
 import { StarIcon, VisaIcon } from "@/icons";
 import { Inter } from "next/font/google";
 import Head from "next/head";
@@ -74,7 +74,6 @@ export default function ButtonsPage() {
             Button
           </Button>
           <RequestButton>Button</RequestButton>
-          <RequestButton compact>Button</RequestButton>
           <div className="PayButtons">
             <Button header>Button</Button>
             <Button header leftIcon={<StarIcon />}>
@@ -85,6 +84,15 @@ export default function ButtonsPage() {
               Банковская карта
             </PayButton>
           </div>
+          <div>
+            <TabButtons
+              tabs={[
+                { label: "Text", id: "1" },
+                { label: "Text", id: "2" },
+              ]}
+              defaultTabId={"1"}
+            />
+          </div>
         </StyledButtons>
       </main>
     </>
@@ -92,9 +100,9 @@ export default function ButtonsPage() {
 }
 
 const StyledButtons = styled.div`
-  button:not(:first-child) {
-    margin-top: 12px;
-  }
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-gap: 20px;
 
   .PayButtons {
     padding: 30px;

@@ -9,5 +9,6 @@ export { Radio } from "./Radio";
 export { RequestButton } from "./RequestButton";
 export { Search } from "./Search";
 export { Sticker } from "./Sticker";
+export { TabButtons } from "./TabButtons";
 export { TextAreaInput } from "./TextAreaInput";
 export { ToggleButton } from "./ToggleButton";
