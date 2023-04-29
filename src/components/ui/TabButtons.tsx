@@ -50,13 +50,15 @@ const Tabs = styled.div`
   border-radius: 10px;
   max-width: 300px;
   width: 100%;
+  padding: 4px;
 `;
 
 const Button = styled.button<ButtonProps>`
+  transition: 0.2s ease;
+
   box-shadow: ${(props) => (props.active ? "" : "0 0 0 2px #e1edfd inset")};
   width: 100%;
   padding: 10px 15px;
-  margin: 3px;
   border: none;
   border-radius: 10px;
   background-color: ${(props) => (props.active ? "#4E6AF3" : "#fff")};
@@ -64,6 +66,9 @@ const Button = styled.button<ButtonProps>`
   cursor: pointer;
   :hover {
     background-color: ${(props) => (props.active ? "#4E6AF3" : "#F1F7FF")};
+  }
+  :not(:first-child) {
+    margin-left: 3px;
   }
 `;
 
