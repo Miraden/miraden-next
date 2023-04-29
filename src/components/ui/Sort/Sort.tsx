@@ -79,6 +79,7 @@ const Sort: FC<Props> = ({ className }) => {
 };
 const StyledDropdownInput = styled.div<Props>`
   max-width: fit-content;
+  position: relative;
 
   .DropdownInput_selectContainer {
     right: 10px;
@@ -104,9 +105,6 @@ const StyledDropdownInput = styled.div<Props>`
       svg {
         margin-left: 12px;
         transition: 0.15s ease-in;
-        path {
-          stroke: #7786a5;
-        }
       }
     }
   }

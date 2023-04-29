@@ -22,9 +22,11 @@ const SortDropdown: FC<Props> = ({
   className,
 }: Props): JSX.Element => {
   return (
-    <StyledDropdown className={className}>
+    <StyledSortDropdown className={className}>
       <div
-        className={showDropDown ? "Dropdown__menu_active" : "Dropdown__menu"}
+        className={
+          showDropDown ? "SortDropdown__menu_active" : "SortDropdown__menu"
+        }
       >
         {options.map((option: string, index: number): JSX.Element => {
           return (
@@ -35,7 +37,7 @@ const SortDropdown: FC<Props> = ({
               }}
               className={cn(`${selectedOption === option ? "selected" : ""}`)}
             >
-              <span className="Dropdown__menuItem">
+              <span className="SortDropdown__menuItem">
                 <p>{option}</p>
                 <CheckIcon
                   className={
@@ -49,27 +51,28 @@ const SortDropdown: FC<Props> = ({
           );
         })}
       </div>
-    </StyledDropdown>
+    </StyledSortDropdown>
   );
 };
 
-const StyledDropdown = styled.div`
-  .Order__form_dropdownMenu {
+const StyledSortDropdown = styled.div`
+  .Order__form_SortDropdownMenu {
     position: relative;
     cursor: pointer;
   }
 
-  .Dropdown__menu {
+  .SortDropdown__menu {
     display: none;
   }
 
-  .Dropdown__menu_active {
+  .SortDropdown__menu_active {
     box-shadow: 0 0 0 2px #e1edfd inset;
     position: absolute;
     z-index: 2;
     top: 10px;
-    left: -20px;
-    width: calc(100% + 40px);
+    /* left: -20px; */
+    right: -20px;
+    width: fit-content;
     background: #fff;
     border-radius: 10px;
     max-height: 228px;
@@ -81,7 +84,7 @@ const StyledDropdown = styled.div`
     div {
       display: flex;
       align-items: start;
-      padding: 10px 15px;
+
       color: #2a344a;
     }
 
@@ -90,12 +93,14 @@ const StyledDropdown = styled.div`
       background: #f1f7ff;
     }
 
-    .Dropdown__menuItem {
+    .SortDropdown__menuItem {
       display: flex;
-      width: fit-content;
+      padding: 10px 15px;
+      align-items: center;
+      width: 100%;
 
-      span {
-        word-break: normal;
+      p {
+        white-space: nowrap;
       }
     }
 
@@ -106,7 +111,9 @@ const StyledDropdown = styled.div`
     }
     .CheckIcon_selected {
       display: flex;
+      align-items: center;
       flex-shrink: 0;
+      margin-left: 10px;
     }
 
     .CheckIcon {
