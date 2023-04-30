@@ -1,5 +1,11 @@
 import cn from "classnames";
-import { ButtonHTMLAttributes, MouseEvent, ReactNode, useState } from "react";
+import {
+  ButtonHTMLAttributes,
+  MouseEvent,
+  ReactNode,
+  useCallback,
+  useState,
+} from "react";
 import styled from "styled-components";
 
 interface PayButtonProps {
@@ -11,30 +17,29 @@ interface PayButtonProps {
   ariaLabel?: string;
   children?: ReactNode;
   disabled?: boolean;
+  tax?: string;
 }
 
 const PayButton = ({
   className,
   onClick,
   children,
-  href,
-  type,
   leftIcon,
-  ariaLabel,
   disabled,
+  tax,
 }: PayButtonProps) => {
-  const [isActive, setIsActive] = useState(false);
+  const [activeButton, setActiveButton] = useState(false);
 
-  const handleActive = () => {
-    setIsActive(!isActive);
-  };
+  const handleActive = useCallback(() => {
+    setActiveButton(!activeButton);
+  }, [activeButton]);
 
   return (
     <StyledButton
       onClick={handleActive}
       className={cn(`${className} Font_16_140 PayButton`, {
         disabled: disabled,
-        isActive: isActive,
+        isActive: activeButton,
       })}
     >
       <div className="Button__container">
@@ -45,7 +50,7 @@ const PayButton = ({
         )}
         {children && <span className="[ Button__label ]">{children}</span>}
       </div>
-      <div className="Font_14_140 PayButton__percent">6%</div>
+      {tax && <div className="Font_14_140 PayButton__percent">{tax}%</div>}
     </StyledButton>
   );
 };

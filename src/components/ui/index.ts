@@ -5,6 +5,7 @@ export { MessageInput } from "./MessageInput";
 export { Notification } from "./Notification";
 export { PasswordInput } from "./PasswordInput";
 export { PayButton } from "./PayButton";
+export { PayForm } from "./PayForm/PayForm";
 export { Radio } from "./Radio";
 export { RequestButton } from "./RequestButton";
 export { Search } from "./Search";
