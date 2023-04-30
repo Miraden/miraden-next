@@ -12,3 +12,4 @@ export { Sticker } from "./Sticker";
 export { TabButtons } from "./TabButtons";
 export { TextAreaInput } from "./TextAreaInput";
 export { ToggleButton } from "./ToggleButton";
+export { Tooltip } from "./Tooltip/Tooltip";
