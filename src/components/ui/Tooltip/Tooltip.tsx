@@ -7,7 +7,11 @@ interface TooltipProps {
 
 const Tooltip = styled.div<TooltipProps>`
   position: absolute;
+  max-width: 250px;
+  width: 250px;
   transform: translateX(-50%);
+  z-index: 10;
+  left: 50%;
   padding: 10px;
   border-radius: 10px;
   background-color: #2a344a;
@@ -20,19 +24,16 @@ const Tooltip = styled.div<TooltipProps>`
 
   ::after {
     content: "";
-    width: 12px;
-    height: 8px;
+    z-index: -10;
     position: absolute;
-    width: 12px;
-    height: 8px;
-    left: 50%;
-    top: -10px;
-    background: #2a344a;
-    transform: rotate(90deg);
-    flex: none;
-    order: 1;
-    flex-grow: 0;
-    z-index: 1;
+    width: 24px;
+    height: 16px;
+    top: 0;
+    left: calc(50% - 12px);
+    transform: rotate(45deg);
+    border-radius: 2px;
+    background-color: #2a344a;
+    animation: fade-in 300ms;
   }
 `;
 

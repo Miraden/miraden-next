@@ -1,11 +1,12 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import { Tooltip } from "./Tooltip";
 
-interface MyComponentProps {
+interface TooltipComponentProps {
   text: string;
 }
 
-const MyComponent: React.FC<MyComponentProps> = ({ text }) => {
+const TooltipComponent: React.FC<TooltipComponentProps> = ({ text }) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const handleMouseEnter = () => {
@@ -17,11 +18,19 @@ const MyComponent: React.FC<MyComponentProps> = ({ text }) => {
   };
 
   return (
-    <div onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+    <StyledTest onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       {text}
-      <Tooltip visible={showTooltip}>This is a tooltip</Tooltip>
-    </div>
+      <Tooltip visible={showTooltip}>
+        Подсказка — элемент графического интерфейса, служит дополнительным
+        средством обучения пользователя
+      </Tooltip>
+    </StyledTest>
   );
 };
 
-export default MyComponent;
+const StyledTest = styled.div`
+  position: relative;
+  width: fit-content;
+`;
+
+export { TooltipComponent };

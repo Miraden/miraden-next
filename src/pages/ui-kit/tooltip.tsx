@@ -1,4 +1,4 @@
-import MyComponent from "@/components/ui/Tooltip/MyComponent";
+import { TooltipComponent } from "@/components/ui/Tooltip/MyComponent";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import Link from "next/link";
@@ -20,7 +20,7 @@ export default function TooltipPage() {
         <h1 className="Font_52_120">Тултипы</h1>
         <StyledIcons>
           <div>
-            <MyComponent text="Hover over me" />
+            <TooltipComponent text="Hover" />
           </div>
         </StyledIcons>
       </main>
@@ -28,8 +28,4 @@ export default function TooltipPage() {
   );
 }
 
-const StyledIcons = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 50px);
-  grid-gap: 20px;
-`;
+const StyledIcons = styled.div``;
