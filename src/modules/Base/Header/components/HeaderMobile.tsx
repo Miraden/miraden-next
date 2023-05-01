@@ -1,18 +1,30 @@
 import { Button } from "@/components/ui";
+import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import { BurgerIcon, MiradenLogoMobile } from "@/icons";
 import Link from "next/link";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
+import { HeaderMenu } from "./HeaderMenu";
 
 interface Props {
   className?: string;
 }
 
 const HeaderMobile = ({ className }: Props) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenMenu = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
+
+  useLockBodyScroll(isOpen);
+
   return (
     <StyledHeaderMobile className={className}>
       <div className="Header__mobile">
-        <button className="HeaderMobile__menuButton">
+        <button className="HeaderMobile__menuButton" onClick={handleOpenMenu}>
           <BurgerIcon />
+          {isOpen && <HeaderMenu isOpen={isOpen} />}
         </button>
         <Link href="/" className="HeaderMobile__logoLink">
           <MiradenLogoMobile />
@@ -26,6 +38,7 @@ const HeaderMobile = ({ className }: Props) => {
 };
 
 const StyledHeaderMobile = styled.header`
+  overflow: hidden;
   width: 100%;
   .Header__mobile {
     display: flex;

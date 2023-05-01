@@ -27,6 +27,7 @@ export { SearchIcon } from "./SearchIcon";
 export { ShowPassIcon } from "./ShowPassIcon";
 export { StarIcon } from "./StarIcon";
 export { TelegramIcon } from "./TelegramIcon";
+export { TelegramPureIcon } from "./TelegramPureIcon";
 export { TurkeyIcon } from "./TurkeyIcon";
 export { UnitedKingdomIcon } from "./UnitedKingdomIcon";
 export { VisaIcon } from "./VisaIcon";
