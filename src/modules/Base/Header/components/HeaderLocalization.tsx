@@ -11,7 +11,7 @@ interface Props {
 const HeaderLocalization: FC<Props> = ({ className }) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const [selectOption, setSelectOption] = useState<string>("RU");
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [selectedOption, setSelectedOption] = useState<string>(selectOption);
   const options = () => {
     return ["EN", "RU"];
   };
@@ -64,6 +64,7 @@ const HeaderLocalization: FC<Props> = ({ className }) => {
     </StyledDropdownInput>
   );
 };
+
 const StyledDropdownInput = styled.div<Props>`
   max-width: fit-content;
   position: relative;

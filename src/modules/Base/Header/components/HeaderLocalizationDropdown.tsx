@@ -1,6 +1,6 @@
 import { CheckIcon } from "@/icons/CheckIcon";
 import cn from "classnames";
-import { FC, useState } from "react";
+import { FC } from "react";
 import styled from "styled-components";
 
 type Props = {
@@ -21,16 +21,6 @@ const HeaderLocalizationDropdown: FC<Props> = ({
   showDropDown,
   className,
 }: Props): JSX.Element => {
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number>(
-    options.findIndex((option) => option === selectedOption)
-  );
-
-  const handleOptionClick = (option: string, index: number): void => {
-    setSelectedOption(option);
-    setSelectedOptionIndex(index);
-    optionSelection(option, index);
-  };
-
   return (
     <StyledHeaderLocalizationDropdown className={className}>
       <div
@@ -44,14 +34,14 @@ const HeaderLocalizationDropdown: FC<Props> = ({
           return (
             <div
               key={index}
-              onClick={(): void => handleOptionClick(option, index)}
-              className={cn(
-                `${selectedOptionIndex === index ? "selected" : ""}`
-              )}
+              onClick={(): void => {
+                setSelectedOption(option);
+              }}
+              className={cn(`${selectedOption === option ? "selected" : ""}`)}
             >
               <span className="HeaderLocalizationDropdown__menuItem">
                 <p className="Font_14_140">{option}</p>
-                {selectedOptionIndex === index && (
+                {selectedOption === option && (
                   <CheckIcon className="CheckIcon_selected" />
                 )}
               </span>
