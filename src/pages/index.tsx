@@ -1,4 +1,4 @@
-import { Hero } from "@/modules/Home/Hero";
+import { Hero } from "@/modules/Home/Hero/Hero";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import { Layout } from "../modules/Base/Layout";

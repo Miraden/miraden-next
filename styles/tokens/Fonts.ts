@@ -19,6 +19,12 @@ const Fonts = createGlobalStyle`
     font-weight: 700;
   }
 
+  .Font_50_60 {
+    font-size: 50px;
+    line-height: 60px;
+    font-weight: 700;
+  }
+
   .Font_40_120 {
     font-size: 40px;
     line-height: 120%;
@@ -47,6 +53,12 @@ const Fonts = createGlobalStyle`
     font-size: 26px;
     line-height: 120%;
     font-weight: 500;
+  }
+
+  .Font_26_160 {
+    font-size: 26px;
+    line-height: 160%;
+    font-weight: 400;
   }
 
   .Font_24_120 {
@@ -144,6 +156,37 @@ const Fonts = createGlobalStyle`
     line-height: 16px;
     font-weight: 600;
     letter-spacing: 0.07em;
+  }
+
+  @media (max-width: 1024px) {
+    .lg\\:Font_44_120 {
+      font-size: 44px;
+      line-height: 120%;
+      font-weight: 700;
+    }
+
+    .lg\\:Font_18_160 {
+      font-size: 18px;
+      line-height: 160%;
+    }
+
+    .lg\\:Font_16_24 {
+      font-size: 16px;
+      line-height: 24px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .sm\\:Font_26_120 {
+      font-size: 26px;
+      line-height: 120%;
+      font-weight: 700;
+    }
+
+    .sm\\:Font_16_24 {
+      font-size: 16px;
+      line-height: 24px;
+    }
   }
 `;
 

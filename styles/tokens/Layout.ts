@@ -9,6 +9,13 @@ const Layout = createGlobalStyle`
     padding-right: 40px;
   }
 
+  @media (max-width: 1024px) {
+    .Container {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  }
+
   
 `;
 
