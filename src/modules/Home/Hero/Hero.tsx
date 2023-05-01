@@ -17,7 +17,7 @@ const Hero = ({ className }: HeroProps) => {
             <mark className="Color_blue_primary">Испании</mark> сделают для вас
             персональный подбор
           </h1>
-          <p className="Hero__description Font_26_160 lg:Font_18_160 sm:Font_16_24">
+          <p className="Hero__description Font_22_160 sm:Font_16_24">
             Создайте анонимную заявку и получите предложения от независимых
             продавцов
           </p>
@@ -26,8 +26,8 @@ const Hero = ({ className }: HeroProps) => {
         <Image
           alt=""
           src="/images/HomeHero.svg"
-          width={470}
-          height={360}
+          width={468}
+          height={385}
           className="Hero__image"
         />
       </div>
@@ -53,7 +53,7 @@ const StyledHero = styled.section`
 
   .Hero__description {
     margin-top: 25px;
-    max-width: 370px;
+    max-width: 470px;
   }
 
   .Hero__mainButton {
@@ -90,7 +90,7 @@ const StyledHero = styled.section`
   }
 
   @media (max-width: 1024px) {
-    padding-top: 140px;
+    padding-top: 193px;
 
     .Hero {
       display: flex;
@@ -107,24 +107,24 @@ const StyledHero = styled.section`
     }
 
     .Hero__description {
-      max-width: 400px;
+      max-width: 460px;
     }
 
     .Hero__mainButton {
-      max-width: 198px;
-      padding-top: 15px;
-      padding-bottom: 15px;
+      max-width: 270px;
+      padding-top: 20px;
+      padding-bottom: 20px;
     }
 
     .Hero__image {
-      margin-top: 80px;
+      margin-top: 70px;
       width: 460px;
       height: 355px;
     }
   }
 
   @media (max-width: 576px) {
-    padding-top: 110px;
+    padding-top: 163px;
 
     .Hero__description {
       margin-top: 20px;
@@ -132,6 +132,8 @@ const StyledHero = styled.section`
 
     .Hero__mainButton {
       margin-top: 40px;
+      padding-top: 15px;
+      padding-bottom: 15px;
       max-width: unset;
     }
 
