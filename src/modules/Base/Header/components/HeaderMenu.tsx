@@ -66,6 +66,7 @@ const StyledHeaderMenu = styled.div`
     text-transform: uppercase;
 
     a {
+      width: 100%;
       padding-left: 40px;
       padding-right: 40px;
       padding-top: 20px;
