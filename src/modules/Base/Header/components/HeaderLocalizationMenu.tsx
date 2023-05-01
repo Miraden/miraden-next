@@ -1,3 +1,0 @@
-const HeaderLocalizationMenu = () => {
-  return;
-};

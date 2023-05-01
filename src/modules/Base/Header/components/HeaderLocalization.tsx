@@ -91,7 +91,7 @@ const StyledDropdownInput = styled.div<Props>`
     }
     div {
       svg {
-        margin-left: 12px;
+        margin-left: 5px;
         transition: 0.15s ease-in;
       }
     }
@@ -121,7 +121,7 @@ const StyledDropdownInput = styled.div<Props>`
     div {
       width: 100%;
       svg {
-        margin-left: 12px;
+        margin-left: 5px;
         transition: 0.2s ease-in;
         transform: rotate(-180deg);
       }

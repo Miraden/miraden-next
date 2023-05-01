@@ -24,7 +24,7 @@ const StyledHeader = styled.header`
     justify-content: space-between;
     width: 100%;
     max-width: 1880px;
-    padding: 11px 20px;
+    padding: 12px 20px;
     border-radius: 10px;
     color: white;
     background-color: #2a344a;

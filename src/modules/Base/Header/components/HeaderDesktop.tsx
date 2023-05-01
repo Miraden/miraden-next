@@ -90,7 +90,7 @@ const StyledHeaderDesktop = styled.div`
   }
 
   .Header__enterButton {
-    margin-left: 10px;
+    margin-left: 16px;
   }
 
   .Header__registrationButton {
