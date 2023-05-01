@@ -1,104 +1,166 @@
 import { ArrowIcon } from "@/icons";
 import cn from "classnames";
-import { useState } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
+import { HeaderLocalizationDropdown } from "./HeaderLocalizationDropdown";
 
 interface Props {
   className?: string;
 }
 
-const HeaderLocalization = ({ className }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("EN");
+const HeaderLocalization: FC<Props> = ({ className }) => {
+  const [showDropDown, setShowDropDown] = useState<boolean>(false);
+  const [selectOption, setSelectOption] = useState<string>("RU");
+  const [selectedOption, setSelectedOption] = useState<string>("");
+  const options = () => {
+    return ["EN", "RU"];
+  };
 
-  const handleLanguageSelect = (language: string) => {
-    setSelectedLanguage(language);
-    setIsOpen(false);
+  const toggleDropDown = () => {
+    setShowDropDown(!showDropDown);
+  };
+
+  const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
+    if (event.currentTarget === event.target) {
+      setShowDropDown(false);
+    }
+  };
+  const optionSelection = (option: string, index: number): void => {
+    setSelectedOption(option);
+    setSelectOption(option);
   };
 
   return (
-    <StyledHeaderLocalization className={className}>
-      <div className="HeaderLocalization" onClick={() => setIsOpen(!isOpen)}>
-        <span className="Font_12_16">{selectedLanguage}</span>
-
-        <ArrowIcon
-          className={cn("HeaderLocalization__arrowIcon", { ArrowOpen: isOpen })}
-        />
-      </div>
-      {isOpen && (
-        <Dropdown>
-          <DropdownItem
-            className="Font_12_16"
-            onClick={() => handleLanguageSelect("EN")}
-          >
-            EN
-          </DropdownItem>
-          <DropdownItem
-            className="Font_12_16"
-            onClick={() => handleLanguageSelect("RU")}
-          >
-            RU
-          </DropdownItem>
-        </Dropdown>
-      )}
-    </StyledHeaderLocalization>
+    <StyledDropdownInput
+      className={cn({
+        className,
+      })}
+    >
+      <button
+        className={
+          showDropDown ? `DropdownInput_select_active` : `DropdownInput_select`
+        }
+        onClick={(): void => toggleDropDown()}
+        onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
+          dismissHandler(e)
+        }
+      >
+        <div className="DropdownInput_selectLabel Text_14_16">
+          {selectedOption ? selectedOption : selectOption}
+          <ArrowIcon />
+        </div>
+        {showDropDown && (
+          <HeaderLocalizationDropdown
+            className="DropdownInput_selectContainer"
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            optionSelection={optionSelection}
+            showDropDown={true}
+            toggleDropDown={(): void => toggleDropDown()}
+            options={options()}
+          />
+        )}
+      </button>
+    </StyledDropdownInput>
   );
 };
-
-const StyledHeaderLocalization = styled.button`
+const StyledDropdownInput = styled.div<Props>`
+  max-width: fit-content;
   position: relative;
-
-  padding: 12px 16px 12px 20px;
   color: #fff;
 
-  .HeaderLocalization {
+  .DropdownInput_selectContainer {
+    right: 10px;
+    top: 4px;
+    position: relative;
+    color: #fff;
+    border-radius: 10px;
+  }
+
+  .DropdownInput_select_active {
+    width: 100%;
+    max-width: 300px;
+    background: #414d65;
+    border-radius: 10px;
+    padding: 10px 10px 10px 15px;
+    border: none;
+    transition: 0.15s ease-in;
+    .DropdownInput_selectLabel {
+      color: #fff;
+    }
+    div {
+      svg {
+        margin-left: 12px;
+        transition: 0.15s ease-in;
+      }
+    }
+  }
+
+  .DropdownInput_select {
+    &:focus {
+      box-shadow: 0 0 0 2px #f845fc;
+      div {
+        color: #fff;
+      }
+    }
+    &:hover {
+      background: #414d65;
+    }
+    &:active {
+      outline: none;
+    }
+    outline: none;
+    width: 100%;
+    max-width: 300px;
+    padding: 10px 10px 10px 15px;
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+
+    div {
+      width: 100%;
+      svg {
+        margin-left: 12px;
+        transition: 0.2s ease-in;
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+  .DropdownInput_selectLabel {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-
-    span {
-      margin-right: 5px;
-      font-weight: 600;
-      letter-spacing: 0.07em;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    color: #fff;
+    svg {
+      width: 16px;
+      height: 16px;
+      path {
+        stroke: #7786a5;
+      }
     }
   }
 
-  .HeaderLocalization__arrowIcon {
-    width: 18px;
-    height: 18px;
-    transform: rotate(180deg);
-    transition: 0.2s ease;
-
-    path {
-      stroke: #7786a5 !important;
-    }
+  .DropdownInput_inputContainer {
+    position: relative;
   }
 
-  .ArrowOpen {
-    transform: rotate(0);
+  .DropdownInput_inputContainer_label {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
-`;
 
-const Dropdown = styled.ul`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  background-color: #2a344a;
-  z-index: 1;
-  border-radius: 0 0px 10px 10px;
-  overflow: hidden;
-`;
-
-const DropdownItem = styled.li`
-  padding: 10px;
-  cursor: pointer;
-  font-weight: 600;
-  letter-spacing: 0.07em;
-
-  &:hover {
-    background-color: #3a465d;
+  .DropdownInput_input {
+    width: 100%;
+    padding: 11px 10px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 3px;
   }
 `;
 

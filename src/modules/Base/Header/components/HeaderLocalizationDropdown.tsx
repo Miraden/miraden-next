@@ -1,6 +1,6 @@
 import { CheckIcon } from "@/icons/CheckIcon";
 import cn from "classnames";
-import { FC } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
   className?: string;
 };
 
-const SortDropdown: FC<Props> = ({
+const HeaderLocalizationDropdown: FC<Props> = ({
   selectedOption,
   setSelectedOption,
   options,
@@ -21,59 +21,65 @@ const SortDropdown: FC<Props> = ({
   showDropDown,
   className,
 }: Props): JSX.Element => {
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState<number>(
+    options.findIndex((option) => option === selectedOption)
+  );
+
+  const handleOptionClick = (option: string, index: number): void => {
+    setSelectedOption(option);
+    setSelectedOptionIndex(index);
+    optionSelection(option, index);
+  };
+
   return (
-    <StyledSortDropdown className={className}>
+    <StyledHeaderLocalizationDropdown className={className}>
       <div
         className={
-          showDropDown ? "SortDropdown__menu_active" : "SortDropdown__menu"
+          showDropDown
+            ? "HeaderLocalizationDropdown__menu_active"
+            : "HeaderLocalizationDropdown__menu"
         }
       >
         {options.map((option: string, index: number): JSX.Element => {
           return (
             <div
               key={index}
-              onClick={(): void => {
-                setSelectedOption(option);
-              }}
-              className={cn(`${selectedOption === option ? "selected" : ""}`)}
+              onClick={(): void => handleOptionClick(option, index)}
+              className={cn(
+                `${selectedOptionIndex === index ? "selected" : ""}`
+              )}
             >
-              <span className="SortDropdown__menuItem">
-                <p>{option}</p>
-                <CheckIcon
-                  className={
-                    selectedOption === option
-                      ? "CheckIcon_selected"
-                      : "CheckIcon"
-                  }
-                />
+              <span className="HeaderLocalizationDropdown__menuItem">
+                <p className="Font_14_140">{option}</p>
+                {selectedOptionIndex === index && (
+                  <CheckIcon className="CheckIcon_selected" />
+                )}
               </span>
             </div>
           );
         })}
       </div>
-    </StyledSortDropdown>
+    </StyledHeaderLocalizationDropdown>
   );
 };
 
-const StyledSortDropdown = styled.div`
-  .SortDropdownMenu {
+const StyledHeaderLocalizationDropdown = styled.div`
+  .HeaderLocalizationDropdownMenu {
     position: relative;
     cursor: pointer;
   }
 
-  .SortDropdown__menu {
+  .HeaderLocalizationDropdown__menu {
     display: none;
   }
 
-  .SortDropdown__menu_active {
-    box-shadow: 0 0 0 2px #e1edfd inset;
+  .HeaderLocalizationDropdown__menu_active {
     position: absolute;
     z-index: 2;
     top: 10px;
-    /* left: -20px; */
     right: -20px;
     width: fit-content;
-    background: #fff;
+    background: #2a344a;
     border-radius: 10px;
     max-height: 228px;
     overflow-y: scroll;
@@ -85,17 +91,16 @@ const StyledSortDropdown = styled.div`
       display: flex;
       align-items: start;
 
-      color: #2a344a;
+      color: #fff;
     }
 
     div:hover {
-      color: #4e6af3;
-      background: #f1f7ff;
+      background: #3a465d;
     }
 
-    .SortDropdown__menuItem {
+    .HeaderLocalizationDropdown__menuItem {
       display: flex;
-      padding: 10px 15px;
+      padding: 10px 20px;
       align-items: center;
       width: 100%;
 
@@ -105,7 +110,6 @@ const StyledSortDropdown = styled.div`
     }
 
     .selected {
-      color: #4e6af3;
       display: flex !important;
       flex-wrap: nowrap;
     }
@@ -114,6 +118,9 @@ const StyledSortDropdown = styled.div`
       align-items: center;
       flex-shrink: 0;
       margin-left: 10px;
+      path {
+        fill: #fff !important;
+      }
     }
 
     .CheckIcon {
@@ -122,4 +129,4 @@ const StyledSortDropdown = styled.div`
   }
 `;
 
-export { SortDropdown };
+export { HeaderLocalizationDropdown };
