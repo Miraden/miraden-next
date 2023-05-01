@@ -38,7 +38,7 @@ const Hero = ({ className }: HeroProps) => {
 
 const StyledHero = styled.section`
   background: #eef1f5;
-  padding-top: 174px;
+  padding-top: 182px;
   padding-bottom: 80px;
 
   .Hero {

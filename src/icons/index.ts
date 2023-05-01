@@ -2,6 +2,7 @@ export { AboutUsIcon } from "./AboutUsIcon";
 export { ApplePayIcon } from "./ApplePayIcon";
 export { Applications } from "./Applications";
 export { ArrowIcon } from "./ArrowIcon";
+export { BurgerIcon } from "./BurgerIcon";
 export { CheckboxIcon } from "./CheckboxIcon";
 export { CreditCardArrowIcon } from "./CreditCardArrowIcon";
 export { CreditCardPlusIcon } from "./CreditCardPlusIcon";
