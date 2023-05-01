@@ -19,10 +19,14 @@ const HeroStats = ({ className }: Props) => {
         <ul className="HeroStats__list">
           {stats.map((stat, index) => (
             <li key={index} className="HeroStats__listItem">
-              <h2 className="Font_50_60 lg:Font_44_120">{stat.value}</h2>
-              <p className="HeroStats__description Font_18_160 lg:Font_16_24">
-                {stat.text}
-              </p>
+              <div className="HeroStats__statContent">
+                <h2 className="Font_50_60 lg:Font_44_120 sm:Font_26_120">
+                  {stat.value}
+                </h2>
+                <p className="HeroStats__description Font_18_160 lg:Font_16_24">
+                  {stat.text}
+                </p>
+              </div>
             </li>
           ))}
         </ul>
@@ -52,6 +56,10 @@ const StyledHeroStats = styled.div`
     width: 100%;
   }
 
+  .HeroStats__statContent {
+    max-width: 218px;
+  }
+
   .HeroStats__listItem:not(:first-child) {
     margin-left: 30px;
     padding-left: 40px;
@@ -60,13 +68,14 @@ const StyledHeroStats = styled.div`
 
   @media (max-width: 1024px) {
     .HeroStats {
-      padding: 20px;
+      padding: 20px 20px 30px 20px;
     }
 
     .HeroStats__list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: 2;
+      grid-gap: 30px;
     }
 
     .HeroStats__listItem {
@@ -88,7 +97,13 @@ const StyledHeroStats = styled.div`
 
     .HeroStats__listItem:nth-child(3) {
       /* border-right: 2px solid #e1edfd; */
-      padding-right: 116px;
+      /* border-top: 2px solid #e1edfd; */
+      padding-top: 30px;
+    }
+
+    .HeroStats__listItem:nth-child(4) {
+      /* border-top: 2px solid #e1edfd; */
+      padding-top: 30px;
     }
 
     .HeroStats__listItem:not(:first-child) {
@@ -102,6 +117,12 @@ const StyledHeroStats = styled.div`
     .HeroStats__list {
       display: flex;
       flex-direction: column;
+      grid-gap: 0;
+    }
+
+    .HeroStats__listItem:nth-child(1n) {
+      border-right: none;
+      padding: 0;
     }
 
     .HeroStats__listItem:not(:first-child) {
@@ -110,6 +131,21 @@ const StyledHeroStats = styled.div`
       padding-top: 20px;
       margin-top: 18px;
       border-top: 2px solid #e1edfd;
+    }
+
+    .HeroStats__statContent {
+      max-width: unset;
+      display: flex;
+      h2 {
+        max-width: 68px;
+        width: 100%;
+        white-space: nowrap;
+      }
+    }
+
+    .HeroStats__description {
+      margin-top: 0;
+      margin-left: 28px;
     }
   }
 `;
