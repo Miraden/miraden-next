@@ -1,3 +1,4 @@
+import { Hero } from "@/modules/Home/Hero";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import { Layout } from "../modules/Base/Layout";
@@ -21,7 +22,7 @@ export default function Home() {
         />
       </Head>
       <Layout>
-        <div className="Container">Home Page</div>
+        <Hero />
       </Layout>
     </>
   );

@@ -8,11 +8,18 @@ interface LinkProps {
   children: ReactNode;
   disabled?: boolean;
   underlined?: boolean;
+  className?: string;
 }
 
-const RegularLink = ({ href, children, disabled, underlined }: LinkProps) => {
+const RegularLink = ({
+  href,
+  children,
+  disabled,
+  underlined,
+  className,
+}: LinkProps) => {
   return (
-    <StyledLink>
+    <StyledLink className={className}>
       <Link
         href={href}
         className={cn(

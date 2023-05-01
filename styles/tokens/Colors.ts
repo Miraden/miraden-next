@@ -5,6 +5,11 @@ const Colors = createGlobalStyle`
     color: #2A344A;
   }
 
+  .Color_blue_primary {
+    color: #4E6AF3;
+    background-color: transparent;
+  }
+
 `;
 
 export { Colors };
