@@ -9,6 +9,7 @@ export { CrossIcon } from "./CrossIcon";
 export { CyprusIcon } from "./CyprusIcon";
 export { DropzoneIcon } from "./DropzoneIcon";
 export { FaqIcon } from "./FaqIcon";
+export { InfoIcon } from "./InfoIcon";
 export { KebabIcon } from "./KebabIcon";
 export { ListItemsIcon } from "./ListItemsIcon";
 export { MinusIcon } from "./MinusIcon";
