@@ -55,8 +55,9 @@ const StyledHeaderMobile = styled.header`
   }
 
   .HeaderMobile__closeIcon {
-    width: 24px;
+    width: 24px !important;
     height: 24px;
+
     path {
       fill: #fff;
     }
