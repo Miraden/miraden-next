@@ -1,5 +1,5 @@
 import { RequestButton } from "@/components/ui";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import styled from "styled-components";
 import { ApplicationsCard } from "./components/ApplicationsCard";
 
@@ -69,7 +69,16 @@ const applications = [
   },
   {
     title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
+    location: "Таиланд / Лимассол / Все районы",
+    year: 2022,
+    square: 294,
+    sleeps: 6,
+    baths: 2,
+    price: "158 000 – 230 000",
+  },
+  {
+    title: "Куплю 3-х комнатную квартиру на Кипре",
+    location: "Таиланд / Лимассол / Все районы",
     year: 2022,
     square: 294,
     sleeps: 6,
@@ -87,7 +96,7 @@ const applications = [
   },
   {
     title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
+    location: "Испания / Лимассол / Все районы",
     year: 2022,
     square: 294,
     sleeps: 6,
@@ -96,16 +105,7 @@ const applications = [
   },
   {
     title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
+    location: "Испания",
     year: 2022,
     square: 294,
     sleeps: 6,
@@ -115,10 +115,30 @@ const applications = [
 ];
 
 const Applications = () => {
-  const [isCustomerTab, setIsCustomerTab] = useState(true);
+  const [location, setLocation] = useState("Кипр");
 
-  const toggleTab = () => {
-    setIsCustomerTab((prevTab) => !prevTab);
+  const filteredApplications = applications.filter((app) =>
+    location ? app.location.includes(location) : true
+  );
+
+  const handleButtonClick = (location: SetStateAction<string>) => {
+    setLocation(location);
+  };
+
+  const renderApplications = (apps: any[]) => {
+    return apps.map((app) => (
+      <ApplicationsCard
+        key={app.title}
+        application={app}
+        title={app.title}
+        year={app.year}
+        sleeps={app.sleeps}
+        square={app.square}
+        baths={app.baths}
+        price={app.price}
+        location={app.location}
+      />
+    ));
   };
 
   return (
@@ -130,39 +150,38 @@ const Applications = () => {
           </h2>
           <div className="Applications__tabs">
             <RequestButton
-              onClick={toggleTab}
-              active={isCustomerTab}
-              className="Test Font_16_20"
+              onClick={() => handleButtonClick("Кипр")}
+              active={location === "Кипр"}
             >
               Кипр
             </RequestButton>
-            <RequestButton onClick={toggleTab} active={!isCustomerTab}>
+            <RequestButton
+              onClick={() => handleButtonClick("Черногория")}
+              active={location === "Черногория"}
+            >
               Черногория
+            </RequestButton>
+            <RequestButton
+              onClick={() => handleButtonClick("Таиланд")}
+              active={location === "Таиланд"}
+            >
+              Таиланд
+            </RequestButton>
+            <RequestButton
+              onClick={() => handleButtonClick("Испания")}
+              active={location === "Испания"}
+            >
+              Испания
             </RequestButton>
           </div>
         </div>
-        <div>
-          <ul className="Applications__list">
-            {applications.map((application, index) => (
-              <li key={index}>
-                <ApplicationsCard
-                  title={application.title}
-                  location={application.location}
-                  year={application.year}
-                  square={application.square}
-                  sleeps={application.sleeps}
-                  baths={application.baths}
-                  price={application.price}
-                />
-              </li>
-            ))}
-          </ul>
+        <div className="Applications__list">
+          {renderApplications(filteredApplications)}
         </div>
       </div>
     </StyledApplications>
   );
 };
-
 const StyledApplications = styled.section`
   .Applications__head {
     display: flex;
@@ -173,6 +192,11 @@ const StyledApplications = styled.section`
     display: flex;
     button:not(:first-child) {
       margin-left: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      width: fit-content;
     }
   }
 

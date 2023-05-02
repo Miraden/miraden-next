@@ -17,6 +17,7 @@ interface Props {
   sleeps: number;
   baths: number;
   price: string;
+  application: any;
 }
 
 const ApplicationsCard = ({
@@ -28,6 +29,7 @@ const ApplicationsCard = ({
   square,
   baths,
   price,
+  application,
 }: Props) => {
   return (
     <StyledApplicationsCard className={className}>
