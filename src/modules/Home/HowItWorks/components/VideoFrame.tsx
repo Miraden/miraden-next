@@ -8,7 +8,7 @@ const VideoFrame = ({ videoLink }: Props) => {
   return (
     <StyledVideoFrame>
       <iframe
-        className="[ VideoFrame__iframe relative z-10 w-full aspect-video bg-[#000000] ] "
+        className="VideoFrame__iframe"
         src={`${videoLink}?autoplay=1`}
         allowFullScreen={true}
         title="YouTube video player"
@@ -20,12 +20,17 @@ const VideoFrame = ({ videoLink }: Props) => {
 
 const StyledVideoFrame = styled.div`
   position: relative;
+  border-radius: 10px;
+  overflow: hidden;
 
   .VideoFrame__iframe {
     position: relative;
     z-index: 10;
     width: 100%;
     background-color: #000;
+    max-width: 1170px;
+
+    /* aspect-ratio: 16 / 9; */
   }
 `;
 

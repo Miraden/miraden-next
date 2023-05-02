@@ -13,7 +13,7 @@ const VideoPlaceholder: FC<Props> = ({ image }) => {
       <div className="Placeholder">
         <PlayIcon className="PlayIcon" />
         <div className="PlaceHolder__background" />
-        <Image src={image} fill alt="" />
+        <Image src={image} width={1170} height={500} alt="" />
       </div>
     </StyledPlaceHolder>
   );
@@ -24,9 +24,11 @@ const StyledPlaceHolder = styled.div`
 
   .PlayIcon {
     position: absolute;
-    transform: translateX(50, -50%);
-    transform: translateY(50, -50%);
-    z-index: 10;
+    top: 50%;
+    bottom: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    z-index: 20;
   }
 
   .PlaceHolder__background {
@@ -36,6 +38,10 @@ const StyledPlaceHolder = styled.div`
     background-color: #000000;
     opacity: 0;
     transition: 0.15s ease-in;
+  }
+
+  .Placeholder {
+    position: relative;
   }
 
   .Placeholder:hover {

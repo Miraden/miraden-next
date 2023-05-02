@@ -17,7 +17,7 @@ const VideoContainer = ({ videoLink }: Props) => {
 
   return (
     <StyledVideoContainer>
-      <div onClick={handleClick} className={cn("")}>
+      <div onClick={handleClick} className={cn("VideoContainer")}>
         {isShowIframe ? (
           <VideoFrame videoLink={videoLink} />
         ) : (
@@ -30,6 +30,11 @@ const VideoContainer = ({ videoLink }: Props) => {
 
 const StyledVideoContainer = styled.div`
   margin-top: 80px;
+
+  .VideoContainer {
+    border-radius: 10px;
+    overflow: hidden;
+  }
 `;
 
 export { VideoContainer };
