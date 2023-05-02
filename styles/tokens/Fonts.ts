@@ -86,7 +86,7 @@ const Fonts = createGlobalStyle`
     font-weight: 400;
   }
 
-  .Font_22_120_600{
+  .Font_22_120_600 {
     font-size: 22px;
     line-height: 120%;
     font-weight: 600;

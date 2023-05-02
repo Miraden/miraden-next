@@ -32,6 +32,7 @@ export { RussiaIcon } from "./RussiaIcon";
 export { SearchIcon } from "./SearchIcon";
 export { ShowPassIcon } from "./ShowPassIcon";
 export { SleepsIcon } from "./SleepsIcon";
+export { SliderButton } from "./SliderButton";
 export { SquareIcon } from "./SquareIcon";
 export { StarIcon } from "./StarIcon";
 export { TelegramIcon } from "./TelegramIcon";
