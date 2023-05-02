@@ -12,6 +12,7 @@ interface RequestButtonProps {
   ariaLabel?: string;
   children?: ReactNode;
   disabled?: boolean;
+  active?: boolean;
 }
 
 const RequestButton = ({
@@ -24,6 +25,7 @@ const RequestButton = ({
   narrow,
   ariaLabel,
   disabled,
+  active,
 }: RequestButtonProps) => {
   const [isActive, setIsActive] = useState(false);
 
@@ -51,14 +53,14 @@ const RequestButton = ({
     <StyledButton
       aria-label={ariaLabel}
       as="button"
-      onClick={handleActive}
+      onClick={onClick}
       className={cn(`${className} Font_16_20 RequestButton`, {
         Button_regular: !compact,
         Button_compact: compact,
         Button_narrow: narrow,
         Button_withoutLabel: !children,
         disabled: disabled,
-        isActive: isActive,
+        isActive: active,
       })}
       type={type}
     >

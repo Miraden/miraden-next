@@ -20,6 +20,7 @@ export { MiradenLogoMobile } from "./MiradenLogoMobile";
 export { MontenegroIcon } from "./MontenegroIcon";
 export { ObjectsIcon } from "./ObjectsIcon";
 export { PenIcon } from "./PenIcon";
+export { PlayIcon } from "./PlayIcon";
 export { PlusIcon } from "./PlusIcon";
 export { PointIconFooter } from "./PointIconFooter";
 export { PricingIcon } from "./PricingIcon";

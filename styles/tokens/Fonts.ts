@@ -25,6 +25,12 @@ const Fonts = createGlobalStyle`
     font-weight: 700;
   }
 
+  .Font_44_120 {
+      font-size: 44px;
+      line-height: 120%;
+      font-weight: 700;
+  }
+
   .Font_40_120 {
     font-size: 40px;
     line-height: 120%;
@@ -46,7 +52,7 @@ const Fonts = createGlobalStyle`
   .Font_28_120 {
     font-size: 28px;
     line-height: 120%;
-    font-weight: 500;
+    font-weight: 700;
   }
 
   .Font_26_120 {
@@ -97,9 +103,22 @@ const Fonts = createGlobalStyle`
     font-weight: 500;
   }
 
+  .Font_18_150 {
+    font-size: 18px;
+    line-height: 150%;
+    font-weight: 400;
+  }
+
   .Font_18_160 {
     font-size: 18px;
     line-height: 160%;
+    font-weight: 400;
+  }
+
+
+  .Font_18_21 {
+    font-size: 18px;
+    line-height: 21px;
     font-weight: 400;
   }
 
