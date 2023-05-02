@@ -13,7 +13,13 @@ const VideoPlaceholder: FC<Props> = ({ image }) => {
       <div className="Placeholder">
         <PlayIcon className="PlayIcon" />
         <div className="PlaceHolder__background" />
-        <Image src={image} width={1170} height={500} alt="" />
+        <Image
+          src={image}
+          width={1170}
+          height={500}
+          alt=""
+          className="Placeholder__image"
+        />
       </div>
     </StyledPlaceHolder>
   );
@@ -50,6 +56,10 @@ const StyledPlaceHolder = styled.div`
     .PlaceHolder__background {
       opacity: 0.3;
     }
+  }
+
+  .Placeholder__image {
+    object-fit: cover;
   }
 `;
 

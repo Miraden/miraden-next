@@ -20,6 +20,7 @@ const StyledHeader = styled.header`
     position: fixed;
     display: flex;
     top: 20px;
+    z-index: 200;
     align-items: center;
     justify-content: space-between;
     width: 100%;
