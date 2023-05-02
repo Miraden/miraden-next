@@ -20,8 +20,6 @@ const VideoFrame = ({ videoLink }: Props) => {
 
 const StyledVideoFrame = styled.div`
   position: relative;
-  border-radius: 10px;
-  overflow: hidden;
 
   .VideoFrame__iframe {
     position: relative;
@@ -29,8 +27,10 @@ const StyledVideoFrame = styled.div`
     width: 100%;
     background-color: #000;
     max-width: 1170px;
-
-    /* aspect-ratio: 16 / 9; */
+    border-radius: 10px;
+    overflow: hidden;
+    border: none;
+    aspect-ratio: 16 / 9;
   }
 `;
 

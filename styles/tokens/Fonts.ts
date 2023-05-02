@@ -214,9 +214,20 @@ const Fonts = createGlobalStyle`
       font-weight: 700;
     }
 
+    .sm\\:Font_22_120 {
+      font-size: 22px;
+      line-height: 120%;
+      font-weight: 700;
+    }
+
     .sm\\:Font_16_24 {
       font-size: 16px;
       line-height: 24px;
+    }
+
+    .sm\\:Font_14_140 {
+      font-size: 14px;
+      line-height: 140%;
     }
   }
 `;

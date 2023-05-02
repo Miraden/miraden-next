@@ -20,9 +20,13 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
       <div className="HowItWorks">
         <div className="Container">
           <div className="HowItWorks__head">
-            <h2 className="Font_44_120">Как это работает?</h2>
+            <h2 className="Font_44_120 sm:Font_26_120">Как это работает?</h2>
             <div className="HowItWorks__tabs">
-              <RequestButton onClick={toggleTab} active={isCustomerTab}>
+              <RequestButton
+                onClick={toggleTab}
+                active={isCustomerTab}
+                className="Test Font_16_20"
+              >
                 Для заказчика
               </RequestButton>
               <RequestButton onClick={toggleTab} active={!isCustomerTab}>
@@ -41,16 +45,20 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                       width={140}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21">1</p>
+                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
+                      1
+                    </p>
                   </div>
-                  <h3 className="HowItWorks__listItemTitle Font_28_120">
-                    <mark className="Color_blue">Создайте</mark>
-                    <br /> анонимную заявку
-                  </h3>
-                  <p className="HowItWorks__listItemDescription Font_18_150">
-                    Ответьте на несколько простых вопросов о недвижимости,
-                    которую хотите найти
-                  </p>
+                  <div className="HowItWorks__listItemContent">
+                    <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
+                      <mark className="Color_blue">Создайте</mark>
+                      <br /> анонимную заявку
+                    </h3>
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                      Ответьте на несколько простых вопросов о недвижимости,
+                      которую хотите найти
+                    </p>
+                  </div>
                 </li>
                 <li>
                   <div className="HowItWorks__imageContainer">
@@ -60,16 +68,20 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                       width={140}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21">2</p>
+                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
+                      2
+                    </p>
                   </div>
-                  <h3 className="HowItWorks__listItemTitle Font_28_120">
-                    <mark>Получите</mark>
-                    <br /> предложения
-                  </h3>
-                  <p className="HowItWorks__listItemDescription Font_18_150">
-                    Риелторы и собственники сделают для вас персональные
-                    предложения и подборки объектов
-                  </p>
+                  <div className="HowItWorks__listItemContent">
+                    <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
+                      <mark>Получите</mark>
+                      <br /> предложения
+                    </h3>
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                      Риелторы и собственники сделают для вас персональные
+                      предложения и подборки объектов
+                    </p>
+                  </div>
                 </li>
                 <li>
                   <div className="HowItWorks__imageContainer">
@@ -79,17 +91,22 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                       width={140}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21">3</p>
+                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
+                      3
+                    </p>
                   </div>
-                  <h3 className="HowItWorks__listItemTitle Font_28_120">
-                    Выберите <br /> <mark>лучших исполнителей</mark>
-                  </h3>
-                  <p className="HowItWorks__listItemDescription Font_18_150">
-                    Обменяйтесь контактами с подходящими исполнителями
-                    для обсуждения деталей
-                  </p>
+                  <div className="HowItWorks__listItemContent">
+                    <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
+                      Выберите <br /> <mark>лучших исполнителей</mark>
+                    </h3>
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                      Обменяйтесь контактами с подходящими исполнителями
+                      для обсуждения деталей
+                    </p>
+                  </div>
                 </li>
               </ul>
+
               <VideoContainer videoLink="https://www.youtube.com/embed/hPr-Yc92qaY" />
             </>
           ) : (
@@ -103,17 +120,21 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                       width={140}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21">1</p>
+                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
+                      1
+                    </p>
                   </div>
-                  <h3 className="HowItWorks__listItemTitle Font_28_120">
-                    {/* <mark className="Color_blue">Создайте</mark>
+                  <div className="HowItWorks__listItemContent">
+                    <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
+                      {/* <mark className="Color_blue">Создайте</mark>
                 <br /> анонимную заявку */}
-                    Контент для исполнителя
-                  </h3>
-                  <p className="HowItWorks__listItemDescription Font_18_150">
-                    Ответьте на несколько простых вопросов о недвижимости,
-                    которую хотите найти
-                  </p>
+                      Контент для исполнителя
+                    </h3>
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                      Ответьте на несколько простых вопросов о недвижимости,
+                      которую хотите найти
+                    </p>
+                  </div>
                 </li>
                 <li>
                   <div className="HowItWorks__imageContainer">
@@ -123,17 +144,21 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                       width={140}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21">2</p>
+                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
+                      2
+                    </p>
                   </div>
-                  <h3 className="HowItWorks__listItemTitle Font_28_120">
-                    {/* <mark>Получите</mark>
+                  <div className="HowItWorks__listItemContent">
+                    <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
+                      {/* <mark>Получите</mark>
                 <br /> предложения */}
-                    Контент для исполнителя
-                  </h3>
-                  <p className="HowItWorks__listItemDescription Font_18_150">
-                    Риелторы и собственники сделают для вас персональные
-                    предложения и подборки объектов
-                  </p>
+                      Контент для исполнителя
+                    </h3>
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                      Риелторы и собственники сделают для вас персональные
+                      предложения и подборки объектов
+                    </p>
+                  </div>
                 </li>
                 <li>
                   <div className="HowItWorks__imageContainer">
@@ -143,16 +168,20 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                       width={140}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21">3</p>
+                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
+                      3
+                    </p>
                   </div>
-                  <h3 className="HowItWorks__listItemTitle Font_28_120">
-                    {/* Выберите <br /> <mark>лучших исполнителей</mark> */}
-                    Контент для исполнителя
-                  </h3>
-                  <p className="HowItWorks__listItemDescription Font_18_150">
-                    Обменяйтесь контактами с подходящими исполнителями
-                    для обсуждения деталей
-                  </p>
+                  <div className="HowItWorks__listItemContent">
+                    <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
+                      {/* Выберите <br /> <mark>лучших исполнителей</mark> */}
+                      Контент для исполнителя
+                    </h3>
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                      Обменяйтесь контактами с подходящими исполнителями
+                      для обсуждения деталей
+                    </p>
+                  </div>
                 </li>
               </ul>
               <VideoContainer videoLink="https://www.youtube.com/embed/hPr-Yc92qaY" />
@@ -167,6 +196,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
 const StyledHowItWorks = styled.section`
   display: flex;
   justify-content: center;
+  padding: 0 20px;
 
   .HowItWorks {
     background: #ffffff;
@@ -192,6 +222,8 @@ const StyledHowItWorks = styled.section`
 
     button {
       padding: 10px 20px;
+      line-height: 20px;
+      font-size: 16px;
     }
   }
 
@@ -230,6 +262,7 @@ const StyledHowItWorks = styled.section`
     background: #4e6af3;
     height: fit-content;
     color: #ffffff;
+    flex-shrink: 0;
   }
 
   .HowItWorks__listItemTitle {
@@ -238,6 +271,103 @@ const StyledHowItWorks = styled.section`
 
   .HowItWorks__listItemDescription {
     margin-top: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    .HowItWorks {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    .HowItWorks__head {
+      flex-direction: column;
+
+      button {
+        margin-top: 20px;
+        padding: 10px 15px;
+      }
+    }
+
+    .HowItWorks__list {
+      flex-direction: column;
+
+      li {
+        max-width: unset;
+        display: flex;
+      }
+
+      li:not(:first-child) {
+        margin-left: 0;
+        border-top: 2px solid #e1edfd;
+        margin-top: 48px;
+      }
+    }
+    .HowItWorks__imageContainer {
+      min-width: 196px;
+      height: 220px;
+    }
+
+    .HowItWorks__listItemContent {
+      margin-top: 2px;
+      margin-left: 50px;
+      max-width: 320px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    padding: 0;
+
+    .HowItWorks__head {
+      button {
+        padding: 10px 15px;
+      }
+    }
+
+    .HowItWorks__list {
+      margin-top: 20px;
+      li {
+        flex-direction: column;
+      }
+
+      li:not(:first-child) {
+        margin-top: 20px;
+      }
+    }
+
+    .HowItWorks__imageContainer {
+      margin-top: 20px;
+      height: 202px;
+      flex-flow: row-reverse;
+      align-self: center;
+      width: 260px;
+      justify-content: center;
+      img {
+        width: 141px;
+        height: 202px;
+      }
+    }
+
+    .HowItWorks__counter {
+      padding: 4px;
+      width: 28px;
+      height: 28px;
+    }
+
+    .HowItWorks__listItemContent {
+      text-align: center;
+      margin-top: 24px;
+      margin-left: 0;
+      max-width: 280px;
+      align-self: center;
+    }
+
+    .HowItWorks__listItemTitle {
+      margin-top: 0;
+    }
+
+    .HowItWorks__listItemDescription {
+      margin-top: 10px;
+    }
   }
 `;
 

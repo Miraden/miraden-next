@@ -29,6 +29,8 @@ const StyledPlaceHolder = styled.div`
   position: relative;
 
   .PlayIcon {
+    width: 90px;
+    height: 90px;
     position: absolute;
     top: 50%;
     bottom: 50%;
@@ -60,6 +62,16 @@ const StyledPlaceHolder = styled.div`
 
   .Placeholder__image {
     object-fit: cover;
+  }
+
+  @media (max-width: 576px) {
+    .PlayIcon {
+      width: 60px;
+    }
+
+    .Placeholder__image {
+      height: 380px;
+    }
   }
 `;
 
