@@ -311,10 +311,11 @@ const Applications = () => {
 
         <div className="Applications__list">
           {renderApplications(filteredApplications).slice(0, 9)}
-          <Button className="Applications__openMore">Открыть еще 2 543</Button>
         </div>
         <div className="Applications__listTablet">
           {renderApplications(filteredApplications).slice(0, 6)}
+        </div>
+        <div className="Applications__openMoreContainer">
           <Button className="Applications__openMore">Открыть еще 2 543</Button>
         </div>
       </div>
@@ -343,7 +344,8 @@ const StyledApplications = styled.section`
   }
 
   .Applications__list,
-  .Applications__listTablet {
+  .Applications__listTablet,
+  .Applications__openMoreContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 30px;
@@ -382,7 +384,8 @@ const StyledApplications = styled.section`
       display: none;
     }
 
-    .Applications__listTablet {
+    .Applications__listTablet,
+    .Applications__openMoreContainer {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
     }
@@ -397,7 +400,8 @@ const StyledApplications = styled.section`
   }
 
   @media (max-width: 720px) {
-    .Applications__listTablet {
+    .Applications__listTablet,
+    .Applications__openMoreContainer {
       display: flex;
       flex-direction: column;
     }
