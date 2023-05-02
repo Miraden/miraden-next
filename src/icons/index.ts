@@ -1,6 +1,7 @@
 export { AboutUsIcon } from "./AboutUsIcon";
 export { ApplePayIcon } from "./ApplePayIcon";
 export { Applications } from "./Applications";
+export { ArrowAccordionIcon } from "./ArrowAccordionIcon";
 export { ArrowIcon } from "./ArrowIcon";
 export { BathsIcon } from "./BathsIcon";
 export { BuildYearIcon } from "./BuildYearIcon";

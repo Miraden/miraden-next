@@ -75,7 +75,8 @@ const StyledHeroStats = styled.div`
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-template-rows: 2;
-      grid-gap: 30px;
+      grid-column-gap: 20px;
+      grid-row-gap: 30px;
     }
 
     .HeroStats__listItem {
