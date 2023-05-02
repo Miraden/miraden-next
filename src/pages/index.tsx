@@ -1,3 +1,4 @@
+import { Applications } from "@/modules/Home/Applications";
 import { Hero } from "@/modules/Home/Hero/Hero";
 import { HowItWorks } from "@/modules/Home/HowItWorks";
 import { Inter } from "next/font/google";
@@ -24,6 +25,7 @@ export default function Home() {
       </Head>
       <Layout>
         <Hero />
+        <Applications />
         <HowItWorks />
       </Layout>
     </>

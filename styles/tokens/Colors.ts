@@ -10,6 +10,14 @@ const Colors = createGlobalStyle`
     background-color: transparent;
   }
 
+  .Color_text_disabled {
+    color: #B8C6E3;
+  }
+
+  .Color_text_grey {
+    color: #7786A5;
+  }
+
 `;
 
 export { Colors };
