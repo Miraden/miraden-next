@@ -9,7 +9,7 @@ const Layout = createGlobalStyle`
     padding-right: 40px;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1280px) {
     .Container {
     padding-left: 20px;
     padding-right: 20px;

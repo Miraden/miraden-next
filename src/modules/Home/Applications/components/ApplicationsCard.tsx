@@ -37,7 +37,7 @@ const ApplicationsCard = ({
         <div className="Card__headContent">
           <Sticker theme="black">true</Sticker>
           <span className="Card__headDivider Color_text_grey">От</span>
-          <span className="Color_blue_primary">Агенство</span>
+          <span className="Color_blue_primary">Агентство</span>
         </div>
 
         <p className="Color_text_disabled">3 часа назад</p>
@@ -105,10 +105,16 @@ const StyledApplicationsCard = styled.div`
     p {
       margin-left: 5px;
     }
+
+    svg {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
   }
 
   .Card__objectInfo {
-    margin-top: 24px;
+    margin-top: 22px;
     display: flex;
     align-items: center;
     div {

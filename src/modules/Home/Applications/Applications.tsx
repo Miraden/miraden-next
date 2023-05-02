@@ -248,21 +248,20 @@ const Applications = () => {
   );
 
   const renderApplications = (apps: any[]) => {
-    return apps
-      .map((app) => (
-        <ApplicationsCard
-          key={app.title}
-          application={app}
-          title={app.title}
-          year={app.year}
-          sleeps={app.sleeps}
-          square={app.square}
-          baths={app.baths}
-          price={app.price}
-          location={app.location}
-        />
-      ))
-      .slice(0, 9);
+    return apps.map((app) => (
+      <ApplicationsCard
+        className="Card"
+        key={app.title}
+        application={app}
+        title={app.title}
+        year={app.year}
+        sleeps={app.sleeps}
+        square={app.square}
+        baths={app.baths}
+        price={app.price}
+        location={app.location}
+      />
+    ));
   };
 
   return (
@@ -311,10 +310,13 @@ const Applications = () => {
         </div>
 
         <div className="Applications__list">
-          {renderApplications(filteredApplications)}
+          {renderApplications(filteredApplications).slice(0, 9)}
+          <Button className="Applications__openMore">Открыть еще 2 543</Button>
         </div>
-
-        <Button className="Applications__openMore">Открыть еще 2 543</Button>
+        <div className="Applications__listTablet">
+          {renderApplications(filteredApplications).slice(0, 6)}
+          <Button className="Applications__openMore">Открыть еще 2 543</Button>
+        </div>
       </div>
     </StyledApplications>
   );
@@ -340,16 +342,65 @@ const StyledApplications = styled.section`
     }
   }
 
-  .Applications__list {
+  .Applications__list,
+  .Applications__listTablet {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 30px;
     margin-top: 50px;
   }
 
+  .Applications__listTablet {
+    display: none;
+  }
+
   .Applications__openMore {
+    width: 100%;
+    grid-column-start: 2;
     margin: 0 auto;
     margin-top: 30px;
+  }
+
+  @media (max-width: 1280px) {
+    .Applications__list,
+    .Applications__listTablet {
+      grid-gap: 12px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .Applications__head {
+      flex-direction: column;
+      overflow-x: scroll;
+    }
+
+    .Applications__tabs {
+      margin-top: 20px;
+    }
+
+    .Applications__list {
+      display: none;
+    }
+
+    .Applications__listTablet {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .Card {
+      grid-column: span 2;
+    }
+
+    .Applications__openMore {
+      grid-column: 2 / span 2;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .Applications__listTablet {
+      display: flex;
+      flex-direction: column;
+    }
   }
 `;
 
