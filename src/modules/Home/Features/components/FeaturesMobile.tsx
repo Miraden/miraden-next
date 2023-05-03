@@ -184,6 +184,14 @@ const StyledFeaturesMobile = styled.section`
     border-radius: 10px;
     width: 100%;
     text-align: start;
+
+    :hover {
+      transition: 0.1s ease;
+
+      h3 {
+        color: #4e6af3;
+      }
+    }
   }
 
   .Features__tabButtonActive {
