@@ -1,7 +1,7 @@
 import { RequestButton } from "@/components/ui";
 import { SliderButton } from "@/icons";
 import { useKeenSlider } from "keen-slider/react";
-import { SetStateAction, useCallback, useState } from "react";
+import { SetStateAction, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReviewCard } from "./components/ReviewCard";
 
@@ -103,6 +103,10 @@ const Reviews = () => {
   const isAgency = reviews.some((rev) => rev.role.includes("Агенство"));
   const isRealtor = reviews.some((rev) => rev.role.includes("Риелтор"));
   const isBuilders = reviews.some((rev) => rev.role.includes("Застройщик"));
+
+  useEffect(() => {
+    instanceRef.current?.update();
+  }, [role, instanceRef]);
 
   const renderReviews = (revs: any[]) => {
     return revs.map((rev, index) => (
