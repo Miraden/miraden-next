@@ -24,7 +24,7 @@ const Hero = ({ className }: HeroProps) => {
         </div>
         <img
           alt=""
-          src="/images/HomeHero.svg"
+          src="./images/HomeHero.svg"
           width={468}
           height={385}
           className="Hero__image"
