@@ -90,7 +90,7 @@ const StyledHero = styled.section`
   }
 
   @media (max-width: 1024px) {
-    padding-top: 193px;
+    padding-top: 140px;
 
     .Hero {
       display: flex;

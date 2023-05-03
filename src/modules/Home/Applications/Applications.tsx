@@ -324,6 +324,7 @@ const Applications = () => {
 };
 
 const StyledApplications = styled.section`
+  padding-top: 20px;
   padding-bottom: 75px;
 
   .Applications__head {
@@ -386,8 +387,17 @@ const StyledApplications = styled.section`
 
     .Applications__listTablet,
     .Applications__openMoreContainer {
+      margin-top: 40px;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
+    }
+
+    .Applications__openMoreContainer {
+      margin-top: 0;
+
+      .Applications__openMore {
+        margin-top: 22px;
+      }
     }
 
     .Card {

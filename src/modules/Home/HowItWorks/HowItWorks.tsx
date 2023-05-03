@@ -196,7 +196,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
 const StyledHowItWorks = styled.section`
   display: flex;
   justify-content: center;
-  padding: 0 20px;
+  padding: 24px 20px 0 20px;
 
   .HowItWorks {
     background: #ffffff;

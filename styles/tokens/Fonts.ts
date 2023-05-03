@@ -239,6 +239,12 @@ const Fonts = createGlobalStyle`
       font-weight: 700;
     }
 
+    .sm\\:Font_18_120_700 {
+      font-size: 18px;
+      line-height: 120%;
+      font-weight: 700;
+    }
+
     .sm\\:Font_18_120_600 {
       font-size: 18px;
       line-height: 120%;
