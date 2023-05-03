@@ -9,11 +9,23 @@ const Layout = createGlobalStyle`
     padding-right: 40px;
   }
 
+  .FullBleed {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+  }
+
   @media (max-width: 1280px) {
     .Container {
     padding-left: 20px;
     padding-right: 20px;
   }
+  }
+
+  @media (max-width: 960px) {
+    .md\\:FullBleed {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+    }
   }
 
   
