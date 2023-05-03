@@ -1,5 +1,6 @@
 import { Applications } from "@/modules/Home/Applications";
 import { FAQ } from "@/modules/Home/FAQ";
+import { Features } from "@/modules/Home/Features";
 import { Hero } from "@/modules/Home/Hero/Hero";
 import { HowItWorks } from "@/modules/Home/HowItWorks";
 import { Reviews } from "@/modules/Home/Reviews";
@@ -29,6 +30,7 @@ export default function Home() {
         <Hero />
         <Applications />
         <HowItWorks />
+        <Features />
         <Reviews />
         <FAQ />
       </Layout>
