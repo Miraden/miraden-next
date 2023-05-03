@@ -118,6 +118,22 @@ const StyledFooterTop = styled.div`
     grid-template-columns: repeat(2, 40px);
     grid-gap: 10px;
     margin-top: 46px;
+
+    svg {
+      :hover {
+        cursor: pointer;
+        path {
+          transition: 0.15s ease;
+
+          fill: #fff;
+        }
+        rect {
+          transition: 0.15s ease;
+
+          fill: #4e6af3;
+        }
+      }
+    }
   }
 
   .Footer__description {
@@ -126,9 +142,15 @@ const StyledFooterTop = styled.div`
 
   .Footer__navLinksLeft {
     grid-column: 5 / span 2;
+
     a {
       color: #7786a5;
       padding: 0;
+      :hover {
+        transition: 0.15s ease;
+
+        color: #4e6af3;
+      }
     }
 
     li:not(:first-child) {
@@ -141,6 +163,11 @@ const StyledFooterTop = styled.div`
     a {
       color: #7786a5;
       padding: 0;
+      :hover {
+        transition: 0.15s ease;
+
+        color: #4e6af3;
+      }
     }
     li:not(:first-child) {
       margin-top: 25px;
@@ -149,6 +176,16 @@ const StyledFooterTop = styled.div`
 
   .Footer__contacts {
     grid-column: 11 / span 2;
+
+    a {
+      color: #7786a5;
+      padding: 0;
+      :hover {
+        transition: 0.15s ease;
+
+        color: #4e6af3;
+      }
+    }
   }
 
   .Footer__telegramLink {

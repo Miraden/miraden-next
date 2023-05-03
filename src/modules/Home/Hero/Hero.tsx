@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui";
-import Image from "next/image";
 import styled from "styled-components";
 import { HeroStats } from "./HeroStats";
 
@@ -23,7 +22,7 @@ const Hero = ({ className }: HeroProps) => {
           </p>
           <Button className="Hero__mainButton">Оставить заявку</Button>
         </div>
-        <Image
+        <img
           alt=""
           src="/images/HomeHero.svg"
           width={468}
