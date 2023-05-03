@@ -96,6 +96,11 @@ const StyledHeroStats = styled.div`
   }
 
   @media (max-width: 576px) {
+    &.Container {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
     .HeroStats {
       background-color: #fff;
       padding: 20px;

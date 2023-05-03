@@ -112,10 +112,13 @@ const FeaturesMobile = ({ className }: FeatureProps) => {
                         )}
                       </div>
                       <h3
-                        className={cn("Font_28_120 sm:Font_18_120_700", {
-                          Color_blue_primary:
-                            optionName == activeOption.optionName,
-                        })}
+                        className={cn(
+                          "Font_28_120 Color_primary sm:Font_18_120_700",
+                          {
+                            Color_blue_primary:
+                              optionName == activeOption.optionName,
+                          }
+                        )}
                       >
                         {optionName}
                       </h3>

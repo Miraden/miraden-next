@@ -312,7 +312,7 @@ const Applications = () => {
         <div className="Applications__list">
           {renderApplications(filteredApplications).slice(0, 9)}
         </div>
-        <div className="Applications__listTablet">
+        <div className="Applications__listTablet sm:FullBleed">
           {renderApplications(filteredApplications).slice(0, 6)}
         </div>
         <div className="Applications__openMoreContainer">

@@ -28,6 +28,13 @@ const Layout = createGlobalStyle`
     }
   }
 
+  @media (max-width: 576px) {
+    .sm\\:FullBleed {
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+    }
+  }
+
   
 `;
 
