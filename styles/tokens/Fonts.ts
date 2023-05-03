@@ -250,6 +250,12 @@ const Fonts = createGlobalStyle`
       line-height: 24px;
     }
 
+    .sm\\:Font_16_120_600 {
+      font-size: 16px;
+      line-height: 120%;
+      font-weight: 600;
+    }
+
     .sm\\:Font_14_140 {
       font-size: 14px;
       line-height: 140%;

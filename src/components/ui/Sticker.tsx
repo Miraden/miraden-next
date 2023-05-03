@@ -83,6 +83,7 @@ const StyledSticker = styled.div`
     border-radius: 24px;
     text-transform: uppercase;
     font-weight: 600;
+    letter-spacing: -0.07em;
   }
 `;
 

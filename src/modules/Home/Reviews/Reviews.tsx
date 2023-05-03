@@ -1,9 +1,9 @@
 import { RequestButton } from "@/components/ui";
-import { SliderButton } from "@/icons";
 import { useKeenSlider } from "keen-slider/react";
 import { SetStateAction, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { ReviewCard } from "./components/ReviewCard";
+import { ReviewButtons } from "./components/ReviewSliderButtons";
 
 const reviews = [
   {
@@ -15,7 +15,7 @@ const reviews = [
   },
   {
     name: "Андрей Макеев",
-    role: "Агенство",
+    role: "Агентство",
     title: "Сопровождали во всем и разъясняли каждую деталь",
     text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
     image: "/images/avatar.jpg",
@@ -29,7 +29,7 @@ const reviews = [
   },
   {
     name: "Андрей Макеев",
-    role: "Клиент",
+    role: "Агентство",
     title: "Сопровождали во всем и разъясняли каждую деталь",
     text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
     image: "/images/avatar.jpg",
@@ -57,7 +57,70 @@ const reviews = [
   },
   {
     name: "Андрей Макеев",
+    role: "Агентство",
+    title: "Сопровождали во всем и разъясняли каждую деталь",
+    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
+    image: "/images/avatar.jpg",
+  },
+  {
+    name: "Андрей Макеев",
+    role: "Застройщик",
+    title: "Сопровождали во всем и разъясняли каждую деталь",
+    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
+    image: "/images/avatar.jpg",
+  },
+  {
+    name: "Андрей Макеев",
     role: "Клиент",
+    title: "Сопровождали во всем и разъясняли каждую деталь",
+    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
+    image: "/images/avatar.jpg",
+  },
+  {
+    name: "Андрей Макеев",
+    role: "Агентство",
+    title: "Сопровождали во всем и разъясняли каждую деталь",
+    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
+    image: "/images/avatar.jpg",
+  },
+  {
+    name: "Андрей Макеев",
+    role: "Клиент",
+    title: "Сопровождали во всем и разъясняли каждую деталь",
+    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
+    image: "/images/avatar.jpg",
+  },
+  {
+    name: "Андрей Макеев",
+    role: "Агентство",
+    title: "Сопровождали во всем и разъясняли каждую деталь",
+    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
+    image: "/images/avatar.jpg",
+  },
+  {
+    name: "Андрей Макеев",
+    role: "Риелтор",
+    title: "Сопровождали во всем и разъясняли каждую деталь",
+    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
+    image: "/images/avatar.jpg",
+  },
+  {
+    name: "Андрей Макеев",
+    role: "Клиент",
+    title: "Сопровождали во всем и разъясняли каждую деталь",
+    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
+    image: "/images/avatar.jpg",
+  },
+  {
+    name: "Андрей Макеев",
+    role: "Застройщик",
+    title: "Сопровождали во всем и разъясняли каждую деталь",
+    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
+    image: "/images/avatar.jpg",
+  },
+  {
+    name: "Андрей Макеев",
+    role: "Агентство",
     title: "Сопровождали во всем и разъясняли каждую деталь",
     text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
     image: "/images/avatar.jpg",
@@ -72,11 +135,37 @@ const reviews = [
 ];
 
 const Reviews = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [maxSlide, setMaxSlide] = useState(reviews.length);
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: false,
     slides: {
-      perView: 3.7,
-      spacing: 3,
+      perView: 3,
+      spacing: 30,
+    },
+    slideChanged(slider) {
+      setCurrentSlide(slider.track.details.rel);
+      setMaxSlide(slider.track.details.maxIdx);
+    },
+    breakpoints: {
+      "(max-width: 1280px)": {
+        slides: {
+          perView: 2,
+          spacing: 24,
+        },
+      },
+      "(max-width: 1024px)": {
+        slides: {
+          perView: 1.94,
+          spacing: 12,
+        },
+      },
+      "(max-width: 767px)": {
+        slides: {
+          perView: 1.04,
+          spacing: 12,
+        },
+      },
     },
   });
 
@@ -100,7 +189,7 @@ const Reviews = () => {
   };
 
   const isClient = reviews.some((rev) => rev.role.includes("Клиент"));
-  const isAgency = reviews.some((rev) => rev.role.includes("Агенство"));
+  const isAgency = reviews.some((rev) => rev.role.includes("Агентство"));
   const isRealtor = reviews.some((rev) => rev.role.includes("Риелтор"));
   const isBuilders = reviews.some((rev) => rev.role.includes("Застройщик"));
 
@@ -129,7 +218,7 @@ const Reviews = () => {
     <StyledReviews>
       <div className="Container">
         <div className="Applications__head">
-          <h2 className="Font_44_120">Нам доверяют</h2>
+          <h2 className="Font_44_120 sm:Font_26_120">Нам доверяют</h2>
           <div className="Applications__tabs">
             {isClient && (
               <RequestButton
@@ -171,15 +260,12 @@ const Reviews = () => {
           <>{renderReviews(filteredRoles)}</>
         </div>
         <div className="Reviews__buttonsContainer">
-          <button
-            onClick={handleClickPrevButton}
-            className="Reviews__prevButton"
-          >
-            <SliderButton />
-          </button>
-          <button onClick={handleClickNextButton}>
-            <SliderButton />
-          </button>
+          <ReviewButtons
+            currentSlide={currentSlide}
+            maxSlide={maxSlide}
+            handleClickPrevButton={handleClickPrevButton}
+            handleClickNextButton={handleClickNextButton}
+          />
         </div>
       </div>
     </StyledReviews>
@@ -194,6 +280,7 @@ const StyledReviews = styled.section`
   .Applications__head {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   .Applications__tabs {
@@ -215,12 +302,37 @@ const StyledReviews = styled.section`
 
   .Reviews__buttonsContainer {
     margin-top: 30px;
+    button:not(:first-child) {
+      margin-left: 20px;
+    }
   }
 
   .Reviews__prevButton {
     height: 40px;
     margin-right: 20px;
     transform: rotate(180deg);
+  }
+
+  @media (max-width: 1024px) {
+    .Applications__head {
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .Applications__tabs {
+      margin-top: 20px;
+      overflow-x: scroll;
+
+      button {
+        padding: 10px 15px;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    .Reviews__slider {
+      margin-top: 40px;
+    }
   }
 `;
 

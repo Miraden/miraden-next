@@ -39,6 +39,7 @@ export { TelegramIcon } from "./TelegramIcon";
 export { TelegramPureIcon } from "./TelegramPureIcon";
 export { TurkeyIcon } from "./TurkeyIcon";
 export { UnitedKingdomIcon } from "./UnitedKingdomIcon";
+export { VerifiedIcon } from "./VerifiedIcon";
 export { VisaIcon } from "./VisaIcon";
 export { WarningIcon } from "./WarningIcon";
 export { WebMoneyIcon } from "./WebMoneyIcon";

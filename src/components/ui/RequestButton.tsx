@@ -76,6 +76,7 @@ const StyledButton = styled.a`
   border-radius: 10px;
   cursor: pointer;
   border: none;
+  height: fit-content;
   transition: 0.2s ease;
 
   &.isActive {
