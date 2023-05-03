@@ -188,8 +188,17 @@ const StyledFeaturesDesktop = styled.section`
   .Features__tabHead {
     display: flex;
     align-items: center;
+    transition: 0.1s ease;
     h3 {
       margin-left: 15px;
+    }
+
+    :hover {
+      transition: 0.1s ease;
+
+      h3 {
+        color: #4e6af3;
+      }
     }
   }
 

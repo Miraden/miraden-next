@@ -92,6 +92,10 @@ const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
     display: flex;
     justify-content: space-between;
     padding: 20px;
+    transition: 0.15s ease;
+    :hover {
+      color: #4e6af3;
+    }
   }
 
   .Title_expanded {

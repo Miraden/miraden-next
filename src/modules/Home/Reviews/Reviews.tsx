@@ -216,56 +216,98 @@ const Reviews = () => {
 
   return (
     <StyledReviews>
-      <div className="Container">
-        <div className="Applications__head">
-          <h2 className="Font_44_120 sm:Font_26_120">Нам доверяют</h2>
-          <div className="Applications__tabs">
-            {isClient && (
-              <RequestButton
-                onClick={() => handleButtonClick("Клиент")}
-                active={role === "Клиент"}
-              >
-                Клиенты
-              </RequestButton>
-            )}
-            {isRealtor && (
-              <RequestButton
-                onClick={() => handleButtonClick("Риелтор")}
-                active={role === "Риелтор"}
-              >
-                Риелторы
-              </RequestButton>
-            )}
+      <div className="Reviews__top">
+        <div className="Container">
+          <div className="Reviews__head">
+            <h2 className="Font_44_120 sm:Font_26_120">Нам доверяют</h2>
+            <div className="Reviews__tabsDesktop">
+              {isClient && (
+                <RequestButton
+                  onClick={() => handleButtonClick("Клиент")}
+                  active={role === "Клиент"}
+                >
+                  Клиенты
+                </RequestButton>
+              )}
+              {isRealtor && (
+                <RequestButton
+                  onClick={() => handleButtonClick("Риелтор")}
+                  active={role === "Риелтор"}
+                >
+                  Риелторы
+                </RequestButton>
+              )}
 
-            {isAgency && (
-              <RequestButton
-                onClick={() => handleButtonClick("Агентство")}
-                active={role === "Агентство"}
-              >
-                Агентства
-              </RequestButton>
-            )}
+              {isAgency && (
+                <RequestButton
+                  onClick={() => handleButtonClick("Агентство")}
+                  active={role === "Агентство"}
+                >
+                  Агентства
+                </RequestButton>
+              )}
 
-            {isBuilders && (
-              <RequestButton
-                onClick={() => handleButtonClick("Застройщик")}
-                active={role === "Застройщик"}
-              >
-                Застройщики
-              </RequestButton>
-            )}
+              {isBuilders && (
+                <RequestButton
+                  onClick={() => handleButtonClick("Застройщик")}
+                  active={role === "Застройщик"}
+                >
+                  Застройщики
+                </RequestButton>
+              )}
+            </div>
           </div>
         </div>
-        <div className="Reviews__slider keen-slider" ref={sliderRef}>
-          <>{renderReviews(filteredRoles)}</>
-        </div>
-        <div className="Reviews__buttonsContainer">
-          <ReviewButtons
-            currentSlide={currentSlide}
-            maxSlide={maxSlide}
-            handleClickPrevButton={handleClickPrevButton}
-            handleClickNextButton={handleClickNextButton}
-          />
+      </div>
+      <div className="Reviews__tabs Container">
+        {isClient && (
+          <RequestButton
+            onClick={() => handleButtonClick("Клиент")}
+            active={role === "Клиент"}
+          >
+            Клиенты
+          </RequestButton>
+        )}
+        {isRealtor && (
+          <RequestButton
+            onClick={() => handleButtonClick("Риелтор")}
+            active={role === "Риелтор"}
+          >
+            Риелторы
+          </RequestButton>
+        )}
+
+        {isAgency && (
+          <RequestButton
+            onClick={() => handleButtonClick("Агентство")}
+            active={role === "Агентство"}
+          >
+            Агентства
+          </RequestButton>
+        )}
+
+        {isBuilders && (
+          <RequestButton
+            onClick={() => handleButtonClick("Застройщик")}
+            active={role === "Застройщик"}
+          >
+            Застройщики
+          </RequestButton>
+        )}
+      </div>
+      <div className="Reviews__bottom">
+        <div className="Container">
+          <div className="Reviews__slider keen-slider" ref={sliderRef}>
+            <>{renderReviews(filteredRoles)}</>
+          </div>
+          <div className="Reviews__buttonsContainer">
+            <ReviewButtons
+              currentSlide={currentSlide}
+              maxSlide={maxSlide}
+              handleClickPrevButton={handleClickPrevButton}
+              handleClickNextButton={handleClickNextButton}
+            />
+          </div>
         </div>
       </div>
     </StyledReviews>
@@ -273,18 +315,58 @@ const Reviews = () => {
 };
 
 const StyledReviews = styled.section`
-  overflow: hidden;
-  padding-top: 75px;
-  padding-bottom: 75px;
+  padding-left: 20px;
+  padding-right: 20px;
 
-  .Applications__head {
+  .Reviews__top {
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .Reviews__top,
+  .Reviews__bottom {
+    background: #ffffff;
+    padding-top: 75px;
+    max-width: 1880px;
+    width: 100%;
+    margin: 0 auto;
+    /* display: flex;
+    border-radius: 10px;
+    overflow: hidden; */
+  }
+
+  .Reviews__bottom {
+    overflow: hidden;
+    padding-top: 0;
+    padding-bottom: 75px;
+    border-radius: 0 0 10px 10px;
+  }
+
+  .Reviews__head {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
 
-  .Applications__tabs {
+  .Reviews__tabsDesktop {
     display: flex;
+    button:not(:first-child) {
+      margin-left: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      width: fit-content;
+    }
+  }
+
+  .Reviews__tabs {
+    display: none !important;
+    background: #ffffff;
+    display: flex;
+    white-space: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     button:not(:first-child) {
       margin-left: 10px;
     }
@@ -314,13 +396,26 @@ const StyledReviews = styled.section`
   }
 
   @media (max-width: 1024px) {
-    .Applications__head {
+    .Reviews__head {
       flex-direction: column;
       align-items: start;
     }
 
-    .Applications__tabs {
-      margin-top: 20px;
+    .Reviews__top {
+      padding-top: 20px;
+    }
+
+    .Reviews__bottom {
+      padding-bottom: 20px;
+    }
+
+    .Reviews__tabsDesktop {
+      display: none;
+    }
+
+    .Reviews__tabs {
+      display: flex !important;
+      padding-top: 20px;
       overflow-x: scroll;
 
       button {
@@ -330,6 +425,9 @@ const StyledReviews = styled.section`
   }
 
   @media (max-width: 767px) {
+    padding-left: 0;
+    padding-right: 0;
+
     .Reviews__slider {
       margin-top: 40px;
     }
