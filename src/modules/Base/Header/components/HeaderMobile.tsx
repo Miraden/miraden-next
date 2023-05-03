@@ -28,8 +28,8 @@ const HeaderMobile = ({ className }: Props) => {
           ) : (
             <BurgerIcon />
           )}
-          {isOpen && <HeaderMenu isOpen={isOpen} />}
         </button>
+        {isOpen && <HeaderMenu isOpen={isOpen} />}
         <Link href="/" className="HeaderMobile__logoLink">
           <MiradenLogoMobile />
         </Link>

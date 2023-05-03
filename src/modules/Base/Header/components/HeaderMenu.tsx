@@ -4,7 +4,9 @@ import { FacebookIcon } from "@/icons/FacebookIcon";
 import { InstagramIcon } from "@/icons/InstagramIcon";
 import cn from "classnames";
 import Link from "next/link";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
+import { HeaderAccordion } from "./HeaderAccordion";
 
 interface Props {
   className?: string;
@@ -12,11 +14,29 @@ interface Props {
 }
 
 const HeaderMenu = ({ className, isOpen }: Props) => {
+  const [expanded, setExpanded] = useState();
+
+  const handleChange = useCallback(
+    (panelId: any) => (isExpanded: boolean) =>
+      isExpanded ? setExpanded(panelId) : setExpanded(undefined),
+    []
+  );
+
   return (
-    <StyledHeaderMenu className={cn("", className, { Test: isOpen })}>
+    <StyledHeaderMenu className={cn("", className)}>
       <div className="HeaderMenu__links Font_12_16_600">
         <Link href="/">лента заявок</Link>
-        <Link href="/">о нас</Link>
+        <HeaderAccordion
+          className="HeaderMenu__accordion Font_12_16_600"
+          title="о нас"
+          expanded={expanded}
+          onChange={handleChange}
+        >
+          <Link href="/">о miraden</Link>
+          <Link href="/">философия</Link>
+          <Link href="/">философия</Link>
+          <Link href="/">команда</Link>
+        </HeaderAccordion>
         <Link href="/">тарифы</Link>
         <Link href="/">FAQ</Link>
         <Link href="/">ПОЛУЧИТЬ ПОДБОРКУ</Link>
@@ -49,16 +69,13 @@ const HeaderMenu = ({ className, isOpen }: Props) => {
 
 const StyledHeaderMenu = styled.div`
   position: absolute;
-  top: 102px;
+  top: 48px;
   left: 0;
   background: #2a344a;
   width: 100%;
   border-radius: 0 0 20px 20px;
   color: #b8c6e3;
   padding-top: 12px;
-  .Test {
-    display: block;
-  }
 
   .HeaderMenu__links {
     display: flex;
@@ -66,6 +83,7 @@ const StyledHeaderMenu = styled.div`
     text-transform: uppercase;
 
     a {
+      display: flex;
       width: 100%;
       padding-left: 40px;
       padding-right: 40px;
@@ -75,6 +93,22 @@ const StyledHeaderMenu = styled.div`
       :hover {
         background: rgba(119, 134, 165, 0.2);
       }
+    }
+  }
+
+  .HeaderMenu__accordion {
+    border-top: 1px solid #3a465d;
+    width: 100%;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    a {
+      border: none;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-decoration: none;
     }
   }
 

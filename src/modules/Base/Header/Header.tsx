@@ -46,7 +46,7 @@ const StyledHeader = styled.header`
 
   @media (max-width: 1024px) {
     .Header {
-      padding: 61px 20px 12px 20px;
+      padding: 8px 20px 12px 20px;
       top: 0;
     }
 
