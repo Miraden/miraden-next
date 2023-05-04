@@ -1,3 +1,4 @@
+import { CatalogIcon, CommunityIcon, DealsIcon, HomeIcon } from "@/icons";
 import cn from "classnames";
 import Image from "next/image";
 import { useCallback, useState } from "react";
@@ -12,8 +13,7 @@ const options = [
     optionName: "Биржа заявок",
     image1: "/images/miraden/1.png",
     image2: "/images/miraden/2.png",
-    icon: "/images/miraden/1.svg",
-    iconActive: "/images/miraden/1active.svg",
+    icon: <CatalogIcon width={28} height={28} />,
     text: "Реальные заявки на покупку или аренду недвижимости из разных стран мира",
     id: 1,
   },
@@ -21,8 +21,7 @@ const options = [
     optionName: "Независимые продавцы",
     image1: "/images/miraden/3.png",
     image2: "/images/miraden/4.png",
-    icon: "/images/miraden/2.svg",
-    iconActive: "/images/miraden/2active.svg",
+    icon: <CommunityIcon width={28} height={28} />,
     text: "Собственники, риелторы и застройщики, готовые сделать персональное предложение",
     id: 2,
   },
@@ -30,8 +29,7 @@ const options = [
     optionName: "Каталог недвижимости",
     image1: "/images/miraden/5.png",
     image2: "/images/miraden/6.png",
-    icon: "/images/miraden/3.svg",
-    iconActive: "/images/miraden/3active.svg",
+    icon: <HomeIcon width={28} height={28} />,
     text: "Персональный каталог объектов, собранный из предложений продавцов в реальном времени",
     id: 3,
   },
@@ -39,8 +37,7 @@ const options = [
     optionName: "Партнерские сделки",
     image1: "/images/miraden/7.png",
     image2: "/images/miraden/8.png",
-    icon: "/images/miraden/4.svg",
-    iconActive: "/images/miraden/4active.svg",
+    icon: <DealsIcon width={28} height={28} />,
     text: "Удобный сервис для прозрачной работы между застройщиками и риелторами",
     id: 4,
   },
@@ -68,7 +65,7 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
           <div className="Features__options">
             <h2 className="Font_44_120">Miraden — это</h2>
             <div className="Features__tabs">
-              {options.map(({ id, optionName, icon, iconActive, text }) => (
+              {options.map(({ id, optionName, icon, text }) => (
                 <button
                   onClick={createHandleToggleActiveOptionIndex(optionName)}
                   key={id}
@@ -84,23 +81,7 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
                         IconContainer: optionName == activeOption.optionName,
                       })}
                     >
-                      {optionName == activeOption.optionName ? (
-                        <Image
-                          src={iconActive}
-                          alt=""
-                          width={28}
-                          height={28}
-                          priority
-                        />
-                      ) : (
-                        <Image
-                          src={icon}
-                          alt=""
-                          width={28}
-                          height={28}
-                          priority
-                        />
-                      )}
+                      {icon}
                     </div>
                     <h3
                       className={cn("Font_28_120 ", {
@@ -186,6 +167,32 @@ const StyledFeaturesDesktop = styled.section`
     border-radius: 10px;
     width: 100%;
     text-align: start;
+
+    :hover {
+      svg {
+        path {
+          fill: #4e6af3;
+        }
+      }
+      h3 {
+        color: #4e6af3;
+      }
+    }
+  }
+
+  .Features__tabButtonActive {
+    svg {
+      path {
+        fill: #fff !important;
+      }
+    }
+    :hover {
+      svg {
+        path {
+          fill: #fff;
+        }
+      }
+    }
   }
 
   .Features__tabHead {
@@ -198,17 +205,10 @@ const StyledFeaturesDesktop = styled.section`
 
       margin-left: 15px;
     }
-
-    :hover {
-      transition: 0.15s ease;
-
-      h3 {
-        color: #4e6af3;
-      }
-    }
   }
 
   .Features__iconContainer {
+    display: flex;
     padding: 15px;
   }
 
