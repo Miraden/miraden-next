@@ -9,9 +9,19 @@ interface Props {
   error?: boolean;
   icon?: ReactNode;
   disabled?: boolean;
+  label?: string;
+  className?: string;
 }
 
-const TextInput = ({ maxLength, warning, error, icon, disabled }: Props) => {
+const TextInput = ({
+  maxLength,
+  warning,
+  error,
+  icon,
+  disabled,
+  label,
+  className,
+}: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
@@ -36,7 +46,7 @@ const TextInput = ({ maxLength, warning, error, icon, disabled }: Props) => {
   };
 
   return (
-    <StyledTextInput>
+    <StyledTextInput className={className}>
       <StyledTextInputField
         className={cn({
           FieldInput__labelWarning: warning,
@@ -58,7 +68,9 @@ const TextInput = ({ maxLength, warning, error, icon, disabled }: Props) => {
           disabled={disabled}
         />
         {icon && <div className="Icon__container">{icon}</div>}
-        <StyledTextInputLabel isFocused={isFocused}>Text</StyledTextInputLabel>
+        <StyledTextInputLabel isFocused={isFocused}>
+          {label}
+        </StyledTextInputLabel>
       </StyledTextInputField>
       {warning && (
         <div className="Warning__message">

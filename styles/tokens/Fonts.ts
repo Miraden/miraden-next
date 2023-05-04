@@ -220,6 +220,12 @@ const Fonts = createGlobalStyle`
       line-height: 160%;
     }
 
+    .lg\\:Font_26_120_600 {
+      font-size: 26px;
+      line-height: 120%;
+      font-weight: 600;
+    }
+
     .lg\\:Font_16_24 {
       font-size: 16px;
       line-height: 24px;
@@ -241,7 +247,12 @@ const Fonts = createGlobalStyle`
     .sm\\:Font_22_120 {
       font-size: 22px;
       line-height: 120%;
-      font-weight: 700;
+    }
+
+    .sm\\:Font_22_120_500 {
+      font-size: 22px;
+      line-height: 120%;
+      font-weight: 500;
     }
 
     .sm\\:Font_18_120_700 {
