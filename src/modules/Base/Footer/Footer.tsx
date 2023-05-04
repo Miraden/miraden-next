@@ -27,6 +27,18 @@ const Footer = ({ className }: FooterProps) => {
     <StyledFooter>
       <StyledFooterTop className={className}>
         <div className="Footer">
+          <StyledFooterTopMobile>
+            <div className="Footer__infoMobile">
+              <MiradenLogoFooter className="Footer__logo" />
+              <p className="Footer__description Font_14_140">
+                Miraden — биржа заявок в сфере зарубежной недвижимости
+              </p>
+              <div className="Footer__socialLinks">
+                <FacebookIconFooter />
+                <InstagramIconFooter />
+              </div>
+            </div>
+          </StyledFooterTopMobile>
           <div className="Footer__head Container">
             <div className="Footer__info">
               <MiradenLogoFooter className="Footer__logo" />
@@ -91,6 +103,25 @@ const Footer = ({ className }: FooterProps) => {
 };
 
 const StyledFooter = styled.footer``;
+
+const StyledFooterTopMobile = styled.div`
+  display: none;
+
+  @media (max-width: 960px) {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e1edfd;
+
+    .Footer__socialLinks {
+      justify-content: center;
+    }
+  }
+`;
 
 const StyledFooterTop = styled.div`
   color: #7786a5;
@@ -221,6 +252,7 @@ const StyledFooterTop = styled.div`
     }
 
     .Footer__head {
+      padding-top: 32px;
       grid-template-columns: repeat(4, 1fr);
       grid-gap: 12px;
       div {
@@ -229,12 +261,7 @@ const StyledFooterTop = styled.div`
     }
 
     .Footer__info {
-      grid-column: 2 / span 2;
-      text-align: center;
-      /* border-bottom: 1px solid #e1edfd; */
-      padding-bottom: 20px;
-      margin-bottom: 32px;
-      justify-self: center;
+      display: none;
     }
 
     .Footer__description {
