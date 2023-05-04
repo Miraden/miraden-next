@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { HeaderAccordion } from "./HeaderAccordion";
+import { HeaderLanguageAccordion } from "./HeaderLanguageAccordion";
 
 interface Props {
   className?: string;
@@ -43,6 +44,7 @@ const HeaderMenu = ({ className, isOpen }: Props) => {
         <Link href="/">ПОДПИСАТЬСЯ НА РАССЫЛКУ</Link>
         <Link href="/">РЕГИСТРАЦИЯ</Link>
         <Link href="/">ВХОД</Link>
+        <HeaderLanguageAccordion />
       </div>
       <div className="HeaderMenu__contacts">
         <p className="HeaderMenu__telegramLink Font_14_140">
