@@ -27,6 +27,7 @@ export default function Home() {
         <Link href="customer/reg-3">Step 3</Link>
         <Link href="customer/phone-1">Number 1</Link>
         <Link href="customer/phone-2">Number 2</Link>
+        <Link href="customer/login">Login</Link>
       </StyledMain>
     </>
   );

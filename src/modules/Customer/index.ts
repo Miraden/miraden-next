@@ -1,3 +1,4 @@
+export { Login } from "./Login";
 export { PhoneNum1 } from "./PhoneNum1";
 export { PhoneNum2 } from "./PhoneNum2";
 export { RegStep1 } from "./RegStep1";

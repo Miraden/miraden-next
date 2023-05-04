@@ -15,7 +15,7 @@ interface Props {
   onChange?: any;
 }
 
-const TextInput = ({
+const TextInputForm = ({
   maxLength,
   warning,
   error,
@@ -208,4 +208,4 @@ const StyledTextInputCounter = styled.div`
   color: #808080;
 `;
 
-export { TextInput };
+export { TextInputForm };
