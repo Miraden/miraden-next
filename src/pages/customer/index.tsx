@@ -23,6 +23,10 @@ export default function Home() {
       </Head>
       <StyledMain>
         <Link href="customer/reg-1">Step 1</Link>
+        <Link href="customer/reg-2">Step 2</Link>
+        <Link href="customer/reg-3">Step 3</Link>
+        <Link href="customer/phone-1">Number 1</Link>
+        <Link href="customer/phone-2">Number 2</Link>
       </StyledMain>
     </>
   );
@@ -30,4 +34,6 @@ export default function Home() {
 
 const StyledMain = styled.main`
   background: #eef1f5;
+  display: flex;
+  flex-direction: column;
 `;

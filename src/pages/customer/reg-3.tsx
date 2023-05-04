@@ -17,7 +17,6 @@ export default function Reg2Page() {
       </Head>
       <StyledMain>
         <Link href="/customer">Go back</Link>
-        <h1 className="Font_52_120">Step 1</h1>
         <StyledReg1 className="Container">
           <div className="Reg">
             <RegStep3 />

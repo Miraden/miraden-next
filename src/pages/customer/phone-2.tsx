@@ -1,12 +1,16 @@
-import { RegStep2 } from "@/modules/Customer";
-import { Inter } from "next/font/google";
+import { PhoneNum2 } from "@/modules/Customer";
 import Head from "next/head";
 import Link from "next/link";
+import { useState } from "react";
 import styled from "styled-components";
 
-const inter = Inter({ subsets: ["latin"] });
+export default function PhoneNum2Page() {
+  const [value, setValue] = useState("");
 
-export default function Reg2Page() {
+  const handleValueChange = (newValue: string) => {
+    setValue(newValue);
+  };
+
   return (
     <>
       <Head>
@@ -17,11 +21,11 @@ export default function Reg2Page() {
       </Head>
       <StyledMain>
         <Link href="/customer">Go back</Link>
-        <StyledReg1 className="Container">
+        <StyledNum1 className="Container">
           <div className="Reg">
-            <RegStep2 />
+            <PhoneNum2 onChange={handleValueChange} />
           </div>
-        </StyledReg1>
+        </StyledNum1>
       </StyledMain>
     </>
   );
@@ -32,7 +36,7 @@ const StyledMain = styled.main`
   height: 100vh;
 `;
 
-const StyledReg1 = styled.div`
+const StyledNum1 = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-gap: 30px;

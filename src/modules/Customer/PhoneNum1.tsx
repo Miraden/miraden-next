@@ -1,4 +1,4 @@
-import { Button, Link } from "@/components/ui";
+import { Button } from "@/components/ui";
 import { TextInput } from "@/components/ui/TextInput";
 import { ArrowIcon } from "@/icons";
 import { useState } from "react";
@@ -8,7 +8,7 @@ interface Props {
   className?: string;
 }
 
-const RegStep2 = ({ className }: Props) => {
+const PhoneNum1 = ({ className }: Props) => {
   const [valid, setValid] = useState(true);
 
   return (
@@ -16,26 +16,19 @@ const RegStep2 = ({ className }: Props) => {
       <div className="">
         <div className="Reg__head">
           <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Регистрация! Укажите имя и электронную почту
+            Укажите ваш номер телефона
           </h1>
         </div>
         <div className="Reg__link Color_blue_primary">
-          <span>Пройдите простую регистрацию или </span>
-          <Link underlined href="">
-            войдите в свой аккаунт
-          </Link>
-        </div>
-        <div className="Reg__options">
-          <TextInput label="Имя *" />
-          <TextInput label="Электронная почта *" className="Reg__email" />
-          <span className="Font_12_16">
-            Нажимая на кнопку «Далее», вы соглашаетесь с обработкой  
-            <a href="">персональных данных</a> и 
-            <a href="">политикой конфиденциальности</a>
+          <span>
+            Это конфиденциально! Только вы решаете, кто увидит ваш номер
+            телефона
           </span>
         </div>
+        <div className="Reg__options">
+          <TextInput label="Номер телефона *" />
+        </div>
         <div className="Reg__progressBar"></div>
-
         <div className="Reg__footer">
           <div className="Reg__footerBack">
             <Button
@@ -54,12 +47,12 @@ const RegStep2 = ({ className }: Props) => {
             <div className="Reg__footerSteps">
               <span className="Font_16_24">Шаг</span>
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                2
+                1
               </span>
               <span className="Font_16_140">/ 2</span>
             </div>
           </div>
-          <Button disabled={!valid} href="/customer/reg-3">
+          <Button disabled={!valid} href="/customer/phone-2">
             Далее
           </Button>
         </div>
@@ -88,7 +81,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__options {
     padding-top: 41px;
-    padding-bottom: 117px;
+    padding-bottom: 285px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -121,8 +114,9 @@ const StyledRegStep1 = styled.section`
     background-color: #d4ddee;
     ::after {
       position: absolute;
+      border-radius: 0 10px 10px 0;
       content: "";
-      width: 100%;
+      width: 50%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -216,4 +210,4 @@ const StyledRegStep1 = styled.section`
   }
 `;
 
-export { RegStep2 };
+export { PhoneNum1 };

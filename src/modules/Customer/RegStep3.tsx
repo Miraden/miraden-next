@@ -1,17 +1,12 @@
 import { Button, Link } from "@/components/ui";
 import Image from "next/image";
-import { useState } from "react";
 import styled from "styled-components";
 
 interface Props {
   className?: string;
 }
 
-type Option = "client" | "owner" | "realtor" | "agency" | "developer";
-
 const RegStep3 = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>(null);
-
   return (
     <StyledRegStep1 className={className}>
       <div className="">
