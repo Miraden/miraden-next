@@ -109,6 +109,7 @@ const StyledHeaderMenu = styled.div`
       font-weight: 600;
       letter-spacing: 0.07em;
       text-decoration: none;
+      border-bottom: none;
     }
   }
 

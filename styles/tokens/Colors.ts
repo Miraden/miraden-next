@@ -18,6 +18,9 @@ const Colors = createGlobalStyle`
     color: #7786A5;
   }
 
+  .Color_white {
+    color: #ffffff
+  }
 `;
 
 export { Colors };

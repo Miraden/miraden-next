@@ -53,7 +53,9 @@ const HeaderAccordion = ({
     >
       <div className="Accordion__head" onClick={handleToggle}>
         <div className="Accordion__title">
-          <h3 className="Font_12_16_600">{title}</h3>
+          <h3 className={cn("Font_12_16_600", { Color_white: expanded })}>
+            {title}
+          </h3>
         </div>
         <ArrowAccordionIcon
           height={20}
@@ -76,6 +78,7 @@ const HeaderAccordion = ({
 };
 
 const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
+  cursor: pointer;
   .Accordion__head {
     display: flex;
     justify-content: space-between;
@@ -101,7 +104,7 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
     transition: height 0.175s ease;
 
     a {
-      text-decoration: underline;
+      text-decoration: none;
 
       &:hover {
       }
@@ -113,7 +116,7 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
 
   .Accordion__text {
     a {
-      text-decoration: underline;
+      text-decoration: none;
 
       &:hover {
       }
@@ -128,11 +131,14 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
     transition: transform 0.3s;
 
     path {
-      fill: #fff;
+      fill: #b8c6e3;
     }
 
     &_rotated {
       transform: rotate(-180deg);
+      path {
+        fill: #fff;
+      }
     }
   }
 `;
