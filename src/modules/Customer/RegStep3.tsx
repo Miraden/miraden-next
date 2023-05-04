@@ -23,8 +23,14 @@ const RegStep3 = ({ className }: Props) => {
         <div className="Reg__options">
           <Image src="/images/SuccesReg.svg" alt="" width={150} height={120} />
           <h2 className="Font_20_120">Вы отлично справились с регистрацией!</h2>
-          <span>На вашу почту info@miraden.comотправлен пароль</span>
-          <Link href="/">Изменить электронную почту</Link>
+          <span className="Font_16_24 Color_text_grey">
+            На вашу почту{" "}
+            <span className="Color_blue_primary">info@miraden.com</span>{" "}
+            отправлен пароль
+          </span>
+          <Link href="/" className="Reg__changeEmail Font_14_16">
+            Изменить электронную почту
+          </Link>
         </div>
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
@@ -69,12 +75,17 @@ const StyledRegStep1 = styled.section`
     text-align: center;
     margin: 0 auto;
 
+    div {
+      width: 100%;
+    }
+
     h2 {
       margin-top: 30px;
     }
 
     span {
       margin-top: 10px;
+      max-width: 320px;
     }
 
     a {
@@ -85,6 +96,10 @@ const StyledRegStep1 = styled.section`
   .Reg__email {
     margin-top: 20px;
     margin-bottom: 40px;
+  }
+
+  .Reg__changeEmail {
+    margin-top: 40px;
   }
 
   .Reg__progressBar {

@@ -84,10 +84,10 @@ const TextInput = ({
 };
 
 const StyledTextInput = styled.div`
-  max-width: 300px;
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 100%;
 
   .FieldInput__disabled {
     input {
@@ -161,7 +161,7 @@ const StyledTextInputField = styled.div`
 `;
 
 const StyledTextInputInput = styled.input`
-  max-width: 300px;
+  width: 100%;
   position: relative;
   border: none;
   box-shadow: 0 0 0 2px #e1edfd inset;

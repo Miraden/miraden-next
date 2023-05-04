@@ -30,17 +30,22 @@ const RegStep2 = ({ className }: Props) => {
         <div className="Reg__options">
           <TextInput label="Имя *" />
           <TextInput label="Электронная почта *" className="Reg__email" />
-          <p>
-            Нажимая на кнопку «Далее», вы соглашаетесь с обработкой персональных
-            данных и политикой конфиденциальности
-          </p>
+          <span className="Font_12_16">
+            Нажимая на кнопку «Далее», вы соглашаетесь с обработкой  
+            <a href="">персональных данных</a> и 
+            <a href="">политикой конфиденциальности</a>
+          </span>
         </div>
         <div className="Reg__progressBar"></div>
 
         <div className="Reg__footer">
           <div className="Reg__footerBack">
-            <Button secondary href="/" className="Reg__goBackButton">
-              На главную
+            <Button
+              secondary
+              href="/customer/reg-1"
+              className="Reg__goBackButton"
+            >
+              Назад
             </Button>
             <Button
               secondary
@@ -81,7 +86,8 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__options {
-    padding: 41px 30px 155px 30px;
+    padding-top: 41px;
+    padding-bottom: 117px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -89,6 +95,18 @@ const StyledRegStep1 = styled.section`
     width: 100%;
     text-align: center;
     margin: 0 auto;
+
+    span {
+      max-width: 320px;
+    }
+
+    a {
+      color: #4e6af3;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
   }
 
   .Reg__email {
@@ -139,12 +157,6 @@ const StyledRegStep1 = styled.section`
 
   @media (max-width: 960px) {
     .Reg__options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: max-content;
-      grid-gap: 20px;
-      margin-left: 0;
-      margin-top: 0;
       height: 797px;
       button {
         max-width: unset;
