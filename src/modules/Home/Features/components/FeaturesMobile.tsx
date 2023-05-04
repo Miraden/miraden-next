@@ -124,11 +124,14 @@ const FeaturesMobile = ({ className }: FeatureProps) => {
                       </h3>
                     </div>
 
-                    {optionName == activeOption.optionName && (
-                      <p className="Features__headDescription Font_18_150 sm:Font_16_24">
-                        {text}
-                      </p>
-                    )}
+                    <p
+                      className={cn("Features__headDescription Font_18_150", {
+                        Features__headDescriptionActive:
+                          optionName == activeOption.optionName,
+                      })}
+                    >
+                      {text}
+                    </p>
                     {optionName == activeOption.optionName && (
                       <div className="Features__imagesContainer">
                         <Image
@@ -189,9 +192,9 @@ const StyledFeaturesMobile = styled.section`
     text-align: start;
 
     :hover {
-      transition: 0.1s ease;
-
       h3 {
+        transition: 0.15s ease;
+
         color: #4e6af3;
       }
     }
@@ -220,8 +223,13 @@ const StyledFeaturesMobile = styled.section`
   }
 
   .Features__headDescription {
+    display: none;
+  }
+
+  .Features__headDescriptionActive {
+    display: flex;
     margin-left: 73px;
-    margin-bottom: 60px;
+    animation: fade-in 300ms;
   }
 
   .Features__TabsList {
@@ -233,7 +241,7 @@ const StyledFeaturesMobile = styled.section`
     }
   }
 
-  .Features__tabContentActiveImage {
+  .Features__tabContentActive {
     animation: fade-in 200ms;
   }
 

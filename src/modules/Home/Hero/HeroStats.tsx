@@ -53,11 +53,12 @@ const StyledHeroStats = styled.div`
   }
 
   .HeroStats__listItem {
-    width: 100%;
+    /* width: 100%; */
   }
 
   .HeroStats__statContent {
     max-width: 218px;
+    /* width: 100%; */
   }
 
   .HeroStats__listItem:not(:first-child) {

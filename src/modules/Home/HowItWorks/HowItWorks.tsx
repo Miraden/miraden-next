@@ -233,7 +233,9 @@ const StyledHowItWorks = styled.section`
     margin-top: 50px;
 
     li {
-      max-width: 320px;
+      p {
+        /* max-width: 320px; */
+      }
 
       mark {
         color: #4e6af3;
@@ -310,7 +312,10 @@ const StyledHowItWorks = styled.section`
     .HowItWorks__listItemContent {
       margin-top: 2px;
       margin-left: 50px;
-      max-width: 320px;
+
+      p {
+        max-width: 320px;
+      }
     }
   }
 

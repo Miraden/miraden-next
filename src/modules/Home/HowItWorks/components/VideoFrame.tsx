@@ -2,11 +2,12 @@ import styled from "styled-components";
 
 interface Props {
   videoLink: string;
+  className?: string;
 }
 
-const VideoFrame = ({ videoLink }: Props) => {
+const VideoFrame = ({ videoLink, className }: Props) => {
   return (
-    <StyledVideoFrame>
+    <StyledVideoFrame className={className}>
       <iframe
         className="VideoFrame__iframe"
         src={`${videoLink}?autoplay=1`}
@@ -20,6 +21,7 @@ const VideoFrame = ({ videoLink }: Props) => {
 
 const StyledVideoFrame = styled.div`
   position: relative;
+  width: 100%;
 
   .VideoFrame__iframe {
     position: relative;

@@ -330,6 +330,7 @@ const StyledApplications = styled.section`
   .Applications__head {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   .Applications__tabs {

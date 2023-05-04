@@ -61,6 +61,7 @@ const StyledPlaceHolder = styled.div`
   }
 
   .Placeholder__image {
+    width: 100%;
     object-fit: cover;
   }
 

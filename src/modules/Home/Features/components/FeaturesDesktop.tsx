@@ -112,11 +112,14 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
                     </h3>
                   </div>
 
-                  {optionName == activeOption.optionName && (
-                    <p className="Features__headDescription Font_18_150">
-                      {text}
-                    </p>
-                  )}
+                  <p
+                    className={cn("Features__headDescription Font_18_150", {
+                      Features__headDescriptionActive:
+                        optionName == activeOption.optionName,
+                    })}
+                  >
+                    {text}
+                  </p>
                 </button>
               ))}
             </div>
@@ -188,13 +191,16 @@ const StyledFeaturesDesktop = styled.section`
   .Features__tabHead {
     display: flex;
     align-items: center;
-    transition: 0.1s ease;
+    transition: 0.15s ease;
+
     h3 {
+      transition: 0.15s ease;
+
       margin-left: 15px;
     }
 
     :hover {
-      transition: 0.1s ease;
+      transition: 0.15s ease;
 
       h3 {
         color: #4e6af3;
@@ -213,7 +219,13 @@ const StyledFeaturesDesktop = styled.section`
   }
 
   .Features__headDescription {
+    display: none;
+  }
+
+  .Features__headDescriptionActive {
+    display: flex;
     margin-left: 73px;
+    animation: fade-in 300ms;
   }
 
   .Features__TabsList {
@@ -241,8 +253,8 @@ const StyledFeaturesDesktop = styled.section`
     transition: display 0.2s;
   }
 
-  .Features__tabContentActiveImage {
-    animation: fade-in 200ms;
+  .Features__tabContentActive {
+    animation: fade-in 300ms;
   }
 
   @keyframes fade-in {
