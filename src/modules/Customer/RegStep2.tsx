@@ -22,12 +22,10 @@ const RegStep2 = ({ className }: Props) => {
           </h1>
         </div>
         <div className="Reg__link Color_blue_primary">
-          <span>
-            Пройдите простую регистрацию или 
-            <Link underlined href="">
-              войдите в свой аккаунт
-            </Link>
-          </span>
+          <span>Пройдите простую регистрацию или </span>
+          <Link underlined href="">
+            войдите в свой аккаунт
+          </Link>
         </div>
         <div className="Reg__options">
           <TextInput label="Имя *" />
@@ -77,6 +75,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__link {
     display: flex;
+    flex-wrap: wrap;
     padding: 5px 30px;
     background: #f1f7ff;
   }
