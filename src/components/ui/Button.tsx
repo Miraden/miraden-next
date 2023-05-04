@@ -332,6 +332,7 @@ const StyledButton = styled.a`
   }
 
   .Button__label {
+    display: flex;
     text-align: center;
   }
 

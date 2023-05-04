@@ -20,6 +20,7 @@ export { HomeIcon } from "./HomeIcon";
 export { InfoIcon } from "./InfoIcon";
 export { KebabIcon } from "./KebabIcon";
 export { ListItemsIcon } from "./ListItemsIcon";
+export { MessagesIcon } from "./MessagesIcon";
 export { MinusIcon } from "./MinusIcon";
 export { MiradenLogo } from "./MiradenLogo";
 export { MiradenLogoFooter } from "./MiradenLogoFooter";

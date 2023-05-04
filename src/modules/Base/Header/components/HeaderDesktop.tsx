@@ -9,11 +9,13 @@ import {
 import Link from "next/link";
 import styled from "styled-components";
 import { HeaderLocalization } from "./HeaderLocalization";
+import { HeaderUserMenu } from "./HeaderUserMenu";
 interface Props {
   className?: string;
+  isAuthorized?: boolean;
 }
 
-const HeaderDesktop = ({ className }: Props) => {
+const HeaderDesktop = ({ className, isAuthorized }: Props) => {
   return (
     <StyledHeaderDesktop>
       <div>
@@ -49,13 +51,19 @@ const HeaderDesktop = ({ className }: Props) => {
       </div>
 
       <div className="Header__userButtons">
-        <HeaderLocalization />
-        <Button header className="Header__enterButton">
-          вход
-        </Button>
-        <Button className="Header__registrationButton Font_12_16_600">
-          регистрация
-        </Button>
+        {isAuthorized ? (
+          <HeaderUserMenu />
+        ) : (
+          <>
+            <HeaderLocalization />
+            <Button header className="Header__enterButton">
+              вход
+            </Button>
+            <Button className="Header__registrationButton Font_12_16_600">
+              регистрация
+            </Button>
+          </>
+        )}
       </div>
     </StyledHeaderDesktop>
   );

@@ -5,12 +5,14 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { HeaderMenu } from "./HeaderMenu";
+import { HeaderUserMenuMobile } from "./HeaderUserMenuMobile";
 
 interface Props {
   className?: string;
+  isAuthorized?: boolean;
 }
 
-const HeaderMobile = ({ className }: Props) => {
+const HeaderMobile = ({ className, isAuthorized }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenMenu = useCallback(() => {
@@ -22,20 +24,29 @@ const HeaderMobile = ({ className }: Props) => {
   return (
     <StyledHeaderMobile className={className}>
       <div className="Header__mobile">
-        <button className="HeaderMobile__menuButton" onClick={handleOpenMenu}>
-          {isOpen ? (
-            <CrossIcon className="HeaderMobile__closeIcon" />
-          ) : (
-            <BurgerIcon />
-          )}
-        </button>
-        {isOpen && <HeaderMenu isOpen={isOpen} />}
-        <Link href="/" className="HeaderMobile__logoLink">
-          <MiradenLogoMobile />
-        </Link>
-        <Button className="HeaderMobile__enterButton Font_12_16_600">
-          вход
-        </Button>
+        {isAuthorized ? (
+          <HeaderUserMenuMobile />
+        ) : (
+          <>
+            <button
+              className="HeaderMobile__menuButton"
+              onClick={handleOpenMenu}
+            >
+              {isOpen ? (
+                <CrossIcon className="HeaderMobile__closeIcon" />
+              ) : (
+                <BurgerIcon />
+              )}
+            </button>
+            {isOpen && <HeaderMenu isOpen={isOpen} />}
+            <Link href="/" className="HeaderMobile__logoLink">
+              <MiradenLogoMobile />
+            </Link>
+            <Button className="HeaderMobile__enterButton Font_12_16_600">
+              вход
+            </Button>
+          </>
+        )}
       </div>
     </StyledHeaderMobile>
   );
