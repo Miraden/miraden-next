@@ -1,7 +1,8 @@
 import { Button, Link } from "@/components/ui";
 import { ArrowIcon } from "@/icons";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { TechSupport } from "./TechSupport";
 
 interface Props {
   className?: string;
@@ -12,6 +13,15 @@ const COUNTDOWN_SECONDS = 180;
 const PassRecover2 = ({ className, onChange }: Props) => {
   const [valid, setValid] = useState(false);
   const [inputValues, setInputValues] = useState<string[]>(["", "", "", ""]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenMenu = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
+
+  const handleCloseMenu = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
 
   const secondInputRef = useRef<HTMLInputElement>(null);
   const thirdInputRef = useRef<HTMLInputElement>(null);
@@ -71,9 +81,12 @@ const PassRecover2 = ({ className, onChange }: Props) => {
           <span>
             На почту info@inveroom.com был отправлен код для подтверждения.
             Если код не поступил, проверьте спам или напишите в 
-            <a href="">поддержку</a>
+            <button onClick={handleOpenMenu} className="Color_blue_primary">
+              поддержку
+            </button>
           </span>
         </div>
+        {isOpen && <TechSupport onClose={handleCloseMenu} />}
         <div className="Reg__options">
           <div>
             <DigitInput
@@ -168,7 +181,7 @@ const StyledRegStep1 = styled.section`
     flex-wrap: wrap;
     padding: 5px 30px;
     background: #f1f7ff;
-    a {
+    button {
       text-decoration: underline;
       padding: 0;
     }
