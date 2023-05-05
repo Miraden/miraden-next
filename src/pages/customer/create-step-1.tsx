@@ -1,4 +1,4 @@
-import { CreateStart } from "@/modules/Customer";
+import { CreateStep1 } from "@/modules/Customer";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import Link from "next/link";
@@ -19,7 +19,7 @@ export default function CreateStep1Page() {
         <Link href="/customer">Go back</Link>
         <StyledCreateStep1 className="Container">
           <div className="Reg">
-            <CreateStart />
+            <CreateStep1 />
           </div>
         </StyledCreateStep1>
       </StyledMain>

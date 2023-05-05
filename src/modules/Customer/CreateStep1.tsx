@@ -1,132 +1,187 @@
-import { Button } from "@/components/ui";
+import { Button, RequestButton } from "@/components/ui";
 import { ArrowIcon } from "@/icons";
-import { useKeenSlider } from "keen-slider/react";
-import Image from "next/image";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 interface Props {
   className?: string;
 }
 
-const steps = [
-  {
-    title: "Вы создаёте анонимную заявку",
-    description:
-      "Отвечаете на 10 простых вопросов о недвижимости, которую хотите найти",
-    image: "/images/HowItWorks.svg",
-    step: "1",
-  },
-  {
-    title: "Сервис публикует заявку в ленте",
-    description: "Самые подходящие исполнители получают уведомление о заявке",
-    image: "/images/HowItWorks.svg",
-    step: "2",
-  },
-  {
-    title: "Исполнители делают вам предложения",
-    description:
-      "Получаете персональные предложения и подборки от независимых исполнителей",
-    image: "/images/HowItWorks.svg",
-    step: "3",
-  },
-];
+type Option = "turkey" | "cyprus" | "northCyprus" | "montenegro";
 
-type SliderDotsProps = {
-  count: number;
-  currentSlide: number;
-  onDotClick: any;
-};
-
-const SliderDots = ({ count, currentSlide, onDotClick }: SliderDotsProps) => {
-  return (
-    <div className="slider-dots">
-      {Array.from({ length: count }).map((_, index) => (
-        <button
-          key={index}
-          className={currentSlide === index ? "active" : ""}
-          onClick={() => onDotClick(index)}
-        />
-      ))}
-    </div>
-  );
+const cityMap: Record<Option, { label: string; cities: string[] }> = {
+  turkey: {
+    label: "Турция",
+    cities: [
+      "Все города",
+      "Аланья",
+      "Анталья",
+      "Стамбул",
+      "Кемер",
+      "Бодрум",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "0",
+      "11",
+    ],
+  },
+  cyprus: {
+    label: "Кипр",
+    cities: [
+      "Все города",
+      "Лимассол",
+      "Пафос",
+      "Ларнака",
+      "Никосия",
+      "Айя-Напа",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+    ],
+  },
+  northCyprus: {
+    label: "Северный Кипр",
+    cities: [
+      "Все города",
+      "Гирне",
+      "Фамагуста",
+      "Лефкоша",
+      "Искеле",
+      "Карпасия",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+      "31",
+    ],
+  },
+  montenegro: {
+    label: "Черногория",
+    cities: [
+      "Все города",
+      "Будва",
+      "Котор",
+      "Тиват",
+      "Подгорица",
+      "Бар",
+      "32",
+      "33",
+      "34",
+      "35",
+      "36",
+      "37",
+      "38",
+      "39",
+      "40",
+      "41",
+    ],
+  },
 };
 
 const CreateStep1 = ({ className }: Props) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [loaded, setLoaded] = useState(false);
-  const [sliderRef, instanceRef] = useKeenSlider({
-    slides: {
-      perView: 1,
-    },
-    initial: 0,
-    slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
-    },
-    created() {
-      setLoaded(true);
-    },
-  });
+  const [selected, setSelected] = useState<Option | null>(null);
+  const [showAllCities, setShowAllCities] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
+  const [numCitiesToShow, setNumCitiesToShow] = useState(5); // шаг 1
+
+  const handleSelect = useCallback((option: Option) => {
+    setSelected(option);
+    setSelectedCity(null); // очистить выбранный город
+    setShowAllCities(false); // сбросить флаг
+    setNumCitiesToShow(5);
+  }, []);
+
+  const handleSelectCity = useCallback((city: string) => {
+    setSelectedCity(city);
+  }, []);
+
+  const handleShowMoreCities = useCallback(() => {
+    setShowAllCities(true);
+    setNumCitiesToShow(cityMap[selected as Option].cities.length); // показать все города
+  }, [selected]);
+
+  const handleHideExtraCities = useCallback(() => {
+    setShowAllCities(false);
+    setNumCitiesToShow(5); // показать только первые 5 городов
+  }, []);
 
   return (
     <StyledCreateStep1 className={className}>
       <div className="">
         <div className="Reg__head">
           <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Как это работает?
+            Укажите город или локацию недвижимости
           </h1>
         </div>
         <div className="Reg__options">
-          <ul className="Reg__Steps">
-            {steps.map((step, index) => (
-              <li key={index} className="Reg__step">
-                <div className="Reg__imageContainer">
-                  <Image src={step.image} alt="" width={95} height={136} />
-                  <p className="Reg__counter Font_14_140">{step.step}</p>
-                </div>
-                <div className="Reg__listItemContent">
-                  <h3 className="Reg__listItemTitle Font_20_120 lg:Font_18_120_500">
-                    {step.title}
-                  </h3>
-                  <p className="Reg__listItemDescription Font_16_24 Color_text_grey">
-                    {step.description}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <ul className="Reg__StepsMobile keen-slider" ref={sliderRef}>
-            {steps.map((step, index) => (
-              <li key={index} className="Reg__step keen-slider__slide">
-                <div className="Reg__imageContainer">
-                  <Image src={step.image} alt="" width={95} height={136} />
-                  <p className="Reg__counter Font_14_140">{step.step}</p>
-                </div>
-                <div className="Reg__listItemContent">
-                  <h3 className="Reg__listItemTitle Font_20_120 lg:Font_18_120_500">
-                    {step.title}
-                  </h3>
-                  <p className="Reg__listItemDescription Font_16_24 Color_text_grey">
-                    {step.description}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ul>
-          <SliderDots
-            count={steps.length}
-            currentSlide={currentSlide}
-            onDotClick={() => {
-              instanceRef.current?.moveToIdx;
-            }}
-          />
+          {Object.keys(cityMap).map((option) => (
+            <RequestButton
+              key={option}
+              onClick={() => handleSelect(option as Option)}
+              active={selected === option}
+            >
+              {cityMap[option as Option].label}
+            </RequestButton>
+          ))}
+        </div>
+        <div className="Reg__citiesContainer">
+          <h2>Город</h2>
+          <div className="Reg__cities">
+            {selected && (
+              <>
+                {cityMap[selected].cities
+                  .slice(0, numCitiesToShow)
+                  .map((city) => (
+                    <RequestButton
+                      key={city}
+                      onClick={() => handleSelectCity(city)}
+                      active={selectedCity === city}
+                    >
+                      {city}
+                    </RequestButton>
+                  ))}
+                {cityMap[selected].cities.length > numCitiesToShow &&
+                  !showAllCities && (
+                    <RequestButton
+                      onClick={handleShowMoreCities}
+                      className="Color_blue_primary"
+                    >
+                      Ещё {numCitiesToShow}
+                    </RequestButton>
+                  )}
+                {showAllCities && (
+                  <RequestButton onClick={handleHideExtraCities}>
+                    Скрыть
+                  </RequestButton>
+                )}
+              </>
+            )}
+          </div>
         </div>
         <div className="Reg__progressBar"></div>
 
         <div className="Reg__footer">
           <div className="Reg__footerBack">
             <Button secondary href="/" className="Reg__goBackButton">
-              На главную
+              На главную
             </Button>
             <Button
               secondary
@@ -134,8 +189,17 @@ const CreateStep1 = ({ className }: Props) => {
               leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>
+            <div className="Reg__footerSteps">
+              <span className="Font_16_24">Шаг</span>
+              <span className="Reg__footerCount Font_16_140 Color_blue_primary">
+                1
+              </span>
+              <span className="Font_16_140">/ 11</span>
+            </div>
           </div>
-          <Button href="/customer/reg-2">Начать</Button>
+          <Button disabled={!selected || !selectedCity} href="/customer/reg-2">
+            Далее
+          </Button>
         </div>
       </div>
     </StyledCreateStep1>
@@ -146,86 +210,74 @@ const StyledCreateStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
 
-  .slider-dots {
-    display: flex;
-    justify-content: center;
-    margin-top: 64px;
-  }
-
-  .slider-dots button {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: none;
-    background-color: #eff3fb;
-    margin: 0 15px;
-    cursor: pointer;
-  }
-
-  .slider-dots button.active {
-    background-color: #4e6af3;
-  }
-
   .Reg__head {
-    padding: 30px 30px 18px 30px;
-    border-bottom: 2px solid #f1f7ff;
+    padding: 30px 30px 20px 30px;
+  }
+
+  .Reg__link {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px 30px;
+    background: #f1f7ff;
   }
 
   .Reg__options {
-    padding: 50px 80px;
-    justify-content: center;
-  }
-
-  .Reg__Steps {
+    padding: 41px 30px 0 30px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-left: -20px;
+    margin-top: -20px;
+
+    button {
+      justify-content: flex-start;
+      width: fit-content;
+      margin-left: 20px;
+      margin-top: 20px;
+      padding: 10px 20px;
+
+      span {
+        text-align: initial;
+      }
+    }
   }
 
-  .Reg__StepsMobile {
-    display: none;
+  .Reg__citiesContainer {
+    padding-top: 50px;
+    padding-left: 30px;
   }
 
-  .Reg__step {
-    max-width: 230px;
-  }
-
-  .Reg__step:not(:first-child) {
-    margin-left: 26px;
-  }
-
-  .Reg__imageContainer {
+  .Reg__cities {
+    padding: 15px 30px 155px 0;
+    margin-left: -20px;
+    margin-top: -20px;
     display: flex;
-    align-items: flex-end;
-  }
+    flex-wrap: wrap;
 
-  .Reg__counter {
-    margin-left: 10px;
-    margin-bottom: 10px;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    justify-content: center;
-    padding: 4px;
-    border-radius: 50%;
-    background: #4e6af3;
-    height: fit-content;
-    color: #ffffff;
-    flex-shrink: 0;
-  }
+    button {
+      justify-content: flex-start;
+      width: fit-content;
+      margin-left: 20px;
+      margin-top: 20px;
+      padding: 10px 20px;
 
-  .Reg__listItemTitle {
-    margin-top: 10px;
-  }
-
-  .Reg__listItemDescription {
-    margin-top: 10px;
+      span {
+        text-align: initial;
+      }
+    }
   }
 
   .Reg__progressBar {
     position: relative;
     height: 6px;
     background-color: #d4ddee;
+    ::after {
+      position: absolute;
+      border-radius: 0 10px 10px 0;
+      content: "";
+      width: 9%;
+      height: 6px;
+      background-color: #4e6af3;
+    }
   }
 
   .Reg__footer {
@@ -257,57 +309,37 @@ const StyledCreateStep1 = styled.section`
 
   @media (max-width: 960px) {
     .Reg__options {
-      padding: 50px 30px;
+      margin-top: -10px;
+      margin-left: -10px;
+      flex-wrap: wrap;
+      button {
+        max-width: unset;
+        margin-left: 10px;
+        margin-top: 10px;
+      }
     }
 
-    .Reg__step {
-      margin-left: 0;
-      max-width: 220px;
+    .Reg__citiesContainer {
+      padding-bottom: 529px;
     }
   }
 
   @media (max-width: 576px) {
-    .Reg__StepsMobile {
-      display: flex;
-    }
-
-    .Reg__Steps {
-      display: none;
-    }
-
     .Reg__head {
       padding: 20px;
     }
 
     .Reg__options {
-      padding: 48px 50px;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      grid-gap: 12px;
-      height: 566px;
-    }
+      padding: 38px 20px;
+      padding-bottom: 0;
 
-    .Reg__step {
-      text-align: center;
-    }
-
-    .Reg__step:not(:first-child) {
-      margin-left: 0;
-    }
-
-    .Reg__listItemContent {
-      max-width: 260px;
-      margin: 0 auto;
-    }
-
-    .Reg__imageContainer {
-      flex-flow: row-reverse;
-      justify-content: center;
-      img {
-        width: 141px;
-        height: 220px;
+      button {
       }
+    }
+
+    .Reg__citiesContainer {
+      padding-top: 36px;
+      padding-left: 20px;
     }
 
     .Reg__goBackButton {

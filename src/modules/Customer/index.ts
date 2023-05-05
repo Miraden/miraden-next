@@ -1,3 +1,4 @@
+export { CreateStart } from "./CreateStart";
 export { CreateStep1 } from "./CreateStep1";
 export { Login } from "./Login";
 export { PassRecover1 } from "./PassRecover1";

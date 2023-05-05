@@ -30,7 +30,8 @@ export default function Home() {
         <Link href="customer/login">Login</Link>
         <Link href="customer/pass-recover-1">Password recover 1</Link>
         <Link href="customer/pass-recover-2">Password recover 2</Link>
-        <Link href="customer/create-1">Create step 1</Link>
+        <Link href="customer/create-1">Create</Link>
+        <Link href="customer/create-step-1">Create step 1</Link>
       </StyledMain>
     </>
   );

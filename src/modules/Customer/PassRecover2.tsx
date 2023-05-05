@@ -26,6 +26,8 @@ const PassRecover2 = ({ className, onChange }: Props) => {
   const secondInputRef = useRef<HTMLInputElement>(null);
   const thirdInputRef = useRef<HTMLInputElement>(null);
   const fourthInputRef = useRef<HTMLInputElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const startY = useRef<number>(0);
 
   const handleDigitChange =
     (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,6 +71,20 @@ const PassRecover2 = ({ className, onChange }: Props) => {
   const minutes = Math.floor(secondsRemaining / 60);
   const seconds = secondsRemaining % 60;
 
+  const handleTouchStart = (event: TouchEvent) => {
+    const touch = event.touches[0];
+    startY.current = touch.pageY;
+  };
+
+  const handleTouchEnd = (event: TouchEvent) => {
+    const touch = event.changedTouches[0];
+    const deltaY = touch.pageY - startY.current;
+
+    if (deltaY > 50) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <StyledRegStep1 className={className}>
       <div className="">
@@ -86,7 +102,13 @@ const PassRecover2 = ({ className, onChange }: Props) => {
             </button>
           </span>
         </div>
-        {isOpen && <TechSupport onClose={handleCloseMenu} />}
+        {isOpen && (
+          <TechSupport
+            onClose={handleCloseMenu}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          />
+        )}
         <div className="Reg__options">
           <div>
             <DigitInput

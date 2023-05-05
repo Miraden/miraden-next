@@ -4,12 +4,22 @@ import styled from "styled-components";
 interface Props {
   className?: string;
   onClose?: any;
+  onTouchStart?: any;
+  onTouchEnd?: any;
 }
 
-const TechSupport = ({ className, onClose }: Props) => {
+const TechSupport = ({
+  className,
+  onClose,
+  onTouchStart,
+  onTouchEnd,
+}: Props) => {
   return (
-    <StyledTechSupport>
+    <StyledTechSupport onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <div className="TechSupport">
+        <div className="TechSupport__swipe">
+          <div className="TechSupport__swipeElement" />
+        </div>
         <div className="TechSupport__head">
           <h2 className="Font_32_120">Поддержка</h2>
           <button onClick={onClose}>
@@ -45,6 +55,21 @@ const StyledTechSupport = styled.div`
   top: 0;
   background: rgba(60, 75, 97, 0.6);
   backdrop-filter: blur(11px);
+
+  .TechSupport__swipe {
+    background: #fff;
+    padding-top: 4px;
+    padding-bottom: 5px;
+    display: none;
+  }
+
+  .TechSupport__swipeElement {
+    width: 36px;
+    height: 5px;
+    background: #c7d2e9;
+    margin: 0 auto;
+    border-radius: 5px;
+  }
 
   .TechSupport {
     background: #fff;
@@ -109,6 +134,13 @@ const StyledTechSupport = styled.div`
     .TechSupport {
       max-width: 100%;
       width: 100%;
+      top: 36px;
+      border-radius: 10px 10px 0px 0px;
+      overflow: hidden;
+    }
+
+    .TechSupport__swipe {
+      display: flex;
     }
   }
 `;
