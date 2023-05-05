@@ -220,6 +220,12 @@ const Fonts = createGlobalStyle`
       line-height: 160%;
     }
 
+    .lg\\:Font_18_120_500 {
+      font-size: 18px;
+      line-height: 120%;
+      font-weight: 500;
+    }
+
     .lg\\:Font_26_120_600 {
       font-size: 26px;
       line-height: 120%;
