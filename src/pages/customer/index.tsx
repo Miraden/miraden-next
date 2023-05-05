@@ -32,6 +32,7 @@ export default function Home() {
         <Link href="customer/pass-recover-2">Password recover 2</Link>
         <Link href="customer/create-1">Create</Link>
         <Link href="customer/create-step-1">Create step 1</Link>
+        <Link href="customer/create-step-2">Create step 2</Link>
       </StyledMain>
     </>
   );

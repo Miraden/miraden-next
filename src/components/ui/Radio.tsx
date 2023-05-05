@@ -1,24 +1,26 @@
 import cn from "classnames";
-import { useState } from "react";
 import styled from "styled-components";
 
 interface RadioProps {
   label?: string;
   disabled?: boolean;
   error?: boolean;
+  checked?: any;
+  onChange?: (
+    e: React.ChangeEvent<
+      HTMLInputElement & HTMLSelectElement & HTMLTextAreaElement
+    >
+  ) => void;
 }
 
-const Radio = ({ label, disabled, error }: RadioProps) => {
-  const [isChecked, setIsChecked] = useState(false);
+const Radio = ({ label, disabled, error, checked, onChange }: RadioProps) => {
   return (
     <StyledRadio>
       <input
         type="radio"
         className={cn("Radio__input", { Radio__input_error: error })}
-        onClick={(e: React.MouseEvent<HTMLInputElement>) => {
-          setIsChecked(!isChecked);
-        }}
-        checked={isChecked}
+        onChange={onChange}
+        checked={checked}
         tabIndex={0}
         disabled={disabled}
       />
@@ -37,7 +39,7 @@ const StyledRadio = styled.div`
     border: 3px solid #c7d2e9;
     border-radius: 50%;
     transition: 0.15s ease;
-    outline: none; /* добавлено свойство outline: none */
+    outline: none;
     ::after {
       content: "";
       display: block;

@@ -180,8 +180,12 @@ const CreateStep1 = ({ className }: Props) => {
 
         <div className="Reg__footer">
           <div className="Reg__footerBack">
-            <Button secondary href="/" className="Reg__goBackButton">
-              На главную
+            <Button
+              secondary
+              href="/customer/create-1"
+              className="Reg__goBackButton"
+            >
+              Назад
             </Button>
             <Button
               secondary
@@ -197,7 +201,10 @@ const CreateStep1 = ({ className }: Props) => {
               <span className="Font_16_140">/ 11</span>
             </div>
           </div>
-          <Button disabled={!selected || !selectedCity} href="/customer/reg-2">
+          <Button
+            disabled={!selected || !selectedCity}
+            href="/customer/create-step-2"
+          >
             Далее
           </Button>
         </div>
