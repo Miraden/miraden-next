@@ -28,6 +28,8 @@ export default function Home() {
         <Link href="customer/phone-1">Number 1</Link>
         <Link href="customer/phone-2">Number 2</Link>
         <Link href="customer/login">Login</Link>
+        <Link href="customer/pass-recover-1">Password recover 1</Link>
+        <Link href="customer/pass-recover-2">Password recover 2</Link>
       </StyledMain>
     </>
   );
