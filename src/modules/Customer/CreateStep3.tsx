@@ -25,12 +25,19 @@ type Option =
   | "free";
 
 const CreateStep3 = ({ className }: Props) => {
+  const [isResidentialChecked, setIsResidentialChecked] = useState(true);
+  const [isCommercialChecked, setIsCommercialChecked] = useState(false);
   const [selected, setSelected] = useState<Option | null>(null);
-  const [checked, setChecked] = useState<boolean>(false);
-
-  const handleCheck = useCallback((value: boolean) => {
-    setChecked(value);
+  const handleResidentialCheck = useCallback(() => {
+    setIsResidentialChecked(true);
+    setIsCommercialChecked(false);
   }, []);
+
+  const handleCommercialCheck = useCallback(() => {
+    setIsResidentialChecked(false);
+    setIsCommercialChecked(true);
+  }, []);
+
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
   }, []);
@@ -42,57 +49,111 @@ const CreateStep3 = ({ className }: Props) => {
           <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
             Укажите тип недвижимости
           </h1>
-
-          <div className="Reg__radioButtons">
-            <Radio
-              label="Жилая"
-              onChange={() => handleCheck(true)}
-              checked={setChecked}
-            />
-            <Radio
-              label="Коммерческая"
-              onChange={() => handleCheck(false)}
-              checked={setChecked}
-            />
-          </div>
         </div>
-        <div className="Reg__options">
-          <RequestButton
-            onClick={() => handleSelect("flat")}
-            active={selected === "flat"}
-          >
-            Квартира / апартаменты
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelect("house")}
-            active={selected === "house"}
-          >
-            Дом / вилла
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelect("penthouse")}
-            active={selected === "penthouse"}
-          >
-            Пентхаус
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelect("townhouse")}
-            active={selected === "townhouse"}
-          >
-            Таунхаус
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelect("duplex")}
-            active={selected === "duplex"}
-          >
-            Дуплекс
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelect("land")}
-            active={selected === "land"}
-          >
-            Участок земли
-          </RequestButton>
+        <div className="Reg__radioButtons">
+          <Radio
+            value="Жилая"
+            checked={isResidentialChecked}
+            onChange={handleResidentialCheck}
+          />
+          <Radio
+            value="Коммерческая"
+            checked={isCommercialChecked}
+            onChange={handleCommercialCheck}
+          />
+        </div>
+        <div className="Reg__options ">
+          {isResidentialChecked ? (
+            <>
+              <RequestButton
+                onClick={() => handleSelect("flat")}
+                active={selected === "flat"}
+              >
+                Квартира / апартаменты
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("house")}
+                active={selected === "house"}
+              >
+                Дом / вилла
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("penthouse")}
+                active={selected === "penthouse"}
+              >
+                Пентхаус
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("townhouse")}
+                active={selected === "townhouse"}
+              >
+                Таунхаус
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("duplex")}
+                active={selected === "duplex"}
+              >
+                Дуплекс
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("land")}
+                active={selected === "land"}
+              >
+                Участок земли
+              </RequestButton>
+            </>
+          ) : (
+            <>
+              <RequestButton
+                onClick={() => handleSelect("hotel")}
+                active={selected === "hotel"}
+              >
+                Отель
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("office")}
+                active={selected === "office"}
+              >
+                Офис
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("selling")}
+                active={selected === "selling"}
+              >
+                Торговля
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("warehouse")}
+                active={selected === "warehouse"}
+              >
+                Склад
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("catering")}
+                active={selected === "catering"}
+              >
+                Общепит
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("production")}
+                active={selected === "production"}
+              >
+                Производство
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("landing")}
+                active={selected === "landing"}
+              >
+                Участок земли
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelect("free")}
+                active={selected === "free"}
+              >
+                Свободное назначение
+              </RequestButton>
+            </>
+          )}
         </div>
         <div className="Reg__progressBar"></div>
 
@@ -126,9 +187,15 @@ const CreateStep3 = ({ className }: Props) => {
               </span>
               <p className="Color_blue_primary Font_16_140">317</p>
             </div>
-            <Button disabled={!selected} href="/customer/create-step-3">
-              Далее
-            </Button>
+            {isResidentialChecked ? (
+              <Button disabled={!selected} href="/customer/create-step-4">
+                Далее
+              </Button>
+            ) : (
+              <Button disabled={!selected} href="/customer/create-step-4">
+                Далее
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -136,21 +203,25 @@ const CreateStep3 = ({ className }: Props) => {
   );
 };
 
-{
-  /*  */
-}
-
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
 
   .Reg__head {
-    padding: 30px 30px 20px 30px;
+    padding: 30px 30px 18px 30px;
+    border: 2px solid #f1f7ff;
   }
 
   .Reg__radioButtons {
+    padding-left: 30px;
+    margin-top: 42px;
+    margin-left: -30px;
     display: flex;
     align-items: center;
+
+    input {
+      margin-left: 30px;
+    }
   }
 
   .Reg__options {

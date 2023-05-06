@@ -1,4 +1,4 @@
-import { CreateStep2 } from "@/modules/Customer";
+import { CreateStep4 } from "@/modules/Customer";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function CreateStep2Page() {
+export default function CreateStep4Page() {
   return (
     <>
       <Head>
@@ -19,7 +19,7 @@ export default function CreateStep2Page() {
         <Link href="/customer">Go back</Link>
         <StyledCreateStep1 className="Container">
           <div className="Reg">
-            <CreateStep2 />
+            <CreateStep4 />
           </div>
         </StyledCreateStep1>
       </StyledMain>

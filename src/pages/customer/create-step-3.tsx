@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function CreateStep1Page() {
+export default function CreateStep3Page() {
   return (
     <>
       <Head>

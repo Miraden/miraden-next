@@ -2,7 +2,7 @@ import cn from "classnames";
 import styled from "styled-components";
 
 interface RadioProps {
-  label?: string;
+  value?: string;
   disabled?: boolean;
   error?: boolean;
   checked?: any;
@@ -13,7 +13,7 @@ interface RadioProps {
   ) => void;
 }
 
-const Radio = ({ label, disabled, error, checked, onChange }: RadioProps) => {
+const Radio = ({ value, disabled, error, checked, onChange }: RadioProps) => {
   return (
     <StyledRadio>
       <input
@@ -24,12 +24,17 @@ const Radio = ({ label, disabled, error, checked, onChange }: RadioProps) => {
         tabIndex={0}
         disabled={disabled}
       />
-      <Label>{label}</Label>
+      <Label className="Font_16_24" htmlFor="">
+        {value}
+      </Label>
     </StyledRadio>
   );
 };
 
 const StyledRadio = styled.div`
+  display: flex;
+  align-items: center;
+
   .Radio__input {
     -webkit-appearance: none;
     appearance: none;
@@ -132,5 +137,7 @@ const StyledRadio = styled.div`
 
 export const RadioButton = styled.input``;
 
-export const Label = styled.label<{ disabled?: boolean }>``;
+export const Label = styled.label<{ disabled?: boolean }>`
+  margin-left: 10px;
+`;
 export { Radio };
