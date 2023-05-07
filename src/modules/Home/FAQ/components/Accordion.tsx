@@ -56,13 +56,15 @@ const Accordion: FC<Props> = ({
         >
           {title}
         </h4>
-        <ArrowAccordionIcon
-          height={20}
-          width={20}
-          className={cn("Accordion__icon", {
-            Accordion__icon_rotated: expanded,
-          })}
-        />
+        <div className="Accordion__iconContainer">
+          <ArrowAccordionIcon
+            height={20}
+            width={20}
+            className={cn("Accordion__icon", {
+              Accordion__icon_rotated: expanded,
+            })}
+          />
+        </div>
       </div>
       <div className="Accordion__content">
         <div className="Accordion__contentWrapper" ref={contentRef}>
@@ -138,13 +140,18 @@ const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
     }
   }
 
+  .Accordion__iconContainer {
+    width: 28px;
+    height: 28px;
+  }
+
   .Accordion__icon {
     flex-shrink: 0;
     transition: transform 0.3s;
     margin-top: 4px;
-    margin-right: 4px;
-    margin-left: 10px;
+    margin-left: 4px;
 
+    margin-right: 4px;
     &_rotated {
       transform: rotate(-180deg);
     }

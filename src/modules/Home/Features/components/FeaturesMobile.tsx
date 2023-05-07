@@ -10,27 +10,27 @@ interface FeatureProps {
 
 const options = [
   {
-    optionName: "Биржа заявок",
+    optionName: "Поиск недвижимости",
     image1: "/images/miraden/1.png",
     image2: "/images/miraden/2.png",
-    icon: <CatalogIcon width={28} height={28} />,
-    text: "Реальные заявки на покупку или аренду недвижимости из разных стран мира",
+    icon: <HomeIcon width={28} height={28} />,
+    text: "Персональный каталог объектов, собранный из предложений продавцов в реальном времени",
     id: 1,
   },
   {
-    optionName: "Независимые продавцы",
+    optionName: "Биржа заявок",
     image1: "/images/miraden/3.png",
     image2: "/images/miraden/4.png",
-    icon: <CommunityIcon width={28} height={28} />,
-    text: "Собственники, риелторы и застройщики, готовые сделать персональное предложение",
+    icon: <CatalogIcon width={28} height={28} />,
+    text: "Реальные заявки на покупку или аренду недвижимости из разных стран мира",
     id: 2,
   },
   {
-    optionName: "Каталог недвижимости",
+    optionName: "Независимые продавцы",
     image1: "/images/miraden/5.png",
     image2: "/images/miraden/6.png",
-    icon: <HomeIcon width={28} height={28} />,
-    text: "Персональный каталог объектов, собранный из предложений продавцов в реальном времени",
+    icon: <CommunityIcon width={28} height={28} />,
+    text: "Собственники, риелторы и застройщики, готовые сделать персональное предложение",
     id: 3,
   },
   {
@@ -42,7 +42,6 @@ const options = [
     id: 4,
   },
 ];
-
 const FeaturesMobile = ({ className }: FeatureProps) => {
   const [activeOptionIndex, setActiveOptionIndex] = useState(0);
 

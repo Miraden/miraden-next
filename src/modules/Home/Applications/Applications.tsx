@@ -269,7 +269,7 @@ const Applications = () => {
       <div className="Container">
         <div className="Applications__head">
           <h2 className="Font_44_120">
-            Заявки за <mark className="Color_blue_primary">сегодня</mark>
+            Новые <mark className="Color_blue_primary">заявки</mark>
           </h2>
           <div className="Applications__tabs">
             {hasCyprusLocation && (
@@ -324,7 +324,7 @@ const Applications = () => {
 };
 
 const StyledApplications = styled.section`
-  padding-top: 20px;
+  padding-top: 66px;
   padding-bottom: 75px;
 
   .Applications__head {
@@ -356,6 +356,10 @@ const StyledApplications = styled.section`
 
   .Applications__listTablet {
     display: none;
+  }
+
+  .Applications__openMoreContainer {
+    margin-top: 0;
   }
 
   .Applications__openMore {

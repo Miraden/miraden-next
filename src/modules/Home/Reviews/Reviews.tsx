@@ -1,9 +1,24 @@
 import { RequestButton } from "@/components/ui";
 import { useKeenSlider } from "keen-slider/react";
-import { SetStateAction, useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { ReviewCard } from "./components/ReviewCard";
 import { ReviewButtons } from "./components/ReviewSliderButtons";
+import { BerkshireLogo } from "./components/logos/BerkshireLogo";
+import { BetterHomesLogo } from "./components/logos/BetterHomesLogo";
+import { CenturyLogo } from "./components/logos/CenturyLogo";
+import { ColdwellLogo } from "./components/logos/ColdwellLogo";
+import { ColliersLogo } from "./components/logos/ColliersLogo";
+import { CrbeLogo } from "./components/logos/CrbeLogo";
+import { CushmanLogo } from "./components/logos/CushmanLogo";
+import { EraLogo } from "./components/logos/EraLogo";
+import { JllLogo } from "./components/logos/JllLogo";
+import { KnightLogo } from "./components/logos/KnightLogo";
+import { LevelsLogo } from "./components/logos/LevelsLogo";
+import { RealStateLogo } from "./components/logos/RealStateLogo";
+import { RealtyLogo } from "./components/logos/RealtyLogo";
+import { RemaxLogo } from "./components/logos/RemaxLogo";
+import { SothebysLogo } from "./components/logos/SothebysLogo";
 
 const reviews = [
   {
@@ -15,7 +30,7 @@ const reviews = [
   },
   {
     name: "Андрей Макеев",
-    role: "Агентство",
+    role: "Клиент",
     title: "Сопровождали во всем и разъясняли каждую деталь",
     text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
     image: "/images/avatar.jpg",
@@ -29,14 +44,7 @@ const reviews = [
   },
   {
     name: "Андрей Макеев",
-    role: "Агентство",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "/images/avatar.jpg",
-  },
-  {
-    name: "Андрей Макеев",
-    role: "Риелтор",
+    role: "Клиент",
     title: "Сопровождали во всем и разъясняли каждую деталь",
     text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
     image: "/images/avatar.jpg",
@@ -50,21 +58,7 @@ const reviews = [
   },
   {
     name: "Андрей Макеев",
-    role: "Застройщик",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "/images/avatar.jpg",
-  },
-  {
-    name: "Андрей Макеев",
-    role: "Агентство",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "/images/avatar.jpg",
-  },
-  {
-    name: "Андрей Макеев",
-    role: "Застройщик",
+    role: "Клиент",
     title: "Сопровождали во всем и разъясняли каждую деталь",
     text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
     image: "/images/avatar.jpg",
@@ -76,62 +70,24 @@ const reviews = [
     text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
     image: "/images/avatar.jpg",
   },
-  {
-    name: "Андрей Макеев",
-    role: "Агентство",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "/images/avatar.jpg",
-  },
-  {
-    name: "Андрей Макеев",
-    role: "Клиент",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "/images/avatar.jpg",
-  },
-  {
-    name: "Андрей Макеев",
-    role: "Агентство",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "/images/avatar.jpg",
-  },
-  {
-    name: "Андрей Макеев",
-    role: "Риелтор",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "/images/avatar.jpg",
-  },
-  {
-    name: "Андрей Макеев",
-    role: "Клиент",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "/images/avatar.jpg",
-  },
-  {
-    name: "Андрей Макеев",
-    role: "Застройщик",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "/images/avatar.jpg",
-  },
-  {
-    name: "Андрей Макеев",
-    role: "Агентство",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "/images/avatar.jpg",
-  },
-  {
-    name: "Андрей Макеев",
-    role: "Застройщик",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "/images/avatar.jpg",
-  },
+];
+
+const agecnyReviews = [
+  { logo: <RemaxLogo /> },
+  { logo: <CenturyLogo /> },
+  { logo: <LevelsLogo /> },
+  { logo: <SothebysLogo /> },
+  { logo: <KnightLogo /> },
+  { logo: <JllLogo /> },
+  { logo: <BetterHomesLogo /> },
+  { logo: <CrbeLogo /> },
+  { logo: <ColdwellLogo /> },
+  { logo: <BerkshireLogo /> },
+  { logo: <CushmanLogo /> },
+  { logo: <RealtyLogo /> },
+  { logo: <EraLogo /> },
+  { logo: <ColliersLogo /> },
+  { logo: <RealStateLogo /> },
 ];
 
 const Reviews = () => {
@@ -178,41 +134,15 @@ const Reviews = () => {
     [instanceRef]
   );
 
-  const [role, setRole] = useState("Клиент");
+  const [isAgency, setIsAgency] = useState(false);
 
-  const filteredRoles = reviews.filter((rev) =>
-    role ? rev.role.includes(role) : true
-  );
+  const handleClickAgency = useCallback(() => {
+    setIsAgency(true);
+  }, []);
 
-  const handleButtonClick = (role: SetStateAction<string>) => {
-    setRole(role);
-  };
-
-  const isClient = reviews.some((rev) => rev.role.includes("Клиент"));
-  const isAgency = reviews.some((rev) => rev.role.includes("Агентство"));
-  const isRealtor = reviews.some((rev) => rev.role.includes("Риелтор"));
-  const isBuilders = reviews.some((rev) => rev.role.includes("Застройщик"));
-
-  useEffect(() => {
-    instanceRef.current?.update();
-  }, [role, instanceRef]);
-
-  const renderReviews = (revs: any[]) => {
-    return revs.map((rev, index) => (
-      <>
-        <div className="keen-slider__slide">
-          <ReviewCard
-            key={index}
-            text={rev.text}
-            title={rev.title}
-            role={rev.role}
-            name={rev.name}
-            image={rev.image}
-          />
-        </div>
-      </>
-    ));
-  };
+  const handleClickClient = useCallback(() => {
+    setIsAgency(false);
+  }, []);
 
   return (
     <StyledReviews>
@@ -221,93 +151,59 @@ const Reviews = () => {
           <div className="Reviews__head">
             <h2 className="Font_44_120 sm:Font_26_120">Нам доверяют</h2>
             <div className="Reviews__tabsDesktop">
-              {isClient && (
-                <RequestButton
-                  onClick={() => handleButtonClick("Клиент")}
-                  active={role === "Клиент"}
-                >
-                  Клиенты
-                </RequestButton>
-              )}
-              {isRealtor && (
-                <RequestButton
-                  onClick={() => handleButtonClick("Риелтор")}
-                  active={role === "Риелтор"}
-                >
-                  Риелторы
-                </RequestButton>
-              )}
+              <RequestButton onClick={handleClickClient} active={!isAgency}>
+                Клиенты
+              </RequestButton>
 
-              {isAgency && (
-                <RequestButton
-                  onClick={() => handleButtonClick("Агентство")}
-                  active={role === "Агентство"}
-                >
-                  Агентства
-                </RequestButton>
-              )}
-
-              {isBuilders && (
-                <RequestButton
-                  onClick={() => handleButtonClick("Застройщик")}
-                  active={role === "Застройщик"}
-                >
-                  Застройщики
-                </RequestButton>
-              )}
+              <RequestButton onClick={handleClickAgency} active={isAgency}>
+                Агентства недвижимости
+              </RequestButton>
             </div>
           </div>
         </div>
       </div>
       <div className="Reviews__tabs Container">
-        {isClient && (
-          <RequestButton
-            onClick={() => handleButtonClick("Клиент")}
-            active={role === "Клиент"}
-          >
-            Клиенты
-          </RequestButton>
-        )}
-        {isRealtor && (
-          <RequestButton
-            onClick={() => handleButtonClick("Риелтор")}
-            active={role === "Риелтор"}
-          >
-            Риелторы
-          </RequestButton>
-        )}
+        <RequestButton onClick={handleClickClient}>Клиенты</RequestButton>
 
-        {isAgency && (
-          <RequestButton
-            onClick={() => handleButtonClick("Агентство")}
-            active={role === "Агентство"}
-          >
-            Агентства
-          </RequestButton>
-        )}
-
-        {isBuilders && (
-          <RequestButton
-            onClick={() => handleButtonClick("Застройщик")}
-            active={role === "Застройщик"}
-          >
-            Застройщики
-          </RequestButton>
-        )}
+        <RequestButton onClick={handleClickAgency}>
+          Агентства недвижимости
+        </RequestButton>
       </div>
       <div className="Reviews__bottom">
         <div className="Container">
-          <div className="Reviews__slider keen-slider" ref={sliderRef}>
-            <>{renderReviews(filteredRoles)}</>
-          </div>
-          <div className="Reviews__buttonsContainer">
-            <ReviewButtons
-              currentSlide={currentSlide}
-              maxSlide={maxSlide}
-              handleClickPrevButton={handleClickPrevButton}
-              handleClickNextButton={handleClickNextButton}
-            />
-          </div>
+          {isAgency ? (
+            <div className="Reviews__agencys">
+              {agecnyReviews.map((review, index) => (
+                <div className="Reviews__agencyCard" key={index}>
+                  {review.logo}
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="Reviews__slider keen-slider" ref={sliderRef}>
+              {reviews.map((review, index) => (
+                <div className="keen-slider__slide" key={index}>
+                  <ReviewCard
+                    text={review.text}
+                    title={review.title}
+                    role={review.role}
+                    name={review.name}
+                    image={review.image}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+          {isAgency ? null : (
+            <div className="Reviews__buttonsContainer">
+              <ReviewButtons
+                currentSlide={currentSlide}
+                maxSlide={maxSlide}
+                handleClickPrevButton={handleClickPrevButton}
+                handleClickNextButton={handleClickNextButton}
+              />
+            </div>
+          )}
         </div>
       </div>
     </StyledReviews>
@@ -315,6 +211,7 @@ const Reviews = () => {
 };
 
 const StyledReviews = styled.section`
+  padding-top: 70px;
   padding-left: 20px;
   padding-right: 20px;
 
@@ -338,7 +235,7 @@ const StyledReviews = styled.section`
   .Reviews__bottom {
     overflow: hidden;
     padding-top: 0;
-    padding-bottom: 75px;
+    padding-bottom: 70px;
     border-radius: 0 0 10px 10px;
   }
 
@@ -380,6 +277,33 @@ const StyledReviews = styled.section`
   .Reviews__slider {
     display: flex;
     margin-top: 50px;
+  }
+
+  .Reviews__agencys {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 10px;
+    margin-top: 50px;
+  }
+
+  .Reviews__agencyCard {
+    padding-top: 24px;
+    padding-bottom: 24px;
+    box-shadow: 0 0 0 2px inset #f1f7ff;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .Reviews__agencyCard:nth-child(13) {
+    grid-column: 1 / span 2;
+  }
+  .Reviews__agencyCard:nth-child(14) {
+    grid-column: 3 / span 2;
+  }
+  .Reviews__agencyCard:nth-child(15) {
+    grid-column: 5 / span 2;
   }
 
   .Reviews__buttonsContainer {
@@ -430,6 +354,23 @@ const StyledReviews = styled.section`
 
     .Reviews__slider {
       margin-top: 40px;
+    }
+
+    .Reviews__agencys {
+      margin-top: 40px;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .Reviews__agencyCard:nth-child(13),
+    .Reviews__agencyCard:nth-child(14),
+    .Reviews__agencyCard:nth-child(15) {
+      grid-column: auto;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .Reviews__agencys {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 `;

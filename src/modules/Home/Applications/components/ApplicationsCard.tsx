@@ -42,7 +42,7 @@ const ApplicationsCard = ({
 
         <p className="Color_text_disabled">3 часа назад</p>
       </div>
-      <h3 className="Card__title Font_18_120">{title}</h3>
+      <p className="Card__title Font_18_120">{title}</p>
       <div className="Card__location">
         <PointIconFooter />
         <p className="Color_text_grey">{location}</p>
@@ -96,6 +96,9 @@ const StyledApplicationsCard = styled.div`
 
   .Card__title {
     margin-top: 15px;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 100% !important;
   }
 
   .Card__location {
