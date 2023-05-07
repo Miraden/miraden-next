@@ -84,15 +84,36 @@ const Footer = ({ className }: FooterProps) => {
           </div>
         </div>
       </StyledFooterTop>
+
+      <StyledFooterSocialMobile>
+        <div className="Footer__contactsMobile Font_14_140">
+          <p className="Color_text_grey">
+            Заходите в наш Telegram канал <br /> и будьте в курсе новых заявок
+          </p>
+          <Button
+            leftIcon={<TelegramPureIcon />}
+            className="Footer__telegramLink"
+          >
+            Telegram
+          </Button>
+          <div className="Footer__socialLinksMobile">
+            <FacebookIconFooter />
+            <InstagramIconFooter />
+          </div>
+          <Link href="/" className="Font_16_20 lg:Font_14_140">
+            info@miraden.com
+          </Link>
+        </div>
+      </StyledFooterSocialMobile>
       <StyledFooterBottom>
         <div className="Container">
-          <div className="Footer__addLinks">
+          <div className="Footer__addLinks  Font_14_140 lg:Font_12_16">
             <p className="Footer__address">
               <PointIconFooter width={16} hanging={16} />
               <span>10314 Estonia. Tallinn 10314 Lelle Street 22</span>
             </p>
             <p className="Footer__rights">© 2023 Все права защищены</p>
-            <Link href="" className="Footer__privacyPolicy Font_14_140">
+            <Link href="" className="Footer__privacyPolicy">
               Политика конфиденциальности и обработки данных{" "}
             </Link>
           </div>
@@ -103,6 +124,52 @@ const Footer = ({ className }: FooterProps) => {
 };
 
 const StyledFooter = styled.footer``;
+
+const StyledFooterSocialMobile = styled.div`
+  display: none;
+  background: #fff;
+  .Footer__socialLinksMobile {
+    display: none;
+  }
+
+  @media (max-width: 576px) {
+    margin-top: -20px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 32px;
+    padding-bottom: 32px;
+
+    .Footer__socialLinksMobile {
+      display: grid;
+      margin-top: 32px;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 12px;
+
+      margin-bottom: 20px;
+    }
+  }
+
+  .Footer__contactsMobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .Footer__telegramLink {
+    margin-top: 16px;
+    width: 100%;
+  }
+
+  a {
+    color: #7786a5 !important;
+  }
+  a:hover {
+    color: #4e6af3 !important;
+  }
+`;
 
 const StyledFooterTopMobile = styled.div`
   display: none;
@@ -119,6 +186,15 @@ const StyledFooterTopMobile = styled.div`
 
     .Footer__socialLinks {
       justify-content: center;
+    }
+  }
+
+  @media (max-width: 576px) {
+    padding-top: 44px;
+    padding-bottom: 32px;
+
+    .Footer__socialLinks {
+      display: none;
     }
   }
 `;
@@ -263,6 +339,7 @@ const StyledFooterTop = styled.div`
       padding-top: 20px;
       grid-template-columns: repeat(4, 1fr);
       grid-gap: 12px;
+      padding-bottom: 34px;
       div {
         justify-content: center;
       }
@@ -317,11 +394,12 @@ const StyledFooterTop = styled.div`
 
   @media (max-width: 576px) {
     .Footer__head {
-      padding-top: 44px;
-      padding-bottom: 32px;
+      padding-top: 24px;
+      padding-bottom: 24px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      border-bottom: 1px solid #e1edfd;
 
       ul {
         text-align: center;
@@ -330,9 +408,29 @@ const StyledFooterTop = styled.div`
       }
     }
 
+    .Footer__navLinksLeft:not(:first-child) {
+      margin-top: -20px;
+      li {
+        margin-top: 20px;
+      }
+    }
+
+    .Footer__navLinksRight:not(:first-child) {
+      margin-top: -10px;
+
+      li {
+        margin-top: 20px;
+      }
+    }
+
     .Footer__contacts {
+      display: none;
       padding-left: 20px;
       text-align: center;
+    }
+
+    .Footer__socialLinks {
+      display: none;
     }
   }
 `;
@@ -403,6 +501,10 @@ const StyledFooterBottom = styled.div`
       text-align: center;
       grid-gap: 10px;
     }
+  }
+
+  @media (max-width: 576px) {
+    margin-top: 16px;
   }
 `;
 

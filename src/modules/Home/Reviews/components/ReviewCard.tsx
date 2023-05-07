@@ -41,8 +41,8 @@ const ReviewCard = ({ className, name, role, image, text, title }: Props) => {
         <StarIconFilled width={18} hanging={18} />
       </div>
       <div className="Card__text">
-        <h3 className="Font_22_120_600 sm:Font_16_120_600">{title}</h3>
-        <p className="Font_16_24 sm:Font_14_140">{text}</p>
+        <h3 className="Font_22_120_600 sm:Font_18_120_600">{title}</h3>
+        <p className="Font_16_24 sm:Font_16_24">{text}</p>
       </div>
     </StyledReviewCard>
   );

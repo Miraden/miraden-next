@@ -371,6 +371,7 @@ const StyledReviews = styled.section`
   }
 
   @media (max-width: 576px) {
+    padding-top: 65px;
     .Reviews__agencys {
       grid-template-columns: repeat(2, 1fr);
     }

@@ -90,7 +90,8 @@ const StyledFeatures = styled.section`
   }
 
   @media (max-width: 576px) {
-    padding-top: 32px;
+    padding-top: 100px;
+    padding-bottom: 35px;
   }
 `;
 

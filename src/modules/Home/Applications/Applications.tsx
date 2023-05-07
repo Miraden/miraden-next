@@ -268,7 +268,7 @@ const Applications = () => {
     <StyledApplications>
       <div className="Container">
         <div className="Applications__head">
-          <h2 className="Font_44_120">
+          <h2 className="Font_44_120 sm:Font_26_120">
             Новые <mark className="Color_blue_primary">заявки</mark>
           </h2>
           <div className="Applications__tabs">

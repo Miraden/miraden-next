@@ -130,7 +130,7 @@ const StyledHeroStats = styled.div`
       margin-left: 0;
       padding-left: 0;
       padding-top: 20px;
-      margin-top: 18px;
+      margin-top: 20px;
       border-top: 2px solid #e1edfd;
     }
 

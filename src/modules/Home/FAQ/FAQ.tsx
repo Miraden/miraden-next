@@ -224,7 +224,7 @@ const StyledFAQ = styled.section`
   }
 
   @media (max-width: 576px) {
-    padding-bottom: 100px;
+    padding-bottom: 120px;
 
     .FAQ__description {
       margin-top: 20px;

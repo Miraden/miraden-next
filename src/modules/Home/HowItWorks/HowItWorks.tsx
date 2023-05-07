@@ -251,6 +251,7 @@ const StyledHowItWorks = styled.section`
   }
 
   .HowItWorks__imageContainer {
+    position: relative;
     display: flex;
     align-items: flex-end;
   }
@@ -354,6 +355,8 @@ const StyledHowItWorks = styled.section`
       img {
         width: 141px;
         height: 202px;
+        left: 50px;
+        position: absolute;
       }
     }
 
@@ -361,6 +364,10 @@ const StyledHowItWorks = styled.section`
       padding: 4px;
       width: 28px;
       height: 28px;
+
+      position: absolute;
+      left: 30px;
+      bottom: 10px;
     }
 
     .HowItWorks__listItemContent {

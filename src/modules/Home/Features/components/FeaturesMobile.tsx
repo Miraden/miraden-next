@@ -96,10 +96,13 @@ const FeaturesMobile = ({ className }: FeatureProps) => {
                   </div>
 
                   <p
-                    className={cn("Features__headDescription Font_18_150", {
-                      Features__headDescriptionActive:
-                        optionName == activeOption.optionName,
-                    })}
+                    className={cn(
+                      "Features__headDescription Font_18_150 sm:Font_16_24",
+                      {
+                        Features__headDescriptionActive:
+                          optionName == activeOption.optionName,
+                      }
+                    )}
                   >
                     {text}
                   </p>
@@ -280,15 +283,9 @@ const StyledFeaturesMobile = styled.section`
   }
 
   @media (max-width: 576px) {
-    .Features__options {
-      h2 {
-        padding-left: 20px;
-      }
-    }
-
     .Features__iconContainer {
       padding: 10px;
-      img {
+      svg {
         width: 24px;
         height: 24px;
       }
@@ -300,9 +297,18 @@ const StyledFeaturesMobile = styled.section`
       margin-bottom: 34px;
     }
 
+    .Features__tabs {
+      margin-top: 20px;
+
+      button:not(:first-child) {
+        margin-top: 12px;
+      }
+    }
+
     .Features__imagesContainer {
       max-width: 260px;
       height: 427px;
+      margin-top: 20px;
 
       img {
         border-radius: 15px;

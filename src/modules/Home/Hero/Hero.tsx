@@ -126,6 +126,10 @@ const StyledHero = styled.section`
   @media (max-width: 576px) {
     padding-top: 163px;
 
+    .Hero__stats {
+      margin-top: 50px;
+    }
+
     .Hero__description {
       margin-top: 20px;
     }

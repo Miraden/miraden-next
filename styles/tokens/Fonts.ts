@@ -241,6 +241,11 @@ const Fonts = createGlobalStyle`
       font-size: 14px;
       line-height: 140%;
     }
+
+    .lg\\:Font_12_16 {
+      font-size: 12px;
+      line-height: 16px;
+    }
   }
 
   @media (max-width: 576px) {
@@ -277,7 +282,7 @@ const Fonts = createGlobalStyle`
       font-size: 16px;
       line-height: 24px;
     }
-
+  
     .sm\\:Font_16_120_600 {
       font-size: 16px;
       line-height: 120%;

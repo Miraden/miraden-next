@@ -161,6 +161,14 @@ const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
     width: fit-content;
     margin-bottom: 32px;
   }
+
+  @media (max-width: 576px) {
+    .Accordion__title {
+      h4 {
+        margin-top: 2px;
+      }
+    }
+  }
 `;
 
 export { Accordion };
