@@ -9,34 +9,25 @@ interface Props {
 
 type Option = "new" | "secondary" | "any";
 
-const CreateStep4 = ({ className }: Props) => {
+const CreateStep5 = ({ className }: Props) => {
   const [selected, setSelected] = useState<Option | null>(null);
-  const [showAllYears, setShowAllYears] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  const [startMonth, setStartMonth] = useState<number | null>(null);
+  const [startSquare, setStartSquare] = useState<number | null>(null);
   const [selectedRange, setSelectedRange] = useState<number[]>([]);
   const [selectedYear, setSelectedYear] = useState();
 
-  const handleYearSelection = (year: any) => {
-    setSelectedYear(year);
-  };
-  const [maxVisibleMonths, setMaxVisibleMonths] = useState(18);
-  const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-    setShowMore(false); // reset show more button state when new option is selected
-    setMaxVisibleMonths(18);
-  }, []);
+  const [maxVisibleSquare, setMaxVisibleSquare] = useState(21);
 
-  const handleMonthClick = (monthIndex: number) => {
-    if (startMonth === null) {
+  const handleSquareClick = (squareIndex: number) => {
+    if (startSquare === null) {
       // start new range
-      setStartMonth(monthIndex);
-      setSelectedRange([monthIndex]);
+      setStartSquare(squareIndex);
+      setSelectedRange([squareIndex]);
     } else {
       // continue existing range
-      const endMonth = monthIndex;
-      const rangeStart = Math.min(startMonth, endMonth);
-      const rangeEnd = Math.max(startMonth, endMonth);
+      const endSquare = squareIndex;
+      const rangeStart = Math.min(startSquare, endSquare);
+      const rangeEnd = Math.max(startSquare, endSquare);
       const selectedRange: SetStateAction<number[]> = [];
       for (let i = rangeStart; i <= rangeEnd; i++) {
         selectedRange.push(i);
@@ -48,14 +39,13 @@ const CreateStep4 = ({ className }: Props) => {
       } else {
         // create new range
         setSelectedRange(selectedRange);
-        setStartMonth(null);
+        setStartSquare(null);
       }
     }
 
-    // add all months between start and end of selected range
-    if (startMonth !== null && monthIndex !== startMonth) {
-      const rangeStart = Math.min(startMonth, monthIndex);
-      const rangeEnd = Math.max(startMonth, monthIndex);
+    if (startSquare !== null && squareIndex !== startSquare) {
+      const rangeStart = Math.min(startSquare, squareIndex);
+      const rangeEnd = Math.max(startSquare, squareIndex);
       const newRange = [];
       for (let i = rangeStart; i <= rangeEnd; i++) {
         newRange.push(i);
@@ -74,78 +64,158 @@ const CreateStep4 = ({ className }: Props) => {
     }
   };
 
-  const handleShowAllYears = useCallback(() => {
-    setShowAllYears(true);
-  }, []);
-
   const handleShowMore = useCallback(() => {
     setShowMore(true);
-    setMaxVisibleMonths(64);
+    setMaxVisibleSquare(64);
   }, []);
 
-  const years = [];
-  const currentYear = new Date().getFullYear();
-  const minYear = currentYear - 50;
+  const squares = [];
+  const defaultSquare = new Date().getFullYear();
+  const minSquare = defaultSquare - 50;
 
-  for (let year = currentYear; year >= minYear; year--) {
-    years.push(year);
+  for (let square = defaultSquare; square >= minSquare; square--) {
+    squares.push(square);
   }
 
-  const visibleYears = showAllYears ? years : years.slice(0, 10);
+  // //////////////////////////////////
+
+  const [startLivingSquare, setStartLivingSquare] = useState<number | null>(
+    null
+  );
+  const [selectedLivingRage, setSelectedLivingRage] = useState<number[]>([]);
+  const [showMoreLiving, setShowMoreLiving] = useState(false);
+
+  const [maxVisibleLivingSquare, setMaxVisibleLivingSquare] = useState(21);
+  const [maxVisibleLiving, setMaxVisibleLiving] = useState(21);
+
+  const handleLivingSquareClick = (squareIndexLiving: number) => {
+    if (startLivingSquare === null) {
+      // start new range
+      setStartLivingSquare(squareIndexLiving);
+      setSelectedLivingRage([squareIndexLiving]);
+    } else {
+      // continue existing range
+      const endLivingSquare = squareIndexLiving;
+      const livingRangeStart = Math.min(startLivingSquare, endLivingSquare);
+      const livingRangeEnd = Math.max(startLivingSquare, endLivingSquare);
+      const selectedLivingRage: SetStateAction<number[]> = [];
+      for (let i = livingRangeStart; i <= livingRangeEnd; i++) {
+        selectedLivingRage.push(i);
+      }
+
+      if (selectedLivingRage.every((m) => selectedLivingRage.includes(m))) {
+        // update existing range
+        setSelectedLivingRage(selectedLivingRage);
+      } else {
+        // create new range
+        setSelectedLivingRage(selectedLivingRage);
+        setStartLivingSquare(null);
+      }
+    }
+
+    if (startLivingSquare !== null && squareIndexLiving !== startLivingSquare) {
+      const livingRangeStart = Math.min(startLivingSquare, squareIndexLiving);
+      const livingRangeEnd = Math.max(startLivingSquare, squareIndexLiving);
+      const newRange = [];
+      for (let i = livingRangeStart; i <= livingRangeEnd; i++) {
+        newRange.push(i);
+      }
+
+      if (
+        selectedLivingRage.length > 0 &&
+        newRange.every((m) => selectedLivingRage.includes(m))
+      ) {
+        // update existing range
+        setSelectedLivingRage(newRange);
+      } else {
+        // add new range to existing range
+        setSelectedLivingRage([...selectedLivingRage, ...newRange]);
+      }
+    }
+  };
+
+  const handleShowMoreLiving = useCallback(() => {
+    setShowMoreLiving(true);
+    setMaxVisibleLiving(64);
+  }, []);
+
+  const livingSquares = [];
+  const defaultLivingSquare = new Date().getFullYear();
+  const minLivingSquare = defaultLivingSquare - 50;
+
+  for (let square = defaultLivingSquare; square >= minLivingSquare; square--) {
+    livingSquares.push(square);
+  }
 
   return (
     <StyledRegStep1 className={className}>
       <div className="">
         <div className="Reg__head">
           <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Укажите состояние недвижимости
+            Укажите общую площадь недвижимости
           </h1>
         </div>
 
-        <div className="Reg__options ">
-          <RequestButton
-            onClick={() => handleSelect("new")}
-            active={selected === "new"}
-          >
-            Новая
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelect("secondary")}
-            active={selected === "secondary"}
-          >
-            Вторичная
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelect("any")}
-            active={selected === "any"}
-          >
-            Неважно
-          </RequestButton>
+        <div className="Reg__monthsContainer">
+          <div className="Reg__months">
+            {[...Array(64)].map((_, index) => {
+              const label = index + "0 м²";
+              if (index === 0) {
+                return label === "уже построена";
+              }
+              if (index >= maxVisibleSquare) {
+                return null;
+              }
+
+              const isActive = selectedRange.includes(index);
+              const isWithinRange =
+                selectedRange.length === 2 &&
+                index >= selectedRange[0] &&
+                index <= selectedRange[1];
+              return (
+                <RequestButton
+                  key={`${index}`}
+                  onClick={() => handleSquareClick(index)}
+                  active={isActive}
+                  ranged={isWithinRange}
+                >
+                  {label}
+                </RequestButton>
+              );
+            })}
+            {maxVisibleSquare < 64 && (
+              <RequestButton
+                onClick={handleShowMore}
+                className="ShowMoreButton Color_blue_primary"
+              >
+                Ещё {squares.length - maxVisibleSquare}
+              </RequestButton>
+            )}
+          </div>
         </div>
-        {selected === "new" && (
+
+        <div>
+          <h2>Жилая площадь</h2>
           <div className="Reg__monthsContainer">
-            <h2>Ввод в эксплуатацию через</h2>
             <div className="Reg__months">
               {[...Array(64)].map((_, index) => {
-                const month = index % 12;
-
-                const label = index + " мес";
+                const label = index + "0 м²";
                 if (index === 0) {
                   return label === "уже построена";
                 }
-                if (index >= maxVisibleMonths) {
+                if (index >= maxVisibleLivingSquare) {
                   return null;
                 }
 
-                const isActive = selectedRange.includes(index);
+                const isActive = selectedLivingRage.includes(index);
                 const isWithinRange =
-                  selectedRange.length === 2 &&
-                  index >= selectedRange[0] &&
-                  index <= selectedRange[1];
+                  selectedLivingRage.length === 2 &&
+                  index >= selectedLivingRage[0] &&
+                  index <= selectedLivingRage[1];
                 return (
                   <RequestButton
                     key={`${index}`}
-                    onClick={() => handleMonthClick(index)}
+                    onClick={() => handleLivingSquareClick(index)}
                     active={isActive}
                     ranged={isWithinRange}
                   >
@@ -153,36 +223,18 @@ const CreateStep4 = ({ className }: Props) => {
                   </RequestButton>
                 );
               })}
-              {maxVisibleMonths < 64 && (
+              {maxVisibleSquare < 64 && (
                 <RequestButton
-                  onClick={handleShowMore}
+                  onClick={handleShowMoreLiving}
                   className="ShowMoreButton Color_blue_primary"
                 >
-                  Ещё {maxVisibleMonths}
+                  Ещё {maxVisibleSquare}
                 </RequestButton>
               )}
             </div>
           </div>
-        )}
-        {selected === "secondary" && (
-          <div>
-            <h2>Год постройки</h2>
-            <div className="Reg__options">
-              {visibleYears.map((year) => (
-                <RequestButton
-                  key={year}
-                  active={year === selectedYear}
-                  onClick={() => handleYearSelection(year)}
-                >
-                  {year}
-                </RequestButton>
-              ))}
-            </div>
-            {!showAllYears && years.length > 10 && (
-              <button onClick={handleShowAllYears}>Показать еще</button>
-            )}
-          </div>
-        )}
+        </div>
+
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
           <div className="Reg__footerBack">
@@ -202,7 +254,7 @@ const CreateStep4 = ({ className }: Props) => {
             <div className="Reg__footerSteps">
               <span className="Font_16_24">Шаг</span>
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                4
+                5
               </span>
               <span className="Font_16_140">/ 11</span>
             </div>
@@ -215,7 +267,7 @@ const CreateStep4 = ({ className }: Props) => {
               <p className="Color_blue_primary Font_16_140">317</p>
             </div>
 
-            <Button disabled={!selected} href="/customer/create-step-5">
+            <Button disabled={!selectedRange} href="/customer/create-step-4">
               Далее
             </Button>
           </div>
@@ -292,7 +344,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 29%;
+      width: 33%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -408,4 +460,4 @@ const StyledRegStep1 = styled.section`
   }
 `;
 
-export { CreateStep4 };
+export { CreateStep5 };
