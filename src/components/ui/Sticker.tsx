@@ -80,10 +80,12 @@ const StyledSticker = styled.div`
   .Sticker__black {
     background: #3a465d;
     padding: 1px 7px;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.07em;
     border-radius: 24px;
     text-transform: uppercase;
     font-weight: 600;
-    letter-spacing: -0.07em;
   }
 `;
 

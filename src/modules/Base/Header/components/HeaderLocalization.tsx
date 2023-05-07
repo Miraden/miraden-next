@@ -69,7 +69,8 @@ const StyledDropdownInput = styled.div<Props>`
   max-width: fit-content;
   position: relative;
   color: #fff;
-
+  user-select: none;
+  outline: none;
   .DropdownInput_selectContainer {
     right: 10px;
     top: 4px;
@@ -98,6 +99,7 @@ const StyledDropdownInput = styled.div<Props>`
   }
 
   .DropdownInput_select {
+    overflow-y: hidden; // тестово для сколла
     &:focus {
       box-shadow: 0 0 0 2px #f845fc;
       div {

@@ -78,6 +78,10 @@ const StyledApplicationsCard = styled.div`
   background: #fff;
   padding: 20px;
   border-radius: 10px;
+  transition: 0.15s ease;
+  :hover {
+    box-shadow: 0 0 0 2px inset #d4ddee;
+  }
 
   .Card__head {
     justify-content: space-between;

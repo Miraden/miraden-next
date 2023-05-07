@@ -155,7 +155,7 @@ const Reviews = () => {
                 Клиенты
               </RequestButton>
 
-              <RequestButton onClick={handleClickAgency}>
+              <RequestButton onClick={handleClickAgency} active={isAgency}>
                 Агентства недвижимости
               </RequestButton>
             </div>

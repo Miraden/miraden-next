@@ -342,6 +342,7 @@ const StyledApplications = styled.section`
     button {
       padding: 10px 20px;
       width: fit-content;
+      background: #fff;
     }
   }
 
