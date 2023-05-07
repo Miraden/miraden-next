@@ -1,6 +1,6 @@
 import { Button, RequestButton } from "@/components/ui";
 import { ArrowIcon } from "@/icons";
-import { useCallback, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -13,13 +13,66 @@ const CreateStep4 = ({ className }: Props) => {
   const [selected, setSelected] = useState<Option | null>(null);
   const [showAllYears, setShowAllYears] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [startMonth, setStartMonth] = useState<number | null>(null);
+  const [selectedRange, setSelectedRange] = useState<number[]>([]);
+  const [selectedYear, setSelectedYear] = useState();
 
+  const handleYearSelection = (year: any) => {
+    setSelectedYear(year);
+  };
   const [maxVisibleMonths, setMaxVisibleMonths] = useState(18);
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
     setShowMore(false); // reset show more button state when new option is selected
     setMaxVisibleMonths(18);
   }, []);
+
+  const handleMonthClick = (monthIndex: number) => {
+    if (startMonth === null) {
+      // start new range
+      setStartMonth(monthIndex);
+      setSelectedRange([monthIndex]);
+    } else {
+      // continue existing range
+      const endMonth = monthIndex;
+      const rangeStart = Math.min(startMonth, endMonth);
+      const rangeEnd = Math.max(startMonth, endMonth);
+      const selectedRange: SetStateAction<number[]> = [];
+      for (let i = rangeStart; i <= rangeEnd; i++) {
+        selectedRange.push(i);
+      }
+
+      if (selectedRange.every((m) => selectedRange.includes(m))) {
+        // update existing range
+        setSelectedRange(selectedRange);
+      } else {
+        // create new range
+        setSelectedRange(selectedRange);
+        setStartMonth(null);
+      }
+    }
+
+    // add all months between start and end of selected range
+    if (startMonth !== null && monthIndex !== startMonth) {
+      const rangeStart = Math.min(startMonth, monthIndex);
+      const rangeEnd = Math.max(startMonth, monthIndex);
+      const newRange = [];
+      for (let i = rangeStart; i <= rangeEnd; i++) {
+        newRange.push(i);
+      }
+
+      if (
+        selectedRange.length > 0 &&
+        newRange.every((m) => selectedRange.includes(m))
+      ) {
+        // update existing range
+        setSelectedRange(newRange);
+      } else {
+        // add new range to existing range
+        setSelectedRange([...selectedRange, ...newRange]);
+      }
+    }
+  };
 
   const handleShowAllYears = useCallback(() => {
     setShowAllYears(true);
@@ -39,6 +92,8 @@ const CreateStep4 = ({ className }: Props) => {
   }
 
   const visibleYears = showAllYears ? years : years.slice(0, 10);
+
+  console.log(selectedRange);
 
   return (
     <StyledRegStep1 className={className}>
@@ -70,42 +125,57 @@ const CreateStep4 = ({ className }: Props) => {
           </RequestButton>
         </div>
         {selected === "new" && (
-          <div className="Reg__options ">
-            {[...Array(64)].map((_, index) => {
-              const month = index % 12;
+          <div className="Reg__monthsContainer">
+            <h2>Ввод в эксплуатацию через</h2>
+            <div className="Reg__months">
+              {[...Array(64)].map((_, index) => {
+                const month = index % 12;
 
-              const label = index + " мес";
-              if (index === 0) {
-                return label === "уже построена";
-              }
-              if (index >= maxVisibleMonths) {
-                return null;
-              }
+                const label = index + " мес";
+                if (index === 0) {
+                  return label === "уже построена";
+                }
+                if (index >= maxVisibleMonths) {
+                  return null;
+                }
 
-              return (
+                const isActive = selectedRange.includes(index);
+                const isWithinRange =
+                  selectedRange.length === 2 &&
+                  index >= selectedRange[0] &&
+                  index <= selectedRange[1];
+                return (
+                  <RequestButton
+                    key={`${index}`}
+                    onClick={() => handleMonthClick(index)}
+                    active={isActive}
+                    ranged={isWithinRange}
+                  >
+                    {label}
+                  </RequestButton>
+                );
+              })}
+              {maxVisibleMonths < 64 && (
                 <RequestButton
-                  key={`${month}`}
-                  onClick={() => {}}
-                  active={false}
+                  onClick={handleShowMore}
+                  className="ShowMoreButton Color_blue_primary"
                 >
-                  {label}
+                  Ещё {maxVisibleMonths}
                 </RequestButton>
-              );
-            })}
-            {maxVisibleMonths < 64 && (
-              <button onClick={handleShowMore} className="ShowMoreButton">
-                Показать ещё
-              </button>
-            )}
+              )}
+            </div>
           </div>
         )}
-
         {selected === "secondary" && (
           <div>
             <h2>Год постройки</h2>
             <div className="Reg__options">
               {visibleYears.map((year) => (
-                <RequestButton key={year} onClick={() => {}}>
+                <RequestButton
+                  key={year}
+                  active={year === selectedYear}
+                  onClick={() => handleYearSelection(year)}
+                >
                   {year}
                 </RequestButton>
               ))}
@@ -116,7 +186,6 @@ const CreateStep4 = ({ className }: Props) => {
           </div>
         )}
         <div className="Reg__progressBar"></div>
-
         <div className="Reg__footer">
           <div className="Reg__footerBack">
             <Button
@@ -196,6 +265,24 @@ const StyledRegStep1 = styled.section`
       span {
         text-align: initial;
       }
+    }
+  }
+
+  .Reg__monthsContainer {
+    padding: 30px;
+  }
+
+  .Reg__months {
+    display: flex;
+    flex-wrap: wrap;
+
+    margin-left: -10px;
+    margin-top: -10px;
+    button {
+      padding: 10px 20px;
+      width: fit-content;
+      margin-left: 10px;
+      margin-top: 10px;
     }
   }
 

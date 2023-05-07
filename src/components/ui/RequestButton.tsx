@@ -13,6 +13,7 @@ interface RequestButtonProps {
   children?: ReactNode;
   disabled?: boolean;
   active?: boolean;
+  ranged?: boolean;
 }
 
 const RequestButton = ({
@@ -20,6 +21,7 @@ const RequestButton = ({
   onClick,
   children,
   href,
+  ranged,
   type,
   compact,
   narrow,
@@ -61,6 +63,7 @@ const RequestButton = ({
         Button_withoutLabel: !children,
         disabled: disabled,
         isActive: active,
+        ranged: ranged,
       })}
       type={type}
     >
@@ -78,6 +81,11 @@ const StyledButton = styled.a`
   border: none;
   height: fit-content;
   transition: 0.2s ease;
+
+  &.ranged {
+    background: ${({ theme }) =>
+      theme.colors.button.request["hover"]} !important;
+  }
 
   &.isActive {
     background: ${({ theme }) =>
