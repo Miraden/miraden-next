@@ -96,9 +96,6 @@ const StyledApplicationsCard = styled.div`
 
   .Card__title {
     margin-top: 15px;
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    line-height: 100% !important;
   }
 
   .Card__location {

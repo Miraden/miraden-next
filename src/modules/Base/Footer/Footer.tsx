@@ -50,18 +50,18 @@ const Footer = ({ className }: FooterProps) => {
                 <InstagramIconFooter />
               </div>
             </div>
-            <ul className="Footer__navLinksLeft Font_16_24 lg:Font_14_140">
+            <ul className="Footer__navLinksLeft">
               {linksLeft.map((link, index) => (
                 <li key={index}>
-                  <Link href="/">
+                  <Link href="/" className="Font_16_20 lg:Font_14_140">
                     <p>{link.label}</p>
                   </Link>
                 </li>
               ))}
             </ul>
-            <ul className="Footer__navLinksRight Font_16_24 lg:Font_14_140">
+            <ul className="Footer__navLinksRight">
               {linksRight.map((link, index) => (
-                <li key={index}>
+                <li key={index} className="Font_16_20 lg:Font_14_140">
                   <Link href="/">
                     <p>{link.label}</p>
                   </Link>
@@ -89,12 +89,12 @@ const Footer = ({ className }: FooterProps) => {
           <div className="Footer__addLinks">
             <p className="Footer__address">
               <PointIconFooter width={16} hanging={16} />
-              <span>10314 Estonia. Tallinn 10314 Pikk tn 62-6</span>
+              <span>10314 Estonia. Tallinn 10314 Lelle Street 22</span>
             </p>
-            <p className="Footer__rights">© 2023 Все права защищен</p>
-            <a className="Footer__privacyPolicy">
+            <p className="Footer__rights">© 2023 Все права защищены</p>
+            <Link href="" className="Footer__privacyPolicy Font_14_140">
               Политика конфиденциальности и обработки данных{" "}
-            </a>
+            </Link>
           </div>
         </div>
       </StyledFooterBottom>
@@ -168,7 +168,7 @@ const StyledFooterTop = styled.div`
   }
 
   .Footer__description {
-    margin-top: 10px;
+    margin-top: 8px;
   }
 
   .Footer__navLinksLeft {
@@ -185,7 +185,7 @@ const StyledFooterTop = styled.div`
     }
 
     li:not(:first-child) {
-      margin-top: 25px;
+      margin-top: 30px;
     }
   }
 
@@ -201,7 +201,7 @@ const StyledFooterTop = styled.div`
       }
     }
     li:not(:first-child) {
-      margin-top: 25px;
+      margin-top: 30px;
     }
   }
 
@@ -236,6 +236,14 @@ const StyledFooterTop = styled.div`
       grid-gap: 20px;
     }
 
+    .Footer__description {
+      margin-top: 4px;
+    }
+
+    .Footer__socialLinks {
+      margin-top: 20px;
+    }
+
     .Footer__navLinksRight {
       grid-column: 6 / span 3;
     }
@@ -252,7 +260,7 @@ const StyledFooterTop = styled.div`
     }
 
     .Footer__head {
-      padding-top: 32px;
+      padding-top: 20px;
       grid-template-columns: repeat(4, 1fr);
       grid-gap: 12px;
       div {
@@ -277,6 +285,21 @@ const StyledFooterTop = styled.div`
       grid-row: 2;
       grid-column: 1 / span 1;
       padding-left: 20px;
+    }
+
+    .Footer__navLinksLeft:not(:first-child) {
+      margin-top: -25px;
+      li {
+        margin-top: 25px;
+      }
+    }
+
+    .Footer__navLinksRight:not(:first-child) {
+      margin-top: -25px;
+
+      li {
+        margin-top: 25px;
+      }
     }
 
     .Footer__contacts {
@@ -353,8 +376,18 @@ const StyledFooterBottom = styled.div`
   }
 
   .Footer__privacyPolicy {
-    padding-left: 21px;
+    padding-left: 16px;
     grid-column: 9 / span 4;
+
+    a {
+      color: #7786a5;
+      padding: 0;
+      :hover {
+        transition: 0.15s ease;
+
+        color: #4e6af3;
+      }
+    }
   }
 
   @media (max-width: 1024px) {

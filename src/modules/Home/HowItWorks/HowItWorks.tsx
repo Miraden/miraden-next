@@ -97,7 +97,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                   </div>
                   <div className="HowItWorks__listItemContent">
                     <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
-                      Выберите <br /> <mark>лучших исполнителей</mark>
+                      <mark>Выберите</mark> <br /> лучших исполнителей
                     </h3>
                     <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
                       Обменяйтесь контактами с подходящими исполнителями
@@ -234,8 +234,9 @@ const StyledHowItWorks = styled.section`
     margin-top: 50px;
 
     li {
+      /* max-width: 320px; */
       p {
-        /* max-width: 320px; */
+        max-width: 320px;
       }
 
       mark {
@@ -245,7 +246,7 @@ const StyledHowItWorks = styled.section`
     }
 
     li:not(:first-child) {
-      margin-left: 30px;
+      margin-left: 105px;
     }
   }
 
@@ -284,7 +285,7 @@ const StyledHowItWorks = styled.section`
 
     .HowItWorks__head {
       flex-direction: column;
-
+      align-items: start;
       button {
         margin-top: 20px;
         padding: 10px 15px;
@@ -297,6 +298,10 @@ const StyledHowItWorks = styled.section`
       li {
         max-width: unset;
         display: flex;
+
+        p {
+          max-width: 320px;
+        }
       }
 
       li:not(:first-child) {
@@ -315,7 +320,6 @@ const StyledHowItWorks = styled.section`
       margin-left: 50px;
 
       p {
-        max-width: 320px;
       }
     }
   }

@@ -28,7 +28,7 @@ const RegularLink = ({
           { Underlined: underlined }
         )}
       >
-        <span className="Test_14_16">{children}</span>
+        <span className="">{children}</span>
       </Link>
     </StyledLink>
   );
@@ -53,7 +53,6 @@ const StyledLink = styled.div`
     border-radius: 5px;
     span {
     }
-
     :focus {
       outline: 2px solid ${({ theme }) => theme.colors.stroke["purple"]};
     }

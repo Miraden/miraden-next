@@ -112,7 +112,7 @@ const Reviews = () => {
       },
       "(max-width: 1024px)": {
         slides: {
-          perView: 1.94,
+          perView: 1.83,
           spacing: 12,
         },
       },
@@ -155,7 +155,7 @@ const Reviews = () => {
                 Клиенты
               </RequestButton>
 
-              <RequestButton onClick={handleClickAgency} active={isAgency}>
+              <RequestButton onClick={handleClickAgency}>
                 Агентства недвижимости
               </RequestButton>
             </div>
@@ -163,9 +163,11 @@ const Reviews = () => {
         </div>
       </div>
       <div className="Reviews__tabs Container">
-        <RequestButton onClick={handleClickClient}>Клиенты</RequestButton>
+        <RequestButton onClick={handleClickClient} active={!isAgency}>
+          Клиенты
+        </RequestButton>
 
-        <RequestButton onClick={handleClickAgency}>
+        <RequestButton onClick={handleClickAgency} active={isAgency}>
           Агентства недвижимости
         </RequestButton>
       </div>

@@ -188,9 +188,7 @@ const StyledFAQ = styled.section`
 
   .FAQ__description {
     margin-top: 25px;
-    font-size: 14px !important;
-    line-height: 150% !important;
-    font-weight: 400;
+
     a {
       text-decoration: none;
       color: #4e6af3;
@@ -208,7 +206,7 @@ const StyledFAQ = styled.section`
 
   @media (max-width: 1024px) {
     padding-top: 100px;
-    padding-bottom: 110px;
+    padding-bottom: 120px;
 
     .FAQ {
       display: flex;

@@ -86,6 +86,10 @@ const StyledHeroStats = styled.div`
       border-radius: 10px;
     }
 
+    .HeroStats__listItem:not(:first-child) {
+      padding: 30px 20px;
+    }
+
     .HeroStats__description {
       max-width: 220px;
     }

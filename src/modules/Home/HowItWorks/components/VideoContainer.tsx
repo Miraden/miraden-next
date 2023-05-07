@@ -36,6 +36,10 @@ const StyledVideoContainer = styled.div`
     overflow: hidden;
   }
 
+  @media (max-width: 1024px) {
+    margin-top: 130px;
+  }
+
   @media (max-width: 576px) {
     margin-top: 50px;
   }

@@ -377,9 +377,15 @@ const StyledApplications = styled.section`
   }
 
   @media (max-width: 1024px) {
+    padding-bottom: 100px;
     .Applications__head {
       flex-direction: column;
       overflow-x: scroll;
+      align-items: flex-start;
+
+      button {
+        padding: 10px 15px;
+      }
     }
 
     .Applications__tabs {
@@ -394,6 +400,7 @@ const StyledApplications = styled.section`
     .Applications__openMoreContainer {
       margin-top: 40px;
       display: grid;
+      grid-gap: 12px;
       grid-template-columns: repeat(4, 1fr);
     }
 

@@ -248,6 +248,7 @@ const StyledFeaturesMobile = styled.section`
     margin: 0 auto;
     max-width: 470px;
     height: 724px;
+    margin-top: 60px;
     img {
       background: #eef1f5;
       box-shadow: 0px 2px 13px rgba(34, 49, 77, 0.05),
@@ -258,23 +259,24 @@ const StyledFeaturesMobile = styled.section`
 
   .Features__tabContent:nth-of-type(2n) {
     .Features__image1 {
-      left: 0;
+      right: 0;
     }
 
     .Features__image2 {
-      right: 0;
+      left: 0;
     }
   }
 
   .Features__image1 {
     position: absolute;
     z-index: 20;
-    right: 0;
+    left: 0;
   }
 
   .Features__image2 {
     position: absolute;
     top: 69px;
+    right: 0;
   }
 
   @media (max-width: 576px) {
