@@ -23,7 +23,7 @@ const HeroStats = ({ className }: Props) => {
                 <h2 className="Font_50_60 lg:Font_44_120 sm:Font_26_120">
                   {stat.value}
                 </h2>
-                <p className="HeroStats__description Font_18_160 lg:Font_16_24">
+                <p className="HeroStats__description Font_18_160 lg:Font_16_24 Color_grey_dark">
                   {stat.text}
                 </p>
               </div>

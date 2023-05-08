@@ -195,7 +195,7 @@ const StyledFeaturesMobile = styled.section`
 
   .Features__tabButtonActive {
     padding: 20px 20px 40px 20px;
-
+    background: #fff;
     svg {
       path {
         fill: #fff !important;

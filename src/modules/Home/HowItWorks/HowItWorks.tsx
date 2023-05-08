@@ -51,7 +51,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                       <mark className="Color_blue">Создайте</mark>
                       <br /> анонимную заявку
                     </h3>
-                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24 Color_grey_dark">
                       Ответьте на несколько простых вопросов о недвижимости,
                       которую хотите найти
                     </p>
@@ -71,7 +71,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                       <mark>Получите</mark>
                       <br /> предложения
                     </h3>
-                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24 Color_grey_dark">
                       Риелторы и собственники сделают для вас персональные
                       предложения и подборки объектов
                     </p>
@@ -90,7 +90,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                     <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
                       <mark>Выберите</mark> <br /> лучших исполнителей
                     </h3>
-                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24 Color_grey_dark">
                       Обменяйтесь контактами с подходящими исполнителями
                       для обсуждения деталей
                     </p>
@@ -117,7 +117,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                       <mark className="Color_blue">Настройте</mark>
                       <br /> уведомления
                     </h3>
-                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24 Color_grey_dark">
                       Ответьте на несколько простых вопросов о недвижимости,
                       которую вы предлагаете
                     </p>
@@ -137,7 +137,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                       <mark className="Color_blue">Откликнитесь</mark>
                       <br /> на подходящие заявки
                     </h3>
-                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24 Color_grey_dark">
                       Предложите недвижимость подходящим клиентам и обсудите
                       детали в чате
                     </p>
@@ -157,7 +157,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                       <mark className="Color_blue">Получите</mark>
                       <br /> контакты от клиентов
                     </h3>
-                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
+                    <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24 Color_grey_dark">
                       Клиент сам откроет контакты для дальнейшей работы, если
                       ваше предложение заинтересует
                     </p>
@@ -302,9 +302,9 @@ const StyledHowItWorks = styled.section`
 
     .HowItWorks__listItemContent {
       margin-top: 2px;
-      /* margin-left: 50px; */
 
       p {
+        color: #3b4a69;
       }
     }
   }

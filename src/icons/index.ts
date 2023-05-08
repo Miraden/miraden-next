@@ -24,6 +24,7 @@ export { MessagesIcon } from "./MessagesIcon";
 export { MinusIcon } from "./MinusIcon";
 export { MiradenLogo } from "./MiradenLogo";
 export { MiradenLogoFooter } from "./MiradenLogoFooter";
+export { MiradenLogoFooterHover } from "./MiradenLogoFooterHover";
 export { MiradenLogoMobile } from "./MiradenLogoMobile";
 export { MontenegroIcon } from "./MontenegroIcon";
 export { ObjectsIcon } from "./ObjectsIcon";

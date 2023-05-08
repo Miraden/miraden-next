@@ -82,7 +82,7 @@ const StyledDropdownInput = styled.div<Props>`
   .DropdownInput_select_active {
     width: 100%;
     max-width: 300px;
-    background: #414d65;
+    background: #3a465d;
     border-radius: 10px;
     padding: 10px 10px 10px 15px;
     border: none;
@@ -100,7 +100,7 @@ const StyledDropdownInput = styled.div<Props>`
 
   .DropdownInput_select {
     overflow-y: hidden; // тестово для сколла
-    &:focus {
+    &:focus-visible {
       box-shadow: 0 0 0 2px #f845fc;
       div {
         color: #fff;

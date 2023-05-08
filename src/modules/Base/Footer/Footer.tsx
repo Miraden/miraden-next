@@ -1,5 +1,10 @@
 import { Button, Link } from "@/components/ui";
-import { MiradenLogoFooter, PointIconFooter, TelegramPureIcon } from "@/icons";
+import {
+  MiradenLogoFooter,
+  MiradenLogoFooterHover,
+  PointIconFooter,
+  TelegramPureIcon,
+} from "@/icons";
 import { FacebookIconFooter } from "@/icons/FacebookIconFooter";
 import { InstagramIconFooter } from "@/icons/InstagramIconFooter";
 import styled from "styled-components";
@@ -31,6 +36,7 @@ const Footer = ({ className }: FooterProps) => {
             <div className="Footer__infoMobile">
               <a href="">
                 <MiradenLogoFooter className="Footer__logo" />
+                <MiradenLogoFooterHover className="Footer__logoHover" />
               </a>
               <p className="Footer__description Font_14_140">
                 Miraden — биржа заявок в сфере зарубежной недвижимости
@@ -45,6 +51,7 @@ const Footer = ({ className }: FooterProps) => {
             <div className="Footer__info">
               <a href="">
                 <MiradenLogoFooter className="Footer__logo" />
+                <MiradenLogoFooterHover className="Footer__logoHover" />
               </a>
               <p className="Footer__description Font_14_140">
                 Miraden — биржа заявок в сфере зарубежной недвижимости
@@ -178,16 +185,21 @@ const StyledFooterSocialMobile = styled.div`
 const StyledFooterTopMobile = styled.div`
   display: none;
 
-  a {
-    svg:hover {
-      path {
-        stroke: #3b4a69;
-      }
+  .Footer__logoHover {
+    position: absolute;
+    left: 19.5%;
+
+    opacity: 0;
+
+    :hover {
+      opacity: 1;
     }
   }
 
-  .Footer__logo {
+  .Footer__logo:hover {
+    opacity: 0;
   }
+
   @media (max-width: 960px) {
     display: flex;
     width: 100%;
@@ -221,11 +233,15 @@ const StyledFooterTop = styled.div`
   margin: 0 auto;
   border-radius: 10px 10px 0 0;
   background: #fff;
+  .Footer__logoHover {
+    position: absolute;
+    left: 0;
+    opacity: 0;
 
-  .Footer__logo {
-    border: 1px solid red;
+    :hover {
+      opacity: 1;
+    }
   }
-
   .Footer__head {
     padding-top: 80px;
     padding-bottom: 80px;
@@ -235,6 +251,7 @@ const StyledFooterTop = styled.div`
   }
 
   .Footer__info {
+    position: relative;
     grid-column: 1 / span 3;
   }
 

@@ -78,7 +78,6 @@ const Accordion: FC<Props> = ({
 };
 
 const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
-  /* padding-bottom: 32px; */
   background-color: #ffffff;
   margin-top: 10px;
   border-radius: 10px;
@@ -140,7 +139,7 @@ const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
       }
     }
 
-    h4 {
+    div {
       font-size: 18px;
       line-height: 150%;
       font-weight: 700;
@@ -177,7 +176,7 @@ const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
     }
 
     .Accordion__text {
-      h4 {
+      div {
         font-size: 16px;
         line-height: 24px;
         font-weight: 700;

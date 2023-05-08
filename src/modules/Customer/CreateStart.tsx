@@ -150,6 +150,7 @@ const StyledCreateStep1 = styled.section`
     display: flex;
     justify-content: center;
     margin-top: 64px;
+    display: none;
   }
 
   .slider-dots button {
@@ -267,6 +268,10 @@ const StyledCreateStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    .slider-dots {
+      display: flex;
+    }
+
     .Reg__StepsMobile {
       display: flex;
     }

@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui";
 import { ArrowIcon } from "@/icons";
+import ru from "date-fns/locale/ru";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import styled from "styled-components";
-
 interface Props {
   className?: string;
 }
@@ -28,7 +28,6 @@ const RentRangeStep = ({ className }: Props) => {
             Укажите период аренды
           </h1>
         </div>
-        Calendar
         <DatePicker
           className="Test"
           selected={startDate}
@@ -37,7 +36,7 @@ const RentRangeStep = ({ className }: Props) => {
           endDate={endDate}
           selectsRange
           inline
-          locale="ru"
+          locale={ru}
           monthsShown={2}
         />
         <div className="Reg__progressBar"></div>
@@ -87,15 +86,74 @@ const StyledRegStep1 = styled.section`
   .datepicker__day {
     border: 1px solid red !important;
   }
-  .Test {
-    .react-datepicker__week:nth-child(3n + 1) {
-      background-color: #215005;
+  .react-datepicker {
+    background: #ffffff;
+    border: none;
+    box-shadow: 0 0 0 2px inset #e1edfd;
+
+    .react-datepicker__header {
+      background: #ffffff;
+    }
+
+    .react-datepicker__current-month {
+      color: #2a344a;
+    }
+
+    .react-datepicker__day-name {
+      color: #7786a5;
+      font-size: 10px;
+      line-height: 24px;
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+
+    .react-datepicker__header {
+      border: none;
+    }
+
+    .react-datepicker__day {
+      color: #2a344a;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+      margin: 0;
+      padding: 3px;
+    }
+
+    .react-datepicker__day--selected,
+    .react-datepicker__day--range-end {
+      background: #2a344a !important;
+      color: #fff;
+      border-radius: 10px !important;
+    }
+
+    .react-datepicker__day--range-end {
+    }
+
+    .react-datepicker__day--in-selecting-range {
+      background: #f1f7ff;
+    }
+
+    .react-datepicker__day--in-range {
+      background: #f1f7ff;
+      border-radius: 0;
+    }
+
+    .react-datepicker__day--outside-month {
+      color: #b8c6e3;
+    }
+
+    .react-datepicker__current-month {
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+    }
+    .react-datepicker__week:not(:first-child) {
+      margin-top: 5px;
     }
     .react-datepicker__week:nth-child(3n + 2) {
-      background-color: #eea429;
     }
     .react-datepicker__week:nth-child(3n + 3) {
-      background-color: #a82a15;
     }
   }
 

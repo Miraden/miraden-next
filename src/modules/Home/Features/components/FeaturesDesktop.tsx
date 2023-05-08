@@ -184,6 +184,7 @@ const StyledFeaturesDesktop = styled.section`
   }
 
   .Features__tabButtonActive {
+    background: #fff;
     svg {
       path {
         fill: #fff !important;
