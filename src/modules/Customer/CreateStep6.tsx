@@ -7,21 +7,13 @@ interface Props {
   className?: string;
 }
 
-const CreateStep5 = ({ className }: Props) => {
-  const [selected, setSelected] = useState(false);
+const CreateStep6 = ({ className }: Props) => {
   const [showMore, setShowMore] = useState(false);
   const [startSquare, setStartSquare] = useState<number | null>(null);
   const [selectedRange, setSelectedRange] = useState<number[]>([]);
   const [maxVisibleSquare, setMaxVisibleSquare] = useState(21);
 
-  const handleSelect = useCallback(() => {
-    setSelected(!selected);
-    setSelectedRange([0]);
-  }, [selected]);
-
   const handleSquareClick = (squareIndex: number) => {
-    setSelected(false);
-
     if (startSquare === null) {
       // start new range
       setStartSquare(squareIndex);
@@ -153,9 +145,6 @@ const CreateStep5 = ({ className }: Props) => {
 
         <div className="Reg__monthsContainer">
           <div className="Reg__months">
-            <RequestButton onClick={handleSelect} active={selected}>
-              Неважно
-            </RequestButton>
             {[...Array(64)].map((_, index) => {
               const label = index + "0 м²";
               if (index === 0) {
@@ -265,10 +254,7 @@ const CreateStep5 = ({ className }: Props) => {
               <p className="Color_blue_primary Font_16_140">317</p>
             </div>
 
-            <Button
-              disabled={selectedRange.length === 0}
-              href="/customer/create-step-6"
-            >
+            <Button disabled={!selectedRange} href="/customer/create-step-4">
               Далее
             </Button>
           </div>
@@ -461,4 +447,4 @@ const StyledRegStep1 = styled.section`
   }
 `;
 
-export { CreateStep5 };
+export { CreateStep6 };
