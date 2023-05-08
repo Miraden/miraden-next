@@ -40,14 +40,11 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                 <li>
                   <div className="HowItWorks__imageContainer">
                     <Image
-                      src="/images/HowItWorks.svg"
+                      src="/images/howItWorks/1.svg"
                       alt=""
-                      width={140}
+                      width={320}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
-                      1
-                    </p>
                   </div>
                   <div className="HowItWorks__listItemContent">
                     <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
@@ -63,14 +60,11 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                 <li>
                   <div className="HowItWorks__imageContainer">
                     <Image
-                      src="/images/HowItWorks.svg"
+                      src="/images/howItWorks/2.svg"
                       alt=""
-                      width={140}
+                      width={320}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
-                      2
-                    </p>
                   </div>
                   <div className="HowItWorks__listItemContent">
                     <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
@@ -86,14 +80,11 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                 <li>
                   <div className="HowItWorks__imageContainer">
                     <Image
-                      src="/images/HowItWorks.svg"
+                      src="/images/howItWorks/3.svg"
                       alt=""
-                      width={140}
+                      width={320}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
-                      3
-                    </p>
                   </div>
                   <div className="HowItWorks__listItemContent">
                     <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
@@ -115,71 +106,60 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                 <li>
                   <div className="HowItWorks__imageContainer">
                     <Image
-                      src="/images/HowItWorks.svg"
+                      src="/images/howItWorks/4.svg"
                       alt=""
-                      width={140}
+                      width={320}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
-                      1
-                    </p>
                   </div>
                   <div className="HowItWorks__listItemContent">
                     <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
-                      {/* <mark className="Color_blue">Создайте</mark>
-                <br /> анонимную заявку */}
-                      Контент для исполнителя
+                      <mark className="Color_blue">Настройте</mark>
+                      <br /> уведомления
                     </h3>
                     <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
                       Ответьте на несколько простых вопросов о недвижимости,
-                      которую хотите найти
+                      которую вы предлагаете
                     </p>
                   </div>
                 </li>
                 <li>
                   <div className="HowItWorks__imageContainer">
                     <Image
-                      src="/images/HowItWorks.svg"
+                      src="/images/howItWorks/5.svg"
                       alt=""
-                      width={140}
+                      width={320}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
-                      2
-                    </p>
                   </div>
                   <div className="HowItWorks__listItemContent">
                     <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
-                      {/* <mark>Получите</mark>
-                <br /> предложения */}
-                      Контент для исполнителя
+                      <mark className="Color_blue">Откликнитесь</mark>
+                      <br /> на подходящие заявки
                     </h3>
                     <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
-                      Риелторы и собственники сделают для вас персональные
-                      предложения и подборки объектов
+                      Предложите недвижимость подходящим клиентам и обсудите
+                      детали в чате
                     </p>
                   </div>
                 </li>
                 <li>
                   <div className="HowItWorks__imageContainer">
                     <Image
-                      src="/images/HowItWorks.svg"
+                      src="/images/howItWorks/6.svg"
                       alt=""
-                      width={140}
+                      width={320}
                       height={220}
                     />
-                    <p className="HowItWorks__counter Font_18_21 sm:Font_14_140">
-                      3
-                    </p>
                   </div>
                   <div className="HowItWorks__listItemContent">
                     <h3 className="HowItWorks__listItemTitle Font_28_120 sm:Font_22_120">
-                      {/* Выберите <br /> <mark>лучших исполнителей</mark> */}
-                      Контент для исполнителя
+                      <mark className="Color_blue">Получите</mark>
+                      <br /> контакты от клиентов
                     </h3>
                     <p className="HowItWorks__listItemDescription Font_18_150 sm:Font_16_24">
-                      Обменяйтесь контактами с подходящими исполнителями
-                      для обсуждения деталей
+                      Клиент сам откроет контакты для дальнейшей работы, если
+                      ваше предложение заинтересует
                     </p>
                   </div>
                 </li>
@@ -254,6 +234,10 @@ const StyledHowItWorks = styled.section`
     position: relative;
     display: flex;
     align-items: flex-end;
+    img {
+      flex-shrink: 0;
+      object-fit: contain;
+    }
   }
 
   .HowItWorks__counter {
@@ -318,7 +302,7 @@ const StyledHowItWorks = styled.section`
 
     .HowItWorks__listItemContent {
       margin-top: 2px;
-      margin-left: 50px;
+      /* margin-left: 50px; */
 
       p {
       }
@@ -353,7 +337,7 @@ const StyledHowItWorks = styled.section`
       width: 260px;
       justify-content: center;
       img {
-        width: 141px;
+        /* width: 141px; */
         height: 202px;
         left: 50px;
         position: absolute;

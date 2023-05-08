@@ -68,7 +68,7 @@ const Accordion: FC<Props> = ({
       </div>
       <div className="Accordion__content">
         <div className="Accordion__contentWrapper" ref={contentRef}>
-          <div className="Accordion__text Font_18_150 sm:Font_16_24">
+          <div className="Accordion__text Font_18_150 sm:Font_16_24 Color_grey_dark">
             {children}
           </div>
         </div>
@@ -130,13 +130,20 @@ const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
     padding-right: 20px;
 
     a {
-      text-decoration: underline;
-
+      color: #4e6af3;
+      text-decoration: none;
       &:hover {
+        text-decoration: underline;
       }
       &.active {
         opacity: 0.7;
       }
+    }
+
+    h4 {
+      font-size: 18px;
+      line-height: 150%;
+      font-weight: 700;
     }
   }
 
@@ -166,6 +173,14 @@ const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
     .Accordion__title {
       h4 {
         margin-top: 2px;
+      }
+    }
+
+    .Accordion__text {
+      h4 {
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 700;
       }
     }
   }

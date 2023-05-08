@@ -29,7 +29,9 @@ const Footer = ({ className }: FooterProps) => {
         <div className="Footer">
           <StyledFooterTopMobile>
             <div className="Footer__infoMobile">
-              <MiradenLogoFooter className="Footer__logo" />
+              <a href="">
+                <MiradenLogoFooter className="Footer__logo" />
+              </a>
               <p className="Footer__description Font_14_140">
                 Miraden — биржа заявок в сфере зарубежной недвижимости
               </p>
@@ -41,7 +43,9 @@ const Footer = ({ className }: FooterProps) => {
           </StyledFooterTopMobile>
           <div className="Footer__head Container">
             <div className="Footer__info">
-              <MiradenLogoFooter className="Footer__logo" />
+              <a href="">
+                <MiradenLogoFooter className="Footer__logo" />
+              </a>
               <p className="Footer__description Font_14_140">
                 Miraden — биржа заявок в сфере зарубежной недвижимости
               </p>
@@ -174,6 +178,16 @@ const StyledFooterSocialMobile = styled.div`
 const StyledFooterTopMobile = styled.div`
   display: none;
 
+  a {
+    svg:hover {
+      path {
+        stroke: #3b4a69;
+      }
+    }
+  }
+
+  .Footer__logo {
+  }
   @media (max-width: 960px) {
     display: flex;
     width: 100%;
@@ -207,6 +221,10 @@ const StyledFooterTop = styled.div`
   margin: 0 auto;
   border-radius: 10px 10px 0 0;
   background: #fff;
+
+  .Footer__logo {
+    border: 1px solid red;
+  }
 
   .Footer__head {
     padding-top: 80px;

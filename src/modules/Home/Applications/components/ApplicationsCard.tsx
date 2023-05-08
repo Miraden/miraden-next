@@ -74,13 +74,14 @@ const ApplicationsCard = ({
   );
 };
 
-const StyledApplicationsCard = styled.div`
+const StyledApplicationsCard = styled.a`
   background: #fff;
   padding: 20px;
   border-radius: 10px;
   transition: 0.15s ease;
   :hover {
     box-shadow: 0 0 0 2px inset #d4ddee;
+    cursor: pointer;
   }
 
   .Card__head {

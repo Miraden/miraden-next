@@ -4,7 +4,7 @@ import {
   FaqIcon,
   ListItemsIcon,
   MiradenLogo,
-  PricingIcon,
+  PricingHeaderIcon,
 } from "@/icons";
 import Link from "next/link";
 import styled from "styled-components";
@@ -39,7 +39,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
           </Button>
           <Button
             header
-            leftIcon={<PricingIcon />}
+            leftIcon={<PricingHeaderIcon />}
             className="Header__navButton"
           >
             тарифы

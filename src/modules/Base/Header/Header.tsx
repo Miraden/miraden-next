@@ -22,13 +22,13 @@ const StyledHeader = styled.header`
     position: fixed;
     background: #eef1f5;
     width: 100%;
-    height: 20px;
+    height: 10px;
   }
 
   .Header {
     position: fixed;
     display: flex;
-    top: 20px;
+    top: 10px;
     z-index: 200;
     align-items: center;
     justify-content: space-between;

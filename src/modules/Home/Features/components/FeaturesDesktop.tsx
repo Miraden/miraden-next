@@ -63,7 +63,7 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
       <div className="Container">
         <div className="Features">
           <div className="Features__options">
-            <h2 className="Font_44_120">Miraden — это</h2>
+            <h2 className="Font_44_120 Color_primary">Miraden — это</h2>
             <div className="Features__tabs">
               {options.map(({ id, optionName, icon, text }) => (
                 <button
@@ -84,7 +84,7 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
                       {icon}
                     </div>
                     <h3
-                      className={cn("Font_28_120 ", {
+                      className={cn("Font_28_120 Color_primary", {
                         Color_blue_primary:
                           optionName == activeOption.optionName,
                       })}
@@ -94,10 +94,13 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
                   </div>
 
                   <p
-                    className={cn("Features__headDescription Font_18_150", {
-                      Features__headDescriptionActive:
-                        optionName == activeOption.optionName,
-                    })}
+                    className={cn(
+                      "Features__headDescription Font_18_150 Color_grey_dark",
+                      {
+                        Features__headDescriptionActive:
+                          optionName == activeOption.optionName,
+                      }
+                    )}
                   >
                     {text}
                   </p>
@@ -232,8 +235,6 @@ const StyledFeaturesDesktop = styled.section`
     grid-column: 8 / span 5;
     img {
       background: #eef1f5;
-      box-shadow: 0px 2px 13px rgba(34, 49, 77, 0.05),
-        20px 20px 50px rgba(34, 49, 77, 0.2);
       border-radius: 25px;
     }
   }
@@ -271,13 +272,27 @@ const StyledFeaturesDesktop = styled.section`
     height: 655px;
   }
 
+  .Features__image1 {
+    box-shadow: 0px 2px 13px rgba(34, 49, 77, 0.05),
+      20px 20px 50px rgba(34, 49, 77, 0.2);
+  }
+
+  .Features__image2 {
+    box-shadow: 0px 2px 13px rgba(34, 49, 77, 0.05),
+      10px 20px 50px rgba(34, 49, 77, 0.2);
+  }
+
   .Features__tabContent:nth-of-type(2n) {
     .Features__image1 {
       right: 0;
+      box-shadow: -20px 20px 50px rgba(34, 49, 77, 0.2),
+        0px -2px 13px rgba(34, 49, 77, 0.05);
     }
 
     .Features__image2 {
       left: 0;
+      box-shadow: 0px -2px 13px rgba(34, 49, 77, 0.05),
+        -5px 20px 50px rgba(34, 49, 77, 0.2);
     }
   }
 

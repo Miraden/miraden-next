@@ -31,6 +31,7 @@ export { PenIcon } from "./PenIcon";
 export { PlayIcon } from "./PlayIcon";
 export { PlusIcon } from "./PlusIcon";
 export { PointIconFooter } from "./PointIconFooter";
+export { PricingHeaderIcon } from "./PricingHeaderIcon";
 export { PricingIcon } from "./PricingIcon";
 export { QiwiIcon } from "./QiwiIcon";
 export { RussiaIcon } from "./RussiaIcon";

@@ -16,7 +16,7 @@ const Hero = ({ className }: HeroProps) => {
             <mark className="Color_blue_primary">Испании</mark> сделают для вас
             персональный подбор
           </h1>
-          <p className="Hero__description Font_22_160 sm:Font_16_24">
+          <p className="Hero__description Font_22_160 sm:Font_16_24 Color_grey_dark">
             Создайте анонимную заявку и получите предложения от независимых
             продавцов
           </p>

@@ -84,7 +84,7 @@ const FeaturesMobile = ({ className }: FeatureProps) => {
                     </div>
                     <h3
                       className={cn(
-                        "Font_28_120 Color_primary sm:Font_18_120_700",
+                        "Font_28_120 Color_primary sm:Font_18_120_700 Color_primary",
                         {
                           Color_blue_primary:
                             optionName == activeOption.optionName,
@@ -97,7 +97,7 @@ const FeaturesMobile = ({ className }: FeatureProps) => {
 
                   <p
                     className={cn(
-                      "Features__headDescription Font_18_150 sm:Font_16_24",
+                      "Features__headDescription Font_18_150 sm:Font_16_24 Color_grey_dark",
                       {
                         Features__headDescriptionActive:
                           optionName == activeOption.optionName,
@@ -163,6 +163,7 @@ const StyledFeaturesMobile = styled.section`
     border-radius: 10px;
     width: 100%;
     text-align: start;
+
     :hover {
       svg {
         path {
@@ -171,6 +172,23 @@ const StyledFeaturesMobile = styled.section`
       }
       h3 {
         color: #4e6af3;
+      }
+    }
+  }
+
+  .Features__tabButton:nth-of-type(2n) {
+    .Features__imagesContainer {
+      .Features__image1 {
+        right: 0;
+        left: unset;
+        box-shadow: -20px 20px 50px rgba(34, 49, 77, 0.2),
+          0px -2px 13px rgba(34, 49, 77, 0.05);
+      }
+
+      .Features__image2 {
+        left: 0;
+        box-shadow: 0px -2px 13px rgba(34, 49, 77, 0.05),
+          -5px 20px 50px rgba(34, 49, 77, 0.2);
       }
     }
   }
@@ -226,8 +244,6 @@ const StyledFeaturesMobile = styled.section`
   .Features__TabsList {
     img {
       background: #eef1f5;
-      box-shadow: 0px 2px 13px rgba(34, 49, 77, 0.05),
-        20px 20px 50px rgba(34, 49, 77, 0.2);
       border-radius: 25px;
     }
   }
@@ -257,16 +273,6 @@ const StyledFeaturesMobile = styled.section`
       box-shadow: 0px 2px 13px rgba(34, 49, 77, 0.05),
         20px 20px 50px rgba(34, 49, 77, 0.2);
       border-radius: 25px;
-    }
-  }
-
-  .Features__tabContent:nth-of-type(2n) {
-    .Features__image1 {
-      right: 0;
-    }
-
-    .Features__image2 {
-      left: 0;
     }
   }
 
