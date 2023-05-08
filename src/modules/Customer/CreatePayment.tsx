@@ -1,12 +1,62 @@
-import { Button } from "@/components/ui";
+import { Button, CreatePaymentButton, PayForm } from "@/components/ui";
 import { ArrowIcon } from "@/icons";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 interface Props {
   className?: string;
 }
 
+const paymentOptions = [
+  {
+    buttonTitle: "Открыть отклик для всех",
+    buttonText:
+      "На заявку смогут откликнуться все пользователи, а не только PRO",
+    tax: 10,
+  },
+  {
+    buttonTitle: "Закрепить вверху на 24 часа",
+    buttonText:
+      "Заявка будет закреплена вверху ленты. После чего сместится вниз по мере поступления новых",
+    tax: 15,
+  },
+  {
+    buttonTitle: "Поднимать каждые 3 дня",
+    buttonText:
+      "Заявка будет автоматически подниматься в самый верх ленты каждые 3 дня",
+    tax: 20,
+  },
+];
+
 const CreatePayment = ({ className }: Props) => {
+  const [activeButtons, setActiveButtons] = useState(
+    paymentOptions.map((option, index) => index === 0)
+  );
+
+  const handleActive = useCallback(
+    (index: number) => {
+      const newActiveButtons = [...activeButtons];
+      newActiveButtons[index] = !newActiveButtons[index];
+      setActiveButtons(newActiveButtons);
+    },
+    [activeButtons]
+  );
+
+  const selectedOptions = paymentOptions.filter(
+    (option, index) => activeButtons[index]
+  );
+  const totalTax = selectedOptions.reduce((acc, option) => acc + option.tax, 0);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenMenu = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
+
+  const handleCloseMenu = useCallback(() => {
+    setIsOpen(!isOpen);
+  }, [isOpen]);
+
   return (
     <StyledRegStep1 className={className}>
       <div className="">
@@ -15,7 +65,21 @@ const CreatePayment = ({ className }: Props) => {
             Получите больше просмотров и откликов
           </h1>
         </div>
-        <div>button</div>
+        <div>
+          <ul className="">
+            {paymentOptions.map((option, index) => (
+              <li key={index}>
+                <CreatePaymentButton
+                  onClick={() => handleActive(index)}
+                  buttonTitle={option.buttonTitle}
+                  buttonText={option.buttonText}
+                  tax={option.tax}
+                  active={activeButtons[index]}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
           <div className="Reg__footerBack">
@@ -32,13 +96,6 @@ const CreatePayment = ({ className }: Props) => {
               leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>
-            <div className="Reg__footerSteps">
-              <span className="Font_16_24">Шаг</span>
-              <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                11
-              </span>
-              <span className="Font_16_140">/ 11</span>
-            </div>
           </div>
           <div className="Reg__nextButtonContainer">
             <div>
@@ -47,8 +104,10 @@ const CreatePayment = ({ className }: Props) => {
               </span>
               <p className="Color_blue_primary Font_16_140">317</p>
             </div>
-            <Button href="/customer/payment">Далее</Button>
+
+            <Button onClick={handleOpenMenu}>Оплатить {totalTax} €</Button>
           </div>
+          {isOpen && <PayForm onClose={handleCloseMenu} />}
         </div>
       </div>
     </StyledRegStep1>
@@ -131,13 +190,6 @@ const StyledRegStep1 = styled.section`
     position: relative;
     height: 6px;
     background-color: #d4ddee;
-    ::after {
-      position: absolute;
-      content: "";
-      width: 100%;
-      height: 6px;
-      background-color: #4e6af3;
-    }
   }
 
   .Reg__footer {
