@@ -1,3 +1,4 @@
+export { CreateCommercialStep5 } from "./CreateCommercialStep5";
 export { CreatePayment } from "./CreatePayment";
 export { CreateStart } from "./CreateStart";
 export { CreateStep1 } from "./CreateStep1";
