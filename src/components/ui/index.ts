@@ -3,6 +3,7 @@ export { Checkbox } from "./CheckBox";
 export { Link } from "./Link";
 export { MessageInput } from "./MessageInput";
 export { Notification } from "./Notification";
+export { NumberInput } from "./NumberInput";
 export { PasswordInput } from "./PasswordInput";
 export { PayButton } from "./PayButton";
 export { PayForm } from "./PayForm/PayForm";

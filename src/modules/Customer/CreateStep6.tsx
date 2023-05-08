@@ -8,21 +8,28 @@ interface Props {
 }
 
 const CreateStep6 = ({ className }: Props) => {
+  const [selected, setSelected] = useState(false);
   const [showMore, setShowMore] = useState(false);
-  const [startSquare, setStartSquare] = useState<number | null>(null);
+  const [startRoom, setStartRoom] = useState<number | null>(null);
   const [selectedRange, setSelectedRange] = useState<number[]>([]);
-  const [maxVisibleSquare, setMaxVisibleSquare] = useState(21);
+  const [maxVisibleRooms, setMaxVisibleRooms] = useState(8);
 
-  const handleSquareClick = (squareIndex: number) => {
-    if (startSquare === null) {
+  const handleSelect = useCallback(() => {
+    setSelected(!selected);
+    setSelectedRange([]);
+  }, [selected]);
+  const handleRoomClick = (roomIndex: number) => {
+    setSelected(false);
+
+    if (startRoom === null) {
       // start new range
-      setStartSquare(squareIndex);
-      setSelectedRange([squareIndex]);
+      setStartRoom(roomIndex);
+      setSelectedRange([roomIndex]);
     } else {
       // continue existing range
-      const endSquare = squareIndex;
-      const rangeStart = Math.min(startSquare, endSquare);
-      const rangeEnd = Math.max(startSquare, endSquare);
+      const endRoom = roomIndex;
+      const rangeStart = Math.min(startRoom, endRoom);
+      const rangeEnd = Math.max(startRoom, endRoom);
       const selectedRange: SetStateAction<number[]> = [];
       for (let i = rangeStart; i <= rangeEnd; i++) {
         selectedRange.push(i);
@@ -34,13 +41,13 @@ const CreateStep6 = ({ className }: Props) => {
       } else {
         // create new range
         setSelectedRange(selectedRange);
-        setStartSquare(null);
+        setStartRoom(null);
       }
     }
 
-    if (startSquare !== null && squareIndex !== startSquare) {
-      const rangeStart = Math.min(startSquare, squareIndex);
-      const rangeEnd = Math.max(startSquare, squareIndex);
+    if (startRoom !== null && roomIndex !== startRoom) {
+      const rangeStart = Math.min(startRoom, roomIndex);
+      const rangeEnd = Math.max(startRoom, roomIndex);
       const newRange = [];
       for (let i = rangeStart; i <= rangeEnd; i++) {
         newRange.push(i);
@@ -61,77 +68,136 @@ const CreateStep6 = ({ className }: Props) => {
 
   const handleShowMore = useCallback(() => {
     setShowMore(true);
-    setMaxVisibleSquare(64);
+    setMaxVisibleRooms(18);
   }, []);
 
-  const squares = [];
-  for (let square = 10; square <= 800; square += 10) {
-    squares.push(square);
+  const rooms = [];
+  for (let room = 1; room <= 18; room++) {
+    rooms.push(room);
   }
+  const [startSleep, setStartSleep] = useState<number | null>(null);
+  const [selectedSleepRange, setSelectedSleepRange] = useState<number[]>([]);
+  const [showMoreSleep, setShowMoreSleep] = useState(false);
 
-  const [startLivingSquare, setStartLivingSquare] = useState<number | null>(
-    null
-  );
-  const [selectedLivingRage, setSelectedLivingRage] = useState<number[]>([]);
-  const [showMoreLiving, setShowMoreLiving] = useState(false);
+  const [maxVisibleSleep, setMaxVisibleSleep] = useState(6);
 
-  const [maxVisibleLivingSquare, setMaxVisibleLivingSquare] = useState(21);
-  const [maxVisibleLiving, setMaxVisibleLiving] = useState(21);
-
-  const handleLivingSquareClick = (squareIndexLiving: number) => {
-    if (startLivingSquare === null) {
+  const handleSleepClick = (sleepIndex: number) => {
+    if (startSleep === null) {
       // start new range
-      setStartLivingSquare(squareIndexLiving);
-      setSelectedLivingRage([squareIndexLiving]);
+      setStartSleep(sleepIndex);
+      setSelectedSleepRange([sleepIndex]);
     } else {
       // continue existing range
-      const endLivingSquare = squareIndexLiving;
-      const livingRangeStart = Math.min(startLivingSquare, endLivingSquare);
-      const livingRangeEnd = Math.max(startLivingSquare, endLivingSquare);
-      const selectedLivingRage: SetStateAction<number[]> = [];
-      for (let i = livingRangeStart; i <= livingRangeEnd; i++) {
-        selectedLivingRage.push(i);
+      const endSleep = sleepIndex;
+      const rangeStart = Math.min(startSleep, endSleep);
+      const rangeEnd = Math.max(startSleep, endSleep);
+      const selectedSleepRange: SetStateAction<number[]> = [];
+      for (let i = rangeStart; i <= rangeEnd; i++) {
+        selectedSleepRange.push(i);
       }
 
-      if (selectedLivingRage.every((m) => selectedLivingRage.includes(m))) {
+      if (selectedSleepRange.every((m) => selectedSleepRange.includes(m))) {
         // update existing range
-        setSelectedLivingRage(selectedLivingRage);
+        setSelectedSleepRange(selectedSleepRange);
       } else {
         // create new range
-        setSelectedLivingRage(selectedLivingRage);
-        setStartLivingSquare(null);
+        setSelectedSleepRange(selectedSleepRange);
+        setStartSleep(null);
       }
     }
 
-    if (startLivingSquare !== null && squareIndexLiving !== startLivingSquare) {
-      const livingRangeStart = Math.min(startLivingSquare, squareIndexLiving);
-      const livingRangeEnd = Math.max(startLivingSquare, squareIndexLiving);
+    if (startSleep !== null && sleepIndex !== startSleep) {
+      const rangeStart = Math.min(startSleep, sleepIndex);
+      const rangeEnd = Math.max(startSleep, sleepIndex);
       const newRange = [];
-      for (let i = livingRangeStart; i <= livingRangeEnd; i++) {
+      for (let i = rangeStart; i <= rangeEnd; i++) {
         newRange.push(i);
       }
 
       if (
-        selectedLivingRage.length > 0 &&
-        newRange.every((m) => selectedLivingRage.includes(m))
+        selectedSleepRange.length > 0 &&
+        newRange.every((m) => selectedSleepRange.includes(m))
       ) {
         // update existing range
-        setSelectedLivingRage(newRange);
+        setSelectedSleepRange(newRange);
       } else {
         // add new range to existing range
-        setSelectedLivingRage([...selectedLivingRage, ...newRange]);
+        setSelectedSleepRange([...selectedSleepRange, ...newRange]);
       }
     }
   };
 
-  const handleShowMoreLiving = useCallback(() => {
-    setShowMoreLiving(true);
-    setMaxVisibleLiving(64);
+  const handleShowMoreSleep = useCallback(() => {
+    setShowMoreSleep(true);
+    setMaxVisibleSleep(16);
   }, []);
 
-  const livingSquares = [];
-  for (let livingSquare = 10; livingSquare <= 800; livingSquare += 10) {
-    livingSquares.push(livingSquare);
+  const sleeps = [];
+  for (let sleep = 1; sleep <= 16; sleep++) {
+    sleeps.push(sleep);
+  }
+
+  const [showMoreBaths, setShowMoreBaths] = useState(false);
+  const [startBath, setStartBath] = useState<number | null>(null);
+  const [selectedBathsRange, setSelectedBathsRange] = useState<number[]>([]);
+  const [maxVisibleBaths, setMaxVisibleBaths] = useState(6);
+
+  const handleBathClick = (bathIndex: number) => {
+    setSelected(false);
+
+    if (startBath === null) {
+      // start new range
+      setStartBath(bathIndex);
+      setSelectedBathsRange([bathIndex]);
+    } else {
+      // continue existing range
+      const endBath = bathIndex;
+      const rangeStart = Math.min(startBath, endBath);
+      const rangeEnd = Math.max(startBath, endBath);
+      const selectedBathsRange: SetStateAction<number[]> = [];
+      for (let i = rangeStart; i <= rangeEnd; i++) {
+        selectedBathsRange.push(i);
+      }
+
+      if (selectedBathsRange.every((m) => selectedBathsRange.includes(m))) {
+        // update existing range
+        setSelectedBathsRange(selectedBathsRange);
+      } else {
+        // create new range
+        setSelectedBathsRange(selectedBathsRange);
+        setStartBath(null);
+      }
+    }
+
+    if (startBath !== null && bathIndex !== startBath) {
+      const rangeStart = Math.min(startBath, bathIndex);
+      const rangeEnd = Math.max(startBath, bathIndex);
+      const newRange = [];
+      for (let i = rangeStart; i <= rangeEnd; i++) {
+        newRange.push(i);
+      }
+
+      if (
+        selectedBathsRange.length > 0 &&
+        newRange.every((m) => selectedBathsRange.includes(m))
+      ) {
+        // update existing range
+        setSelectedBathsRange(newRange);
+      } else {
+        // add new range to existing range
+        setSelectedBathsRange([...selectedBathsRange, ...newRange]);
+      }
+    }
+  };
+
+  const handleShowMoreBaths = useCallback(() => {
+    setShowMoreBaths(true);
+    setMaxVisibleBaths(13);
+  }, []);
+
+  const baths = [];
+  for (let bath = 1; bath <= 16; bath++) {
+    baths.push(bath);
   }
 
   return (
@@ -145,12 +211,13 @@ const CreateStep6 = ({ className }: Props) => {
 
         <div className="Reg__monthsContainer">
           <div className="Reg__months">
-            {[...Array(64)].map((_, index) => {
-              const label = index + "0 м²";
-              if (index === 0) {
-                return label === "уже построена";
-              }
-              if (index >= maxVisibleSquare) {
+            <RequestButton onClick={handleSelect} active={selected}>
+              Неважно
+            </RequestButton>
+            {[...Array(18)].map((_, index) => {
+              const label = index + 1;
+
+              if (index >= maxVisibleRooms) {
                 return null;
               }
 
@@ -162,7 +229,7 @@ const CreateStep6 = ({ className }: Props) => {
               return (
                 <RequestButton
                   key={`${index}`}
-                  onClick={() => handleSquareClick(index)}
+                  onClick={() => handleRoomClick(index)}
                   active={isActive}
                   ranged={isWithinRange}
                 >
@@ -170,39 +237,37 @@ const CreateStep6 = ({ className }: Props) => {
                 </RequestButton>
               );
             })}
-            {maxVisibleSquare < 64 && (
+            {maxVisibleRooms < 18 && (
               <RequestButton
                 onClick={handleShowMore}
                 className="ShowMoreButton Color_blue_primary"
               >
-                Ещё {squares.length - maxVisibleSquare}
+                Ещё {rooms.length - maxVisibleRooms}
               </RequestButton>
             )}
           </div>
         </div>
 
         <div>
-          <h2>Жилая площадь</h2>
+          <h2>Спальня</h2>
           <div className="Reg__monthsContainer">
             <div className="Reg__months">
-              {[...Array(64)].map((_, index) => {
-                const label = index + "0 м²";
-                if (index === 0) {
-                  return label === "уже построена";
-                }
-                if (index >= maxVisibleLivingSquare) {
+              {[...Array(16)].map((_, index) => {
+                const label = index + "";
+
+                if (index >= maxVisibleSleep) {
                   return null;
                 }
 
-                const isActive = selectedLivingRage.includes(index);
+                const isActive = selectedSleepRange.includes(index);
                 const isWithinRange =
-                  selectedLivingRage.length === 2 &&
-                  index >= selectedLivingRage[0] &&
-                  index <= selectedLivingRage[1];
+                  selectedSleepRange.length === 2 &&
+                  index >= selectedSleepRange[0] &&
+                  index <= selectedSleepRange[1];
                 return (
                   <RequestButton
                     key={`${index}`}
-                    onClick={() => handleLivingSquareClick(index)}
+                    onClick={() => handleSleepClick(index)}
                     active={isActive}
                     ranged={isWithinRange}
                   >
@@ -210,12 +275,49 @@ const CreateStep6 = ({ className }: Props) => {
                   </RequestButton>
                 );
               })}
-              {maxVisibleSquare < 64 && (
+              {maxVisibleSleep < 16 && (
                 <RequestButton
-                  onClick={handleShowMoreLiving}
+                  onClick={handleShowMoreSleep}
                   className="ShowMoreButton Color_blue_primary"
                 >
-                  Ещё {livingSquares.length - maxVisibleLivingSquare}
+                  Ещё {sleeps.length - maxVisibleSleep}
+                </RequestButton>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h2>Санузел</h2>
+          <div className="Reg__monthsContainer">
+            <div className="Reg__months">
+              {[...Array(16)].map((_, index) => {
+                const label = index + 1;
+                if (index >= maxVisibleBaths) {
+                  return null;
+                }
+                const isActive = selectedBathsRange.includes(index);
+                const isWithinRange =
+                  selectedBathsRange.length === 2 &&
+                  index >= selectedBathsRange[0] &&
+                  index <= selectedBathsRange[1];
+                return (
+                  <RequestButton
+                    key={`${index}`}
+                    onClick={() => handleBathClick(index)}
+                    active={isActive}
+                    ranged={isWithinRange}
+                  >
+                    {label}
+                  </RequestButton>
+                );
+              })}
+              {maxVisibleBaths < 16 && (
+                <RequestButton
+                  onClick={handleShowMoreBaths}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Ещё {baths.length - maxVisibleBaths}
                 </RequestButton>
               )}
             </div>
@@ -227,21 +329,21 @@ const CreateStep6 = ({ className }: Props) => {
           <div className="Reg__footerBack">
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-step-4"
               className="Reg__goBackButton"
             >
               Назад
             </Button>
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-step-4"
               leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>
             <div className="Reg__footerSteps">
               <span className="Font_16_24">Шаг</span>
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                5
+                6
               </span>
               <span className="Font_16_140">/ 11</span>
             </div>
@@ -254,7 +356,10 @@ const CreateStep6 = ({ className }: Props) => {
               <p className="Color_blue_primary Font_16_140">317</p>
             </div>
 
-            <Button disabled={!selectedRange} href="/customer/create-step-4">
+            <Button
+              disabled={selectedRange.length === 0 && !selected}
+              href="/customer/create-step-6"
+            >
               Далее
             </Button>
           </div>
@@ -331,7 +436,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 33%;
+      width: 39%;
       height: 6px;
       background-color: #4e6af3;
     }

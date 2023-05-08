@@ -1,10 +1,16 @@
+export { CreatePayment } from "./CreatePayment";
 export { CreateStart } from "./CreateStart";
 export { CreateStep1 } from "./CreateStep1";
+export { CreateStep10 } from "./CreateStep10";
+export { CreateStep11 } from "./CreateStep11";
 export { CreateStep2 } from "./CreateStep2";
 export { CreateStep3 } from "./CreateStep3";
 export { CreateStep4 } from "./CreateStep4";
 export { CreateStep5 } from "./CreateStep5";
 export { CreateStep6 } from "./CreateStep6";
+export { CreateStep7 } from "./CreateStep7";
+export { CreateStep8 } from "./CreateStep8";
+export { CreateStep9 } from "./CreateStep9";
 export { Login } from "./Login";
 export { PassRecover1 } from "./PassRecover1";
 export { PassRecover2 } from "./PassRecover2";

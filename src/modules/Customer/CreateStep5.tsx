@@ -16,7 +16,7 @@ const CreateStep5 = ({ className }: Props) => {
 
   const handleSelect = useCallback(() => {
     setSelected(!selected);
-    setSelectedRange([0]);
+    setSelectedRange([]);
   }, [selected]);
 
   const handleSquareClick = (squareIndex: number) => {
@@ -266,7 +266,7 @@ const CreateStep5 = ({ className }: Props) => {
             </div>
 
             <Button
-              disabled={selectedRange.length === 0}
+              disabled={selectedRange.length === 0 && !selected}
               href="/customer/create-step-6"
             >
               Далее

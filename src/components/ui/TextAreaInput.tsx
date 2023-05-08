@@ -8,9 +8,16 @@ interface Props {
   disabled?: boolean;
   warning?: boolean;
   error?: boolean;
+  label?: string;
 }
 
-const TextAreaInput = ({ maxLength, disabled, warning, error }: Props) => {
+const TextAreaInput = ({
+  maxLength,
+  disabled,
+  warning,
+  error,
+  label,
+}: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
@@ -45,6 +52,7 @@ const TextAreaInput = ({ maxLength, disabled, warning, error }: Props) => {
           </StyledTextAreaCounter>
         )}
         <StyledTextAreaInput
+          placeholder={label}
           value={value}
           onChange={handleChange}
           onFocus={handleFocus}
@@ -52,7 +60,7 @@ const TextAreaInput = ({ maxLength, disabled, warning, error }: Props) => {
           maxLength={maxLength}
           disabled={disabled}
         />
-        <StyledTextAreaLabel isFocused={isFocused}>Text</StyledTextAreaLabel>
+        <StyledTextAreaLabel isFocused={isFocused}></StyledTextAreaLabel>
       </StyledTextAreaField>
       {warning && (
         <div className="Warning__message Text_12_16">
@@ -141,7 +149,6 @@ const StyledTextArea = styled.div`
     }
   }
 
-  max-width: 300px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -154,7 +161,6 @@ const StyledTextAreaField = styled.div`
 `;
 
 const StyledTextAreaInput = styled.textarea`
-  max-width: 300px;
   min-width: 300px;
   min-height: 60px;
   position: relative;
