@@ -184,7 +184,7 @@ const StyledHowItWorks = styled.section`
     padding-bottom: 75px;
     max-width: 1880px;
     width: 100%;
-    display: flex;
+    /* display: flex; */
     border-radius: 10px;
     justify-content: center;
   }

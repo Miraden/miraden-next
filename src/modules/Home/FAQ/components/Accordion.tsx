@@ -139,7 +139,7 @@ const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
       }
     }
 
-    div {
+    span {
       font-size: 18px;
       line-height: 150%;
       font-weight: 700;
@@ -176,7 +176,7 @@ const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
     }
 
     .Accordion__text {
-      div {
+      span {
         font-size: 16px;
         line-height: 24px;
         font-weight: 700;
