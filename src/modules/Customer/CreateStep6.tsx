@@ -358,7 +358,7 @@ const CreateStep6 = ({ className }: Props) => {
 
             <Button
               disabled={selectedRange.length === 0 && !selected}
-              href="/customer/create-step-6"
+              href="/customer/create-step-7"
             >
               Далее
             </Button>
@@ -436,7 +436,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 39%;
+      width: 54%;
       height: 6px;
       background-color: #4e6af3;
     }

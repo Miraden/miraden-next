@@ -192,44 +192,42 @@ const CreateStep5 = ({ className }: Props) => {
           </div>
         </div>
 
-        <div>
+        <div className="Reg__monthsContainer">
           <h2>Жилая площадь</h2>
-          <div className="Reg__monthsContainer">
-            <div className="Reg__months">
-              {[...Array(64)].map((_, index) => {
-                const label = index + "0 м²";
-                if (index === 0) {
-                  return label === "уже построена";
-                }
-                if (index >= maxVisibleLivingSquare) {
-                  return null;
-                }
+          <div className="Reg__months">
+            {[...Array(64)].map((_, index) => {
+              const label = index + "0 м²";
+              if (index === 0) {
+                return label === "уже построена";
+              }
+              if (index >= maxVisibleLivingSquare) {
+                return null;
+              }
 
-                const isActive = selectedLivingRage.includes(index);
-                const isWithinRange =
-                  selectedLivingRage.length === 2 &&
-                  index >= selectedLivingRage[0] &&
-                  index <= selectedLivingRage[1];
-                return (
-                  <RequestButton
-                    key={`${index}`}
-                    onClick={() => handleLivingSquareClick(index)}
-                    active={isActive}
-                    ranged={isWithinRange}
-                  >
-                    {label}
-                  </RequestButton>
-                );
-              })}
-              {maxVisibleSquare < 64 && (
+              const isActive = selectedLivingRage.includes(index);
+              const isWithinRange =
+                selectedLivingRage.length === 2 &&
+                index >= selectedLivingRage[0] &&
+                index <= selectedLivingRage[1];
+              return (
                 <RequestButton
-                  onClick={handleShowMoreLiving}
-                  className="ShowMoreButton Color_blue_primary"
+                  key={`${index}`}
+                  onClick={() => handleLivingSquareClick(index)}
+                  active={isActive}
+                  ranged={isWithinRange}
                 >
-                  Ещё {livingSquares.length - maxVisibleLivingSquare}
+                  {label}
                 </RequestButton>
-              )}
-            </div>
+              );
+            })}
+            {maxVisibleSquare < 64 && (
+              <RequestButton
+                onClick={handleShowMoreLiving}
+                className="ShowMoreButton Color_blue_primary"
+              >
+                Ещё {livingSquares.length - maxVisibleLivingSquare}
+              </RequestButton>
+            )}
           </div>
         </div>
 
@@ -284,7 +282,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__head {
     padding: 30px 30px 18px 30px;
-    border: 2px solid #f1f7ff;
+    border-bottom: 2px solid #f1f7ff;
   }
 
   .Reg__radioButtons {
@@ -320,7 +318,7 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__monthsContainer {
-    padding: 30px;
+    padding: 30px 30px 0 30px;
   }
 
   .Reg__months {
@@ -345,7 +343,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 33%;
+      width: 45%;
       height: 6px;
       background-color: #4e6af3;
     }

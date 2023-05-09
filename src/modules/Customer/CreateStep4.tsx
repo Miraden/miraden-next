@@ -165,9 +165,9 @@ const CreateStep4 = ({ className }: Props) => {
           </div>
         )}
         {selected === "secondary" && (
-          <div>
+          <div className="Reg__monthsContainer">
             <h2>Год постройки</h2>
-            <div className="Reg__options">
+            <div className="Reg__months">
               {visibleYears.map((year) => (
                 <RequestButton
                   key={year}
@@ -176,11 +176,16 @@ const CreateStep4 = ({ className }: Props) => {
                 >
                   {year}
                 </RequestButton>
-              ))}
+              ))}{" "}
+              {!showAllYears && years.length > 10 && (
+                <RequestButton
+                  onClick={handleShowAllYears}
+                  className="Color_blue_primary"
+                >
+                  Еще {visibleYears.length}
+                </RequestButton>
+              )}
             </div>
-            {!showAllYears && years.length > 10 && (
-              <button onClick={handleShowAllYears}>Показать еще</button>
-            )}
           </div>
         )}
         <div className="Reg__progressBar"></div>
@@ -188,14 +193,14 @@ const CreateStep4 = ({ className }: Props) => {
           <div className="Reg__footerBack">
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-step-3"
               className="Reg__goBackButton"
             >
               Назад
             </Button>
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-step-3"
               leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>
@@ -237,6 +242,7 @@ const CreateStep4 = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 18px 30px;
@@ -276,21 +282,28 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__monthsContainer {
-    padding: 30px;
+    padding: 30px 30px 0 30px;
   }
 
   .Reg__months {
+    margin-top: 15px;
     display: flex;
     flex-wrap: wrap;
+    padding-bottom: 10px;
+    align-content: flex-start;
+    height: 206px;
+    overflow-y: scroll;
 
     margin-left: -10px;
-    margin-top: -10px;
     button {
       padding: 10px 20px;
       width: fit-content;
       margin-left: 10px;
       margin-top: 10px;
     }
+  }
+
+  .Reg__years {
   }
 
   .Reg__progressBar {
@@ -301,7 +314,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 29%;
+      width: 36.3%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -347,7 +360,12 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
+    margin-top: 10px;
     .Reg__options {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -355,13 +373,16 @@ const StyledRegStep1 = styled.section`
       grid-gap: 20px;
       margin-left: 0;
       margin-top: 0;
-      height: 797px;
       button {
         max-width: unset;
         width: 100%;
         margin-left: 0;
         margin-top: 0;
       }
+    }
+
+    .Reg__months {
+      height: 606px;
     }
   }
 
@@ -374,6 +395,7 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }
@@ -383,13 +405,12 @@ const StyledRegStep1 = styled.section`
       display: flex;
       flex-direction: column;
       grid-gap: 12px;
-      height: 566px;
       button {
       }
     }
 
-    .Reg__link {
-      padding: 5px 20px;
+    .Reg__months {
+      height: 463px;
     }
 
     .Reg__goBackButton {
