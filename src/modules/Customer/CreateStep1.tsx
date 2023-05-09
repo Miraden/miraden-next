@@ -1,5 +1,5 @@
 import { Button, RequestButton } from "@/components/ui";
-import { ArrowIcon, SearchIcon } from "@/icons";
+import { ArrowIcon, CrossIcon, MapIcon, SearchIcon } from "@/icons";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 
@@ -175,16 +175,36 @@ const SearchReg = ({ options }: SearchProps) => {
     },
     {}
   );
+
+  const handleRemoveResults = useCallback(() => {
+    setSearchText("");
+  }, []);
+
   return (
     <SearchRegContainer>
       <SearchIcon className="Search__searchIcon" />
+      <div className="Search__container">
+        <SearchInput
+          type="text"
+          placeholder="Укажите город"
+          value={searchText}
+          onChange={handleSearchInputChange}
+        />
 
-      <SearchInput
-        type="text"
-        placeholder="Поиск по городам"
-        value={searchText}
-        onChange={handleSearchInputChange}
-      />
+        {searchText && (
+          <CrossIcon
+            className="Search__crossIcon"
+            width={18}
+            height={18}
+            onClick={handleRemoveResults}
+          />
+        )}
+        <button className="Search__mapButton">
+          <MapIcon />
+          <p>На карте</p>
+        </button>
+      </div>
+
       {showDropdown && (
         <SearchDropdown>
           {Object.keys(filteredOptions).map((optionKey) => (
@@ -220,6 +240,7 @@ const CreateStep1 = ({ className }: Props) => {
   const [showAllCities, setShowAllCities] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [numCitiesToShow, setNumCitiesToShow] = useState<number>(5); // шаг 1
+  const [allCitiesActive, setAllCitiesActive] = useState(false);
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
@@ -256,50 +277,66 @@ const CreateStep1 = ({ className }: Props) => {
         <SearchReg options={cityMap} />
 
         <div className="Reg__options">
-          {Object.keys(cityMap).map((option) => (
-            <RequestButton
-              key={option}
-              onClick={() => handleSelect(option as Option)}
-              active={selected === option}
-            >
-              {cityMap[option as Option].label}
-            </RequestButton>
-          ))}
-        </div>
-        <div className="Reg__citiesContainer">
-          <h2>Город</h2>
-          <div className="Reg__cities">
-            {selected && (
-              <>
-                {cityMap[selected].cities
-                  .slice(0, numCitiesToShow)
-                  .map((city) => (
-                    <RequestButton
-                      key={city}
-                      onClick={() => handleSelectCity(city)}
-                      active={selectedCity === city}
-                    >
-                      {city}
-                    </RequestButton>
-                  ))}
-                {cityMap[selected].cities.length > numCitiesToShow &&
-                  !showAllCities && (
-                    <RequestButton
-                      onClick={handleShowMoreCities}
-                      className="Color_blue_primary"
-                    >
-                      Ещё {numCitiesToShow}
+          <div className="Reg__optionsList">
+            {Object.keys(cityMap).map((option) => (
+              <RequestButton
+                key={option}
+                onClick={() => handleSelect(option as Option)}
+                active={selected === option}
+              >
+                {cityMap[option as Option].label}
+              </RequestButton>
+            ))}
+          </div>
+
+          <div className="Reg__citiesContainer">
+            <h2>Город</h2>
+            <div className="Reg__cities">
+              {selected && (
+                <>
+                  <RequestButton
+                    onClick={() => {
+                      setSelectedCity(null);
+                      setAllCitiesActive(true);
+                    }}
+                    active={allCitiesActive}
+                  >
+                    Все города
+                  </RequestButton>
+                  {cityMap[selected].cities
+                    .slice(0, numCitiesToShow)
+                    .map((city) => (
+                      <RequestButton
+                        key={city}
+                        onClick={() => {
+                          handleSelectCity(city);
+                          setAllCitiesActive(false);
+                        }}
+                        active={selectedCity === city && !allCitiesActive}
+                      >
+                        {city}
+                      </RequestButton>
+                    ))}
+                  {cityMap[selected].cities.length > numCitiesToShow &&
+                    !showAllCities && (
+                      <RequestButton
+                        onClick={handleShowMoreCities}
+                        className="Color_blue_primary"
+                      >
+                        Ещё {numCitiesToShow}
+                      </RequestButton>
+                    )}
+                  {showAllCities && (
+                    <RequestButton onClick={handleHideExtraCities}>
+                      Скрыть
                     </RequestButton>
                   )}
-                {showAllCities && (
-                  <RequestButton onClick={handleHideExtraCities}>
-                    Скрыть
-                  </RequestButton>
-                )}
-              </>
-            )}
+                </>
+              )}
+            </div>
           </div>
         </div>
+
         <div className="Reg__progressBar"></div>
 
         <div className="Reg__footer">
@@ -326,7 +363,7 @@ const CreateStep1 = ({ className }: Props) => {
             </div>
           </div>
           <Button
-            disabled={!selected || !selectedCity}
+            disabled={!selected || (!selectedCity && !allCitiesActive)}
             href="/customer/create-step-2"
           >
             Далее
@@ -355,10 +392,15 @@ const StyledCreateStep1 = styled.section`
 
   .Reg__options {
     padding: 41px 30px 0 30px;
+    height: 362px;
+  }
+
+  .Reg__optionsList {
     display: flex;
     flex-wrap: wrap;
     margin-left: -20px;
     margin-top: -20px;
+    overflow-y: scroll;
 
     button {
       justify-content: flex-start;
@@ -375,10 +417,10 @@ const StyledCreateStep1 = styled.section`
 
   .Reg__citiesContainer {
     padding-top: 50px;
-    padding-left: 30px;
   }
 
   .Reg__cities {
+    margin-top: 15px;
     padding: 15px 30px 155px 0;
     margin-left: -20px;
     margin-top: -20px;
@@ -387,7 +429,7 @@ const StyledCreateStep1 = styled.section`
 
     button {
       justify-content: flex-start;
-      width: fit-content;
+      width: fit-content !important;
       margin-left: 20px;
       margin-top: 20px;
       padding: 10px 20px;
@@ -449,15 +491,12 @@ const StyledCreateStep1 = styled.section`
       margin-top: -10px;
       margin-left: -10px;
       flex-wrap: wrap;
+      height: 767px;
       button {
         max-width: unset;
         margin-left: 10px;
         margin-top: 10px;
       }
-    }
-
-    .Reg__citiesContainer {
-      padding-bottom: 529px;
     }
   }
 
@@ -469,9 +508,15 @@ const StyledCreateStep1 = styled.section`
     .Reg__options {
       padding: 38px 20px;
       padding-bottom: 0;
+    }
 
-      button {
-      }
+    .Reg__optionsList {
+      padding-left: 20px;
+    }
+    .Reg__cities {
+      margin-top: 10px;
+      padding-top: 0;
+      padding-bottom: 0;
     }
 
     .Reg__citiesContainer {
@@ -518,15 +563,40 @@ const SearchRegContainer = styled.div`
 
   border-top: 2px solid #f1f7ff;
   border-bottom: 2px solid #f1f7ff;
-  padding: 18px 21px;
+  padding: 10px 21px;
 
   .Search__searchIcon {
     position: absolute;
     width: 18px;
     height: 18px;
-    top: 18px;
+    top: 20px;
     left: 20px;
     z-index: 21;
+  }
+
+  .Search__container {
+    display: flex;
+  }
+
+  .Search__crossIcon {
+    position: absolute;
+    right: 160px;
+    top: 20px;
+    path {
+      fill: #7786a5;
+    }
+  }
+
+  .Search__mapButton {
+    display: flex;
+    align-items: center;
+    padding: 10px 24px;
+    p {
+      margin-left: 10px;
+      font-size: 16px;
+      line-height: 20px;
+      color: #7786a5;
+    }
   }
 `;
 
