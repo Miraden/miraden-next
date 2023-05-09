@@ -14,18 +14,12 @@ const Sort: FC<Props> = ({ className }) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const options = () => {
     return [
-      "Select 1",
-      "Select 2",
-      "Select 3",
-      "Select 4",
-      "Select 5",
-      "Select 6",
-      "Select 7",
-      "Select 8",
-      "Select 9",
-      "Select 10",
-      "Select 11",
-      "Select 12",
+      "Диапазон 1 км",
+      "Диапазон 5 км",
+      "Диапазон 10 км",
+      "Диапазон 15 км",
+      "Диапазон 20 км",
+      "Диапазон 30 км",
     ];
   };
 
@@ -59,7 +53,7 @@ const Sort: FC<Props> = ({ className }) => {
         }
       >
         <div className="DropdownInput_selectLabel Text_14_16">
-          {selectOption ? selectOption : "Sort"}
+          {selectedOption ? selectedOption : "Диапазон"}
           <ArrowIcon />
         </div>
         {showDropDown && (
@@ -80,7 +74,8 @@ const Sort: FC<Props> = ({ className }) => {
 const StyledDropdownInput = styled.div<Props>`
   max-width: fit-content;
   position: relative;
-
+  background: #ffffff;
+  border-radius: 10px;
   .DropdownInput_selectContainer {
     right: 10px;
     top: 4px;

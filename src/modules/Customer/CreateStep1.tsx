@@ -2,6 +2,7 @@ import { Button, RequestButton } from "@/components/ui";
 import { ArrowIcon, CrossIcon, MapIcon, SearchIcon } from "@/icons";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
+import { MapContainer } from "./MapContainer";
 
 interface Props {
   className?: string;
@@ -93,6 +94,7 @@ type Option = "turkey" | "cyprus" | "northCyprus" | "montenegro";
 
 interface SearchProps {
   options: { [key: string]: { label: string; cities: string[] } };
+  onClick?: any;
 }
 
 interface SearchOptionProps {
@@ -133,7 +135,7 @@ const SearchOptionLocal = ({
   );
 };
 
-const SearchReg = ({ options }: SearchProps) => {
+const SearchReg = ({ options, onClick }: SearchProps) => {
   const [searchText, setSearchText] = useState("");
   const [selectedOption, setSelectedOption] = useState<{
     city: string;
@@ -199,7 +201,7 @@ const SearchReg = ({ options }: SearchProps) => {
             onClick={handleRemoveResults}
           />
         )}
-        <button className="Search__mapButton">
+        <button className="Search__mapButton" onClick={onClick}>
           <MapIcon />
           <p>На карте</p>
         </button>
@@ -242,6 +244,12 @@ const CreateStep1 = ({ className }: Props) => {
   const [numCitiesToShow, setNumCitiesToShow] = useState<number>(5); // шаг 1
   const [allCitiesActive, setAllCitiesActive] = useState(false);
 
+  const [openMap, setOpenMap] = useState(false);
+
+  const handleOpenMap = useCallback(() => {
+    setOpenMap(!openMap);
+  }, [openMap]);
+
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
     setSelectedCity(null); // очистить выбранный город
@@ -274,68 +282,71 @@ const CreateStep1 = ({ className }: Props) => {
             Укажите город или локацию недвижимости
           </h1>
         </div>
-        <SearchReg options={cityMap} />
+        <SearchReg options={cityMap} onClick={handleOpenMap} />
+        {openMap ? (
+          <MapContainer />
+        ) : (
+          <div className="Reg__options">
+            <div className="Reg__optionsList">
+              {Object.keys(cityMap).map((option) => (
+                <RequestButton
+                  key={option}
+                  onClick={() => handleSelect(option as Option)}
+                  active={selected === option}
+                >
+                  {cityMap[option as Option].label}
+                </RequestButton>
+              ))}
+            </div>
 
-        <div className="Reg__options">
-          <div className="Reg__optionsList">
-            {Object.keys(cityMap).map((option) => (
-              <RequestButton
-                key={option}
-                onClick={() => handleSelect(option as Option)}
-                active={selected === option}
-              >
-                {cityMap[option as Option].label}
-              </RequestButton>
-            ))}
-          </div>
-
-          <div className="Reg__citiesContainer">
-            <h2>Город</h2>
-            <div className="Reg__cities">
-              {selected && (
-                <>
-                  <RequestButton
-                    onClick={() => {
-                      setSelectedCity(null);
-                      setAllCitiesActive(true);
-                    }}
-                    active={allCitiesActive}
-                  >
-                    Все города
-                  </RequestButton>
-                  {cityMap[selected].cities
-                    .slice(0, numCitiesToShow)
-                    .map((city) => (
-                      <RequestButton
-                        key={city}
-                        onClick={() => {
-                          handleSelectCity(city);
-                          setAllCitiesActive(false);
-                        }}
-                        active={selectedCity === city && !allCitiesActive}
-                      >
-                        {city}
-                      </RequestButton>
-                    ))}
-                  {cityMap[selected].cities.length > numCitiesToShow &&
-                    !showAllCities && (
-                      <RequestButton
-                        onClick={handleShowMoreCities}
-                        className="Color_blue_primary"
-                      >
-                        Ещё {numCitiesToShow}
+            <div className="Reg__citiesContainer">
+              <h2>Город</h2>
+              <div className="Reg__cities">
+                {selected && (
+                  <>
+                    <RequestButton
+                      onClick={() => {
+                        setSelectedCity(null);
+                        setAllCitiesActive(true);
+                      }}
+                      active={allCitiesActive}
+                    >
+                      Все города
+                    </RequestButton>
+                    {cityMap[selected].cities
+                      .slice(0, numCitiesToShow)
+                      .map((city) => (
+                        <RequestButton
+                          key={city}
+                          onClick={() => {
+                            handleSelectCity(city);
+                            setAllCitiesActive(false);
+                          }}
+                          active={selectedCity === city && !allCitiesActive}
+                        >
+                          {city}
+                        </RequestButton>
+                      ))}
+                    {cityMap[selected].cities.length > numCitiesToShow &&
+                      !showAllCities && (
+                        <RequestButton
+                          onClick={handleShowMoreCities}
+                          className="Color_blue_primary"
+                        >
+                          Ещё {numCitiesToShow}
+                        </RequestButton>
+                      )}
+                    {showAllCities && (
+                      <RequestButton onClick={handleHideExtraCities}>
+                        Скрыть
                       </RequestButton>
                     )}
-                  {showAllCities && (
-                    <RequestButton onClick={handleHideExtraCities}>
-                      Скрыть
-                    </RequestButton>
-                  )}
-                </>
-              )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         <div className="Reg__progressBar"></div>
 
