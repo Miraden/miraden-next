@@ -18,13 +18,13 @@ const steps = [
     step: "1",
   },
   {
-    title: "Сервис публикует заявку в ленте",
+    title: "Сервис публикует заявку в ленте",
     description: "Самые подходящие исполнители получают уведомление о заявке",
     image: "/images/HowItWorks.svg",
     step: "2",
   },
   {
-    title: "Исполнители делают вам предложения",
+    title: "Исполнители делают вам предложения",
     description:
       "Получаете персональные предложения и подборки от независимых исполнителей",
     image: "/images/HowItWorks.svg",
@@ -85,7 +85,7 @@ const CreateStart = ({ className }: Props) => {
                   <p className="Reg__counter Font_14_140">{step.step}</p>
                 </div>
                 <div className="Reg__listItemContent">
-                  <h3 className="Reg__listItemTitle Font_20_120 lg:Font_18_120_500">
+                  <h3 className="Reg__listItemTitle Font_20_24_500 lg:Font_18_120_500">
                     {step.title}
                   </h3>
                   <p className="Reg__listItemDescription Font_16_24 Color_text_grey">
@@ -99,11 +99,11 @@ const CreateStart = ({ className }: Props) => {
             {steps.map((step, index) => (
               <li key={index} className="Reg__step keen-slider__slide">
                 <div className="Reg__imageContainer">
-                  <Image src={step.image} alt="" width={95} height={136} />
+                  <Image src={step.image} alt="" width={141} height={202} />
                   <p className="Reg__counter Font_14_140">{step.step}</p>
                 </div>
                 <div className="Reg__listItemContent">
-                  <h3 className="Reg__listItemTitle Font_20_120 lg:Font_18_120_500">
+                  <h3 className="Reg__listItemTitle Font_20_120 lg:Font_18_120_500 sm:Font_18_120_500">
                     {step.title}
                   </h3>
                   <p className="Reg__listItemDescription Font_16_24 Color_text_grey">
@@ -135,7 +135,7 @@ const CreateStart = ({ className }: Props) => {
               className="Reg__goBackButtonMobile"
             ></Button>
           </div>
-          <Button href="/customer/reg-2">Начать</Button>
+          <Button href="/customer/create-step-1">Начать</Button>
         </div>
       </div>
     </StyledCreateStep1>
@@ -145,6 +145,7 @@ const CreateStart = ({ className }: Props) => {
 const StyledCreateStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .slider-dots {
     display: flex;
@@ -173,13 +174,14 @@ const StyledCreateStep1 = styled.section`
   }
 
   .Reg__options {
-    padding: 50px 80px;
+    padding: 50px 80px 0 80px;
+    height: 416px;
     justify-content: center;
   }
 
   .Reg__Steps {
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: space-between;
   }
 
@@ -189,10 +191,11 @@ const StyledCreateStep1 = styled.section`
 
   .Reg__step {
     max-width: 230px;
+    width: 100%;
   }
 
   .Reg__step:not(:first-child) {
-    margin-left: 26px;
+    margin-left: 60px;
   }
 
   .Reg__imageContainer {
@@ -256,9 +259,15 @@ const StyledCreateStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
+    margin-top: 10px;
     .Reg__options {
-      padding: 50px 30px;
+      padding: 50px 30px 0px 30px;
+      height: 827px;
     }
 
     .Reg__step {
@@ -268,12 +277,15 @@ const StyledCreateStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
+
     .slider-dots {
       display: flex;
     }
 
     .Reg__StepsMobile {
       display: flex;
+      overflow: hidden;
     }
 
     .Reg__Steps {
@@ -290,7 +302,7 @@ const StyledCreateStep1 = styled.section`
       display: flex;
       flex-direction: column;
       grid-gap: 12px;
-      height: 566px;
+      height: 642px;
     }
 
     .Reg__step {

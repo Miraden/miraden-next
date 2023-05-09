@@ -13,6 +13,7 @@ interface Props {
   className?: string;
   values?: any;
   onChange?: any;
+  onKeyPress?: any;
 }
 
 const TextInput = ({
@@ -25,6 +26,7 @@ const TextInput = ({
   className,
   values,
   onChange,
+  onKeyPress,
 }: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -64,15 +66,16 @@ const TextInput = ({
           </StyledTextInputCounter>
         )}
         <StyledTextInputInput
-          value={value}
-          onChange={handleChange}
+          value={values}
+          onChange={onChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
           maxLength={maxLength}
           disabled={disabled}
+          className="TextInput"
         />
         {icon && <div className="Icon__container">{icon}</div>}
-        <StyledTextInputLabel isFocused={isFocused}>
+        <StyledTextInputLabel isFocused={isFocused} className="TextInput">
           {label}
         </StyledTextInputLabel>
       </StyledTextInputField>
@@ -92,7 +95,11 @@ const StyledTextInput = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-
+  .TextInput::after {
+    content: "*";
+    color: red;
+    margin-right: 5px;
+  }
   .FieldInput__disabled {
     input {
       background: #eff3fb !important;
@@ -181,6 +188,12 @@ const StyledTextInputInput = styled.input`
   }
   &:hover {
     box-shadow: 0 0 0 2px #cddef4 inset;
+  }
+
+  .TextInput::before {
+    content: "*";
+    color: red;
+    margin-right: 5px;
   }
 `;
 

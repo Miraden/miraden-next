@@ -37,7 +37,7 @@ const RegStep3 = ({ className }: Props) => {
               Профиль
             </Button>
           </div>
-          <Button href="/customer/reg-2">Далее</Button>
+          <Button href="/customer/create-1">Далее</Button>
         </div>
       </div>
     </StyledRegStep1>
@@ -47,6 +47,7 @@ const RegStep3 = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
@@ -130,7 +131,12 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
+    margin-top: 10px;
     .Reg__options {
       padding-top: 100;
       padding-bottom: 495px;
@@ -138,6 +144,7 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }

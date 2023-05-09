@@ -1,7 +1,7 @@
 import { Button, Link } from "@/components/ui";
 import { TextInput } from "@/components/ui/TextInput";
 import { ArrowIcon } from "@/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -10,6 +10,25 @@ interface Props {
 
 const RegStep2 = ({ className }: Props) => {
   const [valid, setValid] = useState(true);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setName(event.target.value);
+  }
+
+  function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(event.target.value);
+  }
+
+  useEffect(() => {
+    if (name && email) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
+  }, [name, email]);
 
   return (
     <StyledRegStep1 className={className}>
@@ -26,8 +45,12 @@ const RegStep2 = ({ className }: Props) => {
           </Link>
         </div>
         <div className="Reg__options">
-          <TextInput label="Имя *" />
-          <TextInput label="Электронная почта *" className="Reg__email" />
+          <TextInput label="Имя " onChange={handleNameChange} />
+          <TextInput
+            label="Электронная почта "
+            className="Reg__email"
+            onChange={handleEmailChange}
+          />
           <span className="Font_12_16">
             Нажимая на кнопку «Далее», вы соглашаетесь с обработкой  
             <a href="">персональных данных</a> и 
@@ -71,6 +94,7 @@ const RegStep2 = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
@@ -88,7 +112,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__options {
     padding-top: 41px;
-    padding-bottom: 117px;
+    height: 386px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -138,7 +162,7 @@ const StyledRegStep1 = styled.section`
     margin-left: 30px;
 
     span:last-child {
-      margin-left: 4px;
+      margin-left: 6px;
     }
   }
 
@@ -155,7 +179,12 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
+    margin-top: 10px;
     .Reg__options {
       height: 797px;
       button {
@@ -168,6 +197,7 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }

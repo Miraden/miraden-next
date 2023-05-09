@@ -91,7 +91,6 @@ const Search = ({ options, disabled, className }: SearchProps) => {
 
 const SearchContainer = styled.div`
   position: relative;
-  max-width: 300px;
 
   .Search_disabled .Search__searchIcon {
     svg path {

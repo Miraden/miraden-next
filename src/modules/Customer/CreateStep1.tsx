@@ -1,5 +1,5 @@
 import { Button, RequestButton } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
+import { ArrowIcon, SearchIcon } from "@/icons";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 
@@ -7,13 +7,10 @@ interface Props {
   className?: string;
 }
 
-type Option = "turkey" | "cyprus" | "northCyprus" | "montenegro";
-
 const cityMap: Record<Option, { label: string; cities: string[] }> = {
   turkey: {
     label: "Турция",
     cities: [
-      "Все города",
       "Аланья",
       "Анталья",
       "Стамбул",
@@ -34,7 +31,6 @@ const cityMap: Record<Option, { label: string; cities: string[] }> = {
   cyprus: {
     label: "Кипр",
     cities: [
-      "Все города",
       "Лимассол",
       "Пафос",
       "Ларнака",
@@ -55,7 +51,6 @@ const cityMap: Record<Option, { label: string; cities: string[] }> = {
   northCyprus: {
     label: "Северный Кипр",
     cities: [
-      "Все города",
       "Гирне",
       "Фамагуста",
       "Лефкоша",
@@ -76,7 +71,6 @@ const cityMap: Record<Option, { label: string; cities: string[] }> = {
   montenegro: {
     label: "Черногория",
     cities: [
-      "Все города",
       "Будва",
       "Котор",
       "Тиват",
@@ -95,12 +89,137 @@ const cityMap: Record<Option, { label: string; cities: string[] }> = {
     ],
   },
 };
+type Option = "turkey" | "cyprus" | "northCyprus" | "montenegro";
+
+interface SearchProps {
+  options: { [key: string]: { label: string; cities: string[] } };
+}
+
+interface SearchOptionProps {
+  selected: boolean;
+  onClick: () => void;
+  children?: any;
+}
+
+interface SearchOptionItemProps {
+  selected: boolean;
+  onClick: () => void;
+}
+
+const SearchOptionItem = styled.li<SearchOptionItemProps>`
+  background-color: ${(props) => (props.selected ? "#ccc" : "transparent")};
+  cursor: pointer;
+  padding: 8px;
+`;
+const SearchOptionLocal = ({
+  selected,
+  onClick,
+  children,
+  searchText,
+}: SearchOptionProps &
+  React.HTMLProps<HTMLLIElement> & { searchText: string }) => {
+  const highlightedText = searchText
+    ? children
+        .toString()
+        .replace(
+          new RegExp(searchText, "gi"),
+          (match: any) => `<mark>${match}</mark>`
+        )
+    : children;
+  return (
+    <SearchOptionItem onClick={onClick} selected={selected}>
+      <div dangerouslySetInnerHTML={{ __html: highlightedText }} />
+    </SearchOptionItem>
+  );
+};
+
+const SearchReg = ({ options }: SearchProps) => {
+  const [searchText, setSearchText] = useState("");
+  const [selectedOption, setSelectedOption] = useState<{
+    city: string;
+    region: string;
+  } | null>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const handleSearchInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const value = event.target.value;
+    setSearchText(value);
+    setSelectedOption(null);
+    setShowDropdown(value !== "");
+  };
+
+  const handleOptionClick = (option: { city: string; region: string }) => {
+    setSelectedOption(option);
+    setSearchText(option.city);
+    setShowDropdown(false);
+  };
+
+  const filteredOptions = Object.keys(options).reduce(
+    (
+      acc: { [key: string]: { label: string; cities: string[] } },
+      optionKey: string
+    ) => {
+      const option = options[optionKey];
+      const cities = option.cities.filter((city) =>
+        city.toLowerCase().includes(searchText.toLowerCase())
+      );
+      if (cities.length) {
+        acc[optionKey] = {
+          ...option,
+          cities,
+        };
+      }
+      return acc;
+    },
+    {}
+  );
+  return (
+    <SearchRegContainer>
+      <SearchIcon className="Search__searchIcon" />
+
+      <SearchInput
+        type="text"
+        placeholder="Поиск по городам"
+        value={searchText}
+        onChange={handleSearchInputChange}
+      />
+      {showDropdown && (
+        <SearchDropdown>
+          {Object.keys(filteredOptions).map((optionKey) => (
+            <SearchOptionGroup key={optionKey} className="Font_16_24">
+              <SearchOptionList>
+                {filteredOptions[optionKey].cities.map((city) => (
+                  <SearchOptionLocal
+                    key={city}
+                    selected={selectedOption?.city === city}
+                    onClick={() =>
+                      handleOptionClick({ city, region: optionKey })
+                    }
+                    searchText={searchText}
+                  >
+                    {city}
+                  </SearchOptionLocal>
+                ))}
+              </SearchOptionList>
+            </SearchOptionGroup>
+          ))}
+        </SearchDropdown>
+      )}
+    </SearchRegContainer>
+  );
+};
+
+interface Props {
+  className?: string;
+}
 
 const CreateStep1 = ({ className }: Props) => {
   const [selected, setSelected] = useState<Option | null>(null);
   const [showAllCities, setShowAllCities] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
-  const [numCitiesToShow, setNumCitiesToShow] = useState(5); // шаг 1
+  const [numCitiesToShow, setNumCitiesToShow] = useState<number>(5); // шаг 1
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
@@ -115,7 +234,10 @@ const CreateStep1 = ({ className }: Props) => {
 
   const handleShowMoreCities = useCallback(() => {
     setShowAllCities(true);
-    setNumCitiesToShow(cityMap[selected as Option].cities.length); // показать все города
+    setNumCitiesToShow((prev) => {
+      const option = cityMap[selected as Option];
+      return option ? option.cities.length : prev;
+    }); // показать все города
   }, [selected]);
 
   const handleHideExtraCities = useCallback(() => {
@@ -131,6 +253,8 @@ const CreateStep1 = ({ className }: Props) => {
             Укажите город или локацию недвижимости
           </h1>
         </div>
+        <SearchReg options={cityMap} />
+
         <div className="Reg__options">
           {Object.keys(cityMap).map((option) => (
             <RequestButton
@@ -216,6 +340,7 @@ const CreateStep1 = ({ className }: Props) => {
 const StyledCreateStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
@@ -314,7 +439,12 @@ const StyledCreateStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
+    margin-top: 10px;
     .Reg__options {
       margin-top: -10px;
       margin-left: -10px;
@@ -371,6 +501,72 @@ const StyledCreateStep1 = styled.section`
         }
       }
     }
+  }
+`;
+
+const Option = styled.div`
+  padding: 8px 12px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+`;
+
+const SearchRegContainer = styled.div`
+  position: relative;
+
+  border-top: 2px solid #f1f7ff;
+  border-bottom: 2px solid #f1f7ff;
+  padding: 18px 21px;
+
+  .Search__searchIcon {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 18px;
+    left: 20px;
+    z-index: 21;
+  }
+`;
+
+const SearchInput = styled.input`
+  width: 100%;
+  font-size: 16px;
+  border: none;
+  margin-left: 20px;
+  outline: none;
+  color: #7786a5;
+`;
+
+const SearchDropdown = styled.div`
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 0 0 10px 10px;
+  border: none;
+  border-bottom: 2px solid #f1f7ff;
+  border-right: 2px solid #f1f7ff;
+  border-left: 2px solid #f1f7ff;
+  background-color: #fff;
+  z-index: 1;
+`;
+
+const SearchOptionGroup = styled.div`
+  padding-left: 30px;
+`;
+
+const SearchOptionList = styled.ul`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: #7786a5;
+  mark {
+    color: #2a344a;
+    background: transparent;
   }
 `;
 

@@ -28,17 +28,19 @@ const RentRangeStep = ({ className }: Props) => {
             Укажите период аренды
           </h1>
         </div>
-        <DatePicker
-          className="Test"
-          selected={startDate}
-          onChange={onChange}
-          startDate={startDate}
-          endDate={endDate}
-          selectsRange
-          inline
-          locale={ru}
-          monthsShown={2}
-        />
+        <div className="Test">
+          <DatePicker
+            selected={startDate}
+            onChange={onChange}
+            startDate={startDate}
+            endDate={endDate}
+            selectsRange
+            inline
+            locale={ru}
+            monthsShown={2}
+          />
+        </div>
+
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
           <div className="Reg__footerBack">
@@ -58,9 +60,9 @@ const RentRangeStep = ({ className }: Props) => {
             <div className="Reg__footerSteps">
               <span className="Font_16_24">Шаг</span>
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                4
+                5
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140">/ 7</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">
@@ -83,16 +85,36 @@ const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
 
-  .datepicker__day {
-    border: 1px solid red !important;
+  .Test {
+    width: fit-content;
+    padding-left: 30px;
+    padding-top: 40px;
+    padding-bottom: 96px;
   }
+
   .react-datepicker {
-    background: #ffffff;
+    background: transparent;
     border: none;
-    box-shadow: 0 0 0 2px inset #e1edfd;
+    box-shadow: 0 0 0 2px inset #e1edfd !important;
+    border-radius: 10px;
+
+    .react-datepicker__month-container:nth-of-type(2n + 1) {
+      margin-left: 30px;
+    }
 
     .react-datepicker__header {
-      background: #ffffff;
+      background: transparent;
+      padding: 17px 30px 0 23px;
+    }
+
+    .react-datepicker__navigation-icon {
+      ::before {
+        content: "url(icons/arrow.svg)";
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border-width: 1.5px 1.5px 0 0;
+      }
     }
 
     .react-datepicker__current-month {
@@ -111,6 +133,18 @@ const StyledRegStep1 = styled.section`
       border: none;
     }
 
+    .react-datepicker__month {
+      margin: 0;
+      width: fit-content;
+      padding-left: 23px;
+      padding-right: 30px;
+      padding-bottom: 19px;
+    }
+
+    .react-datepicker__week {
+      margin-top: 5px;
+    }
+
     .react-datepicker__day {
       color: #2a344a;
       font-size: 16px;
@@ -118,6 +152,7 @@ const StyledRegStep1 = styled.section`
       font-weight: 400;
       margin: 0;
       padding: 3px;
+      width: 30px;
     }
 
     .react-datepicker__day--selected,
@@ -132,6 +167,7 @@ const StyledRegStep1 = styled.section`
 
     .react-datepicker__day--in-selecting-range {
       background: #f1f7ff;
+      border-radius: 0;
     }
 
     .react-datepicker__day--in-range {
@@ -220,7 +256,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 29%;
+      width: 73%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -266,7 +302,12 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
+    margin-top: 10px;
     .Reg__options {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -293,6 +334,7 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }

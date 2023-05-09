@@ -37,14 +37,14 @@ const Login = ({ className }: Props) => {
         </div>
         <div className="Reg__options">
           <TextInput
-            label="Электронная почта *"
+            label="Электронная почта "
             values={email}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setEmail(event.target.value)
             }
           />
           <TextInput
-            label="Пароль *"
+            label="Пароль "
             className="Reg__email"
             values={password}
             onChange={
@@ -74,7 +74,7 @@ const Login = ({ className }: Props) => {
               className="Reg__goBackButtonMobile"
             ></Button>
           </div>
-          <Button disabled={valid} href="">
+          <Button disabled={valid} href="customer/pass-recover-1">
             Далее
           </Button>
         </div>
@@ -86,6 +86,7 @@ const Login = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
@@ -168,7 +169,11 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
   @media (max-width: 960px) {
+    margin-top: 10px;
     .Reg__options {
       height: 797px;
       button {
@@ -181,6 +186,8 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
+
     .Reg__head {
       padding: 20px;
     }

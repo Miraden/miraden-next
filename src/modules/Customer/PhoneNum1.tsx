@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui";
 import { TextInput } from "@/components/ui/TextInput";
 import { ArrowIcon } from "@/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -10,6 +10,19 @@ interface Props {
 
 const PhoneNum1 = ({ className }: Props) => {
   const [valid, setValid] = useState(true);
+  const [phone, setPhone] = useState("");
+
+  function handlePhoneChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setPhone(event.target.value);
+  }
+
+  useEffect(() => {
+    if (phone) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
+  }, [phone]);
 
   return (
     <StyledRegStep1 className={className}>
@@ -26,7 +39,7 @@ const PhoneNum1 = ({ className }: Props) => {
           </span>
         </div>
         <div className="Reg__options">
-          <TextInput label="Номер телефона *" />
+          <TextInput label="Номер телефона " onChange={handlePhoneChange} />
         </div>
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
@@ -52,7 +65,7 @@ const PhoneNum1 = ({ className }: Props) => {
               <span className="Font_16_140">/ 2</span>
             </div>
           </div>
-          <Button disabled={!valid} href="/customer/phone-2">
+          <Button disabled={!valid} href="/customer/login">
             Далее
           </Button>
         </div>
@@ -64,6 +77,7 @@ const PhoneNum1 = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
@@ -148,8 +162,12 @@ const StyledRegStep1 = styled.section`
   .Reg__goBackButtonMobile {
     display: none;
   }
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
 
   @media (max-width: 960px) {
+    margin-top: 0;
     .Reg__options {
       height: 797px;
       button {
@@ -162,6 +180,7 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }
