@@ -7,36 +7,73 @@ interface Props {
   className?: string;
 }
 
-type Option = "buy" | "sell";
+type Option =
+  | "business"
+  | "another"
+  | "rent"
+  | "sell"
+  | "register"
+  | "citizenship";
 
-const CreateStep2 = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>(null);
+const CreateCommercialStep6 = ({ className }: Props) => {
+  const [selected, setSelected] = useState<Option[]>([]);
 
-  const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+  const handleSelect = useCallback(
+    (option: Option) => {
+      if (selected.includes(option)) {
+        setSelected(selected.filter((item) => item !== option));
+      } else {
+        setSelected([...selected, option]);
+      }
+    },
+    [selected]
+  );
 
   return (
     <StyledRegStep1 className={className}>
       <div className="">
         <div className="Reg__head">
           <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Укажите формат сделки с недвижимостью
+            Укажите цель покупки
           </h1>
         </div>
 
         <div className="Reg__options">
           <RequestButton
-            onClick={() => handleSelect("buy")}
-            active={selected === "buy"}
+            onClick={() => handleSelect("rent")}
+            active={selected.includes("rent")}
           >
-            Хочу купить
+            Для инвестиций (сдавать)
           </RequestButton>
           <RequestButton
             onClick={() => handleSelect("sell")}
-            active={selected === "sell"}
+            active={selected.includes("sell")}
           >
-            Хочу арендавать
+            Для инвестиций (перепродать)
+          </RequestButton>
+          <RequestButton
+            onClick={() => handleSelect("register")}
+            active={selected.includes("register")}
+          >
+            Для ВНЖ / ПМЖ
+          </RequestButton>
+          <RequestButton
+            onClick={() => handleSelect("citizenship")}
+            active={selected.includes("citizenship")}
+          >
+            Для гражданства
+          </RequestButton>
+          <RequestButton
+            onClick={() => handleSelect("business")}
+            active={selected.includes("business")}
+          >
+            Для своего бизнеса
+          </RequestButton>
+          <RequestButton
+            onClick={() => handleSelect("another")}
+            active={selected.includes("another")}
+          >
+            Другое
           </RequestButton>
         </div>
         <div className="Reg__progressBar"></div>
@@ -45,23 +82,23 @@ const CreateStep2 = ({ className }: Props) => {
           <div className="Reg__footerBack">
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-commercial-step-5"
               className="Reg__goBackButton"
             >
               Назад
             </Button>
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-commercial-step-5"
               leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>
             <div className="Reg__footerSteps">
               <span className="Font_16_24">Шаг</span>
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                2
+                6
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140">/ 10</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">
@@ -71,15 +108,12 @@ const CreateStep2 = ({ className }: Props) => {
               </span>
               <p className="Color_blue_primary Font_16_140">317</p>
             </div>
-            {selected === "sell" ? (
-              <Button disabled={!selected} href="/customer/rent-range-step">
-                Далее
-              </Button>
-            ) : (
-              <Button disabled={!selected} href="/customer/create-step-3">
-                Далее
-              </Button>
-            )}
+            <Button
+              disabled={selected.length === 0}
+              href="/customer/create-step-8"
+            >
+              Далее
+            </Button>
           </div>
         </div>
       </div>
@@ -94,6 +128,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
+    border-bottom: 2px solid #f1f7ff;
   }
 
   .Reg__link {
@@ -131,7 +166,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 18.2%;
+      width: 60%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -224,10 +259,6 @@ const StyledRegStep1 = styled.section`
       }
     }
 
-    .Reg__link {
-      padding: 5px 20px;
-    }
-
     .Reg__goBackButton {
       display: none;
     }
@@ -253,4 +284,4 @@ const StyledRegStep1 = styled.section`
   }
 `;
 
-export { CreateStep2 };
+export { CreateCommercialStep6 };

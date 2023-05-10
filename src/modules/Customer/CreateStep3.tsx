@@ -156,7 +156,6 @@ const CreateStep3 = ({ className }: Props) => {
           )}
         </div>
         <div className="Reg__progressBar"></div>
-
         <div className="Reg__footer">
           <div className="Reg__footerBack">
             <Button
@@ -187,14 +186,28 @@ const CreateStep3 = ({ className }: Props) => {
               </span>
               <p className="Color_blue_primary Font_16_140">317</p>
             </div>
-            {isResidentialChecked ? (
-              <Button disabled={!selected} href="/customer/create-step-4">
+            {isCommercialChecked ? (
+              <Button
+                disabled={!selected}
+                href="/customer/create-commercial-step-4"
+              >
                 Далее
               </Button>
             ) : (
-              <Button disabled={!selected} href="/customer/create-step-4">
-                Далее
-              </Button>
+              <>
+                {selected === "land" ? (
+                  <Button
+                    disabled={!selected}
+                    href="/customer/create-step-6-land"
+                  >
+                    Далее
+                  </Button>
+                ) : (
+                  <Button disabled={!selected} href="/customer/create-step-4">
+                    Далее
+                  </Button>
+                )}
+              </>
             )}
           </div>
         </div>

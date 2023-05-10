@@ -46,14 +46,14 @@ const RentRangeStep = ({ className }: Props) => {
           <div className="Reg__footerBack">
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-step-4"
               className="Reg__goBackButton"
             >
               Назад
             </Button>
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-step-4"
               leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>
@@ -73,7 +73,7 @@ const RentRangeStep = ({ className }: Props) => {
               <p className="Color_blue_primary Font_16_140">317</p>
             </div>
 
-            <Button href="/customer/create-step-5">Далее</Button>
+            <Button href="/customer/rent-range-step-7">Далее</Button>
           </div>
         </div>
       </div>
@@ -84,12 +84,14 @@ const RentRangeStep = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Test {
     width: fit-content;
     padding-left: 30px;
     padding-top: 40px;
     padding-bottom: 96px;
+    padding-right: 30px;
   }
 
   .react-datepicker {
@@ -97,6 +99,10 @@ const StyledRegStep1 = styled.section`
     border: none;
     box-shadow: 0 0 0 2px inset #e1edfd !important;
     border-radius: 10px;
+
+    .react-datepicker__day {
+      margin-right: 15px !important;
+    }
 
     .react-datepicker__month-container:nth-of-type(2n + 1) {
       margin-left: 30px;
@@ -107,13 +113,44 @@ const StyledRegStep1 = styled.section`
       padding: 17px 30px 0 23px;
     }
 
-    .react-datepicker__navigation-icon {
+    .react-datepicker__navigation {
+    }
+
+    .react-datepicker__navigation--previous {
+      top: 10px;
+      left: 28px;
+    }
+
+    .react-datepicker__navigation--next {
+      top: 5px;
+      right: 34px;
+    }
+
+    .react-datepicker__navigation--next {
+      .react-datepicker__navigation-icon--next {
+        ::before {
+          content: "";
+          display: inline-block;
+          border: none;
+          width: 18px;
+          height: 18px;
+          transform: rotate(180deg);
+          background-image: url("/icons/arrow.svg");
+          background-repeat: no-repeat;
+        }
+      }
+    }
+
+    .react-datepicker__navigation-icon--previous {
       ::before {
-        content: "url(icons/arrow.svg)";
+        content: "";
         display: inline-block;
-        width: 9px;
-        height: 9px;
-        border-width: 1.5px 1.5px 0 0;
+        border: none;
+        width: 18px;
+        height: 18px;
+        transform: rotate(0);
+        background-image: url("/icons/arrow.svg");
+        background-repeat: no-repeat;
       }
     }
 
@@ -195,7 +232,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__head {
     padding: 30px 30px 18px 30px;
-    border: 2px solid #f1f7ff;
+    border-bottom: 2px solid #f1f7ff;
   }
 
   .Reg__radioButtons {
@@ -330,6 +367,26 @@ const StyledRegStep1 = styled.section`
       div {
         display: none;
       }
+    }
+
+    .react-datepicker__navigation {
+      display: none;
+    }
+
+    .react-datepicker {
+      box-shadow: none !important;
+
+      .react-datepicker__month-container:nth-of-type(2n + 1) {
+        margin-left: 0;
+      }
+    }
+
+    .Test {
+      width: fit-content;
+      padding-left: 20px;
+      padding-top: 40px;
+      padding-bottom: 96px;
+      padding-right: 20px;
     }
   }
 

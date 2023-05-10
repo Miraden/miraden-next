@@ -60,6 +60,13 @@ const StyledPayForm = styled.div`
       fill: #7786a5;
     }
   }
+
+  @media (max-width: 576px) {
+    .PayForm {
+      width: 100%;
+      max-width: unset;
+    }
+  }
 `;
 
 export { PayForm };

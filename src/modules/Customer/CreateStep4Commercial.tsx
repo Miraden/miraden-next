@@ -9,7 +9,7 @@ interface Props {
 
 type Option = "new" | "secondary" | "any";
 
-const CreateStep4 = ({ className }: Props) => {
+const CreateStep4Commercial = ({ className }: Props) => {
   const [selected, setSelected] = useState<Option | null>(null);
   const [showAllYears, setShowAllYears] = useState(false);
   const [showMore, setShowMore] = useState(false);
@@ -225,7 +225,7 @@ const CreateStep4 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 4
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140">/ 10</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">
@@ -244,7 +244,10 @@ const CreateStep4 = ({ className }: Props) => {
                 Далее
               </Button>
             ) : (
-              <Button disabled={!selected} href="/customer/create-step-5">
+              <Button
+                disabled={!selected}
+                href="/customer/create-commercial-step-5"
+              >
                 Далее
               </Button>
             )}
@@ -320,7 +323,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 36.3%;
+      width: 40%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -444,4 +447,4 @@ const StyledRegStep1 = styled.section`
   }
 `;
 
-export { CreateStep4 };
+export { CreateStep4Commercial };

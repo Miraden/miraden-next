@@ -300,7 +300,7 @@ const CreateStep1 = ({ className }: Props) => {
             </div>
 
             <div className="Reg__citiesContainer">
-              <h2>Город</h2>
+              <h2 className="Font_20_120 sm:Font_18_120_500">Город</h2>
               <div className="Reg__cities">
                 {selected && (
                   <>

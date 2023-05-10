@@ -136,6 +136,10 @@ const StyledButton = styled.a`
       /* fill: ${({ theme }) => theme.colors.white}; */
     }
   }
+
+  @media (max-width: 1200px) {
+    max-width: unset;
+  }
 `;
 
 export { PayButton };

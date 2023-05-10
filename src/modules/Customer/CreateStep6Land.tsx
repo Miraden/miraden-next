@@ -7,7 +7,7 @@ interface Props {
   className?: string;
 }
 
-const CreateCommercialStep5 = ({ className }: Props) => {
+const CreateStep6Land = ({ className }: Props) => {
   const [selected, setSelected] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [startSquare, setStartSquare] = useState<number | null>(null);
@@ -82,48 +82,48 @@ const CreateCommercialStep5 = ({ className }: Props) => {
       <div className="">
         <div className="Reg__head">
           <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Укажите площадь недвижимости
+            Укажите площадь участка земли
           </h1>
         </div>
-
-        <div className="Reg__monthsContainer">
-          <div className="Reg__months">
-            <RequestButton onClick={handleSelect} active={selected}>
-              Неважно
-            </RequestButton>
-            {[...Array(64)].map((_, index) => {
-              const label = index + "0 м²";
-              if (index === 0) {
-                return label === "уже построена";
-              }
-              if (index >= maxVisibleSquare) {
-                return null;
-              }
-
-              const isActive = selectedRange.includes(index);
-              const isWithinRange =
-                selectedRange.length === 2 &&
-                index >= selectedRange[0] &&
-                index <= selectedRange[1];
-              return (
-                <RequestButton
-                  key={`${index}`}
-                  onClick={() => handleSquareClick(index)}
-                  active={isActive}
-                  ranged={isWithinRange}
-                >
-                  {label}
-                </RequestButton>
-              );
-            })}
-            {maxVisibleSquare < 64 && (
-              <RequestButton
-                onClick={handleShowMore}
-                className="ShowMoreButton Color_blue_primary"
-              >
-                Ещё {squares.length - maxVisibleSquare}
+        <div className="Reg__selectContainer">
+          <div className="Reg__squareContainer">
+            <div className="Reg__square">
+              <RequestButton onClick={handleSelect} active={selected}>
+                Неважно
               </RequestButton>
-            )}
+              {[...Array(64)].map((_, index) => {
+                const label = index + "0 м²";
+                if (index === 0) {
+                  return label === "уже построена";
+                }
+                if (index >= maxVisibleSquare) {
+                  return null;
+                }
+                const isActive = selectedRange.includes(index);
+                const isWithinRange =
+                  selectedRange.length === 2 &&
+                  index >= selectedRange[0] &&
+                  index <= selectedRange[1];
+                return (
+                  <RequestButton
+                    key={`${index}`}
+                    onClick={() => handleSquareClick(index)}
+                    active={isActive}
+                    ranged={isWithinRange}
+                  >
+                    {label}
+                  </RequestButton>
+                );
+              })}
+              {maxVisibleSquare < 64 && (
+                <RequestButton
+                  onClick={handleShowMore}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Ещё {squares.length - maxVisibleSquare}
+                </RequestButton>
+              )}
+            </div>
           </div>
         </div>
         <div className="Reg__progressBar"></div>
@@ -131,14 +131,14 @@ const CreateCommercialStep5 = ({ className }: Props) => {
           <div className="Reg__footerBack">
             <Button
               secondary
-              href="/customer/create-step-4"
+              href="/customer/create-step-3"
               className="Reg__goBackButton"
             >
               Назад
             </Button>
             <Button
               secondary
-              href="/customer/create-step-4"
+              href="/customer/create-step-3"
               leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>
@@ -147,7 +147,7 @@ const CreateCommercialStep5 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 5
               </span>
-              <span className="Font_16_140">/ 10</span>
+              <span className="Font_16_140">/ 11</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">
@@ -160,7 +160,7 @@ const CreateCommercialStep5 = ({ className }: Props) => {
 
             <Button
               disabled={selectedRange.length === 0 && !selected}
-              href="/customer/create-commercial-step-6"
+              href="/customer/create-step-8"
             >
               Далее
             </Button>
@@ -178,48 +178,29 @@ const StyledRegStep1 = styled.section`
 
   .Reg__head {
     padding: 30px 30px 18px 30px;
-    border: 2px solid #f1f7ff;
+    border-bottom: 2px solid #f1f7ff;
   }
 
-  .Reg__radioButtons {
-    padding-left: 30px;
-    margin-top: 42px;
-    margin-left: -30px;
-    display: flex;
-    align-items: center;
-
-    input {
-      margin-left: 30px;
-    }
-  }
-
-  .Reg__options {
-    padding: 41px 30px 30px;
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -20px;
-    margin-top: -20px;
-
-    button {
-      justify-content: flex-start;
-      max-width: 340px;
-      width: 100%;
-      margin-left: 20px;
-      margin-top: 20px;
-
-      span {
-        text-align: initial;
-      }
-    }
-  }
-
-  .Reg__monthsContainer {
-    padding: 40px 30px 0 30px;
-    height: 416px;
+  .Reg__selectContainer {
+    height: 496px;
     overflow-y: scroll;
   }
 
-  .Reg__months {
+  .Reg__squareContainer {
+    padding: 30px 30px 0 30px;
+  }
+
+  .Reg__squareHead {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+
+    svg {
+      margin-left: 10px;
+    }
+  }
+
+  .Reg__square {
     display: flex;
     flex-wrap: wrap;
 
@@ -241,7 +222,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 50%;
+      width: 45.45%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -294,11 +275,10 @@ const StyledRegStep1 = styled.section`
   @media (max-width: 960px) {
     margin-top: 10px;
 
-    .Reg__monthsContainer {
+    .Reg__selectContainer {
       height: 827px;
     }
   }
-
   @media (max-width: 768px) {
     .Reg__nextButtonContainer {
       div {
@@ -308,13 +288,12 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
-    margin-top: 5px;
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }
 
-    .Reg__monthsContainer {
-      padding: 24px 20px 0 20px;
+    .Reg__selectContainer {
       height: 934px;
     }
 
@@ -343,4 +322,4 @@ const StyledRegStep1 = styled.section`
   }
 `;
 
-export { CreateCommercialStep5 };
+export { CreateStep6Land };

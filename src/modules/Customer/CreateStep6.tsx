@@ -249,7 +249,7 @@ const CreateStep6 = ({ className }: Props) => {
           </div>
 
           <div className="Reg__sleepsContainer">
-            <h2>Спальня</h2>
+            <h2 className="Font_20_120 sm:Font_18_120_500">Спальня</h2>
             <div className="Reg__sleeps">
               {[...Array(16)].map((_, index) => {
                 const label = index + 1;
@@ -286,7 +286,7 @@ const CreateStep6 = ({ className }: Props) => {
           </div>
 
           <div className="Reg__bathsContainer">
-            <h2>Санузел</h2>
+            <h2 className="Font_20_120 sm:Font_18_120_500">Санузел</h2>
             <div className="Reg__baths">
               {[...Array(16)].map((_, index) => {
                 const label = index + 1;
@@ -326,14 +326,14 @@ const CreateStep6 = ({ className }: Props) => {
           <div className="Reg__footerBack">
             <Button
               secondary
-              href="/customer/create-step-4"
+              href="/customer/create-step-5"
               className="Reg__goBackButton"
             >
               Назад
             </Button>
             <Button
               secondary
-              href="/customer/create-step-4"
+              href="/customer/create-step-5"
               leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>

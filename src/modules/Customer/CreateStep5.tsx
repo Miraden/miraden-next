@@ -199,7 +199,7 @@ const CreateStep5 = ({ className }: Props) => {
           </div>
           <div className="Reg__squareContainer">
             <div className="Reg__squareHead">
-              <h2>Жилая площадь</h2>
+              <h2 className="Font_20_120 sm:Font_18_120_500">Жилая площадь</h2>
               <InfoIconGrey />
             </div>
             <div className="Reg__square">
@@ -251,14 +251,14 @@ const CreateStep5 = ({ className }: Props) => {
           <div className="Reg__footerBack">
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-step-4"
               className="Reg__goBackButton"
             >
               Назад
             </Button>
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-step-4"
               leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>

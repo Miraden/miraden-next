@@ -7,9 +7,9 @@ interface Props {
   className?: string;
 }
 
-type Option = "buy" | "sell";
+type Option = "fast" | "asap" | "one" | "two" | "tree" | "looking";
 
-const CreateStep2 = ({ className }: Props) => {
+const RentStep8 = ({ className }: Props) => {
   const [selected, setSelected] = useState<Option | null>(null);
 
   const handleSelect = useCallback((option: Option) => {
@@ -21,22 +21,46 @@ const CreateStep2 = ({ className }: Props) => {
       <div className="">
         <div className="Reg__head">
           <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Укажите формат сделки с недвижимостью
+            Когда готовы выходить на сделку?
           </h1>
         </div>
 
         <div className="Reg__options">
           <RequestButton
-            onClick={() => handleSelect("buy")}
-            active={selected === "buy"}
+            onClick={() => handleSelect("fast")}
+            active={selected === "fast"}
           >
-            Хочу купить
+            Вопрос срочный
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("sell")}
-            active={selected === "sell"}
+            onClick={() => handleSelect("asap")}
+            active={selected === "asap"}
           >
-            Хочу арендавать
+            Сразу, как найду
+          </RequestButton>
+          <RequestButton
+            onClick={() => handleSelect("one")}
+            active={selected === "one"}
+          >
+            Через 1 месяц
+          </RequestButton>
+          <RequestButton
+            onClick={() => handleSelect("two")}
+            active={selected === "two"}
+          >
+            Через 2 месяца
+          </RequestButton>
+          <RequestButton
+            onClick={() => handleSelect("tree")}
+            active={selected === "tree"}
+          >
+            Через 3 месяца
+          </RequestButton>
+          <RequestButton
+            onClick={() => handleSelect("looking")}
+            active={selected === "looking"}
+          >
+            Пока просто изучаю
           </RequestButton>
         </div>
         <div className="Reg__progressBar"></div>
@@ -45,21 +69,21 @@ const CreateStep2 = ({ className }: Props) => {
           <div className="Reg__footerBack">
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-step-7"
               className="Reg__goBackButton"
             >
               Назад
             </Button>
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-step-7"
               leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>
             <div className="Reg__footerSteps">
               <span className="Font_16_24">Шаг</span>
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                2
+                8
               </span>
               <span className="Font_16_140">/ 11</span>
             </div>
@@ -71,15 +95,9 @@ const CreateStep2 = ({ className }: Props) => {
               </span>
               <p className="Color_blue_primary Font_16_140">317</p>
             </div>
-            {selected === "sell" ? (
-              <Button disabled={!selected} href="/customer/rent-range-step">
-                Далее
-              </Button>
-            ) : (
-              <Button disabled={!selected} href="/customer/create-step-3">
-                Далее
-              </Button>
-            )}
+            <Button disabled={!selected} href="/customer/rent-range-step-6">
+              Далее
+            </Button>
           </div>
         </div>
       </div>
@@ -94,6 +112,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
+    border-bottom: 2px solid #f1f7ff;
   }
 
   .Reg__link {
@@ -131,7 +150,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 18.2%;
+      width: 72.72%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -224,10 +243,6 @@ const StyledRegStep1 = styled.section`
       }
     }
 
-    .Reg__link {
-      padding: 5px 20px;
-    }
-
     .Reg__goBackButton {
       display: none;
     }
@@ -253,4 +268,4 @@ const StyledRegStep1 = styled.section`
   }
 `;
 
-export { CreateStep2 };
+export { RentStep8 };
