@@ -88,82 +88,87 @@ const CreateStep10 = ({ className }: Props) => {
       <div className="">
         <div className="Reg__head">
           <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Укажите формат сделки с недвижимостью
+            Укажите удобный способ покупки
           </h1>
         </div>
 
-        <div className="Reg__options">
-          <RequestButton
-            onClick={() => handleSelect("any")}
-            active={selected === "any"}
-          >
-            Неважно
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelect("installments")}
-            active={selected === "installments"}
-          >
-            В рассрочку
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelect("mortgage")}
-            active={selected === "mortgage"}
-          >
-            В ипотеку
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelect("personal")}
-            active={selected === "personal"}
-          >
-            Личными средствами
-          </RequestButton>
-        </div>
-        <div>
-          <h2>Первый взнос</h2>
-          <div className="Reg__percents">
-            {[...Array(10)].map((_, index) => {
-              const percent = (index + 1) * 10;
-              const label = `${percent}%`;
+        <div className="Reg__selectContainer">
+          <div className="Reg__options">
+            <RequestButton
+              onClick={() => handleSelect("any")}
+              active={selected === "any"}
+            >
+              Неважно
+            </RequestButton>
+            <RequestButton
+              onClick={() => handleSelect("installments")}
+              active={selected === "installments"}
+            >
+              В рассрочку
+            </RequestButton>
+            <RequestButton
+              onClick={() => handleSelect("mortgage")}
+              active={selected === "mortgage"}
+            >
+              В ипотеку
+            </RequestButton>
+            <RequestButton
+              onClick={() => handleSelect("personal")}
+              active={selected === "personal"}
+            >
+              Личными средствами
+            </RequestButton>
+          </div>
+          <div className="Reg__percentsContainer">
+            <h2 className="Font_20_120 sm:Font_18_120_500">Первый взнос</h2>
+            <div className="Reg__percents">
+              {[...Array(10)].map((_, index) => {
+                const percent = (index + 1) * 10;
+                const label = `${percent}%`;
 
-              const isActive = selectedRange.includes(percent);
-              const isWithinRange =
-                selectedRange.length === 2 &&
-                percent >= selectedRange[0] &&
-                percent <= selectedRange[1];
-              return (
-                <RequestButton
-                  key={`${index}`}
-                  onClick={() => handleSquareClick(percent)}
-                  active={isActive}
-                  ranged={isWithinRange}
-                >
-                  {label}
-                </RequestButton>
-              );
-            })}
+                const isActive = selectedRange.includes(percent);
+                const isWithinRange =
+                  selectedRange.length === 2 &&
+                  percent >= selectedRange[0] &&
+                  percent <= selectedRange[1];
+                return (
+                  <RequestButton
+                    key={`${index}`}
+                    onClick={() => handleSquareClick(percent)}
+                    active={isActive}
+                    ranged={isWithinRange}
+                  >
+                    {label}
+                  </RequestButton>
+                );
+              })}
+            </div>
+          </div>
+          <div className="Reg__payOptionsContainer">
+            <h2 className="Font_20_120 sm:Font_18_120_500">Формат расчёта</h2>
+            <div className="Reg__payOptions">
+              <RequestButton
+                onClick={() => handleSelectPay("cash")}
+                active={selectedPay.includes("cash")}
+              >
+                Наличный
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelectPay("cashless")}
+                active={selectedPay.includes("cashless")}
+              >
+                Безналичный
+              </RequestButton>
+              <RequestButton
+                onClick={() => handleSelectPay("crypt")}
+                active={selectedPay.includes("crypt")}
+              >
+                Криптовалютой
+              </RequestButton>
+            </div>
           </div>
         </div>
 
-        <div className="Reg__payOptions">
-          <RequestButton
-            onClick={() => handleSelectPay("cash")}
-            active={selectedPay.includes("cash")}
-          >
-            Наличный
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelectPay("cashless")}
-            active={selectedPay.includes("cashless")}
-          >
-            Безналичный
-          </RequestButton>
-          <RequestButton
-            onClick={() => handleSelectPay("crypt")}
-            active={selectedPay.includes("crypt")}
-          >
-            Криптовалютой
-          </RequestButton>
-        </div>
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
           <div className="Reg__footerBack">
@@ -206,36 +211,30 @@ const CreateStep10 = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 18px 30px;
-    border: 2px solid #f1f7ff;
+    border-bottom: 2px solid #f1f7ff;
   }
 
-  .Reg__radioButtons {
-    padding-left: 30px;
-    margin-top: 42px;
-    margin-left: -30px;
-    display: flex;
-    align-items: center;
-
-    input {
-      margin-left: 30px;
-    }
+  .Reg__selectContainer {
+    height: 416px;
+    padding: 40px 30px 0 30px;
+    overflow-y: scroll;
   }
 
   .Reg__options {
-    padding: 41px 30px 30px;
     display: flex;
     flex-wrap: wrap;
-    margin-left: -20px;
+    margin-left: -10px;
     margin-top: -20px;
 
     button {
       justify-content: flex-start;
       width: fit-content;
       padding: 10px 20px;
-      margin-left: 20px;
+      margin-left: 10px;
       margin-top: 20px;
 
       span {
@@ -244,34 +243,37 @@ const StyledRegStep1 = styled.section`
     }
   }
 
+  .Reg__percentsContainer {
+    margin-top: 50px;
+  }
+
   .Reg__percents {
     display: flex;
     flex-wrap: wrap;
+    margin-left: -10px;
+    margin-top: 5px;
     button {
+      margin-left: 10px;
+      margin-top: 10px;
       max-width: fit-content;
       padding: 10px 20px;
     }
   }
 
+  .Reg__payOptionsContainer {
+    margin-top: 50px;
+  }
+
   .Reg__payOptions {
     display: flex;
-  }
-
-  .Reg__monthsContainer {
-    padding: 30px;
-  }
-
-  .Reg__months {
-    display: flex;
     flex-wrap: wrap;
-
+    margin-top: 5px;
     margin-left: -10px;
-    margin-top: -10px;
     button {
-      padding: 10px 20px;
-      width: fit-content;
       margin-left: 10px;
       margin-top: 10px;
+      width: fit-content;
+      padding: 10px 20px;
     }
   }
 
@@ -283,7 +285,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 92%;
+      width: 91%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -329,21 +331,27 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
-    .Reg__options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: max-content;
-      grid-gap: 20px;
-      margin-left: 0;
-      margin-top: 0;
-      height: 797px;
-      button {
-        max-width: unset;
-        width: 100%;
-        margin-left: 0;
-        margin-top: 0;
-      }
+    margin-top: 10px;
+
+    .Reg__selectContainer {
+      height: 827px;
+    }
+
+    .Reg__selectContainer {
+      padding-top: 36px;
+    }
+
+    .Reg__percentsContainer {
+      margin-top: 36px;
+    }
+
+    .Reg__payOptionsContainer {
+      margin-top: 36px;
     }
   }
 
@@ -356,18 +364,17 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }
 
+    .Reg__selectContainer {
+      padding: 24px 20px 0 20px;
+      height: 616px;
+    }
+
     .Reg__options {
-      padding: 38px 20px;
-      display: flex;
-      flex-direction: column;
-      grid-gap: 12px;
-      height: 566px;
-      button {
-      }
     }
 
     .Reg__link {

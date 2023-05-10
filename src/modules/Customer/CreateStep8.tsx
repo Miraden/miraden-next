@@ -108,9 +108,11 @@ const CreateStep8 = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
+    border-bottom: 2px solid #f1f7ff;
   }
 
   .Reg__link {
@@ -148,7 +150,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 72%;
+      width: 72.72%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -194,7 +196,12 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
+    margin-top: 10px;
     .Reg__options {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -221,6 +228,7 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }
@@ -233,10 +241,6 @@ const StyledRegStep1 = styled.section`
       height: 566px;
       button {
       }
-    }
-
-    .Reg__link {
-      padding: 5px 20px;
     }
 
     .Reg__goBackButton {

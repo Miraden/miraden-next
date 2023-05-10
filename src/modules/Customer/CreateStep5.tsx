@@ -1,5 +1,6 @@
 import { Button, RequestButton } from "@/components/ui";
 import { ArrowIcon } from "@/icons";
+import { InfoIconGrey } from "@/icons/InfoIconGrey";
 import { SetStateAction, useCallback, useState } from "react";
 import styled from "styled-components";
 
@@ -76,19 +77,24 @@ const CreateStep5 = ({ className }: Props) => {
   for (let square = 10; square <= 800; square += 10) {
     squares.push(square);
   }
-
+  const [selectedLiving, setSelectedLiving] = useState(false);
   const [startLivingSquare, setStartLivingSquare] = useState<number | null>(
     null
   );
   const [selectedLivingRage, setSelectedLivingRage] = useState<number[]>([]);
   const [showMoreLiving, setShowMoreLiving] = useState(false);
-
   const [maxVisibleLivingSquare, setMaxVisibleLivingSquare] = useState(21);
   const [maxVisibleLiving, setMaxVisibleLiving] = useState(21);
+
+  const handleSelectLiving = useCallback(() => {
+    setSelectedLiving(!selectedLiving);
+    setSelectedLivingRage([]);
+  }, [selectedLiving]);
 
   const handleLivingSquareClick = (squareIndexLiving: number) => {
     if (startLivingSquare === null) {
       // start new range
+      setSelectedLiving(false);
       setStartLivingSquare(squareIndexLiving);
       setSelectedLivingRage([squareIndexLiving]);
     } else {
@@ -134,7 +140,7 @@ const CreateStep5 = ({ className }: Props) => {
 
   const handleShowMoreLiving = useCallback(() => {
     setShowMoreLiving(true);
-    setMaxVisibleLiving(64);
+    setMaxVisibleLivingSquare(64);
   }, []);
 
   const livingSquares = [];
@@ -150,87 +156,96 @@ const CreateStep5 = ({ className }: Props) => {
             Укажите общую площадь недвижимости
           </h1>
         </div>
-
-        <div className="Reg__monthsContainer">
-          <div className="Reg__months">
-            <RequestButton onClick={handleSelect} active={selected}>
-              Неважно
-            </RequestButton>
-            {[...Array(64)].map((_, index) => {
-              const label = index + "0 м²";
-              if (index === 0) {
-                return label === "уже построена";
-              }
-              if (index >= maxVisibleSquare) {
-                return null;
-              }
-
-              const isActive = selectedRange.includes(index);
-              const isWithinRange =
-                selectedRange.length === 2 &&
-                index >= selectedRange[0] &&
-                index <= selectedRange[1];
-              return (
-                <RequestButton
-                  key={`${index}`}
-                  onClick={() => handleSquareClick(index)}
-                  active={isActive}
-                  ranged={isWithinRange}
-                >
-                  {label}
-                </RequestButton>
-              );
-            })}
-            {maxVisibleSquare < 64 && (
-              <RequestButton
-                onClick={handleShowMore}
-                className="ShowMoreButton Color_blue_primary"
-              >
-                Ещё {squares.length - maxVisibleSquare}
+        <div className="Reg__selectContainer">
+          <div className="Reg__squareContainer">
+            <div className="Reg__square">
+              <RequestButton onClick={handleSelect} active={selected}>
+                Неважно
               </RequestButton>
-            )}
+              {[...Array(64)].map((_, index) => {
+                const label = index + "0 м²";
+                if (index === 0) {
+                  return label === "уже построена";
+                }
+                if (index >= maxVisibleSquare) {
+                  return null;
+                }
+
+                const isActive = selectedRange.includes(index);
+                const isWithinRange =
+                  selectedRange.length === 2 &&
+                  index >= selectedRange[0] &&
+                  index <= selectedRange[1];
+                return (
+                  <RequestButton
+                    key={`${index}`}
+                    onClick={() => handleSquareClick(index)}
+                    active={isActive}
+                    ranged={isWithinRange}
+                  >
+                    {label}
+                  </RequestButton>
+                );
+              })}
+              {maxVisibleSquare < 64 && (
+                <RequestButton
+                  onClick={handleShowMore}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Ещё {squares.length - maxVisibleSquare}
+                </RequestButton>
+              )}
+            </div>
+          </div>
+          <div className="Reg__squareContainer">
+            <div className="Reg__squareHead">
+              <h2>Жилая площадь</h2>
+              <InfoIconGrey />
+            </div>
+            <div className="Reg__square">
+              <RequestButton
+                onClick={handleSelectLiving}
+                active={selectedLiving}
+              >
+                Неважно
+              </RequestButton>
+              {[...Array(64)].map((_, index) => {
+                const label = index + "0 м²";
+                if (index === 0) {
+                  return label === "уже построена";
+                }
+                if (index >= maxVisibleLivingSquare) {
+                  return null;
+                }
+
+                const isActive = selectedLivingRage.includes(index);
+                const isWithinRange =
+                  selectedLivingRage.length === 2 &&
+                  index >= selectedLivingRage[0] &&
+                  index <= selectedLivingRage[1];
+
+                return (
+                  <RequestButton
+                    key={`${index}`}
+                    onClick={() => handleLivingSquareClick(index)}
+                    active={isActive}
+                    ranged={isWithinRange}
+                  >
+                    {label}
+                  </RequestButton>
+                );
+              })}
+              {maxVisibleLiving < 64 && (
+                <RequestButton
+                  onClick={handleShowMoreLiving}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Ещё {livingSquares.length - maxVisibleLivingSquare}
+                </RequestButton>
+              )}
+            </div>
           </div>
         </div>
-
-        <div className="Reg__monthsContainer">
-          <h2>Жилая площадь</h2>
-          <div className="Reg__months">
-            {[...Array(64)].map((_, index) => {
-              const label = index + "0 м²";
-              if (index === 0) {
-                return label === "уже построена";
-              }
-              if (index >= maxVisibleLivingSquare) {
-                return null;
-              }
-
-              const isActive = selectedLivingRage.includes(index);
-              const isWithinRange =
-                selectedLivingRage.length === 2 &&
-                index >= selectedLivingRage[0] &&
-                index <= selectedLivingRage[1];
-              return (
-                <RequestButton
-                  key={`${index}`}
-                  onClick={() => handleLivingSquareClick(index)}
-                  active={isActive}
-                  ranged={isWithinRange}
-                >
-                  {label}
-                </RequestButton>
-              );
-            })}
-            {maxVisibleSquare < 64 && (
-              <RequestButton
-                onClick={handleShowMoreLiving}
-                className="ShowMoreButton Color_blue_primary"
-              >
-                Ещё {livingSquares.length - maxVisibleLivingSquare}
-              </RequestButton>
-            )}
-          </div>
-        </div>
-
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
           <div className="Reg__footerBack">
@@ -279,49 +294,33 @@ const CreateStep5 = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 18px 30px;
     border-bottom: 2px solid #f1f7ff;
   }
 
-  .Reg__radioButtons {
-    padding-left: 30px;
-    margin-top: 42px;
-    margin-left: -30px;
-    display: flex;
-    align-items: center;
-
-    input {
-      margin-left: 30px;
-    }
+  .Reg__selectContainer {
+    height: 496px;
+    overflow-y: scroll;
   }
 
-  .Reg__options {
-    padding: 41px 30px 30px;
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -20px;
-    margin-top: -20px;
-
-    button {
-      justify-content: flex-start;
-      max-width: 340px;
-      width: 100%;
-      margin-left: 20px;
-      margin-top: 20px;
-
-      span {
-        text-align: initial;
-      }
-    }
-  }
-
-  .Reg__monthsContainer {
+  .Reg__squareContainer {
     padding: 30px 30px 0 30px;
   }
 
-  .Reg__months {
+  .Reg__squareHead {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+
+    svg {
+      margin-left: 10px;
+    }
+  }
+
+  .Reg__square {
     display: flex;
     flex-wrap: wrap;
 
@@ -343,7 +342,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 45%;
+      width: 45.45%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -389,24 +388,17 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
-  @media (max-width: 960px) {
-    .Reg__options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: max-content;
-      grid-gap: 20px;
-      margin-left: 0;
-      margin-top: 0;
-      height: 797px;
-      button {
-        max-width: unset;
-        width: 100%;
-        margin-left: 0;
-        margin-top: 0;
-      }
-    }
+  @media (max-width: 1200px) {
+    margin-top: 100px;
   }
 
+  @media (max-width: 960px) {
+    margin-top: 10px;
+
+    .Reg__selectContainer {
+      height: 827px;
+    }
+  }
   @media (max-width: 768px) {
     .Reg__nextButtonContainer {
       div {
@@ -416,22 +408,13 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }
 
-    .Reg__options {
-      padding: 38px 20px;
-      display: flex;
-      flex-direction: column;
-      grid-gap: 12px;
-      height: 566px;
-      button {
-      }
-    }
-
-    .Reg__link {
-      padding: 5px 20px;
+    .Reg__selectContainer {
+      height: 934px;
     }
 
     .Reg__goBackButton {

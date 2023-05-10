@@ -9,6 +9,7 @@ interface Props {
   warning?: boolean;
   error?: boolean;
   label?: string;
+  className?: string;
 }
 
 const TextAreaInput = ({
@@ -17,6 +18,7 @@ const TextAreaInput = ({
   warning,
   error,
   label,
+  className,
 }: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -38,7 +40,7 @@ const TextAreaInput = ({
   };
 
   return (
-    <StyledTextArea>
+    <StyledTextArea className={className}>
       <StyledTextAreaField
         className={cn({
           Disabled_area: disabled,
@@ -167,12 +169,15 @@ const StyledTextAreaInput = styled.textarea`
   border: none;
   box-shadow: 0 0 0 2px #e1edfd inset;
   border-radius: 10px;
-  padding: 26px 20px 10px 20px;
+  padding: 20px 20px 10px 20px;
   font-size: 16px;
   line-height: 24px;
   height: 150px;
   outline: none;
-
+  resize: none;
+  ::placeholder {
+    color: #7786a5;
+  }
   transition: 0.1s;
   &:focus {
     box-shadow: 0 0 0 2px #4e6af3 inset;

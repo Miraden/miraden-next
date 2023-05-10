@@ -39,6 +39,11 @@ const CreatePaymentButton = ({
         <Checkbox onChange={onChange} checked={active} />
         {buttonTitle && (
           <div className="[ Button__label ]">
+            {tax && (
+              <div className="Font_20_120 CreatePaymentButton__percentMobile">
+                {tax} €
+              </div>
+            )}
             <h3 className="Font_16_140">{buttonTitle}</h3>
             <p className="Font_14_140">{buttonText}</p>
           </div>
@@ -73,6 +78,12 @@ const StyledButton = styled.a`
     color: #4e6af3;
   }
 
+  .CreatePaymentButton__percentMobile {
+    display: none;
+    color: #4e6af3;
+    margin-top: -2px;
+  }
+
   &.isActive {
     background: #2a344a !important;
     h3 {
@@ -82,7 +93,8 @@ const StyledButton = styled.a`
       color: #fff;
     }
 
-    .CreatePaymentButton__percent {
+    .CreatePaymentButton__percent,
+    .CreatePaymentButton__percentMobile {
       color: #fff;
     }
   }
@@ -113,6 +125,16 @@ const StyledButton = styled.a`
   }
 
   .Button__label {
+  }
+
+  @media (max-width: 576px) {
+    .CreatePaymentButton__percentMobile {
+      display: flex;
+    }
+
+    .CreatePaymentButton__percent {
+      display: none;
+    }
   }
 `;
 

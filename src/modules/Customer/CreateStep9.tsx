@@ -40,19 +40,9 @@ const CreateStep9 = ({ className }: Props) => {
             Укажите примерный бюджет
           </h1>
         </div>
-
-        <div className="Reg__options">
-          {currencyOptions.slice(0, 4).map((option) => (
-            <RequestButton
-              key={option}
-              onClick={() => handleSelect(option)}
-              active={selected === option}
-            >
-              {option}
-            </RequestButton>
-          ))}
-          {showAllOptions &&
-            currencyOptions.slice(4).map((option) => (
+        <div className="Reg__selectContainer">
+          <div className="Reg__options">
+            {currencyOptions.slice(0, 4).map((option) => (
               <RequestButton
                 key={option}
                 onClick={() => handleSelect(option)}
@@ -61,27 +51,39 @@ const CreateStep9 = ({ className }: Props) => {
                 {option}
               </RequestButton>
             ))}
-          {!showAllOptions && (
-            <RequestButton
-              className="Reg__showMoreButton"
-              onClick={() => setShowAllOptions(true)}
-            >
-              Показать ещё {currencyOptions.length - 4}
-            </RequestButton>
-          )}
+            {showAllOptions &&
+              currencyOptions.slice(4).map((option) => (
+                <RequestButton
+                  key={option}
+                  onClick={() => handleSelect(option)}
+                  active={selected === option}
+                >
+                  {option}
+                </RequestButton>
+              ))}
+            {!showAllOptions && (
+              <RequestButton
+                className="Reg__showMoreButton"
+                onClick={() => setShowAllOptions(true)}
+              >
+                Ещё {currencyOptions.length - 4}
+              </RequestButton>
+            )}
+          </div>
+          <div className="Reg__inputs">
+            <NumberInput
+              label="От"
+              value={fromValue}
+              onChange={(event: any) => setFromValue(event.target.value)}
+            />
+            <NumberInput
+              label="До"
+              value={toValue}
+              onChange={(event: any) => setToValue(event.target.value)}
+            />
+          </div>
         </div>
-        <div className="Reg__inputs">
-          <NumberInput
-            label="От"
-            value={fromValue}
-            onChange={(event: any) => setFromValue(event.target.value)}
-          />
-          <NumberInput
-            label="До"
-            value={toValue}
-            onChange={(event: any) => setToValue(event.target.value)}
-          />
-        </div>
+
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
           <div className="Reg__footerBack">
@@ -129,9 +131,11 @@ const CreateStep9 = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
+    border-bottom: 2px solid #f1f7ff;
   }
 
   .Reg__link {
@@ -141,16 +145,21 @@ const StyledRegStep1 = styled.section`
     background: #f1f7ff;
   }
 
+  .Reg__selectContainer {
+    height: 416px;
+    overflow-y: scroll;
+  }
+
   .Reg__options {
-    padding: 41px 30px 155px 30px;
+    padding: 40px 30px 0 30px;
     display: flex;
     flex-wrap: wrap;
-    margin-left: -20px;
+    margin-left: -10px;
     margin-top: -20px;
 
     button {
       justify-content: flex-start;
-      margin-left: 20px;
+      margin-left: 10px;
       margin-top: 20px;
       padding: 10px 20px;
 
@@ -161,7 +170,9 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__inputs {
+    margin-top: 50px;
     padding-left: 30px;
+    padding-right: 30px;
     display: flex;
     align-items: center;
     div {
@@ -184,7 +195,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 85%;
+      width: 81.81%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -230,20 +241,20 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
-    .Reg__options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: max-content;
-      grid-gap: 20px;
-      margin-left: 0;
-      margin-top: 0;
-      height: 797px;
-      button {
+    margin-top: 10px;
+
+    .Reg__selectContainer {
+      height: 827px;
+    }
+
+    .Reg__inputs {
+      div {
         max-width: unset;
-        width: 100%;
-        margin-left: 0;
-        margin-top: 0;
       }
     }
   }
@@ -257,22 +268,30 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
+    }
+
+    .Reg__selectContainer {
+      height: 610px;
     }
 
     .Reg__options {
       padding: 38px 20px;
       display: flex;
-      flex-direction: column;
-      grid-gap: 12px;
-      height: 566px;
-      button {
-      }
     }
 
-    .Reg__link {
-      padding: 5px 20px;
+    .Reg__inputs {
+      padding-left: 20px;
+      padding-right: 20px;
+      margin-top: 36px;
+      flex-direction: column;
+
+      div:not(:first-child) {
+        margin-left: 0;
+        margin-top: 20px;
+      }
     }
 
     .Reg__goBackButton {

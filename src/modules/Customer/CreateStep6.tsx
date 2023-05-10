@@ -205,55 +205,54 @@ const CreateStep6 = ({ className }: Props) => {
       <div className="">
         <div className="Reg__head">
           <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Укажите общую площадь недвижимости
+            Укажите общее количество комнат
           </h1>
         </div>
-
-        <div className="Reg__monthsContainer">
-          <div className="Reg__months">
-            <RequestButton onClick={handleSelect} active={selected}>
-              Неважно
-            </RequestButton>
-            {[...Array(18)].map((_, index) => {
-              const label = index + 1;
-
-              if (index >= maxVisibleRooms) {
-                return null;
-              }
-
-              const isActive = selectedRange.includes(index);
-              const isWithinRange =
-                selectedRange.length === 2 &&
-                index >= selectedRange[0] &&
-                index <= selectedRange[1];
-              return (
-                <RequestButton
-                  key={`${index}`}
-                  onClick={() => handleRoomClick(index)}
-                  active={isActive}
-                  ranged={isWithinRange}
-                >
-                  {label}
-                </RequestButton>
-              );
-            })}
-            {maxVisibleRooms < 18 && (
-              <RequestButton
-                onClick={handleShowMore}
-                className="ShowMoreButton Color_blue_primary"
-              >
-                Ещё {rooms.length - maxVisibleRooms}
+        <div className="Reg__selectContainer">
+          <div className="Reg__roomsContainer">
+            <div className="Reg__rooms">
+              <RequestButton onClick={handleSelect} active={selected}>
+                Неважно
               </RequestButton>
-            )}
-          </div>
-        </div>
+              {[...Array(18)].map((_, index) => {
+                const label = index + 1;
 
-        <div>
-          <h2>Спальня</h2>
-          <div className="Reg__monthsContainer">
-            <div className="Reg__months">
+                if (index >= maxVisibleRooms) {
+                  return null;
+                }
+
+                const isActive = selectedRange.includes(index);
+                const isWithinRange =
+                  selectedRange.length === 2 &&
+                  index >= selectedRange[0] &&
+                  index <= selectedRange[1];
+                return (
+                  <RequestButton
+                    key={`${index}`}
+                    onClick={() => handleRoomClick(index)}
+                    active={isActive}
+                    ranged={isWithinRange}
+                  >
+                    {label}
+                  </RequestButton>
+                );
+              })}
+              {maxVisibleRooms < 18 && (
+                <RequestButton
+                  onClick={handleShowMore}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Ещё {rooms.length - maxVisibleRooms}
+                </RequestButton>
+              )}
+            </div>
+          </div>
+
+          <div className="Reg__sleepsContainer">
+            <h2>Спальня</h2>
+            <div className="Reg__sleeps">
               {[...Array(16)].map((_, index) => {
-                const label = index + "";
+                const label = index + 1;
 
                 if (index >= maxVisibleSleep) {
                   return null;
@@ -285,12 +284,10 @@ const CreateStep6 = ({ className }: Props) => {
               )}
             </div>
           </div>
-        </div>
 
-        <div>
-          <h2>Санузел</h2>
-          <div className="Reg__monthsContainer">
-            <div className="Reg__months">
+          <div className="Reg__bathsContainer">
+            <h2>Санузел</h2>
+            <div className="Reg__baths">
               {[...Array(16)].map((_, index) => {
                 const label = index + 1;
                 if (index >= maxVisibleBaths) {
@@ -372,10 +369,11 @@ const CreateStep6 = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 18px 30px;
-    border: 2px solid #f1f7ff;
+    border-bottom: 2px solid #f1f7ff;
   }
 
   .Reg__radioButtons {
@@ -410,11 +408,37 @@ const StyledRegStep1 = styled.section`
     }
   }
 
-  .Reg__monthsContainer {
-    padding: 30px;
+  .Reg__selectContainer {
+    height: 416px;
+    overflow-y: scroll;
   }
 
-  .Reg__months {
+  .Reg__roomsContainer {
+    padding: 40px 30px 0 30px;
+  }
+
+  .Reg__sleepsContainer,
+  .Reg__bathsContainer {
+    margin-top: 50px;
+    padding: 0 30px 0 30px;
+  }
+
+  .Reg__sleeps,
+  .Reg__baths {
+    display: flex;
+    flex-wrap: wrap;
+
+    margin-left: -10px;
+    margin-top: 5px;
+    button {
+      padding: 10px 20px;
+      width: fit-content;
+      margin-left: 10px;
+      margin-top: 10px;
+    }
+  }
+
+  .Reg__rooms {
     display: flex;
     flex-wrap: wrap;
 
@@ -436,7 +460,7 @@ const StyledRegStep1 = styled.section`
       position: absolute;
       border-radius: 0 10px 10px 0;
       content: "";
-      width: 54%;
+      width: 54.54%;
       height: 6px;
       background-color: #4e6af3;
     }
@@ -482,21 +506,14 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
-    .Reg__options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: max-content;
-      grid-gap: 20px;
-      margin-left: 0;
-      margin-top: 0;
-      height: 797px;
-      button {
-        max-width: unset;
-        width: 100%;
-        margin-left: 0;
-        margin-top: 0;
-      }
+    margin-top: 10px;
+    .Reg__selectContainer {
+      height: 827px;
     }
   }
 
@@ -509,22 +526,13 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }
 
-    .Reg__options {
-      padding: 38px 20px;
-      display: flex;
-      flex-direction: column;
-      grid-gap: 12px;
-      height: 566px;
-      button {
-      }
-    }
-
-    .Reg__link {
-      padding: 5px 20px;
+    .Reg__selectContainer {
+      height: 616px;
     }
 
     .Reg__goBackButton {

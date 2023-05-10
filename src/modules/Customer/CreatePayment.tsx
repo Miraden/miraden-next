@@ -65,21 +65,25 @@ const CreatePayment = ({ className }: Props) => {
             Получите больше просмотров и откликов
           </h1>
         </div>
-        <div>
-          <ul className="">
-            {paymentOptions.map((option, index) => (
-              <li key={index}>
-                <CreatePaymentButton
-                  onClick={() => handleActive(index)}
-                  buttonTitle={option.buttonTitle}
-                  buttonText={option.buttonText}
-                  tax={option.tax}
-                  active={activeButtons[index]}
-                />
-              </li>
-            ))}
-          </ul>
+        <div className="Reg__link Color_blue_primary">
+          <span>
+            Важно! Любая выбранная опция даёт вашей заявке отметку TRUE
+            и повышенный интерес исполнителей
+          </span>
         </div>
+        <ul className="Reg__paymentOptions">
+          {paymentOptions.map((option, index) => (
+            <li key={index}>
+              <CreatePaymentButton
+                onClick={() => handleActive(index)}
+                buttonTitle={option.buttonTitle}
+                buttonText={option.buttonText}
+                tax={option.tax}
+                active={activeButtons[index]}
+              />
+            </li>
+          ))}
+        </ul>
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
           <div className="Reg__footerBack">
@@ -117,72 +121,28 @@ const CreatePayment = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 18px 30px;
-    border: 2px solid #f1f7ff;
+    border-bottom: 2px solid #f1f7ff;
   }
 
-  .Reg__radioButtons {
-    padding-left: 30px;
-    margin-top: 42px;
-    margin-left: -30px;
-    display: flex;
-    align-items: center;
-
-    input {
-      margin-left: 30px;
-    }
-  }
-
-  .Reg__options {
-    padding: 41px 30px 30px;
+  .Reg__link {
     display: flex;
     flex-wrap: wrap;
-    margin-left: -20px;
-    margin-top: -20px;
+    padding: 5px 30px;
+    background: #f1f7ff;
+  }
 
-    button {
-      justify-content: flex-start;
-      width: fit-content;
-      padding: 10px 20px;
-      margin-left: 20px;
+  .Reg__paymentOptions {
+    max-width: 840px;
+    padding: 41px 30px 0 30px;
+    height: 386px;
+    overflow-y: scroll;
+
+    li:not(:first-child) {
       margin-top: 20px;
-
-      span {
-        text-align: initial;
-      }
-    }
-  }
-
-  .Reg__percents {
-    display: flex;
-    flex-wrap: wrap;
-    button {
-      max-width: fit-content;
-      padding: 10px 20px;
-    }
-  }
-
-  .Reg__payOptions {
-    display: flex;
-  }
-
-  .Reg__monthsContainer {
-    padding: 30px;
-  }
-
-  .Reg__months {
-    display: flex;
-    flex-wrap: wrap;
-
-    margin-left: -10px;
-    margin-top: -10px;
-    button {
-      padding: 10px 20px;
-      width: fit-content;
-      margin-left: 10px;
-      margin-top: 10px;
     }
   }
 
@@ -232,21 +192,14 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
-    .Reg__options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: max-content;
-      grid-gap: 20px;
-      margin-left: 0;
-      margin-top: 0;
-      height: 797px;
-      button {
-        max-width: unset;
-        width: 100%;
-        margin-left: 0;
-        margin-top: 0;
-      }
+    margin-top: 10px;
+    .Reg__paymentOptions {
+      height: 775px;
     }
   }
 
@@ -259,18 +212,14 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }
 
-    .Reg__options {
-      padding: 38px 20px;
-      display: flex;
-      flex-direction: column;
-      grid-gap: 12px;
-      height: 566px;
-      button {
-      }
+    .Reg__paymentOptions {
+      height: 599px;
+      padding: 36px 20px 0 20px;
     }
 
     .Reg__link {

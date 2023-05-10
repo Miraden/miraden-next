@@ -16,10 +16,16 @@ const CreateStep11 = ({ className }: Props) => {
             Опишите ваши дополнительные пожелания
           </h1>
         </div>
-        <div>
-          <TextInput label="Заголовок заявки *" />
-          <TextAreaInput label="Опишите дополнительные пожелания" />
+        <div className="Reg__inputsContainer">
+          <div className="Reg__inputs">
+            <TextInput label="Заголовок заявки " />
+            <TextAreaInput
+              label="Опишите дополнительные пожелания"
+              className="Reg__textArea"
+            />
+          </div>
         </div>
+
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
           <div className="Reg__footerBack">
@@ -62,73 +68,28 @@ const CreateStep11 = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 18px 30px;
-    border: 2px solid #f1f7ff;
+    border-bottom: 2px solid #f1f7ff;
   }
 
-  .Reg__radioButtons {
-    padding-left: 30px;
-    margin-top: 42px;
-    margin-left: -30px;
-    display: flex;
-    align-items: center;
-
-    input {
-      margin-left: 30px;
-    }
+  .Reg__inputsContainer {
+    height: 416px;
+    overflow-y: scroll;
   }
 
-  .Reg__options {
-    padding: 41px 30px 30px;
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: -20px;
-    margin-top: -20px;
-
-    button {
-      justify-content: flex-start;
-      width: fit-content;
-      padding: 10px 20px;
-      margin-left: 20px;
-      margin-top: 20px;
-
-      span {
-        text-align: initial;
-      }
-    }
+  .Reg__inputs {
+    padding: 40px 30px 0 30px;
+    max-width: 840px;
+    height: 416px;
+    overflow-y: scroll;
   }
 
-  .Reg__percents {
-    display: flex;
-    flex-wrap: wrap;
-    button {
-      max-width: fit-content;
-      padding: 10px 20px;
-    }
-  }
-
-  .Reg__payOptions {
-    display: flex;
-  }
-
-  .Reg__monthsContainer {
-    padding: 30px;
-  }
-
-  .Reg__months {
-    display: flex;
-    flex-wrap: wrap;
-
-    margin-left: -10px;
-    margin-top: -10px;
-    button {
-      padding: 10px 20px;
-      width: fit-content;
-      margin-left: 10px;
-      margin-top: 10px;
-    }
+  .Reg__textArea {
+    margin-top: 11px;
+    max-width: 840px;
   }
 
   .Reg__progressBar {
@@ -184,21 +145,14 @@ const StyledRegStep1 = styled.section`
     display: none;
   }
 
+  @media (max-width: 1200px) {
+    margin-top: 100px;
+  }
+
   @media (max-width: 960px) {
-    .Reg__options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: max-content;
-      grid-gap: 20px;
-      margin-left: 0;
-      margin-top: 0;
-      height: 797px;
-      button {
-        max-width: unset;
-        width: 100%;
-        margin-left: 0;
-        margin-top: 0;
-      }
+    margin-top: 10px;
+    .Reg__inputsContainer {
+      height: 827px;
     }
   }
 
@@ -211,22 +165,13 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }
 
-    .Reg__options {
-      padding: 38px 20px;
-      display: flex;
-      flex-direction: column;
-      grid-gap: 12px;
-      height: 566px;
-      button {
-      }
-    }
-
-    .Reg__link {
-      padding: 5px 20px;
+    .Reg__inputsContainer {
+      height: 616px;
     }
 
     .Reg__goBackButton {

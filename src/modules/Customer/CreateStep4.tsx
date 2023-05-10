@@ -16,6 +16,12 @@ const CreateStep4 = ({ className }: Props) => {
   const [startMonth, setStartMonth] = useState<number | null>(null);
   const [selectedRange, setSelectedRange] = useState<number[]>([]);
   const [selectedYear, setSelectedYear] = useState();
+  const [selectedAlready, setSelectedAlready] = useState(false);
+
+  const handleSelectAlready = useCallback(() => {
+    setSelectedAlready(!selectedAlready);
+    setSelectedRange([]);
+  }, [selectedAlready]);
 
   const handleYearSelection = (year: any) => {
     setSelectedYear(year);
@@ -32,6 +38,7 @@ const CreateStep4 = ({ className }: Props) => {
       // start new range
       setStartMonth(monthIndex);
       setSelectedRange([monthIndex]);
+      setSelectedAlready(false);
     } else {
       // continue existing range
       const endMonth = monthIndex;
@@ -121,73 +128,80 @@ const CreateStep4 = ({ className }: Props) => {
           >
             Неважно
           </RequestButton>
-        </div>
-        {selected === "new" && (
-          <div className="Reg__monthsContainer">
-            <h2>Ввод в эксплуатацию через</h2>
-            <div className="Reg__months">
-              {[...Array(64)].map((_, index) => {
-                const month = index % 12;
+          {selected === "new" && (
+            <div className="Reg__monthsContainer">
+              <h2>Ввод в эксплуатацию через</h2>
+              <div className="Reg__months">
+                <RequestButton
+                  onClick={handleSelectAlready}
+                  active={selectedAlready}
+                >
+                  Уже построена
+                </RequestButton>
+                {[...Array(64)].map((_, index) => {
+                  const month = index % 12;
 
-                const label = index + " мес";
-                if (index === 0) {
-                  return label === "уже построена";
-                }
-                if (index >= maxVisibleMonths) {
-                  return null;
-                }
+                  const label = index + " мес";
+                  if (index === 0) {
+                    return label === "уже построена";
+                  }
+                  if (index >= maxVisibleMonths) {
+                    return null;
+                  }
 
-                const isActive = selectedRange.includes(index);
-                const isWithinRange =
-                  selectedRange.length === 2 &&
-                  index >= selectedRange[0] &&
-                  index <= selectedRange[1];
-                return (
+                  const isActive = selectedRange.includes(index);
+                  const isWithinRange =
+                    selectedRange.length === 2 &&
+                    index >= selectedRange[0] &&
+                    index <= selectedRange[1];
+                  return (
+                    <RequestButton
+                      key={`${index}`}
+                      onClick={() => handleMonthClick(index)}
+                      active={isActive}
+                      ranged={isWithinRange}
+                    >
+                      {label}
+                    </RequestButton>
+                  );
+                })}
+                {maxVisibleMonths < 64 && (
                   <RequestButton
-                    key={`${index}`}
-                    onClick={() => handleMonthClick(index)}
-                    active={isActive}
-                    ranged={isWithinRange}
+                    onClick={handleShowMore}
+                    className="ShowMoreButton Color_blue_primary"
                   >
-                    {label}
+                    Ещё {maxVisibleMonths}
                   </RequestButton>
-                );
-              })}
-              {maxVisibleMonths < 64 && (
-                <RequestButton
-                  onClick={handleShowMore}
-                  className="ShowMoreButton Color_blue_primary"
-                >
-                  Ещё {maxVisibleMonths}
-                </RequestButton>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        )}
-        {selected === "secondary" && (
-          <div className="Reg__monthsContainer">
-            <h2>Год постройки</h2>
-            <div className="Reg__months">
-              {visibleYears.map((year) => (
-                <RequestButton
-                  key={year}
-                  active={year === selectedYear}
-                  onClick={() => handleYearSelection(year)}
-                >
-                  {year}
-                </RequestButton>
-              ))}{" "}
-              {!showAllYears && years.length > 10 && (
-                <RequestButton
-                  onClick={handleShowAllYears}
-                  className="Color_blue_primary"
-                >
-                  Еще {visibleYears.length}
-                </RequestButton>
-              )}
+          )}
+          {selected === "secondary" && (
+            <div className="Reg__monthsContainer">
+              <h2>Год постройки</h2>
+              <div className="Reg__months">
+                {visibleYears.map((year) => (
+                  <RequestButton
+                    key={year}
+                    active={year === selectedYear}
+                    onClick={() => handleYearSelection(year)}
+                  >
+                    {year}
+                  </RequestButton>
+                ))}{" "}
+                {!showAllYears && years.length > 10 && (
+                  <RequestButton
+                    onClick={handleShowAllYears}
+                    className="Color_blue_primary"
+                  >
+                    Еще {visibleYears.length}
+                  </RequestButton>
+                )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
+
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
           <div className="Reg__footerBack">
@@ -249,24 +263,14 @@ const StyledRegStep1 = styled.section`
     border: 2px solid #f1f7ff;
   }
 
-  .Reg__radioButtons {
-    padding-left: 30px;
-    margin-top: 42px;
-    margin-left: -30px;
-    display: flex;
-    align-items: center;
-
-    input {
-      margin-left: 30px;
-    }
-  }
-
   .Reg__options {
-    padding: 41px 30px 30px;
+    padding: 41px 30px 0 30px;
     display: flex;
     flex-wrap: wrap;
     margin-left: -20px;
     margin-top: -20px;
+    align-content: start;
+    height: 449px;
 
     button {
       justify-content: flex-start;
