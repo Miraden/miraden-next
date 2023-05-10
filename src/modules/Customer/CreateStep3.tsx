@@ -203,9 +203,25 @@ const CreateStep3 = ({ className }: Props) => {
                     Далее
                   </Button>
                 ) : (
-                  <Button disabled={!selected} href="/customer/create-step-4">
-                    Далее
-                  </Button>
+                  <>
+                    {selected === "duplex" ||
+                    selected === "townhouse" ||
+                    selected === "house" ? (
+                      <Button
+                        disabled={!selected}
+                        href="/customer/create-step-4-full"
+                      >
+                        Далее
+                      </Button>
+                    ) : (
+                      <Button
+                        disabled={!selected}
+                        href="/customer/create-step-4"
+                      >
+                        Далее
+                      </Button>
+                    )}
+                  </>
                 )}
               </>
             )}
@@ -223,7 +239,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__head {
     padding: 30px 30px 18px 30px;
-    border: 2px solid #f1f7ff;
+    border-bottom: 2px solid #f1f7ff;
   }
 
   .Reg__radioButtons {

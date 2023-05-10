@@ -262,7 +262,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__head {
     padding: 30px 30px 18px 30px;
-    border: 2px solid #f1f7ff;
+    border-bottom: 2px solid #f1f7ff;
   }
 
   .Reg__options {
