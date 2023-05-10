@@ -36,14 +36,14 @@ const PassRecover1 = ({ className }: Props) => {
         </div>
         <div className="Reg__options">
           <TextInput
-            label="Электронная почта *"
+            label="Электронная почта "
             values={email}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setEmail(event.target.value)
             }
           />
           <TextInput
-            label="Новый пароль *"
+            label="Новый пароль "
             className="Reg__passInput"
             values={password}
             onChange={
@@ -52,7 +52,7 @@ const PassRecover1 = ({ className }: Props) => {
             }
           />
           <TextInput
-            label="Повторите пароль *"
+            label="Повторите пароль "
             className="Reg__passInput"
             values={password}
             onChange={
