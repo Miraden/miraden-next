@@ -1,7 +1,6 @@
 import { CatalogIcon, CommunityIcon, DealsIcon, HomeIcon } from "@/icons";
 import cn from "classnames";
 import Image from "next/image";
-import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 interface FeatureProps {
@@ -43,20 +42,6 @@ const options = [
   },
 ];
 const FeaturesMobile = ({ className }: FeatureProps) => {
-  const [activeOptionIndex, setActiveOptionIndex] = useState(0);
-
-  const createHandleToggleActiveOptionIndex = useCallback(
-    (name: string) => () => {
-      const activeOptionIndex = options.findIndex(
-        (option) => option.optionName === name
-      );
-      setActiveOptionIndex(activeOptionIndex);
-    },
-    []
-  );
-
-  const activeOption = options[activeOptionIndex];
-
   return (
     <StyledFeaturesMobile className={className}>
       <div className="Container">
@@ -65,30 +50,16 @@ const FeaturesMobile = ({ className }: FeatureProps) => {
             <h2 className="Font_44_120 sm:Font_26_120 ">Miraden — это</h2>
             <div className="Features__tabs">
               {options.map(({ id, optionName, icon, text, image1, image2 }) => (
-                <button
-                  onClick={createHandleToggleActiveOptionIndex(optionName)}
-                  key={id}
-                  className={cn("Features__tabButton", {
-                    Features__tabButtonActive:
-                      optionName === activeOption.optionName,
-                    Color_tertiary: optionName !== activeOption.optionName,
-                  })}
-                >
+                <button key={id} className={cn("Features__tabButtonActive")}>
                   <div className="Features__tabHead">
                     <div
-                      className={cn("Features__iconContainer", {
-                        IconContainer: optionName == activeOption.optionName,
-                      })}
+                      className={cn("Features__iconContainer", "IconContainer")}
                     >
                       {icon}
                     </div>
                     <h3
                       className={cn(
-                        "Font_28_120 Color_primary sm:Font_18_120_700 Color_primary",
-                        {
-                          Color_blue_primary:
-                            optionName == activeOption.optionName,
-                        }
+                        "Font_28_120 Color_blue_primary sm:Font_18_120_700 Color_primary"
                       )}
                     >
                       {optionName}
@@ -97,35 +68,30 @@ const FeaturesMobile = ({ className }: FeatureProps) => {
 
                   <p
                     className={cn(
-                      "Features__headDescription Font_18_150 sm:Font_16_24 Color_grey_dark",
-                      {
-                        Features__headDescriptionActive:
-                          optionName == activeOption.optionName,
-                      }
+                      "Features__headDescriptionActive Font_18_150 sm:Font_16_24 Color_grey_dark"
                     )}
                   >
                     {text}
                   </p>
-                  {optionName == activeOption.optionName && (
-                    <div className="Features__imagesContainer">
-                      <Image
-                        src={image1}
-                        alt=""
-                        width={312}
-                        height={655}
-                        priority
-                        className="Features__image1"
-                      />
-                      <Image
-                        src={image2}
-                        alt=""
-                        width={312}
-                        height={655}
-                        priority
-                        className="Features__image2"
-                      />
-                    </div>
-                  )}
+
+                  <div className="Features__imagesContainer">
+                    <Image
+                      src={image1}
+                      alt=""
+                      width={312}
+                      height={655}
+                      priority
+                      className="Features__image1"
+                    />
+                    <Image
+                      src={image2}
+                      alt=""
+                      width={312}
+                      height={655}
+                      priority
+                      className="Features__image2"
+                    />
+                  </div>
                 </button>
               ))}
             </div>
@@ -196,6 +162,7 @@ const StyledFeaturesMobile = styled.section`
   .Features__tabButtonActive {
     padding: 20px 20px 40px 20px;
     background: #fff;
+    border-radius: 10px;
     svg {
       path {
         fill: #fff !important;
@@ -239,6 +206,7 @@ const StyledFeaturesMobile = styled.section`
     display: flex;
     margin-left: 73px;
     animation: fade-in 300ms;
+    text-align: start;
   }
 
   .Features__TabsList {
@@ -297,7 +265,7 @@ const StyledFeaturesMobile = styled.section`
       }
     }
 
-    .Features__headDescription {
+    .Features__headDescriptionActive {
       margin-top: -8px;
       margin-left: 59px;
       margin-bottom: 34px;

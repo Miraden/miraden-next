@@ -100,7 +100,8 @@ const StyledRegStep1 = styled.section`
     box-shadow: 0 0 0 2px inset #e1edfd !important;
     border-radius: 10px;
 
-    .react-datepicker__day {
+    .react-datepicker__day:not(:last-child),
+    .react-datepicker__day-name:not(:last-child) {
       margin-right: 15px !important;
     }
 
@@ -204,16 +205,21 @@ const StyledRegStep1 = styled.section`
 
     .react-datepicker__day--in-selecting-range {
       background: #f1f7ff;
-      border-radius: 0;
+      border-radius: 10px !important;
     }
 
     .react-datepicker__day--in-range {
       background: #f1f7ff;
       border-radius: 0;
+      border-radius: 10px !important;
     }
 
     .react-datepicker__day--outside-month {
       color: #b8c6e3;
+    }
+
+    .react-datepicker__day--outside-month {
+      padding: 0;
     }
 
     .react-datepicker__current-month {
@@ -362,13 +368,7 @@ const StyledRegStep1 = styled.section`
     }
   }
 
-  @media (max-width: 768px) {
-    .Reg__nextButtonContainer {
-      div {
-        display: none;
-      }
-    }
-
+  @media (max-width: 820px) {
     .react-datepicker__navigation {
       display: none;
     }
@@ -383,10 +383,18 @@ const StyledRegStep1 = styled.section`
 
     .Test {
       width: fit-content;
-      padding-left: 20px;
+      padding-left: 0;
       padding-top: 40px;
       padding-bottom: 96px;
       padding-right: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .Reg__nextButtonContainer {
+      div {
+        display: none;
+      }
     }
   }
 

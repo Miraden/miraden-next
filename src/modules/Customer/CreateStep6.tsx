@@ -192,7 +192,7 @@ const CreateStep6 = ({ className }: Props) => {
 
   const handleShowMoreBaths = useCallback(() => {
     setShowMoreBaths(true);
-    setMaxVisibleBaths(13);
+    setMaxVisibleBaths(16);
   }, []);
 
   const baths = [];
@@ -226,6 +226,7 @@ const CreateStep6 = ({ className }: Props) => {
                   selectedRange.length === 2 &&
                   index >= selectedRange[0] &&
                   index <= selectedRange[1];
+
                 return (
                   <RequestButton
                     key={`${index}`}

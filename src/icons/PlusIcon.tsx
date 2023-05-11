@@ -3,17 +3,16 @@ import { FC, SVGAttributes } from "react";
 const PlusIcon: FC<SVGAttributes<SVGElement>> = (props) => {
   return (
     <svg
-      width="18"
-      height="18"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M9 4.25a.75.75 0 0 1 .75.75v3.25H13a.75.75 0 0 1 0 1.5H9.75V13a.75.75 0 0 1-1.5 0V9.75H5a.75.75 0 0 1 0-1.5h3.25V5A.75.75 0 0 1 9 4.25Z"
-        fill="#2A344A"
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M5.668 12a1 1 0 0 1 1-1h4.333V6.667a1 1 0 1 1 2 0V11h4.334a1 1 0 1 1 0 2H13v4.334a1 1 0 1 1-2 0V13H6.668a1 1 0 0 1-1-1Z"
+        fill="#fff"
       />
     </svg>
   );

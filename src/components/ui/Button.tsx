@@ -20,6 +20,7 @@ interface Props {
   prefetch?: boolean;
   children?: ReactNode;
   disabled?: boolean;
+  active?: boolean;
 }
 
 const Button: FC<Props> = ({
@@ -38,6 +39,7 @@ const Button: FC<Props> = ({
   rightIcon,
   ariaLabel,
   disabled,
+  active,
   prefetch = true,
 }) => {
   if (!href) {
@@ -57,6 +59,7 @@ const Button: FC<Props> = ({
           Button_narrow: narrow,
           Button_withoutLabel: !children,
           disabled: disabled,
+          active: active,
         })}
         type={type}
       >
@@ -91,6 +94,7 @@ const Button: FC<Props> = ({
           Button_narrow: narrow,
           Button_withoutLabel: !children,
           disabled: disabled,
+          active: active,
         })}
       >
         {leftIcon && (
@@ -154,6 +158,7 @@ const Button: FC<Props> = ({
           Button_narrow: narrow,
           Button_withoutLabel: !children,
           disabled: disabled,
+          active: active,
         })}
       >
         {leftIcon && (
@@ -180,6 +185,10 @@ const StyledButton = styled.a`
   cursor: pointer;
   border: none;
   transition: 0.2s ease;
+
+  &.active {
+    color: #4e6af3 !important;
+  }
 
   &.disabled {
     cursor: unset;

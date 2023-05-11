@@ -29,11 +29,13 @@ const CreateStep4 = ({ className }: Props) => {
   const [maxVisibleMonths, setMaxVisibleMonths] = useState(18);
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
-    setShowMore(false); // reset show more button state when new option is selected
+    setShowMore(false);
     setMaxVisibleMonths(18);
   }, []);
 
   const handleMonthClick = (monthIndex: number) => {
+    setSelectedAlready(false);
+
     if (startMonth === null) {
       // start new range
       setStartMonth(monthIndex);

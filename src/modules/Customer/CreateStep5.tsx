@@ -84,7 +84,6 @@ const CreateStep5 = ({ className }: Props) => {
   const [selectedLivingRage, setSelectedLivingRage] = useState<number[]>([]);
   const [showMoreLiving, setShowMoreLiving] = useState(false);
   const [maxVisibleLivingSquare, setMaxVisibleLivingSquare] = useState(21);
-  const [maxVisibleLiving, setMaxVisibleLiving] = useState(21);
 
   const handleSelectLiving = useCallback(() => {
     setSelectedLiving(!selectedLiving);
@@ -235,7 +234,7 @@ const CreateStep5 = ({ className }: Props) => {
                   </RequestButton>
                 );
               })}
-              {maxVisibleLiving < 64 && (
+              {maxVisibleLivingSquare < 64 && (
                 <RequestButton
                   onClick={handleShowMoreLiving}
                   className="ShowMoreButton Color_blue_primary"

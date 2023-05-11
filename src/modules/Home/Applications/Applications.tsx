@@ -309,6 +309,43 @@ const Applications = () => {
           </div>
         </div>
 
+        <div className="Applications__tabsMobile sm:FullBleed">
+          {hasCyprusLocation && (
+            <RequestButton
+              onClick={() => handleButtonClick("Кипр")}
+              active={location === "Кипр"}
+            >
+              Кипр
+            </RequestButton>
+          )}
+          {hasMontenegroLocation && (
+            <RequestButton
+              onClick={() => handleButtonClick("Черногория")}
+              active={location === "Черногория"}
+            >
+              Черногория
+            </RequestButton>
+          )}
+
+          {hasThailandLocation && (
+            <RequestButton
+              onClick={() => handleButtonClick("Таиланд")}
+              active={location === "Таиланд"}
+            >
+              Таиланд
+            </RequestButton>
+          )}
+
+          {hasSpainLocation && (
+            <RequestButton
+              onClick={() => setLocation("Испания")}
+              active={location === "Испания"}
+            >
+              Испания
+            </RequestButton>
+          )}
+        </div>
+
         <div className="Applications__list">
           {renderApplications(filteredApplications).slice(0, 9)}
         </div>
@@ -333,7 +370,8 @@ const StyledApplications = styled.section`
     align-items: center;
   }
 
-  .Applications__tabs {
+  .Applications__tabs,
+  .Applications__tabsMobile {
     display: flex;
     button:not(:first-child) {
       margin-left: 10px;
@@ -344,6 +382,10 @@ const StyledApplications = styled.section`
       width: fit-content;
       background: #fff;
     }
+  }
+
+  .Applications__tabsMobile {
+    display: none;
   }
 
   .Applications__list,
@@ -427,6 +469,22 @@ const StyledApplications = styled.section`
     .Applications__openMoreContainer {
       display: flex;
       flex-direction: column;
+    }
+
+    .Applications__tabs {
+      display: none;
+    }
+
+    .Applications__tabsMobile {
+      display: flex;
+      margin-top: 20px;
+      overflow-x: scroll;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .Applications__tabsMobile {
+      padding-left: 20px;
     }
   }
 `;

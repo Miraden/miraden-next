@@ -91,6 +91,9 @@ const StyledButton = styled.a`
     background: ${({ theme }) =>
       theme.colors.button.request["isActive"]} !important;
     color: ${({ theme }) => theme.colors.white};
+    :hover {
+      background: #414d65 !important;
+    }
   }
 
   &.disabled {

@@ -264,8 +264,7 @@ const StyledReviews = styled.section`
     background: #ffffff;
     display: flex;
     white-space: nowrap;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
     button:not(:first-child) {
       margin-left: 10px;
     }
@@ -342,7 +341,6 @@ const StyledReviews = styled.section`
     .Reviews__tabs {
       display: flex !important;
       padding-top: 20px;
-      overflow-x: scroll;
 
       button {
         padding: 10px 15px;
@@ -374,6 +372,10 @@ const StyledReviews = styled.section`
     padding-top: 65px;
     .Reviews__agencys {
       grid-template-columns: repeat(2, 1fr);
+    }
+
+    .Reviews__buttonsContainer {
+      display: none;
     }
   }
 `;

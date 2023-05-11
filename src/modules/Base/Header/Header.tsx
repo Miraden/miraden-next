@@ -1,13 +1,26 @@
 import styled from "styled-components";
 import { HeaderDesktop, HeaderMobile } from "./components";
 
-const Header = () => {
+interface HeaderProps {
+  isAuthorized?: boolean;
+}
+
+const Header = ({ isAuthorized }: HeaderProps) => {
   return (
     <StyledHeader>
       <div className="Header__topBlock" />
       <div className="Header">
-        <HeaderDesktop className="Header__desktop" />
-        <HeaderMobile className="Header__mobile" />
+        {isAuthorized ? (
+          <>
+            <HeaderDesktop className="Header__desktop" isAuthorized />
+            <HeaderMobile className="Header__mobile" isAuthorized />
+          </>
+        ) : (
+          <>
+            <HeaderDesktop className="Header__desktop" />
+            <HeaderMobile className="Header__mobile" />
+          </>
+        )}
       </div>
     </StyledHeader>
   );

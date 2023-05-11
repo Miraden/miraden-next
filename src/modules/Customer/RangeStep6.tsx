@@ -44,6 +44,24 @@ const RangeStep6 = ({ className }: Props) => {
     setIsMonthChecked(true);
   }, []);
 
+  const handleFromValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputFromValue = event.target.value;
+    if (/^\d*$/.test(inputFromValue)) {
+      // проверка вводимых символов
+      setFromValue(inputFromValue);
+    }
+  };
+
+  const handleToValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const inputToValue = event.target.value;
+    if (/^\d*$/.test(inputToValue)) {
+      // проверка вводимых символов
+      setToValue(inputToValue);
+    }
+  };
+
   return (
     <StyledRegStep1 className={className}>
       <div className="">
@@ -98,12 +116,12 @@ const RangeStep6 = ({ className }: Props) => {
             <NumberInput
               label="От"
               value={fromValue}
-              onChange={(event: any) => setFromValue(event.target.value)}
+              onChange={handleFromValueChange}
             />
             <NumberInput
               label="До"
               value={toValue}
-              onChange={(event: any) => setToValue(event.target.value)}
+              onChange={handleToValueChange}
             />
           </div>
         </div>
