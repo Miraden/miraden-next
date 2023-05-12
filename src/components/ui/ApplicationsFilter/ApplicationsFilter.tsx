@@ -92,6 +92,9 @@ const StyledApplicationsFilter = styled.div`
 
   .ApplicationsFilter__tabs {
     margin-top: 20px;
+    max-height: calc(100vh - 184px);
+    height: 100%;
+    overflow-y: scroll;
     .TabButtons__container {
       padding: 0px 30px;
     }
@@ -577,7 +580,7 @@ const ObjectsContent = () => {
             {statusOpen && (
               <>
                 <Checkbox label="Клиент (ищу для себя)" className="CheckBox" />
-                <Checkbox label="Риелтор" />
+                <Checkbox label="Риелтор" className="CheckBox" />
                 <Checkbox label="Агентство недвижимости" className="CheckBox" />
                 <Checkbox label="Застройщик" className="CheckBox" />
                 <Checkbox label="Собственник" className="CheckBox" />

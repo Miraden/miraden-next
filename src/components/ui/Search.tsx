@@ -1,15 +1,25 @@
 import { CrossIcon, SearchIcon } from "@/icons";
 import cn from "classnames";
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import styled from "styled-components";
 
 interface SearchProps {
   options: string[];
   disabled?: boolean;
   className?: string;
+  placeholder?: string;
+  rightIcon?: ReactNode;
+  onClick?: any;
 }
 
-const Search = ({ options, disabled, className }: SearchProps) => {
+const Search = ({
+  options,
+  disabled,
+  className,
+  placeholder,
+  rightIcon,
+  onClick,
+}: SearchProps) => {
   const [searchValue, setSearchValue] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>(options);
@@ -45,19 +55,33 @@ const Search = ({ options, disabled, className }: SearchProps) => {
   };
 
   return (
-    <SearchContainer
-      className={cn("", { className, Search_disabled: disabled })}
-    >
+    <SearchContainer className={cn(className, { Search_disabled: disabled })}>
       <SearchIcon className="Search__searchIcon" />
-      <CrossIcon
-        className="Search__crossIcon"
-        onClick={handleClearClick}
-        style={{ opacity: selectedOption ? 1 : 0 }}
-      />
+      {!rightIcon && (
+        <CrossIcon
+          className="Search__crossIcon"
+          onClick={handleClearClick}
+          style={{ opacity: selectedOption ? 1 : 0 }}
+        />
+      )}
+      {rightIcon && (
+        <>
+          <CrossIcon
+            className="Search__crossIconWithButton"
+            onClick={handleClearClick}
+            width={18}
+            height={18}
+            style={{ opacity: selectedOption ? 1 : 0 }}
+          />
+          <button className="Search__rightIcon" onClick={onClick}>
+            {rightIcon}
+          </button>
+        </>
+      )}
 
       <Input
         type="text"
-        placeholder="Text"
+        placeholder={placeholder}
         value={searchValue}
         onChange={handleSearchChange}
         onBlur={handleBlur}
@@ -96,6 +120,18 @@ const SearchContainer = styled.div`
     svg path {
       fill: red !important;
     }
+  }
+
+  .Search__rightIcon,
+  .Search__crossIconWithButton {
+    position: absolute;
+    top: 21px;
+    right: 20px;
+    z-index: 21;
+  }
+
+  .Search__crossIconWithButton {
+    right: 80px;
   }
 
   .Search_disabled {

@@ -1,5 +1,7 @@
-import { Button } from "@/components/ui";
-import { ArrowIcon, PlusIcon } from "@/icons";
+import { Button, Search } from "@/components/ui";
+import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
+import { ArrowIcon } from "@/icons";
+import { FilterIcon } from "@/icons/FilterIcon";
 import cn from "classnames";
 import Image from "next/image";
 import { useCallback, useState } from "react";
@@ -17,9 +19,15 @@ type Option =
 
 const Application = ({ className }: ApplicationProps) => {
   const [selected, setSelected] = useState<Option | null>(null);
+  const [showFilter, setShowFilter] = useState(false);
+
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
   }, []);
+
+  const handleShowFilter = useCallback(() => {
+    setShowFilter(!showFilter);
+  }, [showFilter]);
 
   return (
     <StyledApplication className={className}>
@@ -88,6 +96,15 @@ const Application = ({ className }: ApplicationProps) => {
           <div className="Applications__headTabsBar"></div>
         </div>
       </div>
+      <div>
+        <Search
+          options={[]}
+          placeholder="Поиск"
+          className="Applications__searchBar"
+          rightIcon={<FilterIcon />}
+          onClick={handleShowFilter}
+        />
+      </div>
       <div className="Application__body">
         <Image src="/images/application.svg" alt="" width={150} height={120} />
         <h2>Вы отлично справились!</h2>
@@ -96,8 +113,8 @@ const Application = ({ className }: ApplicationProps) => {
           вы можете посмотреть Рекомендуемое
         </p>
       </div>
-      <div></div>
-      <div className="Application__bottomContainer">
+
+      {/* <div className="Application__bottomContainer">
         <div className="Application__bottomTabs">
           <Button
             onClick={() => handleSelect("requests")}
@@ -131,17 +148,30 @@ const Application = ({ className }: ApplicationProps) => {
             Ещё
           </Button>
         </div>
-      </div>
+      </div> */}
+      {showFilter && (
+        <ApplicationsFilter
+          className="Applications__filter"
+          onClick={handleShowFilter}
+        />
+      )}
     </StyledApplication>
   );
 };
 
 const StyledApplication = styled.section`
+  position: relative;
+  .Applications__filter {
+    position: absolute;
+    top: 94px;
+    right: -380px;
+  }
+
   .Application__headContainer {
     margin-top: 94px;
-    padding: 20px;
+    padding: 20px 20px 0 20px;
     background: #fff;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
   }
 
   .Application__head {
@@ -173,6 +203,14 @@ const StyledApplication = styled.section`
       width: 100%;
       height: 4px;
       border-radius: 10px;
+    }
+  }
+
+  .Applications__searchBar {
+    padding: 0;
+    input {
+      border-radius: 0 0 10px 10px;
+      box-shadow: none !important;
     }
   }
 
