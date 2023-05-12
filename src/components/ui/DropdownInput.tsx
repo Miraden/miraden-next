@@ -42,8 +42,7 @@ const DropdownInput: FC<Props> = ({
 
   return (
     <StyledDropdownInput
-      className={cn({
-        className,
+      className={cn(className, {
         Dropdown_disabled: disabled,
       })}
       disabled={disabled}

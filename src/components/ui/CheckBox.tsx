@@ -11,6 +11,7 @@ interface CheckboxProps {
   onClick?: (e: MouseEvent<HTMLElement>) => void;
   isSelected?: any;
   onChange?: () => void;
+  className?: string;
 }
 
 const Checkbox = ({
@@ -20,12 +21,13 @@ const Checkbox = ({
   label,
   onClick,
   isSelected,
+  className,
   onChange,
 }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(checked || false);
 
   return (
-    <StyledModalCheckbox className={cn("", { ErrorCheckbox: error })}>
+    <StyledModalCheckbox className={cn(className, { ErrorCheckbox: error })}>
       <input
         className="[ Checkbox__input ]"
         type="checkbox"

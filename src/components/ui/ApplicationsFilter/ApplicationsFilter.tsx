@@ -1,4 +1,5 @@
-import { CrossIcon } from "@/icons";
+import { ArrowIcon, CrossIcon } from "@/icons";
+import cn from "classnames";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { Button } from "../Button";
@@ -8,7 +9,6 @@ import { DropdownInput } from "../DropdownInput";
 import { NumberInput } from "../NumberInput";
 import { RequestButton } from "../RequestButton";
 import { TabButtons } from "../TabButtons";
-
 interface FilterProps {
   className?: string;
   onClick?: any;
@@ -166,6 +166,31 @@ const ObjectsContent = () => {
   const [selectedRoomsId, setSelectedRoomsId] = useState(null);
   const [selectedBathsId, setSelectedBathsId] = useState(null);
   const [selectedSleepsId, setSelectedSleepsId] = useState(null);
+  const [objectTypeOpen, setObjectTypeOpen] = useState(false);
+  const [allRoomsOpen, setAllRoomsOpen] = useState(false);
+  const [squareOpen, setSquareOpen] = useState(false);
+  const [purposeOpen, setPurposeOpen] = useState(false);
+  const [statusOpen, setStatusOpen] = useState(false);
+
+  const handleObjectTypeOpen = useCallback(() => {
+    setObjectTypeOpen(!objectTypeOpen);
+  }, [objectTypeOpen]);
+
+  const handleAllRoomsOpen = useCallback(() => {
+    setAllRoomsOpen(!allRoomsOpen);
+  }, [allRoomsOpen]);
+
+  const handleSquareOpen = useCallback(() => {
+    setSquareOpen(!squareOpen);
+  }, [squareOpen]);
+
+  const handlePurposeOpen = useCallback(() => {
+    setPurposeOpen(!purposeOpen);
+  }, [purposeOpen]);
+
+  const handleStatusOpen = useCallback(() => {
+    setStatusOpen(!statusOpen);
+  }, [statusOpen]);
 
   const handleSelectRooms = useCallback(
     (id: any) => {
@@ -282,6 +307,7 @@ const ObjectsContent = () => {
       <div className="ObjectsContent__wrapperContainer">
         <h3 className="ObjectsContent__locations">Локация недвижимости</h3>
         <DropdownInput
+          className="ObjectsContent__locationsSelect"
           placeholder="Все страны"
           options={["Турция", "Кипр", "Черногоря", "Северный Кипр"]}
         />
@@ -322,40 +348,60 @@ const ObjectsContent = () => {
       <div className="ObjectsContent__checkboxes">
         <div className="ObjectsContent__wrapperContainer">
           <h4 className="Font_16_24">Жилая</h4>
-          <Checkbox label="Квартира / апартаменты" />
-          <Checkbox label="Дом / вилла" />
-          <Checkbox label="Пентхаус" />
-          <Checkbox label="Таунхаус" />
-          <Checkbox label="Дуплекс" />
-          <Checkbox label="Участок земли" />
+          <Checkbox label="Квартира / апартаменты" className="CheckBox" />
+          <Checkbox label="Дом / вилла" className="CheckBox" />
+          <Checkbox label="Пентхаус" className="CheckBox" />
+          <Checkbox label="Таунхаус" className="CheckBox" />
+          <Checkbox label="Дуплекс" className="CheckBox" />
+          <Checkbox label="Участок земли" className="CheckBox" />
+          {!objectTypeOpen && (
+            <button
+              onClick={handleObjectTypeOpen}
+              className="ObjectsContent__checkboxesOpenButton Color_blue_primary Font_14_140"
+            >
+              Открыть еще 5
+            </button>
+          )}
         </div>
-        <div className="ObjectsContent__wrapperContainer">
-          <div className="ObjectsContent__commercial">
-            <h4 className="Font_16_24">Коммерческая</h4>
-            <Checkbox label="Офис" />
-            <Checkbox label="Гостиница" />
-            <Checkbox label="Магазин" />
-            <Checkbox label="Торговый центр" />
-            <Checkbox label="Склад" />
-          </div>
-        </div>
-        <div className="ObjectsContent__wrapperContainer">
-          <div className="ObjectsContent_year">
-            <h4>Год постройки</h4>
-            <div className="ObjectsContent__price">
-              <NumberInput
-                label="От"
-                value={yearFromValue}
-                onChange={handleYearFromValueChange}
-              />
-              <NumberInput
-                label="До"
-                value={yearToValue}
-                onChange={handleYearToValueChange}
-              />
+        {objectTypeOpen && (
+          <>
+            <div className="ObjectsContent__wrapperContainer">
+              <div className="ObjectsContent__commercial">
+                <h4 className="Font_16_24">Коммерческая</h4>
+                <Checkbox label="Офис" className="CheckBox" />
+                <Checkbox label="Гостиница" className="CheckBox" />
+                <Checkbox label="Магазин" className="CheckBox" />
+                <Checkbox label="Торговый центр" className="CheckBox" />
+                <Checkbox label="Склад" className="CheckBox" />
+              </div>
             </div>
-          </div>
-        </div>
+            <div className="ObjectsContent__wrapperContainer">
+              <div className="ObjectsContent_year">
+                <h4>Год постройки</h4>
+                <div className="ObjectsContent__price">
+                  <NumberInput
+                    label="От"
+                    value={yearFromValue}
+                    onChange={handleYearFromValueChange}
+                  />
+                  <NumberInput
+                    label="До"
+                    value={yearToValue}
+                    onChange={handleYearToValueChange}
+                  />
+                </div>
+              </div>
+
+              <button
+                onClick={handleObjectTypeOpen}
+                className="ObjectsContent__checkboxesOpenButton Color_blue_primary Font_14_140"
+              >
+                Свернуть
+              </button>
+            </div>
+          </>
+        )}
+
         <div className="ObjectsContent_allRooms">
           <div className="ObjectsContent__wrapperContainer">
             <h4>Всего комнат</h4>
@@ -371,32 +417,50 @@ const ObjectsContent = () => {
                 </li>
               ))}
             </ul>
-            <h4>Спален</h4>
-            <ul className="ObjectsContent__buttons">
-              {sleeps.map((sleep, index) => (
-                <li key={index}>
-                  <RequestButton
-                    onClick={() => handleSelectSleeps(sleep.value)}
-                    activeBlue={selectedSleepsId === sleep.value}
-                  >
-                    {sleep.label}
-                  </RequestButton>
-                </li>
-              ))}
-            </ul>
-            <h4>Санузлов</h4>
-            <ul className="ObjectsContent__buttons">
-              {baths.map((bath, index) => (
-                <li key={index}>
-                  <RequestButton
-                    onClick={() => handleSelectBaths(bath.value)}
-                    activeBlue={selectedBathsId === bath.value}
-                  >
-                    {bath.label}
-                  </RequestButton>
-                </li>
-              ))}
-            </ul>
+            {!allRoomsOpen && (
+              <button
+                onClick={handleAllRoomsOpen}
+                className="ObjectsContent__checkboxesOpenButton Color_blue_primary Font_14_140"
+              >
+                Открыть еще 2
+              </button>
+            )}
+            {allRoomsOpen && (
+              <>
+                <h4>Спален</h4>
+                <ul className="ObjectsContent__buttons">
+                  {sleeps.map((sleep, index) => (
+                    <li key={index}>
+                      <RequestButton
+                        onClick={() => handleSelectSleeps(sleep.value)}
+                        activeBlue={selectedSleepsId === sleep.value}
+                      >
+                        {sleep.label}
+                      </RequestButton>
+                    </li>
+                  ))}
+                </ul>
+                <h4>Санузлов</h4>
+                <ul className="ObjectsContent__buttons">
+                  {baths.map((bath, index) => (
+                    <li key={index}>
+                      <RequestButton
+                        onClick={() => handleSelectBaths(bath.value)}
+                        activeBlue={selectedBathsId === bath.value}
+                      >
+                        {bath.label}
+                      </RequestButton>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={handleAllRoomsOpen}
+                  className="ObjectsContent__checkboxesOpenButton Color_blue_primary Font_14_140"
+                >
+                  Свернуть
+                </button>
+              </>
+            )}
           </div>
         </div>
 
@@ -415,53 +479,110 @@ const ObjectsContent = () => {
                 onChange={handleFullSquareToValueChange}
               />
             </div>
+            {!squareOpen && (
+              <button
+                onClick={handleSquareOpen}
+                className="ObjectsContent__checkboxesOpenButton Color_blue_primary Font_14_140"
+              >
+                Открыть ещё 2
+              </button>
+            )}
+
             <h4>Жилая</h4>
-            <div className="ObjectsContent__price">
-              <NumberInput
-                label="От"
-                value={livingSquareFromValue}
-                onChange={handleLivingSquareFromValueChange}
-              />
-              <NumberInput
-                label="До"
-                value={livingSquareToValue}
-                onChange={handleLivingSquareToValueChange}
-              />
-            </div>
-            <h4>Участок земли</h4>
-            <div className="ObjectsContent__price">
-              <NumberInput
-                label="От"
-                value={landSquareFromValue}
-                onChange={handleLandSquareFromValueChange}
-              />
-              <NumberInput
-                label="До"
-                value={landSquareToValue}
-                onChange={handleLandSquareToValueChange}
-              />
-            </div>
+
+            {squareOpen && (
+              <>
+                <div className="ObjectsContent__price">
+                  <NumberInput
+                    label="От"
+                    value={livingSquareFromValue}
+                    onChange={handleLivingSquareFromValueChange}
+                  />
+                  <NumberInput
+                    label="До"
+                    value={livingSquareToValue}
+                    onChange={handleLivingSquareToValueChange}
+                  />
+                </div>
+                <h4>Участок земли</h4>
+                <div className="ObjectsContent__price">
+                  <NumberInput
+                    label="От"
+                    value={landSquareFromValue}
+                    onChange={handleLandSquareFromValueChange}
+                  />
+                  <NumberInput
+                    label="До"
+                    value={landSquareToValue}
+                    onChange={handleLandSquareToValueChange}
+                  />
+                </div>
+                {squareOpen && (
+                  <button
+                    onClick={handleSquareOpen}
+                    className="ObjectsContent__checkboxesOpenButton Color_blue_primary Font_14_140"
+                  >
+                    Свернуть
+                  </button>
+                )}
+              </>
+            )}
           </div>
         </div>
         <div className="ObjectsContent__purpose">
           <div className="ObjectsContent__wrapperContainer">
-            <h4 className="Font_16_140">Назначение</h4>
-            <Checkbox label="Для проживания" />
-            <Checkbox label="Для сезонного отдыха" />
-            <Checkbox label="Для инвестиций (сдавать)" />
-            <Checkbox label="Для инвестиций (перепродать)" />
-            <Checkbox label="Для ВНЖ / ПМЖ" />
-            <Checkbox label="Для гражданства" />
+            <div
+              className="ObjectsContent__purposeHead"
+              onClick={handlePurposeOpen}
+            >
+              <h4 className="Font_16_140">Назначение</h4>
+
+              <ArrowIcon
+                width={20}
+                height={20}
+                className={cn("", { PurposeOpen: purposeOpen })}
+              />
+            </div>
+            {purposeOpen && (
+              <>
+                <Checkbox label="Для проживания" className="CheckBox" />
+                <Checkbox label="Для сезонного отдыха" className="CheckBox" />
+                <Checkbox
+                  label="Для инвестиций (сдавать)"
+                  className="CheckBox"
+                />
+                <Checkbox
+                  label="Для инвестиций (перепродать)"
+                  className="CheckBox"
+                />
+                <Checkbox label="Для ВНЖ / ПМЖ" className="CheckBox" />
+                <Checkbox label="Для гражданства" className="CheckBox" />
+              </>
+            )}
           </div>
         </div>
         <div className="ObjectsContent__status">
           <div className="ObjectsContent__wrapperContainer">
-            <h4 className="Font_16_140">Статус продавца</h4>
-            <Checkbox label="Клиент (ищу для себя)" />
-            <Checkbox label="Риелтор" />
-            <Checkbox label="Агентство недвижимости" />
-            <Checkbox label="Застройщик" />
-            <Checkbox label="Собственник" />
+            <div
+              className="ObjectsContent__purposeHead"
+              onClick={handleStatusOpen}
+            >
+              <h4 className="Font_16_140">Статус продавца</h4>
+              <ArrowIcon
+                width={20}
+                height={20}
+                className={cn("", { PurposeOpen: statusOpen })}
+              />
+            </div>
+            {statusOpen && (
+              <>
+                <Checkbox label="Клиент (ищу для себя)" className="CheckBox" />
+                <Checkbox label="Риелтор" />
+                <Checkbox label="Агентство недвижимости" className="CheckBox" />
+                <Checkbox label="Застройщик" className="CheckBox" />
+                <Checkbox label="Собственник" className="CheckBox" />
+              </>
+            )}
           </div>
         </div>
         <div className="ObjectsContent__onlyPro">
@@ -486,6 +607,12 @@ const StyledObjectsContent = styled.div`
     margin-bottom: 10px;
   }
 
+  .ObjectsContent__locationsSelect {
+    button {
+      padding: 12px 20px !important;
+    }
+  }
+
   .ObjectsContent__currency {
     display: flex;
     padding-top: 15px;
@@ -501,6 +628,11 @@ const StyledObjectsContent = styled.div`
     margin-top: 10px;
     div:not(:first-child) {
       margin-left: 10px;
+    }
+
+    input {
+      padding: 12px 20px;
+      height: unset;
     }
   }
 
@@ -519,9 +651,13 @@ const StyledObjectsContent = styled.div`
   }
 
   .ObjectsContent__checkboxes {
-    label {
+    .CheckBox {
       margin-top: 10px;
     }
+  }
+
+  .ObjectsContent__checkboxesOpenButton {
+    margin-top: 10px;
   }
 
   .ObjectsContent__commercial,
@@ -536,6 +672,29 @@ const StyledObjectsContent = styled.div`
 
     h4:not(:first-child) {
       margin-top: 20px;
+    }
+  }
+
+  .ObjectsContent__purposeHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    :hover {
+      cursor: pointer;
+    }
+    svg {
+      path {
+        stroke: #b8c6e3;
+      }
+    }
+  }
+
+  .PurposeOpen {
+    transition: 0.15s ease-in-out;
+    transform: rotate(-180deg);
+
+    svg {
     }
   }
 
