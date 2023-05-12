@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui";
 import { ArrowIcon, PlusIcon } from "@/icons";
+import cn from "classnames";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
-
 interface ApplicationProps {
   className?: string;
 }
@@ -32,43 +32,60 @@ const Application = ({ className }: ApplicationProps) => {
           />
           <h1>Хочу купить 3-х комнатную квартиру на Кипре</h1>
         </div>
-
-        <div className="Applications__headTabs">
-          <Button
-            onClick={() => handleSelect("application")}
-            active={selected === "application"}
-            tertiary
-          >
-            Заявка
-          </Button>
-          <Button
-            onClick={() => handleSelect("requests")}
-            active={selected === "requests"}
-            tertiary
-          >
-            Отклики
-          </Button>
-          <Button
-            onClick={() => handleSelect("performers")}
-            active={selected === "performers"}
-            tertiary
-          >
-            Исполнители
-          </Button>
-          <Button
-            onClick={() => handleSelect("refusals")}
-            active={selected === "refusals"}
-            tertiary
-          >
-            Отказы
-          </Button>
-          <Button
-            onClick={() => handleSelect("recommended")}
-            active={selected === "recommended"}
-            tertiary
-          >
-            Рекомендуемые
-          </Button>
+        <div className="Applications__headTabsContainer">
+          <div className="Applications__headTabs">
+            <Button
+              className={cn("", {
+                Applications__headTabButton: selected === "application",
+              })}
+              onClick={() => handleSelect("application")}
+              active={selected === "application"}
+              tertiary
+            >
+              Заявка
+            </Button>
+            <Button
+              className={cn("", {
+                Applications__headTabButton: selected === "requests",
+              })}
+              onClick={() => handleSelect("requests")}
+              active={selected === "requests"}
+              tertiary
+            >
+              Отклики
+            </Button>
+            <Button
+              className={cn("", {
+                Applications__headTabButton: selected === "performers",
+              })}
+              onClick={() => handleSelect("performers")}
+              active={selected === "performers"}
+              tertiary
+            >
+              Исполнители
+            </Button>
+            <Button
+              className={cn("", {
+                Applications__headTabButton: selected === "refusals",
+              })}
+              onClick={() => handleSelect("refusals")}
+              active={selected === "refusals"}
+              tertiary
+            >
+              Отказы
+            </Button>
+            <Button
+              className={cn("", {
+                Applications__headTabButton: selected === "recommended",
+              })}
+              onClick={() => handleSelect("recommended")}
+              active={selected === "recommended"}
+              tertiary
+            >
+              Рекомендуемые
+            </Button>
+          </div>
+          <div className="Applications__headTabsBar"></div>
         </div>
       </div>
       <div className="Application__body">
@@ -146,6 +163,19 @@ const StyledApplication = styled.section`
     }
   }
 
+  .Applications__headTabButton {
+    position: relative;
+    ::before {
+      position: absolute;
+      top: 35px;
+      content: "";
+      background: #4e6af3;
+      width: 100%;
+      height: 4px;
+      border-radius: 10px;
+    }
+  }
+
   .Application__body {
     padding-top: 100px;
     margin: 0 auto;
@@ -167,6 +197,14 @@ const StyledApplication = styled.section`
     path {
       stroke: #7786a5;
     }
+  }
+
+  .Applications__headTabsBar {
+    margin-top: 15px;
+    width: 100%;
+    background: #e1edfd;
+    height: 4px;
+    border-radius: 10px;
   }
 
   .Application__bottomContainer {

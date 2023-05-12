@@ -9,27 +9,22 @@ interface Props {
   disabled?: boolean;
   warning?: boolean;
   error?: boolean;
+  placeholder?: string;
+  options?: Array<string>;
 }
 
-const DropdownInput: FC<Props> = ({ className, disabled, warning, error }) => {
+const DropdownInput: FC<Props> = ({
+  className,
+  disabled,
+  warning,
+  error,
+  placeholder,
+  options = [],
+}) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const [selectOption, setSelectOption] = useState<string>("");
-  const options = () => {
-    return [
-      "Select 1",
-      "Select 2",
-      "Select 3",
-      "Select 4",
-      "Select 5",
-      "Select 6",
-      "Select 7",
-      "Select 8",
-      "Select 9",
-      "Select 10",
-      "Select 11",
-      "Select 12",
-    ];
-  };
+
+  const selectOptions = options.length ? options : ["Нет подходящих вариантов"];
 
   const toggleDropDown = () => {
     setShowDropDown(!showDropDown);
@@ -66,13 +61,13 @@ const DropdownInput: FC<Props> = ({ className, disabled, warning, error }) => {
         tabIndex={disabled ? -1 : undefined}
       >
         <div className="DropdownInput_selectLabel Text_16_24">
-          {selectOption ? selectOption : "Text"}
+          {selectOption ? selectOption : placeholder}
           <ArrowIcon />
         </div>
         {showDropDown && (
           <Dropdown
             className="DropdownInput_selectContainer"
-            options={options()}
+            options={selectOptions}
             showDropDown={false}
             toggleDropDown={(): void => toggleDropDown()}
             optionSelection={optionSelection}

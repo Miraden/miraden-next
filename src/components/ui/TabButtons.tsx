@@ -2,29 +2,39 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 type TabButtonsProps = {
-  tabs: { label: string; id: string }[];
+  tabs: { label: string; id: string; content?: React.ReactNode }[];
   defaultTabId: string;
+  onTabClick?: (tabId: string) => void;
+  className?: string;
 };
 
 type ButtonProps = {
   active: boolean;
 };
 
-const TabButtons: React.FC<TabButtonsProps> = ({ tabs, defaultTabId }) => {
+const TabButtons: React.FC<TabButtonsProps> = ({
+  tabs,
+  defaultTabId,
+  onTabClick,
+  className,
+}) => {
   const [activeTabId, setActiveTabId] = useState(defaultTabId);
 
   const handleTabClick = (tabId: string) => {
     setActiveTabId(tabId);
+    if (onTabClick) {
+      onTabClick(tabId);
+    }
   };
 
   const activeTab = tabs.find((tab) => tab.id === activeTabId);
 
   return (
-    <Container>
+    <Container className={className}>
       <Tabs>
         {tabs.map((tab) => (
           <Button
-            className="Font_16_20"
+            className="Font_16_20 TabButton"
             key={tab.id}
             onClick={() => handleTabClick(tab.id)}
             active={tab.id === activeTabId}
@@ -34,10 +44,7 @@ const TabButtons: React.FC<TabButtonsProps> = ({ tabs, defaultTabId }) => {
         ))}
       </Tabs>
 
-      <Content>
-        {activeTab === tabs[0] && <div>Контент 1</div>}
-        {activeTab === tabs[1] && <div>Контент 2</div>}
-      </Content>
+      <Content>{activeTab?.content}</Content>
     </Container>
   );
 };
@@ -47,7 +54,7 @@ const Container = styled.div``;
 const Tabs = styled.div`
   display: flex;
   box-shadow: 0 0 0 2px #e1edfd inset;
-  border-radius: 10px;
+  border-radius: 13px;
   max-width: 300px;
   width: 100%;
   padding: 4px;
@@ -56,7 +63,6 @@ const Tabs = styled.div`
 const Button = styled.button<ButtonProps>`
   transition: 0.2s ease;
 
-  box-shadow: ${(props) => (props.active ? "" : "0 0 0 2px #e1edfd inset")};
   width: 100%;
   padding: 10px 15px;
   border: none;

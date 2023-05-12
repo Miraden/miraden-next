@@ -14,6 +14,7 @@ interface RequestButtonProps {
   disabled?: boolean;
   active?: boolean;
   ranged?: boolean;
+  activeBlue?: boolean;
 }
 
 const RequestButton = ({
@@ -28,8 +29,10 @@ const RequestButton = ({
   ariaLabel,
   disabled,
   active,
+  activeBlue,
 }: RequestButtonProps) => {
   const [isActive, setIsActive] = useState(false);
+  const [isActiveBlue, setIsActiveBlue] = useState(false);
 
   const handleActive = () => {
     setIsActive(!isActive);
@@ -63,6 +66,7 @@ const RequestButton = ({
         Button_withoutLabel: !children,
         disabled: disabled,
         isActive: active,
+        isActiveBlue: activeBlue,
         ranged: ranged,
       })}
       type={type}
@@ -93,6 +97,17 @@ const StyledButton = styled.a`
     color: ${({ theme }) => theme.colors.white};
     :hover {
       background: #414d65 !important;
+    }
+  }
+
+  &.isActiveBlue {
+    background: #4e6af3 !important;
+    color: #fff !important;
+    box-shadow: 0 0 0 2px inset #4e6af3 !important;
+
+    :hover {
+      background: #3e56d0 !important;
+      box-shadow: 0 0 0 2px inset #3e56d0 !important;
     }
   }
 
