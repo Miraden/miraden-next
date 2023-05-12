@@ -62,7 +62,7 @@ const DropdownInput: FC<Props> = ({
       >
         <div className="DropdownInput_selectLabel Text_16_24">
           {selectOption ? selectOption : placeholder}
-          <ArrowIcon />
+          <ArrowIcon width={18} height={18} />
         </div>
         {showDropDown && (
           <Dropdown
@@ -86,7 +86,6 @@ const DropdownInput: FC<Props> = ({
 };
 
 const StyledDropdownInput = styled.div<Props>`
-  max-width: 300px;
   pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
 
   .Warning__message {

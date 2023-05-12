@@ -30,26 +30,26 @@ const TabButtons: React.FC<TabButtonsProps> = ({
   const activeTab = tabs.find((tab) => tab.id === activeTabId);
 
   return (
-    <Container className={className}>
-      <Tabs>
-        {tabs.map((tab) => (
-          <Button
-            className="Font_16_20 TabButton"
-            key={tab.id}
-            onClick={() => handleTabClick(tab.id)}
-            active={tab.id === activeTabId}
-          >
-            {tab.label}
-          </Button>
-        ))}
-      </Tabs>
+    <div className={className}>
+      <div className="TabButtons__container">
+        <Tabs>
+          {tabs.map((tab) => (
+            <Button
+              className="Font_16_20 TabButton"
+              key={tab.id}
+              onClick={() => handleTabClick(tab.id)}
+              active={tab.id === activeTabId}
+            >
+              {tab.label}
+            </Button>
+          ))}
+        </Tabs>
+      </div>
 
       <Content>{activeTab?.content}</Content>
-    </Container>
+    </div>
   );
 };
-
-const Container = styled.div``;
 
 const Tabs = styled.div`
   display: flex;

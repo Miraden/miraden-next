@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { Button } from "../Button";
 import { Checkbox } from "../CheckBox";
+import { CurrencySelect } from "../CurrencySelect/CurrencySelect";
 import { DropdownInput } from "../DropdownInput";
 import { NumberInput } from "../NumberInput";
 import { RequestButton } from "../RequestButton";
@@ -49,8 +50,9 @@ const ApplicationsFilter = ({ className, onClick }: FilterProps) => {
           <CrossIcon width={24} height={24} />
         </Button>
       </div>
-      <div className="ApplicationsFilter__tabs">
+      <div>
         <TabButtons
+          className="ApplicationsFilter__tabs"
           tabs={[
             { label: "Продавцы", id: "1", content: <SellerContent /> },
             { label: "Объекты", id: "2", content: <ObjectsContent /> },
@@ -90,7 +92,9 @@ const StyledApplicationsFilter = styled.div`
 
   .ApplicationsFilter__tabs {
     margin-top: 20px;
-    padding: 0px 30px;
+    .TabButtons__container {
+      padding: 0px 30px;
+    }
   }
 `;
 
@@ -98,19 +102,23 @@ const SellerContent = () => {
   return (
     <StyledSellerContent>
       <div className="SellerContent__status">
-        <h3 className="Font_16_140">Статус продавца</h3>
-        <Checkbox label="PRO аккаунт" />
-        <Checkbox label="Только с объектами" />
-        <Checkbox label="С проверенными документами" />
-        <Checkbox label="С рейтингом выше 4" />
+        <div className="ObjectsContent__wrapperContainer">
+          <h3 className="Font_16_140">Статус продавца</h3>
+          <Checkbox label="PRO аккаунт" />
+          <Checkbox label="Только с объектами" />
+          <Checkbox label="С проверенными документами" />
+          <Checkbox label="С рейтингом выше 4" />
+        </div>
       </div>
       <div className="SellerContent__type">
-        <h3 className="Font_16_140">Тип продавца</h3>
-        <Checkbox label="Клиент (ищу для себя)" />
-        <Checkbox label="Риелтор" />
-        <Checkbox label="Агентство недвижимости" />
-        <Checkbox label="Застройщик" />
-        <Checkbox label="Собственник" />
+        <div className="ObjectsContent__wrapperContainer">
+          <h3 className="Font_16_140">Тип продавца</h3>
+          <Checkbox label="Клиент (ищу для себя)" />
+          <Checkbox label="Риелтор" />
+          <Checkbox label="Агентство недвижимости" />
+          <Checkbox label="Застройщик" />
+          <Checkbox label="Собственник" />
+        </div>
       </div>
     </StyledSellerContent>
   );
@@ -125,16 +133,24 @@ const StyledSellerContent = styled.div`
     }
   }
 
+  .ObjectsContent__wrapperContainer {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
   .SellerContent__type {
     border-top: 1px solid #e1edfd;
     padding-top: 15px;
     margin-top: 14px;
+    padding-bottom: 15px;
 
     label {
       margin-top: 10px;
     }
   }
 `;
+
+const currency = ["Евро, €", "Доллар, $", "Фунт стерлингов, £", "Рубль, ₽"];
 
 const ObjectsContent = () => {
   const [priceToValue, setPriceToValue] = useState("");
@@ -263,38 +279,48 @@ const ObjectsContent = () => {
 
   return (
     <StyledObjectsContent>
-      <h3>Локация недвижимости</h3>
-      <DropdownInput
-        placeholder="Все страны"
-        options={["Турция", "Кипр", "Черногоря", "Северный Кипр"]}
-      />
-      <h3 className="Font_16_140">Цена в евро</h3>
-      <div className="ObjectsContent__price">
-        <NumberInput
-          label="От"
-          value={priceFromValue}
-          onChange={handlePriceFromValueChange}
+      <div className="ObjectsContent__wrapperContainer">
+        <h3 className="ObjectsContent__locations">Локация недвижимости</h3>
+        <DropdownInput
+          placeholder="Все страны"
+          options={["Турция", "Кипр", "Черногоря", "Северный Кипр"]}
         />
-        <NumberInput
-          label="До"
-          value={priceToValue}
-          onChange={handlePriceToValueChange}
-        />
+      </div>
+      <div className="ObjectsContent__wrapperContainer">
+        <h3 className="ObjectsContent__currency Font_16_140">
+          <span>Цена в </span>
+          <CurrencySelect options={currency} />
+        </h3>
+        <div className="ObjectsContent__price">
+          <NumberInput
+            label="От"
+            value={priceFromValue}
+            onChange={handlePriceFromValueChange}
+          />
+          <NumberInput
+            label="До"
+            value={priceToValue}
+            onChange={handlePriceToValueChange}
+          />
+        </div>
       </div>
       <div className="ObjectsContent__type">
-        <h3>Тип недвижимости</h3>
-        <TabButtons
-          className="ObjectsContent__tabs"
-          tabs={[
-            { label: "Вся", id: "1" },
-            { label: "Новая", id: "2" },
-            { label: "Вторичная", id: "3" },
-          ]}
-          defaultTabId="1"
-        />
+        <div className="ObjectsContent__wrapperContainer">
+          <h3>Тип недвижимости</h3>
+          <TabButtons
+            className="ObjectsContent__tabs"
+            tabs={[
+              { label: "Вся", id: "1" },
+              { label: "Новая", id: "2" },
+              { label: "Вторичная", id: "3" },
+            ]}
+            defaultTabId="1"
+          />
+        </div>
       </div>
+
       <div className="ObjectsContent__checkboxes">
-        <div>
+        <div className="ObjectsContent__wrapperContainer">
           <h4 className="Font_16_24">Жилая</h4>
           <Checkbox label="Квартира / апартаменты" />
           <Checkbox label="Дом / вилла" />
@@ -303,131 +329,145 @@ const ObjectsContent = () => {
           <Checkbox label="Дуплекс" />
           <Checkbox label="Участок земли" />
         </div>
-        <div className="ObjectsContent__commercial">
-          <h4 className="Font_16_24">Коммерческая</h4>
-          <Checkbox label="Офис" />
-          <Checkbox label="Гостиница" />
-          <Checkbox label="Магазин" />
-          <Checkbox label="Торговый центр" />
-          <Checkbox label="Склад" />
+        <div className="ObjectsContent__wrapperContainer">
+          <div className="ObjectsContent__commercial">
+            <h4 className="Font_16_24">Коммерческая</h4>
+            <Checkbox label="Офис" />
+            <Checkbox label="Гостиница" />
+            <Checkbox label="Магазин" />
+            <Checkbox label="Торговый центр" />
+            <Checkbox label="Склад" />
+          </div>
         </div>
-        <div className="ObjectsContent_year">
-          <h4>Год постройки</h4>
-          <div className="ObjectsContent__price">
-            <NumberInput
-              label="От"
-              value={yearFromValue}
-              onChange={handleYearFromValueChange}
-            />
-            <NumberInput
-              label="До"
-              value={yearToValue}
-              onChange={handleYearToValueChange}
-            />
+        <div className="ObjectsContent__wrapperContainer">
+          <div className="ObjectsContent_year">
+            <h4>Год постройки</h4>
+            <div className="ObjectsContent__price">
+              <NumberInput
+                label="От"
+                value={yearFromValue}
+                onChange={handleYearFromValueChange}
+              />
+              <NumberInput
+                label="До"
+                value={yearToValue}
+                onChange={handleYearToValueChange}
+              />
+            </div>
           </div>
         </div>
         <div className="ObjectsContent_allRooms">
-          <h4>Всего комнат</h4>
-          <ul className="ObjectsContent__buttons">
-            {allRooms.map((room, index) => (
-              <li key={index}>
-                <RequestButton
-                  onClick={() => handleSelectRooms(room.value)}
-                  activeBlue={selectedRoomsId === room.value}
-                >
-                  {room.label}
-                </RequestButton>
-              </li>
-            ))}
-          </ul>
+          <div className="ObjectsContent__wrapperContainer">
+            <h4>Всего комнат</h4>
+            <ul className="ObjectsContent__buttons">
+              {allRooms.map((room, index) => (
+                <li key={index}>
+                  <RequestButton
+                    onClick={() => handleSelectRooms(room.value)}
+                    activeBlue={selectedRoomsId === room.value}
+                  >
+                    {room.label}
+                  </RequestButton>
+                </li>
+              ))}
+            </ul>
+            <h4>Спален</h4>
+            <ul className="ObjectsContent__buttons">
+              {sleeps.map((sleep, index) => (
+                <li key={index}>
+                  <RequestButton
+                    onClick={() => handleSelectSleeps(sleep.value)}
+                    activeBlue={selectedSleepsId === sleep.value}
+                  >
+                    {sleep.label}
+                  </RequestButton>
+                </li>
+              ))}
+            </ul>
+            <h4>Санузлов</h4>
+            <ul className="ObjectsContent__buttons">
+              {baths.map((bath, index) => (
+                <li key={index}>
+                  <RequestButton
+                    onClick={() => handleSelectBaths(bath.value)}
+                    activeBlue={selectedBathsId === bath.value}
+                  >
+                    {bath.label}
+                  </RequestButton>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <h4>Спален</h4>
-        <ul className="ObjectsContent__buttons">
-          {sleeps.map((sleep, index) => (
-            <li key={index}>
-              <RequestButton
-                onClick={() => handleSelectSleeps(sleep.value)}
-                activeBlue={selectedSleepsId === sleep.value}
-              >
-                {sleep.label}
-              </RequestButton>
-            </li>
-          ))}
-        </ul>
-        <h4>Санузлов</h4>
-        <ul className="ObjectsContent__buttons">
-          {baths.map((bath, index) => (
-            <li key={index}>
-              <RequestButton
-                onClick={() => handleSelectBaths(bath.value)}
-                activeBlue={selectedBathsId === bath.value}
-              >
-                {bath.label}
-              </RequestButton>
-            </li>
-          ))}
-        </ul>
 
         <div className="ObjectsContent__squares">
-          <h4>Общая площадь</h4>
-          <div className="ObjectsContent__price">
-            <NumberInput
-              label="От"
-              value={fullSquareFromValue}
-              onChange={handleFullSquareFromValueChange}
-            />
-            <NumberInput
-              label="До"
-              value={fullSquareToValue}
-              onChange={handleFullSquareToValueChange}
-            />
-          </div>
-          <h4>Жилая</h4>
-          <div className="ObjectsContent__price">
-            <NumberInput
-              label="От"
-              value={livingSquareFromValue}
-              onChange={handleLivingSquareFromValueChange}
-            />
-            <NumberInput
-              label="До"
-              value={livingSquareToValue}
-              onChange={handleLivingSquareToValueChange}
-            />
-          </div>
-          <h4>Участок земли</h4>
-          <div className="ObjectsContent__price">
-            <NumberInput
-              label="От"
-              value={landSquareFromValue}
-              onChange={handleLandSquareFromValueChange}
-            />
-            <NumberInput
-              label="До"
-              value={landSquareToValue}
-              onChange={handleLandSquareToValueChange}
-            />
+          <div className="ObjectsContent__wrapperContainer">
+            <h4>Общая площадь</h4>
+            <div className="ObjectsContent__price">
+              <NumberInput
+                label="От"
+                value={fullSquareFromValue}
+                onChange={handleFullSquareFromValueChange}
+              />
+              <NumberInput
+                label="До"
+                value={fullSquareToValue}
+                onChange={handleFullSquareToValueChange}
+              />
+            </div>
+            <h4>Жилая</h4>
+            <div className="ObjectsContent__price">
+              <NumberInput
+                label="От"
+                value={livingSquareFromValue}
+                onChange={handleLivingSquareFromValueChange}
+              />
+              <NumberInput
+                label="До"
+                value={livingSquareToValue}
+                onChange={handleLivingSquareToValueChange}
+              />
+            </div>
+            <h4>Участок земли</h4>
+            <div className="ObjectsContent__price">
+              <NumberInput
+                label="От"
+                value={landSquareFromValue}
+                onChange={handleLandSquareFromValueChange}
+              />
+              <NumberInput
+                label="До"
+                value={landSquareToValue}
+                onChange={handleLandSquareToValueChange}
+              />
+            </div>
           </div>
         </div>
         <div className="ObjectsContent__purpose">
-          <h4 className="Font_16_140">Назначение</h4>
-          <Checkbox label="Для проживания" />
-          <Checkbox label="Для сезонного отдыха" />
-          <Checkbox label="Для инвестиций (сдавать)" />
-          <Checkbox label="Для инвестиций (перепродать)" />
-          <Checkbox label="Для ВНЖ / ПМЖ" />
-          <Checkbox label="Для гражданства" />
+          <div className="ObjectsContent__wrapperContainer">
+            <h4 className="Font_16_140">Назначение</h4>
+            <Checkbox label="Для проживания" />
+            <Checkbox label="Для сезонного отдыха" />
+            <Checkbox label="Для инвестиций (сдавать)" />
+            <Checkbox label="Для инвестиций (перепродать)" />
+            <Checkbox label="Для ВНЖ / ПМЖ" />
+            <Checkbox label="Для гражданства" />
+          </div>
         </div>
         <div className="ObjectsContent__status">
-          <h4 className="Font_16_140">Статус продавца</h4>
-          <Checkbox label="Клиент (ищу для себя)" />
-          <Checkbox label="Риелтор" />
-          <Checkbox label="Агентство недвижимости" />
-          <Checkbox label="Застройщик" />
-          <Checkbox label="Собственник" />
+          <div className="ObjectsContent__wrapperContainer">
+            <h4 className="Font_16_140">Статус продавца</h4>
+            <Checkbox label="Клиент (ищу для себя)" />
+            <Checkbox label="Риелтор" />
+            <Checkbox label="Агентство недвижимости" />
+            <Checkbox label="Застройщик" />
+            <Checkbox label="Собственник" />
+          </div>
         </div>
         <div className="ObjectsContent__onlyPro">
-          <Checkbox label="Только PRO" />
+          <div className="ObjectsContent__wrapperContainer">
+            <Checkbox label="Только PRO" />
+          </div>
         </div>
       </div>
     </StyledObjectsContent>
@@ -437,6 +477,19 @@ const ObjectsContent = () => {
 const StyledObjectsContent = styled.div`
   margin-top: 10px;
 
+  .ObjectsContent__wrapperContainer {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .ObjectsContent__locations {
+    margin-bottom: 10px;
+  }
+
+  .ObjectsContent__currency {
+    display: flex;
+    padding-top: 15px;
+  }
   .ObjectsContent__pricing {
     .DropdownInput_select {
       box-shadow: none !important;
@@ -445,6 +498,7 @@ const StyledObjectsContent = styled.div`
 
   .ObjectsContent__price {
     display: flex;
+    margin-top: 10px;
     div:not(:first-child) {
       margin-left: 10px;
     }
@@ -454,6 +508,10 @@ const StyledObjectsContent = styled.div`
     padding-top: 15px;
     margin-top: 14px;
     border-top: 1px solid #e1edfd;
+
+    .TabButtons__container {
+      padding: 0;
+    }
   }
 
   .ObjectsContent__tabs {
@@ -481,6 +539,10 @@ const StyledObjectsContent = styled.div`
     }
   }
 
+  .ObjectsContent__onlyPro {
+    padding-bottom: 20px;
+  }
+
   .ObjectsContent_allRooms {
     padding-top: 15px;
     margin-top: 14px;
@@ -498,13 +560,16 @@ const StyledObjectsContent = styled.div`
 
   .ObjectsContent__buttons {
     display: flex;
+    li {
+      margin-top: 10px;
+    }
     button {
       background: #fff;
       padding: 10px 15.5px;
       box-shadow: 0 0 0 2px inset #e1edfd;
     }
 
-    button:not(:first-child) {
+    li:not(:first-child) {
       margin-left: 10px;
     }
   }
