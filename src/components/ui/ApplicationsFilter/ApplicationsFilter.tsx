@@ -13,6 +13,33 @@ interface FilterProps {
   onClick?: any;
 }
 
+const allRooms = [
+  { label: "1", value: 1 },
+  { label: "2", value: 2 },
+  { label: "3", value: 3 },
+  { label: "4", value: 4 },
+  { label: "5", value: 5 },
+  { label: "6+", value: 6 },
+];
+
+const sleeps = [
+  { label: "1", value: 1 },
+  { label: "2", value: 2 },
+  { label: "3", value: 3 },
+  { label: "4", value: 4 },
+  { label: "5", value: 5 },
+  { label: "6+", value: 6 },
+];
+
+const baths = [
+  { label: "1", value: 1 },
+  { label: "2", value: 2 },
+  { label: "3", value: 3 },
+  { label: "4", value: 4 },
+  { label: "5", value: 5 },
+  { label: "6+", value: 6 },
+];
+
 const ApplicationsFilter = ({ className, onClick }: FilterProps) => {
   return (
     <StyledApplicationsFilter className={className}>
@@ -110,29 +137,127 @@ const StyledSellerContent = styled.div`
 `;
 
 const ObjectsContent = () => {
-  const [toValue, setToValue] = useState("");
-  const [fromValue, setFromValue] = useState("");
-  const [selected, setSelected] = useState(false);
+  const [priceToValue, setPriceToValue] = useState("");
+  const [priceFromValue, setPriceFromValue] = useState("");
+  const [yearToValue, setYearToValue] = useState("");
+  const [yearFromValue, setYearFromValue] = useState("");
+  const [fullSquareToValue, setFullSquareToValue] = useState("");
+  const [fullSquareFromValue, setFullSquareFromValue] = useState("");
+  const [livingSquareToValue, setLivingSquareToValue] = useState("");
+  const [livingSquareFromValue, setLivingSquareFromValue] = useState("");
+  const [landSquareToValue, setLandSquareToValue] = useState("");
+  const [landSquareFromValue, setLandSquareFromValue] = useState("");
+  const [selectedRoomsId, setSelectedRoomsId] = useState(null);
+  const [selectedBathsId, setSelectedBathsId] = useState(null);
+  const [selectedSleepsId, setSelectedSleepsId] = useState(null);
 
-  const handleSelect = useCallback(() => {
-    setSelected(!selected);
-  }, [selected]);
+  const handleSelectRooms = useCallback(
+    (id: any) => {
+      setSelectedRoomsId(id === selectedRoomsId ? null : id);
+    },
+    [selectedRoomsId]
+  );
+  const handleSelectBaths = useCallback(
+    (id: any) => {
+      setSelectedBathsId(id === selectedBathsId ? null : id);
+    },
+    [selectedBathsId]
+  );
 
-  const handleFromValueChange = (
+  const handleSelectSleeps = useCallback(
+    (id: any) => {
+      setSelectedSleepsId(id === selectedSleepsId ? null : id);
+    },
+    [selectedSleepsId]
+  );
+
+  const handlePriceFromValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputFromValue = event.target.value;
-    if (/^\d*$/.test(inputFromValue)) {
-      // проверка вводимых символов
-      setFromValue(inputFromValue);
+    const inputPriceFromValue = event.target.value;
+    if (/^\d*$/.test(inputPriceFromValue)) {
+      setPriceFromValue(inputPriceFromValue);
     }
   };
 
-  const handleToValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputToValue = event.target.value;
-    if (/^\d*$/.test(inputToValue)) {
-      // проверка вводимых символов
-      setToValue(inputToValue);
+  const handlePriceToValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputPriceToValue = event.target.value;
+    if (/^\d*$/.test(inputPriceToValue)) {
+      setPriceToValue(inputPriceToValue);
+    }
+  };
+
+  const handleYearFromValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputYearFromValue = event.target.value;
+    if (/^\d*$/.test(inputYearFromValue)) {
+      setYearFromValue(inputYearFromValue);
+    }
+  };
+
+  const handleYearToValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputYearToValue = event.target.value;
+    if (/^\d*$/.test(inputYearToValue)) {
+      setYearToValue(inputYearToValue);
+    }
+  };
+
+  const handleFullSquareFromValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputFullSquareFromValue = event.target.value;
+    if (/^\d*$/.test(inputFullSquareFromValue)) {
+      setFullSquareFromValue(inputFullSquareFromValue);
+    }
+  };
+
+  const handleFullSquareToValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputFullSquareToValue = event.target.value;
+    if (/^\d*$/.test(inputFullSquareToValue)) {
+      setFullSquareToValue(inputFullSquareToValue);
+    }
+  };
+
+  const handleLivingSquareFromValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputLivingSquareFromValue = event.target.value;
+    if (/^\d*$/.test(inputLivingSquareFromValue)) {
+      setLivingSquareFromValue(inputLivingSquareFromValue);
+    }
+  };
+
+  const handleLivingSquareToValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputLivingSquareToValue = event.target.value;
+    if (/^\d*$/.test(inputLivingSquareToValue)) {
+      setLivingSquareToValue(inputLivingSquareToValue);
+    }
+  };
+
+  const handleLandSquareFromValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputLandSquareFromValue = event.target.value;
+    if (/^\d*$/.test(inputLandSquareFromValue)) {
+      setLandSquareFromValue(inputLandSquareFromValue);
+    }
+  };
+
+  const handleLandSquareToValueChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const inputLandSquareToValue = event.target.value;
+    if (/^\d*$/.test(inputLandSquareToValue)) {
+      setLandSquareToValue(inputLandSquareToValue);
     }
   };
 
@@ -147,13 +272,13 @@ const ObjectsContent = () => {
       <div className="ObjectsContent__price">
         <NumberInput
           label="От"
-          value={fromValue}
-          onChange={handleFromValueChange}
+          value={priceFromValue}
+          onChange={handlePriceFromValueChange}
         />
         <NumberInput
           label="До"
-          value={toValue}
-          onChange={handleToValueChange}
+          value={priceToValue}
+          onChange={handlePriceToValueChange}
         />
       </div>
       <div className="ObjectsContent__type">
@@ -191,123 +316,96 @@ const ObjectsContent = () => {
           <div className="ObjectsContent__price">
             <NumberInput
               label="От"
-              value={fromValue}
-              onChange={handleFromValueChange}
+              value={yearFromValue}
+              onChange={handleYearFromValueChange}
             />
             <NumberInput
               label="До"
-              value={toValue}
-              onChange={handleToValueChange}
+              value={yearToValue}
+              onChange={handleYearToValueChange}
             />
           </div>
         </div>
         <div className="ObjectsContent_allRooms">
           <h4>Всего комнат</h4>
-          <div className="ObjectsContent__buttons">
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              1
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              2
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              3
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              4
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              5
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              6+
-            </RequestButton>
-          </div>
+          <ul className="ObjectsContent__buttons">
+            {allRooms.map((room, index) => (
+              <li key={index}>
+                <RequestButton
+                  onClick={() => handleSelectRooms(room.value)}
+                  activeBlue={selectedRoomsId === room.value}
+                >
+                  {room.label}
+                </RequestButton>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="ObjectsContent__sleeps">
-          <h4>Спален</h4>
-          <div className="ObjectsContent__buttons">
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              1
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              2
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              3
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              4
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              5
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              6+
-            </RequestButton>
-          </div>
-        </div>
-        <div className="ObjectsContent__baths">
-          <h4>Санузлов</h4>
-          <div className="ObjectsContent__buttons">
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              1
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              2
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              3
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              4
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              5
-            </RequestButton>
-            <RequestButton onClick={handleSelect} activeBlue={selected}>
-              6+
-            </RequestButton>
-          </div>
-        </div>
+        <h4>Спален</h4>
+        <ul className="ObjectsContent__buttons">
+          {sleeps.map((sleep, index) => (
+            <li key={index}>
+              <RequestButton
+                onClick={() => handleSelectSleeps(sleep.value)}
+                activeBlue={selectedSleepsId === sleep.value}
+              >
+                {sleep.label}
+              </RequestButton>
+            </li>
+          ))}
+        </ul>
+        <h4>Санузлов</h4>
+        <ul className="ObjectsContent__buttons">
+          {baths.map((bath, index) => (
+            <li key={index}>
+              <RequestButton
+                onClick={() => handleSelectBaths(bath.value)}
+                activeBlue={selectedBathsId === bath.value}
+              >
+                {bath.label}
+              </RequestButton>
+            </li>
+          ))}
+        </ul>
+
         <div className="ObjectsContent__squares">
           <h4>Общая площадь</h4>
           <div className="ObjectsContent__price">
             <NumberInput
               label="От"
-              value={fromValue}
-              onChange={handleFromValueChange}
+              value={fullSquareFromValue}
+              onChange={handleFullSquareFromValueChange}
             />
             <NumberInput
               label="До"
-              value={toValue}
-              onChange={handleToValueChange}
+              value={fullSquareToValue}
+              onChange={handleFullSquareToValueChange}
             />
           </div>
           <h4>Жилая</h4>
           <div className="ObjectsContent__price">
             <NumberInput
               label="От"
-              value={fromValue}
-              onChange={handleFromValueChange}
+              value={livingSquareFromValue}
+              onChange={handleLivingSquareFromValueChange}
             />
             <NumberInput
               label="До"
-              value={toValue}
-              onChange={handleToValueChange}
+              value={livingSquareToValue}
+              onChange={handleLivingSquareToValueChange}
             />
           </div>
           <h4>Участок земли</h4>
           <div className="ObjectsContent__price">
             <NumberInput
               label="От"
-              value={fromValue}
-              onChange={handleFromValueChange}
+              value={landSquareFromValue}
+              onChange={handleLandSquareFromValueChange}
             />
             <NumberInput
               label="До"
-              value={toValue}
-              onChange={handleToValueChange}
+              value={landSquareToValue}
+              onChange={handleLandSquareToValueChange}
             />
           </div>
         </div>
