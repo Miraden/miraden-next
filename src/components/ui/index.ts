@@ -13,6 +13,7 @@ export { RequestButton } from "./RequestButton";
 export { Search } from "./Search";
 export { Sticker } from "./Sticker";
 export { TabButtons } from "./TabButtons";
+export { Tag } from "./Tag";
 export { TextAreaInput } from "./TextAreaInput";
 export { ToggleButton } from "./ToggleButton";
 export { Tooltip } from "./Tooltip/Tooltip";

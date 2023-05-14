@@ -3,22 +3,19 @@ import { Application } from "./Application/Application";
 
 const ApplicationsLayout = () => {
   return (
-    <StyledApplicationsLayout>
+    <StyledApplicationsLayout className="Container">
       <Application className="Application" />
     </StyledApplicationsLayout>
   );
 };
 
 const StyledApplicationsLayout = styled.div`
-  min-height: 100%;
-  max-width: 870px;
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(9, 1fr);
+  grid-template-columns: repeat(12, 1fr);
   grid-gap: 30px;
 
   .Application {
-    grid-column: 1 / span 9;
+    grid-column: 2 / span 10;
   }
 `;
 

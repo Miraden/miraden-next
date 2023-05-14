@@ -6,6 +6,7 @@ import cn from "classnames";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
+import { ObjectCard } from "./components/ObjectCard";
 import { SellerCard } from "./components/SellerCard";
 interface ApplicationProps {
   className?: string;
@@ -62,6 +63,72 @@ const applicationsArray = [
     status: "Собственник",
     isOnline: false,
     unreadMessages: 0,
+  },
+];
+
+const objectsArray = [
+  {
+    title: "3-х комнатная квартира на Кипре для ВНЖ",
+    location: "Северный Кипр",
+    id: "1445",
+    cashBack: 6,
+    yieldCount: 8,
+    year: "2022",
+    square: "294",
+    rooms: 10,
+    sleeps: 6,
+    baths: 2,
+    price: "158 000",
+    status: "Собственник",
+    name: "Анастасия Петрова",
+    image: "/images/avatar.jpg",
+    isBooked: false,
+    isUnpublished: false,
+    image1: "/images/img.jpg",
+    image2: "/images/img.jpg",
+    image3: "/images/img.jpg",
+  },
+  {
+    title: "3-х комнатная квартира на Кипре для ВНЖ",
+    location: "Северный Кипр",
+    id: "1445",
+    cashBack: 6,
+    yieldCount: 8,
+    year: "2022",
+    square: "294",
+    rooms: 10,
+    sleeps: 6,
+    baths: 2,
+    price: "158 000",
+    status: "Собственник",
+    name: "Анастасия Петрова",
+    image: "/images/avatar.jpg",
+    isBooked: true,
+    isUnpublished: false,
+    image1: "/images/img.jpg",
+    image2: "/images/img.jpg",
+    image3: "/images/img.jpg",
+  },
+  {
+    title: "3-х комнатная квартира на Кипре для ВНЖ",
+    location: "Северный Кипр",
+    id: "1445",
+    cashBack: 6,
+    yieldCount: 8,
+    year: "2022",
+    square: "294",
+    rooms: 10,
+    sleeps: 6,
+    baths: 2,
+    price: "158 000",
+    status: "Собственник",
+    name: "Анастасия Петрова",
+    image: "/images/avatar.jpg",
+    isBooked: false,
+    isUnpublished: true,
+    image1: "/images/img.jpg",
+    image2: "/images/img.jpg",
+    image3: "/images/img.jpg",
   },
 ];
 
@@ -182,6 +249,35 @@ const Application = ({ className }: ApplicationProps) => {
                 agencyName={appItem.agencyName}
                 isOnline={appItem.isOnline}
                 unreadMessages={appItem.unreadMessages}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+      {selectedContent === "2" && (
+        <ul className="Applications__list">
+          {objectsArray.map((object, index) => (
+            <li key={index}>
+              <ObjectCard
+                title={object.title}
+                location={object.location}
+                id={object.id}
+                cashBack={object.cashBack}
+                year={object.year}
+                yieldCount={object.yieldCount}
+                sleeps={object.sleeps}
+                square={object.square}
+                rooms={object.rooms}
+                baths={object.baths}
+                price={object.price}
+                isBooked={object.isBooked}
+                isUnpublished={object.isUnpublished}
+                name={object.name}
+                status={object.status}
+                image1={object.image1}
+                image2={object.image2}
+                image3={object.image3}
+                image={object.image}
               />
             </li>
           ))}
