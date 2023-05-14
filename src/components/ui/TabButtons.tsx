@@ -6,6 +6,7 @@ type TabButtonsProps = {
   defaultTabId: string;
   onTabClick?: (tabId: string) => void;
   className?: string;
+  selectedTab?: any;
 };
 
 type ButtonProps = {
@@ -17,6 +18,7 @@ const TabButtons: React.FC<TabButtonsProps> = ({
   defaultTabId,
   onTabClick,
   className,
+  selectedTab,
 }) => {
   const [activeTabId, setActiveTabId] = useState(defaultTabId);
 

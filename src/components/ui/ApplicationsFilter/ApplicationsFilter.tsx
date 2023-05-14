@@ -12,6 +12,7 @@ import { TabButtons } from "../TabButtons";
 interface FilterProps {
   className?: string;
   onClick?: any;
+  onTabClick?: any;
 }
 
 const allRooms = [
@@ -41,7 +42,11 @@ const baths = [
   { label: "6+", value: 6 },
 ];
 
-const ApplicationsFilter = ({ className, onClick }: FilterProps) => {
+const ApplicationsFilter = ({
+  className,
+  onClick,
+  onTabClick,
+}: FilterProps) => {
   return (
     <StyledApplicationsFilter className={className}>
       <div className="ApplicationsFilter__head">
@@ -58,6 +63,7 @@ const ApplicationsFilter = ({ className, onClick }: FilterProps) => {
             { label: "Объекты", id: "2", content: <ObjectsContent /> },
           ]}
           defaultTabId={"1"}
+          onTabClick={onTabClick}
         />
       </div>
     </StyledApplicationsFilter>
@@ -706,9 +712,13 @@ const StyledObjectsContent = styled.div`
   }
 
   .ObjectsContent_allRooms {
-    padding-top: 15px;
+    padding-top: 5px;
     margin-top: 14px;
     border-top: 1px solid #e1edfd;
+
+    h4 {
+      padding-top: 10px;
+    }
   }
 
   .ObjectsContent__sleeps,

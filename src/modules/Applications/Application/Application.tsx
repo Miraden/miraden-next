@@ -6,6 +6,7 @@ import cn from "classnames";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
+import { SellerCard } from "./components/SellerCard";
 interface ApplicationProps {
   className?: string;
 }
@@ -17,9 +18,58 @@ type Option =
   | "refusals"
   | "recommended";
 
+const applicationsArray = [
+  {
+    name: "Ангелина Синичкина",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    rating: 4.8,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "HomeSweet",
+    isOnline: true,
+    unreadMessages: 0,
+  },
+  {
+    name: "Андрей Макеев",
+    type: "seller",
+    isVerified: true,
+    isPro: false,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "Realhome",
+    isOnline: false,
+    unreadMessages: 1,
+  },
+  {
+    name: "Валентина Антонова",
+    type: "object",
+    isVerified: true,
+    isPro: false,
+    rating: 5.0,
+    image: "/images/avatar.jpg",
+    status: "Риелтор",
+    isOnline: false,
+    unreadMessages: 0,
+  },
+  {
+    name: "Константин Гриндин",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    image: "/images/avatar.jpg",
+    status: "Собственник",
+    isOnline: false,
+    unreadMessages: 0,
+  },
+];
+
 const Application = ({ className }: ApplicationProps) => {
   const [selected, setSelected] = useState<Option | null>(null);
   const [showFilter, setShowFilter] = useState(false);
+
+  const [selectedContent, setSelectedContent] = useState("");
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
@@ -28,6 +78,12 @@ const Application = ({ className }: ApplicationProps) => {
   const handleShowFilter = useCallback(() => {
     setShowFilter(!showFilter);
   }, [showFilter]);
+
+  const handleTabClick = (tabId: string) => {
+    setSelectedContent(tabId);
+
+    console.log(tabId);
+  };
 
   return (
     <StyledApplication className={className}>
@@ -105,6 +161,33 @@ const Application = ({ className }: ApplicationProps) => {
           onClick={handleShowFilter}
         />
       </div>
+      {showFilter && (
+        <ApplicationsFilter
+          onTabClick={handleTabClick}
+          className="Applications__filter"
+          onClick={handleShowFilter}
+        />
+      )}
+      {selectedContent === "1" && (
+        <ul className="Applications__list">
+          {applicationsArray.map((appItem, index) => (
+            <li key={index}>
+              <SellerCard
+                name={appItem.name}
+                isPro={appItem.isPro}
+                isVerified={appItem.isVerified}
+                rating={appItem.rating}
+                image={appItem.image}
+                status={appItem.status}
+                agencyName={appItem.agencyName}
+                isOnline={appItem.isOnline}
+                unreadMessages={appItem.unreadMessages}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+
       <div className="Application__body">
         <Image src="/images/application.svg" alt="" width={150} height={120} />
         <h2>Вы отлично справились!</h2>
@@ -113,48 +196,6 @@ const Application = ({ className }: ApplicationProps) => {
           вы можете посмотреть Рекомендуемое
         </p>
       </div>
-
-      {/* <div className="Application__bottomContainer">
-        <div className="Application__bottomTabs">
-          <Button
-            onClick={() => handleSelect("requests")}
-            active={selected === "requests"}
-            tertiary
-          >
-            Лента
-          </Button>
-          <Button
-            onClick={() => handleSelect("performers")}
-            active={selected === "performers"}
-            tertiary
-          >
-            Мои заявки
-          </Button>
-          <div className="PlusIcon__container">
-            <PlusIcon />
-          </div>
-          <Button
-            onClick={() => handleSelect("refusals")}
-            active={selected === "refusals"}
-            tertiary
-          >
-            Объекты
-          </Button>
-          <Button
-            onClick={() => handleSelect("recommended")}
-            active={selected === "recommended"}
-            tertiary
-          >
-            Ещё
-          </Button>
-        </div>
-      </div> */}
-      {showFilter && (
-        <ApplicationsFilter
-          className="Applications__filter"
-          onClick={handleShowFilter}
-        />
-      )}
     </StyledApplication>
   );
 };
@@ -225,6 +266,13 @@ const StyledApplication = styled.section`
     }
 
     p {
+      margin-top: 10px;
+    }
+  }
+
+  .Applications__list {
+    margin-top: 20px;
+    li:not(:first-child) {
       margin-top: 10px;
     }
   }

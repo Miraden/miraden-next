@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "label": "Test1",
+    "type": "seller",
+    "pro": true,
+    "rate": 4,
+    "withObjects": true,
+    "withCheckedDocs": true,
+    "object": {
+      "location": "",
+      "price": "",
+      "type": "new",
+      "": ""
+    }
+  }
+]

@@ -9,8 +9,8 @@ const PlusIcon: FC<SVGAttributes<SVGElement>> = (props) => {
       {...props}
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M5.668 12a1 1 0 0 1 1-1h4.333V6.667a1 1 0 1 1 2 0V11h4.334a1 1 0 1 1 0 2H13v4.334a1 1 0 1 1-2 0V13H6.668a1 1 0 0 1-1-1Z"
         fill="#fff"
       />
