@@ -87,6 +87,9 @@ const objectsArray = [
     image1: "/images/img.jpg",
     image2: "/images/img.jpg",
     image3: "/images/img.jpg",
+    firstInstallment: "34 000 $",
+    singleCost: "1 200 $",
+    firstInstallmentPercent: "30 %",
   },
   {
     title: "3-х комнатная квартира на Кипре для ВНЖ",
@@ -108,6 +111,9 @@ const objectsArray = [
     image1: "/images/img.jpg",
     image2: "/images/img.jpg",
     image3: "/images/img.jpg",
+    firstInstallment: "34 000 $",
+    singleCost: "1 200 $",
+    firstInstallmentPercent: "30 %",
   },
   {
     title: "3-х комнатная квартира на Кипре для ВНЖ",
@@ -129,6 +135,9 @@ const objectsArray = [
     image1: "/images/img.jpg",
     image2: "/images/img.jpg",
     image3: "/images/img.jpg",
+    firstInstallment: "34 000 $",
+    singleCost: "1 200 $",
+    firstInstallmentPercent: "30 %",
   },
 ];
 
@@ -278,6 +287,9 @@ const Application = ({ className }: ApplicationProps) => {
                 image2={object.image2}
                 image3={object.image3}
                 image={object.image}
+                firstInstallment={object.firstInstallment}
+                firstInstallmentPercent={object.firstInstallmentPercent}
+                singleCost={object.singleCost}
               />
             </li>
           ))}

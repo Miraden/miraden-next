@@ -1,4 +1,5 @@
 import { Button, Tag } from "@/components/ui";
+import { PricingSelect } from "@/components/ui/PricingDropdown/PricingSelect";
 import {
   BathsIcon,
   BuildYearIcon,
@@ -36,8 +37,13 @@ interface ObjectCardProps {
   image2?: any;
   image3?: any;
   agencyName?: string;
+  firstInstallment?: string;
+  firstInstallmentPercent?: string;
+  yieldCountPercent?: number;
+  singleCost?: string;
 }
 
+const currencyOptions = ["€", "$", "£", "₽"];
 const ObjectCard = ({
   className,
   title,
@@ -60,6 +66,9 @@ const ObjectCard = ({
   image3,
   year,
   agencyName,
+  firstInstallment,
+  firstInstallmentPercent,
+  singleCost,
 }: ObjectCardProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -170,7 +179,17 @@ const ObjectCard = ({
             </p>
           </div>
           <div className="ObjectCard__footer">
-            <p className="Color_blue_primary Font_20_120_700">{price}</p>
+            <p className="Color_blue_primary Font_20_120_700">
+              <PricingSelect
+                options={currencyOptions}
+                price={price}
+                yieldCount={yieldCount}
+                yieldCountPercent={yieldCount}
+                firstInstallment={firstInstallment}
+                firstInstallmentPercent={firstInstallmentPercent}
+                singleCost={singleCost}
+              />
+            </p>
             <div className="ObjectCard__footerPerson">
               <div>
                 <p className="Font_14_140">{name}</p>
@@ -195,6 +214,7 @@ const StyledObjectCard = styled.div`
   }
 
   .ObjectCard__unpublishedContainer {
+    min-width: 400px;
     position: relative;
     border-radius: 10px;
     overflow: hidden;
@@ -220,15 +240,16 @@ const StyledObjectCard = styled.div`
 
   .ObjectCard__mainImages {
     display: flex;
+    min-width: 400px;
     img {
       border-radius: 10px;
     }
-    div {
+    .Image2 {
       margin-left: 10px;
-
-      .Image3 {
-        margin-top: 10px;
-      }
+    }
+    .Image3 {
+      margin-left: 10px;
+      margin-top: 10px;
     }
   }
 
@@ -248,6 +269,7 @@ const StyledObjectCard = styled.div`
 
   .ObjectCard__info {
     margin-left: 20px;
+    width: 100%;
   }
 
   .ObjectCard__head {
@@ -259,6 +281,13 @@ const StyledObjectCard = styled.div`
 
   .ObjectCard__button {
     padding: 2px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+
+    :hover {
+      background: #f1f7ff;
+    }
   }
 
   .ObjectCard__location {
