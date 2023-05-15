@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui";
 import { CrossIcon, TelegramIcon, WhatsappIcon } from "@/icons";
 import styled from "styled-components";
 
@@ -22,9 +23,13 @@ const TechSupport = ({
         </div>
         <div className="TechSupport__head">
           <h2 className="Font_32_120">Поддержка</h2>
-          <button onClick={onClose}>
+          <Button
+            tertiary
+            onClick={onClose}
+            className="TechSupport__closeButton"
+          >
             <CrossIcon width={24} height={24} className="CrossIcon" />
-          </button>
+          </Button>
         </div>
         <div className="TechSupport__body">
           <p className="Font_16_24">
@@ -82,12 +87,28 @@ const StyledTechSupport = styled.div`
   }
 
   .TechSupport__head {
-    padding: 30px 30px 18px 30px;
+    padding: 15px 15px 18px 30px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     page-break-after: 18px;
     border-bottom: 2px solid #f1f7ff;
+
+    h2 {
+      margin-top: 15px;
+    }
+  }
+
+  .TechSupport__closeButton {
+    padding: 3px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    :hover {
+      background: #f1f7ff;
+    }
+    :active {
+      background: #e1edfd;
+    }
   }
 
   .CrossIcon {
@@ -118,11 +139,17 @@ const StyledTechSupport = styled.div`
     }
 
     :hover {
-      background: #e1edfd;
+      background: #f1f7ff;
+    }
 
-      span {
-        color: #4e6af3;
-      }
+    :focus {
+      outline: none;
+      box-shadow: 0 0 0 2px inset #f845fc;
+    }
+
+    :active {
+      background: #cfe2fc;
+      box-shadow: none;
     }
   }
 

@@ -133,16 +133,28 @@ const PassRecover2 = ({ className, onChange }: Props) => {
             />
           </div>
           <div className="Reg__countdown">
-            <p className="Color_text_disabled">Отправить код ещё раз через </p>
-            <div className="Color_blue_primary">
-              (
-              {`${minutes.toString().padStart(2, "0")}:${seconds
-                .toString()
-                .padStart(2, "0")}`}
-              )
-            </div>
+            {secondsRemaining === 0 ? (
+              <>
+                <a href="" className="Color_text_disabled">
+                  Отправить код ещё раз
+                </a>
+              </>
+            ) : (
+              <>
+                <p className="Color_text_disabled">
+                  Отправить код ещё раз через 
+                </p>
+                <div className="Color_blue_primary">
+                  (
+                  {`${minutes.toString().padStart(2, "0")}:${seconds
+                    .toString()
+                    .padStart(2, "0")}`}
+                  )
+                </div>
+              </>
+            )}
           </div>
-          <Link href="" className="Reg__changeNumber">
+          <Link href="/customer/pass-recover-1" className="Reg__changeNumber">
             Изменить электронную почту
           </Link>
         </div>
@@ -152,7 +164,7 @@ const PassRecover2 = ({ className, onChange }: Props) => {
           <div className="Reg__footerBack">
             <Button
               secondary
-              href="/customer/reg-1"
+              href="/customer/pass-recover-1"
               className="Reg__goBackButton"
             >
               Назад
@@ -168,7 +180,7 @@ const PassRecover2 = ({ className, onChange }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 2
               </span>
-              <span className="Font_16_140">/ 2</span>
+              <span className="Font_16_140 Color_text_grey">/ 2</span>
             </div>
           </div>
           <Button disabled={!valid}>Далее</Button>
@@ -188,11 +200,22 @@ const DigitInput = styled.input`
   border: none;
   box-shadow: 0 0 0 2px inset #e1edfd;
   border-radius: 10px;
+  margin-top: 40px;
+
+  :focus {
+    outline: none;
+    box-shadow: 0 0 0 2px inset #4e6af3;
+  }
+
+  @media (max-width: 576px) {
+    margin-top: 10px;
+  }
 `;
 
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
@@ -202,19 +225,26 @@ const StyledRegStep1 = styled.section`
     display: flex;
     flex-wrap: wrap;
     padding: 5px 30px;
+    transition: 0.15s ease;
     background: #f1f7ff;
     button {
+      transition: 0.15s ease;
       text-decoration: underline;
       padding: 0;
+    }
+
+    button:hover {
+      transition: 0.15s ease;
+
+      text-decoration: none;
     }
   }
 
   .Reg__options {
-    padding-top: 41px;
-    padding-bottom: 174px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 388px;
     max-width: 370px;
     width: 100%;
     text-align: center;
@@ -283,8 +313,9 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 960px) {
+    margin-top: 10px;
     .Reg__options {
-      height: 797px;
+      height: 777px;
       button {
         max-width: unset;
         width: 100%;
@@ -295,15 +326,15 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
     .Reg__head {
       padding: 20px;
     }
 
     .Reg__options {
-      padding: 38px 20px;
       display: flex;
       flex-direction: column;
-      height: 566px;
+      height: 520px;
 
       span {
         text-align: start;

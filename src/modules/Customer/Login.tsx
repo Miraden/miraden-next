@@ -30,13 +30,14 @@ const Login = ({ className }: Props) => {
           </h1>
         </div>
         <div className="Reg__link Color_blue_primary">
-          <span>Если у вас ещё нет своего аккаунта, тогда </span>
+          <span>Если у вас ещё нет своего аккаунта, тогда  </span>
           <Link underlined href="/customer/reg-1">
             зарегистрируйтесь
           </Link>
         </div>
         <div className="Reg__options">
           <TextInput
+            className="Reg__email"
             label="Электронная почта "
             values={email}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -45,14 +46,17 @@ const Login = ({ className }: Props) => {
           />
           <TextInput
             label="Пароль "
-            className="Reg__email"
+            className="Reg__password"
             values={password}
             onChange={
               (event: React.ChangeEvent<HTMLInputElement>) =>
                 setPassword(event.target.value) // Update the password state
             }
           />
-          <Link href="" className="Font_12_16 Reg__restorePass">
+          <Link
+            href="/customer/pass-recover-1"
+            className="Font_12_16 Reg__restorePass"
+          >
             Забыли пароль?
           </Link>
         </div>
@@ -103,8 +107,7 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__options {
-    padding-top: 41px;
-    padding-bottom: 117px;
+    height: 388px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -127,6 +130,10 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__email {
+    margin-top: 40px;
+  }
+
+  .Reg__password {
     margin-top: 20px;
     margin-bottom: 8px;
   }
@@ -134,6 +141,10 @@ const StyledRegStep1 = styled.section`
   .Reg__restorePass {
     width: 100%;
     text-align: right;
+
+    a:focus {
+      outline: none;
+    }
   }
 
   .Reg__progressBar {

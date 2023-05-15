@@ -1,4 +1,5 @@
 import cn from "classnames";
+import { useMemo } from "react";
 import styled from "styled-components";
 
 interface RadioProps {
@@ -12,19 +13,26 @@ interface RadioProps {
     >
   ) => void;
 }
-
 const Radio = ({ value, disabled, error, checked, onChange }: RadioProps) => {
+  const inputId = useMemo(() => Math.random().toString(36).substr(2, 9), []);
+
+  const handleMouseDown = (event: any) => {
+    event.preventDefault();
+  };
+
   return (
     <StyledRadio>
       <input
         type="radio"
+        id={inputId}
         className={cn("Radio__input", { Radio__input_error: error })}
         onChange={onChange}
         checked={checked}
         tabIndex={0}
         disabled={disabled}
+        onMouseDown={handleMouseDown}
       />
-      <Label className="Font_16_24" htmlFor="">
+      <Label className="Font_16_24" htmlFor={inputId}>
         {value}
       </Label>
     </StyledRadio>
@@ -41,7 +49,7 @@ const StyledRadio = styled.div`
     margin: 0;
     width: 20px;
     height: 20px;
-    border: 3px solid #c7d2e9;
+    border: 2px solid #c7d2e9;
     border-radius: 50%;
     transition: 0.15s ease;
     outline: none;
@@ -138,6 +146,7 @@ const StyledRadio = styled.div`
 export const RadioButton = styled.input``;
 
 export const Label = styled.label<{ disabled?: boolean }>`
+  cursor: pointer;
   margin-left: 10px;
 `;
 export { Radio };

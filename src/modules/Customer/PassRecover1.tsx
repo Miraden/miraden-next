@@ -11,15 +11,16 @@ interface Props {
 const PassRecover1 = ({ className }: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [valid, setValid] = useState(true);
 
   useEffect(() => {
-    if (email && password) {
+    if (email && password && newPassword) {
       setValid(false);
     } else {
       setValid(true);
     }
-  }, [email, password]);
+  }, [email, password, newPassword]);
 
   return (
     <StyledRegStep1 className={className}>
@@ -36,6 +37,7 @@ const PassRecover1 = ({ className }: Props) => {
         </div>
         <div className="Reg__options">
           <TextInput
+            className="Reg__emailInput"
             label="Электронная почта "
             values={email}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -54,10 +56,10 @@ const PassRecover1 = ({ className }: Props) => {
           <TextInput
             label="Повторите пароль "
             className="Reg__passInput"
-            values={password}
+            values={newPassword}
             onChange={
               (event: React.ChangeEvent<HTMLInputElement>) =>
-                setPassword(event.target.value) // Update the password state
+                setNewPassword(event.target.value) // Update the password state
             }
           />
         </div>
@@ -77,7 +79,7 @@ const PassRecover1 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 1
               </span>
-              <span className="Font_16_140">/ 2</span>
+              <span className="Font_16_140 Color_text_grey">/ 2</span>
             </div>
             <Button
               secondary
@@ -86,7 +88,7 @@ const PassRecover1 = ({ className }: Props) => {
               className="Reg__goBackButtonMobile"
             ></Button>
           </div>
-          <Button disabled={valid} href="customer/pass-recover-2">
+          <Button disabled={valid} href="/customer/pass-recover-2">
             Далее
           </Button>
         </div>
@@ -98,6 +100,7 @@ const PassRecover1 = ({ className }: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
@@ -114,8 +117,7 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__options {
-    padding-top: 41px;
-    padding-bottom: 125px;
+    height: 388px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -135,6 +137,10 @@ const StyledRegStep1 = styled.section`
     a:hover {
       text-decoration: underline;
     }
+  }
+
+  .Reg__emailInput {
+    margin-top: 41px;
   }
 
   .Reg__passInput {

@@ -89,13 +89,12 @@ const StyledSortDropdown = styled.div`
     }
 
     div:hover {
-      color: #4e6af3;
       background: #f1f7ff;
     }
 
     .SortDropdown__menuItem {
       display: flex;
-      padding: 10px 15px;
+      padding: 10px 50px 10px 15px;
       align-items: center;
       width: 100%;
 

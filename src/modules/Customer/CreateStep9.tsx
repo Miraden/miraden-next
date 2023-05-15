@@ -24,10 +24,18 @@ const CreateStep9 = ({ className }: Props) => {
   const [selected, setSelected] = useState<Option | null>(currencyOptions[0]);
 
   const [showAllOptions, setShowAllOptions] = useState(false);
+  const [maxVisible, setMaxVisible] = useState(4);
 
   const [fromValue, setFromValue] = useState("");
   const [toValue, setToValue] = useState("");
 
+  const handleShowMore = useCallback(() => {
+    setShowAllOptions(true);
+  }, []);
+
+  const handleShowLess = useCallback(() => {
+    setShowAllOptions(false);
+  }, []);
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
   }, []);
@@ -63,7 +71,7 @@ const CreateStep9 = ({ className }: Props) => {
             {currencyOptions.slice(0, 4).map((option) => (
               <RequestButton
                 key={option}
-                onClick={() => handleSelect(option)}
+                onClick={handleShowMore}
                 active={selected === option}
               >
                 {option}
@@ -82,9 +90,17 @@ const CreateStep9 = ({ className }: Props) => {
             {!showAllOptions && (
               <RequestButton
                 className="Reg__showMoreButton"
-                onClick={() => setShowAllOptions(true)}
+                onClick={handleShowMore}
               >
                 Ещё {currencyOptions.length - 4}
+              </RequestButton>
+            )}
+            {showAllOptions && (
+              <RequestButton
+                className="Reg__showMoreButton"
+                onClick={handleShowLess}
+              >
+                Скрыть {currencyOptions.length - 4}
               </RequestButton>
             )}
           </div>
@@ -123,7 +139,7 @@ const CreateStep9 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 9
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140 Color_text_grey">/ 11</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">
@@ -164,8 +180,7 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__selectContainer {
-    height: 416px;
-    overflow-y: scroll;
+    height: 414px;
   }
 
   .Reg__options {

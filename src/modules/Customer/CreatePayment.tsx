@@ -45,6 +45,7 @@ const CreatePayment = ({ className }: Props) => {
   const selectedOptions = paymentOptions.filter(
     (option, index) => activeButtons[index]
   );
+
   const totalTax = selectedOptions.reduce((acc, option) => acc + option.tax, 0);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -75,6 +76,7 @@ const CreatePayment = ({ className }: Props) => {
           {paymentOptions.map((option, index) => (
             <li key={index}>
               <CreatePaymentButton
+                onChange={() => handleActive(index)}
                 onClick={() => handleActive(index)}
                 buttonTitle={option.buttonTitle}
                 buttonText={option.buttonText}
@@ -83,6 +85,13 @@ const CreatePayment = ({ className }: Props) => {
               />
             </li>
           ))}
+          {isOpen && (
+            <PayForm
+              onClose={handleCloseMenu}
+              totalTax={totalTax}
+              testCost={activeButtons.findIndex}
+            />
+          )}
         </ul>
         <div className="Reg__progressBar"></div>
         <div className="Reg__footer">
@@ -111,7 +120,6 @@ const CreatePayment = ({ className }: Props) => {
 
             <Button onClick={handleOpenMenu}>Оплатить {totalTax} €</Button>
           </div>
-          {isOpen && <PayForm onClose={handleCloseMenu} />}
         </div>
       </div>
     </StyledRegStep1>
@@ -139,7 +147,7 @@ const StyledRegStep1 = styled.section`
     max-width: 840px;
     padding: 41px 30px 0 30px;
     height: 386px;
-    overflow-y: scroll;
+    overflow: scroll;
 
     li:not(:first-child) {
       margin-top: 20px;

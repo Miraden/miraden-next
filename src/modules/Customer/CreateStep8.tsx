@@ -14,6 +14,12 @@ const CreateStep8 = ({ className }: Props) => {
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
+
+    let url = "/customer/create-step-9";
+
+    if (url) {
+      window.location.href = url;
+    }
   }, []);
 
   return (
@@ -85,7 +91,7 @@ const CreateStep8 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 8
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140 Color_text_grey">/ 11</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">

@@ -25,7 +25,7 @@ const PricingSelect: FC<Props> = ({
   singleCost,
   yieldCountPercent,
 }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(true);
+  const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const [selectOption, setSelectOption] = useState<string>("");
   const [selectedOption, setSelectedOption] = useState<string>("");
 
@@ -48,6 +48,8 @@ const PricingSelect: FC<Props> = ({
     setSelectOption(option);
   };
 
+  console.log(selectedOption);
+
   return (
     <StyledDropdownInput className={cn({ className })} options={options}>
       <button
@@ -60,13 +62,13 @@ const PricingSelect: FC<Props> = ({
         }
       >
         <div className="DropdownInput_selectLabel Color_blue_primary">
-          {selectedOption ? price + selectedOption : price}
+          {price + selectedOption ? price + selectedOption : price}
           <ArrowIcon />
         </div>
         {showDropDown && (
           <PricingDropdown
             className="DropdownInput_selectContainer"
-            selectedOption={selectOption + price}
+            selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
             optionSelection={optionSelection}
             showDropDown={true}

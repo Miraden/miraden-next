@@ -157,8 +157,6 @@ const Application = ({ className }: ApplicationProps) => {
 
   const handleTabClick = (tabId: string) => {
     setSelectedContent(tabId);
-
-    console.log(tabId);
   };
 
   return (

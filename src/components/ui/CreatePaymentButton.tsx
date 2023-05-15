@@ -36,7 +36,7 @@ const CreatePaymentButton = ({
       })}
     >
       <div className="Button__container">
-        <Checkbox onChange={onChange} checked={active} />
+        <Checkbox onChange={onChange} onClick={onClick} checked={active} />
         {buttonTitle && (
           <div className="[ Button__label ]">
             {tax && (

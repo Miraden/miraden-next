@@ -20,7 +20,7 @@ export default function TooltipPage() {
         <h1 className="Font_52_120">Тултипы</h1>
         <StyledIcons>
           <div>
-            <TooltipComponent text="Hover" />
+            <TooltipComponent trigger="Hover" />
           </div>
         </StyledIcons>
       </main>

@@ -92,6 +92,12 @@ const CreateStep4 = ({ className }: Props) => {
     setMaxVisibleMonths(64);
   }, []);
 
+  const handleShowLess = useCallback(() => {
+    setShowMore(false);
+    setMaxVisibleMonths(18);
+    setShowAllYears(false);
+  }, []);
+
   const years = [];
   const currentYear = new Date().getFullYear();
   const minYear = currentYear - 50;
@@ -177,6 +183,15 @@ const CreateStep4 = ({ className }: Props) => {
                     Ещё {maxVisibleMonths}
                   </RequestButton>
                 )}
+
+                {maxVisibleMonths >= 64 && (
+                  <RequestButton
+                    onClick={handleShowLess}
+                    className="Color_blue_primary"
+                  >
+                    Скрыть
+                  </RequestButton>
+                )}
               </div>
             </div>
           )}
@@ -192,13 +207,22 @@ const CreateStep4 = ({ className }: Props) => {
                   >
                     {year}
                   </RequestButton>
-                ))}{" "}
+                ))}
                 {!showAllYears && years.length > 10 && (
                   <RequestButton
                     onClick={handleShowAllYears}
                     className="Color_blue_primary"
                   >
-                    Еще {visibleYears.length}
+                    Еще {years.length}
+                  </RequestButton>
+                )}
+
+                {showAllYears && (
+                  <RequestButton
+                    onClick={handleShowLess}
+                    className="Color_blue_primary"
+                  >
+                    Скрыть
                   </RequestButton>
                 )}
               </div>
@@ -227,7 +251,7 @@ const CreateStep4 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 4
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140 Color_text_grey">/ 11</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">
@@ -268,13 +292,12 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__options {
-    padding: 41px 30px 0 30px;
+    padding: 21px 10px 0 10px;
     display: flex;
     flex-wrap: wrap;
-    margin-left: -20px;
-    margin-top: -20px;
     align-content: start;
-    height: 449px;
+    height: 416px;
+    overflow: scroll;
 
     button {
       justify-content: flex-start;
@@ -290,18 +313,14 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__monthsContainer {
-    padding: 30px 30px 0 30px;
+    padding: 50px 30px 0 20px;
   }
 
   .Reg__months {
-    margin-top: 15px;
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 10px;
     align-content: flex-start;
-    height: 206px;
-    overflow-y: scroll;
-
     margin-left: -10px;
     button {
       padding: 10px 20px;
@@ -309,9 +328,6 @@ const StyledRegStep1 = styled.section`
       margin-left: 10px;
       margin-top: 10px;
     }
-  }
-
-  .Reg__years {
   }
 
   .Reg__progressBar {
@@ -375,17 +391,8 @@ const StyledRegStep1 = styled.section`
   @media (max-width: 960px) {
     margin-top: 10px;
     .Reg__options {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-auto-rows: max-content;
-      grid-gap: 20px;
-      margin-left: 0;
-      margin-top: 0;
       button {
-        max-width: unset;
-        width: 100%;
-        margin-left: 0;
-        margin-top: 0;
+        max-width: 338px;
       }
     }
 
@@ -409,11 +416,11 @@ const StyledRegStep1 = styled.section`
     }
 
     .Reg__options {
-      padding: 38px 20px;
+      padding: 8px 20px 0 0;
       display: flex;
-      flex-direction: column;
-      grid-gap: 12px;
+      /* flex-direction: column; */
       button {
+        margin-top: 12px;
       }
     }
 

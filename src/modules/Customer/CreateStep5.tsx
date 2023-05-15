@@ -1,4 +1,5 @@
 import { Button, RequestButton } from "@/components/ui";
+import { TooltipComponent } from "@/components/ui/Tooltip/MyComponent";
 import { ArrowIcon } from "@/icons";
 import { InfoIconGrey } from "@/icons/InfoIconGrey";
 import { SetStateAction, useCallback, useState } from "react";
@@ -73,6 +74,11 @@ const CreateStep5 = ({ className }: Props) => {
     setMaxVisibleSquare(64);
   }, []);
 
+  const handleShowLess = useCallback(() => {
+    setShowMore(false);
+    setMaxVisibleSquare(18);
+  }, []);
+
   const squares = [];
   for (let square = 10; square <= 800; square += 10) {
     squares.push(square);
@@ -142,6 +148,11 @@ const CreateStep5 = ({ className }: Props) => {
     setMaxVisibleLivingSquare(64);
   }, []);
 
+  const handleShowLessLiving = useCallback(() => {
+    setShowMoreLiving(false);
+    setMaxVisibleLivingSquare(18);
+  }, []);
+
   const livingSquares = [];
   for (let livingSquare = 10; livingSquare <= 800; livingSquare += 10) {
     livingSquares.push(livingSquare);
@@ -194,12 +205,24 @@ const CreateStep5 = ({ className }: Props) => {
                   Ещё {squares.length - maxVisibleSquare}
                 </RequestButton>
               )}
+              {maxVisibleSquare >= 64 && (
+                <RequestButton
+                  onClick={handleShowLess}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Скрыть
+                </RequestButton>
+              )}
             </div>
           </div>
           <div className="Reg__squareContainer">
             <div className="Reg__squareHead">
               <h2 className="Font_20_120 sm:Font_18_120_500">Жилая площадь</h2>
-              <InfoIconGrey />
+              <TooltipComponent
+                className="Tooltip"
+                trigger={<InfoIconGrey />}
+                text="В жилую площадь не входят кухни, санузлы, коридоры, балконы и прочие подобные помещения"
+              />
             </div>
             <div className="Reg__square">
               <RequestButton
@@ -242,6 +265,14 @@ const CreateStep5 = ({ className }: Props) => {
                   Ещё {livingSquares.length - maxVisibleLivingSquare}
                 </RequestButton>
               )}
+              {maxVisibleLivingSquare >= 64 && (
+                <RequestButton
+                  onClick={handleShowLessLiving}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Скрыть
+                </RequestButton>
+              )}
             </div>
           </div>
         </div>
@@ -266,7 +297,7 @@ const CreateStep5 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 5
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140 Color_text_grey">/ 11</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">
@@ -301,12 +332,12 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__selectContainer {
-    height: 496px;
+    height: 416px;
     overflow-y: scroll;
   }
 
   .Reg__squareContainer {
-    padding: 30px 30px 0 30px;
+    padding: 30px 30px 10px 30px;
   }
 
   .Reg__squareHead {
@@ -314,9 +345,13 @@ const StyledRegStep1 = styled.section`
     align-items: center;
     margin-bottom: 25px;
 
-    svg {
-      margin-left: 10px;
+    h2 {
+      margin-right: 10px;
     }
+  }
+
+  .Tooltip {
+    height: 18px;
   }
 
   .Reg__square {

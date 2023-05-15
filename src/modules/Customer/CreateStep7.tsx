@@ -76,7 +76,7 @@ const CreateStep7 = ({ className }: Props) => {
           <div className="Reg__footerBack">
             <Button
               secondary
-              href="/customer/create-step-1"
+              href="/customer/create-step-6"
               className="Reg__goBackButton"
             >
               Назад
@@ -92,7 +92,7 @@ const CreateStep7 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 7
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140 Color_text_grey">/ 11</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">

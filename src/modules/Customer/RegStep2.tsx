@@ -112,7 +112,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__options {
     padding-top: 41px;
-    height: 386px;
+    height: 388px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -131,6 +131,15 @@ const StyledRegStep1 = styled.section`
 
     a:hover {
       text-decoration: underline;
+    }
+
+    input {
+      cursor: text;
+
+      :focus {
+        outline: none;
+        box-shadow: 0 0 0 2px inset #4e6af3;
+      }
     }
   }
 

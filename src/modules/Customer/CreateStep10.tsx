@@ -190,7 +190,7 @@ const CreateStep10 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 10
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140 Color_text_grey">/ 11</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">
@@ -221,7 +221,6 @@ const StyledRegStep1 = styled.section`
   .Reg__selectContainer {
     height: 416px;
     padding: 40px 30px 0 30px;
-    overflow-y: scroll;
   }
 
   .Reg__options {

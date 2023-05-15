@@ -13,6 +13,7 @@ interface FilterProps {
   className?: string;
   onClick?: any;
   onTabClick?: any;
+  onChange?: any;
 }
 
 const allRooms = [
@@ -46,6 +47,7 @@ const ApplicationsFilter = ({
   className,
   onClick,
   onTabClick,
+  onChange,
 }: FilterProps) => {
   return (
     <StyledApplicationsFilter className={className}>
@@ -107,16 +109,20 @@ const StyledApplicationsFilter = styled.div`
   }
 `;
 
-const SellerContent = () => {
+interface SellerProps {
+  onChange?: any;
+}
+
+const SellerContent = ({ onChange }: SellerProps) => {
   return (
     <StyledSellerContent>
       <div className="SellerContent__status">
         <div className="ObjectsContent__wrapperContainer">
           <h3 className="Font_16_140">Статус продавца</h3>
-          <Checkbox label="PRO аккаунт" />
-          <Checkbox label="Только с объектами" />
-          <Checkbox label="С проверенными документами" />
-          <Checkbox label="С рейтингом выше 4" />
+          <Checkbox label="PRO аккаунт" onChange={onChange} />
+          <Checkbox label="Только с объектами" onChange={onChange} />
+          <Checkbox label="С проверенными документами" onChange={onChange} />
+          <Checkbox label="С рейтингом выше 4" onChange={onChange} />
         </div>
       </div>
       <div className="SellerContent__type">

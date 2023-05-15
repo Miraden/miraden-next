@@ -176,7 +176,7 @@ const CreateStep3 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 3
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140 Color_text_grey">/ 11</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">
@@ -244,7 +244,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__radioButtons {
     padding-left: 30px;
-    margin-top: 42px;
+    margin-top: 38px;
     margin-left: -30px;
     display: flex;
     align-items: center;
@@ -260,7 +260,7 @@ const StyledRegStep1 = styled.section`
     flex-wrap: wrap;
     margin-left: -20px;
     margin-top: -20px;
-    height: 352px;
+    height: 374px;
     align-content: flex-start;
     overflow-y: scroll;
 

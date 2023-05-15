@@ -71,6 +71,11 @@ const CreateStep6 = ({ className }: Props) => {
     setMaxVisibleRooms(18);
   }, []);
 
+  const handleShowLess = useCallback(() => {
+    setShowMore(false);
+    setMaxVisibleRooms(8);
+  }, []);
+
   const rooms = [];
   for (let room = 1; room <= 18; room++) {
     rooms.push(room);
@@ -130,6 +135,11 @@ const CreateStep6 = ({ className }: Props) => {
   const handleShowMoreSleep = useCallback(() => {
     setShowMoreSleep(true);
     setMaxVisibleSleep(16);
+  }, []);
+
+  const handleShowLessSleep = useCallback(() => {
+    setShowMoreSleep(false);
+    setMaxVisibleSleep(6);
   }, []);
 
   const sleeps = [];
@@ -195,6 +205,11 @@ const CreateStep6 = ({ className }: Props) => {
     setMaxVisibleBaths(16);
   }, []);
 
+  const handleShowLessBaths = useCallback(() => {
+    setShowMoreBaths(false);
+    setMaxVisibleBaths(6);
+  }, []);
+
   const baths = [];
   for (let bath = 1; bath <= 16; bath++) {
     baths.push(bath);
@@ -246,6 +261,14 @@ const CreateStep6 = ({ className }: Props) => {
                   Ещё {rooms.length - maxVisibleRooms}
                 </RequestButton>
               )}
+              {maxVisibleRooms >= 18 && (
+                <RequestButton
+                  onClick={handleShowLess}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Скрыть
+                </RequestButton>
+              )}
             </div>
           </div>
 
@@ -283,6 +306,14 @@ const CreateStep6 = ({ className }: Props) => {
                   Ещё {sleeps.length - maxVisibleSleep}
                 </RequestButton>
               )}
+              {maxVisibleSleep >= 16 && (
+                <RequestButton
+                  onClick={handleShowLessSleep}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Скрыть
+                </RequestButton>
+              )}
             </div>
           </div>
 
@@ -318,6 +349,14 @@ const CreateStep6 = ({ className }: Props) => {
                   Ещё {baths.length - maxVisibleBaths}
                 </RequestButton>
               )}
+              {maxVisibleBaths >= 16 && (
+                <RequestButton
+                  onClick={handleShowLessBaths}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Скрыть
+                </RequestButton>
+              )}
             </div>
           </div>
         </div>
@@ -343,7 +382,7 @@ const CreateStep6 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 6
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140 Color_text_grey">/ 11</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">

@@ -23,7 +23,10 @@ const RegStep3 = ({ className }: Props) => {
             <span className="Color_blue_primary">info@miraden.com</span>{" "}
             отправлен пароль
           </span>
-          <Link href="/" className="Reg__changeEmail Font_14_16">
+          <Link
+            href="/customer/reg-step-2"
+            className="Reg__changeEmail Font_14_16"
+          >
             Изменить электронную почту
           </Link>
         </div>
@@ -96,6 +99,10 @@ const StyledRegStep1 = styled.section`
 
   .Reg__changeEmail {
     margin-top: 40px;
+
+    a:focus {
+      outline: none;
+    }
   }
 
   .Reg__progressBar {

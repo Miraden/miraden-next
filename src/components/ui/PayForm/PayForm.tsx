@@ -5,9 +5,11 @@ import { PayFormContent } from "./PayFormContent";
 interface PayFormProps {
   className?: string;
   onClose?: any;
+  testCost?: any;
+  totalTax?: any;
 }
 
-const PayForm = ({ className, onClose }: PayFormProps) => {
+const PayForm = ({ className, onClose, testCost, totalTax }: PayFormProps) => {
   return (
     <StyledPayForm className={className}>
       <div className="PayForm">
@@ -17,7 +19,7 @@ const PayForm = ({ className, onClose }: PayFormProps) => {
             <CrossIcon width={24} height={24} className="CrossIcon" />
           </button>
         </div>
-        <PayFormContent />
+        <PayFormContent testCost={testCost} totalTax={totalTax} />
       </div>
     </StyledPayForm>
   );
@@ -40,7 +42,7 @@ const StyledPayForm = styled.div`
     top: 0;
     position: absolute;
     z-index: 21;
-    max-width: 390px;
+    width: 390px;
   }
 
   .PayForm__head {

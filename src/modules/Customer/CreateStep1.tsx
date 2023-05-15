@@ -3,7 +3,6 @@ import { ArrowIcon, CrossIcon, MapIcon, SearchIcon } from "@/icons";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { MapContainer } from "./MapContainer";
-
 interface Props {
   className?: string;
 }
@@ -181,18 +180,22 @@ const SearchReg = ({ options, onClick }: SearchProps) => {
   const handleRemoveResults = useCallback(() => {
     setSearchText("");
   }, []);
+  const [isFocused, setIsFocused] = useState(false);
+
+  const [isOpenMap, setIsOpenMap] = useState(false);
 
   return (
     <SearchRegContainer>
-      <SearchIcon className="Search__searchIcon" />
-      <div className="Search__container">
+      <div className={`Search__container ${isFocused ? "focused" : ""}`}>
+        <SearchIcon className="Search__searchIcon" />
         <SearchInput
           type="text"
           placeholder="Укажите город"
           value={searchText}
           onChange={handleSearchInputChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
         />
-
         {searchText && (
           <CrossIcon
             className="Search__crossIcon"
@@ -206,11 +209,10 @@ const SearchReg = ({ options, onClick }: SearchProps) => {
           <p>На карте</p>
         </button>
       </div>
-
       {showDropdown && (
         <SearchDropdown>
           {Object.keys(filteredOptions).map((optionKey) => (
-            <SearchOptionGroup key={optionKey} className="Font_16_24">
+            <SearchOptionGroup key={optionKey} className="Font_14_16">
               <SearchOptionList>
                 {filteredOptions[optionKey].cities.map((city) => (
                   <SearchOptionLocal
@@ -241,7 +243,7 @@ const CreateStep1 = ({ className }: Props) => {
   const [selected, setSelected] = useState<Option | null>(null);
   const [showAllCities, setShowAllCities] = useState(false);
   const [selectedCity, setSelectedCity] = useState<string | null>(null);
-  const [numCitiesToShow, setNumCitiesToShow] = useState<number>(5); // шаг 1
+  const [numCitiesToShow, setNumCitiesToShow] = useState<number>(5);
   const [allCitiesActive, setAllCitiesActive] = useState(false);
 
   const [openMap, setOpenMap] = useState(false);
@@ -252,8 +254,8 @@ const CreateStep1 = ({ className }: Props) => {
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
-    setSelectedCity(null); // очистить выбранный город
-    setShowAllCities(false); // сбросить флаг
+    setSelectedCity(null);
+    setShowAllCities(false);
     setNumCitiesToShow(5);
   }, []);
 
@@ -266,12 +268,12 @@ const CreateStep1 = ({ className }: Props) => {
     setNumCitiesToShow((prev) => {
       const option = cityMap[selected as Option];
       return option ? option.cities.length : prev;
-    }); // показать все города
+    });
   }, [selected]);
 
   const handleHideExtraCities = useCallback(() => {
     setShowAllCities(false);
-    setNumCitiesToShow(5); // показать только первые 5 городов
+    setNumCitiesToShow(5);
   }, []);
 
   return (
@@ -298,12 +300,11 @@ const CreateStep1 = ({ className }: Props) => {
                 </RequestButton>
               ))}
             </div>
-
             <div className="Reg__citiesContainer">
-              <h2 className="Font_20_120 sm:Font_18_120_500">Город</h2>
-              <div className="Reg__cities">
-                {selected && (
-                  <>
+              {selected && (
+                <>
+                  <h2 className="Font_20_120 sm:Font_18_120_500">Город</h2>
+                  <div className="Reg__cities">
                     <RequestButton
                       onClick={() => {
                         setSelectedCity(null);
@@ -337,13 +338,16 @@ const CreateStep1 = ({ className }: Props) => {
                         </RequestButton>
                       )}
                     {showAllCities && (
-                      <RequestButton onClick={handleHideExtraCities}>
+                      <RequestButton
+                        onClick={handleHideExtraCities}
+                        className="Color_blue_primary"
+                      >
                         Скрыть
                       </RequestButton>
                     )}
-                  </>
-                )}
-              </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         )}
@@ -370,7 +374,7 @@ const CreateStep1 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 1
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140 Color_text_grey">/ 11</span>
             </div>
           </div>
           <Button
@@ -403,21 +407,20 @@ const StyledCreateStep1 = styled.section`
 
   .Reg__options {
     padding: 41px 30px 0 30px;
-    height: 362px;
+    height: 356px;
   }
 
   .Reg__optionsList {
     display: flex;
     flex-wrap: wrap;
-    margin-left: -20px;
-    margin-top: -20px;
-    overflow-y: scroll;
+    margin-left: -10px;
+    margin-top: -10px;
 
     button {
       justify-content: flex-start;
       width: fit-content;
-      margin-left: 20px;
-      margin-top: 20px;
+      margin-left: 10px;
+      margin-top: 10px;
       padding: 10px 20px;
 
       span {
@@ -433,16 +436,16 @@ const StyledCreateStep1 = styled.section`
   .Reg__cities {
     margin-top: 15px;
     padding: 15px 30px 155px 0;
-    margin-left: -20px;
-    margin-top: -20px;
+    margin-left: -10px;
+    margin-top: -10px;
     display: flex;
     flex-wrap: wrap;
 
     button {
       justify-content: flex-start;
       width: fit-content !important;
-      margin-left: 20px;
-      margin-top: 20px;
+      margin-left: 10px;
+      margin-top: 10px;
       padding: 10px 20px;
 
       span {
@@ -571,10 +574,9 @@ const Option = styled.div`
 
 const SearchRegContainer = styled.div`
   position: relative;
-
   border-top: 2px solid #f1f7ff;
   border-bottom: 2px solid #f1f7ff;
-  padding: 10px 21px;
+  padding: 10px 6px 10px 21px;
 
   .Search__searchIcon {
     position: absolute;
@@ -585,14 +587,23 @@ const SearchRegContainer = styled.div`
     z-index: 21;
   }
 
+  .Search__container.focused .Search__searchIcon {
+    path {
+      fill: #4e6af3 !important;
+    }
+  }
+
   .Search__container {
     display: flex;
   }
 
   .Search__crossIcon {
     position: absolute;
-    right: 160px;
+    right: 200px;
     top: 20px;
+    :hover {
+      cursor: pointer;
+    }
     path {
       fill: #7786a5;
     }
@@ -608,6 +619,17 @@ const SearchRegContainer = styled.div`
       line-height: 20px;
       color: #7786a5;
     }
+
+    :hover {
+      p {
+        color: #4e6af3;
+      }
+      svg {
+        path {
+          fill: #4e6af3;
+        }
+      }
+    }
   }
 `;
 
@@ -615,9 +637,18 @@ const SearchInput = styled.input`
   width: 100%;
   font-size: 16px;
   border: none;
-  margin-left: 20px;
+  margin-left: 30px;
   outline: none;
-  color: #7786a5;
+
+  ::placeholder {
+    color: #7786a5;
+  }
+
+  :focus {
+    .Search__searchIcon {
+      border: 1px solid #000;
+    }
+  }
 `;
 
 const SearchDropdown = styled.div`
@@ -637,14 +668,14 @@ const SearchDropdown = styled.div`
 `;
 
 const SearchOptionGroup = styled.div`
-  padding-left: 30px;
+  padding-left: 22px;
 `;
 
 const SearchOptionList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
-  color: #7786a5;
+  color: #b8c6e3;
   mark {
     color: #2a344a;
     background: transparent;

@@ -177,12 +177,13 @@ const StyledTextInputInput = styled.input`
   border: none;
   box-shadow: 0 0 0 2px #e1edfd inset;
   border-radius: 10px;
-  padding: 18px 58px 18px 20px;
+  padding: 18px 58px 4px 20px;
   font-size: 16px;
   line-height: 24px;
   height: 60px;
   outline: none;
   transition: 0.1s;
+
   &:focus {
     box-shadow: 0 0 0 2px #4e6af3 inset;
   }

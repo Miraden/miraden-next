@@ -53,7 +53,7 @@ const Sort: FC<Props> = ({ className }) => {
         }
       >
         <div className="DropdownInput_selectLabel Text_14_16">
-          {selectedOption ? selectedOption : "Диапазон"}
+          {selectedOption ? selectedOption : "Без диапазона"}
           <ArrowIcon />
         </div>
         {showDropDown && (

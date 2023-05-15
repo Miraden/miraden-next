@@ -3,10 +3,16 @@ import styled from "styled-components";
 import { Tooltip } from "./Tooltip";
 
 interface TooltipComponentProps {
-  text: string;
+  trigger: any;
+  text?: string;
+  className?: string;
 }
 
-const TooltipComponent: React.FC<TooltipComponentProps> = ({ text }) => {
+const TooltipComponent: React.FC<TooltipComponentProps> = ({
+  trigger,
+  text,
+  className,
+}) => {
   const [showTooltip, setShowTooltip] = useState(false);
 
   const handleMouseEnter = () => {
@@ -18,12 +24,13 @@ const TooltipComponent: React.FC<TooltipComponentProps> = ({ text }) => {
   };
 
   return (
-    <StyledTest onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-      {text}
-      <Tooltip visible={showTooltip}>
-        Подсказка — элемент графического интерфейса, служит дополнительным
-        средством обучения пользователя
-      </Tooltip>
+    <StyledTest
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={className}
+    >
+      {trigger}
+      <Tooltip visible={showTooltip}>{text}</Tooltip>
     </StyledTest>
   );
 };

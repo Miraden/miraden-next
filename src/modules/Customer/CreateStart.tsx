@@ -11,24 +11,38 @@ interface Props {
 
 const steps = [
   {
-    title: "Вы создаёте анонимную заявку",
+    title: (
+      <div>
+        <mark>Создайте </mark>
+        <br /> анонимную заявку
+      </div>
+    ),
     description:
-      "Отвечаете на 10 простых вопросов о недвижимости, которую хотите найти",
-    image: "/images/HowItWorks.svg",
-    step: "1",
+      "Ответьте на несколько простых вопросов о недвижимости, которую хотите найти",
+    image: "/images/create/1.svg",
   },
   {
-    title: "Сервис публикует заявку в ленте",
-    description: "Самые подходящие исполнители получают уведомление о заявке",
-    image: "/images/HowItWorks.svg",
-    step: "2",
+    title: (
+      <div>
+        <mark>Получите </mark>
+        <br />
+        предложения
+      </div>
+    ),
+    description:
+      "Риелторы и собственники сделают для вас персональные предложения и подборки объектов",
+    image: "/images/create/2.svg",
   },
   {
-    title: "Исполнители делают вам предложения",
+    title: (
+      <div>
+        <mark>Выберите </mark>
+        <br /> лучших исполнителей
+      </div>
+    ),
     description:
-      "Получаете персональные предложения и подборки от независимых исполнителей",
-    image: "/images/HowItWorks.svg",
-    step: "3",
+      "Обменяйтесь контактами с подходящими исполнителями для обсуждения деталей",
+    image: "/images/create/3.svg",
   },
 ];
 
@@ -81,8 +95,7 @@ const CreateStart = ({ className }: Props) => {
             {steps.map((step, index) => (
               <li key={index} className="Reg__step">
                 <div className="Reg__imageContainer">
-                  <Image src={step.image} alt="" width={95} height={136} />
-                  <p className="Reg__counter Font_14_140">{step.step}</p>
+                  <Image src={step.image} alt="" width={140} height={140} />
                 </div>
                 <div className="Reg__listItemContent">
                   <h3 className="Reg__listItemTitle Font_20_24_500 lg:Font_18_120_500">
@@ -99,8 +112,7 @@ const CreateStart = ({ className }: Props) => {
             {steps.map((step, index) => (
               <li key={index} className="Reg__step keen-slider__slide">
                 <div className="Reg__imageContainer">
-                  <Image src={step.image} alt="" width={141} height={202} />
-                  <p className="Reg__counter Font_14_140">{step.step}</p>
+                  <Image src={step.image} alt="" width={200} height={200} />
                 </div>
                 <div className="Reg__listItemContent">
                   <h3 className="Reg__listItemTitle Font_20_120 lg:Font_18_120_500 sm:Font_18_120_500">
@@ -174,7 +186,7 @@ const StyledCreateStep1 = styled.section`
   }
 
   .Reg__options {
-    padding: 50px 80px 0 80px;
+    padding: 50px 30px 0 30px;
     height: 416px;
     justify-content: center;
   }
@@ -190,7 +202,7 @@ const StyledCreateStep1 = styled.section`
   }
 
   .Reg__step {
-    max-width: 230px;
+    max-width: 250px;
     width: 100%;
   }
 
@@ -220,6 +232,10 @@ const StyledCreateStep1 = styled.section`
 
   .Reg__listItemTitle {
     margin-top: 10px;
+    mark {
+      background: none;
+      color: #4e6af3;
+    }
   }
 
   .Reg__listItemDescription {
@@ -274,6 +290,10 @@ const StyledCreateStep1 = styled.section`
       margin-left: 0;
       max-width: 220px;
     }
+
+    .Reg__step:not(:first-child) {
+      margin-left: 19px;
+    }
   }
 
   @media (max-width: 576px) {
@@ -321,10 +341,6 @@ const StyledCreateStep1 = styled.section`
     .Reg__imageContainer {
       flex-flow: row-reverse;
       justify-content: center;
-      img {
-        width: 141px;
-        height: 220px;
-      }
     }
 
     .Reg__goBackButton {

@@ -14,6 +14,11 @@ const CreateStep2 = ({ className }: Props) => {
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
+    if (option === "buy") {
+      window.location.href = "/customer/create-step-3"; // Переход на страницу при выборе "Хочу купить"
+    } else if (option === "sell") {
+      window.location.href = "/customer/rent-range-step"; // Переход на страницу при выборе "Хочу арендовать"
+    }
   }, []);
 
   return (
@@ -61,7 +66,7 @@ const CreateStep2 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 2
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140 Color_text_grey">/ 11</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">
@@ -93,22 +98,22 @@ const StyledRegStep1 = styled.section`
   margin-top: 150px;
 
   .Reg__head {
-    padding: 30px 30px 20px 30px;
+    padding: 30px 30px 40px 30px;
   }
 
   .Reg__link {
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5px 30px;
-    background: #f1f7ff;
   }
 
   .Reg__options {
-    padding: 41px 30px 155px 30px;
+    border-top: 2px solid #f1f7ff;
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
     display: flex;
     flex-wrap: wrap;
     margin-left: -20px;
     margin-top: -20px;
+    height: 416px;
 
     button {
       justify-content: flex-start;

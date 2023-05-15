@@ -13,6 +13,8 @@ import { PayButton } from "../PayButton";
 
 interface Props {
   className?: string;
+  testCost?: any;
+  totalTax?: any;
 }
 
 const options = [
@@ -23,10 +25,9 @@ const options = [
 
 const tax = 0.035;
 
-const PayFormContent = ({ className }: Props) => {
+const PayFormContent = ({ className, testCost, totalTax }: Props) => {
   const totalCost = options.reduce((acc, option) => acc + option.cost, 0);
   const commission = totalCost * tax;
-  const totalCostWithCommission = totalCost + commission;
 
   const [isShow, setIsShow] = useState(false);
 
@@ -39,6 +40,7 @@ const PayFormContent = ({ className }: Props) => {
       <div className="PayFormContent__body Font_16_24">
         <span className="PayFormContent__bill">Счёт № 3655 от 20.01.2023</span>
         <div className="PayFormContent__costs">
+          <p>Test {testCost}</p>
           <ul className="">
             {options.map((option, index) => (
               <li key={index} className="PayFormContent__costsItem">
@@ -57,9 +59,7 @@ const PayFormContent = ({ className }: Props) => {
           </div>
           <div className="PayFormContent__totalCost">
             <span>Итого к оплате</span>
-            <span className="Font_32_120">
-              {totalCostWithCommission.toFixed(2)}€
-            </span>
+            <span className="Font_32_120">{totalTax}€</span>
           </div>
         </div>
       </div>
@@ -89,7 +89,7 @@ const PayFormContent = ({ className }: Props) => {
         {isShow && <div>Другие способы оплаты</div>}
       </div>
       <div className="PayFormContent__totalPay">
-        <Button>Оплалить {totalCostWithCommission}€</Button>
+        <Button>Оплалить {totalTax}€</Button>
       </div>
     </StyledPayFormContent>
   );
@@ -138,6 +138,7 @@ const StyledPayFormContent = styled.div`
     margin-top: 30px;
     padding-left: 30px;
     padding-right: 30px;
+    height: 514px;
 
     p {
       margin-bottom: 5px;
