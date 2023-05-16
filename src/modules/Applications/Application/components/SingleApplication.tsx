@@ -1,5 +1,13 @@
 import { Button, Sticker, ToggleButton } from "@/components/ui";
-import { BuildYearIcon, KebabIcon, PointIconFooter, SquareIcon } from "@/icons";
+import { PricingSelect } from "@/components/ui/PricingDropdown/PricingSelect";
+import {
+  BuildYearIcon,
+  KebabIcon,
+  ListItemsIcon,
+  PointIconFooter,
+  SquareIcon,
+} from "@/icons";
+import { EyeIcon } from "@/icons/EyeIcon";
 import { LivingSquareIcon } from "@/icons/LivingSquareIcon";
 import { RoomsIcon } from "@/icons/RoomsIcon";
 import { useCallback, useState } from "react";
@@ -10,6 +18,15 @@ interface Props {
   someContent?: string;
 }
 
+const currencyOptions = ["€", "$", "£", "₽"];
+
+let price = "158 000 – 230 000 ";
+let yieldCount = 8;
+let firstInstallment = "30";
+
+let firstInstallmentPercent = "30";
+
+let singleCost = "30";
 const SingleApplication = ({ className, someContent }: Props) => {
   const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -39,6 +56,32 @@ const SingleApplication = ({ className, someContent }: Props) => {
           {openDropdown && (
             <SingleApplicationDropdown someContent={someContent} />
           )}
+        </div>
+      </div>
+      <div className="SingleApplication__pricing">
+        <div className="Font_24_120">
+          <PricingSelect
+            options={currencyOptions}
+            price={price}
+            yieldCount={yieldCount}
+            yieldCountPercent={yieldCount}
+            firstInstallment={firstInstallment}
+            firstInstallmentPercent={firstInstallmentPercent}
+            singleCost={singleCost}
+          />
+        </div>
+        <div className="SingleApplication__pricingInfo">
+          <div>
+            <ListItemsIcon className="ListIcon" />
+            <p className="Color_blue_primary Font_16_140">1 268</p>
+          </div>
+          <div>
+            <EyeIcon />
+            <p className="Color_blue_primary Font_16_140">264</p>
+          </div>
+          <Sticker theme="blue" className="SingleApplication__pricingSticker">
+            Новых откликов 5
+          </Sticker>
         </div>
       </div>
       <div className="SingleApplication__structureInfo">
@@ -175,14 +218,17 @@ const SingleApplication = ({ className, someContent }: Props) => {
               и морские порты в Лимассоле и Ларнаке. Всего на острове
               15 аэропортов, из них 7 крупных. Более 230 рейсов в неделю,
               выполняемые 33-мя авиакомпаниями, связывают Кипр с Западной
-              и Восточной Европой, Африкой и Ближним Востоком Плюс пассажирские
-              и грузовые чартерные рейсы. Добраться до острова можно двумя
-              способами: воздушным и морским. Для иностранных туристов открыты
-              аэропорты в Ларнаке и Пафосе и морские порты в Лимассоле
-              и Ларнаке. Всего на острове 15 аэропортов, из них 7 крупных. Более
-              230 рейсов в неделю, выполняемые 33-мя авиакомпаниями, связывают
-              Кипр с Западной и Восточной Европой, Африкой и Ближним Востоком.
-              Плюс пассажирские и грузовые чартерные рейсы
+              и Восточной Европой, Африкой и Ближним Востоком
+              <br />
+              <br />
+              Плюс пассажирские и грузовые чартерные рейсы. Добраться до острова
+              можно двумя способами: воздушным и морским. Для иностранных
+              туристов открыты аэропорты в Ларнаке и Пафосе и морские порты
+              в Лимассоле и Ларнаке. Всего на острове 15 аэропортов,
+              из них 7 крупных. Более 230 рейсов в неделю, выполняемые 33-мя
+              авиакомпаниями, связывают Кипр с Западной и Восточной Европой,
+              Африкой и Ближним Востоком. Плюс пассажирские и грузовые чартерные
+              рейсы
             </p>
           </div>
         </div>
@@ -227,6 +273,46 @@ const StyledSingleApplication = styled.div`
 
     button {
       margin-left: 20px;
+    }
+  }
+
+  .SingleApplication__pricing {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 19px;
+    border-bottom: 1px solid #e1edfd;
+  }
+
+  .SingleApplication__pricingInfo {
+    display: flex;
+
+    div {
+      display: flex;
+      align-items: center;
+
+      svg {
+        margin-right: 8px;
+      }
+    }
+
+    div:not(:first-child) {
+      margin-left: 20px;
+    }
+  }
+
+  .ListIcon {
+    width: 18px;
+    height: 18px;
+    path {
+      fill: #7786a5;
+    }
+  }
+
+  .SingleApplication__pricingSticker {
+    div {
+      padding: 4px 10px;
     }
   }
 
@@ -283,7 +369,13 @@ const StyledSingleApplication = styled.div`
 
     div:first-child {
       min-width: 250px;
+      color: #7786a5;
     }
+  }
+
+  .SingleApplication__location:last-child {
+    border-bottom: none;
+    align-items: start;
   }
 
   .SingleApplication__locationInfo {

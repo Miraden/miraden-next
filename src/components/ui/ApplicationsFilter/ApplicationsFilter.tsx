@@ -555,7 +555,7 @@ const ObjectsContent = () => {
               <ArrowIcon
                 width={20}
                 height={20}
-                className={cn("", { PurposeOpen: purposeOpen })}
+                className={cn("ArrowIcon", { PurposeOpen: purposeOpen })}
               />
             </div>
             {purposeOpen && (
@@ -586,7 +586,7 @@ const ObjectsContent = () => {
               <ArrowIcon
                 width={20}
                 height={20}
-                className={cn("", { PurposeOpen: statusOpen })}
+                className={cn("ArrowIcon", { PurposeOpen: statusOpen })}
               />
             </div>
             {statusOpen && (
@@ -705,12 +705,13 @@ const StyledObjectsContent = styled.div`
     }
   }
 
+  .ArrowIcon {
+    transform: rotate(180deg);
+  }
+
   .PurposeOpen {
     transition: 0.15s ease-in-out;
-    transform: rotate(-180deg);
-
-    svg {
-    }
+    transform: rotate(360deg);
   }
 
   .ObjectsContent__onlyPro {

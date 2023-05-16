@@ -224,9 +224,12 @@ const Application = ({ className }: ApplicationProps) => {
             </Button>
           </div>
 
-          <div className="Applications__headTabsBar"></div>
+          <div className="Applications__headTabsBar" />
         </div>
       </div>
+      {selected === "application" && (
+        <div className="Applications__headTabsBar_whiteSpace" />
+      )}
 
       {selected === "application" ? (
         <>
@@ -322,6 +325,14 @@ const StyledApplication = styled.section`
     position: absolute;
     top: 94px;
     right: -380px;
+    height: calc(100vh - 114px);
+  }
+
+  .Applications__headTabsBar_whiteSpace {
+    width: 100%;
+    height: 10px;
+    border-radius: 0 0 10px 10px;
+    background: #fff;
   }
 
   .Application__headContainer {
