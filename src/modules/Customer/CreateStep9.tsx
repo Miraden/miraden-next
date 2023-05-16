@@ -100,7 +100,7 @@ const CreateStep9 = ({ className }: Props) => {
                 className="Reg__showMoreButton"
                 onClick={handleShowLess}
               >
-                Скрыть {currencyOptions.length - 4}
+                Скрыть
               </RequestButton>
             )}
           </div>

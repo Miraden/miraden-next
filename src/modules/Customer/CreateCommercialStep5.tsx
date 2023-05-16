@@ -72,10 +72,18 @@ const CreateCommercialStep5 = ({ className }: Props) => {
     setMaxVisibleSquare(64);
   }, []);
 
+  const handleShowLess = useCallback(() => {
+    setShowMore(false);
+    setMaxVisibleSquare(18);
+  }, []);
+
   const squares = [];
   for (let square = 10; square <= 800; square += 10) {
     squares.push(square);
   }
+
+  const minIndex = Math.min(...selectedRange);
+  const maxIndex = Math.max(...selectedRange);
 
   return (
     <StyledRegStep1 className={className}>
@@ -100,17 +108,13 @@ const CreateCommercialStep5 = ({ className }: Props) => {
                 return null;
               }
 
-              const isActive = selectedRange.includes(index);
-              const isWithinRange =
-                selectedRange.length === 2 &&
-                index >= selectedRange[0] &&
-                index <= selectedRange[1];
+              const isRanged = index > minIndex && index < maxIndex;
               return (
                 <RequestButton
                   key={`${index}`}
                   onClick={() => handleSquareClick(index)}
-                  active={isActive}
-                  ranged={isWithinRange}
+                  active={isRanged ? false : selectedRange.includes(index)}
+                  ranged={isRanged}
                 >
                   {label}
                 </RequestButton>
@@ -122,6 +126,14 @@ const CreateCommercialStep5 = ({ className }: Props) => {
                 className="ShowMoreButton Color_blue_primary"
               >
                 Ещё {squares.length - maxVisibleSquare}
+              </RequestButton>
+            )}
+            {maxVisibleSquare >= 64 && (
+              <RequestButton
+                onClick={handleShowLess}
+                className="Color_blue_primary"
+              >
+                Скрыть
               </RequestButton>
             )}
           </div>

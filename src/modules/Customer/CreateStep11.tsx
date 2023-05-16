@@ -1,6 +1,7 @@
 import { Button, TextAreaInput } from "@/components/ui";
 import { TextInput } from "@/components/ui/TextInput";
 import { ArrowIcon } from "@/icons";
+import { useState } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -8,6 +9,14 @@ interface Props {
 }
 
 const CreateStep11 = ({ className }: Props) => {
+  const [textInputValue, setTextInputValue] = useState("");
+
+  const handleTextInputChange = (event: any) => {
+    setTextInputValue(event.target.value);
+  };
+
+  const isNextButtonDisabled = textInputValue.length === 0;
+
   return (
     <StyledRegStep1 className={className}>
       <div className="">
@@ -18,7 +27,10 @@ const CreateStep11 = ({ className }: Props) => {
         </div>
         <div className="Reg__inputsContainer">
           <div className="Reg__inputs">
-            <TextInput label="Заголовок заявки " />
+            <TextInput
+              label="Заголовок заявки "
+              onChange={handleTextInputChange}
+            />
             <TextAreaInput
               label="Опишите дополнительные пожелания"
               className="Reg__textArea"
@@ -57,7 +69,12 @@ const CreateStep11 = ({ className }: Props) => {
               </span>
               <p className="Color_blue_primary Font_16_140">317</p>
             </div>
-            <Button href="/customer/create-payment">Далее</Button>
+            <Button
+              href="/customer/create-payment"
+              disabled={isNextButtonDisabled}
+            >
+              Далее
+            </Button>
           </div>
         </div>
       </div>

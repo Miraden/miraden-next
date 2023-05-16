@@ -72,7 +72,7 @@ const PassRecover1 = ({ className }: Props) => {
               href="/customer/reg-1"
               className="Reg__goBackButton"
             >
-              На главную
+              Назад
             </Button>
             <div className="Reg__footerSteps">
               <span className="Font_16_24">Шаг</span>

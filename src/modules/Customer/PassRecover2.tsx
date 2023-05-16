@@ -270,6 +270,10 @@ const StyledRegStep1 = styled.section`
 
   .Reg__changeNumber {
     margin-top: 50px;
+
+    :focus {
+      outline: none;
+    }
   }
 
   .Reg__progressBar {

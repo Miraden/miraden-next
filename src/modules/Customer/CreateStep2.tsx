@@ -98,15 +98,15 @@ const StyledRegStep1 = styled.section`
   margin-top: 150px;
 
   .Reg__head {
-    padding: 30px 30px 40px 30px;
+    padding: 30px 30px 20px 30px;
+    border-bottom: 2px solid #f1f7ff;
   }
 
   .Reg__link {
   }
 
   .Reg__options {
-    border-top: 2px solid #f1f7ff;
-    padding-top: 20px;
+    padding-top: 30px;
     padding-left: 30px;
     padding-right: 30px;
     display: flex;

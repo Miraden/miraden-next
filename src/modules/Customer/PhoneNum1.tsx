@@ -62,7 +62,7 @@ const PhoneNum1 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 1
               </span>
-              <span className="Font_16_140">/ 2</span>
+              <span className="Font_16_140 Color_text_grey">/ 2</span>
             </div>
           </div>
           <Button disabled={!valid} href="/customer/login">

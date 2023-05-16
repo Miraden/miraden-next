@@ -107,6 +107,8 @@ const CreateStep4 = ({ className }: Props) => {
   }
 
   const visibleYears = showAllYears ? years : years.slice(0, 10);
+  const minIndex = Math.min(...selectedRange);
+  const maxIndex = Math.max(...selectedRange);
 
   return (
     <StyledRegStep1 className={className}>
@@ -148,6 +150,7 @@ const CreateStep4 = ({ className }: Props) => {
                 >
                   Уже построена
                 </RequestButton>
+
                 {[...Array(64)].map((_, index) => {
                   const month = index % 12;
 
@@ -159,22 +162,20 @@ const CreateStep4 = ({ className }: Props) => {
                     return null;
                   }
 
-                  const isActive = selectedRange.includes(index);
-                  const isWithinRange =
-                    selectedRange.length === 2 &&
-                    index >= selectedRange[0] &&
-                    index <= selectedRange[1];
+                  const isRanged = index > minIndex && index < maxIndex;
+
                   return (
                     <RequestButton
                       key={`${index}`}
                       onClick={() => handleMonthClick(index)}
-                      active={isActive}
-                      ranged={isWithinRange}
+                      active={isRanged ? false : selectedRange.includes(index)}
+                      ranged={isRanged}
                     >
                       {label}
                     </RequestButton>
                   );
                 })}
+
                 {maxVisibleMonths < 64 && (
                   <RequestButton
                     onClick={handleShowMore}

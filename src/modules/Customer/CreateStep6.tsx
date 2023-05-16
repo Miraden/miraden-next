@@ -215,6 +215,12 @@ const CreateStep6 = ({ className }: Props) => {
     baths.push(bath);
   }
 
+  const minIndex = Math.min(...selectedRange);
+  const maxIndex = Math.max(...selectedRange);
+  const minIndexSleeps = Math.min(...selectedSleepRange);
+  const maxIndexSleeps = Math.max(...selectedSleepRange);
+  const minIndexBaths = Math.min(...selectedBathsRange);
+  const maxIndexBaths = Math.max(...selectedBathsRange);
   return (
     <StyledRegStep1 className={className}>
       <div className="">
@@ -236,18 +242,13 @@ const CreateStep6 = ({ className }: Props) => {
                   return null;
                 }
 
-                const isActive = selectedRange.includes(index);
-                const isWithinRange =
-                  selectedRange.length === 2 &&
-                  index >= selectedRange[0] &&
-                  index <= selectedRange[1];
-
+                const isRanged = index > minIndex && index < maxIndex;
                 return (
                   <RequestButton
                     key={`${index}`}
                     onClick={() => handleRoomClick(index)}
-                    active={isActive}
-                    ranged={isWithinRange}
+                    active={isRanged ? false : selectedRange.includes(index)}
+                    ranged={isRanged}
                   >
                     {label}
                   </RequestButton>
@@ -282,17 +283,16 @@ const CreateStep6 = ({ className }: Props) => {
                   return null;
                 }
 
-                const isActive = selectedSleepRange.includes(index);
-                const isWithinRange =
-                  selectedSleepRange.length === 2 &&
-                  index >= selectedSleepRange[0] &&
-                  index <= selectedSleepRange[1];
+                const isRanged =
+                  index > minIndexSleeps && index < maxIndexSleeps;
                 return (
                   <RequestButton
                     key={`${index}`}
                     onClick={() => handleSleepClick(index)}
-                    active={isActive}
-                    ranged={isWithinRange}
+                    active={
+                      isRanged ? false : selectedSleepRange.includes(index)
+                    }
+                    ranged={isRanged}
                   >
                     {label}
                   </RequestButton>
@@ -325,17 +325,16 @@ const CreateStep6 = ({ className }: Props) => {
                 if (index >= maxVisibleBaths) {
                   return null;
                 }
-                const isActive = selectedBathsRange.includes(index);
-                const isWithinRange =
-                  selectedBathsRange.length === 2 &&
-                  index >= selectedBathsRange[0] &&
-                  index <= selectedBathsRange[1];
+                const isRanged = index > minIndexBaths && index < maxIndexBaths;
+
                 return (
                   <RequestButton
                     key={`${index}`}
                     onClick={() => handleBathClick(index)}
-                    active={isActive}
-                    ranged={isWithinRange}
+                    active={
+                      isRanged ? false : selectedBathsRange.includes(index)
+                    }
+                    ranged={isRanged}
                   >
                     {label}
                   </RequestButton>

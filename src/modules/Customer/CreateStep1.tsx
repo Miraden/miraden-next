@@ -583,7 +583,7 @@ const SearchRegContainer = styled.div`
     width: 18px;
     height: 18px;
     top: 20px;
-    left: 20px;
+    left: 30px;
     z-index: 21;
   }
 
@@ -637,7 +637,7 @@ const SearchInput = styled.input`
   width: 100%;
   font-size: 16px;
   border: none;
-  margin-left: 30px;
+  margin-left: 40px;
   outline: none;
 
   ::placeholder {

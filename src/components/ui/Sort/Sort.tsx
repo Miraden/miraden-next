@@ -106,7 +106,7 @@ const StyledDropdownInput = styled.div<Props>`
 
   .DropdownInput_select {
     &:focus {
-      box-shadow: 0 0 0 2px #f845fc inset;
+      /* box-shadow: 0 0 0 2px #f845fc inset; */
       div {
         color: #2a344a;
       }

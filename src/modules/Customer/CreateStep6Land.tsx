@@ -77,6 +77,9 @@ const CreateStep6Land = ({ className }: Props) => {
     squares.push(square);
   }
 
+  const minIndex = Math.min(...selectedRange);
+  const maxIndex = Math.max(...selectedRange);
+
   return (
     <StyledRegStep1 className={className}>
       <div className="">
@@ -99,17 +102,13 @@ const CreateStep6Land = ({ className }: Props) => {
                 if (index >= maxVisibleSquare) {
                   return null;
                 }
-                const isActive = selectedRange.includes(index);
-                const isWithinRange =
-                  selectedRange.length === 2 &&
-                  index >= selectedRange[0] &&
-                  index <= selectedRange[1];
+                const isRanged = index > minIndex && index < maxIndex;
                 return (
                   <RequestButton
                     key={`${index}`}
                     onClick={() => handleSquareClick(index)}
-                    active={isActive}
-                    ranged={isWithinRange}
+                    active={isRanged ? false : selectedRange.includes(index)}
+                    ranged={isRanged}
                   >
                     {label}
                   </RequestButton>
@@ -147,7 +146,7 @@ const CreateStep6Land = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 5
               </span>
-              <span className="Font_16_140">/ 11</span>
+              <span className="Font_16_140 Color_text_grey">/ 11</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">

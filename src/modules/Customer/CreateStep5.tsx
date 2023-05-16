@@ -158,6 +158,10 @@ const CreateStep5 = ({ className }: Props) => {
     livingSquares.push(livingSquare);
   }
 
+  const minIndex = Math.min(...selectedRange);
+  const maxIndex = Math.max(...selectedRange);
+  const minIndexLiving = Math.min(...selectedLivingRage);
+  const maxIndexLiving = Math.max(...selectedLivingRage);
   return (
     <StyledRegStep1 className={className}>
       <div className="">
@@ -181,17 +185,13 @@ const CreateStep5 = ({ className }: Props) => {
                   return null;
                 }
 
-                const isActive = selectedRange.includes(index);
-                const isWithinRange =
-                  selectedRange.length === 2 &&
-                  index >= selectedRange[0] &&
-                  index <= selectedRange[1];
+                const isRanged = index > minIndex && index < maxIndex;
                 return (
                   <RequestButton
                     key={`${index}`}
                     onClick={() => handleSquareClick(index)}
-                    active={isActive}
-                    ranged={isWithinRange}
+                    active={isRanged ? false : selectedRange.includes(index)}
+                    ranged={isRanged}
                   >
                     {label}
                   </RequestButton>
@@ -240,18 +240,16 @@ const CreateStep5 = ({ className }: Props) => {
                   return null;
                 }
 
-                const isActive = selectedLivingRage.includes(index);
-                const isWithinRange =
-                  selectedLivingRage.length === 2 &&
-                  index >= selectedLivingRage[0] &&
-                  index <= selectedLivingRage[1];
-
+                const isRanged =
+                  index > minIndexLiving && index < maxIndexLiving;
                 return (
                   <RequestButton
                     key={`${index}`}
                     onClick={() => handleLivingSquareClick(index)}
-                    active={isActive}
-                    ranged={isWithinRange}
+                    active={
+                      isRanged ? false : selectedLivingRage.includes(index)
+                    }
+                    ranged={isRanged}
                   >
                     {label}
                   </RequestButton>

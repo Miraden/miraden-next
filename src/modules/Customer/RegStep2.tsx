@@ -40,7 +40,7 @@ const RegStep2 = ({ className }: Props) => {
         </div>
         <div className="Reg__link Color_blue_primary">
           <span>Пройдите простую регистрацию или </span>
-          <Link underlined href="">
+          <Link underlined href="/customer/login">
             войдите в свой аккаунт
           </Link>
         </div>
@@ -79,7 +79,7 @@ const RegStep2 = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 2
               </span>
-              <span className="Font_16_140">/ 2</span>
+              <span className="Font_16_140 Color_text_grey">/ 2</span>
             </div>
           </div>
           <Button disabled={!valid} href="/customer/reg-3">
@@ -107,6 +107,10 @@ const StyledRegStep1 = styled.section`
     background: #f1f7ff;
     a {
       padding: 0;
+
+      :focus {
+        outline: none;
+      }
     }
   }
 

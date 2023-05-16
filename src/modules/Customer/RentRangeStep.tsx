@@ -62,7 +62,7 @@ const RentRangeStep = ({ className }: Props) => {
               <span className="Reg__footerCount Font_16_140 Color_blue_primary">
                 5
               </span>
-              <span className="Font_16_140">/ 7</span>
+              <span className="Font_16_140 Color_text_grey">/ 7</span>
             </div>
           </div>
           <div className="Reg__nextButtonContainer">

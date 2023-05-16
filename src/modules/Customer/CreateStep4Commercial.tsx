@@ -85,9 +85,19 @@ const CreateStep4Commercial = ({ className }: Props) => {
     setShowAllYears(true);
   }, []);
 
+  const handleShowLessYears = useCallback(() => {
+    setShowAllYears(false);
+  }, []);
+
   const handleShowMore = useCallback(() => {
     setShowMore(true);
     setMaxVisibleMonths(64);
+  }, []);
+
+  const handleShowLess = useCallback(() => {
+    setShowMore(false);
+    setMaxVisibleMonths(18);
+    setShowAllYears(false);
   }, []);
 
   const years = [];
@@ -99,7 +109,8 @@ const CreateStep4Commercial = ({ className }: Props) => {
   }
 
   const visibleYears = showAllYears ? years : years.slice(0, 10);
-
+  const minIndex = Math.min(...selectedRange);
+  const maxIndex = Math.max(...selectedRange);
   return (
     <StyledRegStep1 className={className}>
       <div className="">
@@ -151,17 +162,13 @@ const CreateStep4Commercial = ({ className }: Props) => {
                     return null;
                   }
 
-                  const isActive = selectedRange.includes(index);
-                  const isWithinRange =
-                    selectedRange.length === 2 &&
-                    index >= selectedRange[0] &&
-                    index <= selectedRange[1];
+                  const isRanged = index > minIndex && index < maxIndex;
                   return (
                     <RequestButton
                       key={`${index}`}
                       onClick={() => handleMonthClick(index)}
-                      active={isActive}
-                      ranged={isWithinRange}
+                      active={isRanged ? false : selectedRange.includes(index)}
+                      ranged={isRanged}
                     >
                       {label}
                     </RequestButton>
@@ -173,6 +180,14 @@ const CreateStep4Commercial = ({ className }: Props) => {
                     className="ShowMoreButton Color_blue_primary"
                   >
                     Ещё {maxVisibleMonths}
+                  </RequestButton>
+                )}
+                {maxVisibleMonths >= 64 && (
+                  <RequestButton
+                    onClick={handleShowLess}
+                    className="Color_blue_primary"
+                  >
+                    Скрыть
                   </RequestButton>
                 )}
               </div>
@@ -197,6 +212,14 @@ const CreateStep4Commercial = ({ className }: Props) => {
                     className="Color_blue_primary"
                   >
                     Еще {visibleYears.length}
+                  </RequestButton>
+                )}
+                {showAllYears && (
+                  <RequestButton
+                    onClick={handleShowLessYears}
+                    className="Color_blue_primary"
+                  >
+                    Скрыть
                   </RequestButton>
                 )}
               </div>

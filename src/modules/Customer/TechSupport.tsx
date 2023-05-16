@@ -15,6 +15,10 @@ const TechSupport = ({
   onTouchStart,
   onTouchEnd,
 }: Props) => {
+  function handleButtonClick(event: any) {
+    event.target.blur();
+  }
+
   return (
     <StyledTechSupport onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
       <div className="TechSupport">
@@ -36,11 +40,11 @@ const TechSupport = ({
             Выберите удобный мессенджер для связи с оператором
           </p>
           <div className="TechSupport__buttonsContainer">
-            <button className="TechSupport__button">
+            <button className="TechSupport__button" onClick={handleButtonClick}>
               <WhatsappIcon />
               <span className="Font_16_140">WhatsApp</span>
             </button>
-            <button className="TechSupport__button">
+            <button className="TechSupport__button" onClick={handleButtonClick}>
               <TelegramIcon />
               <span className="Font_16_140">WhatsApp</span>
             </button>
@@ -149,7 +153,8 @@ const StyledTechSupport = styled.div`
 
     :active {
       background: #cfe2fc;
-      box-shadow: none;
+      box-shadow: none !important;
+      outline: none;
     }
   }
 

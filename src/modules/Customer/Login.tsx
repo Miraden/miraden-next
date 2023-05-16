@@ -103,6 +103,9 @@ const StyledRegStep1 = styled.section`
     background: #f1f7ff;
     a {
       padding: 0;
+      :focus {
+        outline: none;
+      }
     }
   }
 

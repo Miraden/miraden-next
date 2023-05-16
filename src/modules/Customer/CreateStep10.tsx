@@ -82,7 +82,8 @@ const CreateStep10 = ({ className }: Props) => {
   for (let percent = 10; percent <= 100; percent += 10) {
     percents.push(percent);
   }
-
+  const minIndex = Math.min(...selectedRange);
+  const maxIndex = Math.max(...selectedRange);
   return (
     <StyledRegStep1 className={className}>
       <div className="">
@@ -125,18 +126,13 @@ const CreateStep10 = ({ className }: Props) => {
               {[...Array(10)].map((_, index) => {
                 const percent = (index + 1) * 10;
                 const label = `${percent}%`;
-
-                const isActive = selectedRange.includes(percent);
-                const isWithinRange =
-                  selectedRange.length === 2 &&
-                  percent >= selectedRange[0] &&
-                  percent <= selectedRange[1];
+                const isRanged = index > minIndex && index < maxIndex;
                 return (
                   <RequestButton
                     key={`${index}`}
-                    onClick={() => handleSquareClick(percent)}
-                    active={isActive}
-                    ranged={isWithinRange}
+                    onClick={() => handleSquareClick(index)}
+                    active={isRanged ? false : selectedRange.includes(index)}
+                    ranged={isRanged}
                   >
                     {label}
                   </RequestButton>
