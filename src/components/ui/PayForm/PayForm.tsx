@@ -61,26 +61,44 @@ const StyledPayForm = styled.div`
     right: 0;
     height: 100vh;
     top: 0;
-    position: relative;
+    position: absolute;
     z-index: 21;
     width: 390px;
   }
 
   .PayForm__head {
     position: absolute;
-    padding: 30px 30px 18px 30px;
+    padding: 15px 15px 18px 30px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
     page-break-after: 18px;
     background: #fff;
     width: 100%;
     border-bottom: 2px solid #f1f7ff;
     z-index: 2;
+
+    h2 {
+      margin-top: 15px;
+    }
+
+    button {
+      border-radius: 50%;
+      height: 28px;
+      width: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      :hover {
+        background: #f1f7ff;
+      }
+    }
+
+    button:focus {
+      outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+    }
   }
 
   .CrossIcon {
-    background: #f1f7ff;
     border-radius: 50%;
     padding: 2px;
     path {
@@ -90,7 +108,7 @@ const StyledPayForm = styled.div`
 
   .PayFormContent {
     position: relative;
-    padding-top: 88px;
+    margin-top: 88px;
     overflow: scroll;
   }
 
@@ -99,7 +117,6 @@ const StyledPayForm = styled.div`
     background: #fff;
     bottom: 0;
     width: 100%;
-    margin-top: 99px;
     padding: 20px 30px;
     border-top: 2px solid #e1edfd;
     button {
