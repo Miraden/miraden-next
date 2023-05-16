@@ -22,27 +22,69 @@ export default function Home() {
         />
       </Head>
       <StyledMain>
-        <Link href="customer/reg-1">Step 1</Link>
-        <Link href="customer/reg-2">Step 2</Link>
-        <Link href="customer/reg-3">Step 3</Link>
-        <Link href="customer/phone-1">Number 1</Link>
-        <Link href="customer/phone-2">Number 2</Link>
-        <Link href="customer/login">Login</Link>
-        <Link href="customer/pass-recover-1">Password recover 1</Link>
-        <Link href="customer/pass-recover-2">Password recover 2</Link>
-        <Link href="customer/create-1">Create</Link>
-        <Link href="customer/create-step-1">Create step 1</Link>
-        <Link href="customer/create-step-2">Create step 2</Link>
-        <Link href="customer/create-step-3">Create step 3</Link>
-        <Link href="customer/create-step-4">Create step 4</Link>
-        <Link href="customer/create-step-5">Create step 5</Link>
-        <Link href="customer/create-step-6">Create step 6</Link>
-        <Link href="customer/create-step-7">Create step 7</Link>
-        <Link href="customer/create-step-8">Create step 8</Link>
-        <Link href="customer/create-step-9">Create step 9</Link>
-        <Link href="customer/create-step-10">Create step 10</Link>
-        <Link href="customer/create-step-11">Create step 11</Link>
-        <Link href="customer/create-payment">Create payment</Link>
+        <Link href="customer/reg-1">Регистрация! Укажите ваш статус</Link>
+        <Link href="customer/reg-2">
+          Регистрация! Укажите имя и электронную почту
+        </Link>
+        <Link href="customer/reg-3">Поздравляем с успешной регистрацией!</Link>
+        <Link href="customer/phone-1">Укажите ваш номер телефона</Link>
+        <Link href="customer/phone-2">
+          Введите код из СМС для подтверждения телефона
+        </Link>
+        <Link href="customer/login">Вход в аккаунт</Link>
+        <Link href="customer/pass-recover-1">Восстановление пароля</Link>
+        <Link href="customer/pass-recover-2">
+          Введите код с почты для подтверждения пароля
+        </Link>
+        <Link href="customer/create-1">Шаг 0. Как это работает?</Link>
+        <Link href="customer/create-step-1">
+          Шаг 1. Укажите город или локацию недвижимости
+        </Link>
+        <Link href="customer/create-step-2">
+          Шаг 2. Укажите формат сделки с недвижимостью
+        </Link>
+        <Link href="customer/create-step-3">
+          Шаг 3.Укажите тип недвижимости
+        </Link>
+        <Link href="customer/rent-range-step-5">Шаг 3. Аренда</Link>
+        <Link href="customer/create-step-4">
+          Шаг 4. Укажите состояние недвижимости
+        </Link>
+        <Link href="customer/create-commercial-step-4">
+          Шаг 4. Коммерческая
+        </Link>
+        <Link href="customer/rent-range-step">Шаг 4. Аренда</Link>
+
+        <Link href="customer/create-step-5">
+          Шаг 5. Укажите общую площадь недвижимости
+        </Link>
+        <Link href="customer/create-commercial-step-5">
+          Шаг 5. Коммерческая
+        </Link>
+        <Link href="customer/create-step-6">
+          Шаг 6. Укажите общее количество комнат
+        </Link>
+        <Link href="customer/create-commercial-step-6">
+          Шаг 6. Коммерческая
+        </Link>
+        <Link href="customer/rent-range-step-6">Шаг 6. Аренда</Link>
+        <Link href="customer/create-step-7">Шаг 7. Укажите цель покупки</Link>
+        <Link href="customer/rent-range-step-7">Шаг 7. Аренда</Link>
+        <Link href="customer/create-step-8">
+          Шаг 8. Когда готовы выходить на сделку?
+        </Link>
+        <Link href="customer/create-step-9">
+          Шаг 9. Укажите примерный бюджет
+        </Link>
+        <Link href="customer/create-step-10">
+          Шаг 10. Укажите удобный способ покупки
+        </Link>
+        <Link href="customer/create-step-11">
+          Шаг 11. Опишите ваши дополнительные пожелания
+        </Link>
+        <Link href="customer/create-payment">
+          Шаг 12. Получите больше просмотров и откликов
+        </Link>
       </StyledMain>
     </>
   );
@@ -52,4 +94,12 @@ const StyledMain = styled.main`
   background: #eef1f5;
   display: flex;
   flex-direction: column;
+  padding: 40px 20px;
+
+  a {
+    margin-top: 10px;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+  }
 `;

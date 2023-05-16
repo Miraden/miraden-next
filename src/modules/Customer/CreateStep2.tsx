@@ -17,7 +17,7 @@ const CreateStep2 = ({ className }: Props) => {
     if (option === "buy") {
       window.location.href = "/customer/create-step-3"; // Переход на страницу при выборе "Хочу купить"
     } else if (option === "sell") {
-      window.location.href = "/customer/rent-range-step"; // Переход на страницу при выборе "Хочу арендовать"
+      window.location.href = "/customer/rent-range-step-5"; // Переход на страницу при выборе "Хочу арендовать"
     }
   }, []);
 

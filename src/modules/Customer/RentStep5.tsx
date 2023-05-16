@@ -1,5 +1,7 @@
 import { Button, RequestButton } from "@/components/ui";
+import { TooltipComponent } from "@/components/ui/Tooltip/MyComponent";
 import { ArrowIcon } from "@/icons";
+import { InfoIconGrey } from "@/icons/InfoIconGrey";
 import { SetStateAction, useCallback, useState } from "react";
 import styled from "styled-components";
 
@@ -7,7 +9,7 @@ interface Props {
   className?: string;
 }
 
-const CreateStep6Land = ({ className }: Props) => {
+const RentStep5 = ({ className }: Props) => {
   const [selected, setSelected] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [startSquare, setStartSquare] = useState<number | null>(null);
@@ -72,20 +74,100 @@ const CreateStep6Land = ({ className }: Props) => {
     setMaxVisibleSquare(64);
   }, []);
 
+  const handleShowLess = useCallback(() => {
+    setShowMore(false);
+    setMaxVisibleSquare(18);
+  }, []);
+
   const squares = [];
   for (let square = 10; square <= 800; square += 10) {
     squares.push(square);
   }
+  const [selectedLiving, setSelectedLiving] = useState(false);
+  const [startLivingSquare, setStartLivingSquare] = useState<number | null>(
+    null
+  );
+  const [selectedLivingRage, setSelectedLivingRage] = useState<number[]>([]);
+  const [showMoreLiving, setShowMoreLiving] = useState(false);
+  const [maxVisibleLivingSquare, setMaxVisibleLivingSquare] = useState(21);
+
+  const handleSelectLiving = useCallback(() => {
+    setSelectedLiving(!selectedLiving);
+    setSelectedLivingRage([]);
+  }, [selectedLiving]);
+
+  const handleLivingSquareClick = (squareIndexLiving: number) => {
+    if (startLivingSquare === null) {
+      // start new range
+      setSelectedLiving(false);
+      setStartLivingSquare(squareIndexLiving);
+      setSelectedLivingRage([squareIndexLiving]);
+    } else {
+      // continue existing range
+      const endLivingSquare = squareIndexLiving;
+      const livingRangeStart = Math.min(startLivingSquare, endLivingSquare);
+      const livingRangeEnd = Math.max(startLivingSquare, endLivingSquare);
+      const selectedLivingRage: SetStateAction<number[]> = [];
+      for (let i = livingRangeStart; i <= livingRangeEnd; i++) {
+        selectedLivingRage.push(i);
+      }
+
+      if (selectedLivingRage.every((m) => selectedLivingRage.includes(m))) {
+        // update existing range
+        setSelectedLivingRage(selectedLivingRage);
+      } else {
+        // create new range
+        setSelectedLivingRage(selectedLivingRage);
+        setStartLivingSquare(null);
+      }
+    }
+
+    if (startLivingSquare !== null && squareIndexLiving !== startLivingSquare) {
+      const livingRangeStart = Math.min(startLivingSquare, squareIndexLiving);
+      const livingRangeEnd = Math.max(startLivingSquare, squareIndexLiving);
+      const newRange = [];
+      for (let i = livingRangeStart; i <= livingRangeEnd; i++) {
+        newRange.push(i);
+      }
+
+      if (
+        selectedLivingRage.length > 0 &&
+        newRange.every((m) => selectedLivingRage.includes(m))
+      ) {
+        // update existing range
+        setSelectedLivingRage(newRange);
+      } else {
+        // add new range to existing range
+        setSelectedLivingRage([...selectedLivingRage, ...newRange]);
+      }
+    }
+  };
+
+  const handleShowMoreLiving = useCallback(() => {
+    setShowMoreLiving(true);
+    setMaxVisibleLivingSquare(64);
+  }, []);
+
+  const handleShowLessLiving = useCallback(() => {
+    setShowMoreLiving(false);
+    setMaxVisibleLivingSquare(18);
+  }, []);
+
+  const livingSquares = [];
+  for (let livingSquare = 10; livingSquare <= 800; livingSquare += 10) {
+    livingSquares.push(livingSquare);
+  }
 
   const minIndex = Math.min(...selectedRange);
   const maxIndex = Math.max(...selectedRange);
-
+  const minIndexLiving = Math.min(...selectedLivingRage);
+  const maxIndexLiving = Math.max(...selectedLivingRage);
   return (
     <StyledRegStep1 className={className}>
       <div className="">
         <div className="Reg__head">
           <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Укажите площадь участка земли
+            Укажите общую площадь недвижимости
           </h1>
         </div>
         <div className="Reg__selectContainer">
@@ -102,6 +184,7 @@ const CreateStep6Land = ({ className }: Props) => {
                 if (index >= maxVisibleSquare) {
                   return null;
                 }
+
                 const isRanged = index > minIndex && index < maxIndex;
                 return (
                   <RequestButton
@@ -122,6 +205,72 @@ const CreateStep6Land = ({ className }: Props) => {
                   Ещё {squares.length - maxVisibleSquare}
                 </RequestButton>
               )}
+              {maxVisibleSquare >= 64 && (
+                <RequestButton
+                  onClick={handleShowLess}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Скрыть
+                </RequestButton>
+              )}
+            </div>
+          </div>
+          <div className="Reg__squareContainer">
+            <div className="Reg__squareHead">
+              <h2 className="Font_20_120 sm:Font_18_120_500">Жилая площадь</h2>
+              <TooltipComponent
+                className="Tooltip"
+                trigger={<InfoIconGrey />}
+                text="В жилую площадь не входят кухни, санузлы, коридоры, балконы и прочие подобные помещения"
+              />
+            </div>
+            <div className="Reg__square">
+              <RequestButton
+                onClick={handleSelectLiving}
+                active={selectedLiving}
+              >
+                Неважно
+              </RequestButton>
+              {[...Array(64)].map((_, index) => {
+                const label = index + "0 м²";
+                if (index === 0) {
+                  return label === "уже построена";
+                }
+                if (index >= maxVisibleLivingSquare) {
+                  return null;
+                }
+
+                const isRanged =
+                  index > minIndexLiving && index < maxIndexLiving;
+                return (
+                  <RequestButton
+                    key={`${index}`}
+                    onClick={() => handleLivingSquareClick(index)}
+                    active={
+                      isRanged ? false : selectedLivingRage.includes(index)
+                    }
+                    ranged={isRanged}
+                  >
+                    {label}
+                  </RequestButton>
+                );
+              })}
+              {maxVisibleLivingSquare < 64 && (
+                <RequestButton
+                  onClick={handleShowMoreLiving}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Ещё {livingSquares.length - maxVisibleLivingSquare}
+                </RequestButton>
+              )}
+              {maxVisibleLivingSquare >= 64 && (
+                <RequestButton
+                  onClick={handleShowLessLiving}
+                  className="ShowMoreButton Color_blue_primary"
+                >
+                  Скрыть
+                </RequestButton>
+              )}
             </div>
           </div>
         </div>
@@ -130,14 +279,14 @@ const CreateStep6Land = ({ className }: Props) => {
           <div className="Reg__footerBack">
             <Button
               secondary
-              href="/customer/create-step-3"
+              href="/customer/create-step-4"
               className="Reg__goBackButton"
             >
               Назад
             </Button>
             <Button
               secondary
-              href="/customer/create-step-3"
+              href="/customer/create-step-4"
               leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>
@@ -159,7 +308,7 @@ const CreateStep6Land = ({ className }: Props) => {
 
             <Button
               disabled={selectedRange.length === 0 && !selected}
-              href="/customer/create-step-7"
+              href="/customer/rent-range-step"
             >
               Далее
             </Button>
@@ -181,12 +330,12 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__selectContainer {
-    height: 496px;
+    height: 416px;
     overflow-y: scroll;
   }
 
   .Reg__squareContainer {
-    padding: 30px 30px 0 30px;
+    padding: 30px 30px 10px 30px;
   }
 
   .Reg__squareHead {
@@ -194,9 +343,13 @@ const StyledRegStep1 = styled.section`
     align-items: center;
     margin-bottom: 25px;
 
-    svg {
-      margin-left: 10px;
+    h2 {
+      margin-right: 10px;
     }
+  }
+
+  .Tooltip {
+    height: 18px;
   }
 
   .Reg__square {
@@ -321,4 +474,4 @@ const StyledRegStep1 = styled.section`
   }
 `;
 
-export { CreateStep6Land };
+export { RentStep5 };
