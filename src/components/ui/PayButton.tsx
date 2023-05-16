@@ -1,11 +1,5 @@
 import cn from "classnames";
-import {
-  ButtonHTMLAttributes,
-  MouseEvent,
-  ReactNode,
-  useCallback,
-  useState,
-} from "react";
+import { ButtonHTMLAttributes, MouseEvent, ReactNode } from "react";
 import styled from "styled-components";
 
 interface PayButtonProps {
@@ -17,7 +11,8 @@ interface PayButtonProps {
   ariaLabel?: string;
   children?: ReactNode;
   disabled?: boolean;
-  tax?: string;
+  tax?: any;
+  active?: boolean;
 }
 
 const PayButton = ({
@@ -27,19 +22,20 @@ const PayButton = ({
   leftIcon,
   disabled,
   tax,
+  active,
 }: PayButtonProps) => {
-  const [activeButton, setActiveButton] = useState(false);
+  // const [activeButton, setActiveButton] = useState(false);
 
-  const handleActive = useCallback(() => {
-    setActiveButton(!activeButton);
-  }, [activeButton]);
+  // const handleActive = useCallback(() => {
+  //   setActiveButton(!activeButton);
+  // }, [activeButton]);
 
   return (
     <StyledButton
-      onClick={handleActive}
+      onClick={onClick}
       className={cn(`${className} Font_16_140 PayButton`, {
         disabled: disabled,
-        isActive: activeButton,
+        isActive: active,
       })}
     >
       <div className="Button__container">

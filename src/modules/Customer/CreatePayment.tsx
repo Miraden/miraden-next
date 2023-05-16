@@ -47,6 +47,9 @@ const CreatePayment = ({ className }: Props) => {
   );
 
   const totalTax = selectedOptions.reduce((acc, option) => acc + option.tax, 0);
+  const selectedTaxValues = paymentOptions
+    .filter((option, index) => activeButtons[index])
+    .map((option) => option.tax);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -89,7 +92,9 @@ const CreatePayment = ({ className }: Props) => {
             <PayForm
               onClose={handleCloseMenu}
               totalTax={totalTax}
-              testCost={activeButtons.findIndex}
+              openToEveryone={selectedTaxValues[0]}
+              additionalRequests={selectedTaxValues[1]}
+              getUp={selectedTaxValues[2]}
             />
           )}
         </ul>

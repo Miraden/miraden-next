@@ -8,88 +8,117 @@ import {
 } from "@/icons";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
-import { Button } from "../Button";
 import { PayButton } from "../PayButton";
 
 interface Props {
   className?: string;
-  testCost?: any;
   totalTax?: any;
+  additionalRequests?: any;
+  openToEveryone?: any;
+  getUp?: any;
 }
 
-const options = [
-  { label: "Дополнительные пожелания", cost: 0 },
-  { label: "Открыть заявку для всех", cost: 10 },
-  { label: "Закрепить вверху на 24 часа", cost: 15 },
+const payOptions = [
+  { label: "Банковская карта", icon: <VisaIcon />, tax: 3.5 },
+  { label: "Юmoney", icon: <YouMoneyIcon />, tax: 3.5 },
+  { label: "Webmoney", icon: <WebMoneyIcon />, tax: 6 },
+  { label: "QIWI Кошелёк", icon: <QiwiIcon />, tax: 6 },
+  { label: "Apple Pay", icon: <ApplePayIcon />, tax: 4 },
+  { label: "Выставить счёт (B2B)", icon: <CreditCardPlusIcon /> },
 ];
 
-const tax = 0.035;
-
-const PayFormContent = ({ className, testCost, totalTax }: Props) => {
-  const totalCost = options.reduce((acc, option) => acc + option.cost, 0);
-  const commission = totalCost * tax;
-
+const PayFormContent = ({
+  className,
+  totalTax,
+  openToEveryone,
+  additionalRequests,
+  getUp,
+}: Props) => {
   const [isShow, setIsShow] = useState(false);
 
   const handleShow = useCallback(() => {
     setIsShow(!isShow);
   }, [isShow]);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedTax, setSelectedTax] = useState(null);
+
+  const handleSelect = useCallback(
+    (option: any) => {
+      if (selectedOption === option) {
+        setSelectedOption(null);
+        setSelectedTax(null);
+      } else {
+        setSelectedOption(option);
+        setSelectedTax(option.tax);
+      }
+    },
+    [selectedOption]
+  );
 
   return (
     <StyledPayFormContent className={className}>
       <div className="PayFormContent__body Font_16_24">
         <span className="PayFormContent__bill">Счёт № 3655 от 20.01.2023</span>
         <div className="PayFormContent__costs">
-          <p>Test {testCost}</p>
-          <ul className="">
-            {options.map((option, index) => (
-              <li key={index} className="PayFormContent__costsItem">
-                <span>{option.label}</span>{" "}
-                <span className="PayFormContent__cost Font_16_140">
-                  {option.cost}€
-                </span>
-              </li>
-            ))}
-          </ul>
-          <div>
-            <span>Комиссия 3.5%</span>
-            <span className="PayFormContent__cost Font_16_140">
-              {commission.toFixed(2)}€
-            </span>
-          </div>
+          {openToEveryone && (
+            <div className="PayFormContent__costsItem">
+              <span>Открыть заявку для всех</span>
+              <span className="PayFormContent__cost Font_16_140">
+                {openToEveryone}€
+              </span>
+            </div>
+          )}
+          {additionalRequests && (
+            <div className="PayFormContent__costsItem">
+              <span>Закрепить вверху на 24 часа</span>
+              <span className="PayFormContent__cost Font_16_140">
+                {additionalRequests}€
+              </span>
+            </div>
+          )}
+          {getUp && (
+            <div className="PayFormContent__costsItem">
+              <span>Поднимать каждые 3 дня</span>
+              <span className="PayFormContent__cost Font_16_140">{getUp}€</span>
+            </div>
+          )}
+          {selectedOption && (
+            <div>
+              <span>Комиссия </span>
+              <span className="PayFormContent__cost Font_16_140">
+                {selectedTax}%
+              </span>
+            </div>
+          )}
+
           <div className="PayFormContent__totalCost">
             <span>Итого к оплате</span>
-            <span className="Font_32_120">{totalTax}€</span>
+            <span className="Font_32_120">
+              {totalTax + (selectedTax ? (totalTax * selectedTax) / 100 : 0)}€
+            </span>
           </div>
         </div>
       </div>
       <div className="PayFormContent__payButtons Font_16_24">
         <p>Оплатите удобным для вас способом</p>
-        <PayButton leftIcon={<VisaIcon />} tax="3.5">
-          Банковская карта
-        </PayButton>
-        <PayButton leftIcon={<YouMoneyIcon />} tax="3.5">
-          Юmoney
-        </PayButton>
-        <PayButton leftIcon={<WebMoneyIcon />} tax="6">
-          Webmoney
-        </PayButton>
-        <PayButton leftIcon={<QiwiIcon />} tax="6">
-          QIWI Кошелёк
-        </PayButton>
-        <PayButton leftIcon={<ApplePayIcon />} tax="от 4">
-          Apple Pay
-        </PayButton>
-        <PayButton leftIcon={<CreditCardPlusIcon />}>
-          Банковская карта
-        </PayButton>
+        <ul className="">
+          {payOptions.map((option, index) => (
+            <li key={index}>
+              <PayButton
+                leftIcon={option.icon}
+                tax={option.tax}
+                active={selectedOption === option} // Проверяем, является ли текущий элемент выбранным
+                onClick={() => handleSelect(option)}
+              >
+                {option.label}
+              </PayButton>
+            </li>
+          ))}
+        </ul>
         <button onClick={handleShow} className="PayFormContent__payVariants">
           {isShow ? "Скрыть способы оплаты" : "Открыть ещё способы"}
         </button>
         {isShow && <div>Другие способы оплаты</div>}
-      </div>
-      <div className="PayFormContent__totalPay">
-        <Button>Оплалить {totalTax}€</Button>
       </div>
     </StyledPayFormContent>
   );
@@ -155,15 +184,6 @@ const StyledPayFormContent = styled.div`
     margin-top: 15px;
     width: 100%;
     color: #4e6af3;
-  }
-
-  .PayFormContent__totalPay {
-    margin-top: 99px;
-    padding: 20px 30px;
-    border-top: 2px solid #e1edfd;
-    button {
-      width: 100%;
-    }
   }
 `;
 

@@ -1,5 +1,6 @@
 import { CrossIcon } from "@/icons";
 import styled from "styled-components";
+import { Button } from "../Button";
 import { PayFormContent } from "./PayFormContent";
 
 interface PayFormProps {
@@ -7,9 +8,20 @@ interface PayFormProps {
   onClose?: any;
   testCost?: any;
   totalTax?: any;
+  openToEveryone?: any;
+  additionalRequests?: any;
+  getUp?: any;
 }
 
-const PayForm = ({ className, onClose, testCost, totalTax }: PayFormProps) => {
+const PayForm = ({
+  className,
+  onClose,
+  testCost,
+  totalTax,
+  openToEveryone,
+  additionalRequests,
+  getUp,
+}: PayFormProps) => {
   return (
     <StyledPayForm className={className}>
       <div className="PayForm">
@@ -19,7 +31,16 @@ const PayForm = ({ className, onClose, testCost, totalTax }: PayFormProps) => {
             <CrossIcon width={24} height={24} className="CrossIcon" />
           </button>
         </div>
-        <PayFormContent testCost={testCost} totalTax={totalTax} />
+        <PayFormContent
+          className="PayFormContent"
+          totalTax={totalTax}
+          openToEveryone={openToEveryone}
+          additionalRequests={additionalRequests}
+          getUp={getUp}
+        />
+        <div className="PayFormContent__totalPay">
+          <Button>Оплалить {totalTax}€</Button>
+        </div>
       </div>
     </StyledPayForm>
   );
@@ -40,18 +61,22 @@ const StyledPayForm = styled.div`
     right: 0;
     height: 100vh;
     top: 0;
-    position: absolute;
+    position: relative;
     z-index: 21;
     width: 390px;
   }
 
   .PayForm__head {
+    position: absolute;
     padding: 30px 30px 18px 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     page-break-after: 18px;
+    background: #fff;
+    width: 100%;
     border-bottom: 2px solid #f1f7ff;
+    z-index: 2;
   }
 
   .CrossIcon {
@@ -60,6 +85,25 @@ const StyledPayForm = styled.div`
     padding: 2px;
     path {
       fill: #7786a5;
+    }
+  }
+
+  .PayFormContent {
+    position: relative;
+    padding-top: 88px;
+    overflow: scroll;
+  }
+
+  .PayFormContent__totalPay {
+    position: absolute;
+    background: #fff;
+    bottom: 0;
+    width: 100%;
+    margin-top: 99px;
+    padding: 20px 30px;
+    border-top: 2px solid #e1edfd;
+    button {
+      width: 100%;
     }
   }
 
