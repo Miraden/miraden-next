@@ -22,6 +22,7 @@ export default function Home() {
         />
       </Head>
       <StyledMain>
+        <Link href="/">Главная</Link>
         <Link href="customer/reg-1">Регистрация! Укажите ваш статус</Link>
         <Link href="customer/reg-2">
           Регистрация! Укажите имя и электронную почту
@@ -46,15 +47,18 @@ export default function Home() {
         <Link href="customer/create-step-3">
           Шаг 3.Укажите тип недвижимости
         </Link>
-        <Link href="customer/rent-range-step-5">Шаг 3. Аренда</Link>
+        <Link href="customer/rent-range-step-5">
+          Шаг 3. Укажите общую площадь недвижимости для аренды
+        </Link>
         <Link href="customer/create-step-4">
           Шаг 4. Укажите состояние недвижимости
         </Link>
         <Link href="customer/create-commercial-step-4">
           Шаг 4. Коммерческая
         </Link>
-        <Link href="customer/rent-range-step">Шаг 4. Аренда</Link>
-
+        <Link href="customer/rent-range-step">
+          Шаг 4. Укажите период аренды
+        </Link>
         <Link href="customer/create-step-5">
           Шаг 5. Укажите общую площадь недвижимости
         </Link>
@@ -67,9 +71,13 @@ export default function Home() {
         <Link href="customer/create-commercial-step-6">
           Шаг 6. Коммерческая
         </Link>
-        <Link href="customer/rent-range-step-6">Шаг 6. Аренда</Link>
+        <Link href="customer/rent-range-step-6">
+          Шаг 6. Укажите примерный бюджет аренды{" "}
+        </Link>
         <Link href="customer/create-step-7">Шаг 7. Укажите цель покупки</Link>
-        <Link href="customer/rent-range-step-7">Шаг 7. Аренда</Link>
+        <Link href="customer/rent-range-step-7">
+          Шаг 7. Когда готовы арендовать?
+        </Link>
         <Link href="customer/create-step-8">
           Шаг 8. Когда готовы выходить на сделку?
         </Link>
@@ -85,6 +93,8 @@ export default function Home() {
         <Link href="customer/create-payment">
           Шаг 12. Получите больше просмотров и откликов
         </Link>
+
+        <Link href="/applications">Заявки</Link>
       </StyledMain>
     </>
   );

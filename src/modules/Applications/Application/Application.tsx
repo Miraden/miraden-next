@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { ObjectCard } from "./components/ObjectCard";
 import { SellerCard } from "./components/SellerCard";
 import { SingleApplication } from "./components/SingleApplication";
+import { SingleApplicationSideBar } from "./components/SingleApplicationSideBar";
 interface ApplicationProps {
   className?: string;
 }
@@ -234,6 +235,7 @@ const Application = ({ className }: ApplicationProps) => {
       {selected === "application" ? (
         <>
           <SingleApplication />
+          <SingleApplicationSideBar className="SingleApplicationSideBar" />
         </>
       ) : (
         <>
@@ -321,6 +323,7 @@ const Application = ({ className }: ApplicationProps) => {
 
 const StyledApplication = styled.section`
   position: relative;
+
   .Applications__filter {
     position: absolute;
     top: 94px;
@@ -333,6 +336,12 @@ const StyledApplication = styled.section`
     height: 10px;
     border-radius: 0 0 10px 10px;
     background: #fff;
+  }
+
+  .SingleApplicationSideBar {
+    position: absolute;
+    right: -420px;
+    top: 94px;
   }
 
   .Application__headContainer {
