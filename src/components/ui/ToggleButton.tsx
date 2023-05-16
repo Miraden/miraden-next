@@ -3,11 +3,12 @@ import styled from "styled-components";
 
 interface ToggleButtonProps {
   disabled?: boolean;
+  className?: string;
 }
 
-const ToggleButton = ({ disabled }: ToggleButtonProps) => {
+const ToggleButton = ({ className, disabled }: ToggleButtonProps) => {
   return (
-    <StyledToggleButton>
+    <StyledToggleButton className={className}>
       <label className={cn("ToggleButton__switch", { Disabled: disabled })}>
         <input type="checkbox" disabled={disabled} />
         <span className="ToggleButton__slider Round"></span>

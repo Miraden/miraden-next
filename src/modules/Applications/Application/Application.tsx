@@ -3,11 +3,11 @@ import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
 import { ArrowIcon } from "@/icons";
 import { FilterIcon } from "@/icons/FilterIcon";
 import cn from "classnames";
-import Image from "next/image";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { ObjectCard } from "./components/ObjectCard";
 import { SellerCard } from "./components/SellerCard";
+import { SingleApplication } from "./components/SingleApplication";
 interface ApplicationProps {
   className?: string;
 }
@@ -223,85 +223,95 @@ const Application = ({ className }: ApplicationProps) => {
               Рекомендуемые
             </Button>
           </div>
+
           <div className="Applications__headTabsBar"></div>
         </div>
       </div>
-      <div>
-        <Search
-          options={[]}
-          placeholder="Поиск"
-          className="Applications__searchBar"
-          rightIcon={<FilterIcon />}
-          onClick={handleShowFilter}
-        />
-      </div>
-      {showFilter && (
-        <ApplicationsFilter
-          onTabClick={handleTabClick}
-          className="Applications__filter"
-          onClick={handleShowFilter}
-        />
-      )}
-      {selectedContent === "1" && (
-        <ul className="Applications__list">
-          {applicationsArray.map((appItem, index) => (
-            <li key={index}>
-              <SellerCard
-                name={appItem.name}
-                isPro={appItem.isPro}
-                isVerified={appItem.isVerified}
-                rating={appItem.rating}
-                image={appItem.image}
-                status={appItem.status}
-                agencyName={appItem.agencyName}
-                isOnline={appItem.isOnline}
-                unreadMessages={appItem.unreadMessages}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
-      {selectedContent === "2" && (
-        <ul className="Applications__list">
-          {objectsArray.map((object, index) => (
-            <li key={index}>
-              <ObjectCard
-                title={object.title}
-                location={object.location}
-                id={object.id}
-                cashBack={object.cashBack}
-                year={object.year}
-                yieldCount={object.yieldCount}
-                sleeps={object.sleeps}
-                square={object.square}
-                rooms={object.rooms}
-                baths={object.baths}
-                price={object.price}
-                isBooked={object.isBooked}
-                isUnpublished={object.isUnpublished}
-                name={object.name}
-                status={object.status}
-                image1={object.image1}
-                image2={object.image2}
-                image3={object.image3}
-                image={object.image}
-                firstInstallment={object.firstInstallment}
-                firstInstallmentPercent={object.firstInstallmentPercent}
-                singleCost={object.singleCost}
-              />
-            </li>
-          ))}
-        </ul>
+
+      {selected === "application" ? (
+        <>
+          <SingleApplication />
+        </>
+      ) : (
+        <>
+          <div>
+            <Search
+              options={[]}
+              placeholder="Поиск"
+              className="Applications__searchBar"
+              rightIcon={<FilterIcon />}
+              onClick={handleShowFilter}
+            />
+          </div>
+          {showFilter && (
+            <ApplicationsFilter
+              onTabClick={handleTabClick}
+              className="Applications__filter"
+              onClick={handleShowFilter}
+            />
+          )}
+          {selectedContent === "1" && (
+            <ul className="Applications__list">
+              {applicationsArray.map((appItem, index) => (
+                <li key={index}>
+                  <SellerCard
+                    name={appItem.name}
+                    isPro={appItem.isPro}
+                    isVerified={appItem.isVerified}
+                    rating={appItem.rating}
+                    image={appItem.image}
+                    status={appItem.status}
+                    agencyName={appItem.agencyName}
+                    isOnline={appItem.isOnline}
+                    unreadMessages={appItem.unreadMessages}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+          {selectedContent === "2" && (
+            <ul className="Applications__list">
+              {objectsArray.map((object, index) => (
+                <li key={index}>
+                  <ObjectCard
+                    title={object.title}
+                    location={object.location}
+                    id={object.id}
+                    cashBack={object.cashBack}
+                    year={object.year}
+                    yieldCount={object.yieldCount}
+                    sleeps={object.sleeps}
+                    square={object.square}
+                    rooms={object.rooms}
+                    baths={object.baths}
+                    price={object.price}
+                    isBooked={object.isBooked}
+                    isUnpublished={object.isUnpublished}
+                    name={object.name}
+                    status={object.status}
+                    image1={object.image1}
+                    image2={object.image2}
+                    image3={object.image3}
+                    image={object.image}
+                    firstInstallment={object.firstInstallment}
+                    firstInstallmentPercent={object.firstInstallmentPercent}
+                    singleCost={object.singleCost}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
       )}
 
-      <div className="Application__body">
+      {/* <div className="Application__body">
         <Image src="/images/application.svg" alt="" width={150} height={120} />
         <h2>Вы отлично справились!</h2>
         <p className="Color_text_grey">
           На этом месте скоро появятся предложения от исполнителей. А пока
           вы можете посмотреть Рекомендуемое
         </p>
-      </div>
+      </div> */}
     </StyledApplication>
   );
 };

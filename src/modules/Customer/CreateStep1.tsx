@@ -660,6 +660,7 @@ const SearchDropdown = styled.div`
   overflow-y: auto;
   border-radius: 0 0 10px 10px;
   border: none;
+  border-top: 2px solid #f1f7ff;
   border-bottom: 2px solid #f1f7ff;
   border-right: 2px solid #f1f7ff;
   border-left: 2px solid #f1f7ff;
