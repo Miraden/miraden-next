@@ -33,5 +33,5 @@ export default function Applications() {
 
 const StyledMainApplications = styled.main`
   background: #eef1f5;
-  height: 100vh;
+  height: 150vh;
 `;

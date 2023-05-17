@@ -190,6 +190,16 @@ const ObjectCard = ({
                 singleCost={singleCost}
               />
             </p>
+            <div>
+              <Button
+                tertiary
+                className="ObjectCard__buttonMobile"
+                onClick={handleOpenDropdown}
+              >
+                <KebabIcon className="ObjectCard__buttonIcon" />
+              </Button>
+              {openDropdown && <ObjectDropdown agencyName={agencyName} />}
+            </div>
             <div className="ObjectCard__footerPerson">
               <div>
                 <p className="Font_14_140">{name}</p>
@@ -280,7 +290,8 @@ const StyledObjectCard = styled.div`
     position: relative;
   }
 
-  .ObjectCard__button {
+  .ObjectCard__button,
+  .ObjectCard__buttonMobile {
     padding: 2px;
     width: 28px;
     height: 28px;
@@ -352,10 +363,21 @@ const StyledObjectCard = styled.div`
     }
   }
 
+  .ObjectCard__buttonMobile {
+    display: none;
+  }
+
   @media (max-width: 1024px) {
     .ObjectCard__mainImages,
     .ObjectCard__unpublishedContainer {
       min-width: 240px;
+
+      img {
+        width: unset;
+        height: unset;
+        object-fit: cover;
+        border-radius: 10px;
+      }
     }
     .Image2,
     .Image3 {
@@ -372,6 +394,18 @@ const StyledObjectCard = styled.div`
 
     .ObjectCard__objectInfo {
       margin-top: 14px;
+    }
+
+    .ObjectCard__unpublished {
+      display: none;
+    }
+
+    .ObjectCard__unpublishedContainer {
+      max-width: 240px;
+    }
+
+    .ObjectCard__booked {
+      display: none;
     }
   }
 
@@ -415,6 +449,14 @@ const StyledObjectCard = styled.div`
 
     .ObjectCard__footerPerson {
       display: none;
+    }
+
+    .ObjectCard__button {
+      display: none;
+    }
+
+    .ObjectCard__buttonMobile {
+      display: flex;
     }
   }
 `;

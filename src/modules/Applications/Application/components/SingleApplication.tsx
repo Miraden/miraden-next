@@ -7,8 +7,14 @@ import {
   PointIconFooter,
   SquareIcon,
 } from "@/icons";
+import { BuildingIcon } from "@/icons/BuildingIcon";
+import { CashIcon } from "@/icons/CashIcon";
+import { CreditCardIcon } from "@/icons/CreditCardIcon";
+import { DealIcon } from "@/icons/DealIcon";
 import { EyeIcon } from "@/icons/EyeIcon";
+import { LikeIcon } from "@/icons/LikeIcon";
 import { LivingSquareIcon } from "@/icons/LivingSquareIcon";
+import { PurposeCheckIcon } from "@/icons/PurposeCheckIcon";
 import { RoomsIcon } from "@/icons/RoomsIcon";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
@@ -33,6 +39,12 @@ const SingleApplication = ({ className, someContent }: Props) => {
   const handleOpenDropdown = useCallback(() => {
     setOpenDropdown(!openDropdown);
   }, [openDropdown]);
+
+  const [openText, setOpenText] = useState(false);
+
+  const handleOpenText = useCallback(() => {
+    setOpenText(!openText);
+  }, [openText]);
 
   return (
     <StyledSingleApplication className={className}>
@@ -127,7 +139,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <PointIconFooter width={18} />
+            <CashIcon width={18} />
             <p>Формат сделки</p>
           </div>
           <div>
@@ -136,7 +148,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <PointIconFooter width={18} />
+            <BuildingIcon width={18} />
             <p>Тип</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -146,7 +158,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <PointIconFooter width={18} />
+            <BuildYearIcon width={18} />
             <p>Состояние</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -156,7 +168,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <PointIconFooter width={18} />
+            <SquareIcon width={18} />
             <p>Площадь</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -167,7 +179,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <PointIconFooter width={18} />
+            <RoomsIcon width={18} />
             <p>Комнаты</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -178,7 +190,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <PointIconFooter width={18} />
+            <PurposeCheckIcon width={18} />
             <p>Цель покупки</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -188,7 +200,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <PointIconFooter width={18} />
+            <DealIcon width={18} />
             <p>Срочность</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -197,7 +209,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <PointIconFooter width={18} />
+            <CreditCardIcon width={18} />
             <p>Способ покупки</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -208,28 +220,60 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <PointIconFooter width={18} />
+            <LikeIcon width={18} />
             <p>Пожелания</p>
           </div>
-          <div>
+          <div className="SingleApplication__locationInfoText">
             <p className="SingleApplication__locationInfo">
-              Добраться до острова можно двумя способами: воздушным и морским.
-              Для иностранных туристов открыты аэропорты в Ларнаке и Пафосе
-              и морские порты в Лимассоле и Ларнаке. Всего на острове
-              15 аэропортов, из них 7 крупных. Более 230 рейсов в неделю,
-              выполняемые 33-мя авиакомпаниями, связывают Кипр с Западной
-              и Восточной Европой, Африкой и Ближним Востоком
-              <br />
-              <br />
-              Плюс пассажирские и грузовые чартерные рейсы. Добраться до острова
-              можно двумя способами: воздушным и морским. Для иностранных
-              туристов открыты аэропорты в Ларнаке и Пафосе и морские порты
-              в Лимассоле и Ларнаке. Всего на острове 15 аэропортов,
-              из них 7 крупных. Более 230 рейсов в неделю, выполняемые 33-мя
-              авиакомпаниями, связывают Кипр с Западной и Восточной Европой,
-              Африкой и Ближним Востоком. Плюс пассажирские и грузовые чартерные
-              рейсы
+              {openText ? (
+                <span>
+                  Добраться до острова можно двумя способами: воздушным и
+                  морским. Для иностранных туристов открыты аэропорты в Ларнаке
+                  и Пафосе и морские порты в Лимассоле и Ларнаке. Всего на
+                  острове 15 аэропортов, из них 7 крупных. Более 230 рейсов в
+                  неделю, выполняемые 33-мя авиакомпаниями, связывают Кипр с
+                  Западной и Восточной Европой, Африкой и Ближним Востоком
+                  <br /> <br />
+                  Плюс пассажирские и грузовые чартерные рейсы. Добраться до
+                  острова можно двумя способами: воздушным и морским. Для
+                  иностранных туристов открыты аэропорты в Ларнаке и Пафосе и
+                  морские порты в Лимассоле и Ларнаке. Всего на острове 15
+                  аэропортов, из них 7 крупных. Более 230 рейсов в неделю,
+                  выполняемые 33-мя авиакомпаниями, связывают Кипр с Западной и
+                  Восточной Европой, Африкой и Ближним Востоком. Плюс
+                  пассажирские и грузовые чартерные рейсы.
+                  <br />
+                  <br />А тут будет какой-то нереально длинный текст, понимаете?
+                </span>
+              ) : (
+                <span>
+                  Добраться до острова можно двумя способами: воздушным и
+                  морским. Для иностранных туристов открыты аэропорты в Ларнаке
+                  и Пафосе и морские порты в Лимассоле и Ларнаке. Всего на
+                  острове 15 аэропортов, из них 7 крупных. Более 230 рейсов в
+                  неделю, выполняемые 33-мя авиакомпаниями, связывают Кипр с
+                  Западной и Восточной Европой, Африкой и Ближним Востоком
+                  <br /> <br />
+                  Плюс пассажирские и грузовые чартерные рейсы. Добраться до
+                  острова можно двумя способами: воздушным и морским. Для
+                  иностранных туристов открыты аэропорты в Ларнаке и Пафосе и
+                  морские порты в Лимассоле и Ларнаке. Всего на острове 15
+                  аэропортов, из них 7 крупных. Более 230 рейсов в неделю,
+                  выполняемые 33-мя авиакомпаниями, связывают Кипр с Западной и
+                  Восточной Европой, Африкой и Ближним Востоком. Плюс
+                  пассажирские и грузовые чартерные рейсы
+                </span>
+              )}
             </p>
+            {!openText ? (
+              <button onClick={handleOpenText} className="Color_blue_primary">
+                Открыть больше
+              </button>
+            ) : (
+              <button onClick={handleOpenText} className="Color_blue_primary">
+                Свернуть
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -370,6 +414,16 @@ const StyledSingleApplication = styled.div`
     div:first-child {
       min-width: 250px;
       color: #7786a5;
+    }
+  }
+
+  .SingleApplication__locationInfoText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    button {
+      margin-top: 20px;
     }
   }
 

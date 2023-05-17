@@ -41,11 +41,11 @@ const TechSupport = ({
           </p>
           <div className="TechSupport__buttonsContainer">
             <button className="TechSupport__button" onClick={handleButtonClick}>
-              <WhatsappIcon />
+              <WhatsappIcon width={42} height={42} />
               <span className="Font_16_140">WhatsApp</span>
             </button>
             <button className="TechSupport__button" onClick={handleButtonClick}>
-              <TelegramIcon />
+              <TelegramIcon width={42} height={42} />
               <span className="Font_16_140">WhatsApp</span>
             </button>
           </div>

@@ -61,7 +61,7 @@ const PricingSelect: FC<Props> = ({
           dismissHandler(e)
         }
       >
-        <div className="DropdownInput_selectLabel Color_blue_primary">
+        <div className="DropdownInput_selectLabel Color_blue_primary sm:Font_14_16_600">
           {price + selectedOption ? price + selectedOption : price}
           <ArrowIcon />
         </div>
