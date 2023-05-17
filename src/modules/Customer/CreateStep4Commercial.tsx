@@ -298,7 +298,7 @@ const StyledRegStep1 = styled.section`
     margin-left: -20px;
     margin-top: -20px;
     align-content: start;
-    height: 449px;
+    height: 436px;
 
     button {
       justify-content: flex-start;

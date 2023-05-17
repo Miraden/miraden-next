@@ -202,9 +202,13 @@ const DigitInput = styled.input`
   border-radius: 10px;
   margin-top: 40px;
 
-  :focus {
+  &:hover {
+    box-shadow: 0 0 0 2px #cddef4 inset;
+    cursor: text;
+  }
+  &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px inset #4e6af3;
+    box-shadow: 0 0 0 2px #4e6af3 inset !important;
   }
 
   @media (max-width: 576px) {
@@ -228,6 +232,7 @@ const StyledRegStep1 = styled.section`
     transition: 0.15s ease;
     background: #f1f7ff;
     button {
+      outline: none;
       transition: 0.15s ease;
       text-decoration: underline;
       padding: 0;
@@ -271,7 +276,7 @@ const StyledRegStep1 = styled.section`
   .Reg__changeNumber {
     margin-top: 50px;
 
-    :focus {
+    a:focus {
       outline: none;
     }
   }

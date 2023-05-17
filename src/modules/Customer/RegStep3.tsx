@@ -64,7 +64,7 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__options {
-    padding-top: 50px;
+    padding-top: 48px;
     padding-bottom: 78px;
     display: flex;
     flex-direction: column;

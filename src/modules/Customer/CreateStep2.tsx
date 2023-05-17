@@ -113,7 +113,7 @@ const StyledRegStep1 = styled.section`
     flex-wrap: wrap;
     margin-left: -20px;
     margin-top: -20px;
-    height: 416px;
+    height: 434px;
 
     button {
       justify-content: flex-start;

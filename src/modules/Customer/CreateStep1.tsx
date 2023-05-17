@@ -407,7 +407,7 @@ const StyledCreateStep1 = styled.section`
 
   .Reg__options {
     padding: 41px 30px 0 30px;
-    height: 356px;
+    height: 352px;
   }
 
   .Reg__optionsList {

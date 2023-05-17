@@ -20,7 +20,7 @@ const MapContainer = ({ className }: Props) => {
 };
 
 const StyledMapContainer = styled.div`
-  height: 354px;
+  height: 352px;
   background: #f1f7ff;
   position: relative;
   display: flex;

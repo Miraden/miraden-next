@@ -55,7 +55,7 @@ const Login = ({ className }: Props) => {
           />
           <Link
             href="/customer/pass-recover-1"
-            className="Font_12_16 Reg__restorePass"
+            className="Font_14_16 Reg__restorePass"
           >
             Забыли пароль?
           </Link>
@@ -78,7 +78,7 @@ const Login = ({ className }: Props) => {
               className="Reg__goBackButtonMobile"
             ></Button>
           </div>
-          <Button disabled={valid} href="customer/pass-recover-1">
+          <Button disabled={valid} href="/customer/pass-recover-1">
             Далее
           </Button>
         </div>

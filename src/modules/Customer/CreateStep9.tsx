@@ -180,7 +180,7 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__selectContainer {
-    height: 414px;
+    height: 434px;
   }
 
   .Reg__options {

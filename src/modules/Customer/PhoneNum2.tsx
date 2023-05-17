@@ -120,7 +120,7 @@ const PhoneNum2 = ({ className, onChange }: Props) => {
               )
             </div>
           </div>
-          <Link href="" className="Reg__changeNumber">
+          <Link href="/customer/reg-1" className="Reg__changeNumber">
             Изменить номер телефона
           </Link>
         </div>
@@ -168,6 +168,15 @@ const DigitInput = styled.input`
   border: none;
   box-shadow: 0 0 0 2px inset #e1edfd;
   border-radius: 10px;
+
+  &:hover {
+    box-shadow: 0 0 0 2px #cddef4 inset;
+    cursor: text;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #4e6af3 inset !important;
+  }
 `;
 
 const StyledRegStep1 = styled.section`
@@ -187,11 +196,12 @@ const StyledRegStep1 = styled.section`
     button {
       text-decoration: underline;
       padding: 0;
+      outline: none;
     }
   }
 
   .Reg__options {
-    padding-top: 41px;
+    padding-top: 38px;
     padding-bottom: 174px;
     display: flex;
     flex-direction: column;
@@ -221,6 +231,10 @@ const StyledRegStep1 = styled.section`
 
   .Reg__changeNumber {
     margin-top: 50px;
+
+    a:focus {
+      outline: none;
+    }
   }
 
   .Reg__progressBar {
