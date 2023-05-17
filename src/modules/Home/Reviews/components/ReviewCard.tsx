@@ -1,7 +1,6 @@
 import { Sticker } from "@/components/ui";
 import { VerifiedIcon } from "@/icons";
 import { StarIconFilled } from "@/icons/StarIconFilled";
-import Image from "next/image";
 import styled from "styled-components";
 
 interface Props {
@@ -17,7 +16,7 @@ const ReviewCard = ({ className, name, role, image, text, title }: Props) => {
   return (
     <StyledReviewCard className={className}>
       <div className="Card__head">
-        <Image src={image} alt="" width={72} height={72} />
+        <img src={image} alt="" width={72} height={72} />
         <div className="Card__userInfo">
           <p className="Font_16_140">{name}</p>
           <p className="Font_14_140 Color_blue_primary">{role}</p>
