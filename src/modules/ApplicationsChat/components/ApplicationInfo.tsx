@@ -2,9 +2,13 @@ import { Sticker } from "@/components/ui";
 import { ArrowAccordionIcon } from "@/icons";
 import styled from "styled-components";
 
-const ApplicationInfo = () => {
+interface Props {
+  className?: string;
+}
+
+const ApplicationInfo = ({ className }: Props) => {
   return (
-    <StyledApplicationInfo>
+    <StyledApplicationInfo className={className}>
       <div className="ApplicationInfo">
         <button className="ApplicationInfo__backButton">
           <ArrowAccordionIcon className="ArrowIcon" />
@@ -36,6 +40,7 @@ const StyledApplicationInfo = styled.div`
   }
 
   .ApplicationInfo__backButton {
+    flex-shrink: 0;
     width: 28px;
     height: 28px;
     display: flex;

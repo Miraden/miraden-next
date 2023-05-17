@@ -130,7 +130,7 @@ const ObjectCard = ({
 
         <div className="ObjectCard__info">
           <div className="ObjectCard__head">
-            <p className="Font_20_120">{title}</p>
+            <p className="Font_20_120 md:Font_16_150_500 ">{title}</p>
             <Button
               tertiary
               className="ObjectCard__button"
@@ -169,11 +169,11 @@ const ObjectCard = ({
               <RoomsIcon />
               <span>{rooms}</span>
             </p>
-            <p>
+            <p className="Sleeps">
               <SleepsIcon />
               <span>{sleeps}</span>
             </p>
-            <p>
+            <p className="Baths">
               <BathsIcon />
               <span>{baths}</span>
             </p>
@@ -243,6 +243,7 @@ const StyledObjectCard = styled.div`
     min-width: 400px;
     img {
       border-radius: 10px;
+      object-fit: cover;
     }
     .Image2 {
       margin-left: 10px;
@@ -351,28 +352,71 @@ const StyledObjectCard = styled.div`
     }
   }
 
-  /* .ObjectCard__mainImages {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 10px;
-
-    .Image1 {
-      grid-column: 1 / span 3;
+  @media (max-width: 1024px) {
+    .ObjectCard__mainImages,
+    .ObjectCard__unpublishedContainer {
+      min-width: 240px;
     }
-
     .Image2,
     .Image3 {
-      grid-column: 4 / span 1;
+      display: none;
     }
 
-    .Image2 {
-      grid-row-start: 1;
+    .ObjectCard__location {
+      margin-top: 8px;
     }
 
-    .Image3 {
-      grid-row-start: 2;
+    .ObjectCard__indicators {
+      margin-top: 10px;
     }
-  } */
+
+    .ObjectCard__objectInfo {
+      margin-top: 14px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 10px;
+    .ObjectCard__mainImages,
+    .ObjectCard__unpublishedContainer {
+      min-width: 120px;
+      img {
+        height: 120px;
+      }
+    }
+
+    .ObjectCard__info {
+      margin-left: 15px;
+    }
+
+    .ObjectCard__location {
+      margin-top: 5px;
+    }
+
+    .ObjectCard__indicators {
+      display: none;
+    }
+
+    .ObjectCard__objectInfo {
+      margin-top: 10px;
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+      p:not(:first-child) {
+        margin-left: 16px;
+      }
+
+      .Sleeps,
+      .Baths {
+        display: none;
+      }
+    }
+
+    .ObjectCard__footerPerson {
+      display: none;
+    }
+  }
 `;
 
 const ObjectDropdown = ({ agencyName }: ObjectCardProps) => {

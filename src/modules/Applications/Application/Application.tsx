@@ -169,7 +169,9 @@ const Application = ({ className }: ApplicationProps) => {
             height={20}
             className="Application__headArrow"
           />
-          <h1>Хочу купить 3-х комнатную квартиру на Кипре</h1>
+          <h1 className="Font_32_120 lg:Font_26_120_500">
+            Хочу купить 3-х комнатную квартиру на Кипре
+          </h1>
         </div>
         <div className="Applications__headTabsContainer">
           <div className="Applications__headTabs">
@@ -362,6 +364,7 @@ const StyledApplication = styled.section`
   .Applications__headTabs {
     display: flex;
     margin-top: 30px;
+    overflow: auto;
     button {
       padding: 0;
     }
@@ -452,6 +455,16 @@ const StyledApplication = styled.section`
       path {
         fill: #fff;
       }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .Application__headContainer {
+      margin-top: 60px;
+    }
+
+    .Applications__list {
+      margin-top: 16px;
     }
   }
 `;

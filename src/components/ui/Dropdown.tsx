@@ -62,7 +62,7 @@ const StyledDropdown = styled.div`
     background: #fff;
     border-radius: 0 0 10px 10px;
     max-height: 228px;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-size: 14px;
     line-height: 140%;
     cursor: pointer;

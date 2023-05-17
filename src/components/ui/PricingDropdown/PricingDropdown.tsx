@@ -136,7 +136,7 @@ const StyledPricingDropdown = styled.div`
     width: fit-content;
     background: #fff;
     border-radius: 10px;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-size: 14px;
     line-height: 140%;
     cursor: pointer;

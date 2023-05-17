@@ -46,7 +46,7 @@ const SellerCard = ({
           </div>
           <div className="SellerCard__info">
             <p className="Font_16_140">{name}</p>
-            <p className="Font_14_140 Color_blue_primary">
+            <p className="SellerCard__status Font_14_140 Color_blue_primary">
               {status?.includes("Агентство") ? (
                 <>
                   {status} - {agencyName}
@@ -193,6 +193,20 @@ const StyledSellerCard = styled.div`
     color: #fff;
     background: #4e6af3;
     border-radius: 50%;
+  }
+
+  @media (max-width: 576px) {
+    padding: 10px;
+    .SellerCard__imageContainer {
+      min-width: 72px;
+    }
+
+    .SellerCard__status {
+      max-width: 215px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 `;
 

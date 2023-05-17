@@ -6,9 +6,13 @@ import Image from "next/image";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 
+interface Props {
+  className?: string;
+}
+
 type Option = "contacts" | "requests" | "information";
 
-const ContactInfo = () => {
+const ContactInfo = ({ className }: Props) => {
   const [selected, setSelected] = useState<Option | null>(null);
   const [showFilter, setShowFilter] = useState(false);
 
@@ -19,7 +23,7 @@ const ContactInfo = () => {
   }, []);
 
   return (
-    <StyledContactInfo>
+    <StyledContactInfo className={className}>
       <div className="Applications__headTabsContainer">
         <div className="Applications__headTabs">
           <Button

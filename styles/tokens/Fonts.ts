@@ -238,6 +238,12 @@ const Fonts = createGlobalStyle`
       font-weight: 600;
     }
 
+    .lg\\:Font_26_120_500 {
+      font-size: 26px;
+      line-height: 120%;
+      font-weight: 500;
+    }
+
     .lg\\:Font_16_24 {
       font-size: 16px;
       line-height: 24px;
@@ -254,6 +260,14 @@ const Fonts = createGlobalStyle`
     }
   }
 
+@media (max-width: 768px) {
+  .md\\:Font_16_150_500 {
+    font-size: 16px;
+      line-height: 120%;
+      font-weight: 500;
+  }
+}
+  
   @media (max-width: 576px) {
     .sm\\:Font_26_120 {
       font-size: 26px;

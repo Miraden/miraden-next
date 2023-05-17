@@ -5,7 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Button } from "./Button";
 
-const MessageInput = () => {
+interface Props {
+  className?: string;
+}
+
+const MessageInput = ({ className }: Props) => {
   const [value, setValue] = useState<string>("");
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
@@ -36,7 +40,7 @@ const MessageInput = () => {
   }, [textareaRef]);
 
   return (
-    <StyledMessageInput>
+    <StyledMessageInput className={className}>
       <InputWrapper>
         {value.length === 0 ? <PenIcon /> : null}
         <Input
@@ -53,7 +57,7 @@ const MessageInput = () => {
             className="MessageInput__button_default"
             leftIcon={<PlusIcon />}
           >
-            Button
+            Добавить объект
           </Button>
         ) : (
           <Button
@@ -72,7 +76,6 @@ const MessageInput = () => {
 };
 
 const StyledMessageInput = styled.div`
-  max-width: 300px;
   display: flex;
   align-items: center;
   background-color: #ffffff;

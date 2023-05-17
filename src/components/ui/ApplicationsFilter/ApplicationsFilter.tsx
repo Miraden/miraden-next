@@ -102,7 +102,7 @@ const StyledApplicationsFilter = styled.div`
     margin-top: 20px;
     max-height: calc(100vh - 184px);
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
     .TabButtons__container {
       padding: 0px 30px;
     }

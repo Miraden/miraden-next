@@ -70,7 +70,7 @@ const StyledCurrencySelect = styled.div`
     background: #2a344a;
     border-radius: 10px;
     max-height: 228px;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-size: 14px;
     line-height: 140%;
     cursor: pointer;
