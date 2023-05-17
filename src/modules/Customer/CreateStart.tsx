@@ -112,7 +112,12 @@ const CreateStart = ({ className }: Props) => {
             {steps.map((step, index) => (
               <li key={index} className="Reg__step keen-slider__slide">
                 <div className="Reg__imageContainer">
-                  <Image src={step.image} alt="" width={200} height={200} />
+                  <Image
+                    src={`.${step.image}`}
+                    alt=""
+                    width={200}
+                    height={200}
+                  />
                 </div>
                 <div className="Reg__listItemContent">
                   <h3 className="Reg__listItemTitle Font_20_120 lg:Font_18_120_500 sm:Font_18_120_500">

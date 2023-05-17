@@ -144,7 +144,7 @@ const FAQ = () => {
             <a href="">базу знаний</a>  или напишите в <a href="">поддержку</a>
           </p>
           <Image
-            src="/images/FAQ.svg"
+            src="./images/FAQ.svg"
             alt=""
             width={250}
             height={250}

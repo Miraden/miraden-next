@@ -1,6 +1,5 @@
 import { CatalogIcon, CommunityIcon, DealsIcon, HomeIcon } from "@/icons";
 import cn from "classnames";
-import Image from "next/image";
 import styled from "styled-components";
 
 interface FeatureProps {
@@ -10,32 +9,32 @@ interface FeatureProps {
 const options = [
   {
     optionName: "Поиск недвижимости",
-    image1: "/images/miraden/1.png",
-    image2: "/images/miraden/2.png",
+    image1: "./images/miraden/1.png",
+    image2: "./images/miraden/2.png",
     icon: <HomeIcon width={28} height={28} />,
     text: "Персональный каталог объектов, собранный из предложений продавцов в реальном времени",
     id: 1,
   },
   {
     optionName: "Биржа заявок",
-    image1: "/images/miraden/3.png",
-    image2: "/images/miraden/4.png",
+    image1: "./images/miraden/3.png",
+    image2: "./images/miraden/4.png",
     icon: <CatalogIcon width={28} height={28} />,
     text: "Реальные заявки на покупку или аренду недвижимости из разных стран мира",
     id: 2,
   },
   {
     optionName: "Независимые продавцы",
-    image1: "/images/miraden/5.png",
-    image2: "/images/miraden/6.png",
+    image1: "./images/miraden/5.png",
+    image2: "./images/miraden/6.png",
     icon: <CommunityIcon width={28} height={28} />,
     text: "Собственники, риелторы и застройщики, готовые сделать персональное предложение",
     id: 3,
   },
   {
     optionName: "Партнерские сделки",
-    image1: "/images/miraden/7.png",
-    image2: "/images/miraden/8.png",
+    image1: "./images/miraden/7.png",
+    image2: "./images/miraden/8.png",
     icon: <DealsIcon width={28} height={28} />,
     text: "Удобный сервис для прозрачной работы между застройщиками и риелторами",
     id: 4,
@@ -75,20 +74,18 @@ const FeaturesMobile = ({ className }: FeatureProps) => {
                   </p>
 
                   <div className="Features__imagesContainer">
-                    <Image
+                    <img
                       src={image1}
                       alt=""
                       width={312}
                       height={655}
-                      priority
                       className="Features__image1"
                     />
-                    <Image
+                    <img
                       src={image2}
                       alt=""
                       width={312}
                       height={655}
-                      priority
                       className="Features__image2"
                     />
                   </div>
