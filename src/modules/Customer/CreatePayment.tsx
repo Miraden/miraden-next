@@ -152,7 +152,7 @@ const StyledRegStep1 = styled.section`
     max-width: 840px;
     padding: 41px 30px 0 30px;
     height: 386px;
-    overflow: scroll;
+    overflow: auto;
 
     li:not(:first-child) {
       margin-top: 20px;

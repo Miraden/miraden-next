@@ -324,7 +324,7 @@ const StyledRegStep1 = styled.section`
     padding-bottom: 10px;
     align-content: flex-start;
     height: 206px;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     margin-left: -10px;
     button {

@@ -9,6 +9,14 @@ const Layout = createGlobalStyle`
     padding-right: 40px;
   }
 
+  .ContainerFull {
+    max-width: calc(1880px + 2 * 20px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   .FullBleed {
     width: 100vw;
     margin-left: calc(50% - 50vw);

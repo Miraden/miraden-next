@@ -94,14 +94,14 @@ const StyledRegStep1 = styled.section`
 
   .Reg__inputsContainer {
     height: 416px;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .Reg__inputs {
     padding: 40px 30px 0 30px;
     max-width: 840px;
     height: 416px;
-    overflow: scroll;
+    overflow: auto;
   }
 
   .Reg__textArea {

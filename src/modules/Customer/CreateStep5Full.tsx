@@ -303,7 +303,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__selectContainer {
     height: 496px;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .Reg__squareContainer {

@@ -25,6 +25,10 @@ const Colors = createGlobalStyle`
   .Color_grey_dark {
     color: #3B4A69;
   }
+
+  .Color_green {
+    color: #0AB258;
+  }
 `;
 
 export { Colors };

@@ -228,7 +228,7 @@ const StyledRegStep1 = styled.section`
   .Reg__monthsContainer {
     padding: 40px 30px 0 30px;
     height: 416px;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .Reg__months {

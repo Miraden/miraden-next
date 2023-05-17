@@ -201,7 +201,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__selectContainer {
     height: 416px;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .Reg__options {

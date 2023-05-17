@@ -262,7 +262,7 @@ const StyledRegStep1 = styled.section`
     margin-top: -20px;
     height: 374px;
     align-content: flex-start;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     button {
       justify-content: flex-start;

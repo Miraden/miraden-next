@@ -423,7 +423,7 @@ const StyledApplications = styled.section`
     padding-bottom: 100px;
     .Applications__head {
       flex-direction: column;
-      overflow-x: scroll;
+      overflow-x: auto;
       align-items: flex-start;
 
       button {

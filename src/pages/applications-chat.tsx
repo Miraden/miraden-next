@@ -1,12 +1,12 @@
-import { ApplicationsLayout } from "@/modules/Applications/ApplicationsLayout";
 import { Header } from "@/modules/Base/Header";
 import { Inter } from "next/font/google";
 import Head from "next/head";
 import styled from "styled-components";
+import { ApplicationsChat } from "../modules/ApplicationsChat/ApplicationsChat";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Applications() {
+export default function ApplicationsChatPage() {
   return (
     <>
       <Head>
@@ -24,8 +24,7 @@ export default function Applications() {
       </Head>
       <StyledMainApplications>
         <Header isAuthorized />
-
-        <ApplicationsLayout />
+        <ApplicationsChat />
       </StyledMainApplications>
     </>
   );
