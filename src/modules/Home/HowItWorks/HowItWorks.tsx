@@ -40,7 +40,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                 <li>
                   <div className="HowItWorks__imageContainer">
                     <Image
-                      src="/images/howItWorks/1.svg"
+                      src="./images/howItWorks/1.svg"
                       alt=""
                       width={320}
                       height={220}
@@ -60,7 +60,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                 <li>
                   <div className="HowItWorks__imageContainer">
                     <Image
-                      src="/images/howItWorks/2.svg"
+                      src="./images/howItWorks/2.svg"
                       alt=""
                       width={320}
                       height={220}
@@ -80,7 +80,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                 <li>
                   <div className="HowItWorks__imageContainer">
                     <Image
-                      src="/images/howItWorks/3.svg"
+                      src="./images/howItWorks/3.svg"
                       alt=""
                       width={320}
                       height={220}
