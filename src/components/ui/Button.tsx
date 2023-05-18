@@ -21,6 +21,7 @@ interface Props {
   children?: ReactNode;
   disabled?: boolean;
   active?: boolean;
+  isSubmit?: boolean;
 }
 
 const Button: FC<Props> = ({
@@ -40,6 +41,7 @@ const Button: FC<Props> = ({
   ariaLabel,
   disabled,
   active,
+  isSubmit,
   prefetch = true,
 }) => {
   if (!href) {
@@ -60,6 +62,7 @@ const Button: FC<Props> = ({
           Button_withoutLabel: !children,
           disabled: disabled,
           active: active,
+          isSubmit: isSubmit,
         })}
         type={type}
       >
@@ -188,6 +191,11 @@ const StyledButton = styled.a`
 
   &.active {
     color: #4e6af3 !important;
+  }
+
+  &.isSubmit {
+    color: #0ab258 !important;
+    background: #eafff3 !important;
   }
 
   &.disabled {

@@ -2,10 +2,13 @@ import { Button } from "@/components/ui";
 import {
   AboutUsIcon,
   FaqIcon,
+  HomeIcon,
   ListItemsIcon,
   MiradenLogo,
   PricingHeaderIcon,
 } from "@/icons";
+import { ApplicationsListIcon } from "@/icons/ApplicationsListIcon";
+import cn from "classnames";
 import Link from "next/link";
 import styled from "styled-components";
 import { HeaderLocalization } from "./HeaderLocalization";
@@ -17,7 +20,7 @@ interface Props {
 
 const HeaderDesktop = ({ className, isAuthorized }: Props) => {
   return (
-    <StyledHeaderDesktop>
+    <StyledHeaderDesktop className={className}>
       <div>
         <div className="Header__links">
           <Link href="/" className="Header__logoLink">
@@ -30,23 +33,48 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
           >
             лента заявок
           </Button>
-          <Button
-            header
-            leftIcon={<AboutUsIcon />}
-            className="Header__navButton"
-          >
-            о нас
-          </Button>
-          <Button
-            header
-            leftIcon={<PricingHeaderIcon />}
-            className="Header__navButton"
-          >
-            тарифы
-          </Button>
-          <Button header leftIcon={<FaqIcon />} className="Header__navButton">
-            FAQ
-          </Button>
+          {isAuthorized ? (
+            <>
+              <Button
+                header
+                leftIcon={<ApplicationsListIcon />}
+                className={cn("Header__navButton")}
+              >
+                мои заявки
+              </Button>
+              <Button
+                header
+                leftIcon={<HomeIcon />}
+                className="Header__navButton"
+              >
+                мои объекты
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                header
+                leftIcon={<AboutUsIcon />}
+                className="Header__navButton"
+              >
+                о нас
+              </Button>
+              <Button
+                header
+                leftIcon={<PricingHeaderIcon />}
+                className="Header__navButton"
+              >
+                тарифы
+              </Button>
+              <Button
+                header
+                leftIcon={<FaqIcon />}
+                className="Header__navButton"
+              >
+                FAQ
+              </Button>
+            </>
+          )}
         </div>
       </div>
 

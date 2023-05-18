@@ -6,6 +6,7 @@ import { StarIconFilled } from "@/icons/StarIconFilled";
 import { ViberIcon } from "@/icons/ViberIcon";
 import Image from "next/image";
 import styled from "styled-components";
+import { OpenContactsAccordion } from "./OpenContactsAccordion";
 
 const OpenContacts = () => {
   return (
@@ -44,7 +45,8 @@ const OpenContacts = () => {
           </div>
         </div>
       </div>
-      <div className="Contacts__fullInfo Font_16_24">
+      <div className="Contacts__fullInfo Font_14_140">
+        <OpenContactsAccordion />
         <div className="Contacts__location">
           <div>
             <p>Локация</p>

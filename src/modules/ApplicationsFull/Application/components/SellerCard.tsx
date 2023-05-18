@@ -1,12 +1,9 @@
 import { Button, Sticker } from "@/components/ui";
 import { KebabIcon, VerifiedIcon } from "@/icons";
-import { PerformerIcon } from "@/icons/PerformerIcon";
-import { RefusalIcon } from "@/icons/RefusalIcon";
 import { StarIconFilled } from "@/icons/StarIconFilled";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
-import { InviteModal } from "./InviteModal";
 
 interface SellerCardProps {
   className?: string;
@@ -19,11 +16,6 @@ interface SellerCardProps {
   agencyName?: string;
   isOnline?: boolean;
   unreadMessages?: number;
-  isPerformer?: boolean;
-  isRefusal?: boolean;
-  isRecommend?: boolean;
-  onClick?: any;
-  submit?: boolean;
 }
 
 const SellerCard = ({
@@ -37,34 +29,12 @@ const SellerCard = ({
   agencyName,
   isOnline,
   unreadMessages,
-  isPerformer,
-  isRefusal,
-  isRecommend,
-  onClick,
-  submit,
 }: SellerCardProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
 
   const handleOpenDropdown = useCallback(() => {
     setOpenDropdown(!openDropdown);
   }, [openDropdown]);
-
-  const [isOpenModal, setIsOpenModal] = useState(false);
-
-  const handleOpenModal = useCallback(() => {
-    setIsOpenModal(true);
-  }, []);
-
-  const handleCloseModal = useCallback(() => {
-    setIsOpenModal(false);
-  }, []);
-
-  const [isSubmit, setIsSubmit] = useState(false);
-
-  const handleSubmit = useCallback(() => {
-    setIsSubmit(true);
-    setIsOpenModal(false);
-  }, []);
 
   return (
     <StyledSellerCard className={className}>
@@ -73,16 +43,6 @@ const SellerCard = ({
           <div className="SellerCard__imageContainer">
             <Image src={image} alt="" width={72} height={72} />
             {isOnline && <div className="SellerCard__onlineDot" />}
-            {isPerformer && (
-              <div className="SellerCard__performerIcon">
-                <PerformerIcon />
-              </div>
-            )}
-            {isRefusal && (
-              <div className="SellerCard__performerIcon">
-                <RefusalIcon />
-              </div>
-            )}
           </div>
           <div className="SellerCard__info">
             <p className="Font_16_140">{name}</p>
@@ -125,51 +85,21 @@ const SellerCard = ({
             </div>
           </div>
         </div>
-        {isRecommend ? (
-          <>
-            {isSubmit ? (
-              <Button
-                isSubmit
-                className="SellerCard__inviteButton"
-                onClick={onClick}
-              >
-                Приглашение отправлено
-              </Button>
-            ) : (
-              <Button
-                className="SellerCard__inviteButton"
-                onClick={handleOpenModal}
-              >
-                Пригласить откликнуться
-              </Button>
-            )}
-
-            {isOpenModal && (
-              <InviteModal
-                closeModal={handleCloseModal}
-                onSubmit={handleSubmit}
-              />
-            )}
-          </>
-        ) : (
-          <>
-            <div className="SellerCard__actions">
-              <Button
-                tertiary
-                className="SellerCard__button"
-                onClick={handleOpenDropdown}
-              >
-                <KebabIcon className="SellerCard__buttonIcon" />
-              </Button>
-              {openDropdown && <SellerDropdown agencyName={agencyName} />}
-              {unreadMessages === 0 ? null : (
-                <div className="SellerCard__unread Font_14_16_600">
-                  {unreadMessages}
-                </div>
-              )}
+        <div className="SellerCard__actions">
+          <Button
+            tertiary
+            className="SellerCard__button"
+            onClick={handleOpenDropdown}
+          >
+            <KebabIcon className="SellerCard__buttonIcon" />
+          </Button>
+          {openDropdown && <SellerDropdown agencyName={agencyName} />}
+          {unreadMessages === 0 ? null : (
+            <div className="SellerCard__unread Font_14_16_600">
+              {unreadMessages}
             </div>
-          </>
-        )}
+          )}
+        </div>
       </div>
     </StyledSellerCard>
   );
@@ -205,19 +135,6 @@ const StyledSellerCard = styled.div`
     border-radius: 50%;
   }
 
-  .SellerCard__performerIcon {
-    position: absolute;
-    left: -12px;
-    bottom: -3px;
-    width: 24px;
-    height: 24px;
-    background: #fffbf4;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   .SellerCard__info {
     margin-left: 15px;
   }
@@ -250,10 +167,6 @@ const StyledSellerCard = styled.div`
     path {
       fill: #7786a5;
     }
-  }
-
-  .SellerCard__inviteButton {
-    padding: 10px 24px;
   }
 
   .SellerCard__actions {

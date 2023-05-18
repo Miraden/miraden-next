@@ -1,0 +1,1 @@
+export { FavouritesPlug } from "./FavouritesPlug";

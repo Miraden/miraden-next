@@ -1,8 +1,10 @@
 import { Button, Search } from "@/components/ui";
 import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
+import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import { ArrowIcon } from "@/icons";
 import { FilterIcon } from "@/icons/FilterIcon";
 import cn from "classnames";
+import Link from "next/link";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { ObjectCard } from "./components/ObjectCard";
@@ -18,7 +20,9 @@ type Option =
   | "requests"
   | "performers"
   | "refusals"
-  | "recommended";
+  | "recommended"
+  | "contacts"
+  | "information";
 
 const applicationsArray = [
   {
@@ -142,11 +146,301 @@ const objectsArray = [
   },
 ];
 
+const performersArray = [
+  {
+    name: "Ангелина Синичкина",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    rating: 4.8,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "HomeSweet",
+    isOnline: true,
+    unreadMessages: 0,
+    isPerformer: true,
+  },
+  {
+    name: "Андрей Макеев",
+    type: "seller",
+    isVerified: true,
+    isPro: false,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "Realhome",
+    isOnline: false,
+    unreadMessages: 0,
+    isPerformer: true,
+  },
+];
+
+const refusalsArray = [
+  {
+    name: "Ангелина Синичкина",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    rating: 4.8,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "HomeSweet",
+    isOnline: true,
+    unreadMessages: 0,
+    isRefusal: true,
+  },
+  {
+    name: "Андрей Макеев",
+    type: "seller",
+    isVerified: true,
+    isPro: false,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "Realhome",
+    isOnline: false,
+    unreadMessages: 0,
+    isRefusal: true,
+  },
+  {
+    name: "Валентина Антонова",
+    type: "object",
+    isVerified: true,
+    isPro: false,
+    rating: 5.0,
+    image: "/images/avatar.jpg",
+    status: "Риелтор",
+    isOnline: false,
+    unreadMessages: 0,
+    isRefusal: true,
+  },
+  {
+    name: "Константин Гриндин",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    image: "/images/avatar.jpg",
+    status: "Собственник",
+    isOnline: false,
+    unreadMessages: 0,
+    isRefusal: true,
+  },
+];
+
+const recommendArray = [
+  {
+    name: "Ангелина Синичкина",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    rating: 4.8,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "HomeSweet",
+    isOnline: true,
+    unreadMessages: 0,
+    isRefusal: true,
+    isRecommend: true,
+  },
+  {
+    name: "Андрей Макеев",
+    type: "seller",
+    isVerified: true,
+    isPro: false,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "Realhome",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Валентина Антонова",
+    type: "object",
+    isVerified: true,
+    isPro: false,
+    rating: 5.0,
+    image: "/images/avatar.jpg",
+    status: "Риелтор",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Константин Гриндин",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    image: "/images/avatar.jpg",
+    status: "Собственник",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Ангелина Синичкина",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    rating: 4.8,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "HomeSweet",
+    isOnline: true,
+    unreadMessages: 0,
+    isRefusal: true,
+    isRecommend: true,
+  },
+  {
+    name: "Андрей Макеев",
+    type: "seller",
+    isVerified: true,
+    isPro: false,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "Realhome",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Валентина Антонова",
+    type: "object",
+    isVerified: true,
+    isPro: false,
+    rating: 5.0,
+    image: "/images/avatar.jpg",
+    status: "Риелтор",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Константин Гриндин",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    image: "/images/avatar.jpg",
+    status: "Собственник",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Ангелина Синичкина",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    rating: 4.8,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "HomeSweet",
+    isOnline: true,
+    unreadMessages: 0,
+    isRefusal: true,
+    isRecommend: true,
+  },
+  {
+    name: "Андрей Макеев",
+    type: "seller",
+    isVerified: true,
+    isPro: false,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "Realhome",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Валентина Антонова",
+    type: "object",
+    isVerified: true,
+    isPro: false,
+    rating: 5.0,
+    image: "/images/avatar.jpg",
+    status: "Риелтор",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Константин Гриндин",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    image: "/images/avatar.jpg",
+    status: "Собственник",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Ангелина Синичкина",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    rating: 4.8,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "HomeSweet",
+    isOnline: true,
+    unreadMessages: 0,
+    isRefusal: true,
+    isRecommend: true,
+  },
+  {
+    name: "Андрей Макеев",
+    type: "seller",
+    isVerified: true,
+    isPro: false,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "Realhome",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Валентина Антонова",
+    type: "object",
+    isVerified: true,
+    isPro: false,
+    rating: 5.0,
+    image: "/images/avatar.jpg",
+    status: "Риелтор",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Константин Гриндин",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    image: "/images/avatar.jpg",
+    status: "Собственник",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+];
+
 const Application = ({ className }: ApplicationProps) => {
-  const [selected, setSelected] = useState<Option | null>(null);
+  const [selected, setSelected] = useState<Option | null>("application");
   const [showFilter, setShowFilter] = useState(false);
 
-  const [selectedContent, setSelectedContent] = useState("");
+  const [selectedContent, setSelectedContent] = useState("1");
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
@@ -160,24 +454,36 @@ const Application = ({ className }: ApplicationProps) => {
     setSelectedContent(tabId);
   };
 
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const handleOpenModal = useCallback(() => {
+    setIsOpenModal(true);
+  }, []);
+
+  const [submit, setSubmit] = useState(false);
+  useLockBodyScroll(isOpenModal);
+
   return (
     <StyledApplication className={className}>
       <div className="Application__headContainer">
         <div className="Application__head">
-          <ArrowIcon
-            width={20}
-            height={20}
-            className="Application__headArrow"
-          />
+          <Link href="/applications-full">
+            <ArrowIcon
+              width={20}
+              height={20}
+              className="Application__headArrow"
+            />
+          </Link>
+
           <h1 className="Font_32_120 lg:Font_26_120_500">
             Хочу купить 3-х комнатную квартиру на Кипре
           </h1>
         </div>
-        <div className="Applications__headTabsContainer">
-          <div className="Applications__headTabs">
+        <div className="Application__headTabsContainer">
+          <div className="Application__headTabs">
             <Button
               className={cn("", {
-                Applications__headTabButton: selected === "application",
+                Application__headTabButton: selected === "application",
               })}
               onClick={() => handleSelect("application")}
               active={selected === "application"}
@@ -187,47 +493,62 @@ const Application = ({ className }: ApplicationProps) => {
             </Button>
             <Button
               className={cn("", {
-                Applications__headTabButton: selected === "requests",
+                Application__headTabButton: selected === "requests",
               })}
               onClick={() => handleSelect("requests")}
               active={selected === "requests"}
               tertiary
             >
-              Отклики
+              Отклики{" "}
+              <p className="TabButton__counter Color_text_grey">
+                {applicationsArray.length}
+              </p>
             </Button>
             <Button
               className={cn("", {
-                Applications__headTabButton: selected === "performers",
+                Application__headTabButton: selected === "performers",
               })}
               onClick={() => handleSelect("performers")}
               active={selected === "performers"}
               tertiary
             >
               Исполнители
+              <p
+                className={cn("TabButton__counter Color_text_grey", {
+                  Color_blue_primary: selected === "performers",
+                })}
+              >
+                {performersArray.length}
+              </p>
             </Button>
             <Button
               className={cn("", {
-                Applications__headTabButton: selected === "refusals",
+                Application__headTabButton: selected === "refusals",
               })}
               onClick={() => handleSelect("refusals")}
               active={selected === "refusals"}
               tertiary
             >
               Отказы
+              <p className="TabButton__counter Color_text_grey">
+                {refusalsArray.length}
+              </p>
             </Button>
             <Button
               className={cn("", {
-                Applications__headTabButton: selected === "recommended",
+                Application__headTabButton: selected === "recommended",
               })}
               onClick={() => handleSelect("recommended")}
               active={selected === "recommended"}
               tertiary
             >
               Рекомендуемые
+              <p className="TabButton__counter Color_text_grey">
+                {recommendArray.length}
+              </p>
             </Button>
           </div>
-
-          <div className="Applications__headTabsBar" />
+          <div className="Application__headTabsBar" />
         </div>
       </div>
       {selected === "application" && (
@@ -257,6 +578,11 @@ const Application = ({ className }: ApplicationProps) => {
               onClick={handleShowFilter}
             />
           )}
+        </>
+      )}
+
+      {selected === "requests" && (
+        <>
           {selectedContent === "1" && (
             <ul className="Applications__list">
               {applicationsArray.map((appItem, index) => (
@@ -311,20 +637,150 @@ const Application = ({ className }: ApplicationProps) => {
         </>
       )}
 
-      {/* <div className="Application__body">
-        <Image src="/images/application.svg" alt="" width={150} height={120} />
-        <h2>Вы отлично справились!</h2>
-        <p className="Color_text_grey">
-          На этом месте скоро появятся предложения от исполнителей. А пока
-          вы можете посмотреть Рекомендуемое
-        </p>
-      </div> */}
+      {selected === "performers" && (
+        <div>
+          <ul className="Applications__list">
+            {performersArray.map((performer, index) => (
+              <li key={index}>
+                <SellerCard
+                  isPerformer={performer.isPerformer}
+                  name={performer.name}
+                  isPro={performer.isPro}
+                  isVerified={performer.isVerified}
+                  rating={performer.rating}
+                  image={performer.image}
+                  status={performer.status}
+                  agencyName={performer.agencyName}
+                  isOnline={performer.isOnline}
+                  unreadMessages={performer.unreadMessages}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {selected === "refusals" && (
+        <ul className="Applications__list">
+          {refusalsArray.map((refusal, index) => (
+            <li key={index}>
+              <SellerCard
+                isRefusal={refusal.isRefusal}
+                name={refusal.name}
+                isPro={refusal.isPro}
+                isVerified={refusal.isVerified}
+                rating={refusal.rating}
+                image={refusal.image}
+                status={refusal.status}
+                agencyName={refusal.agencyName}
+                isOnline={refusal.isOnline}
+                unreadMessages={refusal.unreadMessages}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {selected === "recommended" && (
+        <ul className="Applications__list">
+          {recommendArray.map((recommend, index) => (
+            <li key={index}>
+              <SellerCard
+                isRecommend={recommend.isRecommend}
+                name={recommend.name}
+                isPro={recommend.isPro}
+                isVerified={recommend.isVerified}
+                rating={recommend.rating}
+                image={recommend.image}
+                status={recommend.status}
+                agencyName={recommend.agencyName}
+                isOnline={recommend.isOnline}
+                unreadMessages={recommend.unreadMessages}
+                onClick={handleOpenModal}
+                submit={submit}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
     </StyledApplication>
   );
 };
 
 const StyledApplication = styled.section`
   position: relative;
+
+  .Color_blue_primary {
+    color: #4e6af3;
+  }
+
+  .Application__headTabsBar_whiteSpace {
+    width: 100%;
+    height: 10px;
+    border-radius: 0 0 10px 10px;
+    background: #fff;
+  }
+
+  .TabButton__counter {
+    margin-left: 10px;
+  }
+
+  .SingleChatInfoideBar {
+    position: absolute;
+    right: -420px;
+    top: 94px;
+  }
+
+  .Application__headContainer {
+    margin-top: 94px;
+    padding: 20px 20px 0 20px;
+    background: #fff;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .Application__head {
+    display: flex;
+    align-items: center;
+    h1 {
+      margin-left: 10px;
+    }
+  }
+
+  .Application__headTabs {
+    display: flex;
+    margin-top: 30px;
+    button {
+      padding: 0;
+    }
+    button:not(:first-child) {
+      margin-left: 30px;
+    }
+  }
+
+  .Application__headTabButton {
+    position: relative;
+
+    p {
+      color: #4e6af3 !important;
+    }
+    ::before {
+      position: absolute;
+      top: 35px;
+      content: "";
+      background: #4e6af3;
+      width: 100%;
+      height: 4px;
+      border-radius: 10px;
+    }
+  }
+
+  .Application__headTabsBar {
+    margin-top: 15px;
+    width: 100%;
+    background: #e1edfd;
+    height: 4px;
+    border-radius: 10px;
+  }
 
   .Applications__filter {
     position: absolute;

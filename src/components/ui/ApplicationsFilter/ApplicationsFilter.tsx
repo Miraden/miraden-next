@@ -64,7 +64,7 @@ const ApplicationsFilter = ({
             { label: "Продавцы", id: "1", content: <SellerContent /> },
             { label: "Объекты", id: "2", content: <ObjectsContent /> },
           ]}
-          defaultTabId={"1"}
+          defaultTabId="1"
           onTabClick={onTabClick}
         />
       </div>
