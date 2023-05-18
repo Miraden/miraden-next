@@ -27,9 +27,13 @@ const Header = ({ isAuthorized }: HeaderProps) => {
 };
 
 const StyledHeader = styled.header`
+  position: sticky;
+  top: 10px;
+  z-index: 200;
   display: flex;
   justify-content: center;
-
+  padding-left: 20px;
+  padding-right: 20px;
   .Header__topBlock {
     z-index: 200;
     position: fixed;
@@ -39,7 +43,7 @@ const StyledHeader = styled.header`
   }
 
   .Header {
-    position: fixed;
+    position: sticky;
     display: flex;
     top: 10px;
     z-index: 200;
@@ -58,6 +62,9 @@ const StyledHeader = styled.header`
   }
 
   @media (max-width: 1024px) {
+    padding-left: 0;
+    padding-right: 0;
+    top: 0;
     .Header {
       padding: 8px 20px 12px 20px;
       top: 0;

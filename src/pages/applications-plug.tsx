@@ -30,5 +30,5 @@ export default function ApplicationsPlug() {
 
 const StyledMainApplications = styled.main`
   background: #eef1f5;
-  height: 150vh;
+  min-height: 100vh;
 `;

@@ -102,6 +102,7 @@ const StyledHeaderDesktop = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  position: relative;
 
   .Header__links {
     display: flex;

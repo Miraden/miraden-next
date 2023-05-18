@@ -19,7 +19,7 @@ const ApplicationsChat = () => {
 };
 
 const StyledApplicationsChat = styled.section`
-  margin-top: 94px;
+  margin-top: 20px;
   height: -webkit-fill-available;
 
   .ApplicationsChat {

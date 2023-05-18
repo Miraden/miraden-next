@@ -1,5 +1,7 @@
-import { Button } from "@/components/ui";
+import { Button, Search } from "@/components/ui";
+import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
 import { ArrowIcon } from "@/icons";
+import { FilterIcon } from "@/icons/FilterIcon";
 import cn from "classnames";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,11 +20,20 @@ type Option =
 
 const ApplicationPlug = ({ className }: ApplicationProps) => {
   const [selected, setSelected] = useState<Option | null>("application");
+  const [showFilter, setShowFilter] = useState(false);
+  const [selectedContent, setSelectedContent] = useState("1");
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
   }, []);
 
+  const handleShowFilter = useCallback(() => {
+    setShowFilter(!showFilter);
+  }, [showFilter]);
+
+  const handleTabClick = (tabId: string) => {
+    setSelectedContent(tabId);
+  };
   return (
     <StyledApplication className={className}>
       <div className="Application__headContainer">
@@ -94,23 +105,27 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
           <div className="Application__headTabsBar" />
         </div>
       </div>
-      <div className="Applications__headTabsBar_whiteSpace" />
-
       {selected === "application" && (
+        <div className="Applications__headTabsBar_whiteSpace" />
+      )}
+      {selected === "requests" && (
         <>
-          <div className="Application__body">
-            <Image
-              src="/images/application.svg"
-              alt=""
-              width={150}
-              height={120}
+          <div>
+            <Search
+              options={[]}
+              placeholder="Поиск"
+              className="Applications__searchBar"
+              rightIcon={<FilterIcon />}
+              onClick={handleShowFilter}
             />
-            <h2>Вы отлично справились!</h2>
-            <p className="Color_text_grey">
-              На этом месте скоро появятся предложения от исполнителей. А пока
-              вы можете посмотреть Рекомендуемое
-            </p>
           </div>
+          {showFilter && (
+            <ApplicationsFilter
+              onTabClick={handleTabClick}
+              className="Applications__filter"
+              onClick={handleShowFilter}
+            />
+          )}
         </>
       )}
       {selected === "requests" && (
@@ -133,6 +148,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
 
       {selected === "performers" && (
         <>
+          <div className="Applications__headTabsBar_whiteSpace" />
           <div className="Application__body">
             <Image
               src="/images/application.svg"
@@ -156,6 +172,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
 
       {selected === "refusals" && (
         <>
+          <div className="Applications__headTabsBar_whiteSpace" />
           <div className="Application__body">
             <Image
               src="/images/application.svg"
@@ -164,6 +181,24 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
               height={120}
             />
             <h2>Отказы отсутствуют</h2>
+            <p className="Color_text_grey">
+              Если предложение пользователя вас не заинтересовало,
+              вы всегдаможете от него отказаться
+            </p>
+          </div>
+        </>
+      )}
+      {selected === "recommended" && (
+        <>
+          <div className="Applications__headTabsBar_whiteSpace" />
+          <div className="Application__body">
+            <Image
+              src="/images/application.svg"
+              alt=""
+              width={150}
+              height={120}
+            />
+            <h2>Рекомендации отсутсвуют</h2>
             <p className="Color_text_grey">
               Если предложение пользователя вас не заинтересовало,
               вы всегдаможете от него отказаться
@@ -192,7 +227,7 @@ const StyledApplication = styled.section`
   }
 
   .Application__headContainer {
-    margin-top: 94px;
+    margin-top: 20px;
     padding: 20px 20px 0 20px;
     background: #fff;
     border-radius: 10px 10px 0 0;
@@ -204,6 +239,20 @@ const StyledApplication = styled.section`
     h1 {
       margin-left: 10px;
     }
+  }
+  .Applications__searchBar {
+    padding: 0;
+    input {
+      border-radius: 0 0 10px 10px;
+      box-shadow: none !important;
+    }
+  }
+
+  .Applications__filter {
+    position: absolute;
+    top: 94px;
+    right: -380px;
+    height: calc(100vh - 114px);
   }
 
   .Application__headTabs {
@@ -246,7 +295,7 @@ const StyledApplication = styled.section`
   }
 
   .Application__headContainer {
-    margin-top: 94px;
+    margin-top: 20px;
     padding: 20px 20px 0 20px;
     background: #fff;
     border-radius: 10px 10px 0 0;

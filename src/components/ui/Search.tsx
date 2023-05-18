@@ -2,6 +2,7 @@ import { CrossIcon, SearchIcon } from "@/icons";
 import cn from "classnames";
 import React, { ReactNode, useState } from "react";
 import styled from "styled-components";
+import { SortApps } from "./SortApps/SortApps";
 
 interface SearchProps {
   options: string[];
@@ -10,6 +11,7 @@ interface SearchProps {
   placeholder?: string;
   rightIcon?: ReactNode;
   onClick?: any;
+  withFilter?: boolean;
 }
 
 const Search = ({
@@ -19,6 +21,7 @@ const Search = ({
   placeholder,
   rightIcon,
   onClick,
+  withFilter,
 }: SearchProps) => {
   const [searchValue, setSearchValue] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
@@ -89,7 +92,7 @@ const Search = ({
         className={cn("Text_16_24", { Search_disabled: disabled })}
         disabled={disabled}
       />
-
+      {withFilter && <SortApps className="SortContainer" />}
       {isOptionsOpen && searchValue && (
         <OptionsContainer>
           {filteredOptions.map((option) => (
@@ -128,6 +131,13 @@ const SearchContainer = styled.div`
     top: 21px;
     right: 20px;
     z-index: 21;
+  }
+
+  .SortContainer {
+    position: absolute;
+    top: 12px;
+    right: 58px;
+    z-index: 20;
   }
 
   .Search__crossIconWithButton {

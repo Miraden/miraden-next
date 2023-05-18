@@ -555,12 +555,13 @@ const Application = ({ className }: ApplicationProps) => {
         <div className="Applications__headTabsBar_whiteSpace" />
       )}
 
-      {selected === "application" ? (
+      {selected === "application" && (
         <>
           <SingleApplication />
           <SingleApplicationSideBar className="SingleApplicationSideBar" />
         </>
-      ) : (
+      )}
+      {selected === "performers" && (
         <>
           <div>
             <Search
@@ -569,6 +570,7 @@ const Application = ({ className }: ApplicationProps) => {
               className="Applications__searchBar"
               rightIcon={<FilterIcon />}
               onClick={handleShowFilter}
+              withFilter
             />
           </div>
           {showFilter && (
@@ -583,6 +585,23 @@ const Application = ({ className }: ApplicationProps) => {
 
       {selected === "requests" && (
         <>
+          <div>
+            <Search
+              options={[]}
+              placeholder="Поиск"
+              className="Applications__searchBar"
+              rightIcon={<FilterIcon />}
+              onClick={handleShowFilter}
+              withFilter
+            />
+          </div>
+          {showFilter && (
+            <ApplicationsFilter
+              onTabClick={handleTabClick}
+              className="Applications__filter"
+              onClick={handleShowFilter}
+            />
+          )}
           {selectedContent === "1" && (
             <ul className="Applications__list">
               {applicationsArray.map((appItem, index) => (
@@ -661,47 +680,70 @@ const Application = ({ className }: ApplicationProps) => {
       )}
 
       {selected === "refusals" && (
-        <ul className="Applications__list">
-          {refusalsArray.map((refusal, index) => (
-            <li key={index}>
-              <SellerCard
-                isRefusal={refusal.isRefusal}
-                name={refusal.name}
-                isPro={refusal.isPro}
-                isVerified={refusal.isVerified}
-                rating={refusal.rating}
-                image={refusal.image}
-                status={refusal.status}
-                agencyName={refusal.agencyName}
-                isOnline={refusal.isOnline}
-                unreadMessages={refusal.unreadMessages}
-              />
-            </li>
-          ))}
-        </ul>
+        <>
+          <div className="Applications__headTabsBar_whiteSpace" />
+
+          <ul className="Applications__list">
+            {refusalsArray.map((refusal, index) => (
+              <li key={index}>
+                <SellerCard
+                  isRefusal={refusal.isRefusal}
+                  name={refusal.name}
+                  isPro={refusal.isPro}
+                  isVerified={refusal.isVerified}
+                  rating={refusal.rating}
+                  image={refusal.image}
+                  status={refusal.status}
+                  agencyName={refusal.agencyName}
+                  isOnline={refusal.isOnline}
+                  unreadMessages={refusal.unreadMessages}
+                />
+              </li>
+            ))}
+          </ul>
+        </>
       )}
 
       {selected === "recommended" && (
-        <ul className="Applications__list">
-          {recommendArray.map((recommend, index) => (
-            <li key={index}>
-              <SellerCard
-                isRecommend={recommend.isRecommend}
-                name={recommend.name}
-                isPro={recommend.isPro}
-                isVerified={recommend.isVerified}
-                rating={recommend.rating}
-                image={recommend.image}
-                status={recommend.status}
-                agencyName={recommend.agencyName}
-                isOnline={recommend.isOnline}
-                unreadMessages={recommend.unreadMessages}
-                onClick={handleOpenModal}
-                submit={submit}
-              />
-            </li>
-          ))}
-        </ul>
+        <>
+          <div>
+            <Search
+              options={[]}
+              placeholder="Поиск"
+              className="Applications__searchBar"
+              rightIcon={<FilterIcon />}
+              onClick={handleShowFilter}
+              withFilter
+            />
+          </div>
+          {showFilter && (
+            <ApplicationsFilter
+              onTabClick={handleTabClick}
+              className="Applications__filter"
+              onClick={handleShowFilter}
+            />
+          )}
+          <ul className="Applications__list">
+            {recommendArray.map((recommend, index) => (
+              <li key={index}>
+                <SellerCard
+                  isRecommend={recommend.isRecommend}
+                  name={recommend.name}
+                  isPro={recommend.isPro}
+                  isVerified={recommend.isVerified}
+                  rating={recommend.rating}
+                  image={recommend.image}
+                  status={recommend.status}
+                  agencyName={recommend.agencyName}
+                  isOnline={recommend.isOnline}
+                  unreadMessages={recommend.unreadMessages}
+                  onClick={handleOpenModal}
+                  submit={submit}
+                />
+              </li>
+            ))}
+          </ul>
+        </>
       )}
     </StyledApplication>
   );
@@ -732,7 +774,7 @@ const StyledApplication = styled.section`
   }
 
   .Application__headContainer {
-    margin-top: 94px;
+    margin-top: 20px;
     padding: 20px 20px 0 20px;
     background: #fff;
     border-radius: 10px 10px 0 0;
@@ -803,7 +845,7 @@ const StyledApplication = styled.section`
   }
 
   .Application__headContainer {
-    margin-top: 94px;
+    margin-top: 20px;
     padding: 20px 20px 0 20px;
     background: #fff;
     border-radius: 10px 10px 0 0;

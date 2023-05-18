@@ -83,7 +83,7 @@ const StyledContactInfo = styled.div`
   }
 
   .Application__headContainer {
-    margin-top: 94px;
+    margin-top: 20px;
     padding: 20px 20px 0 20px;
     background: #fff;
     border-radius: 10px 10px 0 0;

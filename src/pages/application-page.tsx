@@ -1,12 +1,11 @@
-import { ApplicationsLayout } from "@/modules/Applications/ApplicationsLayout";
-import { Header } from "@/modules/Base/Header";
 import { Inter } from "next/font/google";
 import Head from "next/head";
+import Link from "next/link";
 import styled from "styled-components";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Applications() {
+export default function ApplicationPage1() {
   return (
     <>
       <Head>
@@ -22,10 +21,12 @@ export default function Applications() {
           rel="stylesheet"
         />
       </Head>
-      <StyledMainApplications>
-        <Header isAuthorized />
-
-        <ApplicationsLayout />
+      <StyledMainApplications className=" Font_20_120">
+        <div className="Pages Container">
+          <Link href="/applications-plug">Отклики / Продавцы_заглушка</Link>
+          <Link href="/applications">Отклики / Продавцы</Link>
+          <Link href="/applications-plug">Отклики / Объекты_заглушка</Link>
+        </div>
       </StyledMainApplications>
     </>
   );
@@ -34,4 +35,12 @@ export default function Applications() {
 const StyledMainApplications = styled.main`
   background: #eef1f5;
   min-height: 100vh;
+  .Pages {
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    margin-top: 20px;
+  }
 `;
