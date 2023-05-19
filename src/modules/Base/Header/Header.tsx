@@ -61,13 +61,14 @@ const StyledHeader = styled.header`
     display: none;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1090px) {
     padding-left: 0;
     padding-right: 0;
     top: 0;
     .Header {
       padding: 8px 20px 12px 20px;
       top: 0;
+      border-radius: 0 0 10px 10px;
     }
 
     .Header__mobile {

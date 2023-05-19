@@ -37,7 +37,7 @@ const Hero = ({ className }: HeroProps) => {
 
 const StyledHero = styled.section`
   background: #eef1f5;
-  padding-top: 184px;
+  padding-top: 110px;
   padding-bottom: 80px;
 
   .Hero {
@@ -124,7 +124,7 @@ const StyledHero = styled.section`
   }
 
   @media (max-width: 576px) {
-    padding-top: 163px;
+    padding-top: 60px;
 
     .Hero__stats {
       margin-top: 50px;

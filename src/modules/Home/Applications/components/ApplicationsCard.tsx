@@ -50,19 +50,19 @@ const ApplicationsCard = ({
 
       <div className="Card__objectInfo Font_16_140">
         <div>
-          <BuildYearIcon />
+          <BuildYearIcon width={18} height={18} />
           <span>{year} г</span>
         </div>
         <div>
-          <SquareIcon />
+          <SquareIcon width={18} height={18} />
           <span>{square} м²</span>
         </div>
         <div>
-          <SleepsIcon />
+          <SleepsIcon width={18} height={18} />
           <span>{sleeps}</span>
         </div>
         <div>
-          <BathsIcon />
+          <BathsIcon width={18} height={18} />
           <span>{baths}</span>
         </div>
       </div>
@@ -100,7 +100,7 @@ const StyledApplicationsCard = styled.a`
   }
 
   .Card__title {
-    margin-top: 15px;
+    margin-top: 16px;
   }
 
   .Card__location {
@@ -145,6 +145,18 @@ const StyledApplicationsCard = styled.a`
 
     button {
       padding: 10px 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .Card__title {
+      max-width: calc(100% - 10px);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .Card__objectInfo {
+      margin-top: 44px;
     }
   }
 `;

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
-import { BurgerIcon, CrossIcon, MiradenLogoMobile } from "@/icons";
+import { BurgerIcon, CrossIcon, MiradenLogo, MiradenLogoMobile } from "@/icons";
 import Link from "next/link";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
@@ -39,12 +39,20 @@ const HeaderMobile = ({ className, isAuthorized }: Props) => {
               )}
             </button>
             {isOpen && <HeaderMenu isOpen={isOpen} />}
-            <Link href="/" className="HeaderMobile__logoLink">
-              <MiradenLogoMobile />
-            </Link>
-            <Button className="HeaderMobile__enterButton Font_12_16_600">
-              вход
-            </Button>
+            {isOpen ? (
+              <div className="MiradenLogoContainer">
+                <MiradenLogo />
+              </div>
+            ) : (
+              <>
+                <Link href="/" className="HeaderMobile__logoLink">
+                  <MiradenLogoMobile />
+                </Link>
+                <Button className="HeaderMobile__enterButton Font_12_16_600">
+                  вход
+                </Button>
+              </>
+            )}
           </>
         )}
       </div>
@@ -59,6 +67,15 @@ const StyledHeaderMobile = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  .MiradenLogoContainer {
+    margin: 0 auto;
+    display: flex;
+
+    svg {
+      margin-left: -40px;
+    }
   }
 
   .HeaderMobile__menuButton {

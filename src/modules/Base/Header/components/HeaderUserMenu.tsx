@@ -14,6 +14,7 @@ const HeaderUserMenu = () => {
             leftIcon={<MessagesIcon />}
           ></Button>
           <Button
+            href="/favourites-full"
             header
             className="HeaderUserMenu__linkButton"
             leftIcon={<StarIcon className="HeaderUserMenu__favorites" />}
@@ -29,6 +30,7 @@ const HeaderUserMenu = () => {
 
         <div className="HeaderUserMenu__buttons">
           <Button
+            href="/customer/create-1"
             leftIcon={<PlusIcon />}
             className="HeaderUserMenu__createButton Font_12_16_600"
           >

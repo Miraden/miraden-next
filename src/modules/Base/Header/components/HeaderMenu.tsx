@@ -35,7 +35,6 @@ const HeaderMenu = ({ className, isOpen }: Props) => {
         >
           <Link href="/">о miraden</Link>
           <Link href="/">философия</Link>
-          <Link href="/">философия</Link>
           <Link href="/">команда</Link>
         </HeaderAccordion>
         <Link href="/">тарифы</Link>
@@ -48,7 +47,7 @@ const HeaderMenu = ({ className, isOpen }: Props) => {
       </div>
       <div className="HeaderMenu__contacts">
         <p className="HeaderMenu__telegramLink Font_14_140">
-          Заходите в наш Telegram канали будьте в курсе новых заявок
+          Заходите в наш Telegram канал и будьте в курсе новых заявок
         </p>
         <Button leftIcon={<TelegramPureIcon />} className="HeaderMenu__button">
           Telegram

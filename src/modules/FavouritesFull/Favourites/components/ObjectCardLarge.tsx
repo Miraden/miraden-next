@@ -134,23 +134,23 @@ const ObjectCardLarge = ({
             </div>
             <div className="ObjectCardLarge__objectInfo Font_16_140">
               <p>
-                <BuildYearIcon />
+                <BuildYearIcon width={18} height={18} />
                 <span> {year}</span>
               </p>
               <p>
-                <SquareIcon />
+                <SquareIcon width={18} height={18} />
                 <span>{square}</span>
               </p>
               <p>
-                <RoomsIcon />
+                <RoomsIcon width={18} height={18} />
                 <span>{rooms}</span>
               </p>
               <p className="Sleeps">
-                <SleepsIcon />
+                <SleepsIcon width={18} height={18} />
                 <span>{sleeps}</span>
               </p>
               <p className="Baths">
-                <BathsIcon />
+                <BathsIcon width={18} height={18} />
                 <span>{baths}</span>
               </p>
             </div>

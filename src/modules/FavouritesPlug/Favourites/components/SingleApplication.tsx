@@ -98,28 +98,28 @@ const SingleApplication = ({ className, someContent }: Props) => {
       </div>
       <div className="SingleApplication__structureInfo">
         <div className="SingleApplication__structureInfoContent">
-          <BuildYearIcon />
+          <BuildYearIcon width={18} height={18} />
           <div>
             <p className="Font_24_120">294 м²</p>
             <p className="Font_16_150 Color_text_grey">Год постройки</p>
           </div>
         </div>
         <div className="SingleApplication__structureInfoContent">
-          <SquareIcon />
+          <SquareIcon width={18} height={18} />
           <div>
             <p className="Font_24_120">2022</p>
             <p className="Font_16_150 Color_text_grey">Общая площадь</p>
           </div>
         </div>{" "}
         <div className="SingleApplication__structureInfoContent">
-          <LivingSquareIcon />
+          <LivingSquareIcon width={18} height={18} />
           <div>
             <p className="Font_24_120">194 м²</p>
             <p className="Font_16_150 Color_text_grey">Жилая площадь</p>
           </div>
         </div>{" "}
         <div className="SingleApplication__structureInfoContent">
-          <RoomsIcon />
+          <RoomsIcon width={18} height={18} />
           <div>
             <p className="Font_24_120">10</p>
             <p className="Font_16_150 Color_text_grey">Комнат</p>
@@ -139,7 +139,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <CashIcon width={18} />
+            <CashIcon width={18} height={18} />
             <p>Формат сделки</p>
           </div>
           <div>
@@ -148,7 +148,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <BuildingIcon width={18} />
+            <BuildingIcon width={18} height={18} />
             <p>Тип</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -158,7 +158,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <BuildYearIcon width={18} />
+            <BuildYearIcon width={18} height={18} />
             <p>Состояние</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -168,7 +168,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <SquareIcon width={18} />
+            <SquareIcon width={18} height={18} />
             <p>Площадь</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -179,7 +179,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <RoomsIcon width={18} />
+            <RoomsIcon width={18} height={18} />
             <p>Комнаты</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -190,7 +190,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <PurposeCheckIcon width={18} />
+            <PurposeCheckIcon width={18} height={18} />
             <p>Цель покупки</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -200,7 +200,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <DealIcon width={18} />
+            <DealIcon width={18} height={18} />
             <p>Срочность</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -209,7 +209,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <CreditCardIcon width={18} />
+            <CreditCardIcon width={18} height={18} />
             <p>Способ покупки</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -220,7 +220,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <LikeIcon width={18} />
+            <LikeIcon width={18} height={18} />
             <p>Пожелания</p>
           </div>
           <div className="SingleApplication__locationInfoText">
@@ -314,7 +314,7 @@ const StyledSingleApplication = styled.div`
   .SingleApplication__headDropdown {
     display: flex;
     align-items: center;
-
+    position: relative;
     button {
       margin-left: 20px;
     }
@@ -423,6 +423,8 @@ const StyledSingleApplication = styled.div`
     align-items: flex-start;
 
     button {
+      align-self: flex-start;
+
       margin-top: 20px;
     }
   }

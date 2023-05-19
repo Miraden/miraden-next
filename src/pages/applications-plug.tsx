@@ -21,7 +21,6 @@ export default function ApplicationsPlug() {
       </Head>
       <StyledMainApplications>
         <Header isAuthorized />
-
         <ApplicationsLayoutPlug />
       </StyledMainApplications>
     </>

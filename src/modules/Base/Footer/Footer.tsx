@@ -134,7 +134,10 @@ const Footer = ({ className }: FooterProps) => {
   );
 };
 
-const StyledFooter = styled.footer``;
+const StyledFooter = styled.footer`
+  position: relative;
+  bottom: -20px;
+`;
 
 const StyledFooterSocialMobile = styled.div`
   display: none;

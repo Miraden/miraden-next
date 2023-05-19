@@ -36,6 +36,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
           {isAuthorized ? (
             <>
               <Button
+                href="/applications-full"
                 header
                 leftIcon={<ApplicationsListIcon />}
                 className={cn("Header__navButton")}
@@ -136,7 +137,7 @@ const StyledHeaderDesktop = styled.div`
     text-transform: uppercase;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 1090px) {
     display: none;
   }
 `;

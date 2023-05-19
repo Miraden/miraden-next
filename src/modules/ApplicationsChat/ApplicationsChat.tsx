@@ -20,10 +20,17 @@ const ApplicationsChat = () => {
 
 const StyledApplicationsChat = styled.section`
   margin-top: 20px;
-  height: -webkit-fill-available;
+  height: calc(100vh - 76px);
 
   .ApplicationsChat {
+    padding-bottom: 20px;
     display: flex;
+  }
+
+  .ContactInfo {
+  }
+
+  .AppInfo {
   }
 `;
 

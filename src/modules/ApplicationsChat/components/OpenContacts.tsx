@@ -151,6 +151,10 @@ const OpenContacts = () => {
 };
 
 const StyledOpenContacts = styled.div`
+  & {
+    padding: 0;
+  }
+
   .Contacts__head {
     display: flex;
     align-items: flex-start;

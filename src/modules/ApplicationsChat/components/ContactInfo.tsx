@@ -12,7 +12,7 @@ interface Props {
 type Option = "contacts" | "requests" | "information";
 
 const ContactInfo = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>(null);
+  const [selected, setSelected] = useState<Option | null>("contacts");
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);

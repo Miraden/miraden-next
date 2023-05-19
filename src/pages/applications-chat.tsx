@@ -32,5 +32,5 @@ export default function ApplicationsChatPage() {
 
 const StyledMainApplications = styled.main`
   background: #eef1f5;
-  height: 100vh;
+  min-height: 100vh;
 `;

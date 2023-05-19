@@ -1,7 +1,14 @@
 import { Button, Search } from "@/components/ui";
 import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
-import { ArrowIcon } from "@/icons";
+import {
+  Applications,
+  ArrowIcon,
+  HomeIcon,
+  KebabIcon,
+  ListItemsIcon,
+  PlusIcon,
+} from "@/icons";
 import { FilterIcon } from "@/icons/FilterIcon";
 import cn from "classnames";
 import Link from "next/link";
@@ -464,293 +471,334 @@ const Application = ({ className }: ApplicationProps) => {
   useLockBodyScroll(isOpenModal);
 
   return (
-    <StyledApplication className={className}>
-      <div className="Application__headContainer">
-        <div className="Application__head">
-          <Link href="/applications-full">
-            <ArrowIcon
-              width={20}
-              height={20}
-              className="Application__headArrow"
-            />
-          </Link>
-
-          <h1 className="Font_32_120 lg:Font_26_120_500">
-            Хочу купить 3-х комнатную квартиру на Кипре
-          </h1>
-        </div>
-        <div className="Application__headTabsContainer">
-          <div className="Application__headTabs">
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "application",
-              })}
-              onClick={() => handleSelect("application")}
-              active={selected === "application"}
-              tertiary
-            >
-              Заявка
-            </Button>
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "requests",
-              })}
-              onClick={() => handleSelect("requests")}
-              active={selected === "requests"}
-              tertiary
-            >
-              Отклики{" "}
-              <p className="TabButton__counter Color_text_grey">
-                {applicationsArray.length}
-              </p>
-            </Button>
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "performers",
-              })}
-              onClick={() => handleSelect("performers")}
-              active={selected === "performers"}
-              tertiary
-            >
-              Исполнители
-              <p
-                className={cn("TabButton__counter Color_text_grey", {
-                  Color_blue_primary: selected === "performers",
-                })}
-              >
-                {performersArray.length}
-              </p>
-            </Button>
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "refusals",
-              })}
-              onClick={() => handleSelect("refusals")}
-              active={selected === "refusals"}
-              tertiary
-            >
-              Отказы
-              <p className="TabButton__counter Color_text_grey">
-                {refusalsArray.length}
-              </p>
-            </Button>
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "recommended",
-              })}
-              onClick={() => handleSelect("recommended")}
-              active={selected === "recommended"}
-              tertiary
-            >
-              Рекомендуемые
-              <p className="TabButton__counter Color_text_grey">
-                {recommendArray.length}
-              </p>
-            </Button>
-          </div>
-          <div className="Application__headTabsBar" />
-        </div>
-      </div>
-      {selected === "application" && (
-        <div className="Applications__headTabsBar_whiteSpace" />
-      )}
-
-      {selected === "application" && (
-        <>
-          <SingleApplication />
-          <SingleApplicationSideBar className="SingleApplicationSideBar" />
-        </>
-      )}
-      {selected === "performers" && (
-        <>
-          <div>
-            <Search
-              options={[]}
-              placeholder="Поиск"
-              className="Applications__searchBar"
-              rightIcon={<FilterIcon />}
-              onClick={handleShowFilter}
-              withFilter
-            />
-          </div>
-          {showFilter && (
-            <ApplicationsFilter
-              onTabClick={handleTabClick}
-              className="Applications__filter"
-              onClick={handleShowFilter}
-            />
-          )}
-        </>
-      )}
-
-      {selected === "requests" && (
-        <>
-          <div>
-            <Search
-              options={[]}
-              placeholder="Поиск"
-              className="Applications__searchBar"
-              rightIcon={<FilterIcon />}
-              onClick={handleShowFilter}
-              withFilter
-            />
-          </div>
-          {showFilter && (
-            <ApplicationsFilter
-              onTabClick={handleTabClick}
-              className="Applications__filter"
-              onClick={handleShowFilter}
-            />
-          )}
-          {selectedContent === "1" && (
-            <ul className="Applications__list">
-              {applicationsArray.map((appItem, index) => (
-                <li key={index}>
-                  <SellerCard
-                    name={appItem.name}
-                    isPro={appItem.isPro}
-                    isVerified={appItem.isVerified}
-                    rating={appItem.rating}
-                    image={appItem.image}
-                    status={appItem.status}
-                    agencyName={appItem.agencyName}
-                    isOnline={appItem.isOnline}
-                    unreadMessages={appItem.unreadMessages}
-                  />
-                </li>
-              ))}
-            </ul>
-          )}
-          {selectedContent === "2" && (
-            <ul className="Applications__list">
-              {objectsArray.map((object, index) => (
-                <li key={index}>
-                  <ObjectCard
-                    title={object.title}
-                    location={object.location}
-                    id={object.id}
-                    cashBack={object.cashBack}
-                    year={object.year}
-                    yieldCount={object.yieldCount}
-                    sleeps={object.sleeps}
-                    square={object.square}
-                    rooms={object.rooms}
-                    baths={object.baths}
-                    price={object.price}
-                    isBooked={object.isBooked}
-                    isUnpublished={object.isUnpublished}
-                    name={object.name}
-                    status={object.status}
-                    image1={object.image1}
-                    image2={object.image2}
-                    image3={object.image3}
-                    image={object.image}
-                    firstInstallment={object.firstInstallment}
-                    firstInstallmentPercent={object.firstInstallmentPercent}
-                    singleCost={object.singleCost}
-                  />
-                </li>
-              ))}
-            </ul>
-          )}
-        </>
-      )}
-
-      {selected === "performers" && (
-        <div>
-          <ul className="Applications__list">
-            {performersArray.map((performer, index) => (
-              <li key={index}>
-                <SellerCard
-                  isPerformer={performer.isPerformer}
-                  name={performer.name}
-                  isPro={performer.isPro}
-                  isVerified={performer.isVerified}
-                  rating={performer.rating}
-                  image={performer.image}
-                  status={performer.status}
-                  agencyName={performer.agencyName}
-                  isOnline={performer.isOnline}
-                  unreadMessages={performer.unreadMessages}
+    <>
+      <StyledApplication className={cn(className, { Test: showFilter })}>
+        <div
+          className={cn("Application__wrapper", { IsOpenFilter: !showFilter })}
+        >
+          <div className="Application__headContainer">
+            <div className="Application__head">
+              <Link href="/applications-full">
+                <ArrowIcon
+                  width={20}
+                  height={20}
+                  className="Application__headArrow"
                 />
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+              </Link>
 
-      {selected === "refusals" && (
-        <>
-          <div className="Applications__headTabsBar_whiteSpace" />
-
-          <ul className="Applications__list">
-            {refusalsArray.map((refusal, index) => (
-              <li key={index}>
-                <SellerCard
-                  isRefusal={refusal.isRefusal}
-                  name={refusal.name}
-                  isPro={refusal.isPro}
-                  isVerified={refusal.isVerified}
-                  rating={refusal.rating}
-                  image={refusal.image}
-                  status={refusal.status}
-                  agencyName={refusal.agencyName}
-                  isOnline={refusal.isOnline}
-                  unreadMessages={refusal.unreadMessages}
-                />
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-
-      {selected === "recommended" && (
-        <>
-          <div>
-            <Search
-              options={[]}
-              placeholder="Поиск"
-              className="Applications__searchBar"
-              rightIcon={<FilterIcon />}
-              onClick={handleShowFilter}
-              withFilter
-            />
+              <h1 className="Font_32_120 lg:Font_26_120_500">
+                Хочу купить 3-х комнатную квартиру на Кипре
+              </h1>
+            </div>
+            <div className="Application__headTabsContainer">
+              <div className="Application__headTabs">
+                <Button
+                  className={cn("", {
+                    Application__headTabButton: selected === "application",
+                  })}
+                  onClick={() => handleSelect("application")}
+                  active={selected === "application"}
+                  tertiary
+                >
+                  Заявка
+                </Button>
+                <Button
+                  className={cn("", {
+                    Application__headTabButton: selected === "requests",
+                  })}
+                  onClick={() => handleSelect("requests")}
+                  active={selected === "requests"}
+                  tertiary
+                >
+                  Отклики{" "}
+                  <p className="TabButton__counter Color_text_grey">
+                    {applicationsArray.length}
+                  </p>
+                </Button>
+                <Button
+                  className={cn("", {
+                    Application__headTabButton: selected === "performers",
+                  })}
+                  onClick={() => handleSelect("performers")}
+                  active={selected === "performers"}
+                  tertiary
+                >
+                  Исполнители
+                  <p
+                    className={cn("TabButton__counter Color_text_grey", {
+                      Color_blue_primary: selected === "performers",
+                    })}
+                  >
+                    {performersArray.length}
+                  </p>
+                </Button>
+                <Button
+                  className={cn("", {
+                    Application__headTabButton: selected === "refusals",
+                  })}
+                  onClick={() => handleSelect("refusals")}
+                  active={selected === "refusals"}
+                  tertiary
+                >
+                  Отказы
+                  <p className="TabButton__counter Color_text_grey">
+                    {refusalsArray.length}
+                  </p>
+                </Button>
+                <Button
+                  className={cn("", {
+                    Application__headTabButton: selected === "recommended",
+                  })}
+                  onClick={() => handleSelect("recommended")}
+                  active={selected === "recommended"}
+                  tertiary
+                >
+                  Рекомендуемые
+                  <p className="TabButton__counter Color_text_grey">
+                    {recommendArray.length}
+                  </p>
+                </Button>
+              </div>
+              <div className="Application__headTabsBar" />
+            </div>
           </div>
-          {showFilter && (
-            <ApplicationsFilter
-              onTabClick={handleTabClick}
-              className="Applications__filter"
-              onClick={handleShowFilter}
-            />
+          {selected === "application" && (
+            <div className="Applications__headTabsBar_whiteSpace" />
           )}
-          <ul className="Applications__list">
-            {recommendArray.map((recommend, index) => (
-              <li key={index}>
-                <SellerCard
-                  isRecommend={recommend.isRecommend}
-                  name={recommend.name}
-                  isPro={recommend.isPro}
-                  isVerified={recommend.isVerified}
-                  rating={recommend.rating}
-                  image={recommend.image}
-                  status={recommend.status}
-                  agencyName={recommend.agencyName}
-                  isOnline={recommend.isOnline}
-                  unreadMessages={recommend.unreadMessages}
-                  onClick={handleOpenModal}
-                  submit={submit}
+
+          {selected === "application" && (
+            <>
+              <SingleApplication />
+              <SingleApplicationSideBar className="SingleApplicationSideBar" />
+            </>
+          )}
+          {selected === "performers" && (
+            <>
+              <div>
+                <Search
+                  options={[]}
+                  placeholder="Поиск"
+                  className="Applications__searchBar"
+                  rightIcon={<FilterIcon />}
+                  onClick={handleShowFilter}
+                  withFilter
                 />
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-    </StyledApplication>
+              </div>
+            </>
+          )}
+
+          {selected === "requests" && (
+            <>
+              <div>
+                <Search
+                  options={[]}
+                  placeholder="Поиск"
+                  className="Applications__searchBar"
+                  rightIcon={<FilterIcon />}
+                  onClick={handleShowFilter}
+                  withFilter
+                />
+              </div>
+
+              {selectedContent === "1" && (
+                <ul className="Applications__list">
+                  {applicationsArray.map((appItem, index) => (
+                    <li key={index}>
+                      <SellerCard
+                        name={appItem.name}
+                        isPro={appItem.isPro}
+                        isVerified={appItem.isVerified}
+                        rating={appItem.rating}
+                        image={appItem.image}
+                        status={appItem.status}
+                        agencyName={appItem.agencyName}
+                        isOnline={appItem.isOnline}
+                        unreadMessages={appItem.unreadMessages}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {selectedContent === "2" && (
+                <ul className="Applications__list">
+                  {objectsArray.map((object, index) => (
+                    <li key={index}>
+                      <ObjectCard
+                        title={object.title}
+                        location={object.location}
+                        id={object.id}
+                        cashBack={object.cashBack}
+                        year={object.year}
+                        yieldCount={object.yieldCount}
+                        sleeps={object.sleeps}
+                        square={object.square}
+                        rooms={object.rooms}
+                        baths={object.baths}
+                        price={object.price}
+                        isBooked={object.isBooked}
+                        isUnpublished={object.isUnpublished}
+                        name={object.name}
+                        status={object.status}
+                        image1={object.image1}
+                        image2={object.image2}
+                        image3={object.image3}
+                        image={object.image}
+                        firstInstallment={object.firstInstallment}
+                        firstInstallmentPercent={object.firstInstallmentPercent}
+                        singleCost={object.singleCost}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </>
+          )}
+
+          {selected === "performers" && (
+            <div>
+              <ul className="Applications__list">
+                {performersArray.map((performer, index) => (
+                  <li key={index}>
+                    <SellerCard
+                      isPerformer={performer.isPerformer}
+                      name={performer.name}
+                      isPro={performer.isPro}
+                      isVerified={performer.isVerified}
+                      rating={performer.rating}
+                      image={performer.image}
+                      status={performer.status}
+                      agencyName={performer.agencyName}
+                      isOnline={performer.isOnline}
+                      unreadMessages={performer.unreadMessages}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {selected === "refusals" && (
+            <>
+              <div className="Applications__headTabsBar_whiteSpace" />
+
+              <ul className="Applications__list">
+                {refusalsArray.map((refusal, index) => (
+                  <li key={index}>
+                    <SellerCard
+                      isRefusal={refusal.isRefusal}
+                      name={refusal.name}
+                      isPro={refusal.isPro}
+                      isVerified={refusal.isVerified}
+                      rating={refusal.rating}
+                      image={refusal.image}
+                      status={refusal.status}
+                      agencyName={refusal.agencyName}
+                      isOnline={refusal.isOnline}
+                      unreadMessages={refusal.unreadMessages}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+
+          {selected === "recommended" && (
+            <>
+              <div>
+                <Search
+                  options={[]}
+                  placeholder="Поиск"
+                  className="Applications__searchBar"
+                  rightIcon={<FilterIcon />}
+                  onClick={handleShowFilter}
+                  withFilter
+                />
+              </div>
+
+              <ul className="Applications__list">
+                {recommendArray.map((recommend, index) => (
+                  <li key={index}>
+                    <SellerCard
+                      isRecommend={recommend.isRecommend}
+                      name={recommend.name}
+                      isPro={recommend.isPro}
+                      isVerified={recommend.isVerified}
+                      rating={recommend.rating}
+                      image={recommend.image}
+                      status={recommend.status}
+                      agencyName={recommend.agencyName}
+                      isOnline={recommend.isOnline}
+                      unreadMessages={recommend.unreadMessages}
+                      onClick={handleOpenModal}
+                      submit={submit}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </div>
+        {showFilter && (
+          <ApplicationsFilter
+            onTabClick={handleTabClick}
+            className="Applications__filter"
+            onClick={handleShowFilter}
+          />
+        )}
+        <div className="Application__Footer">
+          <div className="Application__FooterButtons">
+            <Button tertiary className="FooterButton Font_12_16">
+              <ListItemsIcon />
+              Лента
+            </Button>
+            <Button tertiary className="FooterButton Font_12_16">
+              <Applications />
+              Мои заявки
+            </Button>
+            <div className="PlusIconContainer">
+              <Button>
+                <PlusIcon width={24} height={24} />
+              </Button>
+            </div>
+
+            <Button tertiary className="FooterButton Font_12_16">
+              <HomeIcon width={18} height={18} />
+              Объекты
+            </Button>
+            <Button tertiary className="FooterButton Font_12_16">
+              <KebabIcon className="KebabIcon" />
+              Ещё
+            </Button>
+          </div>
+        </div>
+      </StyledApplication>
+    </>
   );
 };
 
 const StyledApplication = styled.section`
   position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  grid-gap: 30px;
+  padding-left: 55px;
+  padding-right: 55px;
+
+  &.Test {
+    padding-right: 0 !important;
+  }
+
+  .Application__wrapper {
+    grid-column: 5 / span 10;
+  }
+
+  .Applications__filter {
+    grid-column: 16 / span 3;
+    margin-top: 30px;
+    margin-left: -30px;
+    height: calc(100vh - 114px);
+  }
 
   .Color_blue_primary {
     color: #4e6af3;
@@ -774,7 +822,7 @@ const StyledApplication = styled.section`
   }
 
   .Application__headContainer {
-    margin-top: 20px;
+    margin-top: 30px;
     padding: 20px 20px 0 20px;
     background: #fff;
     border-radius: 10px 10px 0 0;
@@ -791,6 +839,7 @@ const StyledApplication = styled.section`
   .Application__headTabs {
     display: flex;
     margin-top: 30px;
+    overflow: auto;
     button {
       padding: 0;
     }
@@ -824,13 +873,6 @@ const StyledApplication = styled.section`
     border-radius: 10px;
   }
 
-  .Applications__filter {
-    position: absolute;
-    top: 94px;
-    right: -380px;
-    height: calc(100vh - 114px);
-  }
-
   .Applications__headTabsBar_whiteSpace {
     width: 100%;
     height: 10px;
@@ -842,13 +884,6 @@ const StyledApplication = styled.section`
     position: absolute;
     right: -420px;
     top: 94px;
-  }
-
-  .Application__headContainer {
-    margin-top: 20px;
-    padding: 20px 20px 0 20px;
-    background: #fff;
-    border-radius: 10px 10px 0 0;
   }
 
   .Application__head {
@@ -956,13 +991,120 @@ const StyledApplication = styled.section`
     }
   }
 
+  .Application__Footer {
+    display: none;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .Application__FooterButtons {
+    display: flex;
+    justify-content: center;
+
+    div,
+    button:not(:first-child) {
+      margin-left: 64px;
+    }
+  }
+
+  .PlusIconContainer {
+    padding: 2px;
+    background: #eef1f5;
+    border-radius: 50%;
+    transform: translate(0, -34px);
+
+    button {
+      background: #4e6af3;
+      width: fit-content;
+      height: fit-content;
+      padding: 10px;
+      border-radius: 50%;
+    }
+  }
+
+  .FooterButton {
+    padding: 5px 0 0 0;
+    max-width: 74px;
+    width: 100%;
+
+    :hover {
+      svg {
+        path {
+          fill: #4e6af3;
+        }
+      }
+    }
+    span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      svg {
+        margin-bottom: 2px;
+        path {
+          fill: #7786a5;
+        }
+      }
+    }
+  }
+
+  .KebabIcon {
+    transform: rotate(90deg);
+  }
+
+  @media (max-width: 1440px) {
+    grid-gap: 20px;
+    padding-left: 0;
+    padding-right: 0;
+
+    .Application__wrapper {
+      grid-column: 1 / span 14;
+      width: 100%;
+
+      &.IsOpenFilter {
+        grid-column: 1 / span 18;
+      }
+    }
+  }
+
   @media (max-width: 1024px) {
+    display: flex;
+
     .Application__headContainer {
-      margin-top: 60px;
+      margin-top: 0;
+    }
+    .Applications__filter {
+      display: none;
     }
 
     .Applications__list {
       margin-top: 16px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .Application__Footer {
+      display: block;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .Applications__list {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .Application__FooterButtons {
+      display: flex;
+      justify-content: center;
+
+      div,
+      button:not(:first-child) {
+        margin-left: 5px;
+      }
     }
   }
 `;

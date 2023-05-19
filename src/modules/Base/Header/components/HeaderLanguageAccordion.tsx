@@ -106,6 +106,8 @@ const HeaderLanguageAccordion = ({
 };
 
 const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
+  width: 100%;
+
   cursor: pointer;
   .Accordion__head {
     display: flex;

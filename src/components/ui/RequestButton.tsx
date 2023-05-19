@@ -87,8 +87,7 @@ const StyledButton = styled.a`
   transition: 0.2s ease;
 
   &.ranged {
-    background: ${({ theme }) =>
-      theme.colors.button.request["hover"]} !important;
+    background: #cddef4 !important;
   }
 
   &.isActive {

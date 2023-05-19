@@ -17,6 +17,14 @@ const Layout = createGlobalStyle`
     padding-right: 20px;
   }
 
+  .ContainerApp {
+    max-width: calc(970px + 2 * 20px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
   .FullBleed {
     width: 100vw;
     margin-left: calc(50% - 50vw);

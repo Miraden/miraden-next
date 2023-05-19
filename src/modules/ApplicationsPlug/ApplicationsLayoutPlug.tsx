@@ -4,15 +4,15 @@ import { ApplicationPlug } from "./Application/ApplicationPlug";
 const ApplicationsLayoutPlug = () => {
   return (
     <StyledApplicationsLayoutPlug className="Container">
-      <ApplicationPlug className="Application" />
+      <ApplicationPlug className="Application ContainerApp" />
     </StyledApplicationsLayoutPlug>
   );
 };
 
 const StyledApplicationsLayoutPlug = styled.div`
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-gap: 30px;
+
+  height: calc(100vh - 66px);
 
   .Application {
     grid-column: 2 / span 10;

@@ -1,6 +1,13 @@
 import { Button, Search } from "@/components/ui";
 import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
-import { ArrowIcon } from "@/icons";
+import {
+  Applications,
+  ArrowIcon,
+  HomeIcon,
+  KebabIcon,
+  ListItemsIcon,
+  PlusIcon,
+} from "@/icons";
 import { FilterIcon } from "@/icons/FilterIcon";
 import cn from "classnames";
 import Image from "next/image";
@@ -45,6 +52,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
               className="Application__headArrow"
             />
           </Link>
+
           <h1 className="Font_32_120 lg:Font_26_120_500">
             Хочу купить 3-х комнатную квартиру на Кипре
           </h1>
@@ -69,7 +77,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
               active={selected === "requests"}
               tertiary
             >
-              Отклики
+              Отклики <p className="TabButton__counter Color_text_grey"></p>
             </Button>
             <Button
               className={cn("", {
@@ -80,6 +88,11 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
               tertiary
             >
               Исполнители
+              <p
+                className={cn("TabButton__counter Color_text_grey", {
+                  Color_blue_primary: selected === "performers",
+                })}
+              ></p>
             </Button>
             <Button
               className={cn("", {
@@ -90,6 +103,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
               tertiary
             >
               Отказы
+              <p className="TabButton__counter Color_text_grey"></p>
             </Button>
             <Button
               className={cn("", {
@@ -100,6 +114,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
               tertiary
             >
               Рекомендуемые
+              <p className="TabButton__counter Color_text_grey"></p>
             </Button>
           </div>
           <div className="Application__headTabsBar" />
@@ -206,6 +221,33 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
           </div>
         </>
       )}
+
+      <div className="Application__Footer">
+        <div className="Application__FooterButtons">
+          <Button tertiary className="FooterButton Font_12_16">
+            <ListItemsIcon />
+            Лента
+          </Button>
+          <Button tertiary className="FooterButton Font_12_16">
+            <Applications />
+            Мои заявки
+          </Button>
+          <div className="PlusIconContainer">
+            <Button>
+              <PlusIcon width={24} height={24} />
+            </Button>
+          </div>
+
+          <Button tertiary className="FooterButton Font_12_16">
+            <HomeIcon width={18} height={18} />
+            Объекты
+          </Button>
+          <Button tertiary className="FooterButton Font_12_16">
+            <KebabIcon className="KebabIcon" />
+            Ещё
+          </Button>
+        </div>
+      </div>
     </StyledApplication>
   );
 };
@@ -213,11 +255,19 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
 const StyledApplication = styled.section`
   position: relative;
 
+  .Color_blue_primary {
+    color: #4e6af3;
+  }
+
   .Application__headTabsBar_whiteSpace {
     width: 100%;
     height: 10px;
     border-radius: 0 0 10px 10px;
     background: #fff;
+  }
+
+  .TabButton__counter {
+    margin-left: 10px;
   }
 
   .SingleChatInfoideBar {
@@ -240,20 +290,6 @@ const StyledApplication = styled.section`
       margin-left: 10px;
     }
   }
-  .Applications__searchBar {
-    padding: 0;
-    input {
-      border-radius: 0 0 10px 10px;
-      box-shadow: none !important;
-    }
-  }
-
-  .Applications__filter {
-    position: absolute;
-    top: 94px;
-    right: -380px;
-    height: calc(100vh - 114px);
-  }
 
   .Application__headTabs {
     display: flex;
@@ -268,6 +304,10 @@ const StyledApplication = styled.section`
 
   .Application__headTabButton {
     position: relative;
+
+    p {
+      color: #4e6af3 !important;
+    }
     ::before {
       position: absolute;
       top: 35px;
@@ -287,11 +327,24 @@ const StyledApplication = styled.section`
     border-radius: 10px;
   }
 
+  .Applications__filter {
+    position: absolute;
+    top: 94px;
+    right: -380px;
+    height: calc(100vh - 114px);
+  }
+
   .Applications__headTabsBar_whiteSpace {
     width: 100%;
     height: 10px;
     border-radius: 0 0 10px 10px;
     background: #fff;
+  }
+
+  .SingleApplicationSideBar {
+    position: absolute;
+    right: -420px;
+    top: 94px;
   }
 
   .Application__headContainer {
@@ -334,6 +387,14 @@ const StyledApplication = styled.section`
     }
   }
 
+  .Applications__searchBar {
+    padding: 0;
+    input {
+      border-radius: 0 0 10px 10px;
+      box-shadow: none !important;
+    }
+  }
+
   .Application__body {
     padding-top: 100px;
     margin: 0 auto;
@@ -363,6 +424,69 @@ const StyledApplication = styled.section`
     background: #e1edfd;
     height: 4px;
     border-radius: 10px;
+  }
+
+  .Application__Footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .Application__FooterButtons {
+    display: flex;
+    justify-content: center;
+
+    div,
+    button:not(:first-child) {
+      margin-left: 64px;
+    }
+  }
+
+  .PlusIconContainer {
+    padding: 2px;
+    background: #eef1f5;
+    border-radius: 50%;
+    transform: translate(0, -34px);
+
+    button {
+      background: #4e6af3;
+      width: fit-content;
+      height: fit-content;
+      padding: 10px;
+      border-radius: 50%;
+    }
+  }
+
+  .FooterButton {
+    padding: 5px 0 0 0;
+    max-width: 74px;
+    width: 100%;
+
+    :hover {
+      svg {
+        path {
+          fill: #4e6af3;
+        }
+      }
+    }
+    span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      svg {
+        margin-bottom: 2px;
+        path {
+          fill: #7786a5;
+        }
+      }
+    }
+  }
+
+  .KebabIcon {
+    transform: rotate(90deg);
   }
 
   @media (max-width: 1024px) {

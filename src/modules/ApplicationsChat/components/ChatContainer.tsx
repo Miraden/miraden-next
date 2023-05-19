@@ -68,6 +68,10 @@ const StyledChatContainer = styled.div`
   .ChatContainer {
     position: relative;
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 
   .ChatContainer__date {
@@ -114,6 +118,7 @@ const StyledChatContainer = styled.div`
 
   .ChatContainer__messageInput {
     /* position: absolute; */
+    margin-top: 20px;
     bottom: 0;
   }
 `;

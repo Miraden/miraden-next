@@ -24,7 +24,6 @@ export default function Applications() {
       </Head>
       <StyledMainApplications>
         <Header isAuthorized />
-
         <ApplicationsLayout />
       </StyledMainApplications>
     </>

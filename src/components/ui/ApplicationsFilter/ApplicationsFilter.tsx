@@ -75,8 +75,9 @@ const ApplicationsFilter = ({
 const StyledApplicationsFilter = styled.div`
   background: #fff;
   border-radius: 10px;
-  max-width: 355px;
+  min-width: 355px;
   width: 100%;
+  position: relative;
 
   .ApplicationsFilter__head {
     display: flex;
