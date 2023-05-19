@@ -90,7 +90,6 @@ const StyledSingleApplicationSideBar = styled.div`
   .SideBar {
     background: #fff;
     padding: 20px;
-    max-width: 355px;
     border-radius: 10px;
   }
 

@@ -57,7 +57,9 @@ const SingleApplication = ({ className, someContent }: Props) => {
           <p className="Font_14_140">ID 1445</p>
         </div>
         <div className="SingleApplication__headDropdown">
-          <p className="Color_text_disabled">Создана 12 января, 12:09</p>
+          <p className="Color_text_disabled">
+            <span>Создана</span> 12 января <span>, 12:09</span>
+          </p>
           <Button
             tertiary
             className="ObjectCard__button"
@@ -71,7 +73,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
       </div>
       <div className="SingleApplication__pricing">
-        <div className="Font_24_120">
+        <div className="SingleApplication__pricingSelect Font_24_120">
           <PricingSelect
             options={currencyOptions}
             price={price}
@@ -95,6 +97,17 @@ const SingleApplication = ({ className, someContent }: Props) => {
             Новых откликов 5
           </Sticker>
         </div>
+      </div>
+      <div className="SingleApplication__pricingSelectMobile Font_24_120">
+        <PricingSelect
+          options={currencyOptions}
+          price={price}
+          yieldCount={yieldCount}
+          yieldCountPercent={yieldCount}
+          firstInstallment={firstInstallment}
+          firstInstallmentPercent={firstInstallmentPercent}
+          singleCost={singleCost}
+        />
       </div>
       <div className="SingleApplication__structureInfo">
         <div className="SingleApplication__structureInfoContent">
@@ -287,6 +300,10 @@ const StyledSingleApplication = styled.div`
   padding: 20px;
   margin-top: 10px;
 
+  .SingleApplication__pricingSelectMobile {
+    display: none;
+  }
+
   .SingleApplication__head {
     display: flex;
     align-items: center;
@@ -316,6 +333,7 @@ const StyledSingleApplication = styled.div`
     align-items: center;
     position: relative;
     button {
+      flex-shrink: 0;
       margin-left: 20px;
     }
   }
@@ -440,6 +458,81 @@ const StyledSingleApplication = styled.div`
       margin-left: 10px;
       border-left: 2px solid #c7d2e9;
       padding-left: 10px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    padding-left: 0;
+    padding-right: 0;
+
+    .SingleApplication__location {
+      flex-direction: column;
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+
+    .SingleApplication__locationInfo {
+      margin-left: 33px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+      p:not(:last-child) {
+        margin-left: 0;
+        margin-right: 9px;
+        border-right: 2px solid #c7d2e9;
+        border-left: none !important;
+        padding-right: 9px;
+      }
+
+      p:not(:first-child) {
+        margin-left: 0;
+        border-left: none !important;
+        padding-right: 9px;
+        padding-left: 0;
+      }
+    }
+
+    .SingleApplication__structureInfo {
+      display: none;
+    }
+
+    .SingleApplication__pricing {
+      .SingleApplication__pricingSelect {
+        display: none;
+      }
+    }
+
+    .SingleApplication__head {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .SingleApplication__pricing {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .SingleApplication__pricingSelectMobile {
+      padding-left: 20px;
+      display: block;
+      padding-top: 16px;
+      padding-bottom: 20px;
+      border-bottom: 3px solid #e1edfd;
+    }
+
+    .SingleApplication__headDropdown {
+      p {
+        span {
+          display: none !important;
+        }
+      }
+    }
+
+    .SingleApplication__locationInfoText {
+      button {
+        margin-left: 32px;
+      }
     }
   }
 `;

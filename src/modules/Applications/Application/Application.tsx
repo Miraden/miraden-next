@@ -472,7 +472,11 @@ const Application = ({ className }: ApplicationProps) => {
 
   return (
     <>
-      <StyledApplication className={cn(className, { Test: showFilter })}>
+      <StyledApplication
+        className={cn(className, {
+          Test: showFilter || selected === "application",
+        })}
+      >
         <div
           className={cn("Application__wrapper", { IsOpenFilter: !showFilter })}
         >
@@ -569,7 +573,6 @@ const Application = ({ className }: ApplicationProps) => {
           {selected === "application" && (
             <>
               <SingleApplication />
-              <SingleApplicationSideBar className="SingleApplicationSideBar" />
             </>
           )}
           {selected === "performers" && (
@@ -738,6 +741,12 @@ const Application = ({ className }: ApplicationProps) => {
             </>
           )}
         </div>
+
+        {selected === "application" && (
+          <>
+            <SingleApplicationSideBar className="SingleApplicationSideBar" />
+          </>
+        )}
         {showFilter && (
           <ApplicationsFilter
             onTabClick={handleTabClick}
@@ -881,9 +890,11 @@ const StyledApplication = styled.section`
   }
 
   .SingleApplicationSideBar {
-    position: absolute;
-    right: -420px;
-    top: 94px;
+    min-width: 355px;
+    grid-column: 16 / span 3;
+    margin-top: 30px;
+    margin-left: -30px;
+    height: calc(100vh - 114px);
   }
 
   .Application__head {
@@ -1068,11 +1079,20 @@ const StyledApplication = styled.section`
         grid-column: 1 / span 18;
       }
     }
+
+    .SingleApplicationSideBar {
+      grid-column: 1 / span 18;
+      margin-top: 16px;
+      margin-left: 0;
+      height: fit-content;
+      padding-bottom: 120px;
+    }
   }
 
   @media (max-width: 1024px) {
     display: flex;
 
+    flex-direction: column;
     .Application__headContainer {
       margin-top: 0;
     }
