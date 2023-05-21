@@ -24,8 +24,14 @@ export default function ApplicationPage1() {
       <StyledMainApplications className=" Font_20_120">
         <div className="Pages Container">
           <Link href="/applications-plug">Отклики / Продавцы_заглушка</Link>
-          <Link href="/applications">Отклики / Продавцы</Link>
+          <Link href="/applications">
+            Отклики / Продавцы тут же заявка просмотр
+          </Link>
           <Link href="/applications-plug">Отклики / Объекты_заглушка</Link>
+          <Link href="/objects-plug">Объекты / Объекты_заглушка</Link>
+          <Link href="/applications-chat">Chat</Link>
+          <Link href="/favourites-plug">Избранное_заглушка</Link>
+          <Link href="/favourites-full">Избранное</Link>
         </div>
       </StyledMainApplications>
     </>

@@ -64,10 +64,12 @@ const ContactInfo = ({ className }: Props) => {
 
 const StyledContactInfo = styled.div`
   background: #fff;
-  padding: 20px 30px;
   border-radius: 10px;
   margin-top: 10px;
-  max-width: 625px;
+
+  .ChatInfo__headTabs {
+    padding: 20px 30px 0 30px;
+  }
 
   .ChatInfo__headTabsBar_whiteSpace {
     width: 100%;
@@ -126,6 +128,14 @@ const StyledContactInfo = styled.div`
     background: #e1edfd;
     height: 4px;
     border-radius: 10px;
+  }
+
+  @media (max-width: 1024px) {
+    margin-top: 16px;
+  }
+
+  @media (max-width: 576px) {
+    /* padding: 20px; */
   }
 `;
 

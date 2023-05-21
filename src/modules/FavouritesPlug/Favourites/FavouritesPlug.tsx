@@ -305,11 +305,12 @@ const StyledApplication = styled.section`
   .Application__Footer {
     display: none;
     position: fixed;
+    border-top: 2px solid #eef1f5;
     width: 100%;
     bottom: 0;
     background: #fff;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
   }
 
   .Application__FooterButtons {

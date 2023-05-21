@@ -584,12 +584,10 @@ const Application = ({ className }: ApplicationProps) => {
                 <Search
                   options={[]}
                   placeholder="Поиск"
-                  className="Applications__searchBar"
-                  rightIcon={
-                    <FilterIcon
-                      className={cn("", { FilterOpen: showFilter })}
-                    />
-                  }
+                  className={cn("Applications__searchBar", {
+                    FilterOpen: !showFilter,
+                  })}
+                  rightIcon={<FilterIcon />}
                   onClick={handleShowFilter}
                   withFilter
                 />
@@ -603,12 +601,10 @@ const Application = ({ className }: ApplicationProps) => {
                 <Search
                   options={[]}
                   placeholder="Поиск"
-                  className="Applications__searchBar"
-                  rightIcon={
-                    <FilterIcon
-                      className={cn("", { FilterOpen: showFilter })}
-                    />
-                  }
+                  className={cn("Applications__searchBar", {
+                    FilterOpen: !showFilter,
+                  })}
+                  rightIcon={<FilterIcon />}
                   onClick={handleShowFilter}
                   withFilter
                 />
@@ -722,12 +718,10 @@ const Application = ({ className }: ApplicationProps) => {
                 <Search
                   options={[]}
                   placeholder="Поиск"
-                  className="Applications__searchBar"
-                  rightIcon={
-                    <FilterIcon
-                      className={cn("", { FilterOpen: showFilter })}
-                    />
-                  }
+                  className={cn("Applications__searchBar", {
+                    FilterOpen: !showFilter,
+                  })}
+                  rightIcon={<FilterIcon />}
                   onClick={handleShowFilter}
                   withFilter
                 />
@@ -817,6 +811,20 @@ const StyledApplication = styled.section`
     grid-column: 5 / span 10;
   }
 
+  .Application__headButton {
+    padding: 4px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-right: 10px;
+    :hover {
+      background: #f1f7ff;
+    }
+
+    :active {
+      background: #e1edfd;
+    }
+  }
+
   .Applications__filter {
     position: sticky;
     top: 94px;
@@ -857,29 +865,18 @@ const StyledApplication = styled.section`
   .Application__head {
     display: flex;
     align-items: center;
-    h1 {
-      margin-left: 10px;
-    }
-  }
-
-  .Application__headButton {
-    padding: 4px !important;
-    border-radius: 50%;
-    :hover {
-      background: #f1f7ff;
-    }
-
-    :active {
-      background: #e1edfd;
-    }
   }
 
   .Application__headTabs {
     display: flex;
     margin-top: 30px;
-    overflow: auto;
     button {
       padding: 0;
+      :hover {
+        p {
+          color: #4e6af3 !important;
+        }
+      }
     }
     button:not(:first-child) {
       margin-left: 30px;
@@ -888,10 +885,6 @@ const StyledApplication = styled.section`
 
   .Application__headTabButton {
     position: relative;
-
-    p {
-      color: #4e6af3 !important;
-    }
     ::before {
       position: absolute;
       top: 35px;
@@ -918,16 +911,6 @@ const StyledApplication = styled.section`
     background: #fff;
   }
 
-  .SingleApplicationSideBar {
-    position: sticky;
-    top: 94px;
-    min-width: 355px;
-    grid-column: 16 / span 3;
-    margin-top: 30px;
-    margin-left: -30px;
-    height: calc(100vh - 114px);
-  }
-
   .Applications__headTabs {
     display: flex;
     margin-top: 30px;
@@ -940,15 +923,17 @@ const StyledApplication = styled.section`
     }
   }
 
-  .Applications__searchBar {
-    padding: 0;
-    input {
-      border-radius: 0 0 10px 10px;
-      box-shadow: none !important;
+  .Applications__headTabButton {
+    position: relative;
+    ::before {
+      position: absolute;
+      top: 35px;
+      content: "";
+      background: #4e6af3;
+      width: 100%;
+      height: 4px;
+      border-radius: 10px;
     }
-  }
-
-  .FilterOpen {
   }
 
   .Application__body {
@@ -966,6 +951,40 @@ const StyledApplication = styled.section`
     }
   }
 
+  .SingleApplicationSideBar {
+    position: sticky;
+    top: 94px;
+    min-width: 355px;
+    grid-column: 16 / span 3;
+    margin-top: 30px;
+    margin-left: -30px;
+    height: calc(100vh - 114px);
+  }
+  .Applications__searchBar {
+    padding: 0;
+    input {
+      border-radius: 0 0 10px 10px;
+      box-shadow: none !important;
+    }
+
+    .Search__rightIcon:hover {
+      svg {
+        path {
+          fill: #4e6af3;
+        }
+      }
+    }
+  }
+
+  .FilterOpen {
+    .Search__rightIcon {
+      svg {
+        path {
+          fill: #7786a5;
+        }
+      }
+    }
+  }
   .Applications__list {
     margin-top: 20px;
     li:not(:first-child) {
@@ -988,11 +1007,12 @@ const StyledApplication = styled.section`
 
   .Application__Footer {
     display: none;
+    border-top: 2px solid #eef1f5;
     position: fixed;
     width: 100%;
     bottom: 0;
     background: #fff;
-    padding: 10px;
+    padding: 10px 10px 0 0;
     border-radius: 10px;
   }
 

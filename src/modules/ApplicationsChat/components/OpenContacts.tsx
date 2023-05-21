@@ -156,10 +156,12 @@ const StyledOpenContacts = styled.div`
   }
 
   .Contacts__head {
+    padding-left: 30px;
+    padding-right: 30px;
     display: flex;
     align-items: flex-start;
     padding-top: 25px;
-    padding-bottom: 25px;
+    padding-bottom: 15px;
     border-bottom: 1px solid #e1edfd;
   }
 
@@ -218,9 +220,11 @@ const StyledOpenContacts = styled.div`
 
   .Contacts__location {
     display: flex;
-    padding-top: 20px;
-    padding-bottom: 19px;
+    padding-top: 15px;
+    padding-bottom: 14px;
     border-bottom: 1px solid #e1edfd;
+    padding-right: 30px;
+    padding-left: 30px;
 
     div {
       display: flex;
@@ -244,6 +248,36 @@ const StyledOpenContacts = styled.div`
 
     p:not(:first-child) {
       margin-left: 10px;
+    }
+  }
+
+  @media (max-width: 660px) {
+    .Contacts__headInfo {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 576px) {
+    padding-bottom: 80px;
+
+    .Contacts__head {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+
+    .Contacts__user {
+      display: none;
+    }
+
+    .Contacts__location {
+      flex-direction: column;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .Contacts__locationInfo {
+      margin-left: 0;
+      margin-top: 4px;
     }
   }
 `;

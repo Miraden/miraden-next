@@ -297,6 +297,7 @@ const StyledObjectCard = styled.div`
     width: 28px;
     height: 28px;
     border-radius: 50%;
+    flex-shrink: 0;
 
     :hover {
       background: #f1f7ff;

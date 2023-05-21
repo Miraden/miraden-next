@@ -94,14 +94,17 @@ const OpenContactsAccordion = ({
 
 const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
   cursor: pointer;
+
   .Accordion__head {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     border-bottom: 1px solid #e1edfd;
+    padding-right: 30px;
+    padding-left: 30px;
   }
 
   .Accordion__status {
@@ -192,6 +195,24 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
 
     &_rotated {
       transform: rotate(-180deg);
+    }
+  }
+
+  @media (max-width: 576px) {
+    .Accordion__title {
+      flex-direction: column;
+    }
+
+    .Accordion__head {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .Accordion__agency {
+      margin-left: 0;
+    }
+
+    .Accordion__languages {
+      flex-direction: column;
     }
   }
 `;

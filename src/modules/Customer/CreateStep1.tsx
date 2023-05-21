@@ -714,7 +714,6 @@ const SearchInput = styled.input`
 
   :focus {
     .Search__searchIcon {
-      border: 1px solid #000;
     }
   }
 `;

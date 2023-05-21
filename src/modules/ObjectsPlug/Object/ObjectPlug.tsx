@@ -237,8 +237,8 @@ const recommendArray = [
   },
 ];
 
-const ApplicationPlug = ({ className }: ApplicationProps) => {
-  const [selected, setSelected] = useState<Option | null>("application");
+const ObjectPlug = ({ className }: ApplicationProps) => {
+  const [selected, setSelected] = useState<Option | null>("requests");
   const [showFilter, setShowFilter] = useState(false);
   const [selectedContent, setSelectedContent] = useState("1");
 
@@ -362,17 +362,10 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
                 width={150}
                 height={120}
               />
-              <h2 className="Font_20_120">Вы отлично справились!</h2>
+              <h2 className="Font_20_120">Объекты отсутствуют</h2>
               <p className="Color_text_grey Font_16_150">
-                На этом месте скоро появятся предложения от исполнителей. А пока
-                вы можете посмотреть
-                <Button
-                  className="Application__bodyButton "
-                  onClick={() => handleSelect("recommended")}
-                  tertiary
-                >
-                  Рекомендуемые
-                </Button>
+                На данный момент пользователи с объектами не откликнулись
+                на вашу заявку
               </p>
             </div>
           </>
@@ -426,7 +419,9 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
               <Search
                 options={[]}
                 placeholder="Поиск"
-                className="Applications__searchBar"
+                className={cn("Applications__searchBar", {
+                  FilterOpen: !showFilter,
+                })}
                 rightIcon={<FilterIcon />}
                 onClick={handleShowFilter}
                 withFilter
@@ -627,6 +622,32 @@ const StyledApplication = styled.section`
     }
   }
 
+  .Applications__searchBar {
+    padding: 0;
+    input {
+      border-radius: 0 0 10px 10px;
+      box-shadow: none !important;
+    }
+
+    .Search__rightIcon:hover {
+      svg {
+        path {
+          fill: #4e6af3;
+        }
+      }
+    }
+  }
+
+  .FilterOpen {
+    .Search__rightIcon {
+      svg {
+        path {
+          fill: #7786a5;
+        }
+      }
+    }
+  }
+
   .Application__body {
     padding-top: 100px;
     margin: 0 auto;
@@ -817,4 +838,4 @@ const StyledApplication = styled.section`
   }
 `;
 
-export { ApplicationPlug };
+export { ObjectPlug };

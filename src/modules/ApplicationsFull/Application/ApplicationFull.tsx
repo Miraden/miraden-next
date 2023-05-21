@@ -254,14 +254,6 @@ const StyledApplication = styled.section`
   .Application__wrapper {
     grid-column: 5 / span 10;
   }
-
-  .Application__headTabsBar_whiteSpace {
-    width: 100%;
-    height: 10px;
-    border-radius: 0 0 10px 10px;
-    background: #fff;
-  }
-
   .SingleChatInfoideBar {
     position: absolute;
     right: -420px;
@@ -285,6 +277,11 @@ const StyledApplication = styled.section`
     margin-top: 30px;
     button {
       padding: 0;
+      :hover {
+        p {
+          color: #4e6af3 !important;
+        }
+      }
     }
     button:not(:first-child) {
       margin-left: 30px;
@@ -317,11 +314,6 @@ const StyledApplication = styled.section`
     height: 10px;
     border-radius: 0 0 10px 10px;
     background: #fff;
-  }
-
-  .Application__head {
-    display: flex;
-    align-items: center;
   }
 
   .Applications__headTabs {
@@ -396,12 +388,14 @@ const StyledApplication = styled.section`
 
   .Application__Footer {
     display: none;
+    border-top: 2px solid #eef1f5;
+
     position: fixed;
     width: 100%;
     bottom: 0;
     background: #fff;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
   }
 
   .Application__FooterButtons {
