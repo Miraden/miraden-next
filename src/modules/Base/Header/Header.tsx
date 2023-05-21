@@ -61,7 +61,7 @@ const StyledHeader = styled.header`
     display: none;
   }
 
-  @media (max-width: 1090px) {
+  @media (max-width: 1023px) {
     padding-left: 0;
     padding-right: 0;
     top: 0;

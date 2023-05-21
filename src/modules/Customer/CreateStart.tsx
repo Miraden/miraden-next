@@ -84,11 +84,13 @@ const CreateStart = ({ className }: Props) => {
 
   return (
     <StyledCreateStep1 className={className}>
-      <div className="">
-        <div className="Reg__head">
-          <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Как это работает?
-          </h1>
+      <div className="Reg">
+        <div className="Reg__headContainer">
+          <div className="Reg__head">
+            <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
+              Как это работает?
+            </h1>
+          </div>
         </div>
         <div className="Reg__options">
           <ul className="Reg__Steps">
@@ -112,12 +114,7 @@ const CreateStart = ({ className }: Props) => {
             {steps.map((step, index) => (
               <li key={index} className="Reg__step keen-slider__slide">
                 <div className="Reg__imageContainer">
-                  <Image
-                    src={`.${step.image}`}
-                    alt=""
-                    width={200}
-                    height={200}
-                  />
+                  <Image src={step.image} alt="" width={200} height={200} />
                 </div>
                 <div className="Reg__listItemContent">
                   <h3 className="Reg__listItemTitle Font_20_120 lg:Font_18_120_500 sm:Font_18_120_500">
@@ -138,21 +135,23 @@ const CreateStart = ({ className }: Props) => {
             }}
           />
         </div>
-        <div className="Reg__progressBar"></div>
+        <div className="Reg__footerContainer">
+          <div className="Reg__progressBar"></div>
 
-        <div className="Reg__footer">
-          <div className="Reg__footerBack">
-            <Button secondary href="/" className="Reg__goBackButton">
-              На главную
-            </Button>
-            <Button
-              secondary
-              href="/"
-              leftIcon={<ArrowIcon />}
-              className="Reg__goBackButtonMobile"
-            ></Button>
+          <div className="Reg__footer">
+            <div className="Reg__footerBack">
+              <Button secondary href="/" className="Reg__goBackButton">
+                На главную
+              </Button>
+              <Button
+                secondary
+                href="/"
+                leftIcon={<ArrowIcon />}
+                className="Reg__goBackButtonMobile"
+              ></Button>
+            </div>
+            <Button href="/customer/create-step-1">Далее</Button>
           </div>
-          <Button href="/customer/create-step-1">Начать</Button>
         </div>
       </div>
     </StyledCreateStep1>
@@ -218,6 +217,7 @@ const StyledCreateStep1 = styled.section`
   .Reg__imageContainer {
     display: flex;
     align-items: flex-end;
+    flex-shrink: 0;
   }
 
   .Reg__counter {
@@ -287,23 +287,39 @@ const StyledCreateStep1 = styled.section`
   @media (max-width: 960px) {
     margin-top: 10px;
     .Reg__options {
-      padding: 50px 30px 0px 30px;
-      height: 827px;
+      padding: 50px 30px 50px 30px;
+      height: auto;
+    }
+
+    .Reg__Steps {
+      flex-direction: column;
     }
 
     .Reg__step {
       margin-left: 0;
-      max-width: 220px;
+      display: flex;
+      max-width: unset;
+    }
+
+    .Reg__listItemContent {
+      max-width: 320px;
+      margin-left: 60px;
     }
 
     .Reg__step:not(:first-child) {
-      margin-left: 19px;
+      border-top: 2px solid #e1edfd;
+      margin-left: 0;
+      padding-top: 30px;
+      margin-top: 28px;
     }
   }
 
   @media (max-width: 576px) {
     margin-top: 0;
-
+    height: 100vh;
+    .Reg {
+      height: 100%;
+    }
     .slider-dots {
       display: flex;
     }
@@ -318,7 +334,7 @@ const StyledCreateStep1 = styled.section`
     }
 
     .Reg__head {
-      padding: 20px;
+      padding: 20px 20px 16px 20px;
     }
 
     .Reg__options {
@@ -332,10 +348,14 @@ const StyledCreateStep1 = styled.section`
 
     .Reg__step {
       text-align: center;
+      flex-direction: column;
     }
 
     .Reg__step:not(:first-child) {
+      border-top: none;
       margin-left: 0;
+      padding-top: 0;
+      margin-top: 0;
     }
 
     .Reg__listItemContent {
@@ -369,6 +389,19 @@ const StyledCreateStep1 = styled.section`
           fill: none !important;
         }
       }
+    }
+    .Reg__headContainer {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      width: 100%;
+    }
+
+    .Reg__footerContainer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
     }
   }
 `;

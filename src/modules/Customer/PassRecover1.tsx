@@ -24,11 +24,13 @@ const PassRecover1 = ({ className }: Props) => {
 
   return (
     <StyledRegStep1 className={className}>
-      <div className="">
-        <div className="Reg__head">
-          <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Восстановление пароля
-          </h1>
+      <div className="Reg">
+        <div className="Reg__headContainer">
+          <div className="Reg__head">
+            <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
+              Восстановление пароля
+            </h1>
+          </div>
         </div>
         <div className="Reg__link Color_blue_primary">
           <span>
@@ -63,34 +65,36 @@ const PassRecover1 = ({ className }: Props) => {
             }
           />
         </div>
-        <div className="Reg__progressBar"></div>
+        <div className="Reg__footerContainer">
+          <div className="Reg__progressBar"></div>
 
-        <div className="Reg__footer">
-          <div className="Reg__footerBack">
-            <Button
-              secondary
-              href="/customer/login"
-              className="Reg__goBackButton"
-            >
-              Назад
-            </Button>
-            <div className="Reg__footerSteps">
-              <span className="Font_16_24">Шаг</span>
-              <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                1
-              </span>
-              <span className="Font_16_140 Color_text_grey">/ 2</span>
+          <div className="Reg__footer">
+            <div className="Reg__footerBack">
+              <Button
+                secondary
+                href="/customer/login"
+                className="Reg__goBackButton"
+              >
+                Назад
+              </Button>
+              <div className="Reg__footerSteps">
+                <span className="Font_16_24">Шаг</span>
+                <span className="Reg__footerCount Font_16_140 Color_blue_primary">
+                  1
+                </span>
+                <span className="Font_16_140 Color_text_grey">/ 2</span>
+              </div>
+              <Button
+                secondary
+                href="/"
+                leftIcon={<ArrowIcon />}
+                className="Reg__goBackButtonMobile"
+              ></Button>
             </div>
-            <Button
-              secondary
-              href="/"
-              leftIcon={<ArrowIcon />}
-              className="Reg__goBackButtonMobile"
-            ></Button>
+            <Button disabled={valid} href="/customer/pass-recover-2">
+              Далее
+            </Button>
           </div>
-          <Button disabled={valid} href="/customer/pass-recover-2">
-            Далее
-          </Button>
         </div>
       </div>
     </StyledRegStep1>
@@ -206,12 +210,22 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
+    height: 100vh;
+
+    .Reg {
+      height: 100%;
+    }
     .Reg__head {
-      padding: 20px;
+      padding: 20px 20px 16px 20px;
+    }
+
+    .Reg__footerSteps {
+      display: none;
     }
 
     .Reg__options {
-      padding: 38px 20px;
+      padding: 24px 20px;
       display: flex;
       flex-direction: column;
       height: 566px;
@@ -219,6 +233,10 @@ const StyledRegStep1 = styled.section`
       span {
         text-align: start;
       }
+    }
+
+    .Reg__emailInput {
+      margin-top: 4px;
     }
 
     .Reg__email {
@@ -250,6 +268,20 @@ const StyledRegStep1 = styled.section`
           fill: none !important;
         }
       }
+    }
+
+    .Reg__headContainer {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      width: 100%;
+    }
+
+    .Reg__footerContainer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
     }
   }
 `;

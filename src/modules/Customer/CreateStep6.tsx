@@ -223,11 +223,13 @@ const CreateStep6 = ({ className }: Props) => {
   const maxIndexBaths = Math.max(...selectedBathsRange);
   return (
     <StyledRegStep1 className={className}>
-      <div className="">
-        <div className="Reg__head">
-          <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Укажите общее количество комнат
-          </h1>
+      <div className="Reg">
+        <div className="Reg__headContainer">
+          <div className="Reg__head">
+            <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
+              Укажите общее количество комнат
+            </h1>
+          </div>
         </div>
         <div className="Reg__selectContainer">
           <div className="Reg__roomsContainer">
@@ -359,45 +361,46 @@ const CreateStep6 = ({ className }: Props) => {
             </div>
           </div>
         </div>
-
-        <div className="Reg__progressBar"></div>
-        <div className="Reg__footer">
-          <div className="Reg__footerBack">
-            <Button
-              secondary
-              href="/customer/create-step-5"
-              className="Reg__goBackButton"
-            >
-              Назад
-            </Button>
-            <Button
-              secondary
-              href="/customer/create-step-5"
-              leftIcon={<ArrowIcon />}
-              className="Reg__goBackButtonMobile"
-            ></Button>
-            <div className="Reg__footerSteps">
-              <span className="Font_16_24">Шаг</span>
-              <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                6
-              </span>
-              <span className="Font_16_140 Color_text_grey">/ 11</span>
+        <div className="Reg__footerContainer">
+          <div className="Reg__progressBar"></div>
+          <div className="Reg__footer">
+            <div className="Reg__footerBack">
+              <Button
+                secondary
+                href="/customer/create-step-5"
+                className="Reg__goBackButton"
+              >
+                Назад
+              </Button>
+              <Button
+                secondary
+                href="/customer/create-step-5"
+                leftIcon={<ArrowIcon />}
+                className="Reg__goBackButtonMobile"
+              ></Button>
+              <div className="Reg__footerSteps">
+                <span className="Font_16_24">Шаг</span>
+                <span className="Reg__footerCount Font_16_140 Color_blue_primary">
+                  6
+                </span>
+                <span className="Font_16_140 Color_text_grey">/ 11</span>
+              </div>
             </div>
-          </div>
-          <div className="Reg__nextButtonContainer">
-            <div>
-              <span className="Color_text_grey Font_16_24">
-                Найдено продавцов
-              </span>
-              <p className="Color_blue_primary Font_16_140">317</p>
-            </div>
+            <div className="Reg__nextButtonContainer">
+              <div>
+                <span className="Color_text_grey Font_16_24">
+                  Найдено продавцов
+                </span>
+                <p className="Color_blue_primary Font_16_140">317</p>
+              </div>
 
-            <Button
-              disabled={selectedRange.length === 0 && !selected}
-              href="/customer/create-step-7"
-            >
-              Далее
-            </Button>
+              <Button
+                disabled={selectedRange.length === 0 && !selected}
+                href="/customer/create-step-7"
+              >
+                Далее
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -468,7 +471,6 @@ const StyledRegStep1 = styled.section`
     flex-wrap: wrap;
 
     margin-left: -10px;
-    margin-top: 5px;
     button {
       padding: 10px 20px;
       width: fit-content;
@@ -487,7 +489,7 @@ const StyledRegStep1 = styled.section`
       padding: 10px 20px;
       width: fit-content;
       margin-left: 10px;
-      margin-top: 10px;
+      margin-top: 12px;
     }
   }
 
@@ -554,6 +556,18 @@ const StyledRegStep1 = styled.section`
     .Reg__selectContainer {
       height: 827px;
     }
+
+    .Reg__roomsContainer {
+      padding-top: 36px;
+    }
+
+    .Reg__sleepsContainer {
+      margin-top: 36px;
+    }
+
+    .Reg__bathsContainer {
+      margin-top: 36px;
+    }
   }
 
   @media (max-width: 768px) {
@@ -566,8 +580,26 @@ const StyledRegStep1 = styled.section`
 
   @media (max-width: 576px) {
     margin-top: 0;
+    height: 100vh;
+
+    .Reg {
+      height: 100%;
+    }
     .Reg__head {
-      padding: 20px;
+      padding: 20px 20px 16px 20px;
+    }
+
+    .Reg__roomsContainer {
+      padding-top: 24px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .Reg__sleepsContainer,
+    .Reg__bathsContainer {
+      margin-top: 36px;
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
     .Reg__selectContainer {
@@ -595,6 +627,20 @@ const StyledRegStep1 = styled.section`
           fill: none !important;
         }
       }
+    }
+
+    .Reg__headContainer {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      width: 100%;
+    }
+
+    .Reg__footerContainer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
     }
   }
 `;

@@ -179,11 +179,11 @@ const StyledTextAreaInput = styled.textarea`
     color: #7786a5;
   }
   transition: 0.1s;
-  &:focus {
-    box-shadow: 0 0 0 2px #4e6af3 inset;
-  }
   &:hover {
     box-shadow: 0 0 0 2px #cddef4 inset;
+  }
+  &:focus {
+    box-shadow: 0 0 0 2px #4e6af3 inset;
   }
 `;
 

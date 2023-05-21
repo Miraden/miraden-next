@@ -44,6 +44,15 @@ const StyledMapContainer = styled.div`
     right: 34px;
     position: absolute;
   }
+
+  @media (max-width: 576px) {
+    height: calc(100% - 96px);
+    .MapContainer__sort {
+      top: 20px;
+      right: 20px;
+      position: absolute;
+    }
+  }
 `;
 
 export { MapContainer };

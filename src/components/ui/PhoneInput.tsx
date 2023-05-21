@@ -11,11 +11,12 @@ interface Props {
   disabled?: boolean;
   label?: string;
   className?: string;
-  value?: string;
+  values?: any;
   onChange?: any;
+  onKeyPress?: any;
 }
 
-const NumberInput = ({
+const PhoneInput = ({
   maxLength,
   warning,
   error,
@@ -23,9 +24,12 @@ const NumberInput = ({
   disabled,
   label,
   className,
-  value,
+  values,
+
   onChange,
+  onKeyPress,
 }: Props) => {
+  const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -41,28 +45,33 @@ const NumberInput = ({
   };
 
   return (
-    <StyledNumberInput className={className}>
-      <StyledNumberInputField
+    <StyledPhoneInput className={className}>
+      <StyledPhoneInputField
         className={cn({
           FieldInput__labelWarning: warning,
           FieldInput__labelError: error,
           FieldInput__disabled: disabled,
         })}
       >
-        <StyledNumberInputInput
-          value={value}
+        {maxLength && (
+          <StyledPhoneInputCounter>
+            {value.length}/{maxLength}
+          </StyledPhoneInputCounter>
+        )}
+        <StyledPhoneInputInput
+          value={values}
           onChange={onChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
           maxLength={maxLength}
           disabled={disabled}
-          inputMode="numeric"
+          className="PhoneInput"
         />
         {icon && <div className="Icon__container">{icon}</div>}
-        <StyledNumberInputLabel isFocused={isFocused}>
+        <StyledPhoneInputLabel isFocused={isFocused} className="PhoneInput">
           {label}
-        </StyledNumberInputLabel>
-      </StyledNumberInputField>
+        </StyledPhoneInputLabel>
+      </StyledPhoneInputField>
       {warning && (
         <div className="Warning__message">
           <WarningIcon />
@@ -70,16 +79,20 @@ const NumberInput = ({
         </div>
       )}
       {error && <div className="Error__message Text_12_16">Error</div>}
-    </StyledNumberInput>
+    </StyledPhoneInput>
   );
 };
 
-const StyledNumberInput = styled.div`
+const StyledPhoneInput = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
-
+  .PhoneInput::after {
+    content: "*";
+    color: red;
+    margin-right: 5px;
+  }
   .FieldInput__disabled {
     input {
       background: #eff3fb !important;
@@ -145,13 +158,13 @@ const StyledNumberInput = styled.div`
   }
 `;
 
-const StyledNumberInputField = styled.div`
+const StyledPhoneInputField = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
 `;
 
-const StyledNumberInputInput = styled.input`
+const StyledPhoneInputInput = styled.input`
   width: 100%;
   position: relative;
   border: none;
@@ -163,16 +176,22 @@ const StyledNumberInputInput = styled.input`
   height: 60px;
   outline: none;
   transition: 0.1s;
+
   &:hover {
-    cursor: text;
     box-shadow: 0 0 0 2px #cddef4 inset;
+    cursor: text;
   }
   &:focus {
     box-shadow: 0 0 0 2px #4e6af3 inset;
   }
+  .PhoneInput::before {
+    content: "*";
+    color: red;
+    margin-right: 5px;
+  }
 `;
 
-const StyledNumberInputLabel = styled.label<{ isFocused: boolean }>`
+const StyledPhoneInputLabel = styled.label<{ isFocused: boolean }>`
   position: absolute;
   top: ${({ isFocused }) => (isFocused ? "6px" : "50%")};
   left: ${({ isFocused }) => (isFocused ? "20px" : "20px")};
@@ -185,7 +204,7 @@ const StyledNumberInputLabel = styled.label<{ isFocused: boolean }>`
   transition: 0.1s;
 `;
 
-const StyledNumberInputCounter = styled.div`
+const StyledPhoneInputCounter = styled.div`
   position: absolute;
   height: 50%;
   z-index: 10;
@@ -196,4 +215,4 @@ const StyledNumberInputCounter = styled.div`
   color: #808080;
 `;
 
-export { NumberInput };
+export { PhoneInput };

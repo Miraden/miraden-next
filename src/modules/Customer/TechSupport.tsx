@@ -16,6 +16,7 @@ const TechSupport = ({
   onTouchEnd,
 }: Props) => {
   function handleButtonClick(event: any) {
+    event.preventDefault(); // Предотвращение фокусировки кнопки
     event.target.blur();
   }
 

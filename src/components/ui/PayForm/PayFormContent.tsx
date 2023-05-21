@@ -16,6 +16,8 @@ interface Props {
   additionalRequests?: any;
   openToEveryone?: any;
   getUp?: any;
+
+  test?: any;
 }
 
 const payOptions = [
@@ -33,6 +35,7 @@ const PayFormContent = ({
   openToEveryone,
   additionalRequests,
   getUp,
+  test,
 }: Props) => {
   const [isShow, setIsShow] = useState(false);
 
@@ -54,6 +57,8 @@ const PayFormContent = ({
     },
     [selectedOption]
   );
+
+  test === totalTax + (selectedTax ? (totalTax * selectedTax) / 100 : 0);
 
   return (
     <StyledPayFormContent className={className}>
@@ -101,7 +106,7 @@ const PayFormContent = ({
       </div>
       <div className="PayFormContent__payButtons Font_16_24">
         <p>Оплатите удобным для вас способом</p>
-        <ul className="">
+        <ul className="PayFormContent__payButtonsContainer">
           {payOptions.map((option, index) => (
             <li key={index}>
               <PayButton
@@ -115,10 +120,10 @@ const PayFormContent = ({
             </li>
           ))}
         </ul>
+        {isShow && <div>Другие способы оплаты</div>}
         <button onClick={handleShow} className="PayFormContent__payVariants">
           {isShow ? "Скрыть способы оплаты" : "Открыть ещё способы"}
         </button>
-        {isShow && <div>Другие способы оплаты</div>}
       </div>
     </StyledPayFormContent>
   );
@@ -132,12 +137,18 @@ const StyledPayFormContent = styled.div`
     border-bottom: 5px solid #f1f7ff;
   }
 
+  .PayFormContent__payButtonsContainer {
+    li {
+      margin-top: 0 !important;
+    }
+  }
+
   .PayFormContent__costs {
     display: flex;
     flex-direction: column;
     margin-top: 5px;
     span {
-      margin-top: 15px;
+      margin-top: 8px;
     }
     div {
       display: flex;
@@ -167,7 +178,7 @@ const StyledPayFormContent = styled.div`
     margin-top: 30px;
     padding-left: 30px;
     padding-right: 30px;
-    height: 514px;
+    height: auto;
 
     p {
       margin-bottom: 5px;

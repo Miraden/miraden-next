@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import styled from "styled-components";
 
 interface RadioProps {
@@ -15,14 +15,25 @@ interface RadioProps {
 }
 const Radio = ({ value, disabled, error, checked, onChange }: RadioProps) => {
   const inputId = useMemo(() => Math.random().toString(36).substr(2, 9), []);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleMouseDown = (event: any) => {
+  const handleMouseDown = (event: React.MouseEvent<HTMLInputElement>) => {
     event.preventDefault();
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+  };
+
+  const handleFocus = () => {
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
   };
 
   return (
     <StyledRadio>
       <input
+        ref={inputRef}
         type="radio"
         id={inputId}
         className={cn("Radio__input", { Radio__input_error: error })}
@@ -31,6 +42,7 @@ const Radio = ({ value, disabled, error, checked, onChange }: RadioProps) => {
         tabIndex={0}
         disabled={disabled}
         onMouseDown={handleMouseDown}
+        onFocus={handleFocus} // Добавлен обработчик onFocus
       />
       <Label className="Font_16_24" htmlFor={inputId}>
         {value}
@@ -52,7 +64,7 @@ const StyledRadio = styled.div`
     border: 2px solid #c7d2e9;
     border-radius: 50%;
     transition: 0.15s ease;
-    outline: none;
+    outline: none; /* добавлено свойство outline: none */
     ::after {
       content: "";
       display: block;
@@ -65,7 +77,9 @@ const StyledRadio = styled.div`
     :hover {
       border: 3px solid #4e6af3;
     }
+    &:focus,
     &:focus-within {
+      outline: none; /* добавлено свойство outline: none */
       box-shadow: 0 0 0 2px #f845fc;
     }
     :checked {
@@ -123,7 +137,9 @@ const StyledRadio = styled.div`
     :hover {
       border: 3px solid red;
     }
+    &:focus,
     &:focus-within {
+      outline: none; /* добавлено свойство outline: none */
       box-shadow: 0 0 0 2px #f845fc;
     }
     :checked {

@@ -9,11 +9,13 @@ interface Props {
 const RegStep3 = ({ className }: Props) => {
   return (
     <StyledRegStep1 className={className}>
-      <div className="">
-        <div className="Reg__head">
-          <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Поздравляем с успешной регистрацией!
-          </h1>
+      <div className="Reg">
+        <div className="Reg__headContainer">
+          <div className="Reg__head">
+            <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
+              Поздравляем с успешной регистрацией!
+            </h1>
+          </div>
         </div>
         <div className="Reg__options">
           <Image src="/images/SuccesReg.svg" alt="" width={150} height={120} />
@@ -30,17 +32,19 @@ const RegStep3 = ({ className }: Props) => {
             Изменить электронную почту
           </Link>
         </div>
-        <div className="Reg__progressBar"></div>
-        <div className="Reg__footer">
-          <div className="Reg__footerBack">
-            <Button secondary className="Reg__goBackButton">
-              Настроить профиль
-            </Button>
-            <Button secondary className="Reg__goBackButtonMobile">
-              Профиль
-            </Button>
+        <div className="Reg__footerContainer">
+          <div className="Reg__progressBar"></div>
+          <div className="Reg__footer">
+            <div className="Reg__footerBack">
+              <Button secondary className="Reg__goBackButton">
+                Настроить профиль
+              </Button>
+              <Button secondary className="Reg__goBackButtonMobile">
+                Профиль
+              </Button>
+            </div>
+            <Button href="/customer/create-1">Далее</Button>
           </div>
-          <Button href="/customer/create-1">Далее</Button>
         </div>
       </div>
     </StyledRegStep1>
@@ -145,13 +149,17 @@ const StyledRegStep1 = styled.section`
   @media (max-width: 960px) {
     margin-top: 10px;
     .Reg__options {
-      padding-top: 100;
+      padding-top: 100px;
       padding-bottom: 495px;
     }
   }
 
   @media (max-width: 576px) {
+    height: 100vh;
     margin-top: 0;
+    .Reg {
+      height: 100%;
+    }
     .Reg__head {
       padding: 20px;
     }
@@ -191,6 +199,19 @@ const StyledRegStep1 = styled.section`
           fill: none !important;
         }
       }
+    }
+    .Reg__headContainer {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      width: 100%;
+    }
+
+    .Reg__footerContainer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
     }
   }
 `;

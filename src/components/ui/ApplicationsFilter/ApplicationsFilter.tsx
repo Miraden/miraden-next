@@ -435,7 +435,7 @@ const ObjectsContent = () => {
 
         <div className="ObjectsContent_allRooms">
           <div className="ObjectsContent__wrapperContainer">
-            <h4 className="Font_16_150">Всего комнат</h4>
+            <h4 className="Font_16_140">Всего комнат</h4>
             <ul className="ObjectsContent__buttons">
               {allRooms.map((room, index) => (
                 <li key={index}>
@@ -458,7 +458,7 @@ const ObjectsContent = () => {
             )}
             {allRoomsOpen && (
               <>
-                <h4 className="Font_16_150">Спален</h4>
+                <h4 className="Font_16_140">Спален</h4>
                 <ul className="ObjectsContent__buttons">
                   {sleeps.map((sleep, index) => (
                     <li key={index}>
@@ -471,7 +471,7 @@ const ObjectsContent = () => {
                     </li>
                   ))}
                 </ul>
-                <h4 className="Font_16_150">Санузлов</h4>
+                <h4 className="Font_16_140">Санузлов</h4>
                 <ul className="ObjectsContent__buttons">
                   {baths.map((bath, index) => (
                     <li key={index}>
@@ -497,7 +497,7 @@ const ObjectsContent = () => {
 
         <div className="ObjectsContent__squares">
           <div className="ObjectsContent__wrapperContainer">
-            <h4 className="Font_16_150">Общая площадь</h4>
+            <h4 className="Font_16_140">Общая площадь</h4>
             <div className="ObjectsContent__price">
               <NumberInputNoLabel
                 label="От"

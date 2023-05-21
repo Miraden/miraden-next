@@ -278,11 +278,13 @@ const CreateStep1 = ({ className }: Props) => {
 
   return (
     <StyledCreateStep1 className={className}>
-      <div className="">
-        <div className="Reg__head">
-          <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Укажите город или локацию недвижимости
-          </h1>
+      <div className="Reg">
+        <div className="Reg__headContainer">
+          <div className="Reg__head">
+            <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
+              Укажите город или локацию недвижимости
+            </h1>
+          </div>
         </div>
         <SearchReg options={cityMap} onClick={handleOpenMap} />
         {openMap ? (
@@ -351,38 +353,39 @@ const CreateStep1 = ({ className }: Props) => {
             </div>
           </div>
         )}
+        <div className="Reg__footerContainer">
+          <div className="Reg__progressBar"></div>
 
-        <div className="Reg__progressBar"></div>
-
-        <div className="Reg__footer">
-          <div className="Reg__footerBack">
-            <Button
-              secondary
-              href="/customer/create-1"
-              className="Reg__goBackButton"
-            >
-              Назад
-            </Button>
-            <Button
-              secondary
-              href="/"
-              leftIcon={<ArrowIcon />}
-              className="Reg__goBackButtonMobile"
-            ></Button>
-            <div className="Reg__footerSteps">
-              <span className="Font_16_24">Шаг</span>
-              <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                1
-              </span>
-              <span className="Font_16_140 Color_text_grey">/ 11</span>
+          <div className="Reg__footer">
+            <div className="Reg__footerBack">
+              <Button
+                secondary
+                href="/customer/create-1"
+                className="Reg__goBackButton"
+              >
+                Назад
+              </Button>
+              <Button
+                secondary
+                href="/"
+                leftIcon={<ArrowIcon />}
+                className="Reg__goBackButtonMobile"
+              ></Button>
+              <div className="Reg__footerSteps">
+                <span className="Font_16_24">Шаг</span>
+                <span className="Reg__footerCount Font_16_140 Color_blue_primary">
+                  1
+                </span>
+                <span className="Font_16_140 Color_text_grey">/ 11</span>
+              </div>
             </div>
+            <Button
+              disabled={!selected || (!selectedCity && !allCitiesActive)}
+              href="/customer/create-step-2"
+            >
+              Далее
+            </Button>
           </div>
-          <Button
-            disabled={!selected || (!selectedCity && !allCitiesActive)}
-            href="/customer/create-step-2"
-          >
-            Далее
-          </Button>
         </div>
       </div>
     </StyledCreateStep1>
@@ -506,21 +509,34 @@ const StyledCreateStep1 = styled.section`
       margin-left: -10px;
       flex-wrap: wrap;
       height: 767px;
+      padding-left: 40px;
+      padding-right: 40px;
+      padding-top: 46px;
       button {
         max-width: unset;
         margin-left: 10px;
-        margin-top: 10px;
+        margin-top: 12px;
       }
+    }
+
+    .Reg__citiesContainer {
+      padding-top: 36px;
     }
   }
 
   @media (max-width: 576px) {
+    margin-top: 0;
+    height: 100vh;
+
+    .Reg {
+      height: 100%;
+    }
     .Reg__head {
-      padding: 20px;
+      padding: 20px 20px 16px 20px;
     }
 
     .Reg__options {
-      padding: 38px 20px;
+      padding: 38px 10px;
       padding-bottom: 0;
     }
 
@@ -528,7 +544,7 @@ const StyledCreateStep1 = styled.section`
       padding-left: 20px;
     }
     .Reg__cities {
-      margin-top: 10px;
+      margin-top: 0;
       padding-top: 0;
       padding-bottom: 0;
     }
@@ -559,6 +575,20 @@ const StyledCreateStep1 = styled.section`
           fill: none !important;
         }
       }
+    }
+
+    .Reg__headContainer {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      width: 100%;
+    }
+
+    .Reg__footerContainer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
     }
   }
 `;
@@ -628,6 +658,22 @@ const SearchRegContainer = styled.div`
         path {
           fill: #4e6af3;
         }
+      }
+    }
+  }
+
+  @media (max-width: 576px) {
+    padding: 10px 6px 10px 11px;
+    .Search__searchIcon {
+      position: absolute;
+
+      top: 20px;
+      left: 20px;
+      z-index: 21;
+    }
+    .Search__mapButton {
+      p {
+        display: none;
       }
     }
   }

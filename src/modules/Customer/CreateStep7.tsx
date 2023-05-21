@@ -25,11 +25,13 @@ const CreateStep7 = ({ className }: Props) => {
 
   return (
     <StyledRegStep1 className={className}>
-      <div className="">
-        <div className="Reg__head">
-          <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Укажите цель покупки
-          </h1>
+      <div className="Reg">
+        <div className="Reg__headContainer">
+          <div className="Reg__head">
+            <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
+              Укажите цель покупки
+            </h1>
+          </div>
         </div>
 
         <div className="Reg__options">
@@ -70,44 +72,47 @@ const CreateStep7 = ({ className }: Props) => {
             Для гражданства
           </RequestButton>
         </div>
-        <div className="Reg__progressBar"></div>
 
-        <div className="Reg__footer">
-          <div className="Reg__footerBack">
-            <Button
-              secondary
-              href="/customer/create-step-6"
-              className="Reg__goBackButton"
-            >
-              Назад
-            </Button>
-            <Button
-              secondary
-              href="/customer/create-step-6"
-              leftIcon={<ArrowIcon />}
-              className="Reg__goBackButtonMobile"
-            ></Button>
-            <div className="Reg__footerSteps">
-              <span className="Font_16_24">Шаг</span>
-              <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                7
-              </span>
-              <span className="Font_16_140 Color_text_grey">/ 11</span>
+        <div className="Reg__footerContainer">
+          <div className="Reg__progressBar"></div>
+
+          <div className="Reg__footer">
+            <div className="Reg__footerBack">
+              <Button
+                secondary
+                href="/customer/create-step-6"
+                className="Reg__goBackButton"
+              >
+                Назад
+              </Button>
+              <Button
+                secondary
+                href="/customer/create-step-6"
+                leftIcon={<ArrowIcon />}
+                className="Reg__goBackButtonMobile"
+              ></Button>
+              <div className="Reg__footerSteps">
+                <span className="Font_16_24">Шаг</span>
+                <span className="Reg__footerCount Font_16_140 Color_blue_primary">
+                  7
+                </span>
+                <span className="Font_16_140 Color_text_grey">/ 11</span>
+              </div>
             </div>
-          </div>
-          <div className="Reg__nextButtonContainer">
-            <div>
-              <span className="Color_text_grey Font_16_24">
-                Найдено продавцов
-              </span>
-              <p className="Color_blue_primary Font_16_140">317</p>
+            <div className="Reg__nextButtonContainer">
+              <div>
+                <span className="Color_text_grey Font_16_24">
+                  Найдено продавцов
+                </span>
+                <p className="Color_blue_primary Font_16_140">317</p>
+              </div>
+              <Button
+                disabled={selected.length === 0}
+                href="/customer/create-step-8"
+              >
+                Далее
+              </Button>
             </div>
-            <Button
-              disabled={selected.length === 0}
-              href="/customer/create-step-8"
-            >
-              Далее
-            </Button>
           </div>
         </div>
       </div>
@@ -220,6 +225,7 @@ const StyledRegStep1 = styled.section`
       margin-left: 0;
       margin-top: 0;
       height: 797px;
+      padding-top: 36px;
       button {
         max-width: unset;
         width: 100%;
@@ -239,12 +245,18 @@ const StyledRegStep1 = styled.section`
 
   @media (max-width: 576px) {
     margin-top: 0;
+    margin-top: 0;
+    height: 100vh;
+
+    .Reg {
+      height: 100%;
+    }
     .Reg__head {
-      padding: 20px;
+      padding: 20px 20px 16px 20px;
     }
 
     .Reg__options {
-      padding: 38px 20px;
+      padding: 24px 20px;
       display: flex;
       flex-direction: column;
       grid-gap: 12px;
@@ -274,6 +286,20 @@ const StyledRegStep1 = styled.section`
           fill: none !important;
         }
       }
+    }
+
+    .Reg__headContainer {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      width: 100%;
+    }
+
+    .Reg__footerContainer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
     }
   }
 `;

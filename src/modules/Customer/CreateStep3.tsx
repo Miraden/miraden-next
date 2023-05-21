@@ -44,11 +44,13 @@ const CreateStep3 = ({ className }: Props) => {
 
   return (
     <StyledRegStep1 className={className}>
-      <div className="">
-        <div className="Reg__head">
-          <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-            Укажите тип недвижимости
-          </h1>
+      <div className="Reg">
+        <div className="Reg__headContainer">
+          <div className="Reg__head">
+            <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
+              Укажите тип недвижимости
+            </h1>
+          </div>
         </div>
         <div className="Reg__radioButtons">
           <Radio
@@ -155,76 +157,78 @@ const CreateStep3 = ({ className }: Props) => {
             </>
           )}
         </div>
-        <div className="Reg__progressBar"></div>
-        <div className="Reg__footer">
-          <div className="Reg__footerBack">
-            <Button
-              secondary
-              href="/customer/create-step-2"
-              className="Reg__goBackButton"
-            >
-              Назад
-            </Button>
-            <Button
-              secondary
-              href="/customer/create-step-2"
-              leftIcon={<ArrowIcon />}
-              className="Reg__goBackButtonMobile"
-            ></Button>
-            <div className="Reg__footerSteps">
-              <span className="Font_16_24">Шаг</span>
-              <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                3
-              </span>
-              <span className="Font_16_140 Color_text_grey">/ 11</span>
-            </div>
-          </div>
-          <div className="Reg__nextButtonContainer">
-            <div>
-              <span className="Color_text_grey Font_16_24">
-                Найдено продавцов
-              </span>
-              <p className="Color_blue_primary Font_16_140">317</p>
-            </div>
-            {isCommercialChecked ? (
+        <div className="Reg__footerContainer">
+          <div className="Reg__progressBar"></div>
+          <div className="Reg__footer">
+            <div className="Reg__footerBack">
               <Button
-                disabled={!selected}
-                href="/customer/create-commercial-step-4"
+                secondary
+                href="/customer/create-step-2"
+                className="Reg__goBackButton"
               >
-                Далее
+                Назад
               </Button>
-            ) : (
-              <>
-                {selected === "land" ? (
-                  <Button
-                    disabled={!selected}
-                    href="/customer/create-step-6-land"
-                  >
-                    Далее
-                  </Button>
-                ) : (
-                  <>
-                    {selected === "duplex" ||
-                    selected === "townhouse" ||
-                    selected === "house" ? (
-                      <Button
-                        disabled={!selected}
-                        href="/customer/create-step-4-full"
-                      >
-                        Далее
-                      </Button>
-                    ) : (
-                      <Button
-                        disabled={!selected}
-                        href="/customer/create-step-4"
-                      >
-                        Далее
-                      </Button>
-                    )}
-                  </>
-                )}
-              </>
-            )}
+              <Button
+                secondary
+                href="/customer/create-step-2"
+                leftIcon={<ArrowIcon />}
+                className="Reg__goBackButtonMobile"
+              ></Button>
+              <div className="Reg__footerSteps">
+                <span className="Font_16_24">Шаг</span>
+                <span className="Reg__footerCount Font_16_140 Color_blue_primary">
+                  3
+                </span>
+                <span className="Font_16_140 Color_text_grey">/ 11</span>
+              </div>
+            </div>
+            <div className="Reg__nextButtonContainer">
+              <div>
+                <span className="Color_text_grey Font_16_24">
+                  Найдено продавцов
+                </span>
+                <p className="Color_blue_primary Font_16_140">317</p>
+              </div>
+              {isCommercialChecked ? (
+                <Button
+                  disabled={!selected}
+                  href="/customer/create-commercial-step-4"
+                >
+                  Далее
+                </Button>
+              ) : (
+                <>
+                  {selected === "land" ? (
+                    <Button
+                      disabled={!selected}
+                      href="/customer/create-step-6-land"
+                    >
+                      Далее
+                    </Button>
+                  ) : (
+                    <>
+                      {selected === "duplex" ||
+                      selected === "townhouse" ||
+                      selected === "house" ? (
+                        <Button
+                          disabled={!selected}
+                          href="/customer/create-step-4-full"
+                        >
+                          Далее
+                        </Button>
+                      ) : (
+                        <Button
+                          disabled={!selected}
+                          href="/customer/create-step-4"
+                        >
+                          Далее
+                        </Button>
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -244,7 +248,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__radioButtons {
     padding-left: 30px;
-    margin-top: 38px;
+    margin-top: 36px;
     margin-left: -30px;
     display: flex;
     align-items: center;
@@ -345,6 +349,7 @@ const StyledRegStep1 = styled.section`
       margin-left: 0;
       margin-top: 0;
       height: 797px;
+      padding-top: 24px;
       button {
         max-width: unset;
         width: 100%;
@@ -364,12 +369,22 @@ const StyledRegStep1 = styled.section`
 
   @media (max-width: 576px) {
     margin-top: 0;
+    margin-top: 0;
+    height: 100vh;
+
+    .Reg__radioButtons {
+      margin-top: 24px;
+    }
+
+    .Reg {
+      height: 100%;
+    }
     .Reg__head {
-      padding: 20px;
+      padding: 20px 20px 16px 20px;
     }
 
     .Reg__options {
-      padding: 38px 20px;
+      padding: 24px 20px;
       display: flex;
       flex-direction: column;
       grid-gap: 12px;
@@ -403,6 +418,20 @@ const StyledRegStep1 = styled.section`
           fill: none !important;
         }
       }
+    }
+
+    .Reg__headContainer {
+      position: sticky;
+      top: 0;
+      background: #fff;
+      width: 100%;
+    }
+
+    .Reg__footerContainer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
     }
   }
 `;

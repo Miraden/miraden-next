@@ -5,6 +5,7 @@ import {
   HomeIcon,
   ListItemsIcon,
   MiradenLogo,
+  MiradenLogoMobile,
   PricingHeaderIcon,
 } from "@/icons";
 import { ApplicationsListIcon } from "@/icons/ApplicationsListIcon";
@@ -29,7 +30,8 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
       <div>
         <div className="Header__links">
           <Link href="/" className="Header__logoLink">
-            <MiradenLogo />
+            <MiradenLogo className="Logo" />
+            <MiradenLogoMobile className="Logo__mobile" />
           </Link>
           <Button
             header
@@ -112,6 +114,10 @@ const StyledHeaderDesktop = styled.div`
   width: 100%;
   position: relative;
 
+  .Logo__mobile {
+    display: none;
+  }
+
   .Header__links {
     display: flex;
     align-items: center;
@@ -144,7 +150,33 @@ const StyledHeaderDesktop = styled.div`
     text-transform: uppercase;
   }
 
-  @media (max-width: 1090px) {
+  @media (max-width: 1200px) {
+    .Header__navButton {
+      margin-left: 0 !important;
+      padding: 11px 15px;
+      :not(:first-child) {
+        margin-left: 10px;
+      }
+    }
+  }
+
+  @media (max-width: 1159px) {
+    .Header__navButton {
+      svg {
+        display: none;
+      }
+    }
+
+    .Logo__mobile {
+      display: flex;
+    }
+
+    .Logo {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1023px) {
     display: none;
   }
 `;
