@@ -1,4 +1,5 @@
 import { CrossIcon } from "@/icons";
+import { useState } from "react";
 import styled from "styled-components";
 import { Button } from "../Button";
 import { PayFormContent } from "./PayFormContent";
@@ -22,6 +23,9 @@ const PayForm = ({
   additionalRequests,
   getUp,
 }: PayFormProps) => {
+  const [totalPay, setTotalPay] = useState<number>(totalTax);
+  const [selectedOption, setSelectedOption] = useState<any>(null);
+
   return (
     <StyledPayForm className={className}>
       <div className="PayForm">
@@ -34,12 +38,14 @@ const PayForm = ({
         <PayFormContent
           className="PayFormContent"
           totalTax={totalTax}
+          setTotalPay={setTotalPay}
           openToEveryone={openToEveryone}
           additionalRequests={additionalRequests}
           getUp={getUp}
+          onOptionSelect={setSelectedOption}
         />
         <div className="PayFormContent__totalPay">
-          <Button>Оплалить {totalTax}€</Button>
+          <Button disabled={!selectedOption}>Оплалить {totalPay}€</Button>
         </div>
       </div>
     </StyledPayForm>

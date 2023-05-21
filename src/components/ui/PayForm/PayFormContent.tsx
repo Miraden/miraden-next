@@ -16,8 +16,8 @@ interface Props {
   additionalRequests?: any;
   openToEveryone?: any;
   getUp?: any;
-
-  test?: any;
+  setTotalPay?: any;
+  onOptionSelect?: any;
 }
 
 const payOptions = [
@@ -35,7 +35,8 @@ const PayFormContent = ({
   openToEveryone,
   additionalRequests,
   getUp,
-  test,
+  onOptionSelect,
+  setTotalPay,
 }: Props) => {
   const [isShow, setIsShow] = useState(false);
 
@@ -44,21 +45,20 @@ const PayFormContent = ({
   }, [isShow]);
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedTax, setSelectedTax] = useState(null);
-
   const handleSelect = useCallback(
     (option: any) => {
-      if (selectedOption === option) {
-        setSelectedOption(null);
-        setSelectedTax(null);
-      } else {
+      if (selectedOption !== option) {
         setSelectedOption(option);
         setSelectedTax(option.tax);
+        const totalPay =
+          totalTax + (option.tax ? (totalTax * option.tax) / 100 : 0);
+        setTotalPay(totalPay);
       }
-    },
-    [selectedOption]
-  );
 
-  test === totalTax + (selectedTax ? (totalTax * selectedTax) / 100 : 0);
+      onOptionSelect?.(option);
+    },
+    [selectedOption, totalTax, onOptionSelect]
+  );
 
   return (
     <StyledPayFormContent className={className}>
