@@ -1,4 +1,11 @@
 import { Button } from "@/components/ui";
+import {
+  Applications,
+  HomeIcon,
+  KebabIcon,
+  ListItemsIcon,
+  PlusIcon,
+} from "@/icons";
 import cn from "classnames";
 import Image from "next/image";
 import { useCallback, useState } from "react";
@@ -96,118 +103,157 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
 
   return (
     <StyledApplication className={className}>
-      <div className="Application__headContainer">
-        <div className="Application__head">
-          <h1 className="Font_32_120 lg:Font_26_120_500">Мои заявки </h1>
+      <div className={cn("Application__wrapper")}>
+        <div className="Application__headContainer">
+          <div className="Application__head">
+            <h1 className="Font_32_120 lg:Font_26_120_500">Мои заявки </h1>
+          </div>
+          <div className="Application__headTabsContainer">
+            <div className="Application__headTabs">
+              <Button
+                className={cn("", {
+                  Application__headTabButton: selected === "all",
+                })}
+                onClick={() => handleSelect("all")}
+                active={selected === "all"}
+                tertiary
+              >
+                Все
+              </Button>
+              <Button
+                className={cn("", {
+                  Application__headTabButton: selected === "published",
+                })}
+                onClick={() => handleSelect("published")}
+                active={selected === "published"}
+                tertiary
+              >
+                Опубликованные
+              </Button>
+              <Button
+                className={cn("", {
+                  Application__headTabButton: selected === "archived",
+                })}
+                onClick={() => handleSelect("archived")}
+                active={selected === "archived"}
+                tertiary
+              >
+                В архиве
+              </Button>
+            </div>
+            <div className="Application__headTabsBar" />
+          </div>
         </div>
-        <div className="Application__headTabsContainer">
-          <div className="Application__headTabs">
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "all",
-              })}
-              onClick={() => handleSelect("all")}
-              active={selected === "all"}
-              tertiary
-            >
-              Все
+        <div className="Applications__headTabsBar_whiteSpace" />
+
+        {selected === "all" && (
+          <ul className="ApplicationsList">
+            {applicationsArray.map((application, index) => (
+              <li key={index}>
+                <ObjectCardLarge
+                  title={application.title}
+                  location={application.location}
+                  id={application.id}
+                  year={application.year}
+                  square={application.square}
+                  rooms={application.rooms}
+                  sleeps={application.sleeps}
+                  baths={application.baths}
+                  price={application.price}
+                  firstInstallment={application.firstInstallment}
+                  firstInstallmentPercent={application.firstInstallmentPercent}
+                  yieldCount={application.yieldCount}
+                  singleCost={application.singleCost}
+                  deal={application.deal}
+                  condition={application.condition}
+                  type={application.type}
+                  purpose={application.purpose}
+                  isPublished={application.isPublished}
+                  isTrue={application.isTrue}
+                  publishedAt={application.publishedAt}
+                  requestsCount={application.requestsCount}
+                  watched={application.watched}
+                  list={application.list}
+                  messagesCount={application.messagesCount}
+                  href="/applications"
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+        {selected === "published" && (
+          <>
+            <div className="Application__body">
+              <Image
+                src="/images/application.svg"
+                alt=""
+                width={150}
+                height={120}
+              />
+              <h2>No published applications</h2>
+              <p className="Color_text_grey">No published</p>
+            </div>
+          </>
+        )}
+
+        {selected === "archived" && (
+          <>
+            <div className="Application__body">
+              <Image
+                src="/images/application.svg"
+                alt=""
+                width={150}
+                height={120}
+              />
+              <h2>No archived applications</h2>
+              <p className="Color_text_grey">No archived</p>
+            </div>
+          </>
+        )}
+
+        <div className="Application__Footer">
+          <div className="Application__FooterButtons">
+            <Button tertiary className="FooterButton Font_12_16">
+              <ListItemsIcon />
+              Лента
             </Button>
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "published",
-              })}
-              onClick={() => handleSelect("published")}
-              active={selected === "published"}
-              tertiary
-            >
-              Опубликованные
+            <Button tertiary className="FooterButton Font_12_16">
+              <Applications />
+              Мои заявки
             </Button>
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "archived",
-              })}
-              onClick={() => handleSelect("archived")}
-              active={selected === "archived"}
-              tertiary
-            >
-              В архиве
+            <div className="PlusIconContainer">
+              <Button>
+                <PlusIcon width={24} height={24} />
+              </Button>
+            </div>
+
+            <Button tertiary className="FooterButton Font_12_16">
+              <HomeIcon width={18} height={18} />
+              Объекты
+            </Button>
+            <Button tertiary className="FooterButton Font_12_16">
+              <KebabIcon className="KebabIcon" />
+              Ещё
             </Button>
           </div>
-          <div className="Application__headTabsBar" />
         </div>
       </div>
-      <div className="Applications__headTabsBar_whiteSpace" />
-
-      {selected === "all" && (
-        <ul className="ApplicationsList">
-          {applicationsArray.map((application, index) => (
-            <li key={index}>
-              <ObjectCardLarge
-                title={application.title}
-                location={application.location}
-                id={application.id}
-                year={application.year}
-                square={application.square}
-                rooms={application.rooms}
-                sleeps={application.sleeps}
-                baths={application.baths}
-                price={application.price}
-                firstInstallment={application.firstInstallment}
-                firstInstallmentPercent={application.firstInstallmentPercent}
-                yieldCount={application.yieldCount}
-                singleCost={application.singleCost}
-                deal={application.deal}
-                condition={application.condition}
-                type={application.type}
-                purpose={application.purpose}
-                isPublished={application.isPublished}
-                isTrue={application.isTrue}
-                publishedAt={application.publishedAt}
-                requestsCount={application.requestsCount}
-                watched={application.watched}
-                list={application.list}
-                messagesCount={application.messagesCount}
-                href="/applications"
-              />
-            </li>
-          ))}
-        </ul>
-      )}
-      {selected === "published" && (
-        <>
-          <div className="Application__body">
-            <Image
-              src="/images/application.svg"
-              alt=""
-              width={150}
-              height={120}
-            />
-            <h2>No published applications</h2>
-            <p className="Color_text_grey">No published</p>
-          </div>
-        </>
-      )}
-
-      {selected === "archived" && (
-        <>
-          <div className="Application__body">
-            <Image
-              src="/images/application.svg"
-              alt=""
-              width={150}
-              height={120}
-            />
-            <h2>No archived applications</h2>
-            <p className="Color_text_grey">No archived</p>
-          </div>
-        </>
-      )}
     </StyledApplication>
   );
 };
 
 const StyledApplication = styled.section`
   position: relative;
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  grid-gap: 30px;
+  padding-left: 55px;
+  padding-right: 55px;
+  .Application__wrapper {
+    grid-column: 5 / span 10;
+  }
 
   .Application__headTabsBar_whiteSpace {
     width: 100%;
@@ -223,7 +269,7 @@ const StyledApplication = styled.section`
   }
 
   .Application__headContainer {
-    margin-top: 20px;
+    margin-top: 30px;
     padding: 20px 20px 0 20px;
     background: #fff;
     border-radius: 10px 10px 0 0;
@@ -271,13 +317,6 @@ const StyledApplication = styled.section`
     height: 10px;
     border-radius: 0 0 10px 10px;
     background: #fff;
-  }
-
-  .Application__headContainer {
-    margin-top: 20px;
-    padding: 20px 20px 0 20px;
-    background: #fff;
-    border-radius: 10px 10px 0 0;
   }
 
   .Application__head {
@@ -355,9 +394,124 @@ const StyledApplication = styled.section`
     }
   }
 
+  .Application__Footer {
+    display: none;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .Application__FooterButtons {
+    display: flex;
+    justify-content: center;
+
+    div,
+    button:not(:first-child) {
+      margin-left: 64px;
+    }
+  }
+
+  .PlusIconContainer {
+    padding: 2px;
+    background: #eef1f5;
+    border-radius: 50%;
+    transform: translate(0, -34px);
+
+    button {
+      background: #4e6af3;
+      width: fit-content;
+      height: fit-content;
+      padding: 10px !important;
+      border-radius: 50%;
+    }
+  }
+
+  .FooterButton {
+    padding: 5px 0 0 0;
+    max-width: 74px;
+    width: 100%;
+
+    :hover {
+      svg {
+        path {
+          fill: #4e6af3;
+        }
+      }
+    }
+    span {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      svg {
+        margin-bottom: 2px;
+        path {
+          fill: #7786a5;
+        }
+      }
+    }
+  }
+
+  .KebabIcon {
+    transform: rotate(90deg);
+  }
+
+  @media (max-width: 1440px) {
+    grid-gap: 20px;
+    padding-left: 0;
+    padding-right: 0;
+
+    .Application__wrapper {
+      grid-column: 1 / span 18;
+      width: 100%;
+
+      &.IsOpenFilter {
+        grid-column: 1 / span 18;
+      }
+    }
+
+    .SingleApplicationSideBar {
+      grid-column: 1 / span 18;
+      margin-top: 16px;
+      margin-left: 0;
+      height: fit-content;
+      padding-bottom: 120px;
+    }
+  }
+
   @media (max-width: 1024px) {
     .Application__headContainer {
-      margin-top: 60px;
+      margin-top: 0;
+    }
+
+    .ApplicationsList {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .Application__Footer {
+      display: block;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .ApplicationsList {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .Application__FooterButtons {
+      display: flex;
+      justify-content: center;
+
+      div,
+      button:not(:first-child) {
+        margin-left: 5px;
+      }
     }
   }
 `;

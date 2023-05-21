@@ -2,6 +2,7 @@ import { Button, Sticker, Tag } from "@/components/ui";
 import {
   BathsIcon,
   BuildYearIcon,
+  Kebab24Icon,
   KebabIcon,
   ListItemsIcon,
   PointIconFooter,
@@ -109,7 +110,7 @@ const ObjectCardLarge = ({
                   className="ObjectCardLarge__button"
                   onClick={handleOpenDropdown}
                 >
-                  <KebabIcon className="ObjectCardLarge__buttonIcon" />
+                  <Kebab24Icon className="ObjectCardLarge__buttonIcon" />
                 </Button>
               </div>
             </div>
@@ -448,7 +449,9 @@ const StyledObjectCardLarge = styled.a`
   }
 
   @media (max-width: 768px) {
-    padding: 10px;
+    .ObjectCardLarge__container {
+      padding: 10px;
+    }
     .ObjectCardLarge__mainImages,
     .ObjectCardLarge__unpublishedContainer {
       min-width: 120px;
@@ -458,7 +461,7 @@ const StyledObjectCardLarge = styled.a`
     }
 
     .ObjectCardLarge__info {
-      margin-left: 15px;
+      margin-left: 0;
     }
 
     .ObjectCardLarge__location {

@@ -83,8 +83,8 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding-left: 40px;
-    padding-right: 40px;
+    padding-left: 30px;
+    padding-right: 30px;
     padding-top: 20px;
     padding-bottom: 20px;
   }

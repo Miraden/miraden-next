@@ -1,37 +1,20 @@
-import { ArrowIcon } from "@/icons/ArrowIcon";
+import { ArrowIcon } from "@/icons";
 import cn from "classnames";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import styled from "styled-components";
-import { PricingDropdown } from "./PricingDropdown";
+import { MoreDropdown } from "./MoreDropdown";
 
 interface Props {
   className?: string;
-  options: string[];
-  price?: string;
-  firstInstallment?: string;
-  firstInstallmentPercent?: string;
-  yieldCount?: number;
-  yieldCountPercent?: number;
-  singleCost?: string;
 }
 
-const PricingSelect: FC<Props> = ({
-  className,
-  options,
-  price,
-  firstInstallment,
-  firstInstallmentPercent,
-  yieldCount,
-  singleCost,
-  yieldCountPercent,
-}) => {
+const More: FC<Props> = ({ className }) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectOption, setSelectOption] = useState<string>("");
-  const [selectedOption, setSelectedOption] = useState<string>("");
-
-  useEffect(() => {
-    setSelectedOption(options[0]);
-  }, [options]);
+  const [selectOption, setSelectOption] = useState<string>("RU");
+  const [selectedOption, setSelectedOption] = useState<string>(selectOption);
+  const options = () => {
+    return ["EN", "RU"];
+  };
 
   const toggleDropDown = () => {
     setShowDropDown(!showDropDown);
@@ -42,16 +25,17 @@ const PricingSelect: FC<Props> = ({
       setShowDropDown(false);
     }
   };
-
   const optionSelection = (option: string, index: number): void => {
     setSelectedOption(option);
     setSelectOption(option);
   };
 
-  console.log(selectedOption);
-
   return (
-    <StyledDropdownInput className={cn({ className })} options={options}>
+    <StyledDropdownInput
+      className={cn({
+        className,
+      })}
+    >
       <button
         className={
           showDropDown ? `DropdownInput_select_active` : `DropdownInput_select`
@@ -61,24 +45,19 @@ const PricingSelect: FC<Props> = ({
           dismissHandler(e)
         }
       >
-        <div className="DropdownInput_selectLabel Color_blue_primary sm:Font_14_16_600">
-          {price + selectedOption ? price + selectedOption : price}
+        <div className="DropdownInput_selectLabel Text_14_16">
+          Ещё
           <ArrowIcon />
         </div>
         {showDropDown && (
-          <PricingDropdown
+          <MoreDropdown
             className="DropdownInput_selectContainer"
             selectedOption={selectedOption}
             setSelectedOption={setSelectedOption}
             optionSelection={optionSelection}
             showDropDown={true}
             toggleDropDown={(): void => toggleDropDown()}
-            options={options}
-            yieldCount={yieldCount}
-            yieldCountPercent={yieldCountPercent}
-            singleCost={singleCost}
-            firstInstallment={firstInstallment}
-            firstInstallmentPercent={firstInstallmentPercent}
+            options={options()}
           />
         )}
       </button>
@@ -89,42 +68,56 @@ const PricingSelect: FC<Props> = ({
 const StyledDropdownInput = styled.div<Props>`
   max-width: fit-content;
   position: relative;
-  margin-left: 4px;
+  color: #fff;
+  user-select: none;
+  outline: none;
   .DropdownInput_selectContainer {
     right: 10px;
+    top: 4px;
     position: relative;
+    color: #fff;
+    border-radius: 10px;
   }
 
   .DropdownInput_select_active {
     width: 100%;
     max-width: 300px;
+    background: #3a465d;
+    border-radius: 10px;
+    padding: 10px 10px 10px 15px;
     border: none;
     transition: 0.15s ease-in;
     .DropdownInput_selectLabel {
-      color: #4e6af3 !important;
+      color: #fff;
     }
     div {
       svg {
-        margin-left: 3px;
+        margin-left: 5px;
         transition: 0.15s ease-in;
       }
     }
   }
 
   .DropdownInput_select {
-    &:focus {
-      box-shadow: none;
+    overflow-y: hidden; // тестово для сколла
+    &:focus-visible {
+      box-shadow: 0 0 0 2px #f845fc;
       div {
-        color: #4e6af3;
+        color: #fff;
       }
     }
-
+    &:hover {
+      background: #414d65;
+    }
     &:active {
       outline: none;
     }
     outline: none;
     width: 100%;
+    max-width: 300px;
+    padding: 10px 10px 10px 15px;
     border: none;
+    border-radius: 10px;
     overflow: hidden;
 
     div {
@@ -141,9 +134,12 @@ const StyledDropdownInput = styled.div<Props>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    color: #4e6af3;
-
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    color: #fff;
     svg {
       width: 16px;
       height: 16px;
@@ -171,4 +167,4 @@ const StyledDropdownInput = styled.div<Props>`
   }
 `;
 
-export { PricingSelect };
+export { More };

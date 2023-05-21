@@ -320,6 +320,17 @@ const StyledSingleApplication = styled.div`
     }
   }
 
+  .ObjectCard__button {
+    padding: 2px !important;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+
+    :hover {
+      background: #f1f7ff;
+    }
+  }
+
   .SingleApplication__pricing {
     display: flex;
     justify-content: space-between;

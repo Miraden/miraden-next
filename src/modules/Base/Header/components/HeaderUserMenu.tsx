@@ -80,7 +80,7 @@ const StyledHeaderUserMenu = styled.div`
 
   .HeaderUserMenu__createButton {
     text-transform: uppercase;
-    padding: 12px 24px;
+    padding: 11px 24px;
   }
 
   .HeaderUserMenu__wallet {

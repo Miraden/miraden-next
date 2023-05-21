@@ -10,15 +10,20 @@ import {
 import { ApplicationsListIcon } from "@/icons/ApplicationsListIcon";
 import cn from "classnames";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 import { HeaderLocalization } from "./HeaderLocalization";
 import { HeaderUserMenu } from "./HeaderUserMenu";
+import { More } from "./MoreDropdown/More";
+
 interface Props {
   className?: string;
   isAuthorized?: boolean;
 }
 
 const HeaderDesktop = ({ className, isAuthorized }: Props) => {
+  const router = useRouter();
+  const currentUrl = router.pathname;
   return (
     <StyledHeaderDesktop className={className}>
       <div>
@@ -40,6 +45,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
                 header
                 leftIcon={<ApplicationsListIcon />}
                 className={cn("Header__navButton")}
+                active={currentUrl.includes("application")}
               >
                 мои заявки
               </Button>
@@ -50,6 +56,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
               >
                 мои объекты
               </Button>
+              <More />
             </>
           ) : (
             <>

@@ -2,11 +2,11 @@ import { ArrowIcon, CrossIcon } from "@/icons";
 import cn from "classnames";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
+import { DropdownLocationInput } from "../../ui/DropdownLocationInput/DropdownLocationInput";
 import { Button } from "../Button";
 import { Checkbox } from "../CheckBox";
 import { CurrencySelect } from "../CurrencySelect/CurrencySelect";
-import { DropdownInput } from "../DropdownInput";
-import { NumberInput } from "../NumberInput";
+import { NumberInputNoLabel } from "../NumberInputNoLabel";
 import { RequestButton } from "../RequestButton";
 import { TabButtons } from "../TabButtons";
 interface FilterProps {
@@ -53,7 +53,7 @@ const ApplicationsFilter = ({
     <StyledApplicationsFilter className={className}>
       <div className="ApplicationsFilter__head">
         <h2 className="Font_12_16_600">фильтр выключен</h2>
-        <Button tertiary onClick={onClick}>
+        <Button tertiary onClick={onClick} className="CloseFilter">
           <CrossIcon width={24} height={24} />
         </Button>
       </div>
@@ -90,7 +90,17 @@ const StyledApplicationsFilter = styled.div`
       text-transform: uppercase;
     }
     button {
+      border-radius: 50%;
       padding: 2px;
+      width: 28px;
+      height: 28px;
+      :hover {
+        background: #f1f7ff;
+      }
+
+      :active {
+        background: #e1edfd;
+      }
     }
     svg {
       path {
@@ -166,7 +176,7 @@ const StyledSellerContent = styled.div`
   }
 `;
 
-const currency = ["Евро, €", "Доллар, $", "Фунт стерлингов, £", "Рубль, ₽"];
+const currency = ["евро", "доллар", "фунт стерлингов", "рубль"];
 
 const ObjectsContent = () => {
   const [priceToValue, setPriceToValue] = useState("");
@@ -322,24 +332,29 @@ const ObjectsContent = () => {
     <StyledObjectsContent>
       <div className="ObjectsContent__wrapperContainer">
         <h3 className="ObjectsContent__locations">Локация недвижимости</h3>
-        <DropdownInput
+        <DropdownLocationInput
           className="ObjectsContent__locationsSelect"
-          placeholder="Все страны"
-          options={["Турция", "Кипр", "Черногоря", "Северный Кипр"]}
+          placeholder="Все страны"
+          options={[
+            { label: "Турция", subOptions: ["1", "2", "3", "4"] },
+            { label: "Кипр", subOptions: ["52", "43", "23", "41"] },
+            { label: "Черногория", subOptions: ["11", "242", "43", "45"] },
+            { label: "Северный Кипр", subOptions: ["11", "22", "34", "43"] },
+          ]}
         />
       </div>
-      <div className="ObjectsContent__wrapperContainer">
+      <div className="ObjectsContent__wrapperContainerPricing">
         <h3 className="ObjectsContent__currency Font_16_140">
           <span>Цена в </span>
           <CurrencySelect options={currency} />
         </h3>
         <div className="ObjectsContent__price">
-          <NumberInput
+          <NumberInputNoLabel
             label="От"
             value={priceFromValue}
             onChange={handlePriceFromValueChange}
           />
-          <NumberInput
+          <NumberInputNoLabel
             label="До"
             value={priceToValue}
             onChange={handlePriceToValueChange}
@@ -393,14 +408,14 @@ const ObjectsContent = () => {
             </div>
             <div className="ObjectsContent__wrapperContainer">
               <div className="ObjectsContent_year">
-                <h4>Год постройки</h4>
+                <h4 className="Font_16_150">Год постройки</h4>
                 <div className="ObjectsContent__price">
-                  <NumberInput
+                  <NumberInputNoLabel
                     label="От"
                     value={yearFromValue}
                     onChange={handleYearFromValueChange}
                   />
-                  <NumberInput
+                  <NumberInputNoLabel
                     label="До"
                     value={yearToValue}
                     onChange={handleYearToValueChange}
@@ -420,7 +435,7 @@ const ObjectsContent = () => {
 
         <div className="ObjectsContent_allRooms">
           <div className="ObjectsContent__wrapperContainer">
-            <h4>Всего комнат</h4>
+            <h4 className="Font_16_150">Всего комнат</h4>
             <ul className="ObjectsContent__buttons">
               {allRooms.map((room, index) => (
                 <li key={index}>
@@ -443,7 +458,7 @@ const ObjectsContent = () => {
             )}
             {allRoomsOpen && (
               <>
-                <h4>Спален</h4>
+                <h4 className="Font_16_150">Спален</h4>
                 <ul className="ObjectsContent__buttons">
                   {sleeps.map((sleep, index) => (
                     <li key={index}>
@@ -456,7 +471,7 @@ const ObjectsContent = () => {
                     </li>
                   ))}
                 </ul>
-                <h4>Санузлов</h4>
+                <h4 className="Font_16_150">Санузлов</h4>
                 <ul className="ObjectsContent__buttons">
                   {baths.map((bath, index) => (
                     <li key={index}>
@@ -482,14 +497,14 @@ const ObjectsContent = () => {
 
         <div className="ObjectsContent__squares">
           <div className="ObjectsContent__wrapperContainer">
-            <h4>Общая площадь</h4>
+            <h4 className="Font_16_150">Общая площадь</h4>
             <div className="ObjectsContent__price">
-              <NumberInput
+              <NumberInputNoLabel
                 label="От"
                 value={fullSquareFromValue}
                 onChange={handleFullSquareFromValueChange}
               />
-              <NumberInput
+              <NumberInputNoLabel
                 label="До"
                 value={fullSquareToValue}
                 onChange={handleFullSquareToValueChange}
@@ -504,30 +519,29 @@ const ObjectsContent = () => {
               </button>
             )}
 
-            <h4>Жилая</h4>
-
             {squareOpen && (
               <>
+                <h4 className="Font_16_150">Жилая</h4>
                 <div className="ObjectsContent__price">
-                  <NumberInput
+                  <NumberInputNoLabel
                     label="От"
                     value={livingSquareFromValue}
                     onChange={handleLivingSquareFromValueChange}
                   />
-                  <NumberInput
+                  <NumberInputNoLabel
                     label="До"
                     value={livingSquareToValue}
                     onChange={handleLivingSquareToValueChange}
                   />
                 </div>
-                <h4>Участок земли</h4>
+                <h4 className="Font_16_150">Участок земли</h4>
                 <div className="ObjectsContent__price">
-                  <NumberInput
+                  <NumberInputNoLabel
                     label="От"
                     value={landSquareFromValue}
                     onChange={handleLandSquareFromValueChange}
                   />
-                  <NumberInput
+                  <NumberInputNoLabel
                     label="До"
                     value={landSquareToValue}
                     onChange={handleLandSquareToValueChange}
@@ -612,11 +626,17 @@ const ObjectsContent = () => {
 };
 
 const StyledObjectsContent = styled.div`
-  margin-top: 10px;
+  margin-top: 30px;
 
-  .ObjectsContent__wrapperContainer {
+  .ObjectsContent__wrapperContainer,
+  .ObjectsContent__wrapperContainerPricing {
     padding-left: 30px;
     padding-right: 30px;
+  }
+
+  .ObjectsContent__wrapperContainerPricing {
+    border-top: 1px solid #e1edfd;
+    margin-top: 14px;
   }
 
   .ObjectsContent__locations {
@@ -663,7 +683,7 @@ const StyledObjectsContent = styled.div`
   }
 
   .ObjectsContent__tabs {
-    margin-top: 15px;
+    margin-top: 10px;
   }
 
   .ObjectsContent__checkboxes {
@@ -682,8 +702,8 @@ const StyledObjectsContent = styled.div`
   .ObjectsContent__purpose,
   .ObjectsContent__status,
   .ObjectsContent__onlyPro {
-    margin-top: 15px;
-    padding-top: 9px;
+    margin-top: 14px;
+    padding-top: 15px;
     border-top: 1px solid #e1edfd;
 
     h4:not(:first-child) {

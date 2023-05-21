@@ -1,5 +1,5 @@
 import { Button, Sticker } from "@/components/ui";
-import { KebabIcon, VerifiedIcon } from "@/icons";
+import { Kebab24Icon, VerifiedIcon } from "@/icons";
 import { StarIconFilled } from "@/icons/StarIconFilled";
 import Image from "next/image";
 import { useCallback, useState } from "react";
@@ -91,7 +91,7 @@ const SellerCard = ({
             className="SellerCard__button"
             onClick={handleOpenDropdown}
           >
-            <KebabIcon className="SellerCard__buttonIcon" />
+            <Kebab24Icon className="SellerCard__buttonIcon" />
           </Button>
           {openDropdown && <SellerDropdown agencyName={agencyName} />}
           {unreadMessages === 0 ? null : (
@@ -171,6 +171,8 @@ const StyledSellerCard = styled.div`
 
   .SellerCard__actions {
     display: flex;
+    align-items: center;
+
     flex-direction: column;
     justify-content: space-between;
     align-self: flex-start;
@@ -178,8 +180,12 @@ const StyledSellerCard = styled.div`
   }
 
   .SellerCard__button {
-    padding: 2px;
+    padding: 2px !important;
     border-radius: 50%;
+
+    :hover {
+      background: #f1f7ff;
+    }
   }
   .SellerCard__buttonIcon {
     transform: rotate(90deg);

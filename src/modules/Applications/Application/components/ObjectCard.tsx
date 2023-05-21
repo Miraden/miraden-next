@@ -250,7 +250,8 @@ const StyledObjectCard = styled.div`
 
   .ObjectCard__mainImages {
     display: flex;
-    min-width: 400px;
+    max-width: 400px;
+    width: 100%;
     img {
       border-radius: 10px;
       object-fit: cover;
@@ -371,6 +372,7 @@ const StyledObjectCard = styled.div`
     .ObjectCard__mainImages,
     .ObjectCard__unpublishedContainer {
       min-width: 240px;
+      max-width: 240px;
 
       img {
         width: unset;
@@ -414,6 +416,8 @@ const StyledObjectCard = styled.div`
     .ObjectCard__mainImages,
     .ObjectCard__unpublishedContainer {
       min-width: 120px;
+      max-width: 120px;
+
       img {
         height: 120px;
       }

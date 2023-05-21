@@ -3,7 +3,7 @@ import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import {
   Applications,
-  ArrowIcon,
+  BackIcon20,
   HomeIcon,
   KebabIcon,
   ListItemsIcon,
@@ -11,7 +11,6 @@ import {
 } from "@/icons";
 import { FilterIcon } from "@/icons/FilterIcon";
 import cn from "classnames";
-import Link from "next/link";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { ObjectCard } from "./components/ObjectCard";
@@ -482,13 +481,17 @@ const Application = ({ className }: ApplicationProps) => {
         >
           <div className="Application__headContainer">
             <div className="Application__head">
-              <Link href="/applications-full">
-                <ArrowIcon
+              <Button
+                tertiary
+                href="/applications-full"
+                className="Application__headButton"
+              >
+                <BackIcon20
                   width={20}
                   height={20}
                   className="Application__headArrow"
                 />
-              </Link>
+              </Button>
 
               <h1 className="Font_32_120 lg:Font_26_120_500">
                 Хочу купить 3-х комнатную квартиру на Кипре
@@ -582,7 +585,11 @@ const Application = ({ className }: ApplicationProps) => {
                   options={[]}
                   placeholder="Поиск"
                   className="Applications__searchBar"
-                  rightIcon={<FilterIcon />}
+                  rightIcon={
+                    <FilterIcon
+                      className={cn("", { FilterOpen: showFilter })}
+                    />
+                  }
                   onClick={handleShowFilter}
                   withFilter
                 />
@@ -597,7 +604,11 @@ const Application = ({ className }: ApplicationProps) => {
                   options={[]}
                   placeholder="Поиск"
                   className="Applications__searchBar"
-                  rightIcon={<FilterIcon />}
+                  rightIcon={
+                    <FilterIcon
+                      className={cn("", { FilterOpen: showFilter })}
+                    />
+                  }
                   onClick={handleShowFilter}
                   withFilter
                 />
@@ -712,7 +723,11 @@ const Application = ({ className }: ApplicationProps) => {
                   options={[]}
                   placeholder="Поиск"
                   className="Applications__searchBar"
-                  rightIcon={<FilterIcon />}
+                  rightIcon={
+                    <FilterIcon
+                      className={cn("", { FilterOpen: showFilter })}
+                    />
+                  }
                   onClick={handleShowFilter}
                   withFilter
                 />
@@ -803,6 +818,8 @@ const StyledApplication = styled.section`
   }
 
   .Applications__filter {
+    position: sticky;
+    top: 94px;
     grid-column: 16 / span 3;
     margin-top: 30px;
     margin-left: -30px;
@@ -842,6 +859,18 @@ const StyledApplication = styled.section`
     align-items: center;
     h1 {
       margin-left: 10px;
+    }
+  }
+
+  .Application__headButton {
+    padding: 4px !important;
+    border-radius: 50%;
+    :hover {
+      background: #f1f7ff;
+    }
+
+    :active {
+      background: #e1edfd;
     }
   }
 
@@ -890,19 +919,13 @@ const StyledApplication = styled.section`
   }
 
   .SingleApplicationSideBar {
+    position: sticky;
+    top: 94px;
     min-width: 355px;
     grid-column: 16 / span 3;
     margin-top: 30px;
     margin-left: -30px;
     height: calc(100vh - 114px);
-  }
-
-  .Application__head {
-    display: flex;
-    align-items: center;
-    h1 {
-      margin-left: 10px;
-    }
   }
 
   .Applications__headTabs {
@@ -917,25 +940,15 @@ const StyledApplication = styled.section`
     }
   }
 
-  .Applications__headTabButton {
-    position: relative;
-    ::before {
-      position: absolute;
-      top: 35px;
-      content: "";
-      background: #4e6af3;
-      width: 100%;
-      height: 4px;
-      border-radius: 10px;
-    }
-  }
-
   .Applications__searchBar {
     padding: 0;
     input {
       border-radius: 0 0 10px 10px;
       box-shadow: none !important;
     }
+  }
+
+  .FilterOpen {
   }
 
   .Application__body {
@@ -958,35 +971,6 @@ const StyledApplication = styled.section`
     li:not(:first-child) {
       margin-top: 10px;
     }
-  }
-
-  .Application__headArrow {
-    transform: rotate(-90deg);
-
-    path {
-      stroke: #7786a5;
-    }
-  }
-
-  .Applications__headTabsBar {
-    margin-top: 15px;
-    width: 100%;
-    background: #e1edfd;
-    height: 4px;
-    border-radius: 10px;
-  }
-
-  .Application__bottomContainer {
-    position: absolute;
-    bottom: 0;
-    background: #fff;
-    padding-top: 6px;
-    border-radius: 10px 10px 0 0;
-  }
-
-  .Application__bottomTabs {
-    display: flex;
-    justify-content: space-between;
   }
 
   .PlusIcon__container {
@@ -1032,7 +1016,7 @@ const StyledApplication = styled.section`
       background: #4e6af3;
       width: fit-content;
       height: fit-content;
-      padding: 10px;
+      padding: 10px !important;
       border-radius: 50%;
     }
   }

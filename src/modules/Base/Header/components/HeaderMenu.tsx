@@ -47,7 +47,9 @@ const HeaderMenu = ({ className, isOpen }: Props) => {
       </div>
       <div className="HeaderMenu__contacts">
         <p className="HeaderMenu__telegramLink Font_14_140">
-          Заходите в наш Telegram канал и будьте в курсе новых заявок
+          Заходите в наш Telegram канал 
+          <br />
+          и будьте в курсе новых заявок
         </p>
         <Button leftIcon={<TelegramPureIcon />} className="HeaderMenu__button">
           Telegram
@@ -86,8 +88,8 @@ const StyledHeaderMenu = styled.div`
     a {
       display: flex;
       width: 100%;
-      padding-left: 40px;
-      padding-right: 40px;
+      padding-left: 30px;
+      padding-right: 30px;
       padding-top: 20px;
       padding-bottom: 20px;
       border-top: 1px solid rgba(119, 134, 165, 0.2);

@@ -35,6 +35,7 @@ const SingleApplicationSideBar = ({ className }: Props) => {
 
   const handleActive = useCallback(
     (index: number) => {
+      if (index === 0) return;
       const newActiveButtons = [...activeButtons];
       newActiveButtons[index] = !newActiveButtons[index];
       setActiveButtons(newActiveButtons);

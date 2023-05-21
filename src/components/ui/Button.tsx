@@ -289,7 +289,6 @@ const StyledButton = styled.a`
   }
 
   &.Button_primary:active {
-    background: ${({ theme }) => theme.colors.button.primary["active"]};
   }
 
   &.Button_secondary:active {
@@ -311,8 +310,9 @@ const StyledButton = styled.a`
     background: ${({ theme }) => theme.colors.button.request["active"]};
   }
 
-  &.Button_header:active {
-    background: ${({ theme }) => theme.colors.button.header["active"]};
+  &.Button_header.active {
+    background: #3a465d !important;
+    color: #eafff3 !important;
   }
 
   &.Button_primary:focus-visible {

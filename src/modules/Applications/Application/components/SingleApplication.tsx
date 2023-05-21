@@ -2,7 +2,7 @@ import { Button, Sticker, ToggleButton } from "@/components/ui";
 import { PricingSelect } from "@/components/ui/PricingDropdown/PricingSelect";
 import {
   BuildYearIcon,
-  KebabIcon,
+  Kebab24Icon,
   ListItemsIcon,
   PointIconFooter,
   SquareIcon,
@@ -65,7 +65,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
             className="ObjectCard__button"
             onClick={handleOpenDropdown}
           >
-            <KebabIcon />
+            <Kebab24Icon />
           </Button>
           {openDropdown && (
             <SingleApplicationDropdown someContent={someContent} />
@@ -139,6 +139,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
           </div>
         </div>
       </div>
+      <div className="Divider"></div>
       <div className="SingleApplication__fullInfo Font_16_24">
         <div className="SingleApplication__location">
           <div>
@@ -298,7 +299,7 @@ const StyledSingleApplication = styled.div`
   background: #ffffff;
   border-radius: 10px;
   padding: 20px;
-  margin-top: 10px;
+  margin-top: 20px;
 
   .SingleApplication__pricingSelectMobile {
     display: none;
@@ -379,7 +380,7 @@ const StyledSingleApplication = styled.div`
   }
 
   .ObjectCard__button {
-    padding: 2px;
+    padding: 2px !important;
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -394,7 +395,12 @@ const StyledSingleApplication = styled.div`
     align-items: center;
     padding-top: 20px;
     padding-bottom: 18px;
-    border-bottom: 4px solid #e1edfd;
+  }
+
+  .Divider {
+    background: #e1edfd;
+    height: 4px;
+    border-radius: 4px;
   }
 
   .SingleApplication__structureInfoContent {
@@ -500,6 +506,11 @@ const StyledSingleApplication = styled.div`
     .SingleApplication__pricing {
       .SingleApplication__pricingSelect {
         display: none;
+        outline: none;
+
+        &:focus {
+          outline: none;
+        }
       }
     }
 

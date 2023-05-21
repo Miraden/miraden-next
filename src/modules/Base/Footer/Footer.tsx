@@ -484,6 +484,10 @@ const StyledFooterBottom = styled.div`
   background: #fff;
   color: #7786a5;
 
+  @media (max-width: 576px) {
+    border-radius: 0;
+  }
+
   .Footer__addLinks {
     display: grid;
     grid-template-columns: repeat(12, 1fr);

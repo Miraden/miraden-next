@@ -1,8 +1,9 @@
 import { Button, Search } from "@/components/ui";
 import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
+import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import {
   Applications,
-  ArrowIcon,
+  BackIcon20,
   HomeIcon,
   KebabIcon,
   ListItemsIcon,
@@ -11,9 +12,9 @@ import {
 import { FilterIcon } from "@/icons/FilterIcon";
 import cn from "classnames";
 import Image from "next/image";
-import Link from "next/link";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
+import { SellerCard } from "./components/SellerCard";
 interface ApplicationProps {
   className?: string;
 }
@@ -24,6 +25,217 @@ type Option =
   | "performers"
   | "refusals"
   | "recommended";
+
+const recommendArray = [
+  {
+    name: "Ангелина Синичкина",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    rating: 4.8,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "HomeSweet",
+    isOnline: true,
+    unreadMessages: 0,
+    isRefusal: true,
+    isRecommend: true,
+  },
+  {
+    name: "Андрей Макеев",
+    type: "seller",
+    isVerified: true,
+    isPro: false,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "Realhome",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Валентина Антонова",
+    type: "object",
+    isVerified: true,
+    isPro: false,
+    rating: 5.0,
+    image: "/images/avatar.jpg",
+    status: "Риелтор",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Константин Гриндин",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    image: "/images/avatar.jpg",
+    status: "Собственник",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Ангелина Синичкина",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    rating: 4.8,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "HomeSweet",
+    isOnline: true,
+    unreadMessages: 0,
+    isRefusal: true,
+    isRecommend: true,
+  },
+  {
+    name: "Андрей Макеев",
+    type: "seller",
+    isVerified: true,
+    isPro: false,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "Realhome",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Валентина Антонова",
+    type: "object",
+    isVerified: true,
+    isPro: false,
+    rating: 5.0,
+    image: "/images/avatar.jpg",
+    status: "Риелтор",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Константин Гриндин",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    image: "/images/avatar.jpg",
+    status: "Собственник",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Ангелина Синичкина",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    rating: 4.8,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "HomeSweet",
+    isOnline: true,
+    unreadMessages: 0,
+    isRefusal: true,
+    isRecommend: true,
+  },
+  {
+    name: "Андрей Макеев",
+    type: "seller",
+    isVerified: true,
+    isPro: false,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "Realhome",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Валентина Антонова",
+    type: "object",
+    isVerified: true,
+    isPro: false,
+    rating: 5.0,
+    image: "/images/avatar.jpg",
+    status: "Риелтор",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Константин Гриндин",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    image: "/images/avatar.jpg",
+    status: "Собственник",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Ангелина Синичкина",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    rating: 4.8,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "HomeSweet",
+    isOnline: true,
+    unreadMessages: 0,
+    isRefusal: true,
+    isRecommend: true,
+  },
+  {
+    name: "Андрей Макеев",
+    type: "seller",
+    isVerified: true,
+    isPro: false,
+    image: "/images/avatar.jpg",
+    status: "Агентство недвижимости",
+    agencyName: "Realhome",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Валентина Антонова",
+    type: "object",
+    isVerified: true,
+    isPro: false,
+    rating: 5.0,
+    image: "/images/avatar.jpg",
+    status: "Риелтор",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+  {
+    name: "Константин Гриндин",
+    type: "seller",
+    isVerified: true,
+    isPro: true,
+    image: "/images/avatar.jpg",
+    status: "Собственник",
+    isOnline: false,
+    unreadMessages: 0,
+    isRecommend: true,
+    isRefusal: true,
+  },
+];
 
 const ApplicationPlug = ({ className }: ApplicationProps) => {
   const [selected, setSelected] = useState<Option | null>("application");
@@ -41,187 +253,216 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
   const handleTabClick = (tabId: string) => {
     setSelectedContent(tabId);
   };
+
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const handleOpenModal = useCallback(() => {
+    setIsOpenModal(true);
+  }, []);
+
+  const [submit, setSubmit] = useState(false);
+  useLockBodyScroll(isOpenModal);
+
   return (
     <StyledApplication className={className}>
-      <div className="Application__headContainer">
-        <div className="Application__head">
-          <Link href="/applications-full">
-            <ArrowIcon
-              width={20}
-              height={20}
-              className="Application__headArrow"
-            />
-          </Link>
+      <div
+        className={cn("Application__wrapper", { IsOpenFilter: !showFilter })}
+      >
+        <div className="Application__headContainer">
+          <div className="Application__head">
+            <Button
+              tertiary
+              href="/applications-full"
+              className="Application__headButton"
+            >
+              <BackIcon20
+                width={20}
+                height={20}
+                className="Application__headArrow"
+              />
+            </Button>
 
-          <h1 className="Font_32_120 lg:Font_26_120_500">
-            Хочу купить 3-х комнатную квартиру на Кипре
-          </h1>
-        </div>
-        <div className="Application__headTabsContainer">
-          <div className="Application__headTabs">
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "application",
-              })}
-              onClick={() => handleSelect("application")}
-              active={selected === "application"}
-              tertiary
-            >
-              Заявка
-            </Button>
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "requests",
-              })}
-              onClick={() => handleSelect("requests")}
-              active={selected === "requests"}
-              tertiary
-            >
-              Отклики <p className="TabButton__counter Color_text_grey"></p>
-            </Button>
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "performers",
-              })}
-              onClick={() => handleSelect("performers")}
-              active={selected === "performers"}
-              tertiary
-            >
-              Исполнители
-              <p
-                className={cn("TabButton__counter Color_text_grey", {
-                  Color_blue_primary: selected === "performers",
+            <h1 className="Font_32_120 lg:Font_26_120_500">
+              Хочу купить 3-х комнатную квартиру на Кипре
+            </h1>
+          </div>
+          <div className="Application__headTabsContainer">
+            <div className="Application__headTabs">
+              <Button
+                className={cn("", {
+                  Application__headTabButton: selected === "application",
                 })}
-              ></p>
-            </Button>
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "refusals",
-              })}
-              onClick={() => handleSelect("refusals")}
-              active={selected === "refusals"}
-              tertiary
-            >
-              Отказы
-              <p className="TabButton__counter Color_text_grey"></p>
-            </Button>
-            <Button
-              className={cn("", {
-                Application__headTabButton: selected === "recommended",
-              })}
-              onClick={() => handleSelect("recommended")}
-              active={selected === "recommended"}
-              tertiary
-            >
-              Рекомендуемые
-              <p className="TabButton__counter Color_text_grey"></p>
-            </Button>
-          </div>
-          <div className="Application__headTabsBar" />
-        </div>
-      </div>
-      {selected === "application" && (
-        <div className="Applications__headTabsBar_whiteSpace" />
-      )}
-      {selected === "requests" && (
-        <>
-          <div>
-            <Search
-              options={[]}
-              placeholder="Поиск"
-              className="Applications__searchBar"
-              rightIcon={<FilterIcon />}
-              onClick={handleShowFilter}
-            />
-          </div>
-          {showFilter && (
-            <ApplicationsFilter
-              onTabClick={handleTabClick}
-              className="Applications__filter"
-              onClick={handleShowFilter}
-            />
-          )}
-        </>
-      )}
-      {selected === "requests" && (
-        <>
-          <div className="Application__body">
-            <Image
-              src="/images/application.svg"
-              alt=""
-              width={150}
-              height={120}
-            />
-            <h2>Объекты отсутствуют</h2>
-            <p className="Color_text_grey">
-              На данный момент пользователи с объектами не откликнулись на вашу
-              заявку
-            </p>
-          </div>
-        </>
-      )}
-
-      {selected === "performers" && (
-        <>
-          <div className="Applications__headTabsBar_whiteSpace" />
-          <div className="Application__body">
-            <Image
-              src="/images/application.svg"
-              alt=""
-              width={150}
-              height={120}
-            />
-            <h2>Исполнители не выбраны</h2>
-            <p className="Color_text_grey">
-              Вы можете выбрать одного или несколько исполнителей в разделе 
-              <button
+                onClick={() => handleSelect("application")}
+                active={selected === "application"}
+                tertiary
+              >
+                Заявка
+              </Button>
+              <Button
+                className={cn("", {
+                  Application__headTabButton: selected === "requests",
+                })}
                 onClick={() => handleSelect("requests")}
-                className="Application__adaptiveButton Color_blue_primary"
+                active={selected === "requests"}
+                tertiary
               >
                 Отклики
-              </button>
-            </p>
+              </Button>
+              <Button
+                className={cn("", {
+                  Application__headTabButton: selected === "performers",
+                })}
+                onClick={() => handleSelect("performers")}
+                active={selected === "performers"}
+                tertiary
+              >
+                Исполнители
+              </Button>
+              <Button
+                className={cn("", {
+                  Application__headTabButton: selected === "refusals",
+                })}
+                onClick={() => handleSelect("refusals")}
+                active={selected === "refusals"}
+                tertiary
+              >
+                Отказы
+              </Button>
+              <Button
+                className={cn("", {
+                  Application__headTabButton: selected === "recommended",
+                })}
+                onClick={() => handleSelect("recommended")}
+                active={selected === "recommended"}
+                tertiary
+              >
+                Рекомендуемые
+                <p className="TabButton__counter Color_text_grey">
+                  {recommendArray.length}
+                </p>
+              </Button>
+            </div>
+            <div className="Application__headTabsBar" />
           </div>
-        </>
-      )}
-
-      {selected === "refusals" && (
-        <>
+        </div>
+        {selected === "application" && (
           <div className="Applications__headTabsBar_whiteSpace" />
-          <div className="Application__body">
-            <Image
-              src="/images/application.svg"
-              alt=""
-              width={150}
-              height={120}
-            />
-            <h2>Отказы отсутствуют</h2>
-            <p className="Color_text_grey">
-              Если предложение пользователя вас не заинтересовало,
-              вы всегдаможете от него отказаться
-            </p>
-          </div>
-        </>
-      )}
-      {selected === "recommended" && (
-        <>
-          <div className="Applications__headTabsBar_whiteSpace" />
-          <div className="Application__body">
-            <Image
-              src="/images/application.svg"
-              alt=""
-              width={150}
-              height={120}
-            />
-            <h2>Рекомендации отсутсвуют</h2>
-            <p className="Color_text_grey">
-              Если предложение пользователя вас не заинтересовало,
-              вы всегдаможете от него отказаться
-            </p>
-          </div>
-        </>
-      )}
+        )}
+        {selected === "requests" && (
+          <>
+            <div className="Applications__headTabsBar_whiteSpace" />
+          </>
+        )}
+        {selected === "requests" && (
+          <>
+            <div className="Application__body">
+              <Image
+                src="/images/application.svg"
+                alt=""
+                width={150}
+                height={120}
+              />
+              <h2>Вы отлично справились!</h2>
+              <p className="Color_text_grey Font_16_150">
+                На этом месте скоро появятся предложения от исполнителей. А пока
+                вы можете посмотреть
+                <Button
+                  className="Application__bodyButton "
+                  onClick={() => handleSelect("recommended")}
+                  tertiary
+                >
+                  Рекомендуемые
+                </Button>
+              </p>
+            </div>
+          </>
+        )}
 
+        {selected === "performers" && (
+          <>
+            <div className="Applications__headTabsBar_whiteSpace" />
+            <div className="Application__body">
+              <Image
+                src="/images/application.svg"
+                alt=""
+                width={150}
+                height={120}
+              />
+              <h2>Исполнители не выбраны</h2>
+              <p className="Color_text_grey Font_16_150">
+                Вы можете выбрать одного или несколько исполнителей в разделе 
+                <button
+                  onClick={() => handleSelect("requests")}
+                  className="Application__adaptiveButton Color_blue_primary"
+                >
+                  Отклики
+                </button>
+              </p>
+            </div>
+          </>
+        )}
+
+        {selected === "refusals" && (
+          <>
+            <div className="Applications__headTabsBar_whiteSpace" />
+            <div className="Application__body">
+              <Image
+                src="/images/application.svg"
+                alt=""
+                width={150}
+                height={120}
+              />
+              <h2>Отказы отсутствуют</h2>
+              <p className="Color_text_grey Font_16_150">
+                Если предложение пользователя вас не заинтересовало, вы всегда
+                <br /> можете от него отказаться
+              </p>
+            </div>
+          </>
+        )}
+        {selected === "recommended" && (
+          <>
+            <div>
+              <Search
+                options={[]}
+                placeholder="Поиск"
+                className="Applications__searchBar"
+                rightIcon={<FilterIcon />}
+                onClick={handleShowFilter}
+                withFilter
+              />
+            </div>
+            <ul className="Applications__list">
+              {recommendArray.map((recommend, index) => (
+                <li key={index}>
+                  <SellerCard
+                    isRecommend={recommend.isRecommend}
+                    name={recommend.name}
+                    isPro={recommend.isPro}
+                    isVerified={recommend.isVerified}
+                    rating={recommend.rating}
+                    image={recommend.image}
+                    status={recommend.status}
+                    agencyName={recommend.agencyName}
+                    isOnline={recommend.isOnline}
+                    unreadMessages={recommend.unreadMessages}
+                    onClick={handleOpenModal}
+                    submit={submit}
+                  />
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+
+      {showFilter && (
+        <ApplicationsFilter
+          onTabClick={handleTabClick}
+          className="Applications__filter"
+          onClick={handleShowFilter}
+        />
+      )}
       <div className="Application__Footer">
         <div className="Application__FooterButtons">
           <Button tertiary className="FooterButton Font_12_16">
@@ -254,11 +495,40 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
 
 const StyledApplication = styled.section`
   position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(18, 1fr);
+  grid-gap: 30px;
+  padding-left: 55px;
+  padding-right: 55px;
+
+  &.Test {
+    padding-right: 0 !important;
+  }
+
+  .Application__wrapper {
+    grid-column: 5 / span 10;
+  }
+
+  .Applications__filter {
+    position: sticky;
+    top: 94px;
+    grid-column: 16 / span 3;
+    margin-top: 30px;
+    margin-left: -30px;
+    height: calc(100vh - 114px);
+  }
 
   .Color_blue_primary {
     color: #4e6af3;
   }
 
+  .Applications__list {
+    margin-top: 20px;
+    li:not(:first-child) {
+      margin-top: 10px;
+    }
+  }
   .Application__headTabsBar_whiteSpace {
     width: 100%;
     height: 10px;
@@ -277,7 +547,7 @@ const StyledApplication = styled.section`
   }
 
   .Application__headContainer {
-    margin-top: 20px;
+    margin-top: 30px;
     padding: 20px 20px 0 20px;
     background: #fff;
     border-radius: 10px 10px 0 0;
@@ -291,9 +561,22 @@ const StyledApplication = styled.section`
     }
   }
 
+  .Application__headButton {
+    padding: 4px !important;
+    border-radius: 50%;
+    :hover {
+      background: #f1f7ff;
+    }
+
+    :active {
+      background: #e1edfd;
+    }
+  }
+
   .Application__headTabs {
     display: flex;
     margin-top: 30px;
+    overflow: auto;
     button {
       padding: 0;
     }
@@ -327,13 +610,6 @@ const StyledApplication = styled.section`
     border-radius: 10px;
   }
 
-  .Applications__filter {
-    position: absolute;
-    top: 94px;
-    right: -380px;
-    height: calc(100vh - 114px);
-  }
-
   .Applications__headTabsBar_whiteSpace {
     width: 100%;
     height: 10px;
@@ -345,13 +621,6 @@ const StyledApplication = styled.section`
     position: absolute;
     right: -420px;
     top: 94px;
-  }
-
-  .Application__headContainer {
-    margin-top: 20px;
-    padding: 20px 20px 0 20px;
-    background: #fff;
-    border-radius: 10px 10px 0 0;
   }
 
   .Application__head {
@@ -410,12 +679,9 @@ const StyledApplication = styled.section`
     }
   }
 
-  .Application__headArrow {
-    transform: rotate(-90deg);
-
-    path {
-      stroke: #7786a5;
-    }
+  .Application__bodyButton {
+    padding: 0;
+    color: #4e6af3;
   }
 
   .Applications__headTabsBar {
@@ -427,7 +693,8 @@ const StyledApplication = styled.section`
   }
 
   .Application__Footer {
-    position: absolute;
+    display: none;
+    position: fixed;
     width: 100%;
     bottom: 0;
     background: #fff;
@@ -455,7 +722,7 @@ const StyledApplication = styled.section`
       background: #4e6af3;
       width: fit-content;
       height: fit-content;
-      padding: 10px;
+      padding: 10px !important;
       border-radius: 50%;
     }
   }
@@ -489,9 +756,85 @@ const StyledApplication = styled.section`
     transform: rotate(90deg);
   }
 
+  .Application__Footer {
+    display: none;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .Application__FooterButtons {
+    display: flex;
+    justify-content: center;
+
+    div,
+    button:not(:first-child) {
+      margin-left: 64px;
+    }
+  }
+
+  @media (max-width: 1440px) {
+    grid-gap: 20px;
+    padding-left: 0;
+    padding-right: 0;
+
+    .Application__wrapper {
+      grid-column: 1 / span 14;
+      width: 100%;
+
+      &.IsOpenFilter {
+        grid-column: 1 / span 18;
+      }
+    }
+
+    .SingleApplicationSideBar {
+      grid-column: 1 / span 18;
+      margin-top: 16px;
+      margin-left: 0;
+      height: fit-content;
+      padding-bottom: 120px;
+    }
+  }
+
   @media (max-width: 1024px) {
+    display: flex;
+
+    flex-direction: column;
     .Application__headContainer {
-      margin-top: 60px;
+      margin-top: 0;
+    }
+    .Applications__filter {
+      display: none;
+    }
+
+    .Applications__list {
+      margin-top: 16px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .Application__Footer {
+      display: block;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .Applications__list {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .Application__FooterButtons {
+      display: flex;
+      justify-content: center;
+
+      div,
+      button:not(:first-child) {
+        margin-left: 5px;
+      }
     }
   }
 `;
