@@ -163,11 +163,12 @@ const StyledNumberInputNoLabelInput = styled.input`
   height: 60px;
   outline: none;
   transition: 0.1s;
-  &:focus {
-    box-shadow: 0 0 0 2px #4e6af3 inset;
-  }
+  cursor: text !important;
   &:hover {
     box-shadow: 0 0 0 2px #cddef4 inset;
+  }
+  &:focus {
+    box-shadow: 0 0 0 2px #4e6af3 inset;
   }
 `;
 

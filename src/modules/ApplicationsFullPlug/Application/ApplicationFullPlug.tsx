@@ -69,7 +69,7 @@ const ApplicationFullPlug = ({ className }: ApplicationProps) => {
               width={150}
               height={120}
             />
-            <h2>У вас еще нет созданных заявок</h2>
+            <h2 className="Font_20_120">У вас еще нет созданных заявок</h2>
             <p className="Color_text_grey">
               Но вы можете сделать это <br /> прямо сейчас!
             </p>
@@ -88,7 +88,7 @@ const ApplicationFullPlug = ({ className }: ApplicationProps) => {
               width={150}
               height={120}
             />
-            <h2>No published applications</h2>
+            <h2 className="Font_20_120">No published applications</h2>
             <p className="Color_text_grey">No published</p>
           </div>
         </>
@@ -103,7 +103,7 @@ const ApplicationFullPlug = ({ className }: ApplicationProps) => {
               width={150}
               height={120}
             />
-            <h2>No archived applications</h2>
+            <h2 className="Font_20_120">No archived applications</h2>
             <p className="Color_text_grey">No archived</p>
           </div>
         </>

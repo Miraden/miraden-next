@@ -73,7 +73,7 @@ const StyledDropdownInput = styled.div<Props>`
   outline: none;
   .DropdownInput_selectContainer {
     right: 10px;
-    top: 4px;
+    top: 10px;
     position: relative;
     color: #fff;
     border-radius: 10px;
@@ -115,7 +115,7 @@ const StyledDropdownInput = styled.div<Props>`
     outline: none;
     width: 100%;
     max-width: 300px;
-    padding: 10px 10px 10px 15px;
+    padding: 12px 10px 12px 15px;
     border: none;
     border-radius: 10px;
     overflow: hidden;

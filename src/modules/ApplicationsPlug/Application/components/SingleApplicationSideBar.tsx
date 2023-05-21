@@ -110,6 +110,13 @@ const StyledSingleApplicationSideBar = styled.div`
         background: #2a344a;
       }
     }
+
+    cursor: pointer;
+    :first-child {
+      :hover {
+        cursor: default;
+      }
+    }
   }
 
   .SideBar__button:first-child {

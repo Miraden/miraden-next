@@ -312,7 +312,7 @@ const StyledButton = styled.a`
 
   &.Button_header.active {
     background: #3a465d !important;
-    color: #eafff3 !important;
+    color: #fff !important;
   }
 
   &.Button_primary:focus-visible {

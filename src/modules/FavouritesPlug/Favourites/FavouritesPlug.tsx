@@ -77,7 +77,7 @@ const FavouritesPlug = ({ className }: ApplicationProps) => {
                 width={150}
                 height={120}
               />
-              <h2>В избранном нет объектов</h2>
+              <h2 className="Font_20_120">В избранном нет объектов</h2>
               <p className="Color_text_grey">
                 Отмечайте понравившиеся объекты, <br /> нажав на иконку
                 в карточке объекта
@@ -97,7 +97,7 @@ const FavouritesPlug = ({ className }: ApplicationProps) => {
                 width={150}
                 height={120}
               />
-              <h2>No published applications</h2>
+              <h2 className="Font_20_120">No published applications</h2>
               <p className="Color_text_grey">No published</p>
             </div>
           </>
@@ -112,7 +112,7 @@ const FavouritesPlug = ({ className }: ApplicationProps) => {
                 width={150}
                 height={120}
               />
-              <h2>No users yet</h2>
+              <h2 className="Font_20_120">No users yet</h2>
               <p className="Color_text_grey">No users</p>
             </div>
           </>

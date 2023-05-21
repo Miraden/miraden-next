@@ -379,12 +379,21 @@ const CreateStep1 = ({ className }: Props) => {
                 <span className="Font_16_140 Color_text_grey">/ 11</span>
               </div>
             </div>
-            <Button
-              disabled={!selected || (!selectedCity && !allCitiesActive)}
-              href="/customer/create-step-2"
-            >
-              Далее
-            </Button>
+            <div className="Reg__nextButtonContainer">
+              <div>
+                <span className="Color_text_grey Font_16_24">
+                  Найдено продавцов
+                </span>
+                <p className="Color_blue_primary Font_16_140">317</p>
+              </div>
+
+              <Button
+                disabled={!selected || (!selectedCity && !allCitiesActive)}
+                href="/customer/create-step-2"
+              >
+                Далее
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -468,6 +477,19 @@ const StyledCreateStep1 = styled.section`
       width: 9%;
       height: 6px;
       background-color: #4e6af3;
+    }
+  }
+
+  .Reg__nextButtonContainer {
+    display: flex;
+    align-items: center;
+    div {
+      display: flex;
+      align-items: center;
+    }
+    p {
+      margin-left: 10px;
+      margin-right: 30px;
     }
   }
 

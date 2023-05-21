@@ -51,11 +51,10 @@ const PaymentButton = ({
   );
 };
 
-const StyledButton = styled.a`
+const StyledButton = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  cursor: pointer;
   border: none;
   width: 100%;
   transition: 0.2s ease;

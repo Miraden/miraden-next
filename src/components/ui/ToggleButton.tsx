@@ -56,10 +56,10 @@ const StyledToggleButton = styled.div`
     content: "";
     height: 16px;
     width: 16px;
-    left: 3px;
+    left: 2.5px;
     bottom: 2px;
     background-color: white;
-    -webkit-transition: 0.4s;
+    -webkit-transition: 0.2s;
     transition: 0.4s;
   }
 

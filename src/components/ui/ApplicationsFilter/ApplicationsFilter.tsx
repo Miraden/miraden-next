@@ -331,7 +331,9 @@ const ObjectsContent = () => {
   return (
     <StyledObjectsContent>
       <div className="ObjectsContent__wrapperContainer">
-        <h3 className="ObjectsContent__locations">Локация недвижимости</h3>
+        <h3 className="ObjectsContent__locations Font_16_140">
+          Локация недвижимости
+        </h3>
         <DropdownLocationInput
           className="ObjectsContent__locationsSelect"
           placeholder="Все страны"
@@ -363,7 +365,7 @@ const ObjectsContent = () => {
       </div>
       <div className="ObjectsContent__type">
         <div className="ObjectsContent__wrapperContainer">
-          <h3>Тип недвижимости</h3>
+          <h3 className="Font_16_140">Тип недвижимости</h3>
           <TabButtons
             className="ObjectsContent__tabs"
             tabs={[
@@ -645,7 +647,7 @@ const StyledObjectsContent = styled.div`
 
   .ObjectsContent__locationsSelect {
     button {
-      padding: 12px 20px !important;
+      padding: 15px 20px !important;
     }
   }
 

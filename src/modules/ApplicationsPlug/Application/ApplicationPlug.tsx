@@ -362,7 +362,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
                 width={150}
                 height={120}
               />
-              <h2>Вы отлично справились!</h2>
+              <h2 className="Font_20_120">Вы отлично справились!</h2>
               <p className="Color_text_grey Font_16_150">
                 На этом месте скоро появятся предложения от исполнителей. А пока
                 вы можете посмотреть
@@ -388,7 +388,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
                 width={150}
                 height={120}
               />
-              <h2>Исполнители не выбраны</h2>
+              <h2 className="Font_20_120">Исполнители не выбраны</h2>
               <p className="Color_text_grey Font_16_150">
                 Вы можете выбрать одного или несколько исполнителей в разделе 
                 <button
@@ -412,7 +412,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
                 width={150}
                 height={120}
               />
-              <h2>Отказы отсутствуют</h2>
+              <h2 className="Font_20_120">Отказы отсутствуют</h2>
               <p className="Color_text_grey Font_16_150">
                 Если предложение пользователя вас не заинтересовало, вы всегда
                 <br /> можете от него отказаться

@@ -125,14 +125,12 @@ const StyledHeaderDesktop = styled.div`
 
   .Header__logoLink {
     height: 30px;
-    margin-right: 20px;
+    margin-right: 10px;
   }
 
-  .Header__navButton {
-    margin-left: 30px;
-    :not(:first-child) {
-      margin-left: 10px;
-    }
+  .Header__navButton:not(:first-child) {
+    margin-left: 10px;
+    margin-right: 10px;
   }
 
   .Header__userButtons {
