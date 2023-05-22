@@ -3,6 +3,7 @@ import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import { MessagesIcon, MiradenLogoMobile, StarIcon } from "@/icons";
 import { WalletIcon } from "@/icons/WalletIcon";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { HeaderMenu } from "./HeaderMenu";
@@ -15,7 +16,8 @@ const HeaderUserMenuMobile = () => {
   }, [isOpen]);
 
   useLockBodyScroll(isOpen);
-
+  const router = useRouter();
+  const currentUrl = router.pathname;
   return (
     <StyledHeaderUserMenuMobile>
       <Link href="/" className="HeaderMobile__logoLink">
@@ -24,9 +26,11 @@ const HeaderUserMenuMobile = () => {
       <div className="HeaderUserMenu">
         <div className="HeaderUserMenu__links">
           <Button
+            href="/chats-all"
             header
             className="HeaderUserMenu__linkButton"
             leftIcon={<MessagesIcon />}
+            active={currentUrl.includes("all")}
           ></Button>
           <Button
             header

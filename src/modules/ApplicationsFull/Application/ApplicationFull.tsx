@@ -348,6 +348,7 @@ const StyledApplication = styled.section`
   }
 
   .ApplicationsList {
+    height: 100vh;
     margin-top: 20px;
 
     li:not(:first-child) {

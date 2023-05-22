@@ -642,6 +642,7 @@ const Application = ({ className }: ApplicationProps) => {
                   {objectsArray.map((object, index) => (
                     <li key={index}>
                       <ObjectCard
+                        href="/"
                         title={object.title}
                         location={object.location}
                         id={object.id}

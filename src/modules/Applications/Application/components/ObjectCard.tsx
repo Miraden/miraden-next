@@ -43,6 +43,7 @@ interface ObjectCardProps {
   firstInstallmentPercent?: string;
   yieldCountPercent?: number;
   singleCost?: string;
+  href?: string;
 }
 
 const currencyOptions = ["€", "$", "£", "₽"];
@@ -71,167 +72,179 @@ const ObjectCard = ({
   firstInstallment,
   firstInstallmentPercent,
   singleCost,
+  href,
 }: ObjectCardProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   const [openLinks, setOpenLinks] = useState(false);
 
-  const handleOpenDropdown = useCallback(() => {
-    setOpenDropdown(!openDropdown);
-  }, [openDropdown]);
+  const handleOpenDropdown = useCallback(
+    (event: any) => {
+      event.preventDefault();
 
-  const handleOpenLinks = useCallback(() => {
-    setOpenLinks(!openLinks);
-  }, [openLinks]);
+      setOpenDropdown(!openDropdown);
+    },
+    [openDropdown]
+  );
+
+  const handleOpenLinks = useCallback(
+    (event: any) => {
+      event.preventDefault();
+      setOpenLinks(!openLinks);
+    },
+    [openLinks]
+  );
 
   return (
-    <StyledObjectCard className={className}>
-      <div className="ObjectCard">
-        {isUnpublished ? (
-          <div className="ObjectCard__unpublishedContainer">
-            <div className="ObjectCard__unpublished">
-              <UnpublishedIcon />
-              <p className="Font_20_120_700">
-                Объект снят
-                <br />
-                с публикации
-              </p>
-              <p className="Font_12_16">И будет удалён 26.01.2023</p>
+    <StyledObjectCard className={className} href={href}>
+      <div>
+        <div className="ObjectCard">
+          {isUnpublished ? (
+            <div className="ObjectCard__unpublishedContainer">
+              <div className="ObjectCard__unpublished">
+                <UnpublishedIcon />
+                <p className="Font_20_120_700">
+                  Объект снят
+                  <br />
+                  с публикации
+                </p>
+                <p className="Font_12_16">И будет удалён 26.01.2023</p>
+              </div>
+              <Image alt="" src={image1} width={400} height={210} />
             </div>
-            <Image alt="" src={image1} width={400} height={210} />
-          </div>
-        ) : (
-          <div className="ObjectCard__mainImages">
-            <div className="ObjectCard__mainImage">
-              {isBooked && (
-                <div className="ObjectCard__booked Font_14_16_600">
-                  Забронирован
-                </div>
-              )}
-              <Image
-                src={image1}
-                alt=""
-                width={290}
-                height={210}
-                className="Image1"
-              />
+          ) : (
+            <div className="ObjectCard__mainImages">
+              <div className="ObjectCard__mainImage">
+                {isBooked && (
+                  <div className="ObjectCard__booked Font_14_16_600">
+                    Забронирован
+                  </div>
+                )}
+                <Image
+                  src={image1}
+                  alt=""
+                  width={290}
+                  height={210}
+                  className="Image1"
+                />
+              </div>
+
+              <div>
+                <Image
+                  src={image2}
+                  alt=""
+                  width={100}
+                  height={100}
+                  className="Image2"
+                />
+                <Image
+                  src={image3}
+                  alt=""
+                  width={100}
+                  height={100}
+                  className="Image3"
+                />
+              </div>
             </div>
+          )}
 
-            <div>
-              <Image
-                src={image2}
-                alt=""
-                width={100}
-                height={100}
-                className="Image2"
-              />
-              <Image
-                src={image3}
-                alt=""
-                width={100}
-                height={100}
-                className="Image3"
-              />
-            </div>
-          </div>
-        )}
-
-        <div className="ObjectCard__info">
-          <div className="ObjectCard__head">
-            <p className="Font_20_120 md:Font_16_150_500 ">{title}</p>
-            <Button
-              tertiary
-              className="ObjectCard__button"
-              onClick={handleOpenDropdown}
-            >
-              <KebabIcon className="ObjectCard__buttonIcon" />
-            </Button>
-            {openDropdown && <ObjectDropdown agencyName={agencyName} />}
-          </div>
-
-          <div className="ObjectCard__location Font_14_140 Color_text_grey">
-            <PointIconFooter width={18} height={18} />
-            <p>{location}</p>
-          </div>
-          <div className="ObjectCard__indicators Font_14_16">
-            <Tag className="ObjectCard__indicatorButton">
-              <StarIcon />
-            </Tag>
-            <Tag className="ObjectCard__indicatorButton Color_blue_primary">
-              ID {id}
-            </Tag>
-            <Tag>Доходность {yieldCount}</Tag>
-            <Tag>Кэшбек {cashBack}</Tag>
-          </div>
-
-          <div className="ObjectCard__objectInfo Font_16_140">
-            <p>
-              <BuildYearIcon width={18} height={18} />
-              <span> {year}</span>
-            </p>
-            <p>
-              <SquareIcon width={18} height={18} />
-              <span>{square}</span>
-            </p>
-            <p>
-              <RoomsIcon width={18} height={18} />
-              <span>{rooms}</span>
-            </p>
-            <p className="Sleeps">
-              <SleepsIcon width={18} height={18} />
-              <span>{sleeps}</span>
-            </p>
-            <p className="Baths">
-              <BathsIcon width={18} height={18} />
-              <span>{baths}</span>
-            </p>
-          </div>
-          <div className="ObjectCard__footer">
-            <p className="Color_blue_primary Font_20_120_700">
-              <PricingSelect
-                options={currencyOptions}
-                price={price}
-                yieldCount={yieldCount}
-                yieldCountPercent={yieldCount}
-                firstInstallment={firstInstallment}
-                firstInstallmentPercent={firstInstallmentPercent}
-                singleCost={singleCost}
-              />
-            </p>
-            <div>
+          <div className="ObjectCard__info">
+            <div className="ObjectCard__head">
+              <p className="Font_20_120 md:Font_16_150_500 ">{title}</p>
               <Button
                 tertiary
-                className="ObjectCard__buttonMobile"
+                className="ObjectCard__button"
                 onClick={handleOpenDropdown}
               >
                 <KebabIcon className="ObjectCard__buttonIcon" />
               </Button>
               {openDropdown && <ObjectDropdown agencyName={agencyName} />}
             </div>
-            <div className="ObjectCard__footerPerson">
-              {openLinks ? (
-                <div className="IconLinks">
-                  <Button href="/applications-chat">
-                    <MessagesIcon className="PhoneIcon" />
-                  </Button>
-                  <Button>
-                    <PhoneIcon className="PhoneIcon" />
-                  </Button>
-                </div>
-              ) : (
-                <div className="Person">
-                  <p className="Font_14_140">{name}</p>
-                  <p className="Font_12_16 Color_text_grey">{status}</p>
-                </div>
-              )}
-              <button onClick={handleOpenLinks}>
-                <Image
-                  alt=""
-                  src={image}
-                  width={40}
-                  height={40}
-                  className="ImageHover"
+
+            <div className="ObjectCard__location Font_14_140 Color_text_grey">
+              <PointIconFooter width={18} height={18} />
+              <p>{location}</p>
+            </div>
+            <div className="ObjectCard__indicators Font_14_16">
+              <Tag className="ObjectCard__indicatorButton">
+                <StarIcon />
+              </Tag>
+              <Tag className="ObjectCard__indicatorButton Color_blue_primary">
+                ID {id}
+              </Tag>
+              <Tag>Доходность {yieldCount}</Tag>
+              <Tag>Кэшбек {cashBack}</Tag>
+            </div>
+
+            <div className="ObjectCard__objectInfo Font_16_140">
+              <p>
+                <BuildYearIcon width={18} height={18} />
+                <span> {year}</span>
+              </p>
+              <p>
+                <SquareIcon width={18} height={18} />
+                <span>{square}</span>
+              </p>
+              <p>
+                <RoomsIcon width={18} height={18} />
+                <span>{rooms}</span>
+              </p>
+              <p className="Sleeps">
+                <SleepsIcon width={18} height={18} />
+                <span>{sleeps}</span>
+              </p>
+              <p className="Baths">
+                <BathsIcon width={18} height={18} />
+                <span>{baths}</span>
+              </p>
+            </div>
+            <div className="ObjectCard__footer">
+              <p className="Color_blue_primary Font_20_120_700">
+                <PricingSelect
+                  options={currencyOptions}
+                  price={price}
+                  yieldCount={yieldCount}
+                  yieldCountPercent={yieldCount}
+                  firstInstallment={firstInstallment}
+                  firstInstallmentPercent={firstInstallmentPercent}
+                  singleCost={singleCost}
                 />
-              </button>
+              </p>
+              <div>
+                <Button
+                  tertiary
+                  className="ObjectCard__buttonMobile"
+                  onClick={handleOpenDropdown}
+                >
+                  <KebabIcon className="ObjectCard__buttonIcon" />
+                </Button>
+                {openDropdown && <ObjectDropdown agencyName={agencyName} />}
+              </div>
+              <div className="ObjectCard__footerPerson">
+                {openLinks ? (
+                  <div className="IconLinks">
+                    <Button href="/applications-chat">
+                      <MessagesIcon className="PhoneIcon" />
+                    </Button>
+                    <Button>
+                      <PhoneIcon className="PhoneIcon" />
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="Person">
+                    <p className="Font_14_140">{name}</p>
+                    <p className="Font_12_16 Color_text_grey">{status}</p>
+                  </div>
+                )}
+                <button onClick={handleOpenLinks}>
+                  <Image
+                    alt=""
+                    src={image}
+                    width={40}
+                    height={40}
+                    className="ImageHover"
+                  />
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -240,13 +253,18 @@ const ObjectCard = ({
   );
 };
 
-const StyledObjectCard = styled.div`
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px;
-
+const StyledObjectCard = styled.a`
   .ObjectCard {
     display: flex;
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    transition: 0.15s ease;
+    :hover {
+      cursor: pointer;
+      box-shadow: 0 0 0 2px inset #c7d2e9;
+    }
   }
 
   .ObjectCard__unpublishedContainer {

@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui";
 import { MessagesIcon, PlusIcon, StarIcon } from "@/icons";
 import { WalletIcon } from "@/icons/WalletIcon";
+import { useRouter } from "next/router";
 import styled from "styled-components";
 
 const HeaderUserMenu = () => {
+  const router = useRouter();
+  const currentUrl = router.pathname;
   return (
     <StyledHeaderUserMenu>
       <div className="HeaderUserMenu">
@@ -12,6 +15,8 @@ const HeaderUserMenu = () => {
             header
             className="HeaderUserMenu__linkButton"
             leftIcon={<MessagesIcon />}
+            active={currentUrl.includes("all")}
+            href="/chats-all"
           ></Button>
           <Button
             href="/favourites-full"

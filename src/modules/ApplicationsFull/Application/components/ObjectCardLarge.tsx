@@ -89,9 +89,13 @@ const ObjectCardLarge = ({
 }: ObjectCardLargeProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
 
-  const handleOpenDropdown = useCallback(() => {
-    setOpenDropdown(!openDropdown);
-  }, [openDropdown]);
+  const handleOpenDropdown = useCallback(
+    (event: any) => {
+      event.preventDefault();
+      setOpenDropdown(!openDropdown);
+    },
+    [openDropdown]
+  );
 
   return (
     <StyledObjectCardLarge className={className} href={href}>
@@ -117,7 +121,6 @@ const ObjectCardLarge = ({
 
             <div className="ObjectCardLarge__head">
               <p className="Font_20_120 md:Font_16_150_500 ">{title}</p>
-
               {openDropdown && <ObjectDropdown agencyName={agencyName} />}
             </div>
             <div className="ObjectCardLarge__location Font_14_140 Color_text_grey">
@@ -194,7 +197,7 @@ const ObjectCardLarge = ({
               >
                 <KebabIcon className="ObjectCardLarge__buttonIcon" />
               </Button>
-              {openDropdown && <ObjectDropdown agencyName={agencyName} />}
+              {/* {openDropdown && <ObjectDropdown agencyName={agencyName} />} */}
             </div>
           </div>
         </div>
@@ -529,7 +532,7 @@ const ObjectDropdown = ({ agencyName }: ObjectCardLargeProps) => {
 const StyledObjectDropdown = styled.div`
   position: absolute;
   right: 0;
-  top: 26px;
+  top: -10px;
   background: #fff;
   padding: 10px 15px;
   box-shadow: 0 0 0 1px #e1edfd;
@@ -537,6 +540,10 @@ const StyledObjectDropdown = styled.div`
 
   a:hover {
     color: #4e6af3;
+  }
+
+  @media (max-width: 768px) {
+    top: 130px;
   }
 `;
 
