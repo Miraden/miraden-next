@@ -4,11 +4,17 @@ import styled from "styled-components";
 
 interface Props {
   className?: string;
+  onTouchStart?: any;
+  onTouchEnd?: any;
 }
 
-const ChatContainer = ({ className }: Props) => {
+const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
   return (
-    <StyledChatContainer className={className}>
+    <StyledChatContainer
+      className={className}
+      onTouchEnd={onTouchEnd}
+      onTouchStart={onTouchStart}
+    >
       <div className="ChatContainer">
         <p className="ChatContainer__date Font_14_140 Color_text_grey">
           22 марта
@@ -64,6 +70,7 @@ const StyledChatContainer = styled.div`
   width: 100%;
   max-width: 1225px;
   margin-left: 30px;
+  background: #eef1f5;
 
   .ChatContainer {
     position: relative;
@@ -72,6 +79,7 @@ const StyledChatContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    background: #eef1f5;
   }
 
   .ChatContainer__date {

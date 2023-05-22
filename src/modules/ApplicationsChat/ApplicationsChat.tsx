@@ -6,21 +6,48 @@ import {
   ListItemsIcon,
   PlusIcon,
 } from "@/icons";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import { ApplicationInfo } from "./components/ApplicationInfo";
 import { ChatContainer } from "./components/ChatContainer";
+import { ChatContainerMobile } from "./components/ChatContainerMobile";
 import { ContactInfo } from "./components/ContactInfo";
 
 const ApplicationsChat = () => {
+  const [isOpen, setIsOpen] = useState(true);
+  const [isSwipedUp, setIsSwipedUp] = useState(false);
+  const startY = useRef<number>(0);
+
+  const handleTouchStart = (event: TouchEvent) => {
+    const touch = event.touches[0];
+    startY.current = touch.pageY;
+  };
+
+  const handleTouchEnd = (event: TouchEvent) => {
+    const touch = event.changedTouches[0];
+    const deltaY = touch.pageY - startY.current;
+
+    if (deltaY < -100) {
+      setIsSwipedUp(true);
+    } else if (deltaY > 100) {
+      setIsSwipedUp(false);
+    }
+  };
+
   return (
     <StyledApplicationsChat className="ContainerFull">
-      <div className="ApplicationsChat">
+      <div className={`ApplicationsChat ${isSwipedUp ? "SwipedUp" : ""}`}>
         <div className="AppInfo">
           <ApplicationInfo className="ApplicationInfo" />
           <ContactInfo className="ContactInfo" />
         </div>
 
-        <ChatContainer className="ChatContainer" />
+        <ChatContainer className="Chat" />
+        <ChatContainerMobile
+          className={`ChatMobile ${isSwipedUp ? "SwipedUp" : ""}`}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        />
       </div>
       <div className="Application__Footer">
         <div className="Application__FooterButtons">
@@ -30,7 +57,7 @@ const ApplicationsChat = () => {
           </Button>
           <Button tertiary className="FooterButton Font_12_16">
             <Applications />
-            Мои заявки
+            Мои заявки
           </Button>
           <div className="PlusIconContainer">
             <Button>
@@ -138,21 +165,14 @@ const StyledApplicationsChat = styled.section`
     transform: rotate(90deg);
   }
 
-  .ChatContainerMobile {
-    display: flex;
-  }
-
   @media (max-width: 1024px) {
     margin-top: -18px;
 
     &.ContainerFull {
       padding: 0;
     }
-    .ChatContainer {
+    .Chat {
       display: none;
-    }
-    .ChatContainerMobile {
-      display: flex;
     }
 
     .AppInfo {
@@ -173,6 +193,27 @@ const StyledApplicationsChat = styled.section`
         margin-left: 5px;
       }
     }
+  }
+
+  /* Additional styles for ChatMobile */
+  .ChatMobile {
+    display: flex;
+    height: 100vh;
+    position: fixed;
+    bottom: 34px;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    transition: transform 0.3s ease-in-out;
+    transform: translateY(100%);
+  }
+
+  .SwipedUp .ChatMobile {
+    transform: translateY(34px);
+  }
+
+  .SwipedUp .ApplicationsChat {
+    transform: translateY(-100%);
   }
 `;
 
