@@ -482,7 +482,6 @@ const Application = ({ className }: ApplicationProps) => {
           <div className="Application__headContainer">
             <div className="Application__head">
               <Button
-                tertiary
                 href="/applications-full"
                 className="Application__headButton"
               >
@@ -500,7 +499,7 @@ const Application = ({ className }: ApplicationProps) => {
             <div className="Application__headTabsContainer">
               <div className="Application__headTabs">
                 <Button
-                  className={cn("", {
+                  className={cn("Application__TabButton", {
                     Application__headTabButton: selected === "application",
                   })}
                   onClick={() => handleSelect("application")}
@@ -510,7 +509,7 @@ const Application = ({ className }: ApplicationProps) => {
                   Заявка
                 </Button>
                 <Button
-                  className={cn("", {
+                  className={cn("Application__TabButton", {
                     Application__headTabButton: selected === "requests",
                   })}
                   onClick={() => handleSelect("requests")}
@@ -523,7 +522,7 @@ const Application = ({ className }: ApplicationProps) => {
                   </p>
                 </Button>
                 <Button
-                  className={cn("", {
+                  className={cn("Application__TabButton", {
                     Application__headTabButton: selected === "performers",
                   })}
                   onClick={() => handleSelect("performers")}
@@ -540,7 +539,7 @@ const Application = ({ className }: ApplicationProps) => {
                   </p>
                 </Button>
                 <Button
-                  className={cn("", {
+                  className={cn("Application__TabButton", {
                     Application__headTabButton: selected === "refusals",
                   })}
                   onClick={() => handleSelect("refusals")}
@@ -553,7 +552,7 @@ const Application = ({ className }: ApplicationProps) => {
                   </p>
                 </Button>
                 <Button
-                  className={cn("", {
+                  className={cn("Application__TabButton", {
                     Application__headTabButton: selected === "recommended",
                   })}
                   onClick={() => handleSelect("recommended")}
@@ -816,8 +815,12 @@ const StyledApplication = styled.section`
     border-radius: 50%;
     flex-shrink: 0;
     margin-right: 10px;
+    background: #fff;
     :hover {
       background: #f1f7ff;
+    }
+    :focus {
+      background: #fff;
     }
 
     :active {
@@ -883,6 +886,12 @@ const StyledApplication = styled.section`
     }
   }
 
+  .Application__TabButton {
+    :active {
+      background: transparent !important;
+    }
+  }
+
   .Application__headTabButton {
     position: relative;
     ::before {
@@ -893,6 +902,14 @@ const StyledApplication = styled.section`
       width: 100%;
       height: 4px;
       border-radius: 10px;
+    }
+
+    p {
+      color: #4e6af3;
+    }
+
+    :active {
+      background: transparent !important;
     }
   }
 
@@ -920,19 +937,6 @@ const StyledApplication = styled.section`
     }
     button:not(:first-child) {
       margin-left: 30px;
-    }
-  }
-
-  .Applications__headTabButton {
-    position: relative;
-    ::before {
-      position: absolute;
-      top: 35px;
-      content: "";
-      background: #4e6af3;
-      width: 100%;
-      height: 4px;
-      border-radius: 10px;
     }
   }
 

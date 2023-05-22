@@ -288,6 +288,10 @@ const StyledObjectCardLarge = styled.a`
 
   .ObjectCardLarge__kebabButton {
     display: flex;
+
+    button {
+      margin-left: 10px;
+    }
   }
 
   .ObjectCardLarge__head {

@@ -16,7 +16,7 @@ const TechSupport = ({
   onTouchEnd,
 }: Props) => {
   function handleButtonClick(event: any) {
-    event.preventDefault(); // Предотвращение фокусировки кнопки
+    event.preventDefault();
     event.target.blur();
   }
 
@@ -45,6 +45,7 @@ const TechSupport = ({
               <WhatsappIcon width={42} height={42} />
               <span className="Font_16_140">WhatsApp</span>
             </button>
+
             <button className="TechSupport__button" onClick={handleButtonClick}>
               <TelegramIcon width={42} height={42} />
               <span className="Font_16_140">WhatsApp</span>
@@ -142,20 +143,18 @@ const StyledTechSupport = styled.div`
     span {
       margin-left: 20px;
     }
+    &:active {
+      outline: none !important;
+      background: #cfe2fc;
+      box-shadow: none !important;
+    }
 
     :hover {
       background: #f1f7ff;
     }
 
     :focus {
-      outline: none;
-      box-shadow: 0 0 0 2px inset #f845fc;
-    }
-
-    :active {
-      background: #cfe2fc;
-      box-shadow: none !important;
-      outline: none;
+      outline: 2px solid #f845fc;
     }
   }
 

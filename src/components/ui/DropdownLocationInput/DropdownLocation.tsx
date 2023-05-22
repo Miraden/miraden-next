@@ -188,7 +188,7 @@ const StyledDropdownLocation = styled.div`
 
     position: absolute;
     z-index: 2;
-    top: 14px;
+    top: 18px;
     left: -20px;
     width: calc(100% + 40px);
     background: #fff;

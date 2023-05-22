@@ -289,7 +289,7 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
           <div className="Application__headTabsContainer">
             <div className="Application__headTabs">
               <Button
-                className={cn("", {
+                className={cn("Application__TabButton", {
                   Application__headTabButton: selected === "application",
                 })}
                 onClick={() => handleSelect("application")}
@@ -299,7 +299,7 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
                 Заявка
               </Button>
               <Button
-                className={cn("", {
+                className={cn("Application__TabButton", {
                   Application__headTabButton: selected === "requests",
                 })}
                 onClick={() => handleSelect("requests")}
@@ -309,7 +309,7 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
                 Отклики
               </Button>
               <Button
-                className={cn("", {
+                className={cn("Application__TabButton", {
                   Application__headTabButton: selected === "performers",
                 })}
                 onClick={() => handleSelect("performers")}
@@ -319,7 +319,7 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
                 Исполнители
               </Button>
               <Button
-                className={cn("", {
+                className={cn("Application__TabButton", {
                   Application__headTabButton: selected === "refusals",
                 })}
                 onClick={() => handleSelect("refusals")}
@@ -329,7 +329,7 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
                 Отказы
               </Button>
               <Button
-                className={cn("", {
+                className={cn("Application__TabButton", {
                   Application__headTabButton: selected === "recommended",
                 })}
                 onClick={() => handleSelect("recommended")}
@@ -569,19 +569,6 @@ const StyledApplication = styled.section`
     }
   }
 
-  .Application__headTabButton {
-    position: relative;
-    ::before {
-      position: absolute;
-      top: 35px;
-      content: "";
-      background: #4e6af3;
-      width: 100%;
-      height: 4px;
-      border-radius: 10px;
-    }
-  }
-
   .Application__headTabsBar {
     margin-top: 15px;
     width: 100%;
@@ -609,7 +596,13 @@ const StyledApplication = styled.section`
     }
   }
 
-  .Applications__headTabButton {
+  .Application__TabButton {
+    :active {
+      background: transparent !important;
+    }
+  }
+
+  .Application__headTabButton {
     position: relative;
     ::before {
       position: absolute;
@@ -619,6 +612,14 @@ const StyledApplication = styled.section`
       width: 100%;
       height: 4px;
       border-radius: 10px;
+    }
+
+    p {
+      color: #4e6af3;
+    }
+
+    :active {
+      background: transparent !important;
     }
   }
 

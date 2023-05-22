@@ -60,11 +60,11 @@ const StyledMoreDropdown = styled.div`
   .MoreDropdown__menu_active {
     position: absolute;
     z-index: 2;
-    top: 10px;
-    right: -20px;
+    top: 14px;
+    left: -5px;
     width: fit-content;
     background: #2a344a;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     max-height: 228px;
     overflow-y: auto;
     font-size: 14px;

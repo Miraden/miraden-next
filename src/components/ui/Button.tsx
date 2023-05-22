@@ -1,5 +1,4 @@
 import cn from "classnames";
-import NextLink from "next/link";
 import { ButtonHTMLAttributes, FC, MouseEvent, ReactNode } from "react";
 import styled from "styled-components";
 
@@ -147,36 +146,35 @@ const Button: FC<Props> = ({
   }
 
   return (
-    <NextLink href={href} passHref>
-      <StyledButton
-        onClick={onClick}
-        className={cn(`${className} Font_16_20`, {
-          Button_primary: !secondary,
-          Button_secondary: secondary,
-          Button_tertiary: tertiary,
-          Button_request: request,
-          Button_header: header,
-          Button_regular: !compact,
-          Button_compact: compact,
-          Button_narrow: narrow,
-          Button_withoutLabel: !children,
-          disabled: disabled,
-          active: active,
-        })}
-      >
-        {leftIcon && (
-          <div className="[ Button__iconContainer Button__leftIconContainer ]">
-            {leftIcon}
-          </div>
-        )}
-        {children && <span className="[ Button__label ]">{children}</span>}
-        {rightIcon && (
-          <div className="[ Button__iconContainer Button__rightIconContainer ]">
-            {rightIcon}
-          </div>
-        )}
-      </StyledButton>
-    </NextLink>
+    <StyledButton
+      href={href}
+      onClick={onClick}
+      className={cn(`${className} Font_16_20`, {
+        Button_primary: !secondary,
+        Button_secondary: secondary,
+        Button_tertiary: tertiary,
+        Button_request: request,
+        Button_header: header,
+        Button_regular: !compact,
+        Button_compact: compact,
+        Button_narrow: narrow,
+        Button_withoutLabel: !children,
+        disabled: disabled,
+        active: active,
+      })}
+    >
+      {leftIcon && (
+        <div className="[ Button__iconContainer Button__leftIconContainer ]">
+          {leftIcon}
+        </div>
+      )}
+      {children && <span className="[ Button__label ]">{children}</span>}
+      {rightIcon && (
+        <div className="[ Button__iconContainer Button__rightIconContainer ]">
+          {rightIcon}
+        </div>
+      )}
+    </StyledButton>
   );
 };
 

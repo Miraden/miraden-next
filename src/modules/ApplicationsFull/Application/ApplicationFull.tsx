@@ -111,7 +111,7 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
           <div className="Application__headTabsContainer">
             <div className="Application__headTabs">
               <Button
-                className={cn("", {
+                className={cn("Application__TabButton", {
                   Application__headTabButton: selected === "all",
                 })}
                 onClick={() => handleSelect("all")}
@@ -121,7 +121,7 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
                 Все
               </Button>
               <Button
-                className={cn("", {
+                className={cn("Application__TabButton", {
                   Application__headTabButton: selected === "published",
                 })}
                 onClick={() => handleSelect("published")}
@@ -131,7 +131,7 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
                 Опубликованные
               </Button>
               <Button
-                className={cn("", {
+                className={cn("Application__TabButton", {
                   Application__headTabButton: selected === "archived",
                 })}
                 onClick={() => handleSelect("archived")}
@@ -288,6 +288,12 @@ const StyledApplication = styled.section`
     }
   }
 
+  .Application__TabButton {
+    :active {
+      background: transparent !important;
+    }
+  }
+
   .Application__headTabButton {
     position: relative;
     ::before {
@@ -299,8 +305,15 @@ const StyledApplication = styled.section`
       height: 4px;
       border-radius: 10px;
     }
-  }
 
+    p {
+      color: #4e6af3;
+    }
+
+    :active {
+      background: transparent !important;
+    }
+  }
   .Application__headTabsBar {
     margin-top: 15px;
     width: 100%;
@@ -325,19 +338,6 @@ const StyledApplication = styled.section`
     }
     button:not(:first-child) {
       margin-left: 30px;
-    }
-  }
-
-  .Applications__headTabButton {
-    position: relative;
-    ::before {
-      position: absolute;
-      top: 35px;
-      content: "";
-      background: #4e6af3;
-      width: 100%;
-      height: 4px;
-      border-radius: 10px;
     }
   }
 

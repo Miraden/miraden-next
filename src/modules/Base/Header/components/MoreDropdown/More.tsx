@@ -84,7 +84,7 @@ const StyledDropdownInput = styled.div<Props>`
     max-width: 300px;
     background: #3a465d;
     border-radius: 10px;
-    padding: 10px 10px 10px 15px;
+    padding: 12px 10px 12px 15px;
     border: none;
     transition: 0.15s ease-in;
     .DropdownInput_selectLabel {

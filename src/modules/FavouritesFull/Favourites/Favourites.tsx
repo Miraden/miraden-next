@@ -85,7 +85,7 @@ const Favourites = ({ className }: ApplicationProps) => {
           <div className="Application__headTabsContainer">
             <div className="Application__headTabs">
               <Button
-                className={cn("", {
+                className={cn("Application__TabButton", {
                   Application__headTabButton: selected === "objects",
                 })}
                 onClick={() => handleSelect("objects")}
@@ -98,7 +98,7 @@ const Favourites = ({ className }: ApplicationProps) => {
                 </p>
               </Button>
               <Button
-                className={cn("", {
+                className={cn("Application__TabButton", {
                   Application__headTabButton: selected === "applications",
                 })}
                 onClick={() => handleSelect("applications")}
@@ -108,7 +108,7 @@ const Favourites = ({ className }: ApplicationProps) => {
                 Заявки
               </Button>
               <Button
-                className={cn("", {
+                className={cn("Application__TabButton", {
                   Application__headTabButton: selected === "users",
                 })}
                 onClick={() => handleSelect("users")}
@@ -271,12 +271,14 @@ const StyledApplication = styled.section`
       margin-left: 30px;
     }
   }
+  .Application__TabButton {
+    :active {
+      background: transparent !important;
+    }
+  }
 
   .Application__headTabButton {
     position: relative;
-    p {
-      color: #4e6af3 !important;
-    }
     ::before {
       position: absolute;
       top: 35px;
@@ -285,6 +287,14 @@ const StyledApplication = styled.section`
       width: 100%;
       height: 4px;
       border-radius: 10px;
+    }
+
+    p {
+      color: #4e6af3;
+    }
+
+    :active {
+      background: transparent !important;
     }
   }
 
@@ -317,19 +327,6 @@ const StyledApplication = styled.section`
     }
     button:not(:first-child) {
       margin-left: 30px;
-    }
-  }
-
-  .Applications__headTabButton {
-    position: relative;
-    ::before {
-      position: absolute;
-      top: 35px;
-      content: "";
-      background: #4e6af3;
-      width: 100%;
-      height: 4px;
-      border-radius: 10px;
     }
   }
 
