@@ -1,7 +1,5 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
-import { Contacts } from "./Contacts";
-import { OpenContacts } from "./OpenContacts";
 
 interface Props {
   className?: string;
@@ -9,7 +7,7 @@ interface Props {
 
 type Option = "contacts" | "requests" | "information";
 
-const ContactInfo = ({ className }: Props) => {
+const ChatInformation = ({ className }: Props) => {
   const [selected, setSelected] = useState<Option | null>("contacts");
 
   const handleSelect = useCallback((option: Option) => {
@@ -19,15 +17,15 @@ const ContactInfo = ({ className }: Props) => {
   const [contactOpen, setContactOpen] = useState(false);
 
   return (
-    <StyledContactInfo className={className}>
+    <StyledChatInformation className={className}>
       <div className="ChatInfo__headTabsContainer">
-        {contactOpen ? <OpenContacts /> : <Contacts />}
+        <h2>Information</h2>
       </div>
-    </StyledContactInfo>
+    </StyledChatInformation>
   );
 };
 
-const StyledContactInfo = styled.div`
+const StyledChatInformation = styled.div`
   background: #fff;
   border-radius: 10px;
   margin-top: 10px;
@@ -104,4 +102,4 @@ const StyledContactInfo = styled.div`
   }
 `;
 
-export { ContactInfo };
+export { ChatInformation };

@@ -1,33 +1,20 @@
-import { useCallback, useState } from "react";
 import styled from "styled-components";
-import { Contacts } from "./Contacts";
-import { OpenContacts } from "./OpenContacts";
 
 interface Props {
   className?: string;
 }
 
-type Option = "contacts" | "requests" | "information";
-
-const ContactInfo = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>("contacts");
-
-  const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
-
-  const [contactOpen, setContactOpen] = useState(false);
-
+const ChatRequests = ({ className }: Props) => {
   return (
-    <StyledContactInfo className={className}>
+    <StyledChatRequests className={className}>
       <div className="ChatInfo__headTabsContainer">
-        {contactOpen ? <OpenContacts /> : <Contacts />}
+        <h2>Requests</h2>
       </div>
-    </StyledContactInfo>
+    </StyledChatRequests>
   );
 };
 
-const StyledContactInfo = styled.div`
+const StyledChatRequests = styled.div`
   background: #fff;
   border-radius: 10px;
   margin-top: 10px;
@@ -104,4 +91,4 @@ const StyledContactInfo = styled.div`
   }
 `;
 
-export { ContactInfo };
+export { ChatRequests };

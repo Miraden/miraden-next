@@ -41,8 +41,13 @@ const MessageInput = ({ className }: Props) => {
 
   return (
     <StyledMessageInput className={className}>
+      {value.length === 0 ? (
+        <button>
+          <PaperclipIcon className="MessageInput__button_paperclipMobile" />
+        </button>
+      ) : null}
       <InputWrapper>
-        {value.length === 0 ? <PenIcon /> : null}
+        {value.length === 0 ? <PenIcon className="PenIcon" /> : null}
         <Input
           placeholder="Text"
           value={value}
@@ -85,6 +90,18 @@ const StyledMessageInput = styled.div`
   :hover {
     box-shadow: 0 0 0 2px #c7d2e9;
   }
+
+  .MessageInput__button_paperclipMobile {
+    display: none;
+    align-items: center;
+    margin-left: 20px;
+  }
+  @media (max-width: 576px) {
+    .MessageInput__button_paperclipMobile {
+      display: flex;
+      margin-left: 0;
+    }
+  }
 `;
 
 const InputWrapper = styled.div`
@@ -95,6 +112,12 @@ const InputWrapper = styled.div`
 
   svg {
     flex-shrink: 0;
+  }
+
+  @media (max-width: 576px) {
+    svg {
+      display: none;
+    }
   }
 `;
 
@@ -125,6 +148,10 @@ const ButtonWrapper = styled.div`
   margin-left: 12px;
   align-self: flex-end;
 
+  .MessageInput__button_paperclip {
+    display: none;
+  }
+
   .MessageInput__button_default {
     padding: 10px 24px;
   }
@@ -137,6 +164,30 @@ const ButtonWrapper = styled.div`
     display: flex;
     align-items: center;
     margin-left: 20px;
+  }
+
+  @media (max-width: 576px) {
+    .MessageInput__button_default {
+      padding: 2px;
+      border-radius: 50%;
+
+      .Button__iconContainer {
+        margin-right: 0;
+      }
+      span {
+        margin-right: 0;
+
+        display: none;
+      }
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .MessageInput__button_paperclip {
+      display: none;
+    }
   }
 `;
 

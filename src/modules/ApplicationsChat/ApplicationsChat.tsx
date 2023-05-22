@@ -1,55 +1,160 @@
-import { useRef, useState } from "react";
+import { Button, Sticker } from "@/components/ui";
+import { ArrowAccordionIcon, Kebab24Icon, VerifiedIcon } from "@/icons";
+import { StarIconFilled } from "@/icons/StarIconFilled";
+import cn from "classnames";
+import Image from "next/image";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { ApplicationsFooter } from "../Base/ApplicationsFooter";
-import { ApplicationInfo } from "./components/ApplicationInfo";
 import { ChatContainer } from "./components/ChatContainer";
-import { ChatContainerMobile } from "./components/ChatContainerMobile";
+import { ChatInformation } from "./components/ChatInformation";
+import { ChatRequests } from "./components/ChatRequests";
 import { ContactInfo } from "./components/ContactInfo";
 
+interface Props {
+  className?: string;
+}
+
 const ApplicationsChat = () => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [isSwipedUp, setIsSwipedUp] = useState(false);
-  const startY = useRef<number>(0);
+  type Option = "chat" | "contacts" | "requests" | "information";
 
-  const handleTouchStart = (event: TouchEvent) => {
-    const touch = event.touches[0];
-    startY.current = touch.pageY;
-  };
+  const [selected, setSelected] = useState<Option | null>("contacts");
 
-  const handleTouchEnd = (event: TouchEvent) => {
-    const touch = event.changedTouches[0];
-    const deltaY = touch.pageY - startY.current;
-
-    if (deltaY < -100) {
-      setIsSwipedUp(true);
-    } else if (deltaY > 100) {
-      setIsSwipedUp(false);
-    }
-  };
+  const handleSelect = useCallback((option: Option) => {
+    setSelected(option);
+  }, []);
 
   return (
     <StyledApplicationsChat className="ContainerFull">
-      <div className={`ApplicationsChat ${isSwipedUp ? "SwipedUp" : ""}`}>
+      <div className="ApplicationsChat">
         <div className="AppInfo">
-          <ApplicationInfo className="ApplicationInfo" />
-          <ContactInfo className="ContactInfo" />
-        </div>
+          <div className="ApplicationInfo__headLayout"></div>
+          {selected === "chat" ? (
+            <div className="Application__infoChat">
+              <div className="Application__infoChatContainer">
+                <button className="ApplicationInfo__backButtonChat">
+                  <ArrowAccordionIcon className="ArrowIcon" />
+                </button>
+                <Image
+                  alt=""
+                  src="/images/avatar.jpg"
+                  width={40}
+                  height={40}
+                  className="ApplicationInfo__avatar"
+                />
+                <div className="Status">
+                  <div className="FullStatus">
+                    <p className="Font_16_140">Анастасия Петрова</p>
+                    <div className="Application__infoStatus">
+                      <VerifiedIcon className="ContactInfo__verifiedIcon" />
+                      <Sticker theme="black" className="ContactInfo__sticker">
+                        pro
+                      </Sticker>
+                      <div className="ContactInfo__rating">
+                        <StarIconFilled
+                          width={14}
+                          height={14}
+                          className="ContactInfo__ratingIcon"
+                        />
+                        <p className="Font_14_140">4.8</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="Font_12_16 Color_text_disabled">
+                    Агентство недвижимости — RealEstate
+                  </p>
+                </div>
+              </div>
 
+              <Button className="ChatButton">Открыть контакты</Button>
+              <Button className="ChatButtonMobile">
+                <Kebab24Icon />
+              </Button>
+            </div>
+          ) : (
+            <div className="ApplicationInfo">
+              <button className="ApplicationInfo__backButton">
+                <ArrowAccordionIcon className="ArrowIcon" />
+              </button>
+              <div className="ApplicationInfo__container">
+                <div className="ApplicationInfo__headContent">
+                  <h2 className="Font_24_120">Заявка #12463</h2>
+                  <Sticker theme="black">TRUE</Sticker>
+                </div>
+                <p className="ApplicationInfo__headDescription Font_16_150">
+                  Хочу купить 3-х комнатную квартиру на Кипре
+                </p>
+              </div>
+            </div>
+          )}
+          <div className="ApplicationInfo__fullContainer">
+            <div className="ChatInfo__headTabs">
+              <Button
+                className={cn("ChatTabButton", {
+                  ChatInfo__headTabButton: selected === "chat",
+                })}
+                onClick={() => handleSelect("chat")}
+                active={selected === "chat"}
+                tertiary
+              >
+                Чат
+              </Button>
+              <Button
+                className={cn("", {
+                  ChatInfo__headTabButton: selected === "contacts",
+                })}
+                onClick={() => handleSelect("contacts")}
+                active={selected === "contacts"}
+                tertiary
+              >
+                Контакты
+              </Button>
+              <Button
+                className={cn("", {
+                  ChatInfo__headTabButton: selected === "requests",
+                })}
+                onClick={() => handleSelect("requests")}
+                active={selected === "requests"}
+                tertiary
+              >
+                Отзывы
+              </Button>
+              <Button
+                className={cn("", {
+                  ChatInfo__headTabButton: selected === "information",
+                })}
+                onClick={() => handleSelect("information")}
+                active={selected === "information"}
+                tertiary
+              >
+                Информация
+              </Button>
+            </div>
+            <div className="ChatInfo__headTabsBar" />
+          </div>
+          {selected === "chat" && <ChatContainer className="ChatMobile" />}
+          {selected === "contacts" && <ContactInfo className="ContactInfo" />}
+          {selected === "requests" && <ChatRequests className="ContactInfo" />}
+          {selected === "information" && (
+            <ChatInformation className="ContactInfo" />
+          )}
+        </div>
         <ChatContainer className="Chat" />
-        <ChatContainerMobile
-          className={`ChatMobile ${isSwipedUp ? "SwipedUp" : ""}`}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        />
       </div>
-      <ApplicationsFooter />
+      {selected === "contacts" && <ApplicationsFooter />}
+      {selected === "requests" && <ApplicationsFooter />}
+      {selected === "information" && <ApplicationsFooter />}
     </StyledApplicationsChat>
   );
 };
 
 const StyledApplicationsChat = styled.section`
-  margin-top: 20px;
+  margin-top: 30px;
   height: calc(100vh - 86px);
+
+  .ChatMobile {
+    display: none;
+  }
 
   .ApplicationsChat {
     padding-bottom: 20px;
@@ -64,77 +169,146 @@ const StyledApplicationsChat = styled.section`
   .AppInfo {
     display: flex;
     flex-direction: column;
-    min-width: 522px;
     max-width: 625px;
+    height: 100%;
   }
 
-  .Application__Footer {
-    border-top: 2px solid #eef1f5;
+  .ApplicationInfo {
+    background: #2a344a;
+    color: #fff;
+    padding: 20px 20px 0 20px;
+    border-radius: 10px 10px 0 0;
+  }
+  .ChatInfo__headTabs {
+    padding: 30px 0 0 0;
+  }
+
+  .ChatTabButton {
     display: none;
-    position: fixed;
+  }
+
+  .ChatInfo__headTabsBar_whiteSpace {
     width: 100%;
-    bottom: 0;
+    height: 10px;
+    border-radius: 0 0 10px 10px;
     background: #fff;
-    padding: 10px;
+  }
+
+  .SingleChatInfoideBar {
+    position: absolute;
+    right: -420px;
+    top: 94px;
+  }
+
+  .Application__headContainer {
+    margin-top: 20px;
+    padding: 20px 20px 0 20px;
+    background: #fff;
     border-radius: 10px 10px 0 0;
   }
 
-  .Application__FooterButtons {
+  .Application__head {
     display: flex;
-    justify-content: center;
-
-    div,
-    button:not(:first-child) {
-      margin-left: 64px;
+    align-items: center;
+    h1 {
+      margin-left: 10px;
     }
   }
 
-  .PlusIconContainer {
-    padding: 2px;
-    background: #eef1f5;
-    border-radius: 50%;
-    transform: translate(0, -34px);
-
+  .ChatInfo__headTabs {
+    display: flex;
     button {
-      background: #4e6af3;
-      width: fit-content;
-      height: fit-content;
-      padding: 10px !important;
-      border-radius: 50%;
+      margin-right: 30px;
+      color: #7786a5;
+
+      padding: 0;
+
+      :hover {
+        color: #fff !important;
+        background: transparent !important;
+      }
+    }
+
+    button.active {
+      color: #fff !important;
     }
   }
 
-  .FooterButton {
-    padding: 5px 0 0 0;
-    max-width: 74px;
+  .ChatInfo__headTabButton {
+    position: relative;
+    ::before {
+      position: absolute;
+      top: 35px;
+      left: 0;
+      content: "";
+      background: #ffffff;
+      width: 100%;
+      height: 4px;
+      border-radius: 10px;
+    }
+  }
+
+  .ChatInfo__headTabsBar {
+    margin-top: 15px;
     width: 100%;
+    background: #3b4a69;
+    height: 4px;
+    border-radius: 10px;
+  }
 
-    :hover {
-      svg {
-        path {
-          fill: #4e6af3;
-        }
-      }
-    }
-    span {
+  .ContactInfo__statusInfo {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    div {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      svg {
-        margin-bottom: 2px;
-        path {
-          fill: #7786a5;
-        }
-      }
     }
   }
 
-  .KebabIcon {
-    transform: rotate(90deg);
+  .ContactInfo__sticker {
+    margin-right: 5px;
+  }
+
+  .ContactInfo__verifiedIcon {
+    margin-right: 5px;
+  }
+
+  .ContactInfo__rating {
+    align-items: center;
+    p {
+      margin-left: 5px;
+    }
+  }
+
+  .ChatButton {
+    padding: 10px 24px;
+  }
+
+  .ContactInfo__ratingIcon {
+    path {
+      fill: #7786a5;
+    }
+  }
+
+  .ChatButtonMobile {
+    display: none;
   }
 
   @media (max-width: 1024px) {
     margin-top: -18px;
+
+    .ChatMobile {
+      display: flex;
+    }
+
+    .ChatTabButton {
+      display: block;
+    }
+
+    .ApplicationsChat {
+      flex-direction: column;
+    }
 
     &.ContainerFull {
       padding: 0;
@@ -142,46 +316,192 @@ const StyledApplicationsChat = styled.section`
     .Chat {
       display: none;
     }
+    .ChatMobile {
+      display: flex;
+    }
 
     .AppInfo {
       width: 100%;
       max-width: unset;
       min-width: unset;
     }
+  }
 
-    .Application__Footer {
-      display: block;
+  .ApplicationInfo__headLayout {
+    display: none;
+    background: #2a344a;
+  }
+
+  .ApplicationInfo__fullContainer {
+    background: #2a344a;
+    color: #fff;
+    padding: 0 20px 20px 20px;
+    border-radius: 0 0 10px 10px;
+    width: 100%;
+  }
+
+  .Application__infoChat {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    background: #2a344a;
+    color: #fff;
+    padding: 10px 20px 20px 20px;
+    border-bottom: 1px solid #3a465d;
+  }
+
+  .Application__infoChatContainer {
+    display: flex;
+  }
+
+  .ApplicationInfo__avatar {
+    border-radius: 50%;
+  }
+
+  .Status {
+    margin-left: 12px;
+  }
+
+  .FullStatus {
+    display: flex;
+    align-items: center;
+  }
+
+  .Application__infoStatus {
+    display: flex;
+    margin-left: 8px;
+  }
+
+  .ContactInfo__rating {
+    display: flex;
+  }
+
+  .ApplicationInfo {
+    display: flex;
+  }
+
+  .ApplicationInfo__backButton {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #3a465d;
+  }
+
+  .ApplicationInfo__backButtonChat {
+    border-radius: 50%;
+    margin-right: 4px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ArrowIcon {
+    width: 20px;
+    height: 20px;
+    transform: rotate(90deg);
+    path {
+      fill: #fff;
     }
-    .Application__FooterButtons {
-      display: flex;
-      justify-content: center;
+  }
 
-      div,
-      button:not(:first-child) {
-        margin-left: 5px;
+  .ApplicationInfo__container {
+    width: 100%;
+    margin-left: 15px;
+  }
+
+  .ApplicationInfo__headContent {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .ApplicationInfo__headDescription {
+    margin-top: 5px;
+  }
+
+  @media (max-width: 1024px) {
+    .ApplicationInfo__fullContainer {
+      border-radius: 0 0 10px 10px;
+      overflow: auto;
+    }
+
+    .Application__infoChat {
+      display: flex;
+      padding-left: 12px;
+    }
+
+    .ChatInfo__headTabs {
+      padding-top: 20px;
+    }
+
+    .ApplicationInfo {
+      border-radius: 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #3a465d;
+    }
+
+    .ApplicationInfo__headLayout {
+      display: block;
+      height: 20px;
+      border-bottom: 1px solid #3a465d;
+    }
+  }
+
+  @media (max-width: 769px) {
+    .ApplicationInfo__headDescription {
+      /* overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      max-width: 500px; */
+    }
+  }
+
+  @media (max-width: 576px) {
+    height: calc(100vh - 44px);
+
+    .ApplicationsChat {
+      padding-bottom: 0;
+    }
+
+    .Application__infoChat {
+      padding-right: 8px;
+    }
+
+    .ChatButton {
+      display: none;
+    }
+    .ChatButtonMobile {
+      display: flex;
+      align-self: flex-start;
+      padding: 2px;
+      border-radius: 50%;
+      background: transparent;
+
+      :hover {
+        background: #3a465d;
+      }
+
+      svg {
+        path {
+          fill: #fff;
+        }
       }
     }
   }
 
-  /* Additional styles for ChatMobile */
-  .ChatMobile {
-    display: flex;
-    height: 100vh;
-    position: fixed;
-    bottom: 34px;
-    left: 0;
-    right: 0;
-    z-index: 99;
-    transition: transform 0.3s ease-in-out;
-    transform: translateY(100%);
-  }
-
-  .SwipedUp .ChatMobile {
-    transform: translateY(34px);
-  }
-
-  .SwipedUp .ApplicationsChat {
-    transform: translateY(-100%);
+  @media (max-width: 440px) {
+    .FullStatus {
+      p {
+        max-width: 110px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
   }
 `;
 

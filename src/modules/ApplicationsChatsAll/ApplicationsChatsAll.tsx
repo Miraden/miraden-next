@@ -1,58 +1,107 @@
-import { useRef, useState } from "react";
+import { Button } from "@/components/ui";
+import cn from "classnames";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { ApplicationsFooter } from "../Base/ApplicationsFooter";
-import { ApplicationInfo } from "./components/ApplicationInfo";
+import { AllChatsContainer } from "./components/AllChatsContainer";
 import { ChatContainer } from "./components/ChatContainer";
-import { ChatContainerMobile } from "./components/ChatContainerMobile";
-import { ContactInfo } from "./components/ContactInfo";
+import { ChatInformation } from "./components/ChatInformation";
+import { ChatPerformers } from "./components/ChatPerformers";
+import { ChatRequests } from "./components/ChatRequests";
+
+interface Props {
+  className?: string;
+}
 
 const ApplicationsChatsAll = () => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [isSwipedUp, setIsSwipedUp] = useState(false);
-  const startY = useRef<number>(0);
+  type Option = "all" | "performers" | "requests" | "support";
 
-  const handleTouchStart = (event: TouchEvent) => {
-    const touch = event.touches[0];
-    startY.current = touch.pageY;
-  };
+  const [selected, setSelected] = useState<Option | null>("all");
 
-  const handleTouchEnd = (event: TouchEvent) => {
-    const touch = event.changedTouches[0];
-    const deltaY = touch.pageY - startY.current;
-
-    if (deltaY < -100) {
-      setIsSwipedUp(true);
-    } else if (deltaY > 100) {
-      setIsSwipedUp(false);
-    }
-  };
+  const handleSelect = useCallback((option: Option) => {
+    setSelected(option);
+  }, []);
 
   return (
     <StyledApplicationsChatsAll className="ContainerFull">
-      <div className={`ApplicationsChatsAll ${isSwipedUp ? "SwipedUp" : ""}`}>
+      <div className="ApplicationsChatsAll">
         <div className="AppInfo">
-          <ApplicationInfo className="ApplicationInfo" />
-          <ContactInfo className="ContactInfo" />
-        </div>
+          <div className="ApplicationInfo__headLayout"></div>
 
+          <div className="ApplicationInfo__fullContainer">
+            <h2 className="Font_24_120">Чаты</h2>
+            <div className="ApplicationsChatsAll__headTabs">
+              <Button
+                className={cn("", {
+                  ApplicationsChatsAll__headTabButton: selected === "all",
+                })}
+                onClick={() => handleSelect("all")}
+                active={selected === "all"}
+                tertiary
+              >
+                Все
+              </Button>
+              <Button
+                className={cn("", {
+                  ApplicationsChatsAll__headTabButton: selected === "requests",
+                })}
+                onClick={() => handleSelect("requests")}
+                active={selected === "requests"}
+                tertiary
+              >
+                Отклики
+              </Button>
+              <Button
+                className={cn("", {
+                  ApplicationsChatsAll__headTabButton:
+                    selected === "performers",
+                })}
+                onClick={() => handleSelect("performers")}
+                active={selected === "performers"}
+                tertiary
+              >
+                Исполнители
+              </Button>
+              <Button
+                className={cn("", {
+                  ApplicationsChatsAll__headTabButton: selected === "support",
+                })}
+                onClick={() => handleSelect("support")}
+                active={selected === "support"}
+                tertiary
+              >
+                Поддержка Miraden
+              </Button>
+            </div>
+            <div className="ApplicationsChatsAll__headTabsBar" />
+          </div>
+          {selected === "all" && <AllChatsContainer className="ContactInfo" />}
+          {selected === "performers" && (
+            <ChatPerformers className="ContactInfo" />
+          )}
+          {selected === "requests" && <ChatRequests className="ContactInfo" />}
+          {selected === "support" && (
+            <ChatInformation className="ContactInfo" />
+          )}
+        </div>
         <ChatContainer className="Chat" />
-        <ChatContainerMobile
-          className={`ChatMobile ${isSwipedUp ? "SwipedUp" : ""}`}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-        />
       </div>
-      <ApplicationsFooter />
+      {selected === "performers" && <ApplicationsFooter />}
+      {selected === "requests" && <ApplicationsFooter />}
+      {selected === "support" && <ApplicationsFooter />}
     </StyledApplicationsChatsAll>
   );
 };
 
 const StyledApplicationsChatsAll = styled.section`
-  margin-top: 20px;
+  margin-top: 35px;
   height: calc(100vh - 86px);
 
+  .ChatMobile {
+    display: none;
+  }
+
   .ApplicationsChatsAll {
-    padding-bottom: 20px;
     display: flex;
     height: 100%;
   }
@@ -64,77 +113,152 @@ const StyledApplicationsChatsAll = styled.section`
   .AppInfo {
     display: flex;
     flex-direction: column;
-    min-width: 522px;
-    max-width: 625px;
+    max-width: 660px;
+    width: 100%;
+    height: 100%;
   }
 
-  .Application__Footer {
-    border-top: 2px solid #eef1f5;
-    display: none;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    background: #fff;
-    padding: 10px;
+  .ApplicationInfo {
+    background: #2a344a;
+    color: #fff;
+    padding: 20px 20px 0 20px;
     border-radius: 10px 10px 0 0;
   }
-
-  .Application__FooterButtons {
-    display: flex;
-    justify-content: center;
-
-    div,
-    button:not(:first-child) {
-      margin-left: 64px;
-    }
+  .ApplicationsChatsAll__headTabs {
+    padding: 20px 0 0 0;
   }
 
-  .PlusIconContainer {
-    padding: 2px;
-    background: #eef1f5;
-    border-radius: 50%;
-    transform: translate(0, -34px);
-
-    button {
-      background: #4e6af3;
-      width: fit-content;
-      height: fit-content;
-      padding: 10px !important;
-      border-radius: 50%;
-    }
+  .ChatTabButton {
+    display: none;
   }
 
-  .FooterButton {
-    padding: 5px 0 0 0;
-    max-width: 74px;
+  .ApplicationsChatsAll__headTabsBar_whiteSpace {
     width: 100%;
+    height: 10px;
+    border-radius: 10px;
+    background: #fff;
+  }
 
-    :hover {
-      svg {
-        path {
-          fill: #4e6af3;
-        }
-      }
-    }
-    span {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      svg {
-        margin-bottom: 2px;
-        path {
-          fill: #7786a5;
-        }
-      }
+  .SingleApplicationsChatsAllideBar {
+    position: absolute;
+    right: -420px;
+    top: 94px;
+  }
+
+  .Application__headContainer {
+    margin-top: 20px;
+    padding: 20px 20px 0 20px;
+    background: #fff;
+    border-radius: 10px;
+  }
+
+  .Application__head {
+    display: flex;
+    align-items: center;
+    h1 {
+      margin-left: 10px;
     }
   }
 
-  .KebabIcon {
-    transform: rotate(90deg);
+  .ApplicationsChatsAll__headTabs {
+    display: flex;
+    button {
+      margin-right: 30px;
+      color: #7786a5;
+
+      padding: 0;
+
+      :hover {
+        color: #fff !important;
+        background: transparent !important;
+      }
+    }
+
+    button.active {
+      color: #fff !important;
+    }
+  }
+
+  .ApplicationsChatsAll__headTabButton {
+    position: relative;
+    ::before {
+      position: absolute;
+      top: 35px;
+      left: 0;
+      content: "";
+      background: #ffffff;
+      width: 100%;
+      height: 4px;
+      border-radius: 10px;
+    }
+  }
+
+  .ApplicationsChatsAll__headTabsBar {
+    margin-top: 15px;
+    width: 100%;
+    background: #3b4a69;
+    height: 4px;
+    border-radius: 10px;
+  }
+
+  .ContactInfo__statusInfo {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+    div {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .ContactInfo__sticker {
+    margin-right: 5px;
+  }
+
+  .ContactInfo__verifiedIcon {
+    margin-right: 5px;
+  }
+
+  .ContactInfo__rating {
+    align-items: center;
+    p {
+      margin-left: 5px;
+    }
+  }
+
+  .ChatButton {
+    padding: 10px 24px;
+  }
+
+  .ContactInfo__ratingIcon {
+    path {
+      fill: #7786a5;
+    }
+  }
+
+  .ChatButtonMobile {
+    display: none;
+  }
+
+  .Chat {
+    padding-bottom: 20px;
   }
 
   @media (max-width: 1024px) {
     margin-top: -18px;
+    height: 100vh;
+
+    .ChatMobile {
+      display: flex;
+    }
+
+    .ChatTabButton {
+      display: block;
+    }
+
+    .ApplicationsChatsAll {
+      flex-direction: column;
+    }
 
     &.ContainerFull {
       padding: 0;
@@ -142,46 +266,182 @@ const StyledApplicationsChatsAll = styled.section`
     .Chat {
       display: none;
     }
+    .ChatMobile {
+      display: flex;
+    }
 
     .AppInfo {
       width: 100%;
       max-width: unset;
       min-width: unset;
     }
+  }
 
-    .Application__Footer {
-      display: block;
+  .ApplicationInfo__headLayout {
+    display: none;
+    background: #2a344a;
+  }
+
+  .ApplicationInfo__fullContainer {
+    background: #2a344a;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%;
+  }
+
+  .Application__infoChat {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    background: #2a344a;
+    color: #fff;
+    padding: 10px 20px 20px 20px;
+    border-bottom: 1px solid #3a465d;
+  }
+
+  .Application__infoChatContainer {
+    display: flex;
+  }
+
+  .ApplicationInfo__avatar {
+    border-radius: 50%;
+  }
+
+  .Status {
+    margin-left: 12px;
+  }
+
+  .FullStatus {
+    display: flex;
+    align-items: center;
+  }
+
+  .Application__infoStatus {
+    display: flex;
+    margin-left: 8px;
+  }
+
+  .ContactInfo__rating {
+    display: flex;
+  }
+
+  .ApplicationInfo {
+    display: flex;
+  }
+
+  .ApplicationInfo__backButton {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #3a465d;
+  }
+
+  .ApplicationInfo__backButtonChat {
+    border-radius: 50%;
+    margin-right: 4px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ArrowIcon {
+    width: 20px;
+    height: 20px;
+    transform: rotate(90deg);
+    path {
+      fill: #fff;
     }
-    .Application__FooterButtons {
-      display: flex;
-      justify-content: center;
+  }
 
-      div,
-      button:not(:first-child) {
-        margin-left: 5px;
+  .ApplicationInfo__container {
+    width: 100%;
+    margin-left: 15px;
+  }
+
+  .ApplicationInfo__headContent {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .ApplicationInfo__headDescription {
+    margin-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  @media (max-width: 1024px) {
+    .ApplicationInfo__fullContainer {
+      border-radius: 0 0 10px 10px;
+      overflow: auto;
+    }
+
+    .Application__infoChat {
+      display: flex;
+      padding-left: 12px;
+    }
+
+    .ApplicationsChatsAll__headTabs {
+      padding-top: 20px;
+    }
+
+    .ApplicationInfo {
+      border-radius: 0;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #3a465d;
+    }
+
+    .ApplicationInfo__headLayout {
+      display: block;
+      height: 20px;
+      border-bottom: 1px solid #3a465d;
+    }
+  }
+
+  @media (max-width: 576px) {
+    height: calc(100vh - 22px);
+
+    .Application__infoChat {
+      padding-right: 8px;
+    }
+
+    .ChatButton {
+      display: none;
+    }
+    .ChatButtonMobile {
+      display: flex;
+      align-self: flex-start;
+      padding: 2px;
+      border-radius: 50%;
+      background: transparent;
+
+      :hover {
+        background: #3a465d;
+      }
+
+      svg {
+        path {
+          fill: #fff;
+        }
       }
     }
   }
 
-  /* Additional styles for ChatMobile */
-  .ChatMobile {
-    display: flex;
-    height: 100vh;
-    position: fixed;
-    bottom: 34px;
-    left: 0;
-    right: 0;
-    z-index: 99;
-    transition: transform 0.3s ease-in-out;
-    transform: translateY(100%);
-  }
-
-  .SwipedUp .ChatMobile {
-    transform: translateY(34px);
-  }
-
-  .SwipedUp .ApplicationsChatsAll {
-    transform: translateY(-100%);
+  @media (max-width: 440px) {
+    .FullStatus {
+      p {
+        max-width: 110px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
   }
 `;
 

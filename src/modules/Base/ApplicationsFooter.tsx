@@ -128,6 +128,18 @@ const StyledApplicationsFooter = styled.div`
       display: block;
     }
   }
+
+  @media (max-width: 767px) {
+    .Application__FooterButtons {
+      display: flex;
+      justify-content: center;
+
+      div,
+      button:not(:first-child) {
+        margin-left: 5px;
+      }
+    }
+  }
 `;
 
 export { ApplicationsFooter };

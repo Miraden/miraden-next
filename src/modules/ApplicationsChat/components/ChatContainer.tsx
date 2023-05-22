@@ -68,6 +68,7 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
 
 const StyledChatContainer = styled.div`
   width: 100%;
+  height: 100%;
   max-width: 1225px;
   margin-left: 30px;
   background: #eef1f5;
@@ -125,9 +126,33 @@ const StyledChatContainer = styled.div`
   }
 
   .ChatContainer__messageInput {
-    /* position: absolute; */
     margin-top: 20px;
     bottom: 0;
+  }
+
+  @media (max-width: 1024px) {
+    margin-left: 0;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  @media (max-width: 576px) {
+    padding-left: 0;
+    padding-right: 0;
+
+    .ChatContainer__avatar {
+      display: none;
+    }
+
+    .ChatContainer__incomingMessage,
+    .ChatContainer__outgoingMessage {
+      margin-left: 0;
+    }
+
+    .ChatContainer__messageContainer {
+      padding-right: 10px;
+      padding-left: 10px;
+    }
   }
 `;
 

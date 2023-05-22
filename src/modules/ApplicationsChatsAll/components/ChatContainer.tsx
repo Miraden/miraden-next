@@ -1,4 +1,6 @@
-import { MessageInput } from "@/components/ui";
+import { Button, MessageInput, Sticker } from "@/components/ui";
+import { VerifiedIcon } from "@/icons";
+import { StarIconFilled } from "@/icons/StarIconFilled";
 import Image from "next/image";
 import styled from "styled-components";
 
@@ -15,6 +17,40 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
       onTouchEnd={onTouchEnd}
       onTouchStart={onTouchStart}
     >
+      <div className="Chat__all">
+        <div className="Chat__allContainer">
+          <Image
+            alt=""
+            src="/images/avatar.jpg"
+            width={52}
+            height={52}
+            className="ApplicationInfo__avatar"
+          />
+          <div className="Status">
+            <div className="FullStatus">
+              <p className="Font_20_120">Светлана Гридасова</p>
+              <div className="Application__infoStatus">
+                <VerifiedIcon className="ContactInfo__verifiedIcon" />
+                <Sticker theme="black" className="ContactInfo__sticker">
+                  pro
+                </Sticker>
+                <div className="ContactInfo__rating">
+                  <StarIconFilled
+                    width={14}
+                    height={14}
+                    className="ContactInfo__ratingIcon"
+                  />
+                  <p className="Font_14_140">4.8</p>
+                </div>
+              </div>
+            </div>
+            <p className="Font_14_140 Color_blue_primary">Агент — RealEstate</p>
+          </div>
+        </div>
+
+        <Button compact>Открыть контакты</Button>
+      </div>
+
       <div className="ChatContainer">
         <p className="ChatContainer__date Font_14_140 Color_text_grey">
           22 марта
@@ -68,9 +104,23 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
 
 const StyledChatContainer = styled.div`
   width: 100%;
+  height: 92%;
   max-width: 1225px;
   margin-left: 30px;
   background: #eef1f5;
+
+  .Chat__all {
+    display: flex;
+    justify-content: space-between;
+
+    padding-bottom: 20px;
+    border-bottom: 1px solid #d4ddee;
+  }
+
+  .Chat__allContainer {
+    display: flex;
+    align-items: center;
+  }
 
   .ChatContainer {
     position: relative;
@@ -125,9 +175,55 @@ const StyledChatContainer = styled.div`
   }
 
   .ChatContainer__messageInput {
-    /* position: absolute; */
     margin-top: 20px;
     bottom: 0;
+  }
+
+  .Status {
+    margin-left: 15px;
+  }
+
+  .FullStatus {
+    display: flex;
+    align-items: center;
+  }
+
+  .Application__infoStatus {
+    display: flex;
+    margin-left: 15px;
+  }
+
+  .ContactInfo__rating {
+    display: flex;
+  }
+
+  .ApplicationInfo {
+    display: flex;
+  }
+
+  @media (max-width: 1024px) {
+    margin-left: 0;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  @media (max-width: 576px) {
+    padding-left: 0;
+    padding-right: 0;
+
+    .ChatContainer__avatar {
+      display: none;
+    }
+
+    .ChatContainer__incomingMessage,
+    .ChatContainer__outgoingMessage {
+      margin-left: 0;
+    }
+
+    .ChatContainer__messageContainer {
+      padding-right: 10px;
+      padding-left: 10px;
+    }
   }
 `;
 

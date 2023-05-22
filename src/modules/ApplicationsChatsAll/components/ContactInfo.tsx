@@ -1,5 +1,3 @@
-import { Button } from "@/components/ui";
-import cn from "classnames";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { Contacts } from "./Contacts";
@@ -23,39 +21,6 @@ const ContactInfo = ({ className }: Props) => {
   return (
     <StyledContactInfo className={className}>
       <div className="ChatInfo__headTabsContainer">
-        <div className="ChatInfo__headTabs">
-          <Button
-            className={cn("", {
-              ChatInfo__headTabButton: selected === "contacts",
-            })}
-            onClick={() => handleSelect("contacts")}
-            active={selected === "contacts"}
-            tertiary
-          >
-            Контакты
-          </Button>
-          <Button
-            className={cn("", {
-              ChatInfo__headTabButton: selected === "requests",
-            })}
-            onClick={() => handleSelect("requests")}
-            active={selected === "requests"}
-            tertiary
-          >
-            Отзывы
-          </Button>
-          <Button
-            className={cn("", {
-              ChatInfo__headTabButton: selected === "information",
-            })}
-            onClick={() => handleSelect("information")}
-            active={selected === "information"}
-            tertiary
-          >
-            Информация
-          </Button>
-        </div>
-        <div className="ChatInfo__headTabsBar" />
         {contactOpen ? <OpenContacts /> : <Contacts />}
       </div>
     </StyledContactInfo>
