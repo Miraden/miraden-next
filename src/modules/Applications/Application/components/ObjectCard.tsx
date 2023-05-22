@@ -4,11 +4,13 @@ import {
   BathsIcon,
   BuildYearIcon,
   KebabIcon,
+  MessagesIcon,
   PointIconFooter,
   SleepsIcon,
   SquareIcon,
   StarIcon,
 } from "@/icons";
+import { PhoneIcon } from "@/icons/PhoneIcon";
 import { RoomsIcon } from "@/icons/RoomsIcon";
 import { UnpublishedIcon } from "@/icons/UnpublishedIcon";
 import Image from "next/image";
@@ -71,10 +73,15 @@ const ObjectCard = ({
   singleCost,
 }: ObjectCardProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [openLinks, setOpenLinks] = useState(false);
 
   const handleOpenDropdown = useCallback(() => {
     setOpenDropdown(!openDropdown);
   }, [openDropdown]);
+
+  const handleOpenLinks = useCallback(() => {
+    setOpenLinks(!openLinks);
+  }, [openLinks]);
 
   return (
     <StyledObjectCard className={className}>
@@ -201,11 +208,30 @@ const ObjectCard = ({
               {openDropdown && <ObjectDropdown agencyName={agencyName} />}
             </div>
             <div className="ObjectCard__footerPerson">
-              <div>
-                <p className="Font_14_140">{name}</p>
-                <p className="Font_12_16 Color_text_grey">{status}</p>
-              </div>
-              <Image alt="" src={image} width={40} height={40} />
+              {openLinks ? (
+                <div className="IconLinks">
+                  <Button href="/applications-chat">
+                    <MessagesIcon className="PhoneIcon" />
+                  </Button>
+                  <Button>
+                    <PhoneIcon className="PhoneIcon" />
+                  </Button>
+                </div>
+              ) : (
+                <div className="Person">
+                  <p className="Font_14_140">{name}</p>
+                  <p className="Font_12_16 Color_text_grey">{status}</p>
+                </div>
+              )}
+              <button onClick={handleOpenLinks}>
+                <Image
+                  alt=""
+                  src={image}
+                  width={40}
+                  height={40}
+                  className="ImageHover"
+                />
+              </button>
             </div>
           </div>
         </div>
@@ -224,7 +250,8 @@ const StyledObjectCard = styled.div`
   }
 
   .ObjectCard__unpublishedContainer {
-    min-width: 400px;
+    max-width: 400px;
+    width: 100%;
     position: relative;
     border-radius: 10px;
     overflow: hidden;
@@ -358,9 +385,33 @@ const StyledObjectCard = styled.div`
   .ObjectCard__footerPerson {
     display: flex;
     text-align: end;
+    align-items: center;
     img {
       margin-left: 10px;
       border-radius: 50%;
+    }
+  }
+
+  .IconLinks {
+    display: flex;
+
+    button,
+    a {
+      background: #f1f7ff;
+      border-radius: 50%;
+      padding: 11px;
+      margin-left: 10px;
+      :hover {
+        background: #e1edfd;
+      }
+    }
+  }
+
+  .PhoneIcon {
+    fill: #2a344a !important;
+
+    path {
+      fill: #2a344a !important;
     }
   }
 
@@ -480,7 +531,7 @@ const ObjectDropdown = ({ agencyName }: ObjectCardProps) => {
 const StyledObjectDropdown = styled.div`
   position: absolute;
   right: 0;
-  top: 26px;
+  top: 34px;
   background: #fff;
   padding: 10px 15px;
   box-shadow: 0 0 0 1px #e1edfd;

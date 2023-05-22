@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui";
+import { ApplicationsFooter } from "@/modules/Base/ApplicationsFooter";
 import cn from "classnames";
 import Image from "next/image";
 import { useCallback, useState } from "react";
@@ -108,6 +109,7 @@ const ApplicationFullPlug = ({ className }: ApplicationProps) => {
           </div>
         </>
       )}
+      <ApplicationsFooter />
     </StyledApplication>
   );
 };

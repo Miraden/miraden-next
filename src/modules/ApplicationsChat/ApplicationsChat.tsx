@@ -1,13 +1,6 @@
-import { Button } from "@/components/ui";
-import {
-  Applications,
-  HomeIcon,
-  KebabIcon,
-  ListItemsIcon,
-  PlusIcon,
-} from "@/icons";
 import { useRef, useState } from "react";
 import styled from "styled-components";
+import { ApplicationsFooter } from "../Base/ApplicationsFooter";
 import { ApplicationInfo } from "./components/ApplicationInfo";
 import { ChatContainer } from "./components/ChatContainer";
 import { ChatContainerMobile } from "./components/ChatContainerMobile";
@@ -49,32 +42,7 @@ const ApplicationsChat = () => {
           onTouchEnd={handleTouchEnd}
         />
       </div>
-      <div className="Application__Footer">
-        <div className="Application__FooterButtons">
-          <Button tertiary className="FooterButton Font_12_16">
-            <ListItemsIcon />
-            Лента
-          </Button>
-          <Button tertiary className="FooterButton Font_12_16">
-            <Applications />
-            Мои заявки
-          </Button>
-          <div className="PlusIconContainer">
-            <Button>
-              <PlusIcon width={24} height={24} />
-            </Button>
-          </div>
-
-          <Button tertiary className="FooterButton Font_12_16">
-            <HomeIcon width={18} height={18} />
-            Объекты
-          </Button>
-          <Button tertiary className="FooterButton Font_12_16">
-            <KebabIcon className="KebabIcon" />
-            Ещё
-          </Button>
-        </div>
-      </div>
+      <ApplicationsFooter />
     </StyledApplicationsChat>
   );
 };

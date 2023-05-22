@@ -57,7 +57,6 @@ const Tabs = styled.div`
   display: flex;
   box-shadow: 0 0 0 2px #e1edfd inset;
   border-radius: 13px;
-  max-width: 300px;
   width: 100%;
   padding: 4px;
 `;

@@ -207,6 +207,10 @@ const StyledObjectCardLarge = styled.a`
     background: #fff;
     border-radius: 10px;
     padding: 20px;
+    transition: 0.15s ease;
+    :hover {
+      box-shadow: 0 0 0 2px inset #c7d2e9;
+    }
   }
 
   .ObjectCardLarge {

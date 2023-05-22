@@ -1,15 +1,9 @@
 import { Button, Search } from "@/components/ui";
 import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
 import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
-import {
-  Applications,
-  BackIcon20,
-  HomeIcon,
-  KebabIcon,
-  ListItemsIcon,
-  PlusIcon,
-} from "@/icons";
+import { BackIcon20 } from "@/icons";
 import { FilterIcon } from "@/icons/FilterIcon";
+import { ApplicationsFooter } from "@/modules/Base/ApplicationsFooter";
 import cn from "classnames";
 import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
@@ -789,34 +783,7 @@ const Application = ({ className }: ApplicationProps) => {
           </>
         )}
 
-        {!showFilter && (
-          <div className="Application__Footer">
-            <div className="Application__FooterButtons">
-              <Button tertiary className="FooterButton Font_12_16">
-                <ListItemsIcon />
-                Лента
-              </Button>
-              <Button tertiary className="FooterButton Font_12_16">
-                <Applications />
-                Мои заявки
-              </Button>
-              <div className="PlusIconContainer">
-                <Button>
-                  <PlusIcon width={24} height={24} />
-                </Button>
-              </div>
-
-              <Button tertiary className="FooterButton Font_12_16">
-                <HomeIcon width={18} height={18} />
-                Объекты
-              </Button>
-              <Button tertiary className="FooterButton Font_12_16">
-                <KebabIcon className="KebabIcon" />
-                Ещё
-              </Button>
-            </div>
-          </div>
-        )}
+        {!showFilter && <ApplicationsFooter />}
       </StyledApplication>
     </>
   );
@@ -902,7 +869,6 @@ const StyledApplication = styled.section`
   .Application__headTabs {
     display: flex;
     margin-top: 30px;
-    overflow: auto;
     button {
       padding: 0;
       :hover {
@@ -942,7 +908,6 @@ const StyledApplication = styled.section`
       background: transparent !important;
     }
   }
-
   .Application__headTabsBar {
     margin-top: 15px;
     width: 100%;
@@ -969,7 +934,6 @@ const StyledApplication = styled.section`
       margin-left: 30px;
     }
   }
-
   .Application__body {
     padding-top: 100px;
     margin: 0 auto;
@@ -1125,6 +1089,10 @@ const StyledApplication = styled.section`
       height: fit-content;
       padding-bottom: 120px;
     }
+  }
+
+  .Applications__filterMobile {
+    display: none;
   }
 
   @media (max-width: 1024px) {
