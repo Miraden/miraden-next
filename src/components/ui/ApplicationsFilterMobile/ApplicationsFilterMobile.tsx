@@ -1,11 +1,10 @@
-import { ArrowIcon, CrossIcon } from "@/icons";
+import { ArrowIcon } from "@/icons";
 import cn from "classnames";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
-import { DropdownLocationInput } from "../../ui/DropdownLocationInput/DropdownLocationInput";
-import { Button } from "../Button";
 import { Checkbox } from "../CheckBox";
 import { CurrencySelect } from "../CurrencySelect/CurrencySelect";
+import { DropdownLocationInput } from "../DropdownLocationInput/DropdownLocationInput";
 import { NumberInputNoLabel } from "../NumberInputNoLabel";
 import { RequestButton } from "../RequestButton";
 import { TabButtons } from "../TabButtons";
@@ -45,35 +44,20 @@ const baths = [
   { label: "6+", value: 6 },
 ];
 
-const ApplicationsFilter = ({
+const ApplicationsFilterMobile = ({
   className,
   onClick,
   onTabClick,
   onChange,
-  onTouchStart,
-  onTouchEnd,
 }: FilterProps) => {
   return (
-    <StyledApplicationsFilter className={className}>
-      <div className="Filter__headContainer">
-        <div
-          className="ApplicationsFilter__swipe"
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-        >
-          <div className="ApplicationsFilter__swipeElement" />
-        </div>
-        <div className="ApplicationsFilter__head">
-          <h2 className="Font_12_16_600">фильтр выключен</h2>
-          <Button tertiary onClick={onClick} className="CloseFilter">
-            <CrossIcon width={24} height={24} />
-          </Button>
-        </div>
+    <StyledApplicationsFilterMobile className={className}>
+      <div className="ApplicationsFilterMobile__head">
+        <h2 className="Font_12_16_600">фильтр выключен</h2>
       </div>
-
       <div>
         <TabButtons
-          className="ApplicationsFilter__tabs"
+          className="ApplicationsFilterMobile__tabs"
           tabs={[
             { label: "Продавцы", id: "1", content: <SellerContent /> },
             { label: "Объекты", id: "2", content: <ObjectsContent /> },
@@ -82,39 +66,18 @@ const ApplicationsFilter = ({
           onTabClick={onTabClick}
         />
       </div>
-      <div className="ApplicationsFilter__footer">
-        <RequestButton active onClick={onClick} className="">
-          Найдено 145 объектов
-        </RequestButton>
-      </div>
-    </StyledApplicationsFilter>
+    </StyledApplicationsFilterMobile>
   );
 };
 
-const StyledApplicationsFilter = styled.div`
+const StyledApplicationsFilterMobile = styled.div`
   background: #fff;
   border-radius: 10px;
   min-width: 355px;
   width: 100%;
   position: relative;
 
-  .ApplicationsFilter__swipe {
-    background: #fff;
-    padding-top: 4px;
-    padding-bottom: 5px;
-    display: none;
-    border-radius: 10px 10px 0 0;
-  }
-
-  .ApplicationsFilter__swipeElement {
-    width: 36px;
-    height: 5px;
-    background: #c7d2e9;
-    margin: 0 auto;
-    border-radius: 5px;
-  }
-
-  .ApplicationsFilter__head {
+  .ApplicationsFilterMobile__head {
     display: flex;
     justify-content: space-between;
 
@@ -144,53 +107,13 @@ const StyledApplicationsFilter = styled.div`
     }
   }
 
-  .ApplicationsFilter__footer {
-    display: none;
-  }
-
-  .ApplicationsFilter__tabs {
+  .ApplicationsFilterMobile__tabs {
     margin-top: 20px;
-    /* max-height: calc(100vh - 184px); */
+    max-height: calc(100vh - 184px);
     height: 100%;
     overflow-y: auto;
     .TabButtons__container {
       padding: 0px 30px;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .ApplicationsFilter__swipe {
-      display: flex;
-    }
-
-    .CloseFilter {
-      display: none;
-    }
-    .Filter__headContainer {
-      background: #fff;
-      padding-bottom: 20px;
-      position: sticky;
-      top: 0;
-    }
-
-    .ApplicationsFilter__tabs {
-      margin-top: 0;
-    }
-
-    .ApplicationsFilter__footer {
-      display: block;
-      position: fixed;
-      bottom: 0;
-      z-index: 999;
-      width: 100%;
-      padding: 20px 20px 0 20px;
-      border-top: 2px solid #eef1f5;
-      background: #ffffff;
-
-      button {
-        padding: 15px;
-        width: 100%;
-      }
     }
   }
 `;
@@ -852,4 +775,4 @@ const StyledObjectsContent = styled.div`
   }
 `;
 
-export { ApplicationsFilter };
+export { ApplicationsFilterMobile };

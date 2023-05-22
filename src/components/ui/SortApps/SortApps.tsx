@@ -1,4 +1,5 @@
 import { ArrowIcon } from "@/icons";
+import { SortIcon } from "@/icons/SortIcon";
 import { FC, useState } from "react";
 import styled from "styled-components";
 import { SortAppsDropdown } from "./SortAppsDropdown";
@@ -41,8 +42,9 @@ const SortApps: FC<Props> = ({ className }) => {
         }
       >
         <div className="DropdownInput_selectLabel Text_14_16">
-          {selectedOption ? selectedOption : "Сначала более надёжные"}
-          <ArrowIcon />
+          <p>{selectedOption ? selectedOption : "Сначала более надёжные"}</p>
+          <ArrowIcon className="DropdownInput_selectLabelIcon" />
+          <SortIcon className="DropdownInput_selectLabelIconMobile" />
         </div>
         {showDropDown && (
           <SortAppsDropdown
@@ -90,6 +92,10 @@ const StyledDropdownInput = styled.div<Props>`
         transition: 0.15s ease-in;
       }
     }
+  }
+
+  .DropdownInput_selectLabelIconMobile {
+    display: none;
   }
 
   .DropdownInput_select {
@@ -156,6 +162,72 @@ const StyledDropdownInput = styled.div<Props>`
     padding: 11px 10px;
     background: rgba(255, 255, 255, 0.85);
     border-radius: 3px;
+  }
+
+  @media (max-width: 769px) {
+    .DropdownInput_selectLabel {
+      p {
+        display: none;
+      }
+    }
+
+    .DropdownInput_selectLabelIconMobile {
+      display: flex;
+    }
+
+    .DropdownInput_selectLabelIcon {
+      display: none;
+    }
+
+    .DropdownInput_select {
+      padding: 8px;
+      border: none;
+      box-shadow: none;
+      div {
+        svg {
+          margin-left: 0;
+          transform: rotate(0);
+        }
+      }
+
+      &:hover {
+        box-shadow: none;
+        background: transparent;
+      }
+    }
+
+    .DropdownInput_select_active {
+      padding: 8px;
+      border: none;
+      box-shadow: none;
+      div {
+        svg {
+          margin-left: 0;
+        }
+      }
+    }
+
+    .DropdownInput_selectLabel {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        path {
+          stroke: none !important;
+        }
+      }
+
+      :hover {
+        svg {
+          path {
+            fill: #4e6af3;
+          }
+        }
+      }
+    }
   }
 `;
 

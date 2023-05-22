@@ -145,6 +145,21 @@ const StyledContacts = styled.div`
     margin-top: 20px;
     max-width: 400px;
   }
+
+  @media (max-width: 576px) {
+    .ContactInfo {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .ContactInfo__openContacts {
+      margin-top: 30px;
+      width: 100%;
+    }
+    .ContactInfo__Image {
+      width: 64px;
+      height: 64px;
+    }
+  }
 `;
 
 export { Contacts };

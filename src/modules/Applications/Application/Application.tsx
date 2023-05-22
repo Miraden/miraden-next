@@ -11,7 +11,7 @@ import {
 } from "@/icons";
 import { FilterIcon } from "@/icons/FilterIcon";
 import cn from "classnames";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 import { ObjectCard } from "./components/ObjectCard";
 import { SellerCard } from "./components/SellerCard";
@@ -445,6 +445,7 @@ const recommendArray = [
 const Application = ({ className }: ApplicationProps) => {
   const [selected, setSelected] = useState<Option | null>("application");
   const [showFilter, setShowFilter] = useState(false);
+  const startY = useRef<number>(0);
 
   const [selectedContent, setSelectedContent] = useState("1");
 
@@ -468,6 +469,20 @@ const Application = ({ className }: ApplicationProps) => {
 
   const [submit, setSubmit] = useState(false);
   useLockBodyScroll(isOpenModal);
+
+  const handleTouchStart = (event: TouchEvent) => {
+    const touch = event.touches[0];
+    startY.current = touch.pageY;
+  };
+
+  const handleTouchEnd = (event: TouchEvent) => {
+    const touch = event.changedTouches[0];
+    const deltaY = touch.pageY - startY.current;
+
+    if (deltaY > 50) {
+      setShowFilter(false);
+    }
+  };
 
   return (
     <>
@@ -756,38 +771,52 @@ const Application = ({ className }: ApplicationProps) => {
           </>
         )}
         {showFilter && (
-          <ApplicationsFilter
-            onTabClick={handleTabClick}
-            className="Applications__filter"
-            onClick={handleShowFilter}
-          />
+          <>
+            <ApplicationsFilter
+              onTabClick={handleTabClick}
+              className="Applications__filter"
+              onClick={handleShowFilter}
+            />
+            <div className="Applications__filterMobileContainer">
+              <ApplicationsFilter
+                onTabClick={handleTabClick}
+                className="Applications__filterMobile"
+                onClick={handleShowFilter}
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+              />
+            </div>
+          </>
         )}
-        <div className="Application__Footer">
-          <div className="Application__FooterButtons">
-            <Button tertiary className="FooterButton Font_12_16">
-              <ListItemsIcon />
-              Лента
-            </Button>
-            <Button tertiary className="FooterButton Font_12_16">
-              <Applications />
-              Мои заявки
-            </Button>
-            <div className="PlusIconContainer">
-              <Button>
-                <PlusIcon width={24} height={24} />
+
+        {!showFilter && (
+          <div className="Application__Footer">
+            <div className="Application__FooterButtons">
+              <Button tertiary className="FooterButton Font_12_16">
+                <ListItemsIcon />
+                Лента
+              </Button>
+              <Button tertiary className="FooterButton Font_12_16">
+                <Applications />
+                Мои заявки
+              </Button>
+              <div className="PlusIconContainer">
+                <Button>
+                  <PlusIcon width={24} height={24} />
+                </Button>
+              </div>
+
+              <Button tertiary className="FooterButton Font_12_16">
+                <HomeIcon width={18} height={18} />
+                Объекты
+              </Button>
+              <Button tertiary className="FooterButton Font_12_16">
+                <KebabIcon className="KebabIcon" />
+                Ещё
               </Button>
             </div>
-
-            <Button tertiary className="FooterButton Font_12_16">
-              <HomeIcon width={18} height={18} />
-              Объекты
-            </Button>
-            <Button tertiary className="FooterButton Font_12_16">
-              <KebabIcon className="KebabIcon" />
-              Ещё
-            </Button>
           </div>
-        </div>
+        )}
       </StyledApplication>
     </>
   );
@@ -873,6 +902,7 @@ const StyledApplication = styled.section`
   .Application__headTabs {
     display: flex;
     margin-top: 30px;
+    overflow: auto;
     button {
       padding: 0;
       :hover {
@@ -1106,6 +1136,20 @@ const StyledApplication = styled.section`
     }
     .Applications__filter {
       display: none;
+    }
+
+    .Applications__filterMobileContainer {
+      position: absolute;
+      z-index: 999;
+      width: 100%;
+      height: 100vh;
+      top: -58px;
+    }
+
+    .Applications__filterMobile {
+      position: relative;
+      display: block;
+      height: 100vh;
     }
 
     .Applications__list {
