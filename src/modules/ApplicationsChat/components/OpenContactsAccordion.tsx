@@ -131,6 +131,8 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
   }
 
   .Accordion__content {
+    padding-left: 30px;
+    padding-right: 30px;
     padding-top: 20px;
     padding-bottom: 20px;
     width: 100%;
@@ -201,6 +203,11 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
   @media (max-width: 576px) {
     .Accordion__title {
       flex-direction: column;
+    }
+
+    .Accordion__content {
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
     .Accordion__head {

@@ -27,118 +27,130 @@ const ApplicationsChat = () => {
   return (
     <StyledApplicationsChat className="ContainerFull">
       <div className="ApplicationsChat">
-        <div className="AppInfo">
-          <div className="ApplicationInfo__headLayout"></div>
-          {selected === "chat" ? (
-            <div className="Application__infoChat">
-              <div className="Application__infoChatContainer">
-                <button className="ApplicationInfo__backButtonChat">
-                  <ArrowAccordionIcon className="ArrowIcon" />
-                </button>
-                <Image
-                  alt=""
-                  src="/images/avatar.jpg"
-                  width={40}
-                  height={40}
-                  className="ApplicationInfo__avatar"
-                />
-                <div className="Status">
-                  <div className="FullStatus">
-                    <p className="Font_16_140">Анастасия Петрова</p>
-                    <div className="Application__infoStatus">
-                      <VerifiedIcon className="ContactInfo__verifiedIcon" />
-                      <Sticker theme="black" className="ContactInfo__sticker">
-                        pro
-                      </Sticker>
-                      <div className="ContactInfo__rating">
-                        <StarIconFilled
-                          width={14}
-                          height={14}
-                          className="ContactInfo__ratingIcon"
-                        />
-                        <p className="Font_14_140">4.8</p>
+        <div className="ChatMainContainer">
+          <div className="AppInfo">
+            <div>
+              <div className="ApplicationInfo__headLayout"></div>
+
+              {selected === "chat" ? (
+                <div className="Application__infoChat">
+                  <div className="Application__infoChatContainer">
+                    <button className="ApplicationInfo__backButtonChat">
+                      <ArrowAccordionIcon className="ArrowIcon" />
+                    </button>
+                    <Image
+                      alt=""
+                      src="/images/avatar.jpg"
+                      width={40}
+                      height={40}
+                      className="ApplicationInfo__avatar"
+                    />
+                    <div className="Status">
+                      <div className="FullStatus">
+                        <p className="Font_16_140">Анастасия Петрова</p>
+                        <div className="Application__infoStatus">
+                          <VerifiedIcon className="ContactInfo__verifiedIcon" />
+                          <Sticker
+                            theme="black"
+                            className="ContactInfo__sticker"
+                          >
+                            pro
+                          </Sticker>
+                          <div className="ContactInfo__rating">
+                            <StarIconFilled
+                              width={14}
+                              height={14}
+                              className="ContactInfo__ratingIcon"
+                            />
+                            <p className="Font_14_140">4.8</p>
+                          </div>
+                        </div>
                       </div>
+                      <p className="Font_12_16 Color_text_disabled">
+                        Агентство недвижимости — RealEstate
+                      </p>
                     </div>
                   </div>
-                  <p className="Font_12_16 Color_text_disabled">
-                    Агентство недвижимости — RealEstate
-                  </p>
-                </div>
-              </div>
 
-              <Button className="ChatButton">Открыть контакты</Button>
-              <Button className="ChatButtonMobile">
-                <Kebab24Icon />
-              </Button>
-            </div>
-          ) : (
-            <div className="ApplicationInfo">
-              <button className="ApplicationInfo__backButton">
-                <ArrowAccordionIcon className="ArrowIcon" />
-              </button>
-              <div className="ApplicationInfo__container">
-                <div className="ApplicationInfo__headContent">
-                  <h2 className="Font_24_120">Заявка #12463</h2>
-                  <Sticker theme="black">TRUE</Sticker>
+                  <Button className="ChatButton">Открыть контакты</Button>
+                  <Button className="ChatButtonMobile">
+                    <Kebab24Icon />
+                  </Button>
                 </div>
-                <p className="ApplicationInfo__headDescription Font_16_150">
-                  Хочу купить 3-х комнатную квартиру на Кипре
-                </p>
+              ) : (
+                <div className="ApplicationInfo">
+                  <button className="ApplicationInfo__backButton">
+                    <ArrowAccordionIcon className="ArrowIcon" />
+                  </button>
+                  <div className="ApplicationInfo__container">
+                    <div className="ApplicationInfo__headContent">
+                      <h2 className="Font_24_120">Заявка #12463</h2>
+                      <Sticker theme="black">TRUE</Sticker>
+                    </div>
+                    <p className="ApplicationInfo__headDescription Font_16_150">
+                      Хочу купить 3-х комнатную квартиру на Кипре
+                    </p>
+                  </div>
+                </div>
+              )}
+              <div className="ApplicationInfo__fullContainer">
+                <div className="ChatInfo__headTabs">
+                  <Button
+                    className={cn("ChatTabButton", {
+                      ChatInfo__headTabButton: selected === "chat",
+                    })}
+                    onClick={() => handleSelect("chat")}
+                    active={selected === "chat"}
+                    tertiary
+                  >
+                    Чат
+                  </Button>
+                  <Button
+                    className={cn("", {
+                      ChatInfo__headTabButton: selected === "contacts",
+                    })}
+                    onClick={() => handleSelect("contacts")}
+                    active={selected === "contacts"}
+                    tertiary
+                  >
+                    Контакты
+                  </Button>
+                  <Button
+                    className={cn("", {
+                      ChatInfo__headTabButton: selected === "requests",
+                    })}
+                    onClick={() => handleSelect("requests")}
+                    active={selected === "requests"}
+                    tertiary
+                  >
+                    Отзывы
+                  </Button>
+                  <Button
+                    className={cn("", {
+                      ChatInfo__headTabButton: selected === "information",
+                    })}
+                    onClick={() => handleSelect("information")}
+                    active={selected === "information"}
+                    tertiary
+                  >
+                    Информация
+                  </Button>
+                </div>
+                <div className="ChatInfo__headTabsBar" />
               </div>
             </div>
-          )}
-          <div className="ApplicationInfo__fullContainer">
-            <div className="ChatInfo__headTabs">
-              <Button
-                className={cn("ChatTabButton", {
-                  ChatInfo__headTabButton: selected === "chat",
-                })}
-                onClick={() => handleSelect("chat")}
-                active={selected === "chat"}
-                tertiary
-              >
-                Чат
-              </Button>
-              <Button
-                className={cn("", {
-                  ChatInfo__headTabButton: selected === "contacts",
-                })}
-                onClick={() => handleSelect("contacts")}
-                active={selected === "contacts"}
-                tertiary
-              >
-                Контакты
-              </Button>
-              <Button
-                className={cn("", {
-                  ChatInfo__headTabButton: selected === "requests",
-                })}
-                onClick={() => handleSelect("requests")}
-                active={selected === "requests"}
-                tertiary
-              >
-                Отзывы
-              </Button>
-              <Button
-                className={cn("", {
-                  ChatInfo__headTabButton: selected === "information",
-                })}
-                onClick={() => handleSelect("information")}
-                active={selected === "information"}
-                tertiary
-              >
-                Информация
-              </Button>
-            </div>
-            <div className="ChatInfo__headTabsBar" />
+
+            {selected === "chat" && <ChatContainer className="ChatMobile" />}
+            {selected === "contacts" && <ContactInfo className="ContactInfo" />}
+            {selected === "requests" && (
+              <ChatRequests className="ContactInfo" />
+            )}
+            {selected === "information" && (
+              <ChatInformation className="ContactInfo" />
+            )}
           </div>
-          {selected === "chat" && <ChatContainer className="ChatMobile" />}
-          {selected === "contacts" && <ContactInfo className="ContactInfo" />}
-          {selected === "requests" && <ChatRequests className="ContactInfo" />}
-          {selected === "information" && (
-            <ChatInformation className="ContactInfo" />
-          )}
         </div>
+
         <ChatContainer className="Chat" />
       </div>
       {selected === "contacts" && <ApplicationsFooter />}
@@ -151,6 +163,11 @@ const ApplicationsChat = () => {
 const StyledApplicationsChat = styled.section`
   margin-top: 30px;
   height: calc(100vh - 86px);
+
+  .ChatMainContainer {
+    display: flex;
+    flex-grow: 1;
+  }
 
   .ChatMobile {
     display: none;
@@ -449,7 +466,6 @@ const StyledApplicationsChat = styled.section`
     .ApplicationInfo__headLayout {
       display: block;
       height: 20px;
-      border-bottom: 1px solid #3a465d;
     }
   }
 
