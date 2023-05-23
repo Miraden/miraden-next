@@ -355,6 +355,15 @@ const StyledRegStep1 = styled.section`
 
   .Tooltip {
     height: 18px;
+
+    svg {
+      :hover {
+        path,
+        circle {
+          stroke: #4e6af3;
+        }
+      }
+    }
   }
 
   .Reg__square {

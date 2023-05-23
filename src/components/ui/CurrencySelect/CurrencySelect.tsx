@@ -29,6 +29,12 @@ const CurrencySelect: FC<Props> = ({ className, options }) => {
     setSelectOption(option);
   };
 
+  // Функция для преобразования значения selectedOption
+  const formatSelectedOption = (option: string): string => {
+    const formattedOption = option.toLowerCase().split(",")[0];
+    return formattedOption;
+  };
+
   return (
     <StyledDropdownInput className={cn({ className })} options={options}>
       <button
@@ -41,7 +47,7 @@ const CurrencySelect: FC<Props> = ({ className, options }) => {
         }
       >
         <div className="DropdownInput_selectLabel Color_blue_primary">
-          {selectedOption ? selectedOption : "евро"}
+          {selectedOption ? formatSelectedOption(selectedOption) : "евро"}
           <ArrowIcon />
         </div>
         {showDropDown && (

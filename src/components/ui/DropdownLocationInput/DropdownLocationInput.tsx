@@ -1,4 +1,4 @@
-import { ArrowIcon, WarningIcon } from "@/icons";
+import { ArrowIcon } from "@/icons";
 import cn from "classnames";
 import { FC, useState } from "react";
 import styled from "styled-components";
@@ -78,13 +78,6 @@ const DropdownLocationInput: FC<Props> = ({
           />
         )}
       </button>
-      {warning && (
-        <div className="Warning__message Text_12_16">
-          <WarningIcon />
-          <span>Warning</span>
-        </div>
-      )}
-      {error && <div className="Error__message Text_12_16">Error</div>}
     </StyledDropdownLocationInput>
   );
 };

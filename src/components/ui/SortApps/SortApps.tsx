@@ -31,12 +31,14 @@ const SortApps: FC<Props> = ({ className }) => {
   };
 
   return (
-    <StyledDropdownInput className={className}>
+    <StyledDropdownInput
+      className={className}
+      onClick={(): void => toggleDropDown()}
+    >
       <button
         className={
           showDropDown ? `DropdownInput_select_active` : `DropdownInput_select`
         }
-        onClick={(): void => toggleDropDown()}
         onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
           dismissHandler(e)
         }

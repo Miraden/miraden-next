@@ -265,18 +265,9 @@ const CreateStep4 = ({ className }: Props) => {
                 <p className="Color_blue_primary Font_16_140">317</p>
               </div>
 
-              {selected === "secondary" ? (
-                <Button
-                  disabled={!selected}
-                  href="/customer/create-commercial-step-5"
-                >
-                  Далее
-                </Button>
-              ) : (
-                <Button disabled={!selected} href="/customer/create-step-5">
-                  Далее
-                </Button>
-              )}
+              <Button disabled={!selected} href="/customer/create-step-5">
+                Далее
+              </Button>
             </div>
           </div>
         </div>

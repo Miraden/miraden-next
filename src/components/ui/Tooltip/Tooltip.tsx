@@ -11,7 +11,7 @@ const Tooltip = styled.div<TooltipProps>`
   width: 250px;
   transform: translateX(-50%);
   z-index: 10;
-  left: 50%;
+  left: calc(50% + 2px);
   padding: 10px;
   border-radius: 10px;
   background-color: #2a344a;

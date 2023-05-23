@@ -130,10 +130,20 @@ const DropdownLocation: FC<Props> = ({
 const StyledDropdownLocation = styled.div`
   .DropdownLocation__menu_active p.active {
     color: #4e6af3;
+
+    :hover {
+      background: #f1f7ff;
+    }
   }
 
   .Options {
+    p {
+      width: 50%;
+    }
     display: flex;
+    p:hover {
+      background: #f1f7ff;
+    }
   }
 
   .SubOptions {
@@ -145,11 +155,21 @@ const StyledDropdownLocation = styled.div`
     p:first-child {
       margin-top: 44px;
     }
+
+    p {
+      width: 100%;
+    }
+    p:hover {
+      background: #f1f7ff;
+    }
   }
 
   .MapButton__container {
     border-top: 1px solid #e1edfd;
     width: 100%;
+    :hover {
+      background: #f1f7ff;
+    }
   }
 
   .MapButton {

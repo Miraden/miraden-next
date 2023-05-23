@@ -152,9 +152,8 @@ const StyledTechSupport = styled.div`
     :hover {
       background: #f1f7ff;
     }
-
     :focus {
-      outline: 2px solid #f845fc;
+      /* outline: 2px solid #f845fc; */
     }
   }
 

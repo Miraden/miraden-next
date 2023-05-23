@@ -251,7 +251,7 @@ const StyledSellerContent = styled.div`
   }
 `;
 
-const currency = ["евро", "доллар", "фунт стерлингов", "рубль"];
+const currency = ["Евро, €", "Доллар, $", "Фунт стерлингов, £", "Рубль, ₽"];
 
 const ObjectsContent = () => {
   const [priceToValue, setPriceToValue] = useState("");

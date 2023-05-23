@@ -40,7 +40,7 @@ const RegStep2 = ({ className }: Props) => {
             </h1>
           </div>
           <div className="Reg__link Color_blue_primary">
-            <span>Пройдите простую регистрацию или </span>
+            <span>Пройдите простую регистрацию или  </span>
             <Link underlined href="/customer/login">
               войдите в свой аккаунт
             </Link>

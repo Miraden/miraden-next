@@ -125,6 +125,10 @@ const SearchContainer = styled.div`
     }
   }
 
+  .Search__rightIcon {
+    height: 18px;
+  }
+
   .Search__rightIcon,
   .Search__crossIconWithButton {
     position: absolute;
@@ -137,7 +141,7 @@ const SearchContainer = styled.div`
     position: absolute;
     top: 12px;
     right: 58px;
-    z-index: 20;
+    z-index: 40;
   }
 
   .Search__crossIconWithButton {
