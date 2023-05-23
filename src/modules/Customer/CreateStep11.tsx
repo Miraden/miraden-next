@@ -203,6 +203,7 @@ const StyledRegStep1 = styled.section`
     }
 
     .Reg__inputs {
+      padding-top: 24px;
       padding-left: 20px;
       padding-right: 20px;
     }

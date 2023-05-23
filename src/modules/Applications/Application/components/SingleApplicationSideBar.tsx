@@ -9,21 +9,21 @@ interface Props {
 
 const paymentOptions = [
   {
-    buttonTitle: "Открыть отклик для всех",
+    buttonTitle: "Открыть отклик для всех",
     buttonText:
-      "На заявку смогут откликнуться все пользователи, а не только PRO",
+      "На заявку смогут откликнуться все пользователи, а не только PRO",
     tax: 10,
   },
   {
-    buttonTitle: "Закрепить вверху на 24 часа",
+    buttonTitle: "Закрепить вверху на 24 часа",
     buttonText:
-      "Заявка будет закреплена вверху ленты. После чего сместится вниз по мере поступления новых",
+      "Заявка будет закреплена вверху ленты. После чего сместится вниз по мере поступления новых",
     tax: 15,
   },
   {
-    buttonTitle: "Поднимать каждые 3 дня",
+    buttonTitle: "Поднимать каждые 3 дня",
     buttonText:
-      "Заявка будет автоматически подниматься в самый верх ленты каждые 3 дня",
+      "Заявка будет автоматически подниматься в самый верх ленты каждые 3 дня",
     tax: 20,
   },
 ];
@@ -52,12 +52,20 @@ const SingleApplicationSideBar = ({ className }: Props) => {
     .filter((option, index) => activeButtons[index])
     .map((option) => option.tax);
 
+  const handleClick = () => {
+    if (selectedOptions.length === 0) {
+      alert("Пожалуйста, выберите одну или несколько опций");
+    } else {
+      // Ваша логика для обработки клика на "Увеличить отклики"
+    }
+  };
+
   return (
     <StyledSingleApplicationSideBar className={className}>
       <div className="SideBar">
         <h2 className="Font_20_120">Увеличьте отклики</h2>
         <p className="SideBar__description Font_14_140">
-          Любая выбранная опция дает вашей заявке отметку TRUE и повышенный
+          Любая выбранная опция дает вашей заявке отметку TRUE и повышенный
           интерес исполнителей
         </p>
         <div>
@@ -77,13 +85,16 @@ const SingleApplicationSideBar = ({ className }: Props) => {
           </ul>
         </div>
       </div>
-      <div className="SideBar__totalTaxButton">
-        <Button>Увеличить отклики {totalTax} €</Button>
-      </div>
+      {selectedOptions.length > 0 ? (
+        <div className="SideBar__totalTaxButton">
+          <Button onClick={handleClick}>Увеличить отклики {totalTax} €</Button>
+        </div>
+      ) : (
+        <p>Пожалуйста, выберите одну или несколько опций</p>
+      )}
     </StyledSingleApplicationSideBar>
   );
 };
-
 const StyledSingleApplicationSideBar = styled.div`
   background: #fff;
   border-radius: 10px;
@@ -125,6 +136,12 @@ const StyledSingleApplicationSideBar = styled.div`
       }
     }
 
+    .Button__container {
+      label {
+        cursor: default;
+      }
+    }
+
     .Checkbox__input:checked + .Checkbox__iconContainer {
       background: #0ab258;
       border: 2px solid #0ab258;
@@ -132,6 +149,9 @@ const StyledSingleApplicationSideBar = styled.div`
   }
 
   .SideBar__totalTaxButton {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
     padding: 20px;
     border-top: 2px solid #f1f7ff;
     margin-top: 28px;

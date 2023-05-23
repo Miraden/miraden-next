@@ -196,7 +196,7 @@ const StyledRegStep1 = styled.section`
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-auto-rows: max-content;
-      grid-gap: 20px;
+      grid-gap: 12px;
       margin-left: 0;
       margin-top: 0;
       padding-top: 36px;

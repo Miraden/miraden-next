@@ -22,6 +22,7 @@ const HeaderUserMenu = () => {
             href="/favourites-full"
             header
             className="HeaderUserMenu__linkButton"
+            active={currentUrl.includes("favourites")}
             leftIcon={<StarIcon className="HeaderUserMenu__favorites" />}
           ></Button>
           <Button
@@ -61,6 +62,7 @@ const StyledHeaderUserMenu = styled.div`
   }
 
   .HeaderUserMenu__links {
+    a:not(:first-child),
     button:not(:first-child) {
       margin-left: 8px;
     }

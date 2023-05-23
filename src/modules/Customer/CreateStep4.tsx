@@ -397,7 +397,13 @@ const StyledRegStep1 = styled.section`
     .Reg__options {
       height: 800px;
       button {
+        margin-top: 12px;
+        margin-left: 12px;
         max-width: 338px;
+      }
+
+      .Reg__months {
+        padding-top: 0;
       }
     }
 

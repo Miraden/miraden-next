@@ -471,6 +471,22 @@ const StyledApplication = styled.section`
   padding-left: 55px;
   padding-right: 55px;
 
+  .Applications__searchBar {
+    padding: 0;
+    input {
+      border-radius: 0 0 10px 10px;
+      box-shadow: none !important;
+    }
+
+    .Search__rightIcon:hover {
+      svg {
+        path {
+          fill: #4e6af3;
+        }
+      }
+    }
+  }
+
   &.Test {
     padding-right: 0 !important;
   }

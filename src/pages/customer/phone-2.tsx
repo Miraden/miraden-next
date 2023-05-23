@@ -33,7 +33,7 @@ export default function PhoneNum2Page() {
 
 const StyledMain = styled.main`
   background: #eef1f5;
-  height: 100vh;
+  min-height: 100vh;
 `;
 
 const StyledNum1 = styled.div`

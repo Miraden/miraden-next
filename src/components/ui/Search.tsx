@@ -118,7 +118,7 @@ const Search = ({
 
 const SearchContainer = styled.div`
   position: relative;
-
+  cursor: pointer;
   .Search_disabled .Search__searchIcon {
     svg path {
       fill: red !important;

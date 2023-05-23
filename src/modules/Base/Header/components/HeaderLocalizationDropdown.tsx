@@ -66,7 +66,7 @@ const StyledHeaderLocalizationDropdown = styled.div`
   .HeaderLocalizationDropdown__menu_active {
     position: absolute;
     z-index: 2;
-    top: 22px;
+    top: 20px;
     left: -5px;
     width: fit-content;
     background: #2a344a;

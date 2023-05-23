@@ -295,6 +295,12 @@ const StyledRegStep1 = styled.section`
         max-width: unset;
       }
     }
+
+    .Reg__inputs {
+      div:not(:first-child) {
+        margin-left: 12px;
+      }
+    }
   }
 
   @media (max-width: 768px) {

@@ -380,7 +380,7 @@ const CreateStep1 = ({ className }: Props) => {
               </div>
             </div>
             <div className="Reg__nextButtonContainer">
-              <div>
+              <div className="Reg__sellers">
                 <span className="Color_text_grey Font_16_24">
                   Найдено продавцов
                 </span>
@@ -522,6 +522,10 @@ const StyledCreateStep1 = styled.section`
 
   @media (max-width: 1200px) {
     margin-top: 100px;
+
+    .Reg__cities {
+      padding-top: 12px;
+    }
   }
 
   @media (max-width: 960px) {
@@ -549,6 +553,10 @@ const StyledCreateStep1 = styled.section`
   @media (max-width: 576px) {
     margin-top: 0;
     height: 100vh;
+
+    .Reg__sellers {
+      display: none !important;
+    }
 
     .Reg {
       height: 100%;
