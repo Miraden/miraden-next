@@ -32,6 +32,7 @@ const SingleApplicationSideBar = ({ className }: Props) => {
   const [activeButtons, setActiveButtons] = useState(
     paymentOptions.map((option, index) => index === 0)
   );
+  const [error, setError] = useState(false);
 
   const handleActive = useCallback(
     (index: number) => {
@@ -39,58 +40,65 @@ const SingleApplicationSideBar = ({ className }: Props) => {
       const newActiveButtons = [...activeButtons];
       newActiveButtons[index] = !newActiveButtons[index];
       setActiveButtons(newActiveButtons);
+      setError(false);
     },
     [activeButtons]
   );
 
   const selectedOptions = paymentOptions.filter(
-    (option, index) => activeButtons[index]
+    (option, index) => index !== 0 && activeButtons[index]
   );
 
   const totalTax = selectedOptions.reduce((acc, option) => acc + option.tax, 0);
+
   const selectedTaxValues = paymentOptions
     .filter((option, index) => activeButtons[index])
     .map((option) => option.tax);
 
   const handleClick = () => {
     if (selectedOptions.length === 0) {
-      alert("Пожалуйста, выберите одну или несколько опций");
+      setError(true);
     } else {
-      // Ваша логика для обработки клика на "Увеличить отклики"
+      setError(false);
     }
   };
 
   return (
     <StyledSingleApplicationSideBar className={className}>
       <div className="SideBar">
-        <h2 className="Font_20_120">Увеличьте отклики</h2>
+        <h2 className="SideBar__title Font_20_120">Увеличьте отклики</h2>
         <p className="SideBar__description Font_14_140">
           Любая выбранная опция дает вашей заявке отметку TRUE и повышенный
           интерес исполнителей
         </p>
-        <div>
-          <ul className="SideBar__buttons">
-            {paymentOptions.map((option, index) => (
-              <li key={index} className="SideBar__button">
-                <PaymentButton
-                  onChange={() => handleActive(index)}
-                  onClick={() => handleActive(index)}
-                  buttonText={option.buttonText}
-                  buttonTitle={option.buttonTitle}
-                  tax={option.tax}
-                  active={activeButtons[index]}
-                />
-              </li>
-            ))}
-          </ul>
-        </div>
+        {error && (
+          <div className="SideBar__errorMessage ">
+            Пожалуйста, выберите одну или несколько опций
+          </div>
+        )}
+        <ul className="SideBar__buttons">
+          {paymentOptions.map((option, index) => (
+            <li key={index} className="SideBar__button">
+              <PaymentButton
+                onChange={() => handleActive(index)}
+                onClick={() => handleActive(index)}
+                buttonText={option.buttonText}
+                buttonTitle={option.buttonTitle}
+                tax={option.tax}
+                active={activeButtons[index]}
+              />
+            </li>
+          ))}
+        </ul>
       </div>
       {selectedOptions.length > 0 ? (
         <div className="SideBar__totalTaxButton">
           <Button onClick={handleClick}>Увеличить отклики {totalTax} €</Button>
         </div>
       ) : (
-        <p>Пожалуйста, выберите одну или несколько опций</p>
+        <div className="SideBar__totalTaxButton">
+          <Button onClick={handleClick}>Увеличить отклики </Button>
+        </div>
       )}
     </StyledSingleApplicationSideBar>
   );
@@ -98,19 +106,39 @@ const SingleApplicationSideBar = ({ className }: Props) => {
 const StyledSingleApplicationSideBar = styled.div`
   background: #fff;
   border-radius: 10px;
+  position: relative;
 
   .SideBar {
     background: #fff;
-    padding: 20px;
     border-radius: 10px;
+    padding-top: 20px;
   }
 
   .SideBar__description {
     margin-top: 15px;
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .SideBar__title {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .SideBar__errorMessage {
+    margin-top: 20px;
+    background: #fff5f5;
+    color: #f34942;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
   }
 
   .SideBar__buttons {
     margin-top: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   .SideBar__button {
