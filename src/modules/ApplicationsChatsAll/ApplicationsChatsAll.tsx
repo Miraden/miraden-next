@@ -444,10 +444,6 @@ const StyledApplicationsChatsAll = styled.section`
       padding: 20px 0 10px 20px;
     }
 
-    .ApplicationsChatsAll__headTabs {
-      overflow: auto;
-    }
-
     .ChatButton {
       display: none;
     }
