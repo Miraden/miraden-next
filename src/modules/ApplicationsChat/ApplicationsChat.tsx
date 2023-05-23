@@ -227,7 +227,7 @@ const StyledApplicationsChat = styled.section`
 
   .Application__head {
     display: flex;
-    align-items: center;
+    align-items: baseline;
     h1 {
       margin-left: 10px;
     }

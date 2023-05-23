@@ -188,7 +188,7 @@ const StyledFAQ = styled.section`
 
   .FAQ__description {
     margin-top: 25px;
-
+    color: #3b4a69;
     a {
       color: #4e6af3;
     }

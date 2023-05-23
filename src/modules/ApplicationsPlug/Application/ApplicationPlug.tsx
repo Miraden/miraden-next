@@ -540,7 +540,7 @@ const StyledApplication = styled.section`
 
   .Application__head {
     display: flex;
-    align-items: center;
+    align-items: baseline;
   }
 
   .Application__headTabs {

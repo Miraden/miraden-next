@@ -1,10 +1,11 @@
 import { Button, RequestButton } from "@/components/ui";
 import { ArrowIcon, CrossIcon, MapIcon, SearchIcon } from "@/icons";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { MapContainer } from "./MapContainer";
 interface Props {
   className?: string;
+  mapButtonLabel?: string;
 }
 
 const cityMap: Record<Option, { label: string; cities: string[] }> = {
@@ -94,17 +95,20 @@ type Option = "turkey" | "cyprus" | "northCyprus" | "montenegro";
 interface SearchProps {
   options: { [key: string]: { label: string; cities: string[] } };
   onClick?: any;
+  mapButtonLabel?: string;
 }
 
 interface SearchOptionProps {
   selected: boolean;
   onClick: () => void;
   children?: any;
+  mapButtonLabel?: string;
 }
 
 interface SearchOptionItemProps {
   selected: boolean;
   onClick: () => void;
+  mapButtonLabel?: string;
 }
 
 const SearchOptionItem = styled.li<SearchOptionItemProps>`
@@ -117,6 +121,7 @@ const SearchOptionLocal = ({
   onClick,
   children,
   searchText,
+  mapButtonLabel,
 }: SearchOptionProps &
   React.HTMLProps<HTMLLIElement> & { searchText: string }) => {
   const highlightedText = searchText
@@ -134,13 +139,14 @@ const SearchOptionLocal = ({
   );
 };
 
-const SearchReg = ({ options, onClick }: SearchProps) => {
+const SearchReg = ({ options, mapButtonLabel, onClick }: SearchProps) => {
   const [searchText, setSearchText] = useState("");
   const [selectedOption, setSelectedOption] = useState<{
     city: string;
     region: string;
   } | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleSearchInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -177,15 +183,28 @@ const SearchReg = ({ options, onClick }: SearchProps) => {
     {}
   );
 
-  const handleRemoveResults = useCallback(() => {
+  const handleRemoveResults = () => {
     setSearchText("");
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (ref.current && !ref.current.contains(event.target as Node)) {
+      setShowDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, []);
+
   const [isFocused, setIsFocused] = useState(false);
 
-  const [isOpenMap, setIsOpenMap] = useState(false);
-
   return (
-    <SearchRegContainer>
+    <SearchRegContainer ref={ref}>
       <div className={`Search__container ${isFocused ? "focused" : ""}`}>
         <SearchIcon className="Search__searchIcon" />
         <SearchInput
@@ -206,7 +225,7 @@ const SearchReg = ({ options, onClick }: SearchProps) => {
         )}
         <button className="Search__mapButton" onClick={onClick}>
           <MapIcon />
-          <p>На карте</p>
+          <p>{mapButtonLabel}</p>
         </button>
       </div>
       {showDropdown && (
@@ -247,9 +266,11 @@ const CreateStep1 = ({ className }: Props) => {
   const [allCitiesActive, setAllCitiesActive] = useState(false);
 
   const [openMap, setOpenMap] = useState(false);
+  const [mapButtonLabel, setMapButtonLabel] = useState("На карте");
 
   const handleOpenMap = useCallback(() => {
     setOpenMap(!openMap);
+    setMapButtonLabel(openMap ? "На карте" : "Свернуть");
   }, [openMap]);
 
   const handleSelect = useCallback((option: Option) => {
@@ -286,7 +307,11 @@ const CreateStep1 = ({ className }: Props) => {
             </h1>
           </div>
         </div>
-        <SearchReg options={cityMap} onClick={handleOpenMap} />
+        <SearchReg
+          options={cityMap}
+          onClick={handleOpenMap}
+          mapButtonLabel={mapButtonLabel}
+        />
         {openMap ? (
           <MapContainer />
         ) : (
@@ -674,6 +699,7 @@ const SearchRegContainer = styled.div`
     align-items: center;
     padding: 10px 24px;
     p {
+      min-width: 66px;
       margin-left: 10px;
       font-size: 16px;
       line-height: 20px;
