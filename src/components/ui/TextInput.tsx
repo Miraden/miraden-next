@@ -24,7 +24,6 @@ const TextInput = ({
   disabled,
   label,
   className,
-  values,
   onChange,
   onKeyPress,
 }: Props) => {
@@ -51,6 +50,8 @@ const TextInput = ({
     }
   };
 
+  console.log(value.length);
+
   return (
     <StyledTextInput className={className}>
       <StyledTextInputField
@@ -66,8 +67,8 @@ const TextInput = ({
           </StyledTextInputCounter>
         )}
         <StyledTextInputInput
-          value={values}
-          onChange={onChange}
+          value={value}
+          onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
           maxLength={maxLength}
