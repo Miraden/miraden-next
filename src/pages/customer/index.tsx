@@ -93,8 +93,17 @@ export default function Home() {
         <Link href="customer/create-payment">
           Шаг 12. Получите больше просмотров и откликов
         </Link>
-
         <Link href="/applications">Заявки</Link>
+        <Link href="/applications-plug">Отклики / Продавцы_заглушка</Link>
+        <Link href="/applications">
+          Отклики / Продавцы тут же заявка просмотр
+        </Link>
+        <Link href="/applications-plug">Отклики / Объекты_заглушка</Link>
+        <Link href="/objects-plug">Объекты / Объекты_заглушка</Link>
+        <Link href="/applications-chat">Chat</Link>
+        <Link href="/chats-all">Чаты</Link>
+        <Link href="/favourites-plug">Избранное_заглушка</Link>
+        <Link href="/favourites-full">Избранное</Link>
       </StyledMain>
     </>
   );

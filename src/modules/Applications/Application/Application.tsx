@@ -1101,6 +1101,7 @@ const StyledApplication = styled.section`
   @media (max-width: 1024px) {
     display: flex;
 
+    padding-bottom: 80px;
     flex-direction: column;
     .Application__headContainer {
       margin-top: 0;
@@ -1131,6 +1132,12 @@ const StyledApplication = styled.section`
 
     .Application__Footer {
       display: block;
+    }
+  }
+
+  @media (max-width: 660px) {
+    .Application__headContainer {
+      padding-right: 0;
     }
   }
 
