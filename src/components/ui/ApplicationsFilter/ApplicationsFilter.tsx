@@ -183,7 +183,7 @@ const StyledApplicationsFilter = styled.div`
       bottom: 0;
       z-index: 999;
       width: 100%;
-      padding: 20px 20px 0 20px;
+      padding: 20px 20px 20px 20px;
       border-top: 2px solid #eef1f5;
       background: #ffffff;
 

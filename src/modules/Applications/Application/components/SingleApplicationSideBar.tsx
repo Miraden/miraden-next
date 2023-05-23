@@ -177,6 +177,7 @@ const StyledSingleApplicationSideBar = styled.div`
   }
 
   .SideBar__totalTaxButton {
+    background: #fff;
     position: absolute;
     width: 100%;
     bottom: 0;

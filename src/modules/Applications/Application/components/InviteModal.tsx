@@ -75,6 +75,7 @@ const StyledModalContent = styled.div`
   max-width: 440px;
   top: 33%;
   left: 50%;
+  min-width: 345px;
   transform: translate(-50%, -50%);
   background: #fff;
   padding: 40px;

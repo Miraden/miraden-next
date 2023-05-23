@@ -194,6 +194,12 @@ const StyledButton = styled.a`
   &.isSubmit {
     color: #0ab258 !important;
     background: #eafff3 !important;
+
+    svg {
+      path {
+        fill: #0ab258 !important;
+      }
+    }
   }
 
   &.disabled {

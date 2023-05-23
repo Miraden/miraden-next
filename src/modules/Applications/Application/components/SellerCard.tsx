@@ -1,9 +1,9 @@
 import { Button, Sticker } from "@/components/ui";
 import { Kebab24Icon, VerifiedIcon } from "@/icons";
+import { InviteIcon } from "@/icons/InviteIcon";
 import { PerformerIcon } from "@/icons/PerformerIcon";
 import { RefusalIcon } from "@/icons/RefusalIcon";
 import { StarIconFilled } from "@/icons/StarIconFilled";
-import Image from "next/image";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { InviteModal } from "./InviteModal";
@@ -71,7 +71,7 @@ const SellerCard = ({
       <div className="SellerCard">
         <div className="SellerCard__content">
           <div className="SellerCard__imageContainer">
-            <Image src={image} alt="" width={72} height={72} />
+            <img src={image} alt="" width={72} height={72} />
             {isOnline && <div className="SellerCard__onlineDot" />}
             {isPerformer && (
               <div className="SellerCard__performerIcon">
@@ -132,6 +132,7 @@ const SellerCard = ({
                 isSubmit
                 className="SellerCard__inviteButton"
                 onClick={onClick}
+                rightIcon={<InviteIcon />}
               >
                 Приглашение отправлено
               </Button>
@@ -139,6 +140,7 @@ const SellerCard = ({
               <Button
                 className="SellerCard__inviteButton"
                 onClick={handleOpenModal}
+                rightIcon={<InviteIcon />}
               >
                 Пригласить откликнуться
               </Button>
@@ -254,6 +256,10 @@ const StyledSellerCard = styled.div`
 
   .SellerCard__inviteButton {
     padding: 10px 24px;
+
+    div {
+      display: none;
+    }
   }
 
   .SellerCard__actions {
@@ -287,7 +293,7 @@ const StyledSellerCard = styled.div`
     border-radius: 50%;
   }
 
-  @media (max-width: 576px) {
+  @media (max-width: 670px) {
     padding: 10px;
     .SellerCard__imageContainer {
       min-width: 72px;
@@ -298,6 +304,19 @@ const StyledSellerCard = styled.div`
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+    }
+
+    .SellerCard__inviteButton {
+      padding: 11px;
+      border-radius: 50%;
+      span {
+        display: none;
+      }
+
+      div {
+        display: flex;
+        margin: 0;
+      }
     }
   }
 `;

@@ -768,11 +768,14 @@ const Application = ({ className }: ApplicationProps) => {
         )}
         {showFilter && (
           <>
-            <ApplicationsFilter
-              onTabClick={handleTabClick}
-              className="Applications__filter"
-              onClick={handleShowFilter}
-            />
+            <div className="TestFilter">
+              <ApplicationsFilter
+                onTabClick={handleTabClick}
+                className="Applications__filter"
+                onClick={handleShowFilter}
+              />
+            </div>
+
             <div className="Applications__filterMobileContainer">
               <ApplicationsFilter
                 onTabClick={handleTabClick}
@@ -805,6 +808,7 @@ const StyledApplication = styled.section`
   }
 
   .Application__wrapper {
+    min-width: 970px;
     grid-column: 5 / span 10;
   }
 
@@ -826,13 +830,24 @@ const StyledApplication = styled.section`
     }
   }
 
-  .Applications__filter {
+  .TestFilter {
     position: sticky;
     top: 94px;
     overflow: auto;
     grid-column: 16 / span 3;
     margin-top: 30px;
     margin-left: -30px;
+    height: calc(100vh - 114px);
+    min-width: 355px;
+  }
+
+  .Applications__filter {
+    /* position: sticky;
+    top: 94px;
+    overflow: auto;
+    grid-column: 16 / span 3;
+    margin-top: 30px;
+    margin-left: -30px; */
     height: calc(100vh - 114px);
   }
 
@@ -1073,24 +1088,60 @@ const StyledApplication = styled.section`
   }
 
   @media (max-width: 1660px) {
+    padding-left: 0;
+    padding-right: 0;
+    grid-gap: 15px;
     .Application__wrapper {
-      grid-column: 2 / span 12;
+      grid-column: 1 / span 11;
       width: 100%;
+
+      &.IsOpenFilter {
+        grid-column: 5 / span 10;
+      }
     }
   }
 
-  @media (max-width: 1440px) {
+  @media (max-width: 1441px) {
     grid-gap: 20px;
     padding-left: 0;
     padding-right: 0;
 
+    display: flex;
+    flex-direction: column;
+
     .Application__wrapper {
+      margin: 0 auto;
       grid-column: 1 / span 14;
       width: 100%;
+      max-width: 970px;
+      min-width: unset;
 
       &.IsOpenFilter {
         grid-column: 1 / span 18;
       }
+    }
+
+    .TestFilter {
+      position: fixed;
+      margin-top: 0;
+      margin-left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(60, 75, 97, 0.6);
+      transform: translate(-20px, 0);
+      backdrop-filter: blur(11px);
+      z-index: 500;
+      min-width: unset;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .Applications__filter {
+      position: relative;
+      margin-left: 0;
+      margin-top: 66px;
+      max-width: 355px;
     }
 
     .SingleApplicationSideBar {
@@ -1114,7 +1165,11 @@ const StyledApplication = styled.section`
     .Application__headContainer {
       margin-top: 0;
     }
-    .Applications__filter {
+    .TestFilter {
+      transform: none;
+    }
+
+    /* .Applications__filter {
       display: none;
     }
 
@@ -1124,7 +1179,7 @@ const StyledApplication = styled.section`
       width: 100%;
       height: 100vh;
       top: -58px;
-    }
+    } */
 
     .Applications__filterMobile {
       position: relative;
@@ -1146,6 +1201,17 @@ const StyledApplication = styled.section`
   @media (max-width: 660px) {
     .Application__headContainer {
       padding-right: 0;
+    }
+    .TestFilter {
+      display: none;
+    }
+
+    .Applications__filterMobileContainer {
+      position: absolute;
+      z-index: 999;
+      width: 100%;
+      height: 100vh;
+      top: -58px;
     }
 
     .Application__headTabs {
