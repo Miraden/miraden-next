@@ -30,6 +30,7 @@ export default function ApplicationPage1() {
           <Link href="/applications-plug">Отклики / Объекты_заглушка</Link>
           <Link href="/objects-plug">Объекты / Объекты_заглушка</Link>
           <Link href="/applications-chat">Chat</Link>
+          <Link href="/chats-all">Чаты</Link>
           <Link href="/favourites-plug">Избранное_заглушка</Link>
           <Link href="/favourites-full">Избранное</Link>
         </div>

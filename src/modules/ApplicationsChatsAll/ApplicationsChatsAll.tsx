@@ -87,8 +87,11 @@ const ApplicationsChatsAll = () => {
               <div className="ApplicationsChatsAll__headTabsBar" />
             </div>
             {selected === "all" && (
+              <AllChatsContainer className="ContactInfo" />
+            )}
+            {selected === "all" && (
               <AllChatsContainer
-                className="ContactInfo"
+                className="ContactInfoMobile"
                 onClick={handleToggleChat}
               />
             )}
@@ -131,12 +134,15 @@ const StyledApplicationsChatsAll = styled.section`
     flex-grow: 1;
   }
 
+  .ContactInfoMobile {
+    display: none;
+  }
+
   .AppInfo {
     display: flex;
     flex-direction: column;
     max-width: 660px;
     width: 100%;
-    /* height: 100%; */
     height: -webkit-fill-available;
   }
 
@@ -268,8 +274,12 @@ const StyledApplicationsChatsAll = styled.section`
     margin-top: -18px;
     height: 100vh;
 
-    .ChatMobile {
-      display: flex;
+    .ContactInfo {
+      display: none;
+    }
+
+    .ContactInfoMobile {
+      display: block;
     }
 
     .ChatTabButton {
