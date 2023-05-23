@@ -498,6 +498,7 @@ const StyledApplication = styled.section`
   .Applications__filter {
     position: sticky;
     top: 94px;
+    overflow: auto;
     grid-column: 16 / span 3;
     margin-top: 30px;
     margin-left: -30px;
