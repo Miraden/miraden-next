@@ -445,6 +445,7 @@ const Application = ({ className }: ApplicationProps) => {
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
+    setShowFilter(false);
   }, []);
 
   const handleShowFilter = useCallback(() => {
@@ -1071,6 +1072,13 @@ const StyledApplication = styled.section`
     transform: rotate(90deg);
   }
 
+  @media (max-width: 1660px) {
+    .Application__wrapper {
+      grid-column: 2 / span 12;
+      width: 100%;
+    }
+  }
+
   @media (max-width: 1440px) {
     grid-gap: 20px;
     padding-left: 0;
@@ -1138,6 +1146,10 @@ const StyledApplication = styled.section`
   @media (max-width: 660px) {
     .Application__headContainer {
       padding-right: 0;
+    }
+
+    .Application__headTabs {
+      overflow: auto;
     }
   }
 

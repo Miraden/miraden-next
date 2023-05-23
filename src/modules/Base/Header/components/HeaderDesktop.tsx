@@ -147,7 +147,7 @@ const StyledHeaderDesktop = styled.div`
     text-transform: uppercase;
   }
 
-  @media (max-width: 1200px) {
+  @media (max-width: 1220px) {
     .Header__navButton {
       margin-left: 0 !important;
       padding: 11px 15px;
@@ -157,7 +157,10 @@ const StyledHeaderDesktop = styled.div`
     }
   }
 
-  @media (max-width: 1159px) {
+  @media (max-width: 1180px) {
+    .Header__logoLink {
+      margin-right: 10px;
+    }
     .Header__navButton {
       svg {
         display: none;
