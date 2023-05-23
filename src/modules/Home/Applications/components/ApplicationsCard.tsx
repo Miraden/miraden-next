@@ -33,42 +33,46 @@ const ApplicationsCard = ({
 }: Props) => {
   return (
     <StyledApplicationsCard className={className}>
-      <div className="Card__head">
-        <div className="Card__headContent">
-          <Sticker theme="black">true</Sticker>
-          <span className="Card__headDivider Color_text_grey">От</span>
-          <span className="Color_blue_primary">Агентство</span>
-        </div>
+      <div>
+        <div className="Card__head">
+          <div className="Card__headContent">
+            <Sticker theme="black">true</Sticker>
+            <span className="Card__headDivider Color_text_grey">От</span>
+            <span className="Color_blue_primary">Агентство</span>
+          </div>
 
-        <p className="Color_text_disabled">3 часа назад</p>
-      </div>
-      <p className="Card__title Font_18_120">{title}</p>
-      <div className="Card__location">
-        <PointIconFooter />
-        <p className="Color_text_grey">{location}</p>
+          <p className="Color_text_disabled">3 часа назад</p>
+        </div>
+        <p className="Card__title Font_18_120">{title}</p>
+        <div className="Card__location">
+          <PointIconFooter />
+          <p className="Color_text_grey">{location}</p>
+        </div>
       </div>
 
-      <div className="Card__objectInfo Font_16_140">
-        <div>
-          <BuildYearIcon width={18} height={18} />
-          <span>{year} г</span>
+      <div>
+        <div className="Card__objectInfo Font_16_140">
+          <div>
+            <BuildYearIcon width={18} height={18} />
+            <span>{year} г</span>
+          </div>
+          <div>
+            <SquareIcon width={18} height={18} />
+            <span>{square} м²</span>
+          </div>
+          <div>
+            <SleepsIcon width={18} height={18} />
+            <span>{sleeps}</span>
+          </div>
+          <div>
+            <BathsIcon width={18} height={18} />
+            <span>{baths}</span>
+          </div>
         </div>
-        <div>
-          <SquareIcon width={18} height={18} />
-          <span>{square} м²</span>
+        <div className="Card__price">
+          <p className="Color_blue_primary Font_16_120">{price} €</p>
+          <Button>Предложить</Button>
         </div>
-        <div>
-          <SleepsIcon width={18} height={18} />
-          <span>{sleeps}</span>
-        </div>
-        <div>
-          <BathsIcon width={18} height={18} />
-          <span>{baths}</span>
-        </div>
-      </div>
-      <div className="Card__price">
-        <p className="Color_blue_primary Font_16_120">{price} €</p>
-        <Button>Предложить</Button>
       </div>
     </StyledApplicationsCard>
   );
@@ -79,6 +83,11 @@ const StyledApplicationsCard = styled.a`
   padding: 20px;
   border-radius: 10px;
   transition: 0.15s ease;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 255px;
   :hover {
     box-shadow: 0 0 0 2px inset #d4ddee;
     cursor: pointer;
@@ -149,12 +158,6 @@ const StyledApplicationsCard = styled.a`
   }
 
   @media (max-width: 768px) {
-    .Card__title {
-      max-width: calc(100% - 10px);
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
     .Card__objectInfo {
       margin-top: 44px;
     }
