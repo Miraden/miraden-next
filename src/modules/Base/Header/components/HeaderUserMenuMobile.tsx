@@ -34,8 +34,10 @@ const HeaderUserMenuMobile = () => {
           ></Button>
           <Button
             header
+            href="/favourites-full"
             className="HeaderUserMenu__linkButton"
             leftIcon={<StarIcon className="HeaderUserMenu__favorites" />}
+            active={currentUrl.includes("favourites")}
           ></Button>
           <Button
             header
@@ -73,6 +75,9 @@ const StyledHeaderUserMenuMobile = styled.div`
   }
 
   .HeaderUserMenu__links {
+    a:not(:first-child) {
+      margin-left: 8px;
+    }
     button:not(:first-child) {
       margin-left: 8px;
     }

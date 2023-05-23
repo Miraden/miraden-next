@@ -147,6 +147,7 @@ const Favourites = ({ className }: ApplicationProps) => {
                   name={object.name}
                   image={object.image}
                   status={object.status}
+                  href=""
                 />
               </li>
             ))}

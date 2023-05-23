@@ -95,8 +95,8 @@ const ObjectCard = ({
   );
 
   return (
-    <StyledObjectCard className={className} href={href}>
-      <div>
+    <StyledObjectCard className={className}>
+      <a href={href}>
         <div className="ObjectCard">
           {isUnpublished ? (
             <div className="ObjectCard__unpublishedContainer">
@@ -248,12 +248,12 @@ const ObjectCard = ({
             </div>
           </div>
         </div>
-      </div>
+      </a>
     </StyledObjectCard>
   );
 };
 
-const StyledObjectCard = styled.a`
+const StyledObjectCard = styled.div`
   .ObjectCard {
     display: flex;
     background: #fff;
@@ -481,7 +481,11 @@ const StyledObjectCard = styled.a`
   }
 
   @media (max-width: 768px) {
-    padding: 10px;
+    /* padding: 10px; */
+
+    .ObjectCard {
+      padding: 10px;
+    }
     .ObjectCard__mainImages,
     .ObjectCard__unpublishedContainer {
       min-width: 120px;
