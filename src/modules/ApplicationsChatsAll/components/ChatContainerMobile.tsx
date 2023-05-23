@@ -1,61 +1,58 @@
 import { Button, MessageInput, Sticker } from "@/components/ui";
-import { VerifiedIcon } from "@/icons";
+import { ArrowAccordionIcon, VerifiedIcon } from "@/icons";
 import { StarIconFilled } from "@/icons/StarIconFilled";
 import Image from "next/image";
 import styled from "styled-components";
 
 interface Props {
   className?: string;
-  onTouchStart?: any;
-  onTouchEnd?: any;
+  onClick?: any;
 }
 
-const ChatContainerMobile = ({
-  className,
-  onTouchEnd,
-  onTouchStart,
-}: Props) => {
+const ChatContainerMobile = ({ className, onClick }: Props) => {
   return (
-    <StyledChatContainerMobile
-      className={className}
-      onTouchEnd={onTouchEnd}
-      onTouchStart={onTouchStart}
-    >
-      <div className="ChatContainerMobile__swiper">
-        <div className="ChatContainerMobile__brow"></div>
-      </div>
-      <div className="ContactInfo">
-        <Image
-          src="/images/avatar.jpg"
-          alt=""
-          width={40}
-          height={40}
-          className="ContactInfo__Image"
-        />
-        <div className="ContactInfo__nameContainer">
-          <p className="ContactInfo__name Font_16_140">Анастасия Петрова</p>
-          <div className="ContactInfo__statusInfo">
-            <VerifiedIcon className="ContactInfo__verifiedIcon" />
-            <Sticker theme="black" className="ContactInfo__sticker">
-              pro
-            </Sticker>
-            <div className="ContactInfo__rating">
-              <StarIconFilled
-                width={14}
-                height={14}
-                className="ContactInfo__ratingIcon"
-              />
-              <p className="Font_14_140">4.8</p>
+    <StyledChatContainerMobile className={className}>
+      <div className="Chat__all">
+        <div className="Chat__allContainer">
+          <button className="AllChats__backButton" onClick={onClick}>
+            <ArrowAccordionIcon width={18} height={18} />
+          </button>
+          <Image
+            alt=""
+            src="/images/avatar.jpg"
+            width={40}
+            height={40}
+            className="ApplicationInfo__avatar"
+          />
+          <div className="Status">
+            <div className="FullStatus">
+              <p className="Font_16_140">Светлана Гридасова</p>
+              <div className="Application__infoStatus">
+                <VerifiedIcon className="ContactInfo__verifiedIcon" />
+                <Sticker theme="black" className="ContactInfo__sticker">
+                  pro
+                </Sticker>
+                <div className="ContactInfo__rating">
+                  <StarIconFilled
+                    width={14}
+                    height={14}
+                    className="ContactInfo__ratingIcon"
+                  />
+                  <p className="Font_14_140">4.8</p>
+                </div>
+              </div>
             </div>
+            <p className="Font_14_140 Color_text_disabled">
+              Агент — RealEstate
+            </p>
           </div>
         </div>
 
-        <p className="ContactInfo__status Font_14_140 Color_blue_primary">
-          Агентство недвижимости — RealEstate
-        </p>
-
-        <Button className="ContactInfo__openContacts">Открыть контакты</Button>
+        <Button compact className="OpenContacts__button">
+          Открыть контакты
+        </Button>
       </div>
+
       <div className="ChatContainerMobile">
         <p className="ChatContainerMobile__date Font_14_140 Color_text_grey">
           22 марта
@@ -109,30 +106,53 @@ const ChatContainerMobile = ({
 
 const StyledChatContainerMobile = styled.div`
   width: 100%;
-  max-width: 1225px;
-  display: flex;
-  flex-direction: column;
-
-  .ChatContainerMobile__swiper {
-    height: 34px;
-    background: transparent;
-    width: 100%;
-    border-radius: 10px 10px 0 0;
+  background: #eef1f5;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  .Chat__all {
+    display: flex;
+    justify-content: space-between;
+    background: #2a344a;
+    padding: 9px 20px 20px 12px;
+    color: #fff;
+    border-radius: 0 0 10px 10px;
+    border-bottom: 1px solid #d4ddee;
+    position: sticky;
+    top: 0;
+    z-index: 200;
   }
 
-  .ChatContainerMobile__brow {
-    background: #2a344a;
-    border-radius: 100px;
-    width: 134px;
-    height: 5px;
-    margin: 0 auto;
-    margin-top: 21px;
+  .Chat__allContainer {
+    display: flex;
+    align-items: center;
+  }
+
+  .AllChats__backButton {
+    border-radius: 50%;
+    margin-right: 3px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    :hover {
+      background: #3b4a69;
+    }
+    svg {
+      margin-left: 2px;
+      margin-bottom: 1px;
+      transform: rotate(90deg);
+      path {
+        fill: #fff;
+      }
+    }
   }
 
   .ChatContainerMobile {
     position: relative;
     width: 100%;
-    height: 100%;
+    height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -151,8 +171,6 @@ const StyledChatContainerMobile = styled.div`
     margin-top: 15px;
     display: flex;
     flex-direction: column;
-    padding-left: 20px;
-    padding-right: 20px;
   }
 
   .ChatContainerMobile__message {
@@ -184,93 +202,74 @@ const StyledChatContainerMobile = styled.div`
   }
 
   .ChatContainerMobile__messageInput {
-    /* position: absolute; */
     margin-top: 20px;
+    position: sticky;
     bottom: 0;
   }
 
-  .ContactInfo {
-    margin-top: 50px;
-    display: flex;
-    background: #2a344a;
-    align-items: center;
-    text-align: center;
-    padding-left: 20px;
-    padding-right: 20px;
+  .Status {
+    margin-left: 15px;
   }
 
-  .ContactInfo__Image {
-    border-radius: 50%;
-  }
-
-  .ContactInfo__nameContainer {
+  .FullStatus {
     display: flex;
     align-items: center;
   }
 
-  .ContactInfo__name {
-    margin-top: 10px;
-    color: #fff;
-  }
-
-  .ContactInfo__status {
-    margin-top: 5px;
-  }
-
-  .ContactInfo__location {
+  .Application__infoStatus {
     display: flex;
-    align-items: center;
-    margin-top: 5px;
-  }
-
-  .ContactInfo__experience {
-    display: flex;
-    align-items: center;
-    margin-top: 5px;
-  }
-
-  .ContactInfo__dotDivider {
-    margin-left: 10px;
-    margin-right: 10px;
-  }
-
-  .ContactInfo__statusInfo {
-    display: flex;
-    align-items: center;
-    margin-top: 8px;
-    div {
-      display: flex;
-      align-items: center;
-    }
-  }
-
-  .ContactInfo__sticker {
-    margin-right: 5px;
-  }
-
-  .ContactInfo__verifiedIcon {
-    margin-right: 10px;
+    margin-left: 15px;
   }
 
   .ContactInfo__rating {
-    p {
-      margin-left: 5px;
-    }
+    display: flex;
   }
 
-  .ContactInfo__ratingIcon {
-    path {
-      fill: #7786a5;
-    }
-  }
-
-  .ContactInfo__openContacts {
+  .OpenContacts__button {
     padding: 10px 24px;
   }
 
-  .ContactInfo__disclaimer {
-    margin-top: 20px;
-    max-width: 400px;
+  .ApplicationInfo {
+    display: flex;
+  }
+
+  @media (max-width: 1024px) {
+    margin-left: 0;
+
+    .ChatContainerMobile__messageContainer {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .Chat__all {
+      flex-direction: column;
+      padding: 10px;
+    }
+
+    .OpenContacts__button {
+      margin-top: 20px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    padding-left: 0;
+    padding-right: 0;
+
+    .ChatContainerMobile__avatar {
+      display: none;
+    }
+
+    .ChatContainerMobile__incomingMessage,
+    .ChatContainerMobile__outgoingMessage {
+      margin-left: 0;
+    }
+
+    .ChatContainerMobile__messageContainer {
+      padding-right: 10px;
+      padding-left: 10px;
+    }
   }
 `;
 

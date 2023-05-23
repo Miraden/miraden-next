@@ -49,6 +49,7 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
               <div>
                 <div className="ChatContainer__outgoingMessage Font_16_150">
                   <p>Добрый день, спасибо, отличные варианты</p>
+                  {/* <span className="Time Font_12_16 Color_text_grey">12:56</span> */}
                 </div>
                 <div className="ChatContainer__outgoingMessage Font_16_150">
                   <p>
@@ -104,11 +105,18 @@ const StyledChatContainer = styled.div`
 
   .ChatContainer__incomingMessage,
   .ChatContainer__outgoingMessage {
+    position: relative;
     padding: 10px 20px;
     background: #fff;
     max-width: 570px;
     border-radius: 10px 10px 10px 0;
     margin-left: 10px;
+  }
+
+  .Time {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
   }
 
   .ChatContainer__outgoing {

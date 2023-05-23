@@ -4,6 +4,7 @@ import { SingleChat } from "./SingleChat";
 
 interface Props {
   className?: string;
+  onClick?: any;
 }
 
 const chatsArray = [
@@ -174,9 +175,9 @@ const chatsArray = [
   },
 ];
 
-const AllChatsContainer = ({ className }: Props) => {
+const AllChatsContainer = ({ className, onClick }: Props) => {
   return (
-    <StyledAllChatsContainer className={className}>
+    <StyledAllChatsContainer className={className} onClick={onClick}>
       <SortChats />
       <ul className="List">
         {chatsArray.map((chat, index) => (
@@ -209,6 +210,11 @@ const StyledAllChatsContainer = styled.div`
 
   @media (max-width: 1024px) {
     min-width: unset;
+    margin-top: 16px;
+  }
+
+  @media (max-width: 576px) {
+    margin-top: 0;
   }
 `;
 

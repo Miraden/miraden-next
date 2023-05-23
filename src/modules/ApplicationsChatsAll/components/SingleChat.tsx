@@ -1,6 +1,7 @@
 import { Sticker } from "@/components/ui";
 import { VerifiedIcon } from "@/icons";
 import { PerformerIcon } from "@/icons/PerformerIcon";
+import { ApplicationsFooter } from "@/modules/Base/ApplicationsFooter";
 import Image from "next/image";
 import styled from "styled-components";
 
@@ -77,6 +78,7 @@ const SingleChat = ({
           </div>
         </div>
       </div>
+      <ApplicationsFooter />
     </StyledSingleChat>
   );
 };
@@ -118,16 +120,6 @@ const StyledSingleChat = styled.div`
     img {
       border-radius: 50%;
     }
-  }
-
-  .SingleChat__onlineDot {
-    position: absolute;
-    right: 5px;
-    bottom: 5px;
-    width: 8px;
-    height: 8px;
-    background: #0ab258;
-    border-radius: 50%;
   }
 
   .SingleChat__performerIcon {
@@ -249,10 +241,25 @@ const StyledSingleChat = styled.div`
     display: flex;
   }
 
+  @media (max-width: 1024px) {
+    .Message {
+      max-width: 600px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .Message {
+      max-width: 300px;
+    }
+  }
+
   @media (max-width: 576px) {
-    padding: 10px;
-    .SingleChat__imageContainer {
-      min-width: 72px;
+    .Message {
+      max-width: 200px;
+    }
+
+    .SingleChatContainer {
+      padding: 10px 20px;
     }
 
     .SingleChat__status {

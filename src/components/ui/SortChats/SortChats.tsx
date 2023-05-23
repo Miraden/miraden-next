@@ -1,5 +1,4 @@
 import { ArrowIcon } from "@/icons";
-import { SortIcon } from "@/icons/SortIcon";
 import { FC, useState } from "react";
 import styled from "styled-components";
 import { SortChatsDropdown } from "./SortChatsDropdown";
@@ -31,29 +30,28 @@ const SortChats: FC<Props> = ({ className }) => {
   };
 
   return (
-    <StyledDropdownInput className={className}>
+    <StyledSortChats className={className}>
       <button
         className={
           showDropDown
-            ? `DropdownInput_select_active Font_16_20 `
-            : `DropdownInput_select Font_16_20 `
+            ? `SortChats_select_active Font_16_20 `
+            : `SortChats_select Font_16_20 `
         }
         onClick={(): void => toggleDropDown()}
         onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
           dismissHandler(e)
         }
       >
-        <div className="DropdownInput_selectLabel Font_16_20 ">
+        <div className="SortChats_selectLabel Font_16_20 ">
           <p className="Font_16_20 Color_blue_primary">
             {selectedOption ? selectedOption : "Все заявки"}
           </p>
-          <ArrowIcon className="DropdownInput_selectLabelIcon" />
-          <SortIcon className="DropdownInput_selectLabelIconMobile" />
+          <ArrowIcon className="SortChats_selectLabelIcon" />
         </div>
       </button>
       {showDropDown && (
         <SortChatsDropdown
-          className="DropdownInput_selectContainer"
+          className="SortChats_selectContainer"
           selectedOption={selectedOption}
           setSelectedOption={setSelectedOption}
           optionSelection={optionSelection}
@@ -62,14 +60,14 @@ const SortChats: FC<Props> = ({ className }) => {
           options={options()}
         />
       )}
-    </StyledDropdownInput>
+    </StyledSortChats>
   );
 };
-const StyledDropdownInput = styled.div<Props>`
+const StyledSortChats = styled.div<Props>`
   position: relative;
   background: #ffffff;
   width: 100%;
-  .DropdownInput_selectContainer {
+  .SortChats_selectContainer {
     right: 10px;
     top: 4px;
     position: relative;
@@ -77,7 +75,7 @@ const StyledDropdownInput = styled.div<Props>`
     width: 100%;
   }
 
-  .DropdownInput_select_active {
+  .SortChats_select_active {
     min-width: 100%;
     background: #fff;
     padding: 20px 30px 12px 30px;
@@ -85,7 +83,7 @@ const StyledDropdownInput = styled.div<Props>`
     transition: 0.15s ease-in;
     border-bottom: 4px solid #e1edfd;
 
-    .DropdownInput_selectLabel {
+    .SortChats_selectLabel {
       color: #2a344a;
     }
     div {
@@ -96,11 +94,11 @@ const StyledDropdownInput = styled.div<Props>`
     }
   }
 
-  .DropdownInput_selectLabelIconMobile {
+  .SortChats_selectLabelIconMobile {
     display: none;
   }
 
-  .DropdownInput_select {
+  .SortChats_select {
     width: 100%;
 
     &:focus {
@@ -131,7 +129,7 @@ const StyledDropdownInput = styled.div<Props>`
     }
   }
 
-  .DropdownInput_selectLabel {
+  .SortChats_selectLabel {
     width: 100%;
 
     display: flex;
@@ -149,19 +147,19 @@ const StyledDropdownInput = styled.div<Props>`
     }
   }
 
-  .DropdownInput_inputContainer {
+  .SortChats_inputContainer {
     position: relative;
     width: 100%;
   }
 
-  .DropdownInput_inputContainer_label {
+  .SortChats_inputContainer_label {
     position: absolute;
     top: 0;
     left: 0;
     min-width: 100%;
   }
 
-  .DropdownInput_input {
+  .SortChats_input {
     width: 100%;
     padding: 11px 10px;
     background: rgba(255, 255, 255, 0.85);
@@ -169,68 +167,44 @@ const StyledDropdownInput = styled.div<Props>`
   }
 
   @media (max-width: 769px) {
-    .DropdownInput_selectLabel {
-      p {
-        display: none;
-      }
-    }
-
-    .DropdownInput_selectLabelIconMobile {
-      display: flex;
-    }
-
-    .DropdownInput_selectLabelIcon {
-      display: none;
-    }
-
-    .DropdownInput_select {
-      padding: 8px;
-      border: none;
+    .SortChats_select {
       box-shadow: none;
-      div {
-        svg {
-          margin-left: 0;
-          transform: rotate(0);
-        }
-      }
-
-      &:hover {
-        box-shadow: none;
-        background: transparent;
-      }
     }
 
-    .DropdownInput_select_active {
-      padding: 8px;
-      border: none;
+    &:hover {
       box-shadow: none;
-      div {
-        svg {
-          margin-left: 0;
-        }
-      }
+      background: transparent;
     }
+  }
 
-    .DropdownInput_selectLabel {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
+  .SortChats_select_active {
+    box-shadow: none;
+    div {
       svg {
-        width: 18px;
-        height: 18px;
-        path {
-          stroke: none !important;
-        }
+        margin-left: 0;
       }
+    }
+  }
 
-      :hover {
-        svg {
-          path {
-            fill: #4e6af3;
-          }
-        }
+  .SortChats_selectLabel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    :hover {
+      svg {
       }
+    }
+  }
+
+  @media (max-width: 576px) {
+    .SortChats_selectLabel {
+      justify-content: flex-start;
     }
   }
 `;

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { ApplicationsFooter } from "../Base/ApplicationsFooter";
 import { AllChatsContainer } from "./components/AllChatsContainer";
 import { ChatContainer } from "./components/ChatContainer";
+import { ChatContainerMobile } from "./components/ChatContainerMobile";
 import { ChatInformation } from "./components/ChatInformation";
 import { ChatPerformers } from "./components/ChatPerformers";
 import { ChatRequests } from "./components/ChatRequests";
@@ -22,70 +23,90 @@ const ApplicationsChatsAll = () => {
     setSelected(option);
   }, []);
 
+  const [openChat, setIsOpenChat] = useState(false);
+
+  const handleToggleChat = useCallback(() => {
+    setIsOpenChat(!openChat);
+  }, [openChat]);
+
   return (
     <StyledApplicationsChatsAll className="ContainerFull">
-      <div className="ApplicationsChatsAll">
-        <div className="AppInfo">
-          <div className="ApplicationInfo__headLayout"></div>
+      {openChat ? (
+        <ChatContainerMobile onClick={handleToggleChat} />
+      ) : (
+        <div className="ApplicationsChatsAll">
+          <div className="AppInfo">
+            <div className="ApplicationInfo__headLayout"></div>
 
-          <div className="ApplicationInfo__fullContainer">
-            <h2 className="Font_24_120">Чаты</h2>
-            <div className="ApplicationsChatsAll__headTabs">
-              <Button
-                className={cn("", {
-                  ApplicationsChatsAll__headTabButton: selected === "all",
-                })}
-                onClick={() => handleSelect("all")}
-                active={selected === "all"}
-                tertiary
-              >
-                Все
-              </Button>
-              <Button
-                className={cn("", {
-                  ApplicationsChatsAll__headTabButton: selected === "requests",
-                })}
-                onClick={() => handleSelect("requests")}
-                active={selected === "requests"}
-                tertiary
-              >
-                Отклики
-              </Button>
-              <Button
-                className={cn("", {
-                  ApplicationsChatsAll__headTabButton:
-                    selected === "performers",
-                })}
-                onClick={() => handleSelect("performers")}
-                active={selected === "performers"}
-                tertiary
-              >
-                Исполнители
-              </Button>
-              <Button
-                className={cn("", {
-                  ApplicationsChatsAll__headTabButton: selected === "support",
-                })}
-                onClick={() => handleSelect("support")}
-                active={selected === "support"}
-                tertiary
-              >
-                Поддержка Miraden
-              </Button>
+            <div className="ApplicationInfo__fullContainer">
+              <h2 className="Font_24_120">Чаты</h2>
+              <div className="ApplicationsChatsAll__headTabs">
+                <Button
+                  className={cn("", {
+                    ApplicationsChatsAll__headTabButton: selected === "all",
+                  })}
+                  onClick={() => handleSelect("all")}
+                  active={selected === "all"}
+                  tertiary
+                >
+                  Все
+                </Button>
+                <Button
+                  className={cn("", {
+                    ApplicationsChatsAll__headTabButton:
+                      selected === "requests",
+                  })}
+                  onClick={() => handleSelect("requests")}
+                  active={selected === "requests"}
+                  tertiary
+                >
+                  Отклики
+                </Button>
+                <Button
+                  className={cn("", {
+                    ApplicationsChatsAll__headTabButton:
+                      selected === "performers",
+                  })}
+                  onClick={() => handleSelect("performers")}
+                  active={selected === "performers"}
+                  tertiary
+                >
+                  Исполнители
+                </Button>
+                <Button
+                  className={cn("", {
+                    ApplicationsChatsAll__headTabButton: selected === "support",
+                  })}
+                  onClick={() => handleSelect("support")}
+                  active={selected === "support"}
+                  tertiary
+                >
+                  Поддержка Miraden
+                </Button>
+              </div>
+              <div className="ApplicationsChatsAll__headTabsBar" />
             </div>
-            <div className="ApplicationsChatsAll__headTabsBar" />
+            {selected === "all" && (
+              <AllChatsContainer
+                className="ContactInfo"
+                onClick={handleToggleChat}
+              />
+            )}
+
+            {selected === "performers" && (
+              <ChatPerformers className="ContactInfo" />
+            )}
+            {selected === "requests" && (
+              <ChatRequests className="ContactInfo" />
+            )}
+            {selected === "support" && (
+              <ChatInformation className="ContactInfo" />
+            )}
           </div>
-          {selected === "all" && <AllChatsContainer className="ContactInfo" />}
-          {selected === "performers" && (
-            <ChatPerformers className="ContactInfo" />
-          )}
-          {selected === "requests" && <ChatRequests className="ContactInfo" />}
-          {selected === "support" && (
-            <ChatInformation className="ContactInfo" />
-          )}
+          <ChatContainer className="Chat" />
         </div>
-        <ChatContainer className="Chat" />
-      </div>
+      )}
+
       {selected === "performers" && <ApplicationsFooter />}
       {selected === "requests" && <ApplicationsFooter />}
       {selected === "support" && <ApplicationsFooter />}
@@ -115,7 +136,8 @@ const StyledApplicationsChatsAll = styled.section`
     flex-direction: column;
     max-width: 660px;
     width: 100%;
-    height: 100%;
+    /* height: 100%; */
+    height: -webkit-fill-available;
   }
 
   .ApplicationInfo {
@@ -126,6 +148,10 @@ const StyledApplicationsChatsAll = styled.section`
   }
   .ApplicationsChatsAll__headTabs {
     padding: 20px 0 0 0;
+
+    button {
+      white-space: nowrap;
+    }
   }
 
   .ChatTabButton {
@@ -137,12 +163,6 @@ const StyledApplicationsChatsAll = styled.section`
     height: 10px;
     border-radius: 10px;
     background: #fff;
-  }
-
-  .SingleApplicationsChatsAllideBar {
-    position: absolute;
-    right: -420px;
-    top: 94px;
   }
 
   .Application__headContainer {
@@ -285,7 +305,7 @@ const StyledApplicationsChatsAll = styled.section`
   .ApplicationInfo__fullContainer {
     background: #2a344a;
     color: #fff;
-    padding: 20px;
+    padding: 20px 20px 10px 20px;
     border-radius: 10px;
     width: 100%;
   }
@@ -379,7 +399,6 @@ const StyledApplicationsChatsAll = styled.section`
   @media (max-width: 1024px) {
     .ApplicationInfo__fullContainer {
       border-radius: 0 0 10px 10px;
-      overflow: auto;
     }
 
     .Application__infoChat {
@@ -409,6 +428,14 @@ const StyledApplicationsChatsAll = styled.section`
 
     .Application__infoChat {
       padding-right: 8px;
+    }
+
+    .ApplicationInfo__fullContainer {
+      padding: 20px 0 10px 20px;
+    }
+
+    .ApplicationsChatsAll__headTabs {
+      overflow: auto;
     }
 
     .ChatButton {

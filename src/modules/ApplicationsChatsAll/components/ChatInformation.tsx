@@ -98,7 +98,7 @@ const StyledChatInformation = styled.div`
   }
 
   @media (max-width: 576px) {
-    /* padding: 20px; */
+    margin-top: 0;
   }
 `;
 

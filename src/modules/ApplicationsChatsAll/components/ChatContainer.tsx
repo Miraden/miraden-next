@@ -197,8 +197,28 @@ const StyledChatContainer = styled.div`
     display: flex;
   }
 
+  .OpenContacts__button {
+    padding: 10px 24px;
+  }
+
   .ApplicationInfo {
     display: flex;
+  }
+
+  @media (max-width: 1200px) {
+    .Chat__all {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+
+      button {
+        margin-top: 24px;
+      }
+    }
+
+    .ChatContainer {
+      height: calc(100% - 70px);
+    }
   }
 
   @media (max-width: 1024px) {

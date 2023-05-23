@@ -171,6 +171,7 @@ const StyledApplicationsChat = styled.section`
     flex-direction: column;
     max-width: 625px;
     height: 100%;
+    width: 100%;
   }
 
   .ApplicationInfo {
@@ -297,6 +298,7 @@ const StyledApplicationsChat = styled.section`
 
   @media (max-width: 1024px) {
     margin-top: -18px;
+    height: calc(100vh - 36px);
 
     .ChatMobile {
       display: flex;
@@ -490,6 +492,10 @@ const StyledApplicationsChat = styled.section`
           fill: #fff;
         }
       }
+    }
+
+    .ApplicationInfo__fullContainer {
+      padding: 0 0 20px 20px;
     }
   }
 
