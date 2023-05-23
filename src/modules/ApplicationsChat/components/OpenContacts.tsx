@@ -177,6 +177,7 @@ const StyledOpenContacts = styled.div`
   .Contacts__headInfo {
     display: flex;
     align-items: flex-start;
+    flex-wrap: wrap;
   }
 
   .Contacts__headName {

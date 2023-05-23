@@ -155,6 +155,7 @@ const StyledApplicationsChatsAll = styled.section`
   .ApplicationsChatsAll__headTabs {
     padding: 20px 0 0 0;
 
+    overflow: auto;
     button {
       white-space: nowrap;
     }
@@ -267,7 +268,7 @@ const StyledApplicationsChatsAll = styled.section`
   }
 
   .Chat {
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
   }
 
   @media (max-width: 1024px) {

@@ -120,7 +120,9 @@ const ObjectCardLarge = ({
             </div>
 
             <div className="ObjectCardLarge__head">
-              <p className="Font_20_120 md:Font_16_150_500 ">{title}</p>
+              <p className="Font_20_120 md:Font_16_150_500 ObjectCardLarge__Title">
+                {title}
+              </p>
               {openDropdown && <ObjectDropdown agencyName={agencyName} />}
             </div>
             <div className="ObjectCardLarge__location Font_14_140 Color_text_grey">
@@ -214,6 +216,10 @@ const StyledObjectCardLarge = styled.a`
     transition: 0.15s ease;
     :hover {
       box-shadow: 0 0 0 2px inset #c7d2e9;
+
+      .ObjectCardLarge__Title {
+        color: #4e6af3;
+      }
     }
   }
 
@@ -460,9 +466,6 @@ const StyledObjectCardLarge = styled.a`
   }
 
   @media (max-width: 768px) {
-    .ObjectCardLarge__container {
-      padding: 10px;
-    }
     .ObjectCardLarge__mainImages,
     .ObjectCardLarge__unpublishedContainer {
       min-width: 120px;

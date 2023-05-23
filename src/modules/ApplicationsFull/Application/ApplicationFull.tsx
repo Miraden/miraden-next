@@ -446,6 +446,7 @@ const StyledApplication = styled.section`
   }
 
   @media (max-width: 1024px) {
+    padding-bottom: 120px;
     .Application__headContainer {
       margin-top: 0;
     }
@@ -461,6 +462,7 @@ const StyledApplication = styled.section`
   }
 
   @media (max-width: 767px) {
+    padding-bottom: 0;
     .ApplicationsList {
       padding-left: 0;
       padding-right: 0;

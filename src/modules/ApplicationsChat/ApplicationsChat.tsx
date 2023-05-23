@@ -187,6 +187,7 @@ const StyledApplicationsChat = styled.section`
     display: flex;
     flex-direction: column;
     max-width: 625px;
+    min-width: 500px;
     height: 100%;
     width: 100%;
   }
