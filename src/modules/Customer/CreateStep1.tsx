@@ -635,6 +635,7 @@ const StyledCreateStep1 = styled.section`
     .Reg__headContainer {
       position: sticky;
       top: 0;
+      z-index: 400;
       background: #fff;
       width: 100%;
     }

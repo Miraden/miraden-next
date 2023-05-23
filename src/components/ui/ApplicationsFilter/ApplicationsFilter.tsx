@@ -598,7 +598,7 @@ const ObjectsContent = () => {
 
             {squareOpen && (
               <>
-                <h4 className="Font_16_150">Жилая</h4>
+                <h4 className="Font_16_140">Жилая</h4>
                 <div className="ObjectsContent__price">
                   <NumberInputNoLabel
                     label="От"
@@ -611,7 +611,7 @@ const ObjectsContent = () => {
                     onChange={handleLivingSquareToValueChange}
                   />
                 </div>
-                <h4 className="Font_16_150">Участок земли</h4>
+                <h4 className="Font_16_140">Участок земли</h4>
                 <div className="ObjectsContent__price">
                   <NumberInputNoLabel
                     label="От"
