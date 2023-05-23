@@ -30,6 +30,7 @@ const CreateStep11 = ({ className }: Props) => {
         <div className="Reg__inputsContainer">
           <div className="Reg__inputs">
             <TextInput
+              maxLength={45}
               label="Заголовок заявки "
               onChange={handleTextInputChange}
             />
