@@ -349,26 +349,38 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
             <div className="Applications__headTabsBar_whiteSpace" />
           </>
         )}
-        {selected === "requests" && (
+        {selected === "application" && (
           <>
             <div className="Application__body">
-              <Image
-                src="/images/application.svg"
-                alt=""
-                width={150}
-                height={120}
-              />
+              <Image src="/images/apps/1.svg" alt="" width={200} height={200} />
               <h2 className="Font_20_120">Вы отлично справились!</h2>
               <p className="Color_text_grey Font_16_150">
                 На этом месте скоро появятся предложения от исполнителей. А пока
-                вы можете посмотреть
-                <Button
+                вы можете посмотреть 
+                <a
                   className="Application__bodyButton "
                   onClick={() => handleSelect("recommended")}
-                  tertiary
                 >
                   Рекомендуемые
-                </Button>
+                </a>
+              </p>
+            </div>
+          </>
+        )}
+        {selected === "requests" && (
+          <>
+            <div className="Application__body">
+              <Image src="/images/apps/1.svg" alt="" width={200} height={200} />
+              <h2 className="Font_20_120">Вы отлично справились!</h2>
+              <p className="Color_text_grey Font_16_150">
+                На этом месте скоро появятся предложения от исполнителей. А пока
+                вы можете посмотреть 
+                <a
+                  className="Application__bodyButton "
+                  onClick={() => handleSelect("recommended")}
+                >
+                  Рекомендуемые
+                </a>
               </p>
             </div>
           </>
@@ -378,21 +390,16 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
           <>
             <div className="Applications__headTabsBar_whiteSpace" />
             <div className="Application__body">
-              <Image
-                src="/images/application.svg"
-                alt=""
-                width={150}
-                height={120}
-              />
+              <Image src="/images/apps/1.svg" alt="" width={200} height={200} />
               <h2 className="Font_20_120">Исполнители не выбраны</h2>
               <p className="Color_text_grey Font_16_150">
                 Вы можете выбрать одного или несколько исполнителей в разделе 
-                <button
+                <a
                   onClick={() => handleSelect("requests")}
                   className="Application__adaptiveButton Color_blue_primary"
                 >
                   Отклики
-                </button>
+                </a>
               </p>
             </div>
           </>
@@ -402,12 +409,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
           <>
             <div className="Applications__headTabsBar_whiteSpace" />
             <div className="Application__body">
-              <Image
-                src="/images/application.svg"
-                alt=""
-                width={150}
-                height={120}
-              />
+              <Image src="/images/apps/1.svg" alt="" width={200} height={200} />
               <h2 className="Font_20_120">Отказы отсутствуют</h2>
               <p className="Color_text_grey Font_16_150">
                 Если предложение пользователя вас не заинтересовало, вы всегда
@@ -629,10 +631,10 @@ const StyledApplication = styled.section`
     padding-top: 100px;
     margin: 0 auto;
     text-align: -webkit-center;
-    max-width: 370px;
+    max-width: 320px;
 
     h2 {
-      margin-top: 30px;
+      margin-top: 20px;
     }
 
     p {
@@ -847,6 +849,10 @@ const StyledApplication = styled.section`
     .Application__Footer {
       display: block;
     }
+
+    .Application__body {
+      padding-top: 120px;
+    }
   }
 
   @media (max-width: 660px) {
@@ -867,6 +873,10 @@ const StyledApplication = styled.section`
     .Applications__list {
       padding-left: 0;
       padding-right: 0;
+    }
+
+    .Application__body {
+      padding-top: 40px;
     }
 
     .Application__FooterButtons {

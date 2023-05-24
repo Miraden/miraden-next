@@ -634,6 +634,7 @@ const StyledApplication = styled.section`
     .Applications__filterMobile {
       position: relative;
       display: block;
+      overflow: auto;
       height: 100vh;
     }
 

@@ -112,7 +112,6 @@ const StyledDropdownLocationInput = styled.div<Props>`
 
   .DropdownLocationInput_select_active {
     width: 100%;
-    max-width: 300px;
     background: #fff;
     border-radius: 10px;
     padding: 18px 20px;
@@ -142,7 +141,6 @@ const StyledDropdownLocationInput = styled.div<Props>`
     }
     outline: none;
     width: 100%;
-    max-width: 300px;
     padding: 18px 20px;
     border: none;
     border-radius: 10px;

@@ -52,9 +52,11 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
                 мои заявки
               </Button>
               <Button
+                href="/objects-plug"
                 header
                 leftIcon={<HomeIcon />}
                 className="Header__navButton"
+                active={currentUrl.includes("objects")}
               >
                 мои объекты
               </Button>

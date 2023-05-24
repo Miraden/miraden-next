@@ -1,0 +1,1 @@
+export { ApplicationFull } from "./ApplicationPlug";

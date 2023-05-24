@@ -1,11 +1,5 @@
 import { Button } from "@/components/ui";
-import {
-  Applications,
-  HomeIcon,
-  KebabIcon,
-  ListItemsIcon,
-  PlusIcon,
-} from "@/icons";
+import { ApplicationsFooter } from "@/modules/Base/ApplicationsFooter";
 import cn from "classnames";
 import Image from "next/image";
 import { useCallback, useState } from "react";
@@ -14,56 +8,53 @@ interface ApplicationProps {
   className?: string;
 }
 
-type Option = "objects" | "applications" | "users";
+type Option = "all" | "published" | "archived";
 
-const FavouritesPlug = ({ className }: ApplicationProps) => {
-  const [selected, setSelected] = useState<Option | null>("objects");
+const ApplicationPlug = ({ className }: ApplicationProps) => {
+  const [selected, setSelected] = useState<Option | null>("all");
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
   }, []);
-  const [showFilter, setShowFilter] = useState(false);
 
   return (
-    <StyledApplication
-      className={cn("Application__wrapper", { IsOpenFilter: showFilter })}
-    >
-      <div className={cn("Application__wrapper", { IsOpenFilter: showFilter })}>
+    <StyledApplication className={className}>
+      <div className={cn("Application__wrapper")}>
         <div className="Application__headContainer">
           <div className="Application__head">
-            <h1 className="Font_32_120 lg:Font_26_120_500">Избранное</h1>
+            <h1 className="Font_32_120 lg:Font_26_120_500">Мои заявки </h1>
           </div>
           <div className="Application__headTabsContainer">
             <div className="Application__headTabs">
               <Button
                 className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "objects",
+                  Application__headTabButton: selected === "all",
                 })}
-                onClick={() => handleSelect("objects")}
-                active={selected === "objects"}
+                onClick={() => handleSelect("all")}
+                active={selected === "all"}
                 tertiary
               >
-                Объекты
+                Все
               </Button>
               <Button
                 className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "applications",
+                  Application__headTabButton: selected === "published",
                 })}
-                onClick={() => handleSelect("applications")}
-                active={selected === "applications"}
+                onClick={() => handleSelect("published")}
+                active={selected === "published"}
                 tertiary
               >
-                Заявки
+                Опубликованные
               </Button>
               <Button
                 className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "users",
+                  Application__headTabButton: selected === "archived",
                 })}
-                onClick={() => handleSelect("users")}
-                active={selected === "users"}
+                onClick={() => handleSelect("archived")}
+                active={selected === "archived"}
                 tertiary
               >
-                Пользователи
+                В архиве
               </Button>
             </div>
             <div className="Application__headTabsBar" />
@@ -71,72 +62,42 @@ const FavouritesPlug = ({ className }: ApplicationProps) => {
         </div>
         <div className="Applications__headTabsBar_whiteSpace" />
 
-        {selected === "objects" && (
+        {selected === "all" && (
           <>
             <div className="Application__body">
-              <Image src="/images/apps/2.svg" alt="" width={200} height={200} />
-              <h2 className="Font_20_120">В избранном нет объектов</h2>
+              <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
+              <h2>Нет созданных заявок</h2>
               <p className="Color_text_grey">
-                Отмечайте понравившиеся объекты, <br /> нажав на иконку
-                в карточке объекта
+                Но вы можете сделать это прямо сейчас!{" "}
               </p>
-              <Button className="Objects__button" href="/">
-                Создать заявку
-              </Button>
             </div>
           </>
         )}
-        {selected === "applications" && (
+        {selected === "published" && (
           <>
             <div className="Application__body">
-              <Image src="/images/apps/6.svg" alt="" width={200} height={200} />
-              <h2 className="Font_20_120">В избранном нет заявок</h2>
+              <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
+
+              <h2>No published applications</h2>
+              <p className="Color_text_grey">No published</p>
+            </div>
+          </>
+        )}
+
+        {selected === "archived" && (
+          <>
+            <div className="Application__body">
+              <Image src="/images/apps/5.svg" alt="" width={200} height={200} />
+              <h2>Нет заявок в архиве</h2>
               <p className="Color_text_grey">
-                Отмечайте понравившиеся заявки, нажав на иконку в карточке
-                заявки
+                Если заявка больше не актуальна, вы можете отправить ее в архив,
+                а по необходимости восстановить обратно
               </p>
             </div>
           </>
         )}
 
-        {selected === "users" && (
-          <>
-            <div className="Application__body">
-              <Image src="/images/apps/7.svg" alt="" width={200} height={200} />
-              <h2 className="Font_20_120">В избранном нет пользователей</h2>
-              <p className="Color_text_grey">
-                Отмечайте понравившихся пользователей, нажав на иконку
-                в карточке пользователя
-              </p>
-            </div>
-          </>
-        )}
-      </div>
-      <div className="Application__Footer">
-        <div className="Application__FooterButtons">
-          <Button tertiary className="FooterButton Font_12_16">
-            <ListItemsIcon />
-            Лента
-          </Button>
-          <Button tertiary className="FooterButton Font_12_16">
-            <Applications />
-            Мои заявки
-          </Button>
-          <div className="PlusIconContainer">
-            <Button>
-              <PlusIcon width={24} height={24} />
-            </Button>
-          </div>
-
-          <Button tertiary className="FooterButton Font_12_16">
-            <HomeIcon width={18} height={18} />
-            Объекты
-          </Button>
-          <Button tertiary className="FooterButton Font_12_16">
-            <KebabIcon className="KebabIcon" />
-            Ещё
-          </Button>
-        </div>
+        <ApplicationsFooter />
       </div>
     </StyledApplication>
   );
@@ -144,49 +105,18 @@ const FavouritesPlug = ({ className }: ApplicationProps) => {
 
 const StyledApplication = styled.section`
   position: relative;
+  position: relative;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(18, 1fr);
   grid-gap: 30px;
   padding-left: 55px;
   padding-right: 55px;
-
-  &.Test {
-    padding-right: 0 !important;
-  }
-  .Objects__button {
-    margin-top: 30px;
-    width: fit-content;
-  }
-  .TestFilter {
-    position: sticky;
-    top: 94px;
-    overflow: auto;
-    grid-column: 16 / span 3;
-    margin-top: 30px;
-    margin-left: -30px;
-    height: calc(100vh - 114px);
-    min-width: 355px;
-  }
-
   .Application__wrapper {
+    grid-column: 5 / span 10;
     min-width: 970px;
     max-width: 970px;
-    grid-column: 5 / span 10;
   }
-
-  .Applications__filter {
-    overflow: auto;
-
-    height: calc(100vh - 114px);
-  }
-  .Application__headTabsBar_whiteSpace {
-    width: 100%;
-    height: 10px;
-    border-radius: 0 0 10px 10px;
-    background: #fff;
-  }
-
   .SingleChatInfoideBar {
     position: absolute;
     right: -420px;
@@ -210,38 +140,11 @@ const StyledApplication = styled.section`
     margin-top: 30px;
     button {
       padding: 0;
-    }
-    button:not(:first-child) {
-      margin-left: 30px;
-    }
-  }
-
-  .Application__headTabsBar {
-    margin-top: 15px;
-    width: 100%;
-    background: #e1edfd;
-    height: 4px;
-    border-radius: 10px;
-  }
-
-  .Applications__headTabsBar_whiteSpace {
-    width: 100%;
-    height: 10px;
-    border-radius: 0 0 10px 10px;
-    background: #fff;
-  }
-
-  .Application__head {
-    display: flex;
-    align-items: center;
-  }
-
-  .Applications__headTabs {
-    display: flex;
-    margin-top: 30px;
-    overflow: auto;
-    button {
-      padding: 0;
+      :hover {
+        p {
+          color: #4e6af3 !important;
+        }
+      }
     }
     button:not(:first-child) {
       margin-left: 30px;
@@ -272,6 +175,32 @@ const StyledApplication = styled.section`
 
     :active {
       background: transparent !important;
+    }
+  }
+  .Application__headTabsBar {
+    margin-top: 15px;
+    width: 100%;
+    background: #e1edfd;
+    height: 4px;
+    border-radius: 10px;
+  }
+
+  .Applications__headTabsBar_whiteSpace {
+    width: 100%;
+    height: 10px;
+    border-radius: 0 0 10px 10px;
+    background: #fff;
+  }
+
+  .Applications__headTabs {
+    display: flex;
+    margin-top: 30px;
+    overflow: auto;
+    button {
+      padding: 0;
+    }
+    button:not(:first-child) {
+      margin-left: 30px;
     }
   }
 
@@ -313,8 +242,8 @@ const StyledApplication = styled.section`
   }
 
   .ApplicationsList {
-    margin-top: 20px;
     height: 100vh;
+    margin-top: 20px;
 
     li:not(:first-child) {
       margin-top: 10px;
@@ -323,8 +252,9 @@ const StyledApplication = styled.section`
 
   .Application__Footer {
     display: none;
-    position: fixed;
     border-top: 2px solid #eef1f5;
+
+    position: fixed;
     width: 100%;
     bottom: 0;
     background: #fff;
@@ -407,7 +337,6 @@ const StyledApplication = styled.section`
     padding-right: 0;
     display: flex;
     flex-direction: column;
-
     .Application__wrapper {
       margin: 0 auto;
       grid-column: 1 / span 14;
@@ -421,30 +350,7 @@ const StyledApplication = styled.section`
         max-width: 970px;
       }
     }
-    .TestFilter {
-      position: fixed;
-      margin-top: 0;
-      margin-left: 0;
-      top: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(60, 75, 97, 0.6);
-      transform: translate(-20px, 0);
-      backdrop-filter: blur(11px);
-      z-index: 500;
-      min-width: unset;
-      display: flex;
-      justify-content: flex-end;
-    }
 
-    .Applications__filter {
-      position: relative;
-      margin-right: 20px;
-      margin-top: 20px;
-      height: calc(100vh - 40px);
-      margin-left: 0;
-      max-width: 355px;
-    }
     .SingleApplicationSideBar {
       grid-column: 1 / span 18;
       margin-top: 16px;
@@ -455,25 +361,46 @@ const StyledApplication = styled.section`
   }
 
   @media (max-width: 1024px) {
+    padding-bottom: 120px;
     .Application__headContainer {
       margin-top: 0;
+    }
+    .Application__body {
+      padding-top: 120px;
+    }
+    .ApplicationsList {
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
     .Application__Footer {
       display: block;
     }
+  }
 
-    .Application__body {
-      padding-top: 120px;
+  @media (max-width: 767px) {
+    padding-bottom: 0;
+    .ApplicationsList {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  @media (max-width: 660px) {
+    .Application__headContainer {
+      padding-right: 0;
+    }
+
+    .Application__headTabs {
+      overflow: auto;
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 
   @media (max-width: 576px) {
-    .Applications__list {
-      padding-left: 0;
-      padding-right: 0;
-    }
-
     .Application__FooterButtons {
       display: flex;
       justify-content: center;
@@ -490,4 +417,4 @@ const StyledApplication = styled.section`
   }
 `;
 
-export { FavouritesPlug };
+export { ApplicationPlug };

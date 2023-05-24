@@ -5,7 +5,7 @@ import { BackIcon20 } from "@/icons";
 import { FilterIcon } from "@/icons/FilterIcon";
 import { ApplicationsFooter } from "@/modules/Base/ApplicationsFooter";
 import cn from "classnames";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { ObjectCard } from "./components/ObjectCard";
 import { SellerCard } from "./components/SellerCard";
@@ -484,6 +484,24 @@ const Application = ({ className }: ApplicationProps) => {
       setShowFilter(false);
     }
   };
+
+  const [mQuery, setMQuery] = useState({
+    matches: window.innerWidth <= 1440 ? true : false,
+  });
+
+  const handleChange = useCallback(
+    (e: any) => setMQuery({ matches: e.matches }),
+    []
+  );
+
+  useEffect(() => {
+    let mediaQuery = window.matchMedia("(max-width: 1440px)");
+    mediaQuery.addEventListener("change", handleChange);
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, [handleChange]);
+  console.log(mQuery, "mQuery");
+
+  useLockBodyScroll(showFilter && mQuery.matches);
 
   return (
     <>
@@ -1197,6 +1215,7 @@ const StyledApplication = styled.section`
     display: flex;
 
     flex-direction: column;
+    padding-bottom: 80px;
     .Application__headContainer {
       margin-top: 0;
     }
@@ -1207,6 +1226,7 @@ const StyledApplication = styled.section`
     .Applications__filterMobile {
       position: relative;
       display: block;
+      overflow: auto;
       height: 100vh;
     }
 

@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui";
-import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
 import { MessagesIcon, MiradenLogoMobile, StarIcon } from "@/icons";
 import { WalletIcon } from "@/icons/WalletIcon";
 import Link from "next/link";
@@ -15,7 +14,6 @@ const HeaderUserMenuMobile = () => {
     setIsOpen(!isOpen);
   }, [isOpen]);
 
-  useLockBodyScroll(isOpen);
   const router = useRouter();
   const currentUrl = router.pathname;
   return (
