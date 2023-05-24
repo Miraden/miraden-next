@@ -71,7 +71,7 @@ const StyledSortChatsDropdown = styled.div`
     width: 100%;
     position: absolute;
     z-index: 2;
-    top: 4px;
+    top: -4px;
     left: 10px;
     background: #fff;
     max-height: 228px;

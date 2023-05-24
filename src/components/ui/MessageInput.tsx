@@ -111,6 +111,7 @@ const InputWrapper = styled.div`
   flex: 1;
 
   svg {
+    margin-left: 10px;
     flex-shrink: 0;
   }
 
@@ -164,6 +165,7 @@ const ButtonWrapper = styled.div`
     display: flex;
     align-items: center;
     margin-left: 20px;
+    margin-right: 10px;
   }
 
   @media (max-width: 576px) {

@@ -103,8 +103,11 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
 };
 
 const StyledChatContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
-  height: 92%;
+  height: 100%;
   max-width: 1225px;
   margin-left: 30px;
   background: #eef1f5;

@@ -64,7 +64,9 @@ const SortChats: FC<Props> = ({ className }) => {
   );
 };
 const StyledSortChats = styled.div<Props>`
-  position: relative;
+  position: sticky;
+  top: 0;
+  z-index: 200;
   background: #ffffff;
   width: 100%;
   .SortChats_selectContainer {

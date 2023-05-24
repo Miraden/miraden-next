@@ -576,7 +576,7 @@ const StyledObjectDropdown = styled.div`
   top: 34px;
   background: #fff;
   padding: 10px 15px;
-  box-shadow: 0 0 0 1px #e1edfd;
+  box-shadow: 0 0 0 2px #e1edfd;
   border-radius: 10px;
 
   a:hover {

@@ -40,10 +40,10 @@ const ApplicationsChatsAll = () => {
 
             <div className="ApplicationInfo__fullContainer">
               <h2 className="Font_24_120">Чаты</h2>
-              <div className="ApplicationsChatsAll__headTabs">
+              <div className="ChatInfo__headTabs">
                 <Button
                   className={cn("", {
-                    ApplicationsChatsAll__headTabButton: selected === "all",
+                    ChatInfo__headTabButton: selected === "all",
                   })}
                   onClick={() => handleSelect("all")}
                   active={selected === "all"}
@@ -53,8 +53,7 @@ const ApplicationsChatsAll = () => {
                 </Button>
                 <Button
                   className={cn("", {
-                    ApplicationsChatsAll__headTabButton:
-                      selected === "requests",
+                    ChatInfo__headTabButton: selected === "requests",
                   })}
                   onClick={() => handleSelect("requests")}
                   active={selected === "requests"}
@@ -64,8 +63,7 @@ const ApplicationsChatsAll = () => {
                 </Button>
                 <Button
                   className={cn("", {
-                    ApplicationsChatsAll__headTabButton:
-                      selected === "performers",
+                    ChatInfo__headTabButton: selected === "performers",
                   })}
                   onClick={() => handleSelect("performers")}
                   active={selected === "performers"}
@@ -75,7 +73,7 @@ const ApplicationsChatsAll = () => {
                 </Button>
                 <Button
                   className={cn("", {
-                    ApplicationsChatsAll__headTabButton: selected === "support",
+                    ChatInfo__headTabButton: selected === "support",
                   })}
                   onClick={() => handleSelect("support")}
                   active={selected === "support"}
@@ -84,7 +82,7 @@ const ApplicationsChatsAll = () => {
                   Поддержка Miraden
                 </Button>
               </div>
-              <div className="ApplicationsChatsAll__headTabsBar" />
+              <div className="ChatInfo__headTabsBar" />
             </div>
             {selected === "all" && (
               <AllChatsContainer className="ContactInfo" />
@@ -119,7 +117,85 @@ const ApplicationsChatsAll = () => {
 
 const StyledApplicationsChatsAll = styled.section`
   margin-top: 35px;
-  height: calc(100vh - 86px);
+  height: calc(100vh - 94px);
+  padding-bottom: 20px;
+
+  .ChatInfo__headTabs {
+    padding: 30px 0 0 0;
+  }
+
+  .ChatTabButton {
+    display: none;
+  }
+
+  .ChatInfo__headTabsBar_whiteSpace {
+    width: 100%;
+    height: 10px;
+    border-radius: 0 0 10px 10px;
+    background: #fff;
+  }
+
+  .SingleChatInfoideBar {
+    position: absolute;
+    right: -420px;
+    top: 94px;
+  }
+
+  .ChatInfo__headContainer {
+    margin-top: 20px;
+    padding: 20px 20px 0 20px;
+    background: #fff;
+    border-radius: 10px 10px 0 0;
+  }
+
+  .ChatInfo__head {
+    display: flex;
+    align-items: baseline;
+    h1 {
+      margin-left: 10px;
+    }
+  }
+
+  .ChatInfo__headTabs {
+    display: flex;
+    button {
+      margin-right: 30px;
+      color: #7786a5;
+
+      padding: 0;
+
+      :hover {
+        color: #fff !important;
+        background: transparent !important;
+      }
+    }
+
+    button.active {
+      color: #fff !important;
+    }
+  }
+
+  .ChatInfo__headTabButton {
+    position: relative;
+    ::before {
+      position: absolute;
+      top: 35px;
+      left: 0;
+      content: "";
+      background: #ffffff;
+      width: 100%;
+      height: 4px;
+      border-radius: 10px;
+    }
+  }
+
+  .ChatInfo__headTabsBar {
+    margin-top: 15px;
+    width: 100%;
+    background: #3b4a69;
+    height: 4px;
+    border-radius: 10px;
+  }
 
   .ChatMobile {
     display: none;

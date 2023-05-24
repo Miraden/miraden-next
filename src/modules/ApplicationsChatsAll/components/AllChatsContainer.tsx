@@ -201,7 +201,7 @@ const AllChatsContainer = ({ className, onClick }: Props) => {
 const StyledAllChatsContainer = styled.div`
   overflow: auto;
   margin-top: 20px;
-  border-radius: 10px 10px 0 0;
+  border-radius: 10px;
   background: #fff;
   min-width: 600px;
   .List {

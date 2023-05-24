@@ -32,6 +32,7 @@ const StyledContactInfo = styled.div`
   border-radius: 10px;
   margin-top: 10px;
 
+  overflow: auto;
   .ChatInfo__headTabs {
     padding: 20px 30px 0 30px;
   }

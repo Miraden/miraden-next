@@ -97,6 +97,8 @@ const ObjectCardLarge = ({
     [openDropdown]
   );
 
+  const mobilePublished = publishedAt?.split("Создана");
+
   return (
     <StyledObjectCardLarge className={className} href={href}>
       <div className="ObjectCardLarge__container">
@@ -108,7 +110,12 @@ const ObjectCardLarge = ({
                 {isPublished && <Sticker theme="green">Опубликована</Sticker>}
               </div>
               <div className="ObjectCardLarge__kebabButton">
-                <p className="Font_14_140 Color_text_disabled">{publishedAt}</p>
+                <p className="Font_14_140 Color_text_disabled Published">
+                  {publishedAt}
+                </p>
+                <p className="Font_14_140 Color_text_disabled PublishedMobile">
+                  {mobilePublished}
+                </p>
                 <Button
                   tertiary
                   className="ObjectCardLarge__button"
@@ -221,6 +228,10 @@ const StyledObjectCardLarge = styled.a`
         color: #4e6af3;
       }
     }
+  }
+
+  .PublishedMobile {
+    display: none;
   }
 
   .ObjectCardLarge {
@@ -341,6 +352,7 @@ const StyledObjectCardLarge = styled.a`
 
   .ObjectCardLarge__indicators {
     margin-top: 15px;
+
     div:not(:first-child) {
       margin-left: 10px;
     }
@@ -465,7 +477,7 @@ const StyledObjectCardLarge = styled.a`
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     .ObjectCardLarge__mainImages,
     .ObjectCardLarge__unpublishedContainer {
       min-width: 120px;
@@ -518,6 +530,28 @@ const StyledObjectCardLarge = styled.a`
       display: none;
     }
   }
+
+  @media (max-width: 576px) {
+    .Published {
+      display: none;
+    }
+
+    .PublishedMobile {
+      display: flex;
+    }
+
+    .ObjectCardLarge__indicators {
+      margin-top: 15px;
+
+      div {
+        font-size: 12px;
+      }
+
+      div:not(:first-child) {
+        margin-left: 10px;
+      }
+    }
+  }
 `;
 
 const ObjectDropdown = ({ agencyName }: ObjectCardLargeProps) => {
@@ -535,10 +569,10 @@ const ObjectDropdown = ({ agencyName }: ObjectCardLargeProps) => {
 const StyledObjectDropdown = styled.div`
   position: absolute;
   right: 0;
-  top: -10px;
+  top: -7px;
   background: #fff;
   padding: 10px 15px;
-  box-shadow: 0 0 0 1px #e1edfd;
+  box-shadow: 0 0 0 2px #e1edfd;
   border-radius: 10px;
 
   a:hover {
