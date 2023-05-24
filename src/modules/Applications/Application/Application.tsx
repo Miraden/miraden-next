@@ -479,15 +479,20 @@ const Application = ({ className }: ApplicationProps) => {
     }
   };
 
+  const [sideBar, setSideBar] = useState(true);
+
   return (
     <>
       <StyledApplication
         className={cn(className, {
-          Test: showFilter || selected === "application",
+          Test: showFilter || sideBar || selected === "application",
         })}
       >
         <div
-          className={cn("Application__wrapper", { IsOpenFilter: !showFilter })}
+          className={cn("Application__wrapper", {
+            IsOpenFilter: showFilter || !sideBar,
+            IsOpenSidebar: !showFilter || sideBar,
+          })}
         >
           <div className="Application__headContainer">
             <div className="Application__head">
@@ -763,7 +768,10 @@ const Application = ({ className }: ApplicationProps) => {
 
         {selected === "application" && (
           <>
-            <SingleApplicationSideBar className="SingleApplicationSideBar" />
+            {" "}
+            {sideBar && (
+              <SingleApplicationSideBar className="SingleApplicationSideBar" />
+            )}
           </>
         )}
         {showFilter && (
@@ -802,13 +810,15 @@ const StyledApplication = styled.section`
   grid-gap: 30px;
   padding-left: 55px;
   padding-right: 55px;
-
+  padding-bottom: 80px;
   &.Test {
     padding-right: 0 !important;
   }
 
   .Application__wrapper {
     min-width: 970px;
+    max-width: 970px;
+
     grid-column: 5 / span 10;
   }
 
@@ -848,6 +858,7 @@ const StyledApplication = styled.section`
     grid-column: 16 / span 3;
     margin-top: 30px;
     margin-left: -30px; */
+    overflow: auto;
     height: calc(100vh - 114px);
   }
 
@@ -945,6 +956,7 @@ const StyledApplication = styled.section`
     display: flex;
     margin-top: 30px;
     overflow: auto;
+
     button {
       padding: 0;
     }
@@ -967,9 +979,25 @@ const StyledApplication = styled.section`
     }
   }
 
+  /* хром, сафари */
+  .Applications__headTabs::-webkit-scrollbar {
+    width: 0;
+  }
+
+  /* ie 10+ */
+  .Applications__headTabs {
+    -ms-overflow-style: none;
+  }
+
+  /* фф (свойство больше не работает, других способов тоже нет)*/
+  .Applications__headTabs {
+    overflow: -moz-scrollbars-none;
+  }
+
   .SingleApplicationSideBar {
     position: sticky;
     top: 94px;
+    max-width: 970px;
     min-width: 355px;
     overflow: auto;
     grid-column: 16 / span 3;
@@ -1092,11 +1120,13 @@ const StyledApplication = styled.section`
     padding-right: 0;
     grid-gap: 15px;
     .Application__wrapper {
-      grid-column: 1 / span 11;
+      grid-column: 5 / span 10;
+
       width: 100%;
 
-      &.IsOpenFilter {
-        grid-column: 5 / span 10;
+      &.IsOpenFilter,
+      &.IsOpenSidebar {
+        grid-column: 1 / span 11;
       }
     }
   }
@@ -1116,8 +1146,10 @@ const StyledApplication = styled.section`
       max-width: 970px;
       min-width: unset;
 
-      &.IsOpenFilter {
+      &.IsOpenFilter,
+      &.IsOpenSidebar {
         grid-column: 1 / span 18;
+        max-width: 970px;
       }
     }
 
@@ -1139,15 +1171,18 @@ const StyledApplication = styled.section`
 
     .Applications__filter {
       position: relative;
+      margin-right: 20px;
+      margin-top: 20px;
+      height: calc(100vh - 40px);
       margin-left: 0;
-      margin-top: 66px;
       max-width: 355px;
     }
 
     .SingleApplicationSideBar {
+      width: 100%;
+      margin: 0 auto;
       grid-column: 1 / span 18;
       margin-top: 16px;
-      margin-left: 0;
       height: fit-content;
       padding-bottom: 120px;
     }
@@ -1202,17 +1237,8 @@ const StyledApplication = styled.section`
     .Application__headContainer {
       padding-right: 0;
     }
-    .TestFilter {
-      display: none;
-    }
 
-    .Applications__filterMobileContainer {
-      position: absolute;
-      z-index: 999;
-      width: 100%;
-      height: 100vh;
-      top: -58px;
-    }
+    /*  */
 
     .Application__headTabs {
       overflow: auto;
@@ -1224,7 +1250,17 @@ const StyledApplication = styled.section`
       padding-left: 0;
       padding-right: 0;
     }
+    .TestFilter {
+      display: none;
+    }
 
+    .Applications__filterMobileContainer {
+      position: absolute;
+      z-index: 999;
+      width: 100%;
+      height: 100vh;
+      top: -58px;
+    }
     .Application__FooterButtons {
       display: flex;
       justify-content: center;

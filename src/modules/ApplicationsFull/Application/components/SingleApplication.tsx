@@ -470,10 +470,10 @@ const SingleApplicationDropdown = ({ someContent }: Props) => {
 const StyledSingleApplicationDropdown = styled.div`
   position: absolute;
   right: 0;
-  top: 26px;
+  top: 34px;
   background: #fff;
   padding: 10px 15px;
-  box-shadow: 0 0 0 1px #e1edfd;
+  box-shadow: 0 0 0 2px #d4ddee;
   border-radius: 10px;
 
   a:hover {

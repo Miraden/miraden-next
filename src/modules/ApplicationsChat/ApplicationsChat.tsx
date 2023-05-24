@@ -176,7 +176,7 @@ const StyledApplicationsChat = styled.section`
   .ApplicationsChat {
     padding-bottom: 20px;
     display: flex;
-    height: 100%;
+    height: calc(100% - 20px);
   }
 
   .ContactInfo {

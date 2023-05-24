@@ -13,6 +13,7 @@ interface Props {
   yieldCount?: number;
   yieldCountPercent?: number;
   singleCost?: string;
+  onClick?: any;
 }
 
 const PricingSelect: FC<Props> = ({
@@ -23,6 +24,7 @@ const PricingSelect: FC<Props> = ({
   firstInstallmentPercent,
   yieldCount,
   singleCost,
+  onClick,
   yieldCountPercent,
 }) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
@@ -51,7 +53,11 @@ const PricingSelect: FC<Props> = ({
   console.log(selectedOption);
 
   return (
-    <StyledDropdownInput className={cn({ className })} options={options}>
+    <StyledDropdownInput
+      className={cn({ className })}
+      options={options}
+      onClick={onClick}
+    >
       <button
         className={
           showDropDown ? `DropdownInput_select_active` : `DropdownInput_select`

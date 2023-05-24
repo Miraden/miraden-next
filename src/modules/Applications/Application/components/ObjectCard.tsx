@@ -3,15 +3,16 @@ import { PricingSelect } from "@/components/ui/PricingDropdown/PricingSelect";
 import {
   BathsIcon,
   BuildYearIcon,
+  Kebab24Icon,
   KebabIcon,
   MessagesIcon,
   PointIconFooter,
   SleepsIcon,
   SquareIcon,
-  StarIcon,
 } from "@/icons";
 import { PhoneIcon } from "@/icons/PhoneIcon";
 import { RoomsIcon } from "@/icons/RoomsIcon";
+import { Star16Icon } from "@/icons/Star16Icon";
 import { UnpublishedIcon } from "@/icons/UnpublishedIcon";
 import Image from "next/image";
 import { useCallback, useState } from "react";
@@ -74,13 +75,12 @@ const ObjectCard = ({
   singleCost,
   href,
 }: ObjectCardProps) => {
-  const [openDropdown, setOpenDropdown] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(true);
   const [openLinks, setOpenLinks] = useState(false);
 
   const handleOpenDropdown = useCallback(
     (event: any) => {
       event.preventDefault();
-
       setOpenDropdown(!openDropdown);
     },
     [openDropdown]
@@ -93,6 +93,10 @@ const ObjectCard = ({
     },
     [openLinks]
   );
+
+  const handleClickPrice = useCallback((event: any) => {
+    event.preventDefault();
+  }, []);
 
   return (
     <StyledObjectCard className={className}>
@@ -155,7 +159,7 @@ const ObjectCard = ({
                 className="ObjectCard__button"
                 onClick={handleOpenDropdown}
               >
-                <KebabIcon className="ObjectCard__buttonIcon" />
+                <Kebab24Icon className="ObjectCard__buttonIcon" />
               </Button>
               {openDropdown && <ObjectDropdown agencyName={agencyName} />}
             </div>
@@ -165,9 +169,9 @@ const ObjectCard = ({
               <p>{location}</p>
             </div>
             <div className="ObjectCard__indicators Font_14_16">
-              <Tag className="ObjectCard__indicatorButton">
-                <StarIcon />
-              </Tag>
+              <Button secondary className="ObjectCard__indicatorButtonFav">
+                <Star16Icon />
+              </Button>
               <Tag className="ObjectCard__indicatorButton Color_blue_primary">
                 ID {id}
               </Tag>
@@ -200,6 +204,7 @@ const ObjectCard = ({
             <div className="ObjectCard__footer">
               <p className="Color_blue_primary Font_20_120_700">
                 <PricingSelect
+                  onClick={handleClickPrice}
                   options={currencyOptions}
                   price={price}
                   yieldCount={yieldCount}
@@ -217,7 +222,7 @@ const ObjectCard = ({
                 >
                   <KebabIcon className="ObjectCard__buttonIcon" />
                 </Button>
-                {openDropdown && <ObjectDropdown agencyName={agencyName} />}
+                {/* {openDropdown && <ObjectDropdown agencyName={agencyName} />} */}
               </div>
               <div className="ObjectCard__footerPerson">
                 {openLinks ? (
@@ -382,12 +387,26 @@ const StyledObjectCard = styled.div`
     }
   }
 
-  .ObjectCard__indicatorButton {
+  .ObjectCard__indicatorButton,
+  .ObjectCard__indicatorButtonFav {
+    border-radius: 5px;
     padding: 7px 10px;
     color: #4e6af3;
     svg {
+      width: 16px;
+      height: 16px;
       path {
         fill: #4e6af3;
+      }
+    }
+  }
+
+  .ObjectCard__indicatorButtonFav:hover {
+    background: #4e6af3;
+
+    svg {
+      path {
+        fill: #fff;
       }
     }
   }
