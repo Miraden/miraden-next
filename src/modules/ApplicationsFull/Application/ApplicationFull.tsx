@@ -497,7 +497,7 @@ const StyledApplication = styled.section`
       padding-right: 0;
     }
 
-    .Application__headTabs {
+    .Application__headTabsContainer {
       overflow: auto;
 
       ::-webkit-scrollbar {
@@ -514,6 +514,19 @@ const StyledApplication = styled.section`
       div,
       button:not(:first-child) {
         margin-left: 5px;
+      }
+    }
+
+    .Application__headTabs {
+      margin-top: 16px;
+    }
+
+    .Application__headTabsBar {
+      margin-top: 8px;
+    }
+    .Application__headTabButton {
+      ::before {
+        top: 28px;
       }
     }
   }

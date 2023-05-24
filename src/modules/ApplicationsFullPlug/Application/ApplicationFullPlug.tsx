@@ -261,6 +261,16 @@ const StyledApplication = styled.section`
       margin-top: 60px;
     }
   }
+
+  @media (max-width: 576px) {
+    .Application__headTabs {
+      margin-top: 16px;
+    }
+
+    .Application__headTabsBar {
+      margin-top: 8px;
+    }
+  }
 `;
 
 export { ApplicationFullPlug };

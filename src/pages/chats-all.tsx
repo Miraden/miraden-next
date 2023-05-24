@@ -25,7 +25,7 @@ export default function ApplicationsChatsAllPage() {
         />
       </Head>
       <StyledMainApplications>
-        <Header isAuthorized />
+        <Header isAuthorized className="ApplicationsChatsAllPage__header" />
         <ApplicationsChatsAll />
       </StyledMainApplications>
     </>
@@ -35,4 +35,10 @@ export default function ApplicationsChatsAllPage() {
 const StyledMainApplications = styled.main`
   background: #eef1f5;
   min-height: 100vh;
+
+  @media (max-width: 576px) {
+    .ApplicationsChatsAllPage__header {
+      display: none;
+    }
+  }
 `;

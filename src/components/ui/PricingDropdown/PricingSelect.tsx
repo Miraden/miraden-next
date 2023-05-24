@@ -27,7 +27,7 @@ const PricingSelect: FC<Props> = ({
   onClick,
   yieldCountPercent,
 }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(true);
+  const [showDropDown, setShowDropDown] = useState<boolean>(false);
   const [selectOption, setSelectOption] = useState<string>("");
   const [selectedOption, setSelectedOption] = useState<string>("");
 

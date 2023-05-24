@@ -487,6 +487,14 @@ const StyledApplication = styled.section`
     .Application__body {
       padding-top: 40px;
     }
+
+    .Application__headTabs {
+      margin-top: 16px;
+    }
+
+    .Application__headTabsBar {
+      margin-top: 8px;
+    }
   }
 `;
 

@@ -86,7 +86,7 @@ const StyledChatInformation = styled.div`
   }
 
   .ChatInfo__headTabsBar {
-    margin-top: 15px;
+    margin-top: 12px;
     width: 100%;
     background: #e1edfd;
     height: 4px;
@@ -99,6 +99,10 @@ const StyledChatInformation = styled.div`
 
   @media (max-width: 576px) {
     margin-top: 0;
+
+    .ChatInfo__headTabsBar {
+      margin-top: 8px;
+    }
   }
 `;
 

@@ -75,7 +75,7 @@ const StyledChatRequests = styled.div`
   }
 
   .ChatInfo__headTabsBar {
-    margin-top: 15px;
+    margin-top: 12px;
     width: 100%;
     background: #e1edfd;
     height: 4px;
@@ -87,7 +87,9 @@ const StyledChatRequests = styled.div`
   }
 
   @media (max-width: 576px) {
-    /* padding: 20px; */
+    .ChatInfo__headTabsBar {
+      margin-top: 8px;
+    }
   }
 `;
 

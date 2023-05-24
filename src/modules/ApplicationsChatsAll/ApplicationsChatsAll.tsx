@@ -121,7 +121,7 @@ const StyledApplicationsChatsAll = styled.section`
   padding-bottom: 20px;
 
   .ChatInfo__headTabs {
-    padding: 30px 0 0 0;
+    padding: 20px 0 0 0;
   }
 
   .ChatTabButton {
@@ -179,7 +179,7 @@ const StyledApplicationsChatsAll = styled.section`
     position: relative;
     ::before {
       position: absolute;
-      top: 35px;
+      top: 32px;
       left: 0;
       content: "";
       background: #ffffff;
@@ -190,7 +190,7 @@ const StyledApplicationsChatsAll = styled.section`
   }
 
   .ChatInfo__headTabsBar {
-    margin-top: 15px;
+    margin-top: 12px;
     width: 100%;
     background: #3b4a69;
     height: 4px;
@@ -513,6 +513,10 @@ const StyledApplicationsChatsAll = styled.section`
   @media (max-width: 576px) {
     height: calc(100vh - 22px);
 
+    .ChatInfo__headTabs {
+      padding-top: 16px;
+    }
+
     .Application__infoChat {
       padding-right: 8px;
     }
@@ -539,6 +543,16 @@ const StyledApplicationsChatsAll = styled.section`
         path {
           fill: #fff;
         }
+      }
+    }
+
+    .ChatInfo__headTabsBar {
+      margin-top: 8px;
+    }
+
+    .ChatInfo__headTabButton {
+      ::before {
+        top: 28px;
       }
     }
   }

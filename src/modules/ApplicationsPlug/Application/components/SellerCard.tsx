@@ -24,6 +24,7 @@ interface SellerCardProps {
   isRecommend?: boolean;
   onClick?: any;
   submit?: boolean;
+  href?: string;
 }
 
 const SellerCard = ({
@@ -42,6 +43,7 @@ const SellerCard = ({
   isRecommend,
   onClick,
   submit,
+  href,
 }: SellerCardProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -67,121 +69,130 @@ const SellerCard = ({
   }, []);
 
   return (
-    <StyledSellerCard className={className}>
-      <div className="SellerCard">
-        <div className="SellerCard__content">
-          <div className="SellerCard__imageContainer">
-            <img src={image} alt="" width={72} height={72} />
-            {isOnline && <div className="SellerCard__onlineDot" />}
-            {isPerformer && (
-              <div className="SellerCard__performerIcon">
-                <PerformerIcon />
-              </div>
-            )}
-            {isRefusal && (
-              <div className="SellerCard__performerIcon">
-                <RefusalIcon />
-              </div>
-            )}
-          </div>
-          <div className="SellerCard__info">
-            <p className="Font_16_140">{name}</p>
-            <p className="SellerCard__status Font_14_140 Color_blue_primary">
-              {status?.includes("Агентство") ? (
-                <>
-                  {status} - {agencyName}
-                </>
-              ) : (
-                <>{status}</>
-              )}
-            </p>
-            <div className="SellerCard__statusInfo">
-              {isPro && (
-                <Sticker theme="black" className="SellerCard__sticker">
-                  pro
-                </Sticker>
-              )}
-              {isVerified && (
-                <VerifiedIcon className="SellerCard__verifiedIcon" />
-              )}
-              {rating ? (
-                <div className="SellerCard__rating">
-                  <StarIconFilled
-                    width={14}
-                    height={14}
-                    className="SellerCard__ratingIcon"
-                  />
-                  <p className="Font_14_140">{rating.toFixed(1)}</p>
+    <StyledSellerCard className={className} href={href}>
+      <div className="SellerCard__container">
+        <div className="SellerCard">
+          <div className="SellerCard__content">
+            <div className="SellerCard__imageContainer">
+              <img src={image} alt="" width={72} height={72} />
+              {isOnline && <div className="SellerCard__onlineDot" />}
+              {isPerformer && (
+                <div className="SellerCard__performerIcon">
+                  <PerformerIcon />
                 </div>
-              ) : (
-                <>
-                  {!isPro && (
-                    <p className="Font_14_140 Color_text_disabled">
-                      Без рейтинга
-                    </p>
-                  )}
-                </>
+              )}
+              {isRefusal && (
+                <div className="SellerCard__performerIcon">
+                  <RefusalIcon />
+                </div>
               )}
             </div>
+            <div className="SellerCard__info">
+              <p className="Font_16_140">{name}</p>
+              <p className="SellerCard__status Font_14_140 Color_blue_primary">
+                {status?.includes("Агентство") ? (
+                  <>
+                    {status} - {agencyName}
+                  </>
+                ) : (
+                  <>{status}</>
+                )}
+              </p>
+              <div className="SellerCard__statusInfo">
+                {isPro && (
+                  <Sticker theme="black" className="SellerCard__sticker">
+                    pro
+                  </Sticker>
+                )}
+                {isVerified && (
+                  <VerifiedIcon className="SellerCard__verifiedIcon" />
+                )}
+                {rating ? (
+                  <div className="SellerCard__rating">
+                    <StarIconFilled
+                      width={14}
+                      height={14}
+                      className="SellerCard__ratingIcon"
+                    />
+                    <p className="Font_14_140">{rating.toFixed(1)}</p>
+                  </div>
+                ) : (
+                  <>
+                    {!isPro && (
+                      <p className="Font_14_140 Color_text_disabled">
+                        Без рейтинга
+                      </p>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
           </div>
-        </div>
-        {isRecommend ? (
-          <>
-            {isSubmit ? (
-              <Button
-                isSubmit
-                className="SellerCard__inviteButton"
-                onClick={onClick}
-                rightIcon={<InviteIcon />}
-              >
-                Приглашение отправлено
-              </Button>
-            ) : (
-              <Button
-                className="SellerCard__inviteButton"
-                onClick={handleOpenModal}
-                rightIcon={<InviteIcon />}
-              >
-                Пригласить откликнуться
-              </Button>
-            )}
+          {isRecommend ? (
+            <>
+              {isSubmit ? (
+                <Button
+                  isSubmit
+                  className="SellerCard__inviteButton"
+                  onClick={onClick}
+                  rightIcon={<InviteIcon />}
+                >
+                  Приглашение отправлено
+                </Button>
+              ) : (
+                <Button
+                  className="SellerCard__inviteButton"
+                  onClick={handleOpenModal}
+                  rightIcon={<InviteIcon />}
+                >
+                  Пригласить откликнуться
+                </Button>
+              )}
 
-            {isOpenModal && (
-              <InviteModal
-                closeModal={handleCloseModal}
-                onSubmit={handleSubmit}
-              />
-            )}
-          </>
-        ) : (
-          <>
-            <div className="SellerCard__actions">
-              <Button
-                tertiary
-                className="SellerCard__button"
-                onClick={handleOpenDropdown}
-              >
-                <Kebab24Icon className="SellerCard__buttonIcon" />
-              </Button>
-              {openDropdown && <SellerDropdown agencyName={agencyName} />}
-              {unreadMessages === 0 ? null : (
-                <div className="SellerCard__unread Font_14_16_600">
-                  {unreadMessages}
-                </div>
+              {isOpenModal && (
+                <InviteModal
+                  closeModal={handleCloseModal}
+                  onSubmit={handleSubmit}
+                />
               )}
-            </div>
-          </>
-        )}
+            </>
+          ) : (
+            <>
+              <div className="SellerCard__actions">
+                <Button
+                  tertiary
+                  className="SellerCard__button"
+                  onClick={handleOpenDropdown}
+                >
+                  <Kebab24Icon className="SellerCard__buttonIcon" />
+                </Button>
+                {openDropdown && <SellerDropdown agencyName={agencyName} />}
+                {unreadMessages === 0 ? null : (
+                  <div className="SellerCard__unread Font_14_16_600">
+                    {unreadMessages}
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </StyledSellerCard>
   );
 };
 
-const StyledSellerCard = styled.div`
-  border-radius: 10px;
-  background: #fff;
-  padding: 15px 20px;
+const StyledSellerCard = styled.a`
+  .SellerCard__container {
+    border-radius: 10px;
+    background: #fff;
+    padding: 15px 20px;
+    transition: 0.15s ease;
 
+    :hover {
+      box-shadow: 0 0 0 2px inset #c7d2e9;
+      cursor: pointer;
+    }
+  }
   .SellerCard {
     display: flex;
     align-items: center;
@@ -325,7 +336,7 @@ const SellerDropdown = ({ agencyName }: SellerCardProps) => {
   return (
     <StyledSellerDropdown>
       <div>
-        <a href="" className="Font_12_16">
+        <a href="" className="Font_14_140">
           {agencyName ? agencyName : "Another link?"}
         </a>
       </div>
@@ -336,11 +347,12 @@ const SellerDropdown = ({ agencyName }: SellerCardProps) => {
 const StyledSellerDropdown = styled.div`
   position: absolute;
   right: 0;
-  top: 26px;
+  top: 32px;
   background: #fff;
   padding: 10px 15px;
-  box-shadow: 0 0 0 1px #e1edfd;
+  box-shadow: 0 0 0 2px #e1edfd;
   border-radius: 10px;
+  width: fit-content;
 
   a:hover {
     color: #4e6af3;

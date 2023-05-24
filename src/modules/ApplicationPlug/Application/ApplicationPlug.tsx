@@ -391,7 +391,7 @@ const StyledApplication = styled.section`
       padding-right: 0;
     }
 
-    .Application__headTabs {
+    .Application__headTabsContainer {
       overflow: auto;
 
       ::-webkit-scrollbar {
@@ -411,8 +411,21 @@ const StyledApplication = styled.section`
       }
     }
 
+    .Application__headTabs {
+      margin-top: 16px;
+    }
+
     .Application__body {
       padding-top: 40px;
+    }
+
+    .Application__headTabsBar {
+      margin-top: 8px;
+    }
+    .Application__headTabButton {
+      ::before {
+        top: 28px;
+      }
     }
   }
 `;
