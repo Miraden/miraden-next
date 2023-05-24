@@ -486,7 +486,8 @@ const Application = ({ className }: ApplicationProps) => {
   };
 
   const [mQuery, setMQuery] = useState({
-    matches: window.innerWidth <= 1440 ? true : false,
+    matches:
+      typeof window !== "undefined" && window.innerWidth <= 1440 ? true : false,
   });
 
   const handleChange = useCallback(

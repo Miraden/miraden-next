@@ -3,11 +3,12 @@ import { HeaderDesktop, HeaderMobile } from "./components";
 
 interface HeaderProps {
   isAuthorized?: boolean;
+  className?: string;
 }
 
-const Header = ({ isAuthorized }: HeaderProps) => {
+const Header = ({ isAuthorized, className }: HeaderProps) => {
   return (
-    <StyledHeader>
+    <StyledHeader className={className}>
       <div className="Header__topBlock" />
       <div className="Header">
         {isAuthorized ? (

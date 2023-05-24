@@ -84,10 +84,12 @@ const ApplicationsChat = () => {
                   </button>
                   <div className="ApplicationInfo__container">
                     <div className="ApplicationInfo__headContent">
-                      <h2 className="Font_24_120">Заявка #12463</h2>
+                      <h2 className="Font_24_120 lg:Font_16_140 ">
+                        Заявка #12463
+                      </h2>
                       <Sticker theme="black">TRUE</Sticker>
                     </div>
-                    <p className="ApplicationInfo__headDescription Font_16_150">
+                    <p className="ApplicationInfo__headDescription Font_16_150 lg:Font_12_16">
                       Хочу купить 3-х комнатную квартиру на Кипре
                     </p>
                   </div>
@@ -187,7 +189,7 @@ const StyledApplicationsChat = styled.section`
     display: flex;
     flex-direction: column;
     max-width: 625px;
-    min-width: 500px;
+    min-width: 560px;
     height: 100%;
     width: 100%;
   }
@@ -355,7 +357,7 @@ const StyledApplicationsChat = styled.section`
   .ApplicationInfo__fullContainer {
     background: #2a344a;
     color: #fff;
-    padding: 0 20px 20px 20px;
+    padding: 0 20px 10px 20px;
     border-radius: 0 0 10px 10px;
     width: 100%;
   }
@@ -408,7 +410,9 @@ const StyledApplicationsChat = styled.section`
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: #3a465d;
+    :hover {
+      background: #3a465d;
+    }
   }
 
   .ApplicationInfo__backButtonChat {
@@ -460,8 +464,20 @@ const StyledApplicationsChat = styled.section`
 
     .ApplicationInfo {
       border-radius: 0;
+      padding-left: 12px;
       padding-bottom: 10px;
       border-bottom: 2px solid #3a465d;
+      align-items: center;
+    }
+
+    .ApplicationInfo__backButton {
+      width: 24px;
+      height: 24px;
+      background: unset;
+
+      :hover {
+        background: #3a465d;
+      }
     }
 
     .ApplicationInfo__headLayout {

@@ -12,7 +12,7 @@ const OpenContacts = () => {
   return (
     <StyledOpenContacts>
       <div className="Contacts__head">
-        <p className="Contacts__user Color_text_grey Font_16_24">
+        <p className="Contacts__user Color_text_grey Font_14_140">
           Пользователь
         </p>
         <Image
@@ -160,14 +160,15 @@ const StyledOpenContacts = styled.div`
     padding-right: 30px;
     display: flex;
     align-items: flex-start;
-    padding-top: 25px;
+    padding-top: 20px;
     padding-bottom: 15px;
     border-bottom: 1px solid #e1edfd;
   }
 
   .Contacts__user {
+    margin-top: 4px;
     min-width: 150px;
-    margin-right: 30px;
+    margin-right: -10px;
   }
 
   .Contacts__Image {

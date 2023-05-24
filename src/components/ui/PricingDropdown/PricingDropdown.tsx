@@ -92,7 +92,7 @@ const StyledPricingDropdown = styled.div`
     flex-direction: column;
     width: 100%;
     div {
-      padding: 15px;
+      padding: 15px 0 15px 0;
       width: 100%;
     }
 
@@ -126,13 +126,13 @@ const StyledPricingDropdown = styled.div`
   }
 
   .PricingDropdown__menu_active {
-    padding: 5px 20px 20px 20px;
+    padding: 5px 18px 20px 18px;
     width: fit-content;
     box-shadow: 0 0 0 2px #e1edfd inset;
     position: absolute;
     z-index: 2;
     top: 4px;
-    right: -20px;
+    left: 0;
     width: fit-content;
     background: #fff;
     border-radius: 10px;

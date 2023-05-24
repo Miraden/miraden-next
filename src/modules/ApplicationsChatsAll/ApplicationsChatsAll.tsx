@@ -217,7 +217,7 @@ const StyledApplicationsChatsAll = styled.section`
   .AppInfo {
     display: flex;
     flex-direction: column;
-    max-width: 660px;
+    max-width: 625px;
     width: 100%;
     height: -webkit-fill-available;
   }

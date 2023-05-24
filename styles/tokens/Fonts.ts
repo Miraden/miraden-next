@@ -249,6 +249,11 @@ const Fonts = createGlobalStyle`
       line-height: 24px;
     }
 
+    .lg\\:Font_16_140 {
+      font-size: 16px;
+      line-height: 140%;
+    }
+
     .lg\\:Font_14_140 {
       font-size: 14px;
       line-height: 140%;
@@ -324,6 +329,11 @@ const Fonts = createGlobalStyle`
     .sm\\:Font_14_140 {
       font-size: 14px;
       line-height: 140%;
+    }
+
+    .sm\\:Font_12_16 {
+      font-size: 12px;
+      line-height: 16px;
     }
   }
 `;

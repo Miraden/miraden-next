@@ -203,7 +203,7 @@ const StyledAllChatsContainer = styled.div`
   margin-top: 20px;
   border-radius: 10px;
   background: #fff;
-  min-width: 600px;
+  min-width: 560px;
   .List {
     margin-top: 20px;
   }

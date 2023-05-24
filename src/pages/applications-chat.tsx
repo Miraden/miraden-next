@@ -11,6 +11,8 @@ export default function ApplicationsChatPage() {
     <>
       <Head>
         <title>Miraden</title>
+        <meta name="theme-color" content="#2A344A" />
+
         <meta name="description" content="Miraden" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
@@ -23,7 +25,7 @@ export default function ApplicationsChatPage() {
         />
       </Head>
       <StyledMainApplications>
-        <Header isAuthorized />
+        <Header isAuthorized className="ApplicationsChatPage__header" />
         <ApplicationsChat />
       </StyledMainApplications>
     </>
@@ -33,4 +35,10 @@ export default function ApplicationsChatPage() {
 const StyledMainApplications = styled.main`
   background: #eef1f5;
   min-height: 100vh;
+
+  @media (max-width: 576px) {
+    .ApplicationsChatPage__header {
+      display: none;
+    }
+  }
 `;
