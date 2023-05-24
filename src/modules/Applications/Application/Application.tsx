@@ -1242,10 +1242,12 @@ const StyledApplication = styled.section`
       padding-right: 0;
     }
 
-    /*  */
-
     .Application__headTabs {
       overflow: auto;
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 

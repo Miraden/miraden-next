@@ -75,7 +75,7 @@ const ObjectCard = ({
   singleCost,
   href,
 }: ObjectCardProps) => {
-  const [openDropdown, setOpenDropdown] = useState(true);
+  const [openDropdown, setOpenDropdown] = useState(false);
   const [openLinks, setOpenLinks] = useState(false);
 
   const handleOpenDropdown = useCallback(
