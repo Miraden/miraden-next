@@ -174,7 +174,7 @@ const StyledApplicationsChat = styled.section`
   }
 
   .ApplicationsChat {
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
     display: flex;
     height: calc(100% - 20px);
   }
@@ -472,15 +472,11 @@ const StyledApplicationsChat = styled.section`
 
   @media (max-width: 769px) {
     .ApplicationInfo__headDescription {
-      /* overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      max-width: 500px; */
     }
   }
 
   @media (max-width: 576px) {
-    height: calc(100vh - 44px);
+    height: calc(100vh - 24px);
 
     .ApplicationsChat {
       padding-bottom: 0;

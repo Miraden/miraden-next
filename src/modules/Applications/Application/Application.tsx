@@ -15,15 +15,6 @@ interface ApplicationProps {
   className?: string;
 }
 
-type Option =
-  | "application"
-  | "requests"
-  | "performers"
-  | "refusals"
-  | "recommended"
-  | "contacts"
-  | "information";
-
 const applicationsArray = [
   {
     name: "Ангелина Синичкина",
@@ -435,6 +426,14 @@ const recommendArray = [
     isRefusal: true,
   },
 ];
+type Option =
+  | "application"
+  | "requests"
+  | "performers"
+  | "refusals"
+  | "recommended"
+  | "contacts"
+  | "information";
 
 const Application = ({ className }: ApplicationProps) => {
   const [selected, setSelected] = useState<Option | null>("application");
@@ -442,10 +441,17 @@ const Application = ({ className }: ApplicationProps) => {
   const startY = useRef<number>(0);
 
   const [selectedContent, setSelectedContent] = useState("1");
+  const [sideBar, setSideBar] = useState(true);
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
-    setShowFilter(false);
+
+    if (option !== "application") {
+      setSideBar(false);
+    } else {
+      setSideBar(true);
+      setShowFilter(false);
+    }
   }, []);
 
   const handleShowFilter = useCallback(() => {
@@ -479,8 +485,6 @@ const Application = ({ className }: ApplicationProps) => {
     }
   };
 
-  const [sideBar, setSideBar] = useState(true);
-
   return (
     <>
       <StyledApplication
@@ -490,8 +494,8 @@ const Application = ({ className }: ApplicationProps) => {
       >
         <div
           className={cn("Application__wrapper", {
-            IsOpenFilter: showFilter || !sideBar,
-            IsOpenSidebar: !showFilter || sideBar,
+            IsOpenSidebar: sideBar,
+            IsOpenFilter: showFilter,
           })}
         >
           <div className="Application__headContainer">
@@ -1124,8 +1128,8 @@ const StyledApplication = styled.section`
 
       width: 100%;
 
-      &.IsOpenFilter,
-      &.IsOpenSidebar {
+      &.IsOpenSidebar,
+      &.IsOpenFilter {
         grid-column: 1 / span 11;
       }
     }
