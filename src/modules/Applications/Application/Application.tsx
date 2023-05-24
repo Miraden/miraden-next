@@ -814,7 +814,6 @@ const StyledApplication = styled.section`
   grid-gap: 30px;
   padding-left: 55px;
   padding-right: 55px;
-  padding-bottom: 80px;
   &.Test {
     padding-right: 0 !important;
   }
@@ -822,7 +821,6 @@ const StyledApplication = styled.section`
   .Application__wrapper {
     min-width: 970px;
     max-width: 970px;
-
     grid-column: 5 / span 10;
   }
 
@@ -1125,7 +1123,6 @@ const StyledApplication = styled.section`
     grid-gap: 15px;
     .Application__wrapper {
       grid-column: 5 / span 10;
-
       width: 100%;
 
       &.IsOpenSidebar,
@@ -1199,7 +1196,6 @@ const StyledApplication = styled.section`
   @media (max-width: 1024px) {
     display: flex;
 
-    padding-bottom: 80px;
     flex-direction: column;
     .Application__headContainer {
       margin-top: 0;
@@ -1207,18 +1203,6 @@ const StyledApplication = styled.section`
     .TestFilter {
       transform: none;
     }
-
-    /* .Applications__filter {
-      display: none;
-    }
-
-    .Applications__filterMobileContainer {
-      position: absolute;
-      z-index: 999;
-      width: 100%;
-      height: 100vh;
-      top: -58px;
-    } */
 
     .Applications__filterMobile {
       position: relative;

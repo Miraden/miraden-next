@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { MouseEvent, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { CheckboxIcon } from "../../icons";
 
@@ -8,9 +8,9 @@ interface CheckboxProps {
   disabled?: boolean;
   checked?: boolean;
   label?: string;
-  onClick?: (e: MouseEvent<HTMLElement>) => void;
   isSelected?: any;
   onChange?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
   className?: string;
 }
 
@@ -26,41 +26,64 @@ const Checkbox = ({
 }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(checked || false);
 
+  useEffect(() => {
+    setIsChecked(checked || false);
+  }, [checked]);
+
+  const handleClick = (e: React.MouseEvent<HTMLLabelElement>) => {
+    setIsChecked(!isChecked);
+    if (onChange) {
+      onChange();
+    }
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setIsChecked(e.target.checked);
+    if (onChange) {
+      onChange();
+    }
+  };
+
   return (
     <StyledModalCheckbox className={cn(className, { ErrorCheckbox: error })}>
-      <input
-        className="[ Checkbox__input ]"
-        type="checkbox"
-        onClick={(e: React.MouseEvent<HTMLInputElement>) => {
-          setIsChecked(!isChecked);
-          e.currentTarget.blur(); // Убираем фокус с элемента после клика
-        }}
-        onChange={onChange}
-        checked={checked}
-        tabIndex={0}
-        disabled={disabled}
-      />
-      <span
-        className={cn("[ Checkbox__iconContainer ]", {
-          ErrorCheckbox: error,
-        })}
-      >
-        {disabled ? null : (
-          <CheckboxIcon
-            className={cn("[ Checkbox__icon ]", { hidden: !isChecked })}
-          />
-        )}
-      </span>
-      <span className="Checkbox__label">{label}</span>
+      <label onClick={handleClick} className="Checkbox">
+        <input
+          className="[ Checkbox__input ]"
+          type="checkbox"
+          onChange={handleChange}
+          checked={isChecked}
+          tabIndex={0}
+          disabled={disabled}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+        />
+        <span
+          className={cn("[ Checkbox__iconContainer ]", {
+            ErrorCheckbox: error,
+          })}
+        >
+          {disabled ? null : (
+            <CheckboxIcon
+              className={cn("[ Checkbox__icon ]", { hidden: !isChecked })}
+            />
+          )}
+        </span>
+        <span className="Checkbox__label">{label}</span>
+      </label>
     </StyledModalCheckbox>
   );
 };
 
-const StyledModalCheckbox = styled.label`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  width: fit-content;
+const StyledModalCheckbox = styled.div`
+  .Checkbox {
+    display: flex;
+    cursor: pointer;
+    width: fit-content;
+    align-items: center;
+  }
 
   .Checkbox__label {
     margin-left: 8px;

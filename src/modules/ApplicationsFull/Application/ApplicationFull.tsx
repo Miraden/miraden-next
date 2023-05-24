@@ -222,6 +222,8 @@ const StyledApplication = styled.section`
   padding-right: 55px;
   .Application__wrapper {
     grid-column: 5 / span 10;
+    min-width: 970px;
+    max-width: 970px;
   }
   .SingleChatInfoideBar {
     position: absolute;
@@ -422,17 +424,38 @@ const StyledApplication = styled.section`
     transform: rotate(90deg);
   }
 
-  @media (max-width: 1440px) {
+  @media (max-width: 1660px) {
+    padding-left: 0;
+    padding-right: 0;
+    grid-gap: 15px;
+    .Application__wrapper {
+      grid-column: 5 / span 10;
+      width: 100%;
+
+      &.IsOpenSidebar,
+      &.IsOpenFilter {
+        grid-column: 1 / span 11;
+      }
+    }
+  }
+
+  @media (max-width: 1441px) {
     grid-gap: 20px;
     padding-left: 0;
     padding-right: 0;
-
+    display: flex;
+    flex-direction: column;
     .Application__wrapper {
-      grid-column: 1 / span 18;
+      margin: 0 auto;
+      grid-column: 1 / span 14;
       width: 100%;
+      max-width: 970px;
+      min-width: unset;
 
-      &.IsOpenFilter {
+      &.IsOpenFilter,
+      &.IsOpenSidebar {
         grid-column: 1 / span 18;
+        max-width: 970px;
       }
     }
 
@@ -466,6 +489,20 @@ const StyledApplication = styled.section`
     .ApplicationsList {
       padding-left: 0;
       padding-right: 0;
+    }
+  }
+
+  @media (max-width: 660px) {
+    .Application__headContainer {
+      padding-right: 0;
+    }
+
+    .Application__headTabs {
+      overflow: auto;
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 

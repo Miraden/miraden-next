@@ -390,6 +390,7 @@ const StyledObjectCard = styled.div`
   .ObjectCard__indicatorButton,
   .ObjectCard__indicatorButtonFav {
     border-radius: 5px;
+    background: #f1f7ff;
     padding: 7px 10px;
     color: #4e6af3;
     svg {

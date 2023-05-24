@@ -27,18 +27,36 @@ const PaymentButton = ({
   active,
   onChange,
 }: PaymentButtonProps) => {
+  const handleButtonClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (onClick) {
+      onClick(e);
+    }
+  };
+
+  const handleCheckboxChange = () => {
+    if (onChange) {
+      onChange();
+    }
+  };
+
   return (
     <StyledButton
-      onClick={onClick}
+      onClick={handleButtonClick}
       className={cn(`${className}  PaymentButton`, {
         disabled: disabled,
         isActive: active,
       })}
     >
       <div className="Button__container">
-        <Checkbox onChange={onChange} onClick={onClick} checked={active} />
+        <Checkbox
+          onChange={handleCheckboxChange}
+          checked={active}
+          onClick={(e) => {
+            e.stopPropagation(); // Остановить всплытие клика, чтобы не вызывался handleButtonClick
+          }}
+        />
         {tax && (
-          <div className="Font_20_120 PaymentButton__percent">{tax} €</div>
+          <div className="Font_20_120 PaymentButton__percent">{tax} €</div>
         )}
       </div>
       {buttonTitle && (

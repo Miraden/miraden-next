@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui";
+import { Button, Search } from "@/components/ui";
 import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
 import {
   Applications,
@@ -7,77 +7,109 @@ import {
   ListItemsIcon,
   PlusIcon,
 } from "@/icons";
+import { FilterIcon } from "@/icons/FilterIcon";
 import { ObjectCard } from "@/modules/Applications/Application/components/ObjectCard";
 import cn from "classnames";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import styled from "styled-components";
 interface ApplicationProps {
   className?: string;
 }
-
+const objectsArray = [
+  {
+    title: "3-х комнатная квартира на Кипре для ВНЖ",
+    location: "Северный Кипр",
+    id: "1445",
+    cashBack: 6,
+    yieldCount: 8,
+    year: "2022",
+    square: "294",
+    rooms: 10,
+    sleeps: 6,
+    baths: 2,
+    price: "158 000",
+    status: "Собственник",
+    name: "Анастасия Петрова",
+    image: "/images/avatar.jpg",
+    isBooked: false,
+    isUnpublished: false,
+    image1: "/images/img.jpg",
+    image2: "/images/img.jpg",
+    image3: "/images/img.jpg",
+    firstInstallment: "34 000 $",
+    singleCost: "1 200 $",
+    firstInstallmentPercent: "30 %",
+  },
+  {
+    title: "3-х комнатная квартира на Кипре для ВНЖ",
+    location: "Северный Кипр",
+    id: "1445",
+    cashBack: 6,
+    yieldCount: 8,
+    year: "2022",
+    square: "294",
+    rooms: 10,
+    sleeps: 6,
+    baths: 2,
+    price: "158 000",
+    status: "Собственник",
+    name: "Анастасия Петрова",
+    image: "/images/avatar.jpg",
+    isBooked: true,
+    isUnpublished: false,
+    image1: "/images/img.jpg",
+    image2: "/images/img.jpg",
+    image3: "/images/img.jpg",
+    firstInstallment: "34 000 $",
+    singleCost: "1 200 $",
+    firstInstallmentPercent: "30 %",
+  },
+];
 type Option = "objects" | "applications" | "users";
 
 const Favourites = ({ className }: ApplicationProps) => {
   const [selected, setSelected] = useState<Option | null>("objects");
+  const [selectedContent, setSelectedContent] = useState("1");
+  const startY = useRef<number>(0);
+
+  const handleTabClick = (tabId: string) => {
+    setSelectedContent(tabId);
+  };
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
   }, []);
+  const handleTouchStart = (event: TouchEvent) => {
+    const touch = event.touches[0];
+    startY.current = touch.pageY;
+  };
 
-  const objectsArray = [
-    {
-      title: "3-х комнатная квартира на Кипре для ВНЖ",
-      location: "Северный Кипр",
-      id: "1445",
-      cashBack: 6,
-      yieldCount: 8,
-      year: "2022",
-      square: "294",
-      rooms: 10,
-      sleeps: 6,
-      baths: 2,
-      price: "158 000",
-      status: "Собственник",
-      name: "Анастасия Петрова",
-      image: "/images/avatar.jpg",
-      isBooked: false,
-      isUnpublished: false,
-      image1: "/images/img.jpg",
-      image2: "/images/img.jpg",
-      image3: "/images/img.jpg",
-      firstInstallment: "34 000 $",
-      singleCost: "1 200 $",
-      firstInstallmentPercent: "30 %",
-    },
-    {
-      title: "3-х комнатная квартира на Кипре для ВНЖ",
-      location: "Северный Кипр",
-      id: "1445",
-      cashBack: 6,
-      yieldCount: 8,
-      year: "2022",
-      square: "294",
-      rooms: 10,
-      sleeps: 6,
-      baths: 2,
-      price: "158 000",
-      status: "Собственник",
-      name: "Анастасия Петрова",
-      image: "/images/avatar.jpg",
-      isBooked: true,
-      isUnpublished: false,
-      image1: "/images/img.jpg",
-      image2: "/images/img.jpg",
-      image3: "/images/img.jpg",
-      firstInstallment: "34 000 $",
-      singleCost: "1 200 $",
-      firstInstallmentPercent: "30 %",
-    },
-  ];
+  const handleTouchEnd = (event: TouchEvent) => {
+    const touch = event.changedTouches[0];
+    const deltaY = touch.pageY - startY.current;
+
+    if (deltaY > 50) {
+      setShowFilter(false);
+    }
+  };
+
+  const [showFilter, setShowFilter] = useState(false);
+  const handleShowFilter = useCallback(() => {
+    setShowFilter(!showFilter);
+  }, [showFilter]);
+
   return (
-    <StyledApplication className={className}>
-      <div className={cn("Application__wrapper")}>
+    <StyledApplication
+      className={cn(className, {
+        Test: showFilter,
+      })}
+    >
+      <div
+        className={cn("Application__wrapper", {
+          IsOpenFilter: showFilter,
+        })}
+      >
         <div className="Application__headContainer">
           <div className="Application__head">
             <h1 className="Font_32_120 lg:Font_26_120_500">Избранное</h1>
@@ -121,40 +153,56 @@ const Favourites = ({ className }: ApplicationProps) => {
             <div className="Application__headTabsBar" />
           </div>
         </div>
-        <div className="Applications__headTabsBar_whiteSpace" />
 
         {selected === "objects" && (
-          <ul className="ApplicationsList">
-            {objectsArray.map((object, index) => (
-              <li key={index}>
-                <ObjectCard
-                  title={object.title}
-                  location={object.location}
-                  image1={object.image1}
-                  image2={object.image2}
-                  image3={object.image3}
-                  id={object.id}
-                  firstInstallment={object.firstInstallment}
-                  firstInstallmentPercent={object.firstInstallmentPercent}
-                  singleCost={object.singleCost}
-                  sleeps={object.sleeps}
-                  baths={object.baths}
-                  year={object.year}
-                  square={object.square}
-                  rooms={object.rooms}
-                  yieldCount={object.yieldCount}
-                  price={object.price}
-                  name={object.name}
-                  image={object.image}
-                  status={object.status}
-                  href=""
-                />
-              </li>
-            ))}
-          </ul>
+          <>
+            <div>
+              <Search
+                options={[]}
+                placeholder="Поиск"
+                className={cn("Applications__searchBar", {
+                  FilterOpen: !showFilter,
+                })}
+                rightIcon={<FilterIcon />}
+                onClick={handleShowFilter}
+                withFilter
+              />
+            </div>
+
+            <ul className="ApplicationsList">
+              {objectsArray.map((object, index) => (
+                <li key={index}>
+                  <ObjectCard
+                    title={object.title}
+                    location={object.location}
+                    image1={object.image1}
+                    image2={object.image2}
+                    image3={object.image3}
+                    id={object.id}
+                    firstInstallment={object.firstInstallment}
+                    firstInstallmentPercent={object.firstInstallmentPercent}
+                    singleCost={object.singleCost}
+                    sleeps={object.sleeps}
+                    baths={object.baths}
+                    year={object.year}
+                    square={object.square}
+                    rooms={object.rooms}
+                    yieldCount={object.yieldCount}
+                    price={object.price}
+                    name={object.name}
+                    image={object.image}
+                    status={object.status}
+                    href=""
+                  />
+                </li>
+              ))}
+            </ul>
+          </>
         )}
         {selected === "applications" && (
           <>
+            <div className="Applications__headTabsBar_whiteSpace" />
+
             <div className="Application__body">
               <Image
                 src="/images/application.svg"
@@ -170,6 +218,8 @@ const Favourites = ({ className }: ApplicationProps) => {
 
         {selected === "users" && (
           <>
+            <div className="Applications__headTabsBar_whiteSpace" />
+
             <div className="Application__body">
               <Image
                 src="/images/application.svg"
@@ -183,7 +233,25 @@ const Favourites = ({ className }: ApplicationProps) => {
           </>
         )}
       </div>
-      <ApplicationsFilter className="Applications__filter" />
+      {showFilter && (
+        <>
+          <div className="TestFilter">
+            <ApplicationsFilter
+              className="Applications__filter"
+              onClick={handleShowFilter}
+            />
+          </div>
+          <div className="Applications__filterMobileContainer">
+            <ApplicationsFilter
+              onTabClick={handleTabClick}
+              className="Applications__filterMobile"
+              onClick={handleShowFilter}
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+            />
+          </div>
+        </>
+      )}
       <div className="Application__Footer">
         <div className="Application__FooterButtons">
           <Button tertiary className="FooterButton Font_12_16">
@@ -221,20 +289,34 @@ const StyledApplication = styled.section`
   grid-template-columns: repeat(18, 1fr);
   grid-gap: 30px;
   padding-left: 55px;
+  padding-right: 55px;
 
+  &.Test {
+    padding-right: 0 !important;
+  }
   .TabButton__counter {
     margin-left: 10px;
   }
   .Application__wrapper {
+    min-width: 970px;
+    max-width: 970px;
     grid-column: 5 / span 10;
   }
-  .Applications__filter {
+
+  .TestFilter {
     position: sticky;
     top: 94px;
     overflow: auto;
     grid-column: 16 / span 3;
     margin-top: 30px;
     margin-left: -30px;
+    height: calc(100vh - 114px);
+    min-width: 355px;
+  }
+
+  .Applications__filter {
+    overflow: auto;
+
     height: calc(100vh - 114px);
   }
 
@@ -243,6 +325,22 @@ const StyledApplication = styled.section`
     height: 10px;
     border-radius: 0 0 10px 10px;
     background: #fff;
+  }
+
+  .Applications__searchBar {
+    padding: 0;
+    input {
+      border-radius: 0 0 10px 10px;
+      box-shadow: none !important;
+    }
+
+    .Search__rightIcon:hover {
+      svg {
+        path {
+          fill: #4e6af3;
+        }
+      }
+    }
   }
 
   .SingleChatInfoideBar {
@@ -295,8 +393,15 @@ const StyledApplication = styled.section`
       color: #4e6af3;
     }
 
+    :hover {
+      background: #f1f7ff;
+    }
+    :focus {
+      background: #fff;
+    }
+
     :active {
-      background: transparent !important;
+      background: #e1edfd;
     }
   }
 
@@ -443,14 +548,39 @@ const StyledApplication = styled.section`
     transform: rotate(90deg);
   }
 
-  @media (max-width: 1440px) {
+  @media (max-width: 1660px) {
+    padding-left: 0;
+    padding-right: 0;
+    grid-gap: 15px;
+    .Application__wrapper {
+      grid-column: 5 / span 10;
+      width: 100%;
+
+      &.IsOpenSidebar,
+      &.IsOpenFilter {
+        grid-column: 1 / span 11;
+      }
+    }
+  }
+
+  @media (max-width: 1441px) {
     grid-gap: 20px;
     padding-left: 0;
     padding-right: 0;
-
+    display: flex;
+    flex-direction: column;
     .Application__wrapper {
+      margin: 0 auto;
       grid-column: 1 / span 14;
       width: 100%;
+      max-width: 970px;
+      min-width: unset;
+
+      &.IsOpenFilter,
+      &.IsOpenSidebar {
+        grid-column: 1 / span 18;
+        max-width: 970px;
+      }
     }
 
     .SingleApplicationSideBar {
@@ -460,8 +590,35 @@ const StyledApplication = styled.section`
       height: fit-content;
       padding-bottom: 120px;
     }
-  }
 
+    .TestFilter {
+      position: fixed;
+      margin-top: 0;
+      margin-left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(60, 75, 97, 0.6);
+      transform: translate(-20px, 0);
+      backdrop-filter: blur(11px);
+      z-index: 500;
+      min-width: unset;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .Applications__filter {
+      position: relative;
+      margin-right: 20px;
+      margin-top: 20px;
+      height: calc(100vh - 40px);
+      margin-left: 0;
+      max-width: 355px;
+    }
+  }
+  .Applications__filterMobile {
+    display: none;
+  }
   @media (max-width: 1024px) {
     display: flex;
 
@@ -469,8 +626,15 @@ const StyledApplication = styled.section`
     .Application__headContainer {
       margin-top: 0;
     }
-    .Applications__filter {
-      display: none;
+
+    .TestFilter {
+      transform: none;
+    }
+
+    .Applications__filterMobile {
+      position: relative;
+      display: block;
+      height: 100vh;
     }
 
     .Applications__list {
@@ -483,13 +647,35 @@ const StyledApplication = styled.section`
       display: block;
     }
   }
+  @media (max-width: 660px) {
+    .Application__headContainer {
+      padding-right: 0;
+    }
+
+    .Application__headTabs {
+      overflow: auto;
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
 
   @media (max-width: 576px) {
     .ApplicationsList {
       padding-left: 0;
       padding-right: 0;
     }
-
+    .TestFilter {
+      display: none;
+    }
+    .Applications__filterMobileContainer {
+      position: absolute;
+      z-index: 999;
+      width: 100%;
+      height: 100vh;
+      top: -58px;
+    }
     .Application__FooterButtons {
       display: flex;
       justify-content: center;

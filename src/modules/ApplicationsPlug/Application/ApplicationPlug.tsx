@@ -258,10 +258,12 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
   useLockBodyScroll(isOpenModal);
 
   return (
-    <StyledApplication className={className}>
-      <div
-        className={cn("Application__wrapper", { IsOpenFilter: !showFilter })}
-      >
+    <StyledApplication
+      className={cn(className, {
+        Test: showFilter,
+      })}
+    >
+      <div className={cn("Application__wrapper", { IsOpenFilter: showFilter })}>
         <div className="Application__headContainer">
           <div className="Application__head">
             <Button
@@ -451,11 +453,13 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
       </div>
 
       {showFilter && (
-        <ApplicationsFilter
-          onTabClick={handleTabClick}
-          className="Applications__filter"
-          onClick={handleShowFilter}
-        />
+        <div className="TestFilter">
+          <ApplicationsFilter
+            onTabClick={handleTabClick}
+            className="Applications__filter"
+            onClick={handleShowFilter}
+          />
+        </div>
       )}
       <ApplicationsFooter />
     </StyledApplication>
@@ -470,7 +474,9 @@ const StyledApplication = styled.section`
   grid-gap: 30px;
   padding-left: 55px;
   padding-right: 55px;
-
+  &.Test {
+    padding-right: 0 !important;
+  }
   .Applications__searchBar {
     padding: 0;
     input {
@@ -487,21 +493,26 @@ const StyledApplication = styled.section`
     }
   }
 
-  &.Test {
-    padding-right: 0 !important;
-  }
-
-  .Application__wrapper {
-    grid-column: 5 / span 10;
-  }
-
-  .Applications__filter {
+  .TestFilter {
     position: sticky;
     top: 94px;
     overflow: auto;
     grid-column: 16 / span 3;
     margin-top: 30px;
     margin-left: -30px;
+    height: calc(100vh - 114px);
+    min-width: 355px;
+  }
+
+  .Application__wrapper {
+    min-width: 970px;
+    max-width: 970px;
+    grid-column: 5 / span 10;
+  }
+
+  .Applications__filter {
+    overflow: auto;
+
     height: calc(100vh - 114px);
   }
 
@@ -741,11 +752,27 @@ const StyledApplication = styled.section`
     }
   }
 
-  @media (max-width: 1440px) {
+  @media (max-width: 1660px) {
+    padding-left: 0;
+    padding-right: 0;
+    grid-gap: 15px;
+    .Application__wrapper {
+      grid-column: 5 / span 10;
+      width: 100%;
+
+      &.IsOpenSidebar,
+      &.IsOpenFilter {
+        grid-column: 1 / span 11;
+      }
+    }
+  }
+
+  @media (max-width: 1441px) {
     grid-gap: 20px;
     padding-left: 0;
     padding-right: 0;
-
+    display: flex;
+    flex-direction: column;
     .Application__wrapper {
       grid-column: 1 / span 14;
       width: 100%;
@@ -762,12 +789,48 @@ const StyledApplication = styled.section`
       height: fit-content;
       padding-bottom: 120px;
     }
+
+    .Application__wrapper {
+      margin: 0 auto;
+      grid-column: 1 / span 14;
+      width: 100%;
+      max-width: 970px;
+      min-width: unset;
+
+      &.IsOpenFilter,
+      &.IsOpenSidebar {
+        grid-column: 1 / span 18;
+        max-width: 970px;
+      }
+    }
+
+    .TestFilter {
+      position: fixed;
+      margin-top: 0;
+      margin-left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(60, 75, 97, 0.6);
+      transform: translate(-20px, 0);
+      backdrop-filter: blur(11px);
+      z-index: 500;
+      min-width: unset;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .Applications__filter {
+      position: relative;
+      margin-right: 20px;
+      margin-top: 20px;
+      height: calc(100vh - 40px);
+      margin-left: 0;
+      max-width: 355px;
+    }
   }
 
   @media (max-width: 1024px) {
-    display: flex;
-
-    flex-direction: column;
     .Application__headContainer {
       margin-top: 0;
     }
@@ -783,6 +846,20 @@ const StyledApplication = styled.section`
 
     .Application__Footer {
       display: block;
+    }
+  }
+
+  @media (max-width: 660px) {
+    .Application__headContainer {
+      padding-right: 0;
+    }
+
+    .Application__headTabs {
+      overflow: auto;
+
+      ::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 
