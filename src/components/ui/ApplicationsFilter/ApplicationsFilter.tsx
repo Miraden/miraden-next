@@ -159,13 +159,13 @@ const StyledApplicationsFilter = styled.div`
   }
 
   @media (max-width: 576px) {
-    .ApplicationsFilter__swipe {
+    /* .ApplicationsFilter__swipe {
       display: flex;
-    }
+    } */
 
-    .CloseFilter {
+    /* .CloseFilter {
       display: none;
-    }
+    } */
     .Filter__headContainer {
       background: #fff;
       padding-bottom: 20px;

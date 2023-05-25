@@ -159,7 +159,7 @@ const objectsArray = [
 ];
 
 const ObjectsList = ({ className, onClose }: Props) => {
-  const [openFilter, setOpenFilter] = useState(true);
+  const [openFilter, setOpenFilter] = useState(false);
 
   const handleOpenFilter = useCallback(() => {
     setOpenFilter(!openFilter);
@@ -197,8 +197,6 @@ const ObjectsList = ({ className, onClose }: Props) => {
     }
     return five;
   }
-
-  let test = getNoun;
 
   return (
     <StyledObjectsList className={className}>
@@ -247,9 +245,6 @@ const ObjectsList = ({ className, onClose }: Props) => {
           </ul>
         </div>
 
-        {openFilter && (
-          <ApplicationsFilter onClick={handleOpenFilter} className="Filter" />
-        )}
         <div className="ObjectsList__buttonContainer">
           {selectedOptions.length <= 0 ? (
             <Button disabled className="ObjectsList__button">
@@ -269,6 +264,12 @@ const ObjectsList = ({ className, onClose }: Props) => {
           )}
         </div>
       </div>
+
+      {openFilter && (
+        <div className="Filter__mobile">
+          <ApplicationsFilter onClick={handleOpenFilter} className="Filter" />
+        </div>
+      )}
     </StyledObjectsList>
   );
 };
@@ -342,9 +343,11 @@ const StyledObjectsList = styled.div`
     display: flex;
     padding: 5px 20px;
     background: #f1f7ff;
+    flex-wrap: wrap;
   }
 
   .ObjectsList__search {
+    border-bottom: 2px solid #eef1f5;
     input {
       border-radius: 0 0 10px 10px;
       box-shadow: none;
@@ -365,6 +368,49 @@ const StyledObjectsList = styled.div`
   .Filter {
     position: absolute;
     right: 410px;
+    top: 20px;
+    max-width: 355px;
+    height: calc(100vh - 40px);
+    overflow: auto;
+  }
+
+  @media (max-width: 768px) {
+    .Filter__mobile {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(60, 75, 97, 0.6);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .Filter {
+      position: relative;
+      top: 20px;
+      right: 15px;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .Filter__mobile {
+      justify-content: center;
+    }
+
+    .Filter {
+      position: relative;
+      top: 20px;
+      right: 0;
+      width: 100%;
+      max-width: unset;
+    }
+
+    .ObjectsList {
+      width: 100%;
+      max-width: 390px;
+    }
   }
 `;
 
