@@ -159,16 +159,46 @@ const objectsArray = [
 ];
 
 const ObjectsList = ({ className, onClose }: Props) => {
-  const [openFilter, setOpenFilter] = useState(false);
-  const [selected, setSelected] = useState(false);
-
-  const handleSelect = useCallback(() => {
-    setSelected(!selected);
-  }, [selected]);
+  const [openFilter, setOpenFilter] = useState(true);
 
   const handleOpenFilter = useCallback(() => {
     setOpenFilter(!openFilter);
   }, [openFilter]);
+
+  const [activeButtons, setActiveButtons] = useState(
+    objectsArray.map((object, index) => index === 0)
+  );
+
+  const handleActive = useCallback(
+    (index: number) => {
+      const newActiveButtons = [...activeButtons];
+      newActiveButtons[index] = !newActiveButtons[index];
+      setActiveButtons(newActiveButtons);
+    },
+    [activeButtons]
+  );
+
+  const selectedOptions = objectsArray.filter(
+    (object, index) => activeButtons[index]
+  );
+
+  function getNoun(number: any, one: any, two: any, five: any) {
+    let n = Math.abs(number);
+    n %= 100;
+    if (n >= 5 && n <= 20) {
+      return five;
+    }
+    n %= 10;
+    if (n === 1) {
+      return one;
+    }
+    if (n >= 2 && n <= 4) {
+      return two;
+    }
+    return five;
+  }
+
+  let test = getNoun;
 
   return (
     <StyledObjectsList className={className}>
@@ -201,7 +231,8 @@ const ObjectsList = ({ className, onClose }: Props) => {
             {objectsArray.map((object, index) => (
               <li key={index}>
                 <ObjectSmallCard
-                  onChange={handleSelect}
+                  onChange={() => handleActive(index)}
+                  onClick={() => handleActive(index)}
                   title={object.title}
                   image={object.image}
                   location={object.location}
@@ -209,6 +240,7 @@ const ObjectsList = ({ className, onClose }: Props) => {
                   rooms={object.rooms}
                   square={object.square}
                   price={object.price}
+                  active={activeButtons[index]}
                 />
               </li>
             ))}
@@ -219,7 +251,22 @@ const ObjectsList = ({ className, onClose }: Props) => {
           <ApplicationsFilter onClick={handleOpenFilter} className="Filter" />
         )}
         <div className="ObjectsList__buttonContainer">
-          <Button>Отправить 4 объекта</Button>
+          {selectedOptions.length <= 0 ? (
+            <Button disabled className="ObjectsList__button">
+              Отправить
+            </Button>
+          ) : (
+            <Button className="ObjectsList__button">
+              Отправить{" "}
+              {`${selectedOptions.length}` +
+                getNoun(
+                  `${selectedOptions.length}`,
+                  " объект",
+                  " объекта",
+                  " объектов"
+                )}
+            </Button>
+          )}
         </div>
       </div>
     </StyledObjectsList>
@@ -264,6 +311,10 @@ const StyledObjectsList = styled.div`
     border-top: 2px solid #d4ddee;
     display: flex;
     justify-content: center;
+  }
+
+  .ObjectsList__button {
+    width: 100%;
   }
 
   .ObjectsList__head {

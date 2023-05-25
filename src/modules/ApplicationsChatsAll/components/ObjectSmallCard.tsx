@@ -2,6 +2,7 @@ import { Checkbox } from "@/components/ui";
 import { BuildYearIcon, PointIconFooter, SquareIcon } from "@/icons";
 import { RoomsIcon } from "@/icons/RoomsIcon";
 import Image from "next/image";
+import { MouseEvent } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -13,7 +14,9 @@ interface Props {
   rooms?: number;
   price?: string;
   image?: any;
-  onChange?: any;
+  onChange?: () => void;
+  onClick?: (e: MouseEvent<HTMLElement>) => void;
+  active?: boolean;
 }
 
 const ObjectSmallCard = ({
@@ -26,9 +29,11 @@ const ObjectSmallCard = ({
   price,
   image,
   onChange,
+  onClick,
+  active,
 }: Props) => {
   return (
-    <StyledObjectSmallCard className={className}>
+    <StyledObjectSmallCard className={className} onClick={onClick}>
       <div className="ObjectCard">
         <div>
           <Image
@@ -58,7 +63,7 @@ const ObjectSmallCard = ({
           </div>
           <div className="ObjectCard__pricing">
             <p className="Font_14_16_600 Color_blue_primary">{price}</p>
-            <Checkbox onChange={onChange} />
+            <Checkbox onChange={onChange} onClick={onClick} checked={active} />
           </div>
         </div>
       </div>
