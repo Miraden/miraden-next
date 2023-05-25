@@ -70,6 +70,9 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
               <p className="Color_text_grey">
                 Но вы можете сделать это прямо сейчас!{" "}
               </p>
+              <Button className="CreateApp__button" href="/customer/create-1">
+                Создать заявку
+              </Button>
             </div>
           </>
         )}
@@ -78,8 +81,11 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
             <div className="Application__body">
               <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
 
-              <h2>No published applications</h2>
-              <p className="Color_text_grey">No published</p>
+              <h2>Нет опубликованных заявок</h2>
+              <p className="Color_text_grey">
+                Но вы можете опубликовать старую заявку или создать новую прямо
+                сейчас!
+              </p>
             </div>
           </>
         )}

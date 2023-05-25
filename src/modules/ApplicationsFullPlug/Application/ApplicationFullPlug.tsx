@@ -64,12 +64,7 @@ const ApplicationFullPlug = ({ className }: ApplicationProps) => {
       {selected === "all" && (
         <>
           <div className="Application__body">
-            <Image
-              src="/images/application.svg"
-              alt=""
-              width={150}
-              height={120}
-            />
+            <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
             <h2 className="Font_20_120">У вас еще нет созданных заявок</h2>
             <p className="Color_text_grey">
               Но вы можете сделать это <br /> прямо сейчас!
@@ -83,14 +78,14 @@ const ApplicationFullPlug = ({ className }: ApplicationProps) => {
       {selected === "published" && (
         <>
           <div className="Application__body">
-            <Image
-              src="/images/application.svg"
-              alt=""
-              width={150}
-              height={120}
-            />
-            <h2 className="Font_20_120">No published applications</h2>
-            <p className="Color_text_grey">No published</p>
+            <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
+            <h2 className="Font_20_120">Нет созданных заявок</h2>
+            <p className="Color_text_grey">
+              Но вы можете сделать это прямо сейчас!{" "}
+            </p>
+            <Button className="CreateApp__button" href="/customer/create-1">
+              Создать заявку
+            </Button>
           </div>
         </>
       )}

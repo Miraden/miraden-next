@@ -1,5 +1,6 @@
 import { Button, Checkbox } from "@/components/ui";
 import { CrossIcon } from "@/icons";
+import { InviteModalIcon } from "@/icons/InviteModalIcon";
 import styled from "styled-components";
 
 interface Props {
@@ -16,6 +17,8 @@ const InviteModal = ({ className, onClick, closeModal, onSubmit }: Props) => {
         <button onClick={closeModal} className="CloseButton">
           <CrossIcon className="CrossIcon" width={24} height={24} />
         </button>
+        <InviteModalIcon />
+
         <h3 className="Font_24_120">Открыть контакты</h3>
 
         <p className="ModalDescription Font_16_150">
@@ -84,6 +87,10 @@ const StyledModalContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  h3 {
+    margin-top: 10px;
+  }
 `;
 
 export { InviteModal };

@@ -178,14 +178,14 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
         {selected === "published" && (
           <>
             <div className="Application__body">
-              <Image
-                src="/images/application.svg"
-                alt=""
-                width={150}
-                height={120}
-              />
-              <h2>No published applications</h2>
-              <p className="Color_text_grey">No published</p>
+              <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
+              <h2>Нет созданных заявок</h2>
+              <p className="Color_text_grey">
+                Но вы можете сделать это прямо сейчас!{" "}
+              </p>
+              <Button className="CreateApp__button" compact>
+                Создать заявку
+              </Button>
             </div>
           </>
         )}

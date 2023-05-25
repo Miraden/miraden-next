@@ -204,18 +204,17 @@ const Favourites = ({ className }: ApplicationProps) => {
             <div className="Applications__headTabsBar_whiteSpace" />
 
             <div className="Application__body">
-              <Image
-                src="/images/application.svg"
-                alt=""
-                width={150}
-                height={120}
-              />
-              <h2>No published applications</h2>
-              <p className="Color_text_grey">No published</p>
+              <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
+              <h2>Нет созданных заявок</h2>
+              <p className="Color_text_grey">
+                Но вы можете сделать это прямо сейчас!{" "}
+              </p>
+              <Button className="CreateApp__button" href="/customer/create-1">
+                Создать заявку
+              </Button>
             </div>
           </>
         )}
-
         {selected === "users" && (
           <>
             <div className="Applications__headTabsBar_whiteSpace" />
@@ -267,7 +266,6 @@ const Favourites = ({ className }: ApplicationProps) => {
               <PlusIcon width={24} height={24} />
             </Button>
           </div>
-
           <Button tertiary className="FooterButton Font_12_16">
             <HomeIcon width={18} height={18} />
             Объекты
