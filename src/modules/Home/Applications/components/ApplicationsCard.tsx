@@ -156,12 +156,6 @@ const StyledApplicationsCard = styled.a`
       padding: 10px 20px;
     }
   }
-
-  @media (max-width: 768px) {
-    .Card__objectInfo {
-      margin-top: 44px;
-    }
-  }
 `;
 
 export { ApplicationsCard };
