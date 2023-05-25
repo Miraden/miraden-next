@@ -500,7 +500,6 @@ const Application = ({ className }: ApplicationProps) => {
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, [handleChange]);
-  console.log(mQuery, "mQuery");
 
   useLockBodyScroll(showFilter && mQuery.matches);
 

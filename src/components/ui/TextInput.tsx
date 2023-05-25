@@ -50,8 +50,6 @@ const TextInput = ({
     }
   };
 
-  console.log(value.length);
-
   return (
     <StyledTextInput className={className}>
       <StyledTextInputField

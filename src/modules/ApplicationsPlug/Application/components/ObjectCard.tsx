@@ -179,7 +179,7 @@ const ObjectCard = ({
             </p>
           </div>
           <div className="ObjectCard__footer">
-            <p className="Color_blue_primary Font_20_120_700">
+            <div className="Color_blue_primary Font_20_120_700">
               <PricingSelect
                 options={currencyOptions}
                 price={price}
@@ -189,7 +189,7 @@ const ObjectCard = ({
                 firstInstallmentPercent={firstInstallmentPercent}
                 singleCost={singleCost}
               />
-            </p>
+            </div>
             <div>
               <Button
                 tertiary

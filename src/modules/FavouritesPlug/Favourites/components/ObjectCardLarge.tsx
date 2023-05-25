@@ -168,7 +168,9 @@ const ObjectCardLarge = ({
               </p>
             </div>
             <div className="ObjectCardLarge__footer">
-              <p className="Color_blue_primary Font_20_120_700">{price} €</p>
+              <div className="Color_blue_primary Font_20_120_700">
+                {price} €
+              </div>
               <div className="ObjectCardLarge__footerInfo ">
                 <div>
                   <ListItemsIcon className="ListItemIcon" />{" "}

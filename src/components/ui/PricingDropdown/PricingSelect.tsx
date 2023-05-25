@@ -50,8 +50,6 @@ const PricingSelect: FC<Props> = ({
     setSelectOption(option);
   };
 
-  console.log(selectedOption);
-
   return (
     <StyledDropdownInput
       className={cn({ className })}
