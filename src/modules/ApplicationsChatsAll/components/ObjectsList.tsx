@@ -166,7 +166,7 @@ const ObjectsList = ({ className, onClose }: Props) => {
   }, [openFilter]);
 
   const [activeButtons, setActiveButtons] = useState(
-    objectsArray.map((object, index) => index === 0)
+    objectsArray.map((object, index) => index === null)
   );
 
   const handleActive = useCallback(
