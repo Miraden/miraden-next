@@ -379,8 +379,8 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
               <Image
                 src="/images/application.svg"
                 alt=""
-                width={150}
-                height={120}
+                width={200}
+                height={200}
               />
               <h2 className="Font_20_120">Объекты отсутствуют</h2>
               <p className="Color_text_grey Font_16_150">

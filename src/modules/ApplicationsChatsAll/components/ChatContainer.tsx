@@ -244,8 +244,8 @@ const StyledChatContainer = styled.div`
     }
 
     .ChatContainer__messageContainer {
-      padding-right: 10px;
-      padding-left: 10px;
+      padding-right: 15px;
+      padding-left: 15px;
     }
   }
 `;

@@ -390,7 +390,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
           <>
             <div className="Applications__headTabsBar_whiteSpace" />
             <div className="Application__body">
-              <Image src="/images/apps/1.svg" alt="" width={200} height={200} />
+              <Image src="/images/apps/8.svg" alt="" width={200} height={200} />
               <h2 className="Font_20_120">Исполнители не выбраны</h2>
               <p className="Color_text_grey Font_16_150">
                 Вы можете выбрать одного или несколько исполнителей в разделе 
@@ -409,7 +409,12 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
           <>
             <div className="Applications__headTabsBar_whiteSpace" />
             <div className="Application__body">
-              <Image src="/images/apps/1.svg" alt="" width={200} height={200} />
+              <Image
+                src="/images/apps/10.svg"
+                alt=""
+                width={200}
+                height={200}
+              />
               <h2 className="Font_20_120">Отказы отсутствуют</h2>
               <p className="Color_text_grey Font_16_150">
                 Если предложение пользователя вас не заинтересовало, вы всегда

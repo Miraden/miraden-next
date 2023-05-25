@@ -193,14 +193,12 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
         {selected === "archived" && (
           <>
             <div className="Application__body">
-              <Image
-                src="/images/application.svg"
-                alt=""
-                width={150}
-                height={120}
-              />
-              <h2>No archived applications</h2>
-              <p className="Color_text_grey">No archived</p>
+              <Image src="/images/apps/5.svg" alt="" width={200} height={200} />
+              <h2>Нет заявок в архиве</h2>
+              <p className="Color_text_grey">
+                Если заявка больше не актуальна, вы можете отправить ее в архив,
+                а по необходимости восстановить обратно
+              </p>
             </div>
           </>
         )}
@@ -316,10 +314,10 @@ const StyledApplication = styled.section`
     padding-top: 100px;
     margin: 0 auto;
     text-align: -webkit-center;
-    max-width: 370px;
+    max-width: 320px;
 
     h2 {
-      margin-top: 30px;
+      margin-top: 20px;
     }
 
     p {
@@ -479,6 +477,10 @@ const StyledApplication = styled.section`
       padding-right: 20px;
     }
 
+    .Application__body {
+      padding-top: 120px;
+    }
+
     .Application__Footer {
       display: block;
     }
@@ -528,6 +530,10 @@ const StyledApplication = styled.section`
       ::before {
         top: 28px;
       }
+    }
+
+    .Application__body {
+      padding-top: 40px;
     }
   }
 `;

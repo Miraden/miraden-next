@@ -219,7 +219,7 @@ const StyledObjectCardLarge = styled.a`
   .ObjectCardLarge__container {
     background: #fff;
     border-radius: 10px;
-    padding: 20px;
+    /* padding: 20px; */
     transition: 0.15s ease;
     :hover {
       box-shadow: 0 0 0 2px inset #c7d2e9;
@@ -300,6 +300,7 @@ const StyledObjectCardLarge = styled.a`
   .ObjectCardLarge__infoContainer {
     display: flex;
     justify-content: space-between;
+    padding: 20px 20px 0 20px;
   }
 
   .ObjectCardLarge__stickers {
@@ -321,6 +322,8 @@ const StyledObjectCardLarge = styled.a`
   .ObjectCardLarge__head {
     width: 100%;
     margin-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
     display: flex;
     justify-content: space-between;
     position: relative;
@@ -342,6 +345,8 @@ const StyledObjectCardLarge = styled.a`
     display: flex;
     align-items: center;
     margin-top: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
   }
 
   .ObjectCardLarge__indicators,
@@ -352,7 +357,13 @@ const StyledObjectCardLarge = styled.a`
 
   .ObjectCardLarge__indicators {
     margin-top: 15px;
-
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: auto;
+    white-space: nowrap;
+    ::-webkit-scrollbar {
+      display: none;
+    }
     div:not(:first-child) {
       margin-left: 10px;
     }
@@ -360,7 +371,8 @@ const StyledObjectCardLarge = styled.a`
 
   .ObjectCardLarge__objectInfo {
     margin-top: 34px;
-
+    padding-left: 20px;
+    padding-right: 20px;
     p {
       display: flex;
       align-items: center;
@@ -390,6 +402,7 @@ const StyledObjectCardLarge = styled.a`
     padding-top: 9px;
     margin-top: 10px;
     border-top: 1px solid #e1edfd;
+    padding: 0 20px 20px 20px;
   }
   .ObjectCardLarge__footerInfo {
     display: flex;

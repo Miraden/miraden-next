@@ -24,7 +24,7 @@ const OpenContacts = () => {
         />
         <div className="Contacts__headInfo">
           <div className="Contacts__headName">
-            <p className="Font_20_120">Анастасия Петрова</p>
+            <p className="Font_16_140">Анастасия Петрова</p>
             <p className="Contacts__online Font_14_140 Color_text_grey">
               В сети 5 ч. назад
             </p>
@@ -245,7 +245,7 @@ const StyledOpenContacts = styled.div`
 
   .Contacts__locationInfo {
     display: flex;
-    margin-left: 30px;
+    /* margin-left: 30px; */
 
     p:not(:first-child) {
       margin-left: 10px;

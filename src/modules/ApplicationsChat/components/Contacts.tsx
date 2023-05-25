@@ -31,12 +31,12 @@ const Contacts = () => {
             Агентство недвижимости — RealEstate
           </p>
           <div className="ContactInfo__location">
-            <PointIconFooter width={18} height={18} />
+            <PointIconFooter width={18} />
             <p className="Color_text_grey">Кипр, Лимассол</p>
           </div>
           <div className="ContactInfo__experience Font_14_140">
             <p className="Color_text_grey">На сайте 6 лет</p>
-            <p className="ContactInfo__dotDivider">•</p>
+            <p className="ContactInfo__dotDivider Color_text_disabled">•</p>
             <p className="Color_green">В сети</p>
           </div>
           <div className="ContactInfo__statusInfo">
@@ -94,6 +94,10 @@ const StyledContacts = styled.div`
     display: flex;
     align-items: center;
     margin-top: 5px;
+
+    svg {
+      margin-right: 6px;
+    }
   }
 
   .ContactInfo__experience {
@@ -118,7 +122,7 @@ const StyledContacts = styled.div`
   }
 
   .ContactInfo__sticker {
-    margin-right: 5px;
+    margin-right: 10px;
   }
 
   .ContactInfo__verifiedIcon {
@@ -139,6 +143,7 @@ const StyledContacts = styled.div`
 
   .ContactInfo__openContacts {
     margin-top: 50px;
+    padding: 10px 24px;
   }
 
   .ContactInfo__disclaimer {

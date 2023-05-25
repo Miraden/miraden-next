@@ -1,5 +1,6 @@
 import { MessageInput } from "@/components/ui";
 import Image from "next/image";
+import { useCallback, useState } from "react";
 import styled from "styled-components";
 
 interface Props {
@@ -9,6 +10,12 @@ interface Props {
 }
 
 const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
+  const [objectsListOpen, setObjectsListOpen] = useState(false);
+
+  const handleObjectsListOpen = useCallback(() => {
+    setObjectsListOpen(!objectsListOpen);
+  }, [objectsListOpen]);
+
   return (
     <StyledChatContainer
       className={className}
@@ -158,8 +165,8 @@ const StyledChatContainer = styled.div`
     }
 
     .ChatContainer__messageContainer {
-      padding-right: 10px;
-      padding-left: 10px;
+      padding-right: 15px;
+      padding-left: 15px;
     }
   }
 `;

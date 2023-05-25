@@ -1,7 +1,8 @@
 import { PenIcon, PlusIcon } from "@/icons";
 import { PaperclipIcon } from "@/icons/PaperclipIcon";
 import { SendMessageIcon } from "@/icons/SendMessageIcon";
-import { useEffect, useRef, useState } from "react";
+import { ObjectsList } from "@/modules/ApplicationsChatsAll/components/ObjectsList";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Button } from "./Button";
 
@@ -39,6 +40,12 @@ const MessageInput = ({ className }: Props) => {
     }
   }, [textareaRef]);
 
+  const [objectsListOpen, setObjectsListOpen] = useState(false);
+
+  const handleObjectsListOpen = useCallback(() => {
+    setObjectsListOpen(!objectsListOpen);
+  }, [objectsListOpen]);
+
   return (
     <StyledMessageInput className={className}>
       {value.length === 0 ? (
@@ -49,7 +56,7 @@ const MessageInput = ({ className }: Props) => {
       <InputWrapper>
         {value.length === 0 ? <PenIcon className="PenIcon" /> : null}
         <Input
-          placeholder="Text"
+          placeholder="Написать сообщение..."
           value={value}
           onChange={handleChange}
           ref={textareaRef}
@@ -61,11 +68,13 @@ const MessageInput = ({ className }: Props) => {
           <Button
             className="MessageInput__button_default"
             leftIcon={<PlusIcon />}
+            onClick={handleObjectsListOpen}
           >
             Добавить объект
           </Button>
         ) : (
           <Button
+            onClick={handleObjectsListOpen}
             className="MessageInput__button_typing"
             leftIcon={<SendMessageIcon />}
           />
@@ -76,6 +85,7 @@ const MessageInput = ({ className }: Props) => {
           </button>
         ) : null}
       </ButtonWrapper>
+      {objectsListOpen && <ObjectsList onClose={handleObjectsListOpen} />}
     </StyledMessageInput>
   );
 };
@@ -97,6 +107,8 @@ const StyledMessageInput = styled.div`
     margin-left: 20px;
   }
   @media (max-width: 576px) {
+    padding: 16px 20px;
+
     .MessageInput__button_paperclipMobile {
       display: flex;
       margin-left: 0;
@@ -132,6 +144,10 @@ const Input = styled.textarea`
   white-space: normal;
   resize: none;
   height: 24px;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Placeholder = styled.span`
@@ -158,7 +174,7 @@ const ButtonWrapper = styled.div`
   }
 
   .MessageInput__button_typing {
-    padding: 16px;
+    padding: 10px;
   }
 
   .MessageInput__button_paperclip {

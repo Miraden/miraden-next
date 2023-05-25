@@ -2,6 +2,7 @@ import { Button, Sticker, Tag } from "@/components/ui";
 import {
   BathsIcon,
   BuildYearIcon,
+  Kebab24Icon,
   KebabIcon,
   ListItemsIcon,
   PointIconFooter,
@@ -88,9 +89,15 @@ const ObjectCardLarge = ({
 }: ObjectCardLargeProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
 
-  const handleOpenDropdown = useCallback(() => {
-    setOpenDropdown(!openDropdown);
-  }, [openDropdown]);
+  const handleOpenDropdown = useCallback(
+    (event: any) => {
+      event.preventDefault();
+      setOpenDropdown(!openDropdown);
+    },
+    [openDropdown]
+  );
+
+  const mobilePublished = publishedAt?.split("Создана");
 
   return (
     <StyledObjectCardLarge className={className} href={href}>
@@ -103,20 +110,26 @@ const ObjectCardLarge = ({
                 {isPublished && <Sticker theme="green">Опубликована</Sticker>}
               </div>
               <div className="ObjectCardLarge__kebabButton">
-                <p className="Font_14_140 Color_text_disabled">{publishedAt}</p>
+                <p className="Font_14_140 Color_text_disabled Published">
+                  {publishedAt}
+                </p>
+                <p className="Font_14_140 Color_text_disabled PublishedMobile">
+                  {mobilePublished}
+                </p>
                 <Button
                   tertiary
                   className="ObjectCardLarge__button"
                   onClick={handleOpenDropdown}
                 >
-                  <KebabIcon className="ObjectCardLarge__buttonIcon" />
+                  <Kebab24Icon className="ObjectCardLarge__buttonIcon" />
                 </Button>
               </div>
             </div>
 
             <div className="ObjectCardLarge__head">
-              <p className="Font_20_120 md:Font_16_150_500 ">{title}</p>
-
+              <p className="Font_20_120 md:Font_16_150_500 ObjectCardLarge__Title">
+                {title}
+              </p>
               {openDropdown && <ObjectDropdown agencyName={agencyName} />}
             </div>
             <div className="ObjectCardLarge__location Font_14_140 Color_text_grey">
@@ -193,7 +206,7 @@ const ObjectCardLarge = ({
               >
                 <KebabIcon className="ObjectCardLarge__buttonIcon" />
               </Button>
-              {openDropdown && <ObjectDropdown agencyName={agencyName} />}
+              {/* {openDropdown && <ObjectDropdown agencyName={agencyName} />} */}
             </div>
           </div>
         </div>
@@ -206,12 +219,19 @@ const StyledObjectCardLarge = styled.a`
   .ObjectCardLarge__container {
     background: #fff;
     border-radius: 10px;
-    padding: 20px;
-
+    /* padding: 20px; */
     transition: 0.15s ease;
     :hover {
       box-shadow: 0 0 0 2px inset #c7d2e9;
+
+      .ObjectCardLarge__Title {
+        color: #4e6af3;
+      }
     }
+  }
+
+  .PublishedMobile {
+    display: none;
   }
 
   .ObjectCardLarge {
@@ -280,6 +300,7 @@ const StyledObjectCardLarge = styled.a`
   .ObjectCardLarge__infoContainer {
     display: flex;
     justify-content: space-between;
+    padding: 20px 20px 0 20px;
   }
 
   .ObjectCardLarge__stickers {
@@ -292,11 +313,17 @@ const StyledObjectCardLarge = styled.a`
 
   .ObjectCardLarge__kebabButton {
     display: flex;
+
+    button {
+      margin-left: 10px;
+    }
   }
 
   .ObjectCardLarge__head {
     width: 100%;
     margin-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
     display: flex;
     justify-content: space-between;
     position: relative;
@@ -318,6 +345,8 @@ const StyledObjectCardLarge = styled.a`
     display: flex;
     align-items: center;
     margin-top: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
   }
 
   .ObjectCardLarge__indicators,
@@ -328,6 +357,13 @@ const StyledObjectCardLarge = styled.a`
 
   .ObjectCardLarge__indicators {
     margin-top: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: auto;
+    white-space: nowrap;
+    ::-webkit-scrollbar {
+      display: none;
+    }
     div:not(:first-child) {
       margin-left: 10px;
     }
@@ -335,7 +371,8 @@ const StyledObjectCardLarge = styled.a`
 
   .ObjectCardLarge__objectInfo {
     margin-top: 34px;
-
+    padding-left: 20px;
+    padding-right: 20px;
     p {
       display: flex;
       align-items: center;
@@ -365,6 +402,7 @@ const StyledObjectCardLarge = styled.a`
     padding-top: 9px;
     margin-top: 10px;
     border-top: 1px solid #e1edfd;
+    padding: 0 20px 20px 20px;
   }
   .ObjectCardLarge__footerInfo {
     display: flex;
@@ -452,8 +490,7 @@ const StyledObjectCardLarge = styled.a`
     }
   }
 
-  @media (max-width: 768px) {
-    padding: 10px;
+  @media (max-width: 767px) {
     .ObjectCardLarge__mainImages,
     .ObjectCardLarge__unpublishedContainer {
       min-width: 120px;
@@ -463,7 +500,7 @@ const StyledObjectCardLarge = styled.a`
     }
 
     .ObjectCardLarge__info {
-      margin-left: 15px;
+      margin-left: 0;
     }
 
     .ObjectCardLarge__location {
@@ -506,6 +543,28 @@ const StyledObjectCardLarge = styled.a`
       display: none;
     }
   }
+
+  @media (max-width: 576px) {
+    .Published {
+      display: none;
+    }
+
+    .PublishedMobile {
+      display: flex;
+    }
+
+    .ObjectCardLarge__indicators {
+      margin-top: 15px;
+
+      div {
+        font-size: 12px;
+      }
+
+      div:not(:first-child) {
+        margin-left: 10px;
+      }
+    }
+  }
 `;
 
 const ObjectDropdown = ({ agencyName }: ObjectCardLargeProps) => {
@@ -523,7 +582,7 @@ const ObjectDropdown = ({ agencyName }: ObjectCardLargeProps) => {
 const StyledObjectDropdown = styled.div`
   position: absolute;
   right: 0;
-  top: 26px;
+  top: -7px;
   background: #fff;
   padding: 10px 15px;
   box-shadow: 0 0 0 2px #e1edfd;
@@ -531,6 +590,10 @@ const StyledObjectDropdown = styled.div`
 
   a:hover {
     color: #4e6af3;
+  }
+
+  @media (max-width: 768px) {
+    top: 130px;
   }
 `;
 

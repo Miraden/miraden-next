@@ -53,7 +53,7 @@ const OpenContactsAccordion = ({
         <div className="Accordion__title">
           <p className="Accordion__status Color_text_grey">Статус</p>
           <p className="Accordion__agency Font_14_140">
-            Агент — <mark>RealEstate</mark>
+            Агент — <mark> RealEstate</mark>
           </p>
         </div>
         <ArrowAccordionIcon
@@ -81,7 +81,7 @@ const OpenContactsAccordion = ({
                   height={48}
                 />
                 <Link href="" className="AgencyLink">
-                  Агентство недвижимости — RealEstate
+                  Агентство недвижимости RealEstate
                 </Link>
               </div>
             </div>
@@ -118,7 +118,7 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
   .Accordion__agency {
     display: flex;
     align-items: center;
-    margin-left: 30px;
+    /* margin-left: 30px; */
 
     mark {
       background: none;
@@ -126,6 +126,7 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
     }
 
     .AgencyLink {
+      max-width: 200px;
       margin-left: 15px;
     }
   }
@@ -134,12 +135,12 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 20px;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
     width: 100%;
     overflow: hidden;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #e1edfd;
+    border-bottom: 4px solid #e1edfd;
   }
 
   .Accordion__contentWrapper {

@@ -201,7 +201,7 @@ const StyledApplicationsChat = styled.section`
     border-radius: 10px 10px 0 0;
   }
   .ChatInfo__headTabs {
-    padding: 20px 0 0 0;
+    padding: 30px 0 0 0;
   }
 
   .ChatTabButton {
@@ -436,6 +436,7 @@ const StyledApplicationsChat = styled.section`
   .ApplicationInfo__container {
     width: 100%;
     margin-left: 15px;
+    /* color: #b8c6e3; */
   }
 
   .ApplicationInfo__headContent {
@@ -486,20 +487,25 @@ const StyledApplicationsChat = styled.section`
     }
   }
 
-  @media (max-width: 769px) {
-    .ApplicationInfo__headDescription {
-    }
+  @media (max-width: 768px) {
+    min-height: 100vh;
+    height: 102vh;
   }
 
   @media (max-width: 576px) {
-    height: calc(100vh - 24px);
-
+    /* height: calc(100vh - 24px); */
+    .ApplicationInfo {
+      background: #2a344a;
+      color: #fff;
+      padding: 10px 20px 20px 20px;
+    }
     .ChatInfo__headTabs {
-      padding-top: 16px;
+      padding-top: 20px;
     }
 
     .ApplicationsChat {
       padding-bottom: 0;
+      height: 100%;
     }
 
     .Application__infoChat {

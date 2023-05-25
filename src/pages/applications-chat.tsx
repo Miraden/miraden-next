@@ -36,7 +36,7 @@ const StyledMainApplications = styled.main`
   background: #eef1f5;
   min-height: 100vh;
 
-  @media (max-width: 576px) {
+  @media (max-width: 768px) {
     .ApplicationsChatPage__header {
       display: none;
     }
