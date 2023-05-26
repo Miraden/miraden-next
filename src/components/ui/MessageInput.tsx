@@ -108,6 +108,7 @@ const StyledMessageInput = styled.div`
   }
   @media (max-width: 576px) {
     padding: 16px 20px;
+    border-radius: 10px 10px 0 0;
 
     .MessageInput__button_paperclipMobile {
       display: flex;

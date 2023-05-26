@@ -405,6 +405,7 @@ const StyledObjectCardLarge = styled.a`
     margin-top: 10px;
     border-top: 1px solid #e1edfd;
     padding: 0 20px 20px 20px;
+    padding-top: 15px;
   }
   .ObjectCardLarge__footerInfo {
     display: flex;
@@ -589,7 +590,9 @@ const StyledObjectDropdown = styled.div`
   padding: 10px 15px;
   box-shadow: 0 0 0 2px #e1edfd;
   border-radius: 10px;
-
+  :hover {
+    background: #f1f7ff;
+  }
   a:hover {
     color: #4e6af3;
   }

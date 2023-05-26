@@ -16,7 +16,9 @@ const Global = createGlobalStyle`
       border: none;
       background: transparent;
     }
-    
+   
+
+
   }
 
   body > div[data-test-id=overlay-container] {

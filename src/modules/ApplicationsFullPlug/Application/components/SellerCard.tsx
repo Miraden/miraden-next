@@ -246,7 +246,9 @@ const StyledSellerDropdown = styled.div`
   box-shadow: 0 0 0 1px #e1edfd;
   border-radius: 10px;
   width: fit-content;
-
+  :hover {
+    background: #f1f7ff;
+  }
   a:hover {
     color: #4e6af3;
   }

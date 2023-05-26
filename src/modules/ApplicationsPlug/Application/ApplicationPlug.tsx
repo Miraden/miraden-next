@@ -370,17 +370,16 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
         {selected === "requests" && (
           <>
             <div className="Application__body">
-              <Image src="/images/apps/1.svg" alt="" width={200} height={200} />
-              <h2 className="Font_20_120">Вы отлично справились!</h2>
+              <Image
+                src="/images/apps/11.svg"
+                alt=""
+                width={200}
+                height={200}
+              />
+              <h2 className="Font_20_120">Нет предложений</h2>
               <p className="Color_text_grey Font_16_150">
-                На этом месте скоро появятся предложения от исполнителей. А пока
-                вы можете посмотреть 
-                <a
-                  className="Application__bodyButton "
-                  onClick={() => handleSelect("recommended")}
-                >
-                  Рекомендуемые
-                </a>
+                По вашему запросу не найдено предложений Попробуйте изменить
+                критерии поиска
               </p>
             </div>
           </>

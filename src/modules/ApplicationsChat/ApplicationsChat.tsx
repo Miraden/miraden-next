@@ -493,7 +493,6 @@ const StyledApplicationsChat = styled.section`
   }
 
   @media (max-width: 576px) {
-    /* height: calc(100vh - 24px); */
     .ApplicationInfo {
       background: #2a344a;
       color: #fff;
@@ -501,6 +500,10 @@ const StyledApplicationsChat = styled.section`
     }
     .ChatInfo__headTabs {
       padding-top: 20px;
+
+      button:last-child {
+        padding-right: 20px;
+      }
     }
 
     .ApplicationsChat {

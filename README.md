@@ -36,3 +36,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Usage
+
+Есть готовая главная страница.
+
+Шаги создания заявки реализованы в виде отдельных страниц. Папка pages/customer. В итоге надо будет оберуть все компоненты в 1 и прописать дополнительную логику их поведения, сохранения предыдущих введённых данных.
+Все страницы заявки/объекты/чаты реализованы как отдельные. Каждая страница тянет компоненты из соответствующей папки, там компоненты дублируются и их стили тоже. При переводе этих страниц в slug надо будет почистить повторяющиеся компоненты.

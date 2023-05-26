@@ -8,14 +8,11 @@ import { BerkshireLogo } from "./components/logos/BerkshireLogo";
 import { BetterHomesLogo } from "./components/logos/BetterHomesLogo";
 import { CenturyLogo } from "./components/logos/CenturyLogo";
 import { ColdwellLogo } from "./components/logos/ColdwellLogo";
-import { ColliersLogo } from "./components/logos/ColliersLogo";
 import { CrbeLogo } from "./components/logos/CrbeLogo";
 import { CushmanLogo } from "./components/logos/CushmanLogo";
-import { EraLogo } from "./components/logos/EraLogo";
 import { JllLogo } from "./components/logos/JllLogo";
 import { KnightLogo } from "./components/logos/KnightLogo";
 import { LevelsLogo } from "./components/logos/LevelsLogo";
-import { RealStateLogo } from "./components/logos/RealStateLogo";
 import { RealtyLogo } from "./components/logos/RealtyLogo";
 import { RemaxLogo } from "./components/logos/RemaxLogo";
 import { SothebysLogo } from "./components/logos/SothebysLogo";
@@ -85,9 +82,6 @@ const agecnyReviews = [
   { logo: <BerkshireLogo /> },
   { logo: <CushmanLogo /> },
   { logo: <RealtyLogo /> },
-  { logo: <EraLogo /> },
-  { logo: <ColliersLogo /> },
-  { logo: <RealStateLogo /> },
 ];
 
 const Reviews = () => {
@@ -282,12 +276,13 @@ const StyledReviews = styled.section`
 
   .Reviews__agencys {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-gap: 10px;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 30px;
     margin-top: 50px;
   }
 
   .Reviews__agencyCard {
+    grid-column: span 2;
     padding-top: 24px;
     padding-bottom: 24px;
     box-shadow: 0 0 0 2px inset #f1f7ff;
@@ -295,16 +290,6 @@ const StyledReviews = styled.section`
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  .Reviews__agencyCard:nth-child(13) {
-    grid-column: 1 / span 2;
-  }
-  .Reviews__agencyCard:nth-child(14) {
-    grid-column: 3 / span 2;
-  }
-  .Reviews__agencyCard:nth-child(15) {
-    grid-column: 5 / span 2;
   }
 
   .Reviews__buttonsContainer {
@@ -346,6 +331,22 @@ const StyledReviews = styled.section`
         padding: 10px 15px;
       }
     }
+
+    .Reviews__agencys {
+      grid-gap: 10px;
+    }
+  }
+
+  @media (max-width: 960px) {
+    .Reviews__agencys {
+      grid-gap: 10px;
+
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .Reviews__agencyCard {
+      grid-column: span 1;
+    }
   }
 
   @media (max-width: 767px) {
@@ -358,13 +359,11 @@ const StyledReviews = styled.section`
 
     .Reviews__agencys {
       margin-top: 40px;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     }
 
-    .Reviews__agencyCard:nth-child(13),
-    .Reviews__agencyCard:nth-child(14),
-    .Reviews__agencyCard:nth-child(15) {
-      grid-column: auto;
+    .Reviews__agencyCard {
+      grid-column: span 1;
     }
   }
 
