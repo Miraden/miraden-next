@@ -40,9 +40,9 @@ const TerritoryInfo = () => {
         onChange={handleOpenAccordion}
       >
         {showAll
-          ? locations.splice(0, locations.length - 1).map((location) => {
+          ? locations.splice(0, locations.length - 1).map((location, idx) => {
               return (
-                <div className="SingleApplication__location">
+                <div key={idx} className="SingleApplication__location">
                   <div>
                     <PurposeCheckIcon width={18} height={18} />
                     <p>{location.title}</p>
@@ -53,9 +53,9 @@ const TerritoryInfo = () => {
                 </div>
               );
             })
-          : locations.splice(0, 10).map((location) => {
+          : locations.splice(0, 10).map((location, idx) => {
               return (
-                <div className="SingleApplication__location">
+                <div key={idx} className="SingleApplication__location">
                   <div>
                     <PurposeCheckIcon width={18} height={18} />
                     <p>{location.title}</p>

@@ -26,9 +26,9 @@ const Documents = () => {
         expanded={openAccordion}
         onChange={handleOpenAccordion}
       >
-        {documents.map((document) => {
+        {documents.map((document, idx) => {
           return (
-            <div className="SingleApplication__location">
+            <div key={idx} className="SingleApplication__location">
               <div>
                 <PurposeCheckIcon width={18} height={18} />
                 <p>{document.title}</p>

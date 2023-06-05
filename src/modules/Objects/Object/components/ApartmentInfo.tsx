@@ -52,9 +52,9 @@ const ApartmentInfo = () => {
         onChange={handleOpenAccordion}
       >
         {showAll
-          ? locations.splice(0, locations.length - 1).map((location) => {
+          ? locations.splice(0, locations.length - 1).map((location, idx) => {
               return (
-                <div className="SingleApplication__location">
+                <div key={idx} className="SingleApplication__location">
                   <div>
                     <PurposeCheckIcon width={18} height={18} />
                     <p>{location.title}</p>
@@ -65,9 +65,9 @@ const ApartmentInfo = () => {
                 </div>
               );
             })
-          : locations.splice(0, 10).map((location) => {
+          : locations.splice(0, 10).map((location, idx) => {
               return (
-                <div className="SingleApplication__location">
+                <div key={idx} className="SingleApplication__location">
                   <div>
                     <PurposeCheckIcon width={18} height={18} />
                     <p>{location.title}</p>
@@ -97,9 +97,9 @@ const ApartmentInfo = () => {
 
         <h2 className="ApartmentInfo__equipmentTitle Font_24_120">Оснащение</h2>
 
-        {equipments.map((equipment) => {
+        {equipments.map((equipment, idx) => {
           return (
-            <div className="SingleApplication__location">
+            <div key={idx} className="SingleApplication__location">
               <div>
                 <PurposeCheckIcon width={18} height={18} />
                 <p className="Color_primary">{equipment}</p>

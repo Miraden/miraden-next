@@ -46,9 +46,9 @@ const BuildingInfo = () => {
         onChange={handleOpenAccordion}
       >
         {showAll
-          ? locations.splice(0, locations.length - 1).map((location) => {
+          ? locations.splice(0, locations.length - 1).map((location, idx) => {
               return (
-                <div className="SingleApplication__location">
+                <div key={idx} className="SingleApplication__location">
                   <div>
                     <PurposeCheckIcon width={18} height={18} />
                     <p>{location.title}</p>
@@ -59,9 +59,9 @@ const BuildingInfo = () => {
                 </div>
               );
             })
-          : locations.splice(0, 10).map((location) => {
+          : locations.splice(0, 10).map((location, idx) => {
               return (
-                <div className="SingleApplication__location">
+                <div key={idx} className="SingleApplication__location">
                   <div>
                     <PurposeCheckIcon width={18} height={18} />
                     <p>{location.title}</p>
@@ -93,9 +93,9 @@ const BuildingInfo = () => {
           Характеристики
         </h2>
 
-        {characteristics.map((characteristic) => {
+        {characteristics.map((characteristic, idx) => {
           return (
-            <div className="SingleApplication__location">
+            <div key={idx} className="SingleApplication__location">
               <div>
                 <PurposeCheckIcon width={18} height={18} />
                 <p>{characteristic.title}</p>

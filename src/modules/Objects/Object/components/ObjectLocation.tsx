@@ -39,9 +39,9 @@ const ObjectLocation = () => {
         expanded={openAccordion}
         onChange={handleOpenAccordion}
       >
-        {locations.map((location) => {
+        {locations.map((location, idx) => {
           return (
-            <div className="SingleApplication__location">
+            <div key={idx} className="SingleApplication__location">
               <div>
                 <PurposeCheckIcon width={18} height={18} />
                 <p>{location.title}</p>
@@ -62,8 +62,8 @@ const ObjectLocation = () => {
         />
 
         <div className="ObjectCard__indicators Font_14_16">
-          {tags.map((tag) => {
-            return <Tag>{tag}</Tag>;
+          {tags.map((tag, idx) => {
+            return <Tag key={idx} >{tag}</Tag>;
           })}
         </div>
       </Accordion>
