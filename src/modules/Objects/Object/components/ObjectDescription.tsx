@@ -42,7 +42,7 @@ const ObjectDescription = () => {
                 Восточной Европой, Африкой и Ближним Востоком. Плюс пассажирские
                 и грузовые чартерные рейсы.
                 <br />
-                <br />А тут будет какой-то нереально длинный текст, понимаете?
+                <br />А тут будет какой-то нереально длинный текст
               </span>
             ) : (
               <span>
@@ -82,12 +82,10 @@ const ObjectDescription = () => {
 const StyledObjectDescription = styled.div`
   display: flex;
   position: relative;
-  padding-bottom: 20px;
-
   flex-direction: column;
   background: #fff;
   border-radius: 10px;
-  padding: 30px 40px;
+  padding: 30px 40px 20px 0;
   width: 100%;
   transition: 0.15s ease;
   margin-top: 20px;
