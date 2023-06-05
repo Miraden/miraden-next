@@ -104,6 +104,7 @@ export default function Home() {
         <Link href="/chats-all">Чаты</Link>
         <Link href="/favourites-plug">Избранное_заглушка</Link>
         <Link href="/favourites-full">Избранное</Link>
+        <Link href="/objects">Объект</Link>
       </StyledMain>
     </>
   );
