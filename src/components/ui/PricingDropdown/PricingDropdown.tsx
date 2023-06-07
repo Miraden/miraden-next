@@ -92,12 +92,12 @@ const StyledPricingDropdown = styled.div`
     flex-direction: column;
     width: 100%;
     div {
-      padding: 15px 0 15px 0;
+      padding: 15px 0 5px 0;
       width: 100%;
     }
 
     div:not(:first-child) {
-      border-top: 1px solid #f1f7ff;
+      border-top: 1px solid #d4ddee;
     }
   }
 

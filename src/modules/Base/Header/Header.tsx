@@ -69,7 +69,7 @@ const StyledHeader = styled.header`
     .Header {
       padding: 8px 20px 12px 20px;
       top: 0;
-      border-radius: 0 0 10px 10px;
+      border-radius: 0;
     }
 
     .Header__mobile {

@@ -54,22 +54,22 @@ const SingleApplication = ({ className, someContent }: Props) => {
           <Sticker theme="black" className="SingleApplication__headSticker">
             TRUE
           </Sticker>
-          <p className="Font_14_140">ID 1445</p>
+          <p className="Font_14_140">Заявка № 10445</p>
         </div>
         <div className="SingleApplication__headDropdown">
           <p className="Color_text_disabled">
-            <span>Создана</span> 12 января <span>, 12:09</span>
+            <span>Создана</span> 12 января, <span> 12:09</span>
           </p>
           <Button
             tertiary
-            className="ObjectCard__button"
+            className={`ObjectCard__button ${openDropdown ? 'ObjectCard__button--open' : ''}`}
             onClick={handleOpenDropdown}
           >
             <Kebab24Icon />
+            {openDropdown && (
+              <SingleApplicationDropdown someContent={someContent} />
+            )}
           </Button>
-          {openDropdown && (
-            <SingleApplicationDropdown someContent={someContent} />
-          )}
         </div>
       </div>
       <div className="SingleApplication__pricing">
@@ -94,7 +94,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p className="Color_blue_primary Font_16_140">264</p>
           </div>
           <Sticker theme="blue" className="SingleApplication__pricingSticker">
-            Новых откликов 5
+            Предложений
           </Sticker>
         </div>
       </div>
@@ -111,40 +111,51 @@ const SingleApplication = ({ className, someContent }: Props) => {
       </div>
       <div className="SingleApplication__structureInfo">
         <div className="SingleApplication__structureInfoContent">
-          <BuildYearIcon width={18} height={18} />
           <div>
-            <p className="Font_24_120">294 м²</p>
-            <p className="Font_16_150 Color_text_grey">Год постройки</p>
-          </div>
-        </div>
-        <div className="SingleApplication__structureInfoContent">
-          <SquareIcon width={18} height={18} />
-          <div>
-            <p className="Font_24_120">2022</p>
+            <div className="SingleApplication__structureInfoDetails">
+              <SquareIcon width={18} height={18} />
+              <p className="Font_24_120">2022</p>
+            </div>
             <p className="Font_16_150 Color_text_grey">Общая площадь</p>
           </div>
         </div>{" "}
+
         <div className="SingleApplication__structureInfoContent">
-          <LivingSquareIcon width={18} height={18} />
           <div>
-            <p className="Font_24_120">194 м²</p>
+            <div className="SingleApplication__structureInfoDetails">
+              <BuildYearIcon width={18} height={18} />
+              <p className="Font_24_120">294 м²</p>
+            </div>
+            <p className="Font_16_150 Color_text_grey">Год постройки</p>
+          </div>
+        </div>
+      
+        <div className="SingleApplication__structureInfoContent">
+          <div>
+            <div className="SingleApplication__structureInfoDetails">
+              <LivingSquareIcon width={18} height={18} />
+              <p className="Font_24_120">194 м²</p>
+            </div>
             <p className="Font_16_150 Color_text_grey">Жилая площадь</p>
           </div>
         </div>{" "}
+       
         <div className="SingleApplication__structureInfoContent">
-          <RoomsIcon width={18} height={18} />
           <div>
-            <p className="Font_24_120">10</p>
+            <div className="SingleApplication__structureInfoDetails">
+              <RoomsIcon width={18} height={18} />
+              <p className="Font_24_120">10</p>
+            </div>
             <p className="Font_16_150 Color_text_grey">Комнат</p>
           </div>
-        </div>
+        </div>{" "}
       </div>
       <div className="Divider"></div>
       <div className="SingleApplication__fullInfo Font_16_24">
         <div className="SingleApplication__location">
           <div>
             <PointIconFooter width={18} height={18} />
-            <p>Локация</p>
+            <p>Расположение</p>
           </div>
           <div className="SingleApplication__locationInfo">
             <p>Кипр</p>
@@ -280,11 +291,11 @@ const SingleApplication = ({ className, someContent }: Props) => {
               )}
             </p>
             {!openText ? (
-              <button onClick={handleOpenText} className="Color_blue_primary">
+              <button onClick={handleOpenText} className="Color_blue_primary Font_14_140">
                 Открыть больше
               </button>
             ) : (
-              <button onClick={handleOpenText} className="Color_blue_primary">
+              <button onClick={handleOpenText} className="Color_blue_primary Font_14_140">
                 Свернуть
               </button>
             )}
@@ -299,7 +310,7 @@ const StyledSingleApplication = styled.div`
   background: #ffffff;
   border-radius: 10px;
   padding: 20px;
-  margin-top: 20px;
+  margin-top: 16px;
 
   .SingleApplication__pricingSelectMobile {
     display: none;
@@ -309,6 +320,7 @@ const StyledSingleApplication = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 50px;
     padding-bottom: 19px;
     border-bottom: 1px solid #e1edfd;
   }
@@ -379,6 +391,10 @@ const StyledSingleApplication = styled.div`
     }
   }
 
+  .ObjectCard__button--open {
+    background: #f1f7ff;
+  }
+
   .ObjectCard__button {
     padding: 2px !important;
     width: 28px;
@@ -409,6 +425,10 @@ const StyledSingleApplication = styled.div`
     svg {
       margin-top: 5.5px;
       margin-right: 15px;
+    }
+
+    .SingleApplication__structureInfoDetails {
+      display: flex;
     }
   }
 
@@ -551,7 +571,7 @@ const StyledSingleApplication = styled.div`
 const SingleApplicationDropdown = ({ someContent }: Props) => {
   return (
     <StyledSingleApplicationDropdown>
-      <a href="" className="Font_12_16">
+      <a href="" className='Font_14_16'>
         {someContent ? someContent : "Какой-то контент"}
       </a>
     </StyledSingleApplicationDropdown>
@@ -563,14 +583,16 @@ const StyledSingleApplicationDropdown = styled.div`
   right: 0;
   top: 34px;
   background: #fff;
+  width: 200px;
+  text-align: center;
   padding: 10px 15px;
   box-shadow: 0 0 0 2px #d4ddee;
   border-radius: 10px;
+  a {
+    color: #2A34AA;
+  }
   :hover {
     background: #f1f7ff;
-  }
-  a:hover {
-    color: #4e6af3;
   }
 `;
 

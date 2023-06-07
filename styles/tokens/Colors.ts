@@ -11,7 +11,7 @@ const Colors = createGlobalStyle`
   }
 
   .Color_text_disabled {
-    color: #B8C6E3;
+    color: #7786A5;
   }
 
   .Color_text_grey {

@@ -792,7 +792,9 @@ const Application = ({ className }: ApplicationProps) => {
           <>
             {" "}
             {sideBar && (
-              <SingleApplicationSideBar className="SingleApplicationSideBar" />
+              <div className="SingleApplicationSideBar">
+                <SingleApplicationSideBar />
+              </div>
             )}
           </>
         )}
@@ -848,6 +850,9 @@ const StyledApplication = styled.section`
     flex-shrink: 0;
     margin-right: 10px;
     background: #fff;
+    .Application__headArrow {
+      background: transparent;
+    }
     :hover {
       background: #f1f7ff;
     }
@@ -917,7 +922,7 @@ const StyledApplication = styled.section`
 
   .Application__headTabs {
     display: flex;
-    margin-top: 30px;
+    margin-top: 20px;
     button {
       padding: 0;
       :hover {
@@ -1024,6 +1029,7 @@ const StyledApplication = styled.section`
     margin-top: 30px;
     margin-left: -30px;
     height: calc(100vh - 114px);
+    background: #fff;
   }
   .Applications__searchBar {
     padding: 0;
@@ -1201,7 +1207,6 @@ const StyledApplication = styled.section`
       width: 100%;
       margin: 0 auto;
       grid-column: 1 / span 18;
-      margin-top: 16px;
       height: fit-content;
       padding-bottom: 120px;
     }

@@ -78,7 +78,7 @@ const SingleApplicationSideBar = ({ className }: Props) => {
         )}
         <ul className="SideBar__buttons">
           {paymentOptions.map((option, index) => (
-            <li key={index} className="SideBar__button">
+            <li key={index} className={`SideBar__button ${activeButtons[index] ? 'SideBar__button--active' : ''}`}>
               <PaymentButton
                 onChange={() => handleActive(index)}
                 onClick={() => handleActive(index)}
@@ -86,6 +86,7 @@ const SingleApplicationSideBar = ({ className }: Props) => {
                 buttonTitle={option.buttonTitle}
                 tax={option.tax}
                 active={activeButtons[index]}
+                
               />
             </li>
           ))}
@@ -94,10 +95,12 @@ const SingleApplicationSideBar = ({ className }: Props) => {
       {selectedOptions.length > 0 ? (
         <div className="SideBar__totalTaxButton">
           <Button onClick={handleClick}>Увеличить отклики {totalTax} €</Button>
+          <Button className="SideBar__totalTaxButton--edit">Редоктировать </Button>
         </div>
       ) : (
         <div className="SideBar__totalTaxButton">
           <Button onClick={handleClick}>Увеличить отклики </Button>
+          <Button className="SideBar__totalTaxButton--edit">Редоктировать </Button>
         </div>
       )}
     </StyledSingleApplicationSideBar>
@@ -151,6 +154,7 @@ const StyledSingleApplicationSideBar = styled.div`
     }
     cursor: pointer;
     :first-child {
+      pointer-events: none;
       :hover {
         cursor: default;
       }
@@ -178,15 +182,18 @@ const StyledSingleApplicationSideBar = styled.div`
 
   .SideBar__totalTaxButton {
     background: #fff;
-    position: absolute;
     width: 100%;
     bottom: 0;
     padding: 20px;
     border-top: 2px solid #f1f7ff;
-    margin-top: 28px;
+    margin-top: 50px;
     button {
       width: 100%;
     }
+  }
+
+  .SideBar__totalTaxButton--edit {
+    margin-top: 15px;
   }
 `;
 

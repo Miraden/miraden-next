@@ -145,8 +145,13 @@ const StyledDropdownInput = styled.div<Props>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    font-size: 26px;
+    white-space: nowrap;
     color: #4e6af3;
+
+    @media (max-width: 576px) {
+      font-size: 22px;
+    }
 
     svg {
       width: 16px;
