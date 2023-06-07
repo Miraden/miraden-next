@@ -41,6 +41,15 @@ const UIKit = ({ className }: UIKitProps) => {
         <Link type="button" href="/ui-kit/forms">
           Forms
         </Link>
+        <Link type="button" href="/ui-kit/cards">
+          Cards
+        </Link>
+        <Link type="button" href="/ui-kit/accordion">
+          Accordion
+        </Link>
+        <Link type="button" href="/ui-kit/modal">
+          Modal
+        </Link>
       </div>
     </StyledUIKit>
   );
