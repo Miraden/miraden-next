@@ -794,6 +794,9 @@ const Application = ({ className }: ApplicationProps) => {
             {sideBar && (
               <div className="SingleApplicationSideBar">
                 <SingleApplicationSideBar />
+                <Button className="SideBar__totalTaxButton--edit">
+                  Редоктировать{" "}
+                </Button>
               </div>
             )}
           </>
@@ -913,11 +916,21 @@ const StyledApplication = styled.section`
     padding: 20px 20px 0 20px;
     background: #fff;
     border-radius: 10px 10px 0 0;
+
+    @media (max-width: 1023px) {
+      border-radius: 0;
+    }
   }
 
   .Application__head {
     display: flex;
     align-items: baseline;
+    @media (max-width: 576px) {
+      display: block;
+      a {
+        float: left;
+      }
+    }
   }
 
   .Application__headTabs {
@@ -1029,7 +1042,16 @@ const StyledApplication = styled.section`
     margin-top: 30px;
     margin-left: -30px;
     height: calc(100vh - 114px);
-    background: #fff;
+    border-radius: 10px;
+
+    .SideBar__totalTaxButton--edit {
+      width: 100%;
+      margin-top: 15px;
+      background: #fff;
+      color: #7786a5;
+      font-size: 14px;
+      font-weight: 400;
+    }
   }
   .Applications__searchBar {
     padding: 0;
@@ -1157,7 +1179,7 @@ const StyledApplication = styled.section`
   }
 
   @media (max-width: 1441px) {
-    grid-gap: 20px;
+    grid-gap: 16px;
     padding-left: 0;
     padding-right: 0;
 

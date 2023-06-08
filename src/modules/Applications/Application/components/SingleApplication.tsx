@@ -8,15 +8,18 @@ import {
   SquareIcon,
 } from "@/icons";
 import { BuildingIcon } from "@/icons/BuildingIcon";
-import { CashIcon } from "@/icons/CashIcon";
+import { KeyIcon } from "@/icons/KeyIcon";
 import { CreditCardIcon } from "@/icons/CreditCardIcon";
-import { DealIcon } from "@/icons/DealIcon";
+import { UrgencyIcon } from "@/icons/UrgencyIcon";
 import { EyeIcon } from "@/icons/EyeIcon";
 import { LikeIcon } from "@/icons/LikeIcon";
 import { LivingSquareIcon } from "@/icons/LivingSquareIcon";
 import { PurposeCheckIcon } from "@/icons/PurposeCheckIcon";
 import { RoomsIcon } from "@/icons/RoomsIcon";
+import { WanaIcon } from "@/icons/WanaIcon";
+import { BedIcon } from "@/icons/BedIcon";
 import { useCallback, useState } from "react";
+import OutsideClickHandler from "react-outside-click-handler";
 import styled from "styled-components";
 
 interface Props {
@@ -60,16 +63,25 @@ const SingleApplication = ({ className, someContent }: Props) => {
           <p className="Color_text_disabled">
             <span>Создана</span> 12 января, <span> 12:09</span>
           </p>
-          <Button
-            tertiary
-            className={`ObjectCard__button ${openDropdown ? 'ObjectCard__button--open' : ''}`}
-            onClick={handleOpenDropdown}
+          <OutsideClickHandler
+            onOutsideClick={() => {
+              setOpenDropdown(false);
+            }}
           >
-            <Kebab24Icon />
-            {openDropdown && (
-              <SingleApplicationDropdown someContent={someContent} />
-            )}
-          </Button>
+            <Button
+              tertiary
+              className={`ObjectCard__button ${
+                openDropdown ? "ObjectCard__button--open" : ""
+              }`}
+              onClick={handleOpenDropdown}
+            >
+              <Kebab24Icon />
+
+              {openDropdown && (
+                <SingleApplicationDropdown someContent={someContent} />
+              )}
+            </Button>
+          </OutsideClickHandler>
         </div>
       </div>
       <div className="SingleApplication__pricing">
@@ -86,15 +98,17 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__pricingInfo">
           <div>
-            <ListItemsIcon className="ListIcon" />
-            <p className="Color_blue_primary Font_16_140">1 268</p>
-          </div>
-          <div>
-            <EyeIcon />
-            <p className="Color_blue_primary Font_16_140">264</p>
+            <div>
+              <ListItemsIcon className="ListIcon" />
+              <p className="Color_blue_primary Font_16_140">1 268</p>
+            </div>
+            <div>
+              <EyeIcon />
+              <p className="Color_blue_primary Font_16_140">264</p>
+            </div>
           </div>
           <Sticker theme="blue" className="SingleApplication__pricingSticker">
-            Предложений
+            Предложений 5
           </Sticker>
         </div>
       </div>
@@ -119,7 +133,6 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p className="Font_16_150 Color_text_grey">Общая площадь</p>
           </div>
         </div>{" "}
-
         <div className="SingleApplication__structureInfoContent">
           <div>
             <div className="SingleApplication__structureInfoDetails">
@@ -129,7 +142,6 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p className="Font_16_150 Color_text_grey">Год постройки</p>
           </div>
         </div>
-      
         <div className="SingleApplication__structureInfoContent">
           <div>
             <div className="SingleApplication__structureInfoDetails">
@@ -139,7 +151,6 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p className="Font_16_150 Color_text_grey">Жилая площадь</p>
           </div>
         </div>{" "}
-       
         <div className="SingleApplication__structureInfoContent">
           <div>
             <div className="SingleApplication__structureInfoDetails">
@@ -149,98 +160,138 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p className="Font_16_150 Color_text_grey">Комнат</p>
           </div>
         </div>{" "}
+        <div className="SingleApplication__structureInfoContent">
+          <div>
+            <div className="SingleApplication__structureInfoDetails">
+              <BedIcon width={18} height={18} />
+              <p className="Font_24_120">2</p>
+            </div>
+            <p className="Font_16_150 Color_text_grey">Спален</p>
+          </div>
+        </div>{" "}
+        <div className="SingleApplication__structureInfoContent">
+          <div>
+            <div className="SingleApplication__structureInfoDetails">
+              <WanaIcon width={18} height={18} />
+              <p className="Font_24_120">2</p>
+            </div>
+            <p className="Font_16_150 Color_text_grey">Санузлов</p>
+          </div>
+        </div>{" "}
       </div>
       <div className="Divider"></div>
       <div className="SingleApplication__fullInfo Font_16_24">
         <div className="SingleApplication__location">
           <div>
-            <PointIconFooter width={18} height={18} />
-            <p>Расположение</p>
-          </div>
-          <div className="SingleApplication__locationInfo">
-            <p>Кипр</p>
-            <p>Лимассол</p>
-          </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <CashIcon width={18} height={18} />
-            <p>Формат сделки</p>
-          </div>
-          <div>
-            <p className="SingleApplication__locationInfo">Покупка</p>
+            <div>
+              <PointIconFooter width={18} height={18} />
+              <p className="SingleApplication__location--title">Расположение</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>Кипр</p>
+              <p>Лимассол</p>
+            </div>
           </div>
         </div>
         <div className="SingleApplication__location">
           <div>
-            <BuildingIcon width={18} height={18} />
-            <p>Тип</p>
-          </div>
-          <div className="SingleApplication__locationInfo">
-            <p>Жилая</p>
-            <p>Дом / вилла</p>
-          </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <BuildYearIcon width={18} height={18} />
-            <p>Состояние</p>
-          </div>
-          <div className="SingleApplication__locationInfo">
-            <p>Новая</p>
-            <p>Ввод в эксплуатацию через 6 – 10 месяцев</p>
+            <div>
+              <KeyIcon width={18} height={18} />
+              <p className="SingleApplication__location--title">
+                Формат сделки
+              </p>
+            </div>
+            <div>
+              <p className="SingleApplication__locationInfo">Покупка</p>
+            </div>
           </div>
         </div>
         <div className="SingleApplication__location">
           <div>
-            <SquareIcon width={18} height={18} />
-            <p>Площадь</p>
-          </div>
-          <div className="SingleApplication__locationInfo">
-            <p>Общая — 294 м²</p>
-            <p>Жилая — 194 м²</p>
-            <p>Участок земли — 100 м²</p>
-          </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <RoomsIcon width={18} height={18} />
-            <p>Комнаты</p>
-          </div>
-          <div className="SingleApplication__locationInfo">
-            <p>Всего — 10</p>
-            <p>Спальни — 6</p>
-            <p>Санузлы — 2</p>
+            <div>
+              <BuildingIcon width={18} height={18} />
+              <p className="SingleApplication__location--title">Тип</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>Жилая</p>
+              <p>Дом / вилла</p>
+            </div>
           </div>
         </div>
         <div className="SingleApplication__location">
           <div>
-            <PurposeCheckIcon width={18} height={18} />
-            <p>Цель покупки</p>
-          </div>
-          <div className="SingleApplication__locationInfo">
-            <p>Для инвестиций (сдавать в аренду)</p>
-            <p>ВНЖ</p>
-          </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <DealIcon width={18} height={18} />
-            <p>Срочность</p>
-          </div>
-          <div className="SingleApplication__locationInfo">
-            <p>Через 1 месяц</p>
+            <div>
+              <BuildYearIcon width={18} height={18} />
+              <p className="SingleApplication__location--title">Состояние</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>Новая</p>
+              <p>Ввод в эксплуатацию через 6 – 10 месяцев</p>
+            </div>
           </div>
         </div>
         <div className="SingleApplication__location">
           <div>
-            <CreditCardIcon width={18} height={18} />
-            <p>Способ покупки</p>
+            <div>
+              <SquareIcon width={18} height={18} />
+              <p className="SingleApplication__location--title">Площадь</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>Общая — 294 м²</p>
+              <p>Жилая — 194 м²</p>
+              <p>Участок земли — 100 м²</p>
+            </div>
           </div>
-          <div className="SingleApplication__locationInfo">
-            <p>В рассрочку</p>
-            <p>Первый взнос — 30%</p>
-            <p>Безналичный расчет</p>
+        </div>
+        <div className="SingleApplication__location">
+          <div>
+            <div>
+              <RoomsIcon width={18} height={18} />
+              <p className="SingleApplication__location--title">Комнаты</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>Всего — 10</p>
+              <p>Спальни — 6</p>
+              <p>Санузлы — 2</p>
+            </div>
+          </div>
+        </div>
+        <div className="SingleApplication__location">
+          <div>
+            <div>
+              <PurposeCheckIcon width={18} height={18} />
+              <p className="SingleApplication__location--title">Цель покупки</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>Для инвестиций (сдавать в аренду)</p>
+              <p>ВНЖ</p>
+            </div>
+          </div>
+        </div>
+        <div className="SingleApplication__location">
+          <div>
+            <div>
+              <UrgencyIcon width={18} height={18} />
+              <p className="SingleApplication__location--title">Срочность</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>Через 1 месяц</p>
+            </div>
+          </div>
+        </div>
+        <div className="SingleApplication__location">
+          <div>
+            <div>
+              <CreditCardIcon width={18} height={18} />
+              <p className="SingleApplication__location--title">
+                Способ покупки
+              </p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>В рассрочку</p>
+              <p>Первый взнос — 30%</p>
+              <p>Безналичный расчет</p>
+            </div>
           </div>
         </div>
         <div className="SingleApplication__location">
@@ -291,11 +342,17 @@ const SingleApplication = ({ className, someContent }: Props) => {
               )}
             </p>
             {!openText ? (
-              <button onClick={handleOpenText} className="Color_blue_primary Font_14_140">
+              <button
+                onClick={handleOpenText}
+                className="Color_blue_primary Font_14_140"
+              >
                 Открыть больше
               </button>
             ) : (
-              <button onClick={handleOpenText} className="Color_blue_primary Font_14_140">
+              <button
+                onClick={handleOpenText}
+                className="Color_blue_primary Font_14_140"
+              >
                 Свернуть
               </button>
             )}
@@ -312,6 +369,10 @@ const StyledSingleApplication = styled.div`
   padding: 20px;
   margin-top: 16px;
 
+  @media (max-width: 1441px) {
+    padding: 0;
+  }
+
   .SingleApplication__pricingSelectMobile {
     display: none;
   }
@@ -321,6 +382,9 @@ const StyledSingleApplication = styled.div`
     align-items: center;
     justify-content: space-between;
     height: 50px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 20px;
     padding-bottom: 19px;
     border-bottom: 1px solid #e1edfd;
   }
@@ -356,8 +420,18 @@ const StyledSingleApplication = styled.div`
     justify-content: space-between;
     align-items: center;
     padding-top: 20px;
+    padding-right: 30px;
+    padding-left: 15px;
     padding-bottom: 19px;
     border-bottom: 1px solid #e1edfd;
+    @media (max-width: 576px) {
+      height: 56px;
+      .SingleApplication__pricingInfo {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
   }
 
   .SingleApplication__pricingInfo {
@@ -409,8 +483,8 @@ const StyledSingleApplication = styled.div`
   .SingleApplication__structureInfo {
     display: flex;
     align-items: center;
-    padding-top: 20px;
-    padding-bottom: 18px;
+    justify-content: space-between;
+    padding: 20px; 20px; 18px; 20px;
   }
 
   .Divider {
@@ -439,13 +513,41 @@ const StyledSingleApplication = styled.div`
   .SingleApplication__fullInfo {
     display: flex;
     flex-direction: column;
+    padding: 0 20px;
+
+    @media (max-width: 1441px) {
+      padding: 0;
+    }
   }
 
   .SingleApplication__location {
     display: flex;
     padding-top: 20px;
-    padding-bottom: 19px;
+    padding-bottom: 20px;
     border-bottom: 1px solid #e1edfd;
+
+    @media (max-width: 1441px) {
+      > div {
+        padding: 0 20px;
+      }
+    }
+
+    @media (max-width: 769px) {
+      .SingleApplication__location--title {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 150%;
+        color: #7786A5;
+      }
+      > div {
+        display: block !important;
+        p {
+          font-weight: 400;
+          font-size: 16px;
+          color: #2A344A;
+        }
+      }
+    }
 
     div {
       display: flex;
@@ -571,7 +673,7 @@ const StyledSingleApplication = styled.div`
 const SingleApplicationDropdown = ({ someContent }: Props) => {
   return (
     <StyledSingleApplicationDropdown>
-      <a href="" className='Font_14_16'>
+      <a href="" className="Font_14_16">
         {someContent ? someContent : "Какой-то контент"}
       </a>
     </StyledSingleApplicationDropdown>
@@ -589,7 +691,7 @@ const StyledSingleApplicationDropdown = styled.div`
   box-shadow: 0 0 0 2px #d4ddee;
   border-radius: 10px;
   a {
-    color: #2A34AA;
+    color: #2a34aa;
   }
   :hover {
     background: #f1f7ff;

@@ -48,19 +48,22 @@ const PaymentButton = ({
       })}
     >
       <div className="Button__container">
-        <Checkbox
-          onChange={handleCheckboxChange}
-          checked={active}
-          onClick={(e) => {
-            e.stopPropagation(); // Остановить всплытие клика, чтобы не вызывался handleButtonClick
-          }}
-        />
+        <div className="Button__container--detail">
+          <Checkbox
+            onChange={handleCheckboxChange}
+            checked={active}
+            onClick={(e) => {
+              e.stopPropagation(); // Остановить всплытие клика, чтобы не вызывался handleButtonClick
+            }}
+          />
+          <h3 className="Font_16_140">{buttonTitle}</h3>
+        </div>
         {tax && (
           <div className="Font_20_120 PaymentButton__percent">{tax} €</div>
         )}
       </div>
       {buttonTitle && (
-        <div className="[ Button__label ]">
+        <div className="[ Button__label ] Button__container--label">
           <h3 className="Font_16_140">{buttonTitle}</h3>
           <p className="Font_14_140">{buttonText}</p>
         </div>
@@ -77,9 +80,32 @@ const StyledButton = styled.div`
   width: 100%;
   transition: 0.2s ease;
 
+  .Button__container--label {
+    @media (max-width: 1441px) {
+      width: calc(100% - 57px);
+      margin: auto;
+      p {
+        margin-top: 0 !important;
+      }
+      h3 {
+        display: none;
+      }
+    }
+  }
+
   .Button__container {
     display: flex;
     align-items: center;
+
+    .Button__container--detail {
+      display: flex;
+      align-items: center;
+      @media (min-width: 1441px) {
+        h3 {
+          display: none;
+        }
+      }
+    }
 
     p {
       margin-top: 7px;
@@ -137,7 +163,10 @@ const StyledButton = styled.div`
   }
 
   .Button__label {
-    margin-top: 10px;
+    @media (min-width: 1441px) {
+      margin-top: 10px;
+    }
+    margin-top: 5px;
 
     p {
       margin-top: 5px;

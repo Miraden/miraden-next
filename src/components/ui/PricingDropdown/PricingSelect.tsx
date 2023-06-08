@@ -3,6 +3,7 @@ import cn from "classnames";
 import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import { PricingDropdown } from "./PricingDropdown";
+import OutsideClickHandler from "react-outside-click-handler";
 
 interface Props {
   className?: string;
@@ -36,13 +37,7 @@ const PricingSelect: FC<Props> = ({
   }, [options]);
 
   const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
-  };
-
-  const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
-    if (event.currentTarget === event.target) {
-      setShowDropDown(false);
-    }
+    setShowDropDown(true);
   };
 
   const optionSelection = (option: string, index: number): void => {
@@ -61,29 +56,29 @@ const PricingSelect: FC<Props> = ({
           showDropDown ? `DropdownInput_select_active` : `DropdownInput_select`
         }
         onClick={(): void => toggleDropDown()}
-        onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
-          dismissHandler(e)
-        }
       >
         <div className="DropdownInput_selectLabel Color_blue_primary sm:Font_14_16_600">
           {price + selectedOption ? price + selectedOption : price}
           <ArrowIcon />
         </div>
+
         {showDropDown && (
-          <PricingDropdown
-            className="DropdownInput_selectContainer"
-            selectedOption={selectedOption}
-            setSelectedOption={setSelectedOption}
-            optionSelection={optionSelection}
-            showDropDown={true}
-            toggleDropDown={(): void => toggleDropDown()}
-            options={options}
-            yieldCount={yieldCount}
-            yieldCountPercent={yieldCountPercent}
-            singleCost={singleCost}
-            firstInstallment={firstInstallment}
-            firstInstallmentPercent={firstInstallmentPercent}
-          />
+          <OutsideClickHandler onOutsideClick={() => setShowDropDown(false)}>
+            <PricingDropdown
+              className="DropdownInput_selectContainer"
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+              optionSelection={optionSelection}
+              showDropDown={true}
+              toggleDropDown={(): void => toggleDropDown()}
+              options={options}
+              yieldCount={yieldCount}
+              yieldCountPercent={yieldCountPercent}
+              singleCost={singleCost}
+              firstInstallment={firstInstallment}
+              firstInstallmentPercent={firstInstallmentPercent}
+            />
+          </OutsideClickHandler>
         )}
       </button>
     </StyledDropdownInput>
@@ -145,7 +140,7 @@ const StyledDropdownInput = styled.div<Props>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 26px;
+    font-size: 32px;
     white-space: nowrap;
     color: #4e6af3;
 
