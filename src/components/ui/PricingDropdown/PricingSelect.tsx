@@ -58,7 +58,7 @@ const PricingSelect: FC<Props> = ({
         onClick={(): void => toggleDropDown()}
       >
         <div className="DropdownInput_selectLabel Color_blue_primary sm:Font_14_16_600">
-          {price + selectedOption ? price + selectedOption : price}
+          <p>{price + selectedOption ? price + selectedOption : price}</p>
           <ArrowIcon />
         </div>
 
@@ -143,13 +143,18 @@ const StyledDropdownInput = styled.div<Props>`
     font-size: 32px;
     white-space: nowrap;
     color: #4e6af3;
+    line-height: initial;
+
+    @media (max-width: 768px) {
+      font-size: 26px;
+    }
 
     @media (max-width: 576px) {
       font-size: 22px;
     }
 
     svg {
-      width: 16px;
+      min-width: 16px;
       height: 16px;
       path {
         stroke: #7786a5;

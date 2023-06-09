@@ -197,9 +197,14 @@ const StyledSingleApplicationSideBar = styled.div`
     bottom: 0;
     padding: 20px;
     border-top: 2px solid #f1f7ff;
+    border-radius: 0 0 10px 10px;
     margin-top: 50px;
+
     button {
       width: 100%;
+      @media (max-width: 768px) {
+        height: 40px;
+      }
     }
   }
 `;

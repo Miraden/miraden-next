@@ -10,6 +10,7 @@ const Header = ({ isAuthorized, className }: HeaderProps) => {
   return (
     <StyledHeader className={className}>
       <div className="Header__topBlock" />
+      <div className="Header_overlay" />
       <div className="Header">
         {isAuthorized ? (
           <>
@@ -35,12 +36,31 @@ const StyledHeader = styled.header`
   justify-content: center;
   padding-left: 20px;
   padding-right: 20px;
+
   .Header__topBlock {
     z-index: 200;
     position: fixed;
     background: #eef1f5;
     width: 100%;
     height: 10px;
+  }
+
+  .Header_overlay {
+    display: none;
+  }
+
+  @media (max-width: 1024px) {
+    .Header_overlay {
+      display: block;
+      width: 100%;
+      background: #fff;
+      height: 300px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 60px;
+      z-index: -1;
+    }
   }
 
   .Header {
@@ -53,7 +73,7 @@ const StyledHeader = styled.header`
     width: 100%;
     max-width: 1880px;
     padding: 12px 20px;
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px;
     color: white;
     background-color: #2a344a;
   }

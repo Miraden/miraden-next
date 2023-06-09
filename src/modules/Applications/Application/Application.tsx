@@ -553,7 +553,7 @@ const Application = ({ className }: ApplicationProps) => {
                   active={selected === "requests"}
                   tertiary
                 >
-                  Отклики{" "}
+                  Предложения{" "}
                   <p className="TabButton__counter Color_text_grey">
                     {applicationsArray.length}
                   </p>
@@ -795,7 +795,7 @@ const Application = ({ className }: ApplicationProps) => {
               <div className="SingleApplicationSideBar">
                 <SingleApplicationSideBar />
                 <Button className="SideBar__totalTaxButton--edit">
-                  Редоктировать{" "}
+                  Редактировать{" "}
                 </Button>
               </div>
             )}
@@ -927,6 +927,9 @@ const StyledApplication = styled.section`
     align-items: baseline;
     @media (max-width: 576px) {
       display: block;
+      h1 {
+        font-size: 22px;
+      }
       a {
         float: left;
       }

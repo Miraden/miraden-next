@@ -91,15 +91,33 @@ const StyledButton = styled.div`
         display: none;
       }
     }
+
+    @media (max-width: 360px) {
+      width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+      h3 {
+        display: block;
+      }
+    }
   }
 
   .Button__container {
     display: flex;
     align-items: center;
 
+    @media (max-width: 360px) {
+      justify-content: flex-start !important;
+    }
+
     .Button__container--detail {
       display: flex;
       align-items: center;
+      @media (max-width: 360px) {
+        h3 {
+          display: none;
+        }
+      }
       @media (min-width: 1441px) {
         h3 {
           display: none;
@@ -113,6 +131,7 @@ const StyledButton = styled.div`
   }
 
   .PaymentButton__percent {
+    white-space: nowrap;
     color: #4e6af3;
   }
 

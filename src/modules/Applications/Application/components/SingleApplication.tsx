@@ -57,12 +57,13 @@ const SingleApplication = ({ className, someContent }: Props) => {
           <Sticker theme="black" className="SingleApplication__headSticker">
             TRUE
           </Sticker>
-          <p className="Font_14_140">Заявка № 10445</p>
+          <p className="SingleApplication__app Font_14_140">Заявка № 10445</p>
         </div>
         <div className="SingleApplication__headDropdown">
           <p className="Color_text_disabled">
             <span>Создана</span> 12 января, <span> 12:09</span>
           </p>
+          <p className="Color_text_disabled--mobile">12 января</p>
           <OutsideClickHandler
             onOutsideClick={() => {
               setOpenDropdown(false);
@@ -108,7 +109,8 @@ const SingleApplication = ({ className, someContent }: Props) => {
             </div>
           </div>
           <Sticker theme="blue" className="SingleApplication__pricingSticker">
-            Предложений 5
+            <span>Предложений</span>
+            <span className="SingleApplication__pricingSticker--count">5</span>
           </Sticker>
         </div>
       </div>
@@ -127,19 +129,23 @@ const SingleApplication = ({ className, someContent }: Props) => {
         <div className="SingleApplication__structureInfoContent">
           <div>
             <div className="SingleApplication__structureInfoDetails">
-              <SquareIcon width={18} height={18} />
+              <BuildYearIcon width={18} height={18} />
               <p className="Font_24_120">2022</p>
             </div>
-            <p className="Font_16_150 Color_text_grey">Общая площадь</p>
+            <p className="structureInfoContent-text Font_16_150 Color_text_grey">
+              Год постройки
+            </p>
           </div>
         </div>{" "}
         <div className="SingleApplication__structureInfoContent">
           <div>
             <div className="SingleApplication__structureInfoDetails">
-              <BuildYearIcon width={18} height={18} />
+              <SquareIcon width={18} height={18} />
               <p className="Font_24_120">294 м²</p>
             </div>
-            <p className="Font_16_150 Color_text_grey">Год постройки</p>
+            <p className="structureInfoContent-text Font_16_150 Color_text_grey">
+              Общая
+            </p>
           </div>
         </div>
         <div className="SingleApplication__structureInfoContent">
@@ -148,7 +154,9 @@ const SingleApplication = ({ className, someContent }: Props) => {
               <LivingSquareIcon width={18} height={18} />
               <p className="Font_24_120">194 м²</p>
             </div>
-            <p className="Font_16_150 Color_text_grey">Жилая площадь</p>
+            <p className="structureInfoContent-text Font_16_150 Color_text_grey">
+              Жилая
+            </p>
           </div>
         </div>{" "}
         <div className="SingleApplication__structureInfoContent">
@@ -157,7 +165,9 @@ const SingleApplication = ({ className, someContent }: Props) => {
               <RoomsIcon width={18} height={18} />
               <p className="Font_24_120">10</p>
             </div>
-            <p className="Font_16_150 Color_text_grey">Комнат</p>
+            <p className="structureInfoContent-text Font_16_150 Color_text_grey">
+              Комнат
+            </p>
           </div>
         </div>{" "}
         <div className="SingleApplication__structureInfoContent">
@@ -166,7 +176,9 @@ const SingleApplication = ({ className, someContent }: Props) => {
               <BedIcon width={18} height={18} />
               <p className="Font_24_120">2</p>
             </div>
-            <p className="Font_16_150 Color_text_grey">Спален</p>
+            <p className="structureInfoContent-text Font_16_150 Color_text_grey">
+              Спален
+            </p>
           </div>
         </div>{" "}
         <div className="SingleApplication__structureInfoContent">
@@ -175,9 +187,12 @@ const SingleApplication = ({ className, someContent }: Props) => {
               <WanaIcon width={18} height={18} />
               <p className="Font_24_120">2</p>
             </div>
-            <p className="Font_16_150 Color_text_grey">Санузлов</p>
+            <p className="structureInfoContent-text Font_16_150 Color_text_grey">
+              Санузлов
+            </p>
           </div>
         </div>{" "}
+        <div className="SingleApplication__shine" />
       </div>
       <div className="Divider"></div>
       <div className="SingleApplication__fullInfo Font_16_24">
@@ -219,7 +234,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
           </div>
         </div>
         <div className="SingleApplication__location">
-          <div>
+          <div className="SingleApplication__location--detail">
             <div>
               <BuildYearIcon width={18} height={18} />
               <p className="SingleApplication__location--title">Состояние</p>
@@ -231,7 +246,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
           </div>
         </div>
         <div className="SingleApplication__location">
-          <div>
+          <div className="SingleApplication__location--detail">
             <div>
               <SquareIcon width={18} height={18} />
               <p className="SingleApplication__location--title">Площадь</p>
@@ -244,7 +259,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
           </div>
         </div>
         <div className="SingleApplication__location">
-          <div>
+          <div className="SingleApplication__location--detail">
             <div>
               <RoomsIcon width={18} height={18} />
               <p className="SingleApplication__location--title">Комнаты</p>
@@ -257,7 +272,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
           </div>
         </div>
         <div className="SingleApplication__location">
-          <div>
+          <div className="SingleApplication__location--detail">
             <div>
               <PurposeCheckIcon width={18} height={18} />
               <p className="SingleApplication__location--title">Цель покупки</p>
@@ -280,7 +295,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
           </div>
         </div>
         <div className="SingleApplication__location">
-          <div>
+          <div className="SingleApplication__location--detail">
             <div>
               <CreditCardIcon width={18} height={18} />
               <p className="SingleApplication__location--title">
@@ -367,6 +382,7 @@ const StyledSingleApplication = styled.div`
   background: #ffffff;
   border-radius: 10px;
   padding: 20px;
+  padding-top: 0;
   margin-top: 16px;
 
   @media (max-width: 1441px) {
@@ -387,6 +403,12 @@ const StyledSingleApplication = styled.div`
     padding-top: 20px;
     padding-bottom: 19px;
     border-bottom: 1px solid #e1edfd;
+
+    @media (max-width: 360px)  {
+      .SingleApplication__app {
+        display: none;
+      }
+    }
   }
 
   .SingleApplication__headToggle {
@@ -409,9 +431,32 @@ const StyledSingleApplication = styled.div`
     display: flex;
     align-items: center;
     position: relative;
+
     button {
       flex-shrink: 0;
       margin-left: 20px;
+      
+      @media (max-width: 360px) {
+        margin-left: 8px;
+      }
+    }
+
+    .Color_text_disabled--mobile {
+      font-weight: 400;
+      font-size: 14px;
+      color: #7786A5;
+    }
+
+    @media (min-width: 768px) {
+      .Color_text_disabled--mobile {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .Color_text_disabled {
+        display: none;
+      }
     }
   }
 
@@ -460,6 +505,21 @@ const StyledSingleApplication = styled.div`
   }
 
   .SingleApplication__pricingSticker {
+    display: flex;
+
+    .SingleApplication__pricingSticker--count {
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 16px;
+      color: #FFFFFF;
+      margin-left: 8px;
+    }
+    span {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 16px;
+      color: #fff;
+    }
     div {
       padding: 4px 10px;
     }
@@ -484,7 +544,19 @@ const StyledSingleApplication = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
     padding: 20px; 20px; 18px; 20px;
+
+    @media (max-width: 1024px) {
+      .SingleApplication__shine {
+        position: absolute;
+        right: 0;
+        width: 70px;
+        height: 100%;
+        background: linear-gradient(270deg, #FFFFFF 52%, rgba(255, 255, 255, 0) 100%);
+        border-radius: 0px;
+      }
+    }
   }
 
   .Divider {
@@ -495,6 +567,10 @@ const StyledSingleApplication = styled.div`
 
   .SingleApplication__structureInfoContent {
     display: flex;
+
+    .structureInfoContent-text {
+      white-space: nowrap;
+    }
 
     svg {
       margin-top: 5.5px;
@@ -513,7 +589,8 @@ const StyledSingleApplication = styled.div`
   .SingleApplication__fullInfo {
     display: flex;
     flex-direction: column;
-    padding: 0 20px;
+
+    
 
     @media (max-width: 1441px) {
       padding: 0;
@@ -526,10 +603,17 @@ const StyledSingleApplication = styled.div`
     padding-bottom: 20px;
     border-bottom: 1px solid #e1edfd;
 
-    @media (max-width: 1441px) {
-      > div {
-        padding: 0 20px;
-      }
+    @media (max-width: 568px) {
+      padding-right: 0 !important;
+      padding-left: 0 !important;
+    }
+
+    .SingleApplication__location--detail {
+      flex-wrap: wrap;
+    }
+
+    > div {
+      padding: 0 18px;
     }
 
     @media (max-width: 769px) {
@@ -540,7 +624,9 @@ const StyledSingleApplication = styled.div`
         color: #7786A5;
       }
       > div {
-        display: block !important;
+        .SingleApplication__locationInfo {
+          margin: 0;
+        }
         p {
           font-weight: 400;
           font-size: 16px;
@@ -558,8 +644,18 @@ const StyledSingleApplication = styled.div`
     }
 
     div:first-child {
-      min-width: 250px;
-      color: #7786a5;
+      min-width: 215px;
+      color: #2A344A;
+      
+      @media (max-width: 576px) {
+        min-width: auto !important;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        div:nth-child(1) {
+          margin-right: 20px;
+        }
+      }
     }
   }
 
@@ -581,7 +677,9 @@ const StyledSingleApplication = styled.div`
 
   .SingleApplication__locationInfo {
     display: flex;
-
+    p {
+      color: #2A344A;
+    }
     p:not(:first-child) {
       margin-left: 10px;
       border-left: 2px solid #c7d2e9;
@@ -616,7 +714,6 @@ const StyledSingleApplication = styled.div`
       p:not(:first-child) {
         margin-left: 0;
         border-left: none !important;
-        padding-right: 9px;
         padding-left: 0;
       }
     }
@@ -652,6 +749,9 @@ const StyledSingleApplication = styled.div`
       padding-top: 16px;
       padding-bottom: 20px;
       border-bottom: 3px solid #e1edfd;
+      @media (max-width: 768px) {
+        border-bottom: 0;
+      }
     }
 
     .SingleApplication__headDropdown {
