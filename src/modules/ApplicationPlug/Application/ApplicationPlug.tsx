@@ -111,7 +111,6 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
 
 const StyledApplication = styled.section`
   position: relative;
-  position: relative;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(18, 1fr);
@@ -167,7 +166,7 @@ const StyledApplication = styled.section`
     position: relative;
     ::before {
       position: absolute;
-      top: 35px;
+      top: 32px;
       content: "";
       background: #4e6af3;
       width: 100%;
@@ -184,7 +183,7 @@ const StyledApplication = styled.section`
     }
   }
   .Application__headTabsBar {
-    margin-top: 15px;
+    margin-top: 12px;
     width: 100%;
     background: #e1edfd;
     height: 4px;
@@ -240,7 +239,7 @@ const StyledApplication = styled.section`
   }
 
   .Applications__headTabsBar {
-    margin-top: 15px;
+    margin-top: 12px;
     width: 100%;
     background: #e1edfd;
     height: 4px;

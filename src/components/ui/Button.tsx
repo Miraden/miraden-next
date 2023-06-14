@@ -80,7 +80,7 @@ const Button: FC<Props> = ({
     );
   }
 
-  if (href.includes("http") || prefetch === false) {
+  if (href.includes("http") || !prefetch) {
     return (
       <StyledButton
         href={href}

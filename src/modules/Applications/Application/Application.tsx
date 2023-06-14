@@ -832,9 +832,6 @@ const StyledApplication = styled.section`
   grid-gap: 30px;
   padding-left: 55px;
   padding-right: 55px;
-  &.Test {
-    padding-right: 0 !important;
-  }
 
   .Application__wrapper {
     min-width: 970px;
@@ -872,12 +869,6 @@ const StyledApplication = styled.section`
   }
 
   .Applications__filter {
-    /* position: sticky;
-    top: 94px;
-    overflow: auto;
-    grid-column: 16 / span 3;
-    margin-top: 30px;
-    margin-left: -30px; */
     overflow: auto;
     height: calc(100vh - 114px);
   }
@@ -941,7 +932,7 @@ const StyledApplication = styled.section`
     position: relative;
     ::before {
       position: absolute;
-      top: 35px;
+      top: 32px;
       content: "";
       background: #4e6af3;
       width: 100%;
@@ -958,7 +949,7 @@ const StyledApplication = styled.section`
     }
   }
   .Application__headTabsBar {
-    margin-top: 15px;
+    margin-top: 12px;
     width: 100%;
     background: #e1edfd;
     height: 4px;

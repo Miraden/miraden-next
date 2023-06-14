@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { ThemeProvider } from "styled-components";
-import { Colors, Fonts, Layout, Utils, theme } from "../styles/tokens";
+import { Colors, Fonts, Layout, Utils, theme } from "./tokens";
 import { Global } from "./Global";
 import { Reset } from "./Reset";
 

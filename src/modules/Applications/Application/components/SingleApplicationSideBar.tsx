@@ -10,8 +10,7 @@ interface Props {
 const paymentOptions = [
   {
     buttonTitle: "Открыть отклик для всех",
-    buttonText:
-      "На заявку смогут откликнуться все пользователи, а не только PRO",
+    buttonText: 'На заявку смогут откликнуться <br/> все пользователи, а не только PRO',
     tax: 10,
   },
   {
@@ -90,21 +89,23 @@ const SingleApplicationSideBar = ({ className }: Props) => {
             </li>
           ))}
         </ul>
+        {selectedOptions.length > 0 ? (
+            <div className="SideBar__totalTaxButton">
+              <Button onClick={handleClick}>Увеличить отклики {totalTax} €</Button>
+            </div>
+        ) : (
+            <div className="SideBar__totalTaxButton">
+              <Button onClick={handleClick}>Увеличить отклики </Button>
+            </div>
+        )}
       </div>
-      {selectedOptions.length > 0 ? (
-        <div className="SideBar__totalTaxButton">
-          <Button onClick={handleClick}>Увеличить отклики {totalTax} €</Button>
-        </div>
-      ) : (
-        <div className="SideBar__totalTaxButton">
-          <Button onClick={handleClick}>Увеличить отклики </Button>
-        </div>
-      )}
+      <div className="SideBar__section SideBar__totalTaxButton--edit">
+        <Button className="" tertiary={true}>Редактировать заявку</Button>
+      </div>
     </StyledSingleApplicationSideBar>
   );
 };
 const StyledSingleApplicationSideBar = styled.div`
-  background: #fff;
   border-radius: 10px;
   position: relative;
 
@@ -129,32 +130,36 @@ const StyledSingleApplicationSideBar = styled.div`
     margin-top: 20px;
     background: #fff5f5;
     color: #f34942;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px 20px;
   }
 
   .SideBar__buttons {
-    margin-top: 30px;
+    margin-top: 31px;
     padding-left: 20px;
     padding-right: 20px;
   }
 
   .SideBar__button {
-    margin-top: 20px;
+    margin-top: 21px;
 
     .PaymentButton {
       &.isActive {
         background: #2a344a;
       }
     }
+
     cursor: pointer;
+
     :first-child {
       :hover {
         cursor: default;
       }
     }
+  }
+  
+  .SideBar__section {
+    background: #fff;
+    margin-top: 10px;
   }
 
   .SideBar__button:first-child {
@@ -177,14 +182,20 @@ const StyledSingleApplicationSideBar = styled.div`
   }
 
   .SideBar__totalTaxButton {
-    background: #fff;
-    position: absolute;
     width: 100%;
-    bottom: 0;
     padding: 20px;
     border-top: 2px solid #f1f7ff;
     margin-top: 28px;
+
     button {
+      width: 100%;
+    }
+  }
+  
+  .SideBar__totalTaxButton--edit {
+    border-radius: 10px;
+    button {
+      padding: 22px 0;
       width: 100%;
     }
   }

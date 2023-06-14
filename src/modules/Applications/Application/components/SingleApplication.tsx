@@ -54,7 +54,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
           <Sticker theme="black" className="SingleApplication__headSticker">
             TRUE
           </Sticker>
-          <p className="Font_14_140">ID 1445</p>
+          <p className="Font_14_140">Заявка № 10445</p>
         </div>
         <div className="SingleApplication__headDropdown">
           <p className="Color_text_disabled">
@@ -114,28 +114,28 @@ const SingleApplication = ({ className, someContent }: Props) => {
           <BuildYearIcon width={18} height={18} />
           <div>
             <p className="Font_24_120">294 м²</p>
-            <p className="Font_16_150 Color_text_grey">Год постройки</p>
+            <p className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Год постройки</p>
           </div>
         </div>
         <div className="SingleApplication__structureInfoContent">
           <SquareIcon width={18} height={18} />
           <div>
             <p className="Font_24_120">2022</p>
-            <p className="Font_16_150 Color_text_grey">Общая площадь</p>
+            <p className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Общая площадь</p>
           </div>
         </div>{" "}
         <div className="SingleApplication__structureInfoContent">
           <LivingSquareIcon width={18} height={18} />
           <div>
             <p className="Font_24_120">194 м²</p>
-            <p className="Font_16_150 Color_text_grey">Жилая площадь</p>
+            <p className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Жилая площадь</p>
           </div>
         </div>{" "}
         <div className="SingleApplication__structureInfoContent">
           <RoomsIcon width={18} height={18} />
           <div>
             <p className="Font_24_120">10</p>
-            <p className="Font_16_150 Color_text_grey">Комнат</p>
+            <p className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Комнат</p>
           </div>
         </div>
       </div>
@@ -298,8 +298,8 @@ const SingleApplication = ({ className, someContent }: Props) => {
 const StyledSingleApplication = styled.div`
   background: #ffffff;
   border-radius: 10px;
-  padding: 20px;
   margin-top: 20px;
+  padding: 0 20px 20px;
 
   .SingleApplication__pricingSelectMobile {
     display: none;
@@ -309,8 +309,8 @@ const StyledSingleApplication = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-bottom: 19px;
     border-bottom: 1px solid #e1edfd;
+    padding: 11px 20px;
   }
 
   .SingleApplication__headToggle {
@@ -319,6 +319,8 @@ const StyledSingleApplication = styled.div`
   }
 
   .SingleApplication__headToggleButton {
+    line-height: 1;
+
     input:checked + .ToggleButton__slider {
       background-color: #0ab258;
     }
@@ -333,6 +335,7 @@ const StyledSingleApplication = styled.div`
     display: flex;
     align-items: center;
     position: relative;
+
     button {
       flex-shrink: 0;
       margin-left: 20px;
@@ -343,9 +346,8 @@ const StyledSingleApplication = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 20px;
-    padding-bottom: 19px;
     border-bottom: 1px solid #e1edfd;
+    padding: 20px 20px 19px 16px;
   }
 
   .SingleApplication__pricingInfo {
@@ -368,6 +370,7 @@ const StyledSingleApplication = styled.div`
   .ListIcon {
     width: 18px;
     height: 18px;
+
     path {
       fill: #7786a5;
     }
@@ -375,7 +378,7 @@ const StyledSingleApplication = styled.div`
 
   .SingleApplication__pricingSticker {
     div {
-      padding: 4px 10px;
+      padding: 4px 13px;
     }
   }
 
@@ -393,8 +396,8 @@ const StyledSingleApplication = styled.div`
   .SingleApplication__structureInfo {
     display: flex;
     align-items: center;
-    padding-top: 20px;
-    padding-bottom: 18px;
+    padding: 20px 20px 18px;
+    margin-bottom: 3px;
   }
 
   .Divider {
@@ -405,6 +408,10 @@ const StyledSingleApplication = styled.div`
 
   .SingleApplication__structureInfoContent {
     display: flex;
+    
+    &__label {
+      margin-top: 4px;
+    }
 
     svg {
       margin-top: 5.5px;
@@ -423,20 +430,20 @@ const StyledSingleApplication = styled.div`
 
   .SingleApplication__location {
     display: flex;
-    padding-top: 20px;
-    padding-bottom: 19px;
+    padding: 20px 20px 19px;
     border-bottom: 1px solid #e1edfd;
 
     div {
       display: flex;
       align-items: center;
+
       svg {
         margin-right: 15px;
       }
     }
 
     div:first-child {
-      min-width: 250px;
+      min-width: 280px;
       color: #7786a5;
     }
   }
@@ -473,16 +480,14 @@ const StyledSingleApplication = styled.div`
 
     .SingleApplication__location {
       flex-direction: column;
-      padding-left: 20px;
-      padding-right: 20px;
-      padding-top: 16px;
-      padding-bottom: 16px;
+      padding: 16px 20px;
     }
 
     .SingleApplication__locationInfo {
       margin-left: 33px;
       margin-top: 4px;
       flex-wrap: wrap;
+
       p:not(:last-child) {
         margin-left: 0;
         margin-right: 9px;

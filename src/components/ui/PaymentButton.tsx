@@ -17,6 +17,8 @@ interface PaymentButtonProps {
   onChange?: () => void;
 }
 
+const baseClass = "PaymentButton"
+
 const PaymentButton = ({
   className,
   onClick,
@@ -51,6 +53,7 @@ const PaymentButton = ({
         <Checkbox
           onChange={handleCheckboxChange}
           checked={active}
+          className={`${baseClass}__checkbox`}
           onClick={(e) => {
             e.stopPropagation(); // Остановить всплытие клика, чтобы не вызывался handleButtonClick
           }}
@@ -62,7 +65,7 @@ const PaymentButton = ({
       {buttonTitle && (
         <div className="[ Button__label ]">
           <h3 className="Font_16_140">{buttonTitle}</h3>
-          <p className="Font_14_140">{buttonText}</p>
+          <p className="Font_14_140" dangerouslySetInnerHTML={{__html: buttonText}}/>
         </div>
       )}
     </StyledButton>
@@ -77,9 +80,14 @@ const StyledButton = styled.div`
   width: 100%;
   transition: 0.2s ease;
 
+  .${baseClass}__checkbox {
+    margin-right: 7px;
+  }
+
   .Button__container {
     display: flex;
     align-items: center;
+    margin-left: -3px;
 
     p {
       margin-top: 7px;

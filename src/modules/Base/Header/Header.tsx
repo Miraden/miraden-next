@@ -41,6 +41,7 @@ const StyledHeader = styled.header`
     background: #eef1f5;
     width: 100%;
     height: 10px;
+    top: 0;
   }
 
   .Header {
