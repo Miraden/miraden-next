@@ -12,6 +12,7 @@ import {SingleApplicationSideBar} from "./components/SingleApplicationSideBar";
 import {TabMenuItem, TabsManager} from "@/components/ui/TabsMenu";
 import {ApplicationsFilter} from "@/components/ui/ApplicationsFilter";
 import {ObjectCard} from "./components/ObjectCard";
+import * as DataProvider from "./DataProfiver";
 
 const BaseClassName: string = "Application"
 
@@ -19,7 +20,7 @@ interface ApplicationProps {
   className?: string;
 }
 
-enum TabsState {
+enum TabsMenuState {
   Lead = 0,
   Requests = 1,
   Executors = 2,
@@ -27,423 +28,9 @@ enum TabsState {
   Recommended = 4
 }
 
-const applicationsArray = [
-  {
-    name: "Ангелина Синичкина",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    rating: 4.8,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "HomeSweet",
-    isOnline: true,
-    unreadMessages: 0,
-  },
-  {
-    name: "Андрей Макеев",
-    type: "seller",
-    isVerified: true,
-    isPro: false,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "Realhome",
-    isOnline: false,
-    unreadMessages: 1,
-  },
-  {
-    name: "Валентина Антонова",
-    type: "object",
-    isVerified: true,
-    isPro: false,
-    rating: 5.0,
-    image: "/images/avatar.jpg",
-    status: "Риелтор",
-    isOnline: false,
-    unreadMessages: 0,
-  },
-  {
-    name: "Константин Гриндин",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    image: "/images/avatar.jpg",
-    status: "Собственник",
-    isOnline: false,
-    unreadMessages: 0,
-  },
-];
-
-const objectsArray = [
-  {
-    title: "3-х комнатная квартира на Кипре для ВНЖ",
-    location: "Северный Кипр",
-    id: "1445",
-    cashBack: 6,
-    yieldCount: 8,
-    year: "2022",
-    square: "294",
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000",
-    status: "Собственник",
-    name: "Анастасия Петрова",
-    image: "/images/avatar.jpg",
-    isBooked: false,
-    isUnpublished: false,
-    image1: "/images/img.jpg",
-    image2: "/images/img.jpg",
-    image3: "/images/img.jpg",
-    firstInstallment: "34 000 $",
-    singleCost: "1 200 $",
-    firstInstallmentPercent: "30 %",
-  },
-  {
-    title: "3-х комнатная квартира на Кипре для ВНЖ",
-    location: "Северный Кипр",
-    id: "1445",
-    cashBack: 6,
-    yieldCount: 8,
-    year: "2022",
-    square: "294",
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000",
-    status: "Собственник",
-    name: "Анастасия Петрова",
-    image: "/images/avatar.jpg",
-    isBooked: true,
-    isUnpublished: false,
-    image1: "/images/img.jpg",
-    image2: "/images/img.jpg",
-    image3: "/images/img.jpg",
-    firstInstallment: "34 000 $",
-    singleCost: "1 200 $",
-    firstInstallmentPercent: "30 %",
-  },
-  {
-    title: "3-х комнатная квартира на Кипре для ВНЖ",
-    location: "Северный Кипр",
-    id: "1445",
-    cashBack: 6,
-    yieldCount: 8,
-    year: "2022",
-    square: "294",
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000",
-    status: "Собственник",
-    name: "Анастасия Петрова",
-    image: "/images/avatar.jpg",
-    isBooked: false,
-    isUnpublished: true,
-    image1: "/images/img.jpg",
-    image2: "/images/img.jpg",
-    image3: "/images/img.jpg",
-    firstInstallment: "34 000 $",
-    singleCost: "1 200 $",
-    firstInstallmentPercent: "30 %",
-  },
-];
-
-const performersArray = [
-  {
-    name: "Ангелина Синичкина",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    rating: 4.8,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "HomeSweet",
-    isOnline: true,
-    unreadMessages: 0,
-    isPerformer: true,
-  },
-  {
-    name: "Андрей Макеев",
-    type: "seller",
-    isVerified: true,
-    isPro: false,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "Realhome",
-    isOnline: false,
-    unreadMessages: 0,
-    isPerformer: true,
-  },
-];
-
-const refusalsArray = [
-  {
-    name: "Ангелина Синичкина",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    rating: 4.8,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "HomeSweet",
-    isOnline: true,
-    unreadMessages: 0,
-    isRefusal: true,
-  },
-  {
-    name: "Андрей Макеев",
-    type: "seller",
-    isVerified: true,
-    isPro: false,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "Realhome",
-    isOnline: false,
-    unreadMessages: 0,
-    isRefusal: true,
-  },
-  {
-    name: "Валентина Антонова",
-    type: "object",
-    isVerified: true,
-    isPro: false,
-    rating: 5.0,
-    image: "/images/avatar.jpg",
-    status: "Риелтор",
-    isOnline: false,
-    unreadMessages: 0,
-    isRefusal: true,
-  },
-  {
-    name: "Константин Гриндин",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    image: "/images/avatar.jpg",
-    status: "Собственник",
-    isOnline: false,
-    unreadMessages: 0,
-    isRefusal: true,
-  },
-];
-
-const recommendArray = [
-  {
-    name: "Ангелина Синичкина",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    rating: 4.8,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "HomeSweet",
-    isOnline: true,
-    unreadMessages: 0,
-    isRefusal: true,
-    isRecommend: true,
-  },
-  {
-    name: "Андрей Макеев",
-    type: "seller",
-    isVerified: true,
-    isPro: false,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "Realhome",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: "Валентина Антонова",
-    type: "object",
-    isVerified: true,
-    isPro: false,
-    rating: 5.0,
-    image: "/images/avatar.jpg",
-    status: "Риелтор",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: "Константин Гриндин",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    image: "/images/avatar.jpg",
-    status: "Собственник",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: "Ангелина Синичкина",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    rating: 4.8,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "HomeSweet",
-    isOnline: true,
-    unreadMessages: 0,
-    isRefusal: true,
-    isRecommend: true,
-  },
-  {
-    name: "Андрей Макеев",
-    type: "seller",
-    isVerified: true,
-    isPro: false,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "Realhome",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: "Валентина Антонова",
-    type: "object",
-    isVerified: true,
-    isPro: false,
-    rating: 5.0,
-    image: "/images/avatar.jpg",
-    status: "Риелтор",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: "Константин Гриндин",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    image: "/images/avatar.jpg",
-    status: "Собственник",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: "Ангелина Синичкина",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    rating: 4.8,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "HomeSweet",
-    isOnline: true,
-    unreadMessages: 0,
-    isRefusal: true,
-    isRecommend: true,
-  },
-  {
-    name: "Андрей Макеев",
-    type: "seller",
-    isVerified: true,
-    isPro: false,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "Realhome",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: "Валентина Антонова",
-    type: "object",
-    isVerified: true,
-    isPro: false,
-    rating: 5.0,
-    image: "/images/avatar.jpg",
-    status: "Риелтор",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: "Константин Гриндин",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    image: "/images/avatar.jpg",
-    status: "Собственник",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: "Ангелина Синичкина",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    rating: 4.8,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "HomeSweet",
-    isOnline: true,
-    unreadMessages: 0,
-    isRefusal: true,
-    isRecommend: true,
-  },
-  {
-    name: "Андрей Макеев",
-    type: "seller",
-    isVerified: true,
-    isPro: false,
-    image: "/images/avatar.jpg",
-    status: "Агентство недвижимости",
-    agencyName: "Realhome",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: "Валентина Антонова",
-    type: "object",
-    isVerified: true,
-    isPro: false,
-    rating: 5.0,
-    image: "/images/avatar.jpg",
-    status: "Риелтор",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: "Константин Гриндин",
-    type: "seller",
-    isVerified: true,
-    isPro: true,
-    image: "/images/avatar.jpg",
-    status: "Собственник",
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-];
-
 const Application = ({className}: ApplicationProps) => {
-  const startY = useRef<number>(0);
-
-  const [selected, setSelected] = useState<TabsState>(TabsState.Lead);
-  const handleSelect = useCallback((option: TabsState) => {
+  const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.Lead);
+  const handleSelect = useCallback((option: TabsMenuState) => {
     setSelected(option);
   }, []);
 
@@ -483,14 +70,14 @@ const Application = ({className}: ApplicationProps) => {
 
   const tabsManager = new TabsManager([], handleSelect)
   tabsManager.addItem(new TabMenuItem('Заявка', 0, (<>{renderLead()}</>)))
-  tabsManager.addItem(new TabMenuItem('Отклики', applicationsArray.length, (<>{renderUsersSearch(handleShowFilter)}{renderRequests(selectedContent)}</>)))
-  tabsManager.addItem(new TabMenuItem('Исполнители', performersArray.length, (<>{renderUsersSearch(handleShowFilter)}{renderExecutors()}</>)))
-  tabsManager.addItem(new TabMenuItem('Отказы', refusalsArray.length, (<>{renderRefusals()}</>)))
-  tabsManager.addItem(new TabMenuItem('Рекомендуемые', recommendArray.length, (<>{renderUsersSearch(handleShowFilter)}{renderRecommended(submit, handleOpenModal)}</>)))
-  const activeState: TabsState = statesFromNumber(parseInt(selected))
+  tabsManager.addItem(new TabMenuItem('Отклики', DataProvider.requestsUsers.length, (<>{renderUsersSearch(handleShowFilter)}{renderRequests(selectedContent)}</>)))
+  tabsManager.addItem(new TabMenuItem('Исполнители', DataProvider.executorsUsers.length, (<>{renderUsersSearch(handleShowFilter)}{renderExecutors()}</>)))
+  tabsManager.addItem(new TabMenuItem('Отказы', DataProvider.refusalsUsers.length, (<>{renderRefusals()}</>)))
+  tabsManager.addItem(new TabMenuItem('Рекомендуемые', DataProvider.recommendUsers.length, (<>{renderUsersSearch(handleShowFilter)}{renderRecommended(submit, handleOpenModal)}</>)))
+  const activeState: TabsMenuState = statesFromNumber(parseInt(selected))
 
-  const showLeadSidebar = activeState === TabsState.Lead
-  const isShowFilter = activeState !== TabsState.Lead && showFilter
+  const showLeadSidebar = activeState === TabsMenuState.Lead
+  const isShowFilter = activeState !== TabsMenuState.Lead && showFilter
 
   return (
     <>
@@ -538,7 +125,7 @@ function renderRecommended(isSubmit: boolean, handleOpenModal: Function): JSX.El
   return (
     <>
       <ul className="Applications__list">
-        {recommendArray.map((recommend, index) => (
+        {DataProvider.recommendUsers.map((recommend, index) => (
           <li key={index}>
             <SellerCard
               isRecommend={recommend.isRecommend}
@@ -565,7 +152,7 @@ function renderRefusals(): JSX.Element {
   return (
     <>
       <ul className="Applications__list">
-        {refusalsArray.map((refusal, index) => (
+        {DataProvider.refusalsUsers.map((refusal, index) => (
           <li key={index}>
             <SellerCard
               isRefusal={refusal.isRefusal}
@@ -590,7 +177,7 @@ function renderExecutors(): JSX.Element {
   return (
     <div>
       <ul className="Applications__list">
-        {performersArray.map((performer, index) => (
+        {DataProvider.executorsUsers.map((performer, index) => (
           <li key={index}>
             <SellerCard
               isPerformer={performer.isPerformer}
@@ -628,7 +215,7 @@ function renderRequests(selected: string): JSX.Element {
     <div>
       {selected === "1" && (
         <ul className="Applications__list">
-          {applicationsArray.map((performer, index) => (
+          {DataProvider.requestsUsers.map((performer, index) => (
             <li key={index}>
               <SellerCard
                 isPerformer={performer.isPerformer}
@@ -649,7 +236,7 @@ function renderRequests(selected: string): JSX.Element {
 
       {selected === "2" && (
         <ul className="Applications__list">
-          {objectsArray.map((object, index) => (
+          {DataProvider.objects.map((object, index) => (
             <li key={index}>
               <ObjectCard
                 href="/"
@@ -715,49 +302,49 @@ function renderFilter(handler: Function, tabHandler: Function): JSX.Element {
   )
 }
 
-function statesFromNumber(val: number): TabsState {
-  let found = TabsState.Lead
+function statesFromNumber(val: number): TabsMenuState {
+  let found = TabsMenuState.Lead
 
   switch (val) {
     case 0:
-      found = TabsState.Lead
+      found = TabsMenuState.Lead
       break
     case 1:
-      found = TabsState.Requests
+      found = TabsMenuState.Requests
       break
     case 2:
-      found = TabsState.Executors
+      found = TabsMenuState.Executors
       break
     case 3:
-      found = TabsState.Refusals
+      found = TabsMenuState.Refusals
       break
     case 4:
-      found = TabsState.Recommended
+      found = TabsMenuState.Recommended
       break
     default:
-      found = TabsState.Lead
+      found = TabsMenuState.Lead
       break
   }
 
   return found
 }
 
-function stateToClassName(val: TabsState): string {
+function stateToClassName(val: TabsMenuState): string {
   let found: string = BaseClassName + "__Lead"
   switch (val) {
-    case TabsState.Lead:
+    case TabsMenuState.Lead:
       found = BaseClassName + "__Lead"
       break
-    case TabsState.Recommended:
+    case TabsMenuState.Recommended:
       found = BaseClassName + "__Recommended"
       break
-    case TabsState.Refusals:
+    case TabsMenuState.Refusals:
       found = BaseClassName + "__Refusals"
       break
-    case TabsState.Executors:
+    case TabsMenuState.Executors:
       found = BaseClassName + "__Executors"
       break
-    case TabsState.Requests:
+    case TabsMenuState.Requests:
       found = BaseClassName + "__Requests"
       break
   }
