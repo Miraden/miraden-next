@@ -49,7 +49,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
                 className={cn("Header__navButton")}
                 active={currentUrl.includes("application")}
               >
-                мои заявки
+                мои заявки
               </Button>
               <Button
                 href="/objects-plug"
@@ -58,7 +58,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
                 className="Header__navButton"
                 active={currentUrl.includes("objects")}
               >
-                мои объекты
+                мои объекты
               </Button>
               <More />
             </>

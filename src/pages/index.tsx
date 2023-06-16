@@ -6,7 +6,7 @@ import { HowItWorks } from "@/modules/Home/HowItWorks";
 import { Reviews } from "@/modules/Home/Reviews";
 import { Inter } from "next/font/google";
 import Head from "next/head";
-import { Layout } from "../modules/Base/Layout";
+import { Layout } from "@/modules/Base/Layout";
 
 const inter = Inter({ subsets: ["latin"] });
 

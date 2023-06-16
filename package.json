@@ -13,8 +13,6 @@
     "@types/react": "18.0.38",
     "@types/react-dom": "18.0.11",
     "classnames": "^2.3.2",
-    "eslint": "8.39.0",
-    "eslint-config-next": "13.3.1",
     "keen-slider": "^6.8.5",
     "next": "13.3.1",
     "react": "18.2.0",
@@ -26,6 +24,8 @@
   },
   "devDependencies": {
     "@types/react-datepicker": "^4.11.2",
-    "@types/styled-components": "^5.1.26"
+    "@types/styled-components": "^5.1.26",
+    "eslint": "8.39.0",
+    "eslint-config-next": "13.3.1"
   }
 }

@@ -6,7 +6,7 @@ interface UIKitProps {
   className?: string;
 }
 
-const UIKit = ({ className }: UIKitProps) => {
+const UIKit = ({className}: UIKitProps) => {
   return (
     <StyledUIKit className={cn(className, "Container")}>
       <h1 className="Font_52_120">UI Kit</h1>
@@ -41,6 +41,9 @@ const UIKit = ({ className }: UIKitProps) => {
         <Link type="button" href="/ui-kit/forms">
           Forms
         </Link>
+        <Link type="button" href="/ui-kit/components">
+          Components
+        </Link>
       </div>
     </StyledUIKit>
   );
@@ -59,4 +62,4 @@ const StyledUIKit = styled.section`
   }
 `;
 
-export { UIKit };
+export {UIKit};

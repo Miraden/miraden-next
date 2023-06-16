@@ -65,7 +65,7 @@ const PaymentButton = ({
       {buttonTitle && (
         <div className="[ Button__label ]">
           <h3 className="Font_16_140">{buttonTitle}</h3>
-          <p className="Font_14_140" dangerouslySetInnerHTML={{__html: buttonText}}/>
+          <p className="Font_14_140">{buttonText}</p>
         </div>
       )}
     </StyledButton>

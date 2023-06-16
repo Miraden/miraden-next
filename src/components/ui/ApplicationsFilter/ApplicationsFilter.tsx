@@ -7,7 +7,7 @@ import { Button } from "../Button";
 import { Checkbox } from "../CheckBox";
 import { CurrencySelect } from "../CurrencySelect/CurrencySelect";
 import { NumberInputNoLabel } from "../NumberInputNoLabel";
-import { RequestButton } from "../RequestButton";
+import { RequestButton } from "@/components/ui";
 import { TabButtons } from "../TabButtons";
 interface FilterProps {
   className?: string;

@@ -1,18 +1,30 @@
-import { Button, Search } from "@/components/ui";
-import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
-import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
-import { BackIcon20 } from "@/icons";
-import { FilterIcon } from "@/icons/FilterIcon";
-import { ApplicationsFooter } from "@/modules/Base/ApplicationsFooter";
+import {Button, Search} from "@/components/ui";
+import {useLockBodyScroll} from "@/hooks/useLockBodyScroll";
+import {BackIcon20} from "@/icons";
+import {FilterIcon} from "@/icons/FilterIcon";
+import {ApplicationsFooter} from "@/modules/Base/ApplicationsFooter";
 import cn from "classnames";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import styled from "styled-components";
-import { ObjectCard } from "./components/ObjectCard";
-import { SellerCard } from "./components/SellerCard";
-import { SingleApplication } from "./components/SingleApplication";
-import { SingleApplicationSideBar } from "./components/SingleApplicationSideBar";
+import {SellerCard} from "./components/SellerCard";
+import {SingleApplication} from "./components/SingleApplication";
+import {SingleApplicationSideBar} from "./components/SingleApplicationSideBar";
+import {TabMenuItem, TabsManager} from "@/components/ui/TabsMenu";
+import {ApplicationsFilter} from "@/components/ui/ApplicationsFilter";
+import {ObjectCard} from "./components/ObjectCard";
+
+const BaseClassName: string = "Application"
+
 interface ApplicationProps {
   className?: string;
+}
+
+enum TabsState {
+  Lead = 0,
+  Requests = 1,
+  Executors = 2,
+  Refusals = 3,
+  Recommended = 4
 }
 
 const applicationsArray = [
@@ -426,44 +438,16 @@ const recommendArray = [
     isRefusal: true,
   },
 ];
-type Option =
-  | "application"
-  | "requests"
-  | "performers"
-  | "refusals"
-  | "recommended"
-  | "contacts"
-  | "information";
 
-const Application = ({ className }: ApplicationProps) => {
-  const [selected, setSelected] = useState<Option | null>("application");
-  const [showFilter, setShowFilter] = useState(false);
+const Application = ({className}: ApplicationProps) => {
   const startY = useRef<number>(0);
 
-  const [selectedContent, setSelectedContent] = useState("1");
-  const [sideBar, setSideBar] = useState(true);
-
-  const handleSelect = useCallback((option: Option) => {
+  const [selected, setSelected] = useState<TabsState>(TabsState.Lead);
+  const handleSelect = useCallback((option: TabsState) => {
     setSelected(option);
-
-    if (option !== "application") {
-      setSideBar(false);
-    } else {
-      setSideBar(true);
-      setShowFilter(false);
-    }
   }, []);
 
-  const handleShowFilter = useCallback(() => {
-    setShowFilter(!showFilter);
-  }, [showFilter]);
-
-  const handleTabClick = (tabId: string) => {
-    setSelectedContent(tabId);
-  };
-
   const [isOpenModal, setIsOpenModal] = useState(false);
-
   const handleOpenModal = useCallback(() => {
     setIsOpenModal(true);
   }, []);
@@ -471,29 +455,23 @@ const Application = ({ className }: ApplicationProps) => {
   const [submit, setSubmit] = useState(false);
   useLockBodyScroll(isOpenModal);
 
-  const handleTouchStart = (event: TouchEvent) => {
-    const touch = event.touches[0];
-    startY.current = touch.pageY;
-  };
-
-  const handleTouchEnd = (event: TouchEvent) => {
-    const touch = event.changedTouches[0];
-    const deltaY = touch.pageY - startY.current;
-
-    if (deltaY > 50) {
-      setShowFilter(false);
-    }
-  };
-
   const [mQuery, setMQuery] = useState({
-    matches:
-      typeof window !== "undefined" && window.innerWidth <= 1440 ? true : false,
+    matches: typeof window !== "undefined" && window.innerWidth <= 1440,
   });
-
   const handleChange = useCallback(
-    (e: any) => setMQuery({ matches: e.matches }),
+    (e: any) => setMQuery({matches: e.matches}),
     []
   );
+
+  const [showFilter, setShowFilter] = useState(false);
+  const handleShowFilter = useCallback(() => {
+    setShowFilter(!showFilter);
+  }, [showFilter]);
+
+  const [selectedContent, setSelectedContent] = useState("1");
+  const handleTabClick = (tabId: string) => {
+    setSelectedContent(tabId);
+  };
 
   useEffect(() => {
     let mediaQuery = window.matchMedia("(max-width: 1440px)");
@@ -503,19 +481,26 @@ const Application = ({ className }: ApplicationProps) => {
 
   useLockBodyScroll(showFilter && mQuery.matches);
 
+  const tabsManager = new TabsManager([], handleSelect)
+  tabsManager.addItem(new TabMenuItem('Заявка', 0, (<>{renderLead()}</>)))
+  tabsManager.addItem(new TabMenuItem('Отклики', applicationsArray.length, (<>{renderUsersSearch(handleShowFilter)}{renderRequests(selectedContent)}</>)))
+  tabsManager.addItem(new TabMenuItem('Исполнители', performersArray.length, (<>{renderUsersSearch(handleShowFilter)}{renderExecutors()}</>)))
+  tabsManager.addItem(new TabMenuItem('Отказы', refusalsArray.length, (<>{renderRefusals()}</>)))
+  tabsManager.addItem(new TabMenuItem('Рекомендуемые', recommendArray.length, (<>{renderUsersSearch(handleShowFilter)}{renderRecommended(submit, handleOpenModal)}</>)))
+  const activeState: TabsState = statesFromNumber(parseInt(selected))
+
+  const showLeadSidebar = activeState === TabsState.Lead
+  const isShowFilter = activeState !== TabsState.Lead && showFilter
+
   return (
     <>
       <StyledApplication
-        className={cn(className, {
-          Test: showFilter || sideBar || selected === "application",
-        })}
-      >
+        className={cn(className, stateToClassName(activeState))}>
         <div
           className={cn("Application__wrapper", {
-            IsOpenSidebar: sideBar,
-            IsOpenFilter: showFilter,
-          })}
-        >
+            IsOpenSidebar: showLeadSidebar,
+            IsOpenFilter: isShowFilter
+          })}>
           <div className="Application__headContainer">
             <div className="Application__head">
               <Button
@@ -530,299 +515,255 @@ const Application = ({ className }: ApplicationProps) => {
               </Button>
 
               <h1 className="Font_32_120 lg:Font_26_120_500">
-                Хочу купить 3-х комнатную квартиру на Кипре
+                Хочу купить 3-х комнатную квартиру на Кипре
               </h1>
             </div>
-            <div className="Application__headTabsContainer">
-              <div className="Application__headTabs">
-                <Button
-                  className={cn("Application__TabButton", {
-                    Application__headTabButton: selected === "application",
-                  })}
-                  onClick={() => handleSelect("application")}
-                  active={selected === "application"}
-                  tertiary
-                >
-                  Заявка
-                </Button>
-                <Button
-                  className={cn("Application__TabButton", {
-                    Application__headTabButton: selected === "requests",
-                  })}
-                  onClick={() => handleSelect("requests")}
-                  active={selected === "requests"}
-                  tertiary
-                >
-                  Отклики{" "}
-                  <p className="TabButton__counter Color_text_grey">
-                    {applicationsArray.length}
-                  </p>
-                </Button>
-                <Button
-                  className={cn("Application__TabButton", {
-                    Application__headTabButton: selected === "performers",
-                  })}
-                  onClick={() => handleSelect("performers")}
-                  active={selected === "performers"}
-                  tertiary
-                >
-                  Исполнители
-                  <p
-                    className={cn("TabButton__counter Color_text_grey", {
-                      Color_blue_primary: selected === "performers",
-                    })}
-                  >
-                    {performersArray.length}
-                  </p>
-                </Button>
-                <Button
-                  className={cn("Application__TabButton", {
-                    Application__headTabButton: selected === "refusals",
-                  })}
-                  onClick={() => handleSelect("refusals")}
-                  active={selected === "refusals"}
-                  tertiary
-                >
-                  Отказы
-                  <p className="TabButton__counter Color_text_grey">
-                    {refusalsArray.length}
-                  </p>
-                </Button>
-                <Button
-                  className={cn("Application__TabButton", {
-                    Application__headTabButton: selected === "recommended",
-                  })}
-                  onClick={() => handleSelect("recommended")}
-                  active={selected === "recommended"}
-                  tertiary
-                >
-                  Рекомендуемые
-                  <p className="TabButton__counter Color_text_grey">
-                    {recommendArray.length}
-                  </p>
-                </Button>
-              </div>
-              <div className="Application__headTabsBar" />
-            </div>
+            {tabsManager.renderMenus(selected)}
           </div>
-          {selected === "application" && (
-            <div className="Applications__headTabsBar_whiteSpace" />
-          )}
 
-          {selected === "application" && (
-            <>
-              <SingleApplication />
-            </>
-          )}
-          {selected === "performers" && (
-            <>
-              <div>
-                <Search
-                  options={[]}
-                  placeholder="Поиск"
-                  className={cn("Applications__searchBar", {
-                    FilterOpen: !showFilter,
-                  })}
-                  rightIcon={<FilterIcon />}
-                  onClick={handleShowFilter}
-                  withFilter
-                />
-              </div>
-            </>
-          )}
-
-          {selected === "requests" && (
-            <>
-              <div>
-                <Search
-                  options={[]}
-                  placeholder="Поиск"
-                  className={cn("Applications__searchBar", {
-                    FilterOpen: !showFilter,
-                  })}
-                  rightIcon={<FilterIcon />}
-                  onClick={handleShowFilter}
-                  withFilter
-                />
-              </div>
-
-              {selectedContent === "1" && (
-                <ul className="Applications__list">
-                  {applicationsArray.map((appItem, index) => (
-                    <li key={index}>
-                      <SellerCard
-                        name={appItem.name}
-                        isPro={appItem.isPro}
-                        isVerified={appItem.isVerified}
-                        rating={appItem.rating}
-                        image={appItem.image}
-                        status={appItem.status}
-                        agencyName={appItem.agencyName}
-                        isOnline={appItem.isOnline}
-                        unreadMessages={appItem.unreadMessages}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              )}
-              {selectedContent === "2" && (
-                <ul className="Applications__list">
-                  {objectsArray.map((object, index) => (
-                    <li key={index}>
-                      <ObjectCard
-                        href="/"
-                        title={object.title}
-                        location={object.location}
-                        id={object.id}
-                        cashBack={object.cashBack}
-                        year={object.year}
-                        yieldCount={object.yieldCount}
-                        sleeps={object.sleeps}
-                        square={object.square}
-                        rooms={object.rooms}
-                        baths={object.baths}
-                        price={object.price}
-                        isBooked={object.isBooked}
-                        isUnpublished={object.isUnpublished}
-                        name={object.name}
-                        status={object.status}
-                        image1={object.image1}
-                        image2={object.image2}
-                        image3={object.image3}
-                        image={object.image}
-                        firstInstallment={object.firstInstallment}
-                        firstInstallmentPercent={object.firstInstallmentPercent}
-                        singleCost={object.singleCost}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </>
-          )}
-
-          {selected === "performers" && (
-            <div>
-              <ul className="Applications__list">
-                {performersArray.map((performer, index) => (
-                  <li key={index}>
-                    <SellerCard
-                      isPerformer={performer.isPerformer}
-                      name={performer.name}
-                      isPro={performer.isPro}
-                      isVerified={performer.isVerified}
-                      rating={performer.rating}
-                      image={performer.image}
-                      status={performer.status}
-                      agencyName={performer.agencyName}
-                      isOnline={performer.isOnline}
-                      unreadMessages={performer.unreadMessages}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {selected === "refusals" && (
-            <>
-              <div className="Applications__headTabsBar_whiteSpace" />
-
-              <ul className="Applications__list">
-                {refusalsArray.map((refusal, index) => (
-                  <li key={index}>
-                    <SellerCard
-                      isRefusal={refusal.isRefusal}
-                      name={refusal.name}
-                      isPro={refusal.isPro}
-                      isVerified={refusal.isVerified}
-                      rating={refusal.rating}
-                      image={refusal.image}
-                      status={refusal.status}
-                      agencyName={refusal.agencyName}
-                      isOnline={refusal.isOnline}
-                      unreadMessages={refusal.unreadMessages}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
-
-          {selected === "recommended" && (
-            <>
-              <div>
-                <Search
-                  options={[]}
-                  placeholder="Поиск"
-                  className={cn("Applications__searchBar", {
-                    FilterOpen: !showFilter,
-                  })}
-                  rightIcon={<FilterIcon />}
-                  onClick={handleShowFilter}
-                  withFilter
-                />
-              </div>
-
-              <ul className="Applications__list">
-                {recommendArray.map((recommend, index) => (
-                  <li key={index}>
-                    <SellerCard
-                      isRecommend={recommend.isRecommend}
-                      name={recommend.name}
-                      isPro={recommend.isPro}
-                      isVerified={recommend.isVerified}
-                      rating={recommend.rating}
-                      image={recommend.image}
-                      status={recommend.status}
-                      agencyName={recommend.agencyName}
-                      isOnline={recommend.isOnline}
-                      unreadMessages={recommend.unreadMessages}
-                      onClick={handleOpenModal}
-                      submit={submit}
-                    />
-                  </li>
-                ))}
-              </ul>
-            </>
-          )}
+          {tabsManager.renderContent(selected)}
         </div>
 
-        {selected === "application" && (
-          <>
-            {" "}
-            {sideBar && (
-              <SingleApplicationSideBar className="SingleApplicationSideBar" />
-            )}
-          </>
-        )}
-        {showFilter && (
-          <>
-            <div className="TestFilter">
-              <ApplicationsFilter
-                onTabClick={handleTabClick}
-                className="Applications__filter"
-                onClick={handleShowFilter}
-              />
-            </div>
+        {showLeadSidebar && renderLeadPaymentOptions()}
 
-            <div className="Applications__filterMobileContainer">
-              <ApplicationsFilter
-                onTabClick={handleTabClick}
-                className="Applications__filterMobile"
-                onClick={handleShowFilter}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-              />
-            </div>
-          </>
-        )}
+        {isShowFilter && renderFilter(handleShowFilter, handleTabClick)}
 
-        {!showFilter && <ApplicationsFooter />}
+        {!isShowFilter && <ApplicationsFooter/>}
       </StyledApplication>
     </>
   );
 };
+
+function renderRecommended(isSubmit: boolean, handleOpenModal: Function): JSX.Element {
+  return (
+    <>
+      <ul className="Applications__list">
+        {recommendArray.map((recommend, index) => (
+          <li key={index}>
+            <SellerCard
+              isRecommend={recommend.isRecommend}
+              name={recommend.name}
+              isPro={recommend.isPro}
+              isVerified={recommend.isVerified}
+              rating={recommend.rating}
+              image={recommend.image}
+              status={recommend.status}
+              agencyName={recommend.agencyName}
+              isOnline={recommend.isOnline}
+              unreadMessages={recommend.unreadMessages}
+              onClick={handleOpenModal}
+              submit={isSubmit}
+            />
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}
+
+function renderRefusals(): JSX.Element {
+  return (
+    <>
+      <ul className="Applications__list">
+        {refusalsArray.map((refusal, index) => (
+          <li key={index}>
+            <SellerCard
+              isRefusal={refusal.isRefusal}
+              name={refusal.name}
+              isPro={refusal.isPro}
+              isVerified={refusal.isVerified}
+              rating={refusal.rating}
+              image={refusal.image}
+              status={refusal.status}
+              agencyName={refusal.agencyName}
+              isOnline={refusal.isOnline}
+              unreadMessages={refusal.unreadMessages}
+            />
+          </li>
+        ))}
+      </ul>
+    </>
+  )
+}
+
+function renderExecutors(): JSX.Element {
+  return (
+    <div>
+      <ul className="Applications__list">
+        {performersArray.map((performer, index) => (
+          <li key={index}>
+            <SellerCard
+              isPerformer={performer.isPerformer}
+              name={performer.name}
+              isPro={performer.isPro}
+              isVerified={performer.isVerified}
+              rating={performer.rating}
+              image={performer.image}
+              status={performer.status}
+              agencyName={performer.agencyName}
+              isOnline={performer.isOnline}
+              unreadMessages={performer.unreadMessages}
+            />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+function renderUsersSearch(handler: Function): JSX.Element {
+  return (
+    <Search
+      options={[]}
+      placeholder="Поиск"
+      className={cn("Applications__searchBar")}
+      rightIcon={<FilterIcon/>}
+      onClick={handler}
+      withFilter/>
+  )
+}
+
+function renderRequests(selected: string): JSX.Element {
+  return (
+    <div>
+      {selected === "1" && (
+        <ul className="Applications__list">
+          {applicationsArray.map((performer, index) => (
+            <li key={index}>
+              <SellerCard
+                isPerformer={performer.isPerformer}
+                name={performer.name}
+                isPro={performer.isPro}
+                isVerified={performer.isVerified}
+                rating={performer.rating}
+                image={performer.image}
+                status={performer.status}
+                agencyName={performer.agencyName}
+                isOnline={performer.isOnline}
+                unreadMessages={performer.unreadMessages}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {selected === "2" && (
+        <ul className="Applications__list">
+          {objectsArray.map((object, index) => (
+            <li key={index}>
+              <ObjectCard
+                href="/"
+                title={object.title}
+                location={object.location}
+                id={object.id}
+                cashBack={object.cashBack}
+                year={object.year}
+                yieldCount={object.yieldCount}
+                sleeps={object.sleeps}
+                square={object.square}
+                rooms={object.rooms}
+                baths={object.baths}
+                price={object.price}
+                isBooked={object.isBooked}
+                isUnpublished={object.isUnpublished}
+                name={object.name}
+                status={object.status}
+                image1={object.image1}
+                image2={object.image2}
+                image3={object.image3}
+                image={object.image}
+                firstInstallment={object.firstInstallment}
+                firstInstallmentPercent={object.firstInstallmentPercent}
+                singleCost={object.singleCost}
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+
+    </div>
+  )
+}
+
+function renderLeadPaymentOptions(): JSX.Element {
+  return (
+    <>
+      <SingleApplicationSideBar className="SingleApplicationSideBar"/>
+    </>
+  )
+}
+
+function renderLead(): JSX.Element {
+  return (
+    <>
+      <SingleApplication/>
+    </>
+  )
+}
+
+function renderFilter(handler: Function, tabHandler: Function): JSX.Element {
+  return (
+    <>
+      <div className="TestFilter">
+        <ApplicationsFilter
+          onTabClick={tabHandler}
+          className="Applications__filter"
+          onClick={handler}
+        />
+      </div>
+    </>
+  )
+}
+
+function statesFromNumber(val: number): TabsState {
+  let found = TabsState.Lead
+
+  switch (val) {
+    case 0:
+      found = TabsState.Lead
+      break
+    case 1:
+      found = TabsState.Requests
+      break
+    case 2:
+      found = TabsState.Executors
+      break
+    case 3:
+      found = TabsState.Refusals
+      break
+    case 4:
+      found = TabsState.Recommended
+      break
+    default:
+      found = TabsState.Lead
+      break
+  }
+
+  return found
+}
+
+function stateToClassName(val: TabsState): string {
+  let found: string = BaseClassName + "__Lead"
+  switch (val) {
+    case TabsState.Lead:
+      found = BaseClassName + "__Lead"
+      break
+    case TabsState.Recommended:
+      found = BaseClassName + "__Recommended"
+      break
+    case TabsState.Refusals:
+      found = BaseClassName + "__Refusals"
+      break
+    case TabsState.Executors:
+      found = BaseClassName + "__Executors"
+      break
+    case TabsState.Requests:
+      found = BaseClassName + "__Requests"
+      break
+  }
+
+  return found
+}
 
 const StyledApplication = styled.section`
   position: relative;
@@ -845,15 +786,25 @@ const StyledApplication = styled.section`
     flex-shrink: 0;
     margin-right: 10px;
     background: #fff;
+
     :hover {
       background: #f1f7ff;
     }
+
     :focus {
       background: #fff;
     }
 
     :active {
       background: #e1edfd;
+    }
+  }
+
+  &.Application__Requests, &.Application__Recommended, &.Application__Executors {
+    .Application__headContainer {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      padding-bottom: 0;
     }
   }
 
@@ -896,9 +847,9 @@ const StyledApplication = styled.section`
 
   .Application__headContainer {
     margin-top: 30px;
-    padding: 20px 20px 0 20px;
+    padding: 20px 20px 10px 20px;
     background: #fff;
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px;
   }
 
   .Application__head {
@@ -909,14 +860,17 @@ const StyledApplication = styled.section`
   .Application__headTabs {
     display: flex;
     margin-top: 30px;
+
     button {
       padding: 0;
+
       :hover {
         p {
           color: #4e6af3 !important;
         }
       }
     }
+
     button:not(:first-child) {
       margin-left: 30px;
     }
@@ -930,6 +884,7 @@ const StyledApplication = styled.section`
 
   .Application__headTabButton {
     position: relative;
+
     ::before {
       position: absolute;
       top: 32px;
@@ -948,6 +903,7 @@ const StyledApplication = styled.section`
       background: transparent !important;
     }
   }
+
   .Application__headTabsBar {
     margin-top: 12px;
     width: 100%;
@@ -971,10 +927,12 @@ const StyledApplication = styled.section`
     button {
       padding: 0;
     }
+
     button:not(:first-child) {
       margin-left: 30px;
     }
   }
+
   .Application__body {
     padding-top: 100px;
     margin: 0 auto;
@@ -991,16 +949,19 @@ const StyledApplication = styled.section`
   }
 
   /* хром, сафари */
+
   .Applications__headTabs::-webkit-scrollbar {
     width: 0;
   }
 
   /* ie 10+ */
+
   .Applications__headTabs {
     -ms-overflow-style: none;
   }
 
   /* фф (свойство больше не работает, других способов тоже нет)*/
+
   .Applications__headTabs {
     overflow: -moz-scrollbars-none;
   }
@@ -1016,8 +977,10 @@ const StyledApplication = styled.section`
     margin-left: -30px;
     height: calc(100vh - 114px);
   }
+
   .Applications__searchBar {
     padding: 0;
+
     input {
       border-radius: 0 0 10px 10px;
       box-shadow: none !important;
@@ -1041,8 +1004,10 @@ const StyledApplication = styled.section`
       }
     }
   }
+
   .Applications__list {
     margin-top: 20px;
+
     li:not(:first-child) {
       margin-top: 10px;
     }
@@ -1054,6 +1019,7 @@ const StyledApplication = styled.section`
     border-radius: 50%;
     width: 44px;
     height: 44px;
+
     svg {
       path {
         fill: #fff;
@@ -1109,12 +1075,15 @@ const StyledApplication = styled.section`
         }
       }
     }
+
     span {
       display: flex;
       flex-direction: column;
       align-items: center;
+
       svg {
         margin-bottom: 2px;
+
         path {
           fill: #7786a5;
         }
@@ -1190,16 +1159,11 @@ const StyledApplication = styled.section`
 
     .SingleApplicationSideBar {
       width: 100%;
-      margin: 0 auto;
       grid-column: 1 / span 18;
-      margin-top: 16px;
+      margin: 16px auto 0;
       height: fit-content;
       padding-bottom: 120px;
     }
-  }
-
-  .Applications__filterMobile {
-    display: none;
   }
 
   @media (max-width: 1024px) {
@@ -1210,6 +1174,7 @@ const StyledApplication = styled.section`
     .Application__headContainer {
       margin-top: 0;
     }
+
     .TestFilter {
       transform: none;
     }
@@ -1251,6 +1216,7 @@ const StyledApplication = styled.section`
       padding-left: 0;
       padding-right: 0;
     }
+
     .TestFilter {
       display: none;
     }
@@ -1262,6 +1228,7 @@ const StyledApplication = styled.section`
       height: 100vh;
       top: -58px;
     }
+
     .Application__FooterButtons {
       display: flex;
       justify-content: center;
@@ -1288,4 +1255,4 @@ const StyledApplication = styled.section`
   }
 `;
 
-export { Application };
+export {Application};

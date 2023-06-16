@@ -1,216 +1,193 @@
-import { Button } from "@/components/ui";
-import { ApplicationsFooter } from "@/modules/Base/ApplicationsFooter";
+import {Button} from "@/components/ui";
+import {ApplicationsFooter} from "@/modules/Base/ApplicationsFooter";
 import cn from "classnames";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import React, {useCallback, useState} from "react";
 import styled from "styled-components";
-import { ObjectCardLarge } from "./components/ObjectCardLarge";
+import {ObjectCardLarge} from "./components/ObjectCardLarge";
+import {TabMenuItem, TabsManager} from "@/components/ui/TabsMenu";
+
 interface ApplicationProps {
   className?: string;
 }
 
-type Option = "all" | "published" | "archived";
+const applicationsArray = [
+  {
+    title: "Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ",
+    location: "Кипр / Лимассол / Все районы",
+    id: "1445",
+    price: "158 000 – 230 000",
+    year: "2022",
+    square: "294 м²",
+    rooms: 10,
+    sleeps: 6,
+    baths: 2,
+    yieldCount: 8,
+    firstInstallment: "12000 €",
+    firstInstallmentPercent: "20%",
+    singleCost: "120 €",
+    deal: "Покупка",
+    type: "Жилая | Квартира / апартаменты",
+    condition: "Новая",
+    purpose: "Для инвестиций (сдавать в аренду)",
+    isPublished: true,
+    isTrue: true,
+    publishedAt: "Создана 12 января",
+    requestsCount: 5,
+    watched: 264,
+    list: 1268,
+  },
+  {
+    title: "Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ",
+    location: "Кипр / Лимассол / Все районы",
+    id: "1445",
+    price: "158 000 – 230 000",
+    year: "2022",
+    square: "294 м²",
+    rooms: 10,
+    sleeps: 6,
+    baths: 2,
+    yieldCount: 8,
+    firstInstallment: "12000 €",
+    firstInstallmentPercent: "20%",
+    singleCost: "120 €",
+    deal: "Покупка",
+    type: "Жилая | Квартира / апартаменты",
+    condition: "Новая",
+    purpose: "Для инвестиций (сдавать в аренду)",
+    isPublished: true,
+    isTrue: true,
+    publishedAt: "Создана 12 января",
+    watched: 264,
+    list: 1268,
+    messagesCount: 10,
+  },
+  {
+    title: "Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ",
+    location: "Кипр / Лимассол / Все районы",
+    id: "1445",
+    price: "158 000 – 230 000",
+    year: "2022",
+    square: "294 м²",
+    rooms: 10,
+    sleeps: 6,
+    baths: 2,
+    yieldCount: 8,
+    firstInstallment: "12000 €",
+    firstInstallmentPercent: "20%",
+    singleCost: "120 €",
+    deal: "Покупка",
+    type: "Жилая | Квартира / апартаменты",
+    condition: "Новая",
+    purpose: "Для инвестиций (сдавать в аренду)",
+    isPublished: true,
+    isTrue: false,
+    publishedAt: "Создана 12 января",
+    watched: 264,
+    list: 1268,
+  },
+];
 
-const ApplicationFull = ({ className }: ApplicationProps) => {
-  const [selected, setSelected] = useState<Option | null>("all");
+const ApplicationFull = ({className}: ApplicationProps) => {
 
-  const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
+  const [selected, setSelected] = useState<number>(0);
+
+  const handleSelect = useCallback((state: number) => {
+    setSelected(state);
   }, []);
 
-  const applicationsArray = [
-    {
-      title: "Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ",
-      location: "Кипр / Лимассол / Все районы",
-      id: "1445",
-      price: "158 000 – 230 000",
-      year: "2022",
-      square: "294 м²",
-      rooms: 10,
-      sleeps: 6,
-      baths: 2,
-      yieldCount: 8,
-      firstInstallment: "12000 €",
-      firstInstallmentPercent: "20%",
-      singleCost: "120 €",
-      deal: "Покупка",
-      type: "Жилая | Квартира / апартаменты",
-      condition: "Новая",
-      purpose: "Для инвестиций (сдавать в аренду)",
-      isPublished: true,
-      isTrue: true,
-      publishedAt: "Создана 12 января",
-      requestsCount: 5,
-      watched: 264,
-      list: 1268,
-    },
-    {
-      title: "Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ",
-      location: "Кипр / Лимассол / Все районы",
-      id: "1445",
-      price: "158 000 – 230 000",
-      year: "2022",
-      square: "294 м²",
-      rooms: 10,
-      sleeps: 6,
-      baths: 2,
-      yieldCount: 8,
-      firstInstallment: "12000 €",
-      firstInstallmentPercent: "20%",
-      singleCost: "120 €",
-      deal: "Покупка",
-      type: "Жилая | Квартира / апартаменты",
-      condition: "Новая",
-      purpose: "Для инвестиций (сдавать в аренду)",
-      isPublished: true,
-      isTrue: true,
-      publishedAt: "Создана 12 января",
-      watched: 264,
-      list: 1268,
-      messagesCount: 10,
-    },
-    {
-      title: "Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ",
-      location: "Кипр / Лимассол / Все районы",
-      id: "1445",
-      price: "158 000 – 230 000",
-      year: "2022",
-      square: "294 м²",
-      rooms: 10,
-      sleeps: 6,
-      baths: 2,
-      yieldCount: 8,
-      firstInstallment: "12000 €",
-      firstInstallmentPercent: "20%",
-      singleCost: "120 €",
-      deal: "Покупка",
-      type: "Жилая | Квартира / апартаменты",
-      condition: "Новая",
-      purpose: "Для инвестиций (сдавать в аренду)",
-      isPublished: true,
-      isTrue: false,
-      publishedAt: "Создана 12 января",
-      watched: 264,
-      list: 1268,
-    },
-  ];
+  const tabsManager = new TabsManager([], handleSelect)
+  tabsManager.addItem(new TabMenuItem('Все', 0, renderTabAll()))
+  tabsManager.addItem(new TabMenuItem('Опубликованные', 3, renderTabPublished()))
+  tabsManager.addItem(new TabMenuItem('В архиве', 1, renderTabArchived()))
 
   return (
     <StyledApplication className={className}>
       <div className={cn("Application__wrapper")}>
         <div className="Application__headContainer">
           <div className="Application__head">
-            <h1 className="Font_32_120 lg:Font_26_120_500">Мои заявки </h1>
+            <h1 className="Font_32_120 lg:Font_26_120_500">Мои заявки</h1>
           </div>
-          <div className="Application__headTabsContainer">
-            <div className="Application__headTabs">
-              <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "all",
-                })}
-                onClick={() => handleSelect("all")}
-                active={selected === "all"}
-                tertiary
-              >
-                Все
-              </Button>
-              <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "published",
-                })}
-                onClick={() => handleSelect("published")}
-                active={selected === "published"}
-                tertiary
-              >
-                Опубликованные
-              </Button>
-              <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "archived",
-                })}
-                onClick={() => handleSelect("archived")}
-                active={selected === "archived"}
-                tertiary
-              >
-                В архиве
-              </Button>
-            </div>
-            <div className="Application__headTabsBar" />
-          </div>
+          {tabsManager.renderMenus(selected)}
         </div>
-        <div className="Applications__headTabsBar_whiteSpace" />
-
-        {selected === "all" && (
-          <ul className="ApplicationsList">
-            {applicationsArray.map((application, index) => (
-              <li key={index}>
-                <ObjectCardLarge
-                  title={application.title}
-                  location={application.location}
-                  id={application.id}
-                  year={application.year}
-                  square={application.square}
-                  rooms={application.rooms}
-                  sleeps={application.sleeps}
-                  baths={application.baths}
-                  price={application.price}
-                  firstInstallment={application.firstInstallment}
-                  firstInstallmentPercent={application.firstInstallmentPercent}
-                  yieldCount={application.yieldCount}
-                  singleCost={application.singleCost}
-                  deal={application.deal}
-                  condition={application.condition}
-                  type={application.type}
-                  purpose={application.purpose}
-                  isPublished={application.isPublished}
-                  isTrue={application.isTrue}
-                  publishedAt={application.publishedAt}
-                  requestsCount={application.requestsCount}
-                  watched={application.watched}
-                  list={application.list}
-                  messagesCount={application.messagesCount}
-                  href="/applications"
-                />
-              </li>
-            ))}
-          </ul>
-        )}
-        {selected === "published" && (
-          <>
-            <div className="Application__body">
-              <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
-              <h2>Нет созданных заявок</h2>
-              <p className="Color_text_grey">
-                Но вы можете сделать это прямо сейчас!{" "}
-              </p>
-              <Button className="CreateApp__button" compact>
-                Создать заявку
-              </Button>
-            </div>
-          </>
-        )}
-
-        {selected === "archived" && (
-          <>
-            <div className="Application__body">
-              <Image src="/images/apps/5.svg" alt="" width={200} height={200} />
-              <h2>Нет заявок в архиве</h2>
-              <p className="Color_text_grey">
-                Если заявка больше не актуальна, вы можете отправить ее в архив,
-                а по необходимости восстановить обратно
-              </p>
-            </div>
-          </>
-        )}
-
-        <ApplicationsFooter />
+        {tabsManager.renderContent(selected)}
+        <ApplicationsFooter/>
       </div>
     </StyledApplication>
   );
 };
 
+function renderTabAll() {
+  return (
+    <ul className="ApplicationsList">
+      {applicationsArray.map((application, index) => (
+        <li key={index}>
+          <ObjectCardLarge
+            title={application.title}
+            location={application.location}
+            id={application.id}
+            year={application.year}
+            square={application.square}
+            rooms={application.rooms}
+            sleeps={application.sleeps}
+            baths={application.baths}
+            price={application.price}
+            firstInstallment={application.firstInstallment}
+            firstInstallmentPercent={application.firstInstallmentPercent}
+            yieldCount={application.yieldCount}
+            singleCost={application.singleCost}
+            deal={application.deal}
+            condition={application.condition}
+            type={application.type}
+            purpose={application.purpose}
+            isPublished={application.isPublished}
+            isTrue={application.isTrue}
+            publishedAt={application.publishedAt}
+            requestsCount={application.requestsCount}
+            watched={application.watched}
+            list={application.list}
+            messagesCount={application.messagesCount}
+            href="/applications"
+          />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function renderTabPublished() {
+  return (
+    <>
+      <div className="Application__body">
+        <Image src="/images/apps/4.svg" alt="" width={200} height={200}/>
+        <h2>Нет созданных заявок</h2>
+        <p className="Color_text_grey">
+          Но вы можете сделать это прямо сейчас!{" "}
+        </p>
+        <Button className="CreateApp__button" compact>
+          Создать заявку
+        </Button>
+      </div>
+    </>
+  );
+}
+
+function renderTabArchived() {
+  return (
+    <>
+      <div className="Application__body">
+        <Image src="/images/apps/5.svg" alt="" width={200} height={200}/>
+        <h2>Нет заявок в архиве</h2>
+        <p className="Color_text_grey">
+          Если заявка больше не актуальна, вы можете отправить ее в архив,
+          а по необходимости восстановить обратно
+        </p>
+      </div>
+    </>
+  );
+}
+
 const StyledApplication = styled.section`
-  position: relative;
   position: relative;
   width: 100%;
   display: grid;
@@ -218,11 +195,13 @@ const StyledApplication = styled.section`
   grid-gap: 30px;
   padding-left: 55px;
   padding-right: 55px;
+
   .Application__wrapper {
     grid-column: 5 / span 10;
     min-width: 970px;
     max-width: 970px;
   }
+
   .SingleChatInfoideBar {
     position: absolute;
     right: -420px;
@@ -231,9 +210,9 @@ const StyledApplication = styled.section`
 
   .Application__headContainer {
     margin-top: 30px;
-    padding: 20px 20px 0 20px;
+    padding: 20px 20px 10px 20px;
     background: #fff;
-    border-radius: 10px 10px 0 0;
+    border-radius: ${({theme}) => theme.border.radius};
   }
 
   .Application__head {
@@ -244,14 +223,17 @@ const StyledApplication = styled.section`
   .Application__headTabs {
     display: flex;
     margin-top: 30px;
+
     button {
       padding: 0;
+
       :hover {
         p {
           color: #4e6af3 !important;
         }
       }
     }
+
     button:not(:first-child) {
       margin-left: 30px;
     }
@@ -265,6 +247,7 @@ const StyledApplication = styled.section`
 
   .Application__headTabButton {
     position: relative;
+
     ::before {
       position: absolute;
       top: 35px;
@@ -283,6 +266,7 @@ const StyledApplication = styled.section`
       background: transparent !important;
     }
   }
+
   .Application__headTabsBar {
     margin-top: 15px;
     width: 100%;
@@ -302,9 +286,11 @@ const StyledApplication = styled.section`
     display: flex;
     margin-top: 30px;
     overflow: auto;
+
     button {
       padding: 0;
     }
+
     button:not(:first-child) {
       margin-left: 30px;
     }
@@ -405,12 +391,15 @@ const StyledApplication = styled.section`
         }
       }
     }
+
     span {
       display: flex;
       flex-direction: column;
       align-items: center;
+
       svg {
         margin-bottom: 2px;
+
         path {
           fill: #7786a5;
         }
@@ -526,6 +515,7 @@ const StyledApplication = styled.section`
     .Application__headTabsBar {
       margin-top: 8px;
     }
+
     .Application__headTabButton {
       ::before {
         top: 28px;
@@ -538,4 +528,4 @@ const StyledApplication = styled.section`
   }
 `;
 
-export { ApplicationFull };
+export {ApplicationFull};

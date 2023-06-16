@@ -48,6 +48,7 @@ const theme = {
     },
     grey: {
       textGrey: "#7786A5",
+      alt: '#E1EDFD',
       lightBlue: "#F1F7FF",
       default: "#F1F7FF",
       disabled: "#B8C6E3",
@@ -75,6 +76,9 @@ const theme = {
     sm: 576 - 1, // range 360px - 575px
     xs: 360, // range 0 - 375px
   },
+  border: {
+    radius: '10px'
+  }
 };
 
 export { theme };

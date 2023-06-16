@@ -21,6 +21,7 @@ interface Props {
   disabled?: boolean;
   active?: boolean;
   isSubmit?: boolean;
+  attr?: Object;
 }
 
 const Button: FC<Props> = ({
@@ -42,6 +43,7 @@ const Button: FC<Props> = ({
   active,
   isSubmit,
   prefetch = true,
+  attr = {},
 }) => {
   if (!href) {
     return (
@@ -49,6 +51,7 @@ const Button: FC<Props> = ({
         aria-label={ariaLabel}
         as="button"
         onClick={onClick}
+        {...attr}
         className={cn(`${className} Font_16_20`, {
           Button_primary: !secondary,
           Button_secondary: secondary,
@@ -84,6 +87,7 @@ const Button: FC<Props> = ({
     return (
       <StyledButton
         href={href}
+        {...attr}
         onClick={onClick}
         className={cn(`${className} Font_16_20`, {
           Button_primary: !secondary,
@@ -117,6 +121,7 @@ const Button: FC<Props> = ({
   if (disabled) {
     return (
       <StyledButton
+        {...attr}
         className={cn(`${className} Font_16_20`, {
           Button_primary: !secondary,
           Button_secondary: secondary,
@@ -149,6 +154,7 @@ const Button: FC<Props> = ({
     <StyledButton
       href={href}
       onClick={onClick}
+      {...attr}
       className={cn(`${className} Font_16_20`, {
         Button_primary: !secondary,
         Button_secondary: secondary,

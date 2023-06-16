@@ -1,10 +1,7 @@
 import { ApplicationsFullLayout } from "@/modules/ApplicationsFull/ApplicationsFullLayout";
 import { Header } from "@/modules/Base/Header";
-import { Inter } from "next/font/google";
 import Head from "next/head";
 import styled from "styled-components";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function ApplicationsFull() {
   return (
@@ -25,7 +22,7 @@ export default function ApplicationsFull() {
         />
       </Head>
       <StyledMainApplications>
-        <Header isAuthorized />
+        <Header isAuthorized={false} />
         <ApplicationsFullLayout />
       </StyledMainApplications>
     </>
