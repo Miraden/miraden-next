@@ -26,6 +26,7 @@ const TextInput = ({
   className,
   onChange,
   onKeyPress,
+  values
 }: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -35,6 +36,7 @@ const TextInput = ({
     if (maxLength && inputValue.length > maxLength) {
       return;
     }
+    if(onChange) onChange(event)
     setValue(inputValue);
   };
 
@@ -65,7 +67,7 @@ const TextInput = ({
           </StyledTextInputCounter>
         )}
         <StyledTextInputInput
-          value={value}
+          value={values}
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}

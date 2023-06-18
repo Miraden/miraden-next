@@ -9,15 +9,19 @@ interface Props {
   error?: boolean;
   icon?: ReactNode;
   disabled?: boolean;
+  className?: string;
+  label?: string;
+  onChange?: any;
 }
 
-const PasswordInput = ({ warning, error, icon, disabled }: Props) => {
+const PasswordInput = ({ warning, error, icon, disabled, className, label, onChange }: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
+    if(onChange) onChange(event)
 
     setValue(inputValue);
   };
@@ -39,7 +43,7 @@ const PasswordInput = ({ warning, error, icon, disabled }: Props) => {
   };
 
   return (
-    <StyledPasswordInput>
+    <StyledPasswordInput className={className}>
       <StyledPasswordInputField
         className={cn({
           PasswordInput__labelWarning: warning,
@@ -61,7 +65,7 @@ const PasswordInput = ({ warning, error, icon, disabled }: Props) => {
           </button>
         )}
         <StyledPasswordInputLabel disabled isFocused={isFocused}>
-          Password
+          {label}
         </StyledPasswordInputLabel>
       </StyledPasswordInputField>
       <div
@@ -71,9 +75,6 @@ const PasswordInput = ({ warning, error, icon, disabled }: Props) => {
           PasswordInput__disabled: disabled,
         })}
       >
-        <Link href="" className="Text_12_16 RestorePassword">
-          Напомнить пароль
-        </Link>
         {warning && (
           <div className="Warning__message">
             <WarningIcon />
