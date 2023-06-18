@@ -27,7 +27,7 @@ const RegStep1 = ({ className }: Props) => {
           </div>
           <div className="Reg__link Color_blue_primary">
             <span>Пройдите простую регистрацию или </span>
-            <Link underlined href="/customer/login">
+            <Link underlined href="/user/login">
               войдите в свой аккаунт
             </Link>
           </div>
@@ -70,7 +70,7 @@ const RegStep1 = ({ className }: Props) => {
           <div className="Reg__footer">
             <div className="Reg__footerBack">
               <Button secondary href="/" className="Reg__goBackButton">
-                На главную
+                На главную
               </Button>
               <Button
                 secondary

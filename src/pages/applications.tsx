@@ -10,7 +10,6 @@ export default function Applications() {
   return (
     <>
       <Head>
-        <title>Miraden</title>
         <meta name="theme-color" content="#2A344A" />
 
         <meta name="description" content="Miraden" />

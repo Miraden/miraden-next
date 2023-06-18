@@ -96,10 +96,10 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
         ) : (
           <>
             <HeaderLocalization />
-            <Button header className="Header__enterButton">
+            <Button header className="Header__enterButton" href="/user/login">
               вход
             </Button>
-            <Button className="Header__registrationButton Font_12_16_600">
+            <Button className="Header__registrationButton Font_12_16_600" href="/user/register">
               регистрация
             </Button>
           </>

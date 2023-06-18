@@ -2,27 +2,26 @@ import { ApplicationsFullLayout } from "@/modules/ApplicationsFull/ApplicationsF
 import { Header } from "@/modules/Base/Header";
 import Head from "next/head";
 import styled from "styled-components";
+import {useEffect, useState} from "react";
+import AuthManager from "@/modules/Security/Authentication/AuthManager";
 
 export default function ApplicationsFull() {
+  const [isUserAuth, setUserAuth] = useState(false);
+
+  const authManger = new AuthManager()
+
+  useEffect(() => {
+    setUserAuth(authManger.isUserHasToken())
+  }, [isUserAuth])
+
   return (
     <>
       <Head>
         <title>Miraden</title>
-        <meta name="theme-color" content="#2A344A" />
-
-        <meta name="description" content="Miraden" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
       </Head>
       <StyledMainApplications>
-        <Header isAuthorized={false} />
+        <Header isAuthorized={isUserAuth}/>
         <ApplicationsFullLayout />
       </StyledMainApplications>
     </>

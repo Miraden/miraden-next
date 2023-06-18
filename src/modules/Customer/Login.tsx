@@ -1,17 +1,22 @@
-import { Button, Link } from "@/components/ui";
-import { TextInput } from "@/components/ui/TextInput";
-import { ArrowIcon } from "@/icons";
-import { useEffect, useState } from "react";
+import {Button, Link, PasswordInput} from "@/components/ui";
+import {TextInput} from "@/components/ui/TextInput";
+import {ArrowIcon, ShowPassIcon} from "@/icons";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
+import {
+  ApiRequest,
+  ApiRequestMethods
+} from "@/infrastructure/Network/Http/ApiRequest";
+import AuthManager from "@/modules/Security/Authentication/AuthManager";
 
 interface Props {
   className?: string;
 }
 
-const Login = ({ className }: Props) => {
+const Login = ({className}: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [valid, setValid] = useState(true);
+  const [valid, setValid] = useState(false);
 
   useEffect(() => {
     if (email && password) {
@@ -20,6 +25,38 @@ const Login = ({ className }: Props) => {
       setValid(true);
     }
   }, [email, password]);
+
+  const authManager = new AuthManager()
+
+  async function loginAction(email: string, password: string): Promise<any> {
+    const apiRequest: ApiRequest = new ApiRequest()
+    const headers: HeadersInit = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }
+    const data: string = new URLSearchParams({
+      email: email,
+      password: password
+    }).toString()
+
+    const result = apiRequest.fetch({
+      method: ApiRequestMethods.POST,
+      headers: headers,
+      body: data,
+      path: "/user/login"
+    })
+
+    result.then(async (res) => {
+      const responseModule = (await import('@/infrastructure/Network/Http/ApiResponse')).default
+      const ApiResponse = new responseModule()
+      const a = ApiResponse.makeFromString(res)
+      // @ts-ignore
+      if (a.payload.token) {
+        // @ts-ignore
+        authManager.authUser(a.payload.token)
+        window.location.href = '/'
+      }
+    })
+  }
 
   return (
     <StyledRegStep1 className={className}>
@@ -32,8 +69,8 @@ const Login = ({ className }: Props) => {
           </div>
         </div>
         <div className="Reg__link Color_blue_primary">
-          <span>Если у вас ещё нет своего аккаунта, тогда  </span>
-          <Link underlined href="/customer/reg-1">
+          <span>Если у вас ещё нет своего аккаунта, тогда&nbsp;</span>
+          <Link underlined href="/user/register">
             зарегистрируйтесь
           </Link>
         </div>
@@ -42,18 +79,13 @@ const Login = ({ className }: Props) => {
             className="Reg__email"
             label="Электронная почта "
             values={email}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setEmail(event.target.value)
-            }
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
           />
-          <TextInput
-            label="Пароль "
+          <PasswordInput
+            icon={<ShowPassIcon/>}
+            label="Пароль"
             className="Reg__password"
-            values={password}
-            onChange={
-              (event: React.ChangeEvent<HTMLInputElement>) =>
-                setPassword(event.target.value) // Update the password state
-            }
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
           />
           <Link
             href="/customer/pass-recover-1"
@@ -69,7 +101,7 @@ const Login = ({ className }: Props) => {
             <div className="Reg__footerBack">
               <Button
                 secondary
-                href="/customer/reg-1"
+                href="/"
                 className="Reg__goBackButton"
               >
                 На главную
@@ -77,11 +109,15 @@ const Login = ({ className }: Props) => {
               <Button
                 secondary
                 href="/"
-                leftIcon={<ArrowIcon />}
+                leftIcon={<ArrowIcon/>}
                 className="Reg__goBackButtonMobile"
               ></Button>
             </div>
-            <Button disabled={valid} href="/customer/pass-recover-1">
+            <Button
+              type="submit"
+              disabled={valid}
+              onClick={async (e) => await loginAction(email, password)}
+            >
               Далее
             </Button>
           </div>
@@ -105,8 +141,10 @@ const StyledRegStep1 = styled.section`
     flex-wrap: wrap;
     padding: 5px 30px;
     background: #f1f7ff;
+
     a {
       padding: 0;
+
       :focus {
         outline: none;
       }
@@ -141,6 +179,8 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__password {
+    width: 100%;
+    max-width: 100%;
     margin-top: 20px;
     margin-bottom: 8px;
   }
@@ -194,6 +234,7 @@ const StyledRegStep1 = styled.section`
     margin-top: 10px;
     .Reg__options {
       height: 797px;
+
       button {
         max-width: unset;
         width: 100%;
@@ -210,6 +251,7 @@ const StyledRegStep1 = styled.section`
     .Reg {
       height: 100%;
     }
+
     .Reg__head {
       padding: 20px 20px 16px 20px;
     }
@@ -254,13 +296,16 @@ const StyledRegStep1 = styled.section`
     .Reg__goBackButtonMobile {
       padding: 16px;
       display: flex;
+
       svg {
         transform: rotate(-90deg);
+
         path {
           fill: none !important;
         }
       }
     }
+
     .Reg__headContainer {
       position: sticky;
       top: 0;
@@ -277,4 +322,4 @@ const StyledRegStep1 = styled.section`
   }
 `;
 
-export { Login };
+export {Login};
