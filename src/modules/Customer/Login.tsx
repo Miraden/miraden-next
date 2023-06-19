@@ -58,7 +58,7 @@ const Login = ({className}: Props) => {
       method: ApiRequestMethods.POST,
       headers: headers,
       body: data,
-      path: "/user/login"
+      endpoint: "/user/login"
     })
 
     result.then(async (res) => {
@@ -75,6 +75,7 @@ const Login = ({className}: Props) => {
 
       setLoginHasErrors(true)
     }).catch((reason) => {
+      setLoginHasErrors(true)
       setFormSubmitted(false)
     }).finally(() => {
       setFormSubmitted(false)
