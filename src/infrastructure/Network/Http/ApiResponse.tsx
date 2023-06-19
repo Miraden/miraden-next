@@ -59,4 +59,4 @@ function codeFromNumber(code: number): HttpCodes {
   return result
 }
 
-export default ApiResponse
+export {ApiResponse, HttpCodes}

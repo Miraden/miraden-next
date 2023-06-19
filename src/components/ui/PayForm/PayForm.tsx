@@ -1,12 +1,12 @@
 import { CrossIcon } from "@/icons";
-import { useState } from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 import { Button } from "../Button";
 import { PayFormContent } from "./PayFormContent";
 
 interface PayFormProps {
   className?: string;
-  onClose?: any;
+  onClose?: Function;
   testCost?: any;
   totalTax?: any;
   openToEveryone?: any;
@@ -26,29 +26,45 @@ const PayForm = ({
   const [totalPay, setTotalPay] = useState<number>(totalTax);
   const [selectedOption, setSelectedOption] = useState<any>(null);
 
+  const onCloseHandler = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
+    const closeBtn =  event.target.closest('button')
+    if(!closeBtn) return
+    if(onClose) onClose(event)
+  }, [onClose])
+
+  function renderForm(): JSX.Element {
+    return (
+      <>
+        <StyledPayForm className={className}>
+          <div className="PayForm">
+            <div className="PayForm__head">
+              <h2 className="Font_32_120">Форма оплаты</h2>
+              <button onClick={(e:React.MouseEvent<HTMLButtonElement>) => onCloseHandler(e)}>
+                <CrossIcon width={24} height={24} className="CrossIcon" />
+              </button>
+            </div>
+            <PayFormContent
+              className="PayFormContent"
+              totalTax={totalTax}
+              setTotalPay={setTotalPay}
+              openToEveryone={openToEveryone}
+              additionalRequests={additionalRequests}
+              getUp={getUp}
+              onOptionSelect={setSelectedOption}
+            />
+            <div className="PayFormContent__totalPay">
+              <Button disabled={!selectedOption}>Оплатить {totalPay}€</Button>
+            </div>
+          </div>
+        </StyledPayForm>
+      </>
+    )
+  }
+
   return (
-    <StyledPayForm className={className}>
-      <div className="PayForm">
-        <div className="PayForm__head">
-          <h2 className="Font_32_120">Форма оплаты</h2>
-          <button onClick={onClose}>
-            <CrossIcon width={24} height={24} className="CrossIcon" />
-          </button>
-        </div>
-        <PayFormContent
-          className="PayFormContent"
-          totalTax={totalTax}
-          setTotalPay={setTotalPay}
-          openToEveryone={openToEveryone}
-          additionalRequests={additionalRequests}
-          getUp={getUp}
-          onOptionSelect={setSelectedOption}
-        />
-        <div className="PayFormContent__totalPay">
-          <Button disabled={!selectedOption}>Оплалить {totalPay}€</Button>
-        </div>
-      </div>
-    </StyledPayForm>
+    <>
+      {renderForm()}
+    </>
   );
 };
 

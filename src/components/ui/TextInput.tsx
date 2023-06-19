@@ -14,6 +14,8 @@ interface Props {
   values?: any;
   onChange?: any;
   onKeyPress?: any;
+  isRequired?: boolean;
+  name?: string;
 }
 
 const TextInput = ({
@@ -26,7 +28,9 @@ const TextInput = ({
   className,
   onChange,
   onKeyPress,
-  values
+  values,
+  isRequired = false,
+  name
 }: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -53,7 +57,7 @@ const TextInput = ({
   };
 
   return (
-    <StyledTextInput className={className}>
+    <StyledTextInput className={cn(className, (isRequired && "TextInput__IsRequired"))}>
       <StyledTextInputField
         className={cn({
           FieldInput__labelWarning: warning,
@@ -67,6 +71,7 @@ const TextInput = ({
           </StyledTextInputCounter>
         )}
         <StyledTextInputInput
+          name={name}
           value={values}
           onChange={handleChange}
           onFocus={handleFocus}
@@ -74,6 +79,7 @@ const TextInput = ({
           maxLength={maxLength}
           disabled={disabled}
           className="TextInput"
+          isRequired={isRequired}
         />
         {icon && <div className="Icon__container">{icon}</div>}
         <StyledTextInputLabel isFocused={isFocused} className="TextInput">
@@ -96,11 +102,13 @@ const StyledTextInput = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  .TextInput::after {
+
+  &.TextInput__IsRequired .TextInput::after {
     content: "*";
     color: red;
     margin-right: 5px;
   }
+
   .FieldInput__disabled {
     input {
       background: #eff3fb !important;
@@ -172,13 +180,13 @@ const StyledTextInputField = styled.div`
   flex-direction: column;
 `;
 
-const StyledTextInputInput = styled.input`
+const StyledTextInputInput = styled.input<{ isRequired: boolean }>`
   width: 100%;
   position: relative;
   border: none;
   box-shadow: 0 0 0 2px #e1edfd inset;
   border-radius: 10px;
-  padding: 18px 58px 4px 20px;
+  padding: ${({ isRequired }) => (isRequired ? "18px 58px 4px 20px;" : "18px 58px 18px 20px;")};
   font-size: 16px;
   line-height: 24px;
   height: 60px;
@@ -200,16 +208,18 @@ const StyledTextInputInput = styled.input`
 `;
 
 const StyledTextInputLabel = styled.label<{ isFocused: boolean }>`
-  position: absolute;
-  top: ${({ isFocused }) => (isFocused ? "6px" : "50%")};
-  left: ${({ isFocused }) => (isFocused ? "20px" : "20px")};
-  transform: ${({ isFocused }) =>
-    isFocused ? "translateY(0)" : "translateY(-50%)"};
-  font-size: ${({ isFocused }) => (isFocused ? "12px" : "16px")};
-  line-height: 20px;
-  color: #7786a5;
-  pointer-events: none;
-  transition: 0.1s;
+  &.TextInput {
+    position: absolute;
+    top: ${({ isFocused }) => (isFocused ? "6px" : "50%")};
+    left: ${({ isFocused }) => (isFocused ? "20px" : "20px")};
+    transform: ${({ isFocused }) =>
+      isFocused ? "translateY(0)" : "translateY(-50%)"};
+    font-size: ${({ isFocused }) => (isFocused ? "12px" : "16px")};
+    line-height: 20px;
+    color: #7786a5;
+    pointer-events: none;
+    transition: 0.1s;
+  }
 `;
 
 const StyledTextInputCounter = styled.div`

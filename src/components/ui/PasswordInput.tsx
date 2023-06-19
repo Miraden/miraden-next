@@ -12,9 +12,10 @@ interface Props {
   className?: string;
   label?: string;
   onChange?: any;
+  name?: string
 }
 
-const PasswordInput = ({ warning, error, icon, disabled, className, label, onChange }: Props) => {
+const PasswordInput = ({ warning, error, icon, disabled, className, label, onChange, name }: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -58,9 +59,10 @@ const PasswordInput = ({ warning, error, icon, disabled, className, label, onCha
           onBlur={handleBlur}
           type={showPassword ? "text" : "password"}
           disabled={disabled}
+          name={name}
         />
         {icon && (
-          <button onClick={togglePassword} className="Icon__container">
+          <button onClick={togglePassword} type={"button"} className="Icon__container">
             {icon}
           </button>
         )}
@@ -88,10 +90,10 @@ const PasswordInput = ({ warning, error, icon, disabled, className, label, onCha
 };
 
 const StyledPasswordInput = styled.div`
-  max-width: 300px;
   position: relative;
   display: flex;
   flex-direction: column;
+  width: 100%;
 
   .PasswordInput__disabled {
     input {
@@ -171,7 +173,6 @@ const StyledPasswordInputField = styled.div`
 `;
 
 const StyledPasswordInputInput = styled.input`
-  max-width: 300px;
   position: relative;
   border: none;
   box-shadow: 0 0 0 2px #e1edfd inset;

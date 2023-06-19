@@ -5,9 +5,11 @@ import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import {
   ApiRequest,
-  ApiRequestMethods
+  ApiRequestMethods,
 } from "@/infrastructure/Network/Http/ApiRequest";
 import AuthManager from "@/modules/Security/Authentication/AuthManager";
+import {HttpCodes} from "@/infrastructure/Network/Http/ApiResponse";
+import Form from "@/components/ui/Form";
 
 interface Props {
   className?: string;
@@ -17,6 +19,7 @@ const Login = ({className}: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState(false);
+  const [isLoginHasError, setLoginHasErrors] = useState(false)
 
   useEffect(() => {
     if (email && password) {
@@ -28,7 +31,20 @@ const Login = ({className}: Props) => {
 
   const authManager = new AuthManager()
 
+  function onPasswordChange(event: React.ChangeEvent<HTMLInputElement>): void {
+
+    setPassword(event.target.value)
+    setLoginHasErrors(false)
+  }
+
+  function onEmailChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    setEmail(event.target.value)
+  }
+
+  const [isFormSubmitted, setFormSubmitted] = useState(false)
+
   async function loginAction(email: string, password: string): Promise<any> {
+    setFormSubmitted(true)
     const apiRequest: ApiRequest = new ApiRequest()
     const headers: HeadersInit = {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -46,15 +62,22 @@ const Login = ({className}: Props) => {
     })
 
     result.then(async (res) => {
-      const responseModule = (await import('@/infrastructure/Network/Http/ApiResponse')).default
+      const responseModule = (await import('@/infrastructure/Network/Http/ApiResponse')).ApiResponse
       const ApiResponse = new responseModule()
       const a = ApiResponse.makeFromString(res)
-      // @ts-ignore
-      if (a.payload.token) {
+      if (a.code === HttpCodes.OK) {
+        setLoginHasErrors(false)
         // @ts-ignore
         authManager.authUser(a.payload.token)
         window.location.href = '/'
+        return
       }
+
+      setLoginHasErrors(true)
+    }).catch((reason) => {
+      setFormSubmitted(false)
+    }).finally(() => {
+      setFormSubmitted(false)
     })
   }
 
@@ -75,24 +98,37 @@ const Login = ({className}: Props) => {
           </Link>
         </div>
         <div className="Reg__options">
-          <TextInput
-            className="Reg__email"
-            label="Электронная почта "
-            values={email}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
-          />
-          <PasswordInput
-            icon={<ShowPassIcon/>}
-            label="Пароль"
-            className="Reg__password"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
-          />
-          <Link
-            href="/customer/pass-recover-1"
-            className="Font_14_16 Reg__restorePass"
+          <Form
+            name={"Login_form"}
+            method={ApiRequestMethods.POST}
+            action='/'
+            className="form__login"
+            isSubmitted={isFormSubmitted}
           >
-            Напомнить пароль
-          </Link>
+            <TextInput
+              className={"Reg__email"}
+              name={"Login_form[email]"}
+              isRequired={true}
+              values={email}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => onEmailChange(event)}
+            />
+
+            <PasswordInput
+              icon={<ShowPassIcon/>}
+              label="Пароль"
+              name={"Login_form[password]"}
+              className={"Reg__password"}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => onPasswordChange(event)}
+            />
+            <Link
+              href="/customer/pass-recover-1"
+              className="Font_14_16 Reg__restorePass"
+            >
+              Напомнить пароль
+            </Link>
+            {isLoginHasError && (
+              <div className="Error__message Text_12_16">Bad credentials</div>)}
+          </Form>
         </div>
         <div className="Reg__footerContainer">
           <div className="Reg__progressBar"></div>
@@ -225,6 +261,12 @@ const StyledRegStep1 = styled.section`
 
   .Reg__goBackButtonMobile {
     display: none;
+  }
+
+  .Error__message {
+    width: 100%;
+    text-align: left;
+    color: ${({theme}) => theme.colors.error}
   }
 
   @media (max-width: 1200px) {

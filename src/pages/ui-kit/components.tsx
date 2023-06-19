@@ -2,6 +2,8 @@ import Head from "next/head";
 import Link from "next/link";
 import {TabMenuItem, TabsManager} from "@/components/ui/TabsMenu";
 import React, {useCallback, useState} from "react";
+import {Preloader} from "@/components/ui/Preloader";
+import styled from "styled-components";
 
 function ComponentsPage() {
   let [selected, setSelected] = useState<number>(0);
@@ -30,10 +32,25 @@ function ComponentsPage() {
           <h3>Tabs menu</h3>
           {tabsManager.renderMenus(selected)}
           {tabsManager.renderContent(selected)}
+
+          <StyledLoader>
+            <h3>Preloader</h3>
+            <Preloader/>
+          </StyledLoader>
         </>
       </main>
     </>
   )
 }
+
+const StyledLoader = styled.div`
+  margin: 20px 0;
+  position: relative;
+  height: 200px;
+
+  .Preloader {
+    left: 50px;
+  }
+`
 
 export default ComponentsPage
