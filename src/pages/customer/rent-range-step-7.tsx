@@ -1,10 +1,7 @@
-import { RentStep8 } from "@/modules/Customer/RentStep8";
-import { Inter } from "next/font/google";
+import {RentStep8} from "@/modules/Customer/RentStep8";
 import Head from "next/head";
 import Link from "next/link";
 import styled from "styled-components";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function RentRangeStep7Page() {
   return (

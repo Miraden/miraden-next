@@ -1,10 +1,7 @@
-import { ImageUploader } from "@/components/ui/Dropzone";
-import { Inter } from "next/font/google";
+import {ImageUploader} from "@/components/ui/Dropzone";
 import Head from "next/head";
 import Link from "next/link";
 import styled from "styled-components";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function DropzonePage() {
   return (

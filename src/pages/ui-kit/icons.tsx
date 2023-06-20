@@ -14,12 +14,9 @@ import {
   WhatsappIcon,
   YouMoneyIcon,
 } from "@/icons";
-import { Inter } from "next/font/google";
 import Head from "next/head";
 import Link from "next/link";
 import styled from "styled-components";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function IconsPage() {
   return (

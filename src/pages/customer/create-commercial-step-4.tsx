@@ -1,10 +1,7 @@
-import { CreateStep4Commercial } from "@/modules/Customer";
-import { Inter } from "next/font/google";
+import {CreateStep4Commercial} from "@/modules/Customer";
 import Head from "next/head";
 import Link from "next/link";
 import styled from "styled-components";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function CreateCommercialStep4Page() {
   return (

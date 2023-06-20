@@ -1,10 +1,7 @@
-import { Checkbox, Radio, ToggleButton } from "@/components/ui";
-import { Inter } from "next/font/google";
+import {Checkbox, Radio, ToggleButton} from "@/components/ui";
 import Head from "next/head";
 import Link from "next/link";
 import styled from "styled-components";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function CheckboxesPage() {
   return (

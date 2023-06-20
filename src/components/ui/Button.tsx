@@ -67,6 +67,7 @@ const Button: FC<Props> = ({
           isSubmit: isSubmit,
         })}
         type={type}
+        disabled={disabled}
       >
         {leftIcon && (
           <div className="[ Button__iconContainer Button__leftIconContainer ]">

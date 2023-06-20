@@ -1,10 +1,9 @@
-import { Header } from "@/modules/Base/Header";
-import { FavouritesFullLayout } from "@/modules/FavouritesFull/FavouritesFullLayout";
-import { Inter } from "next/font/google";
+import {Header} from "@/modules/Base/Header";
+import {
+  FavouritesFullLayout
+} from "@/modules/FavouritesFull/FavouritesFullLayout";
 import Head from "next/head";
 import styled from "styled-components";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function FavouritesFullPage() {
   return (
@@ -19,10 +18,6 @@ export default function FavouritesFullPage() {
 
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
       </Head>
       <StyledMainApplications>
         <Header isAuthorized />

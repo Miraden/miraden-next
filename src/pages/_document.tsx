@@ -6,8 +6,8 @@ import Document, {
   Main,
   NextScript,
 } from "next/document";
-import { ReactElement } from "react";
-import { ServerStyleSheet } from "styled-components";
+import {ReactElement} from "react";
+import {ServerStyleSheet} from "styled-components";
 
 export default class MyDocument extends Document {
   static async getInitialProps(
@@ -37,23 +37,24 @@ export default class MyDocument extends Document {
       sheet.seal();
     }
   }
+
   render(): ReactElement {
     return (
       <Html lang="en">
         <Head>
-          <meta name="theme-color" content="#2A344A" />
-          <meta name="description" content="Miraden" />
-          <link rel="icon" href="/favicon.ico" />
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <meta name="theme-color" content="#2A344A"/>
+          <meta name="description" content="Miraden"/>
+          <link rel="icon" href="/favicon.ico"/>
+          <link rel="preconnect" href="https://fonts.googleapis.com"/>
+          <link rel="preconnect" href="https://fonts.gstatic.com"/>
           <link
             href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
             rel="stylesheet"
           />
         </Head>
         <body>
-          <Main />
-          <NextScript />
+        <Main/>
+        <NextScript/>
         </body>
       </Html>
     );

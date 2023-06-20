@@ -1,11 +1,8 @@
-import { PassRecover2 } from "@/modules/Customer";
-import { Inter } from "next/font/google";
+import {PassRecover2} from "@/modules/Customer";
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import {useState} from "react";
 import styled from "styled-components";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function PassRecover2Page() {
   const [value, setValue] = useState("");

@@ -1,8 +1,5 @@
-import { UIKit } from "@/modules/UIKitTest";
-import { Inter } from "next/font/google";
+import {UIKit} from "@/modules/UIKitTest";
 import Head from "next/head";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function UIKitPage() {
   return (

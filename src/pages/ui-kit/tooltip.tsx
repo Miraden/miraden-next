@@ -1,10 +1,7 @@
-import { TooltipComponent } from "@/components/ui/Tooltip/MyComponent";
-import { Inter } from "next/font/google";
+import {TooltipComponent} from "@/components/ui/Tooltip/MyComponent";
 import Head from "next/head";
 import Link from "next/link";
 import styled from "styled-components";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function TooltipPage() {
   return (

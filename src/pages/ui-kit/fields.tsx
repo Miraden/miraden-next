@@ -4,17 +4,14 @@ import {
   Search,
   TextAreaInput,
 } from "@/components/ui";
-import { DropdownInput } from "@/components/ui/DropdownInput";
-import { DropdownInputCheckbox } from "@/components/ui/DropdownInputCheckbox";
-import { Sort } from "@/components/ui/Sort/Sort";
-import { TextInput } from "@/components/ui/TextInput";
-import { PenIcon, ShowPassIcon } from "@/icons";
-import { Inter } from "next/font/google";
+import {DropdownInput} from "@/components/ui/DropdownInput";
+import {DropdownInputCheckbox} from "@/components/ui/DropdownInputCheckbox";
+import {Sort} from "@/components/ui/Sort/Sort";
+import {TextInput} from "@/components/ui/TextInput";
+import {PenIcon, ShowPassIcon} from "@/icons";
 import Head from "next/head";
 import Link from "next/link";
 import styled from "styled-components";
-
-const inter = Inter({ subsets: ["latin"] });
 
 const options = ["Select 1", "Select 2", "Select 3", "Select 4"];
 
