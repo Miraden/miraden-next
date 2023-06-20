@@ -74,7 +74,7 @@ const Application = ({className}: ApplicationProps) => {
   tabsManager.addItem(new TabMenuItem('Исполнители', DataProvider.executorsUsers.length, (<>{renderUsersSearch(handleShowFilter)}{renderExecutors()}</>)))
   tabsManager.addItem(new TabMenuItem('Отказы', DataProvider.refusalsUsers.length, (<>{renderRefusals()}</>)))
   tabsManager.addItem(new TabMenuItem('Рекомендуемые', DataProvider.recommendUsers.length, (<>{renderUsersSearch(handleShowFilter)}{renderRecommended(submit, handleOpenModal)}</>)))
-  const activeState: TabsMenuState = statesFromNumber(parseInt(selected))
+  const activeState: TabsMenuState = statesFromNumber(selected)
 
   const showLeadSidebar = activeState === TabsMenuState.Lead
   const isShowFilter = activeState !== TabsMenuState.Lead && showFilter
@@ -218,7 +218,7 @@ function renderRequests(selected: string): JSX.Element {
           {DataProvider.requestsUsers.map((performer, index) => (
             <li key={index}>
               <SellerCard
-                isPerformer={performer.isPerformer}
+                isPerformer={true}
                 name={performer.name}
                 isPro={performer.isPro}
                 isVerified={performer.isVerified}
@@ -302,8 +302,8 @@ function renderFilter(handler: Function, tabHandler: Function): JSX.Element {
   )
 }
 
-function statesFromNumber(val: number): TabsMenuState {
-  let found = TabsMenuState.Lead
+function statesFromNumber(val: number | string): TabsMenuState {
+  let found: TabsMenuState = TabsMenuState.Lead
 
   switch (val) {
     case 0:
@@ -550,7 +550,7 @@ const StyledApplication = styled.section`
   /* фф (свойство больше не работает, других способов тоже нет)*/
 
   .Applications__headTabs {
-    overflow: -moz-scrollbars-none;
+    overflow: hidden;
   }
 
   .SingleApplicationSideBar {
