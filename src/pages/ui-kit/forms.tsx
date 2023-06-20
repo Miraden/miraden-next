@@ -16,13 +16,13 @@ export default function FormsPage() {
     setPayFormVisible(!payFormVisible)
   }, [payFormVisible])
 
+  const formId: string = "Testing_form"
   const [isFormSubmitted, setFormSubmitted] = useState(false)
   const onFormSubmit = useCallback((e: MouseEvent<HTMLElement>) => {
     e.preventDefault()
-    const form = e.target.closest('form')
-    if (!form) return
+    const formNode = document.getElementById(formId)
+    if (!formNode) return
 
-    const data = new FormData(form)
     setFormSubmitted(true)
     setTimeout(() => {
       setFormSubmitted(false)
@@ -40,7 +40,7 @@ export default function FormsPage() {
           </Button>
           {payFormVisible && <PayForm onClose={showPayFormHandler}/>}
           <Form
-            name={"Testing_form"}
+            name={formId}
             method={ApiRequestMethods.POST}
             action='/'
             className="form__testing"

@@ -13,7 +13,7 @@ interface Props {
   name: string,
   children?: ReactNode,
   noValidate?: boolean,
-  isSubmitted?: boolean
+  isSubmitted?: boolean,
 }
 
 const DefaultProps: Props = {
@@ -23,7 +23,7 @@ const DefaultProps: Props = {
   name: "",
   children: null,
   noValidate: true,
-  isSubmitted: false
+  isSubmitted: false,
 }
 
 const Form = (args: Props) => {
@@ -32,6 +32,7 @@ const Form = (args: Props) => {
   return (
     <StyledContainer>
       <StyledForm
+        id={props.name}
         className={cn(baseClassName, props.className, (props.isSubmitted) ? "formIsSubmitted" : "")}
         action={props.action}
         method={props.method}
@@ -50,6 +51,7 @@ const StyledForm = styled.form`
 
   &.formIsSubmitted {
     filter: blur(2px);
+
     &::after {
       content: "";
       position: absolute;
