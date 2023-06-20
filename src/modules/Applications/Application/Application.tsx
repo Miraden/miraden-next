@@ -304,6 +304,9 @@ function renderFilter(handler: Function, tabHandler: Function): JSX.Element {
 
 function statesFromNumber(val: number | string): TabsMenuState {
   let found: TabsMenuState = TabsMenuState.Lead
+  if (typeof val === 'string') {
+    val = parseInt(val)
+  }
 
   switch (val) {
     case 0:
