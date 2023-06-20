@@ -1,8 +1,8 @@
-import { CrossIcon } from "@/icons";
-import React, {useCallback, useEffect, useRef, useState} from "react";
+import {CrossIcon} from "@/icons";
+import React, {useCallback, useState} from "react";
 import styled from "styled-components";
-import { Button } from "../Button";
-import { PayFormContent } from "./PayFormContent";
+import {Button} from "../Button";
+import {PayFormContent} from "./PayFormContent";
 
 interface PayFormProps {
   className?: string;
@@ -15,22 +15,26 @@ interface PayFormProps {
 }
 
 const PayForm = ({
-  className,
-  onClose,
-  testCost,
-  totalTax,
-  openToEveryone,
-  additionalRequests,
-  getUp,
-}: PayFormProps) => {
+                   className,
+                   onClose,
+                   testCost,
+                   totalTax,
+                   openToEveryone,
+                   additionalRequests,
+                   getUp,
+                 }: PayFormProps) => {
   const [totalPay, setTotalPay] = useState<number>(totalTax);
   const [selectedOption, setSelectedOption] = useState<any>(null);
 
-  const onCloseHandler = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
-    const closeBtn =  event.target.closest('button')
-    if(!closeBtn) return
-    if(onClose) onClose(event)
-  }, [onClose])
+  let btnClose: HTMLButtonElement | null = null
+  const setRef = (el: HTMLButtonElement | null) => {
+    btnClose = el
+  }
+
+  const onCloseHandler = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
+    if (!btnClose) return
+    if (onClose) onClose(event)
+  }, [onClose, btnClose])
 
   function renderForm(): JSX.Element {
     return (
@@ -39,8 +43,11 @@ const PayForm = ({
           <div className="PayForm">
             <div className="PayForm__head">
               <h2 className="Font_32_120">Форма оплаты</h2>
-              <button onClick={(e:React.MouseEvent<HTMLButtonElement>) => onCloseHandler(e)}>
-                <CrossIcon width={24} height={24} className="CrossIcon" />
+              <button
+                ref={el => setRef(el)}
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) => onCloseHandler(e)
+                }>
+                <CrossIcon width={24} height={24} className="CrossIcon"/>
               </button>
             </div>
             <PayFormContent
@@ -110,19 +117,21 @@ const StyledPayForm = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+
       :hover {
         background: #f1f7ff;
       }
     }
 
     button:focus {
-      outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+      outline: 2px solid ${({theme}) => theme.colors.stroke.purple};
     }
   }
 
   .CrossIcon {
     border-radius: 50%;
     padding: 2px;
+
     path {
       fill: #7786a5;
     }
@@ -141,6 +150,7 @@ const StyledPayForm = styled.div`
     width: 100%;
     padding: 20px 30px;
     border-top: 2px solid #e1edfd;
+
     button {
       width: 100%;
     }
@@ -154,4 +164,4 @@ const StyledPayForm = styled.div`
   }
 `;
 
-export { PayForm };
+export {PayForm};
