@@ -4,15 +4,17 @@ import styled from "styled-components";
 interface ToggleButtonProps {
   disabled?: boolean;
   className?: string;
+  label?: string;
 }
 
-const ToggleButton = ({ className, disabled }: ToggleButtonProps) => {
+const ToggleButton = ({ className, disabled, label }: ToggleButtonProps) => {
   return (
     <StyledToggleButton className={className}>
       <label className={cn("ToggleButton__switch", { Disabled: disabled })}>
         <input type="checkbox" disabled={disabled} />
         <span className="ToggleButton__slider Round"></span>
       </label>
+      <span className="ToggleButton__label">{label}</span>
     </StyledToggleButton>
   );
 };
@@ -63,6 +65,11 @@ const StyledToggleButton = styled.div`
     transition: 0.4s;
   }
 
+  .ToggleButton__label {
+    display: inline;
+    margin-left: 10px;
+  }
+
   input:checked + .ToggleButton__slider {
     background-color: #4e6af3;
   }
@@ -83,6 +90,15 @@ const StyledToggleButton = styled.div`
 
   .ToggleButton__slider.Round:before {
     border-radius: 50%;
+  }
+
+  &.Controls__onGray {
+    .ToggleButton__slider {
+      background: #fff;
+      &:before {
+        background: #EEF1F5;
+      }
+    }
   }
 `;
 

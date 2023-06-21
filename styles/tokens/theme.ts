@@ -1,5 +1,6 @@
 const theme = {
   colors: {
+    main: "#4E6AF3",
     button: {
       primary: {
         default: "#4E6AF3",
@@ -59,7 +60,9 @@ const theme = {
     error: "#F34942",
     success: "#0AB258",
     black: "#2A344A",
-
+    effects: {
+      overlayGrey: "rgba(60, 75, 97, 0.6)"
+    },
     stroke: {
       purple: "#F845FC",
       grey: "#C7D2E9",
@@ -67,6 +70,41 @@ const theme = {
       divider: "#CFE2FC",
       dividerForm: "#F1F7FF",
     },
+    background: {
+      white: "#FFF",
+      lightBlue: "#F1F7FF",
+      disabled: "#EFF3FB",
+      lightGrey: "#EEF1F5",
+      black: "#2A344A",
+      grey: "#3A465D",
+      green: "#EAFFF3",
+      lianer: "#FFF"
+    },
+    text: {
+      black: "#2A344A",
+      white: "#FFF",
+      grey: "#7786A5",
+      disabled: "#B8C6E3",
+      warning: "#FFD64C",
+      error: "#F34942",
+      success: "#0AB258"
+    },
+    fields: {
+      form: "#FFF",
+      title: "#7786A5",
+      text: "#2A344A",
+      description: "#94A5CA",
+      stroke: "#E1EDFD",
+      strokeHover: "#CDDEF4",
+      strokeFocused: "#4E6AF3",
+      strokeValidation: "#FFEAC1",
+      strokeError: "#FFD8D8",
+      strokeErrorBg: "#FFF5F5"
+    },
+    others: {
+      messageBg: "#CFE2FC",
+      greenBg: "#36BF76"
+    }
   },
   breakpoints: {
     "2xl": 1440 - 1, //range 1280 - 1439px

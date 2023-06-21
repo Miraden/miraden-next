@@ -1,39 +1,58 @@
 import {Checkbox, Radio, ToggleButton} from "@/components/ui";
-import Head from "next/head";
-import Link from "next/link";
 import styled from "styled-components";
+import {BlankLayout} from "@/modules/Base/BlankLayout";
+import UIKitHead from "@/modules/UIKitTest/UIKitHead";
 
 export default function CheckboxesPage() {
   return (
-    <>
-      <Head>
-        <title>Miraden</title>
-        <meta name="description" content="Miraden" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="Container">
-        <Link href="/ui-kit">Go back</Link>
-        <h1 className="Font_52_120">Чекбоксы</h1>
-        <StyledCheckboxes>
-          <Checkbox />
-          <Checkbox error />
-          <Checkbox disabled />
+    <BlankLayout>
+        <UIKitHead title={"Select Controls"} className={"Container"} backUrl={"/ui-kit"}/>
+        <StyledCheckboxes className={"Container"}>
+          <div className={"Controls__section"}>
+            <h2>Checkboxes</h2>
+            <Checkbox label={"Checkbox"}/>
+            <Checkbox label={"Checkbox"} error />
+            <Checkbox label={"Checkbox"} disabled />
+          </div>
 
-          <Radio />
-          <Radio error />
-          <Radio disabled />
+          <div className={"Controls__section"}>
+            <h2>Radio</h2>
+            <Radio value={"Label"} />
+            <Radio error />
+            <Radio disabled />
+          </div>
 
-          <ToggleButton />
-          <ToggleButton disabled />
+          <div className={"Controls__section"}>
+            <h2>Toggle</h2>
+            <ToggleButton label={"Toggle"} />
+            <ToggleButton disabled />
+          </div>
+
+          <div className={"Controls__section Controls__onGray"}>
+            <h2>Grey bg</h2>
+            <ToggleButton label={"Label"} disabled className={"Controls__onGray"} />
+            <Checkbox className={"Controls__onGray"} disabled />
+            <Radio className={"Controls__onGray"} disabled />
+          </div>
         </StyledCheckboxes>
-      </main>
-    </>
+    </BlankLayout>
   );
 }
 
 const StyledCheckboxes = styled.div`
-  label {
-    margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .Controls__section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .Controls__onGray {
+    color: ${({ theme }) => theme.colors.grey.disabled};
+    background: #EEF1F5;
   }
 `;

@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { CheckboxIcon } from "../../icons";
+import { CheckboxIcon } from "@/icons";
 
 interface CheckboxProps {
   error?: boolean;
@@ -86,7 +86,7 @@ const StyledModalCheckbox = styled.div`
   }
 
   .Checkbox__label {
-    margin-left: 8px;
+    margin-left: 10px;
     color: #2a344a;
   }
 
@@ -173,6 +173,13 @@ const StyledModalCheckbox = styled.div`
     .Checkbox__input:checked + .Checkbox__iconContainer {
       border-color: ${({ theme }) => theme.colors.error};
       background-color: ${({ theme }) => theme.colors.error};
+    }
+  }
+
+  &.Controls__onGray {
+    .Checkbox__input:disabled + .Checkbox__iconContainer {
+      background: #fff;
+      border-color: #C7D2E9;
     }
   }
 `;

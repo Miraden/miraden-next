@@ -1,6 +1,7 @@
+import {Link as CustomLink} from "@/components/ui";
 import cn from "classnames";
-import Link from "next/link";
 import styled from "styled-components";
+import UIKitHead from "@/modules/UIKitTest/UIKitHead";
 
 interface UIKitProps {
   className?: string;
@@ -8,42 +9,45 @@ interface UIKitProps {
 
 const UIKit = ({className}: UIKitProps) => {
   return (
-    <StyledUIKit className={cn(className, "Container")}>
-      <h1 className="Font_52_120">UI Kit</h1>
-      <div className="UIKit__buttons">
-        <Link type="button" href="/ui-kit/buttons">
+    <StyledUIKit className={cn(className)}>
+      <UIKitHead title={"UI KIT"} className={"Container"} backUrl={undefined}/>
+      <div className="UIKit__buttons Container">
+        <CustomLink href="/ui-kit/buttons">
           Buttons
-        </Link>
-        <Link type="button" href="/ui-kit/icons">
+        </CustomLink>
+        <CustomLink href="/ui-kit/icons">
           Icons
-        </Link>
-        <Link type="button" href="/ui-kit/stickers">
+        </CustomLink>
+        <CustomLink href="/ui-kit/stickers">
           Stickers
-        </Link>
-        <Link type="button" href="/ui-kit/checkboxes">
-          Checkboxes
-        </Link>
-        <Link type="button" href="/ui-kit/links">
+        </CustomLink>
+        <CustomLink href="/ui-kit/checkboxes">
+          Select Controls
+        </CustomLink>
+        <CustomLink href="/ui-kit/links">
           Links
-        </Link>
-        <Link type="button" href="/ui-kit/fields">
+        </CustomLink>
+        <CustomLink href="/ui-kit/fields">
           Fields
-        </Link>
-        <Link type="button" href="/ui-kit/notifications">
+        </CustomLink>
+        <CustomLink href="/ui-kit/notifications">
           Notifications
-        </Link>
-        <Link type="button" href="/ui-kit/tooltip">
+        </CustomLink>
+        <CustomLink href="/ui-kit/tooltip">
           Tooltips
-        </Link>
-        <Link type="button" href="/ui-kit/dropzone">
+        </CustomLink>
+        <CustomLink href="/ui-kit/dropzone">
           Dropzone
-        </Link>
-        <Link type="button" href="/ui-kit/forms">
+        </CustomLink>
+        <CustomLink href="/ui-kit/forms">
           Forms
-        </Link>
-        <Link type="button" href="/ui-kit/components">
+        </CustomLink>
+        <CustomLink href="/ui-kit/components">
           Components
-        </Link>
+        </CustomLink>
+        <CustomLink href="/ui-kit/typography">
+          Typography
+        </CustomLink>
       </div>
     </StyledUIKit>
   );
@@ -53,12 +57,7 @@ const StyledUIKit = styled.section`
   .UIKit__buttons {
     display: flex;
     flex-direction: column;
-
-    a {
-      background-color: #d4d8e1;
-      margin-top: 20px;
-      width: fit-content;
-    }
+    gap: 20px;
   }
 `;
 

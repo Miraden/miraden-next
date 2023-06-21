@@ -3,6 +3,7 @@ import { useMemo, useRef } from "react";
 import styled from "styled-components";
 
 interface RadioProps {
+  className?: string;
   value?: string;
   disabled?: boolean;
   error?: boolean;
@@ -13,7 +14,7 @@ interface RadioProps {
     >
   ) => void;
 }
-const Radio = ({ value, disabled, error, checked, onChange }: RadioProps) => {
+const Radio = ({ className, value, disabled, error, checked, onChange }: RadioProps) => {
   const inputId = useMemo(() => Math.random().toString(36).substr(2, 9), []);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -36,7 +37,7 @@ const Radio = ({ value, disabled, error, checked, onChange }: RadioProps) => {
         ref={inputRef}
         type="radio"
         id={inputId}
-        className={cn("Radio__input", { Radio__input_error: error })}
+        className={cn("Radio__input", { Radio__input_error: error }, className)}
         onChange={onChange}
         checked={checked}
         tabIndex={0}
@@ -109,7 +110,6 @@ const StyledRadio = styled.div`
       :checked {
         ::after {
           background-color: white;
-          background-color: #c7d2e9;
         }
       }
     }

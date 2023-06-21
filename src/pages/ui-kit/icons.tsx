@@ -14,23 +14,15 @@ import {
   WhatsappIcon,
   YouMoneyIcon,
 } from "@/icons";
-import Head from "next/head";
-import Link from "next/link";
 import styled from "styled-components";
+import {BlankLayout} from "@/modules/Base/BlankLayout";
+import UIKitHead from "@/modules/UIKitTest/UIKitHead";
 
 export default function IconsPage() {
   return (
-    <>
-      <Head>
-        <title>Miraden</title>
-        <meta name="description" content="Miraden" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="Container">
-        <Link href="/ui-kit">Go back</Link>
-        <h1 className="Font_52_120">Иконки</h1>
-        <StyledIcons>
+    <BlankLayout>
+        <UIKitHead title={"Иконки"} className={"Container"} backUrl={"/ui-kit"}/>
+        <StyledIcons className={"Container"}>
           <MontenegroIcon />
           <RussiaIcon />
           <UnitedKingdomIcon />
@@ -46,8 +38,7 @@ export default function IconsPage() {
           <CreditCardArrowIcon />
           <CreditCardPlusIcon />
         </StyledIcons>
-      </main>
-    </>
+    </BlankLayout>
   );
 }
 
