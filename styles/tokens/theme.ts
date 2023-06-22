@@ -189,7 +189,19 @@ const theme = {
     lg: 1024 - 1, // range 768px - 1023px
     md: 768 - 1, // range 576px - 767px
     sm: 576 - 1, // range 360px - 575px
-    xs: 360, // range 0 - 375px
+    xs: 360, // range 0 - 375px,
+    tablet: {
+      max: 1024 - 1,
+      min: 360
+    },
+    desktop: {
+      max: 1440 - 1,
+      min: 1024
+    },
+    mobile: {
+      max: 360,
+      min: 0,
+    }
   },
   border: {
     radius: '10px'

@@ -643,6 +643,7 @@ const StyledColors = styled.div`
     text-transform: uppercase;
     color: ${({theme}) => theme.colors.main};
     margin-bottom: 20px;
+    font-weight: 700;
   }
 
   .ColorsSection {
