@@ -41,7 +41,8 @@ function UIKitHead(args: Props) {
 }
 
 const StyledHead = styled.div`
-  background: #EEF1F5;
+  background: ${({theme}) => theme.colors.background.grey};
+  color: ${({theme}) => theme.colors.text.grey};
   padding: 6px 0;
   margin-bottom: 20px;
 

@@ -12,6 +12,7 @@ const UIKit = ({className}: UIKitProps) => {
     <StyledUIKit className={cn(className)}>
       <UIKitHead title={"UI KIT"} className={"Container"} backUrl={undefined}/>
       <div className="UIKit__buttons Container">
+        <CustomLink href="/ui-kit/colors">Colors</CustomLink>
         <CustomLink href="/ui-kit/buttons">
           Buttons
         </CustomLink>
