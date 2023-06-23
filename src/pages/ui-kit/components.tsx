@@ -11,7 +11,7 @@ function ComponentsPage() {
     setSelected(state);
   }, []);
 
-  const tabsManager = new TabsManager([], handleSelect)
+  const tabsManager = new TabsManager(handleSelect)
   tabsManager.addItem(new TabMenuItem('Все', 0, (<div>first</div>)))
   tabsManager.addItem(new TabMenuItem('Опубликованные', 1, (<div>second</div>)))
   tabsManager.addItem(new TabMenuItem('В архиве', 4, (<div>archived</div>)))

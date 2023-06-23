@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {Button} from "@/components/ui/Button";
+import cn from "classnames";
 
 const baseClassName = 'TabsMenu'
 
@@ -36,15 +37,22 @@ class TabMenuItem {
   }
 }
 
+enum Themes {
+  Dark = "dark",
+  Light = "light"
+}
+
 class TabsManager {
   private readonly items: Array<TabMenuItem>;
   public onClick: Function;
   private activeId: number;
+  private theme?: Themes;
 
-  constructor(items: Array<TabMenuItem> = [], callback: Function) {
-    this.items = items
+  constructor(callback: Function, theme: Themes = Themes.Light) {
+    this.items = []
     this.onClick = callback
     this.activeId = 0
+    this.theme = theme
   }
 
   public addItem(item: TabMenuItem) {
@@ -63,7 +71,7 @@ class TabsManager {
 
     return (
       <MenuStyles
-        className={className}
+        className={cn(className, className + "--" + this.theme)}
         onClick={(e) => this.onClickMenu(e)}
       >
         <div className={itemsClassName}>{items}</div>
@@ -77,8 +85,10 @@ class TabsManager {
       return i.getContent()
     })
 
+    const className = baseClassName + "__content"
+
     return (
-      <ContentStyles className="TabsMenu__content">
+      <ContentStyles className={cn(className, className + "--" + this.theme)}>
         {items.at(selected)}
       </ContentStyles>
     )

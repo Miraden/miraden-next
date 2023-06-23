@@ -96,7 +96,7 @@ const ApplicationFull = ({className}: ApplicationProps) => {
     setSelected(state);
   }, []);
 
-  const tabsManager = new TabsManager([], handleSelect)
+  const tabsManager = new TabsManager(handleSelect)
   tabsManager.addItem(new TabMenuItem('Все', 0, renderTabAll()))
   tabsManager.addItem(new TabMenuItem('Опубликованные', 3, renderTabPublished()))
   tabsManager.addItem(new TabMenuItem('В архиве', 1, renderTabArchived()))

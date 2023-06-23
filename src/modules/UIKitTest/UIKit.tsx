@@ -49,6 +49,7 @@ const UIKit = ({className}: UIKitProps) => {
         <CustomLink href="/ui-kit/typography">
           Typography
         </CustomLink>
+        <CustomLink href="/ui-kit/navigation">Navigations</CustomLink>
       </div>
     </StyledUIKit>
   );

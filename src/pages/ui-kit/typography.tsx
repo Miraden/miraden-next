@@ -136,7 +136,7 @@ function renderAccent(): JSX.Element {
             <p className={"Font_Accent_14_m"}>Accent 14(M)</p>
           </div>
           <div className={"TypographySection__Item"}>
-            <p className={"Accent_12_caps"}>Accent 12 caps</p>
+            <p className={"Font_Accent_12_caps"}>Accent 12 caps</p>
           </div>
         </div>
       </div>

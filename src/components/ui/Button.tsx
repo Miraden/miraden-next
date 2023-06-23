@@ -22,6 +22,7 @@ interface Props {
   active?: boolean;
   isSubmit?: boolean;
   attr?: Object;
+  sort?: boolean;
 }
 
 const Button: FC<Props> = ({
@@ -44,6 +45,7 @@ const Button: FC<Props> = ({
   isSubmit,
   prefetch = true,
   attr = {},
+  sort,
 }) => {
   if (!href) {
     return (
@@ -52,12 +54,12 @@ const Button: FC<Props> = ({
         as="button"
         onClick={onClick}
         {...attr}
-        className={cn(`${className} Font_16_20`, {
+        className={cn(`${className} Font_button_medium`, {
           Button_primary: !secondary,
           Button_secondary: secondary,
           Button_tertiary: tertiary,
           Button_request: request,
-          Button_header: header,
+          "Button_header Font_Accent_12_caps": header,
           Button_regular: !compact,
           Button_compact: compact,
           Button_narrow: narrow,
@@ -65,6 +67,7 @@ const Button: FC<Props> = ({
           disabled: disabled,
           active: active,
           isSubmit: isSubmit,
+          Button_sort: sort
         })}
         type={type}
         disabled={disabled}
@@ -90,12 +93,12 @@ const Button: FC<Props> = ({
         href={href}
         {...attr}
         onClick={onClick}
-        className={cn(`${className} Font_16_20`, {
+        className={cn(`${className} Font_button_medium`, {
           Button_primary: !secondary,
           Button_secondary: secondary,
           Button_tertiary: tertiary,
           Button_request: request,
-          Button_header: header,
+          "Button_header Font_Accent_12_caps": header,
           Button_regular: !compact,
           Button_compact: compact,
           Button_narrow: narrow,
@@ -123,12 +126,12 @@ const Button: FC<Props> = ({
     return (
       <StyledButton
         {...attr}
-        className={cn(`${className} Font_16_20`, {
+        className={cn(`${className} Font_button_medium`, {
           Button_primary: !secondary,
           Button_secondary: secondary,
           Button_tertiary: tertiary,
           Button_request: request,
-          Button_header: header,
+          "Button_header Font_Accent_12_caps": header,
           Button_regular: !compact,
           Button_compact: compact,
           Button_narrow: narrow,
@@ -156,12 +159,12 @@ const Button: FC<Props> = ({
       href={href}
       onClick={onClick}
       {...attr}
-      className={cn(`${className} Font_16_20`, {
+      className={cn(`${className} Font_button_medium`, {
         Button_primary: !secondary,
         Button_secondary: secondary,
         Button_tertiary: tertiary,
         Button_request: request,
-        Button_header: header,
+        "Button_header Font_Accent_12_caps": header,
         Button_regular: !compact,
         Button_compact: compact,
         Button_narrow: narrow,
@@ -192,7 +195,8 @@ const StyledButton = styled.a`
   border-radius: 10px;
   cursor: pointer;
   border: none;
-  transition: 0.2s ease;
+  transition: 0.2s background-color ease;
+  appearance: none;
 
   &.active {
     color: #4e6af3 !important;
@@ -211,8 +215,7 @@ const StyledButton = styled.a`
 
   &.disabled {
     cursor: unset;
-    background: ${({ theme }) =>
-      theme.colors.button.disabled.background} !important;
+    background: ${({ theme }) => theme.colors.button.disabled.background} !important;
     color: ${({ theme }) => theme.colors.button.disabled.text} !important;
 
     svg path {
@@ -221,48 +224,74 @@ const StyledButton = styled.a`
   }
 
   &.Button_regular {
-    padding: 15px 36px;
+    padding: 15px 39px;
   }
 
   &.Button_compact {
-    padding: 10px 24px;
+    padding: 10px 20px;
   }
 
   &.Button_header {
     padding: 11px 20px;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    font-size: 12px;
-    line-height: 16px;
-    font-weight: 600;
   }
 
   &.Button_primary {
-    background: ${({ theme }) => theme.colors.button.primary["default"]};
-    color: ${({ theme }) => theme.colors.white};
+    background: ${({ theme }) => theme.colors.button.primary.bg.default};
+    color: ${({ theme }) => theme.colors.button.primary.text.default};
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.button.primary.hover};
+    }
+
+    &:focus-visible {
+      background: ${({ theme }) => theme.colors.button.primary.bg.focused};
+      outline: 2px solid ${({ theme }) => theme.colors.button.primary.stroke.focused};
+    }
+
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.button.primary.text.default};
+    }
+  }
+
+  &.Button_primary:active {
+    background: ${({ theme }) => theme.colors.button.primary.bg.click};
   }
 
   &.Button_secondary {
-    background: ${({ theme }) => theme.colors.grey["default"]};
-    color: ${({ theme }) => theme.colors.black};
+    background: ${({ theme }) => theme.colors.button.secondary.bg.default};
+    color: ${({ theme }) => theme.colors.button.secondary.text.default};
   }
 
   &.Button_tertiary {
-    background: ${({ theme }) => theme.colors.transparent};
-    color: ${({ theme }) => theme.colors.black};
+    background: ${({ theme }) => theme.colors.button.tertiary.bg.default};
+    color: ${({ theme }) => theme.colors.button.tertiary.text.default};
     .Button__iconContainer svg path {
-      fill: ${({ theme }) => theme.colors.black} !important;
+      fill: ${({ theme }) => theme.colors.button.tertiary.text.default};
     }
   }
 
   &.Button_request {
-    background: ${({ theme }) => theme.colors.button.request["default"]};
-    color: ${({ theme }) => theme.colors.black};
+    background: ${({ theme }) => theme.colors.button.request.bg.default};
+    color: ${({ theme }) => theme.colors.button.request.text.default};
+    padding: 15px 53px;
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.button.request.bg.hover};
+    }
+
+    &:active {
+      background: ${({ theme }) => theme.colors.button.request.bg.click};
+    }
+
+    &:focus-visible {
+      background: ${({ theme }) => theme.colors.button.request.bg.focused};
+      outline: 2px solid ${({ theme }) => theme.colors.button.request.strokeFocused};
+    }
   }
 
   &.Button_header {
-    background: ${({ theme }) => theme.colors.transparent};
-    color: ${({ theme }) => theme.colors.white};
+    background: ${({ theme }) => theme.colors.button.header.bg.default};
+    color: ${({ theme }) => theme.colors.button.header.text.default};
   }
 
   &.Button_narrow {
@@ -270,93 +299,94 @@ const StyledButton = styled.a`
     padding-right: 16px;
   }
 
-  &.Button_primary:hover {
-    background: ${({ theme }) => theme.colors.button.primary["hover"]};
+  &.Button_sort {
+    background: ${({ theme }) => theme.colors.background.white};
+    outline: 1px solid ${({ theme }) => theme.colors.stroke.divider};
+    color: ${({ theme }) => theme.colors.text.grey};
+    padding: 8px 13px;
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.background.lightBlue};
+    }
+
+    &:focus-visible {
+      background: ${({ theme }) => theme.colors.background.lightBlue};
+      outline: 2px solid ${({ theme }) => theme.colors.stroke.focused}
+    }
+
+    &.active {
+      background: ${({ theme }) => theme.colors.background.white};
+      outline: 2px solid ${({ theme }) => theme.colors.stroke.lightGrey}
+    }
   }
 
   &.Button_secondary:hover {
-    background: ${({ theme }) => theme.colors.grey["hover"]};
-    color: ${({ theme }) => theme.colors.blue["hover"]};
+    background: ${({ theme }) => theme.colors.button.secondary.bg.hover};
+    color: ${({ theme }) => theme.colors.button.secondary.text.hover};
 
     .Button__iconContainer svg path {
-      fill: ${({ theme }) => theme.colors.blue["default"]};
+      fill: ${({ theme }) => theme.colors.button.secondary.text.hover};
     }
   }
 
   &.Button_tertiary:hover {
-    background: ${({ theme }) => theme.colors.transparent};
-    color: ${({ theme }) => theme.colors.blue["hover"]};
+    background: ${({ theme }) => theme.colors.button.tertiary.bg.hover};
+    color: ${({ theme }) => theme.colors.button.tertiary.text.hover};
     .Button__iconContainer svg path {
-      fill: ${({ theme }) => theme.colors.blue["default"]} !important;
+      fill: ${({ theme }) => theme.colors.button.tertiary.text.hover};
     }
   }
 
-  &.Button_request:hover {
-    background: ${({ theme }) => theme.colors.button.request["hover"]};
-  }
-
   &.Button_header:hover {
-    background: ${({ theme }) => theme.colors.button.header["hover"]};
-  }
-
-  &.Button_primary:active {
+    background: ${({ theme }) => theme.colors.button.header.bg.hover};
+    color: ${({ theme }) => theme.colors.button.header.text.hover};
   }
 
   &.Button_secondary:active {
-    background: ${({ theme }) => theme.colors.grey["active"]};
-    color: ${({ theme }) => theme.colors.blue["default"]};
+    background: ${({ theme }) => theme.colors.button.secondary.bg.click};
+    color: ${({ theme }) => theme.colors.button.secondary.text.click};
     .Button__iconContainer svg path {
-      fill: ${({ theme }) => theme.colors.blue["default"]};
+      fill: ${({ theme }) => theme.colors.button.secondary.text.click};
     }
   }
 
   &.Button_tertiary:active {
-    background: ${({ theme }) => theme.colors.button.tertiary["active"]};
+    background: ${({ theme }) => theme.colors.button.tertiary.bg.click};
     .Button__iconContainer svg path {
-      fill: ${({ theme }) => theme.colors.blue["default"]} !important;
+      fill: ${({ theme }) => theme.colors.button.tertiary.text.click};
     }
   }
 
-  &.Button_request:active {
-    background: ${({ theme }) => theme.colors.button.request["active"]};
-  }
-
+  &.Button_header:active,
   &.Button_header.active {
-    background: #3a465d !important;
-    color: #fff !important;
-  }
-
-  &.Button_primary:focus-visible {
-    background: ${({ theme }) => theme.colors.button.primary["focused"]};
-    outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+    background: ${({ theme }) => theme.colors.button.header.bg.click};
+    color: ${({ theme }) => theme.colors.button.header.text.active};
+    .Button__iconContainer svg path {
+      fill: ${({ theme }) => theme.colors.button.header.text.active};
+    }
   }
 
   &.Button_secondary:focus-visible {
-    background: ${({ theme }) => theme.colors.grey["focused"]};
-    color: ${({ theme }) => theme.colors.blue["default"]};
-    outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+    background: ${({ theme }) => theme.colors.button.secondary.bg.focused};
+    color: ${({ theme }) => theme.colors.button.secondary.text.focused};
+    outline: 2px solid ${({ theme }) => theme.colors.button.secondary.stroke.focused};
     .Button__iconContainer svg path {
-      fill: ${({ theme }) => theme.colors.blue["default"]};
+      fill: ${({ theme }) => theme.colors.button.secondary.text.focused};
     }
   }
 
   &.Button_tertiary:focus-visible {
-    background: ${({ theme }) => theme.colors.transparent};
-    color: ${({ theme }) => theme.colors.blue["default"]};
-    outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+    background: ${({ theme }) => theme.colors.button.tertiary.bg.focused};
+    color: ${({ theme }) => theme.colors.button.tertiary.text.focused};
+    outline: 2px solid ${({ theme }) => theme.colors.button.tertiary.stroke.focused};
     .Button__iconContainer svg path {
-      fill: ${({ theme }) => theme.colors.blue["default"]} !important;
+      fill: ${({ theme }) => theme.colors.button.tertiary.text.focused};
     }
   }
 
-  &.Button_request:focus-visible {
-    background: ${({ theme }) => theme.colors.button.request["focused"]};
-    outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
-  }
-
   &.Button_header:focus-visible {
-    background: ${({ theme }) => theme.colors.button.header["focused"]};
-    outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
+    background: ${({ theme }) => theme.colors.button.header.bg.focused};
+    outline: 2px solid ${({ theme }) => theme.colors.button.header.strokeFocused};
   }
 
   .Button__label {
@@ -383,15 +413,9 @@ const StyledButton = styled.a`
     height: 18px;
   }
 
-  &.Button_primary {
-    .Button__iconContainer svg path {
-      fill: ${({ theme }) => theme.colors.white};
-    }
-  }
-
   &.Button_secondary {
     .Button__iconContainer svg path {
-      fill: ${({ theme }) => theme.colors.black};
+      fill: ${({ theme }) => theme.colors.button.secondary.text.default};
       transition: 0.2s ease;
     }
   }
@@ -404,6 +428,20 @@ const StyledButton = styled.a`
     .Button__leftIconContainer {
       margin-right: 0;
     }
+
+    padding: 0;
+    width: 50px;
+    height: 50px;
+
+    &.Button_compact {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  &.Button_header.Button_withoutLabel {
+    width: 40px;
+    height: 40px;
   }
 `;
 

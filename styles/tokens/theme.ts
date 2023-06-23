@@ -46,6 +46,23 @@ const theme = {
       },
       tertiary: {
         active: "#F1F7FF",
+        bg: {
+          default: "#FFFFFF",
+          hover: "#FFFFFF",
+          focused: "#FFFFFF",
+          click: "#F1F7FF",
+          disabled: "#EFF3F"
+        },
+        text: {
+          default: "#7786A5",
+          hover: "#4E6AF3",
+          focused: "#4E6AF3",
+          click: "#4E6AF3",
+          disabled: "#B8C6E3"
+        },
+        stroke: {
+          focused: "#F845FC"
+        }
       },
       request: {
         bg: {
@@ -190,16 +207,16 @@ const theme = {
     md: 768 - 1, // range 576px - 767px
     sm: 576 - 1, // range 360px - 575px
     xs: 360, // range 0 - 375px,
-    tablet: {
-      max: 1024 - 1,
-      min: 360
-    },
     desktop: {
       max: 1440 - 1,
       min: 1024
     },
+    tablet: {
+      max: 1024 - 1,
+      min: 576
+    },
     mobile: {
-      max: 360,
+      max: 576-1,
       min: 0,
     }
   },

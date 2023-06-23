@@ -68,7 +68,7 @@ const Application = ({className}: ApplicationProps) => {
 
   useLockBodyScroll(showFilter && mQuery.matches);
 
-  const tabsManager = new TabsManager([], handleSelect)
+  const tabsManager = new TabsManager(handleSelect)
   tabsManager.addItem(new TabMenuItem('Заявка', 0, (<>{renderLead()}</>)))
   tabsManager.addItem(new TabMenuItem('Отклики', DataProvider.requestsUsers.length, (<>{renderUsersSearch(handleShowFilter)}{renderRequests(selectedContent)}</>)))
   tabsManager.addItem(new TabMenuItem('Исполнители', DataProvider.executorsUsers.length, (<>{renderUsersSearch(handleShowFilter)}{renderExecutors()}</>)))
