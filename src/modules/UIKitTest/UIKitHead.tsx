@@ -24,6 +24,7 @@ function UIKitHead(args: Props) {
           props.backUrl &&
           <Button
             tertiary
+            header
             href={props.backUrl}
             className="Application__headButton"
           >
@@ -41,7 +42,7 @@ function UIKitHead(args: Props) {
 }
 
 const StyledHead = styled.div`
-  background: ${({theme}) => theme.colors.background.grey};
+  background: ${({theme}) => theme.colors.background.black};
   color: ${({theme}) => theme.colors.text.grey};
   padding: 6px 0;
   margin-bottom: 20px;
@@ -49,6 +50,7 @@ const StyledHead = styled.div`
   .UIKit__header {
     display: flex;
     align-items: center;
+    gap: 10px;
   }
 `
 

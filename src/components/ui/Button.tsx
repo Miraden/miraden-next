@@ -287,6 +287,10 @@ const StyledButton = styled.a`
       background: ${({ theme }) => theme.colors.button.request.bg.focused};
       outline: 2px solid ${({ theme }) => theme.colors.button.request.strokeFocused};
     }
+
+    &.Button_compact {
+      padding: 10px 20px;
+    }
   }
 
   &.Button_header {
