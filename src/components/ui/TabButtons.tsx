@@ -57,14 +57,12 @@ const Tabs = styled.div`
   display: flex;
   box-shadow: 0 0 0 2px #e1edfd inset;
   border-radius: 13px;
-  width: 100%;
   padding: 4px;
 `;
 
 const Button = styled.button<ButtonProps>`
   transition: 0.2s ease;
 
-  width: 100%;
   padding: 10px 15px;
   border: none;
   border-radius: 10px;

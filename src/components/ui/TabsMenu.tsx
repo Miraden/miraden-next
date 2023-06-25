@@ -45,17 +45,24 @@ enum Themes {
   Light = "light"
 }
 
+enum Types {
+  Buttons = "buttons",
+  Classic = "classic"
+}
+
 class TabsManager {
   private readonly items: Array<TabMenuItem>;
   public onClick: Function;
   private activeId: number;
   private readonly theme?: Themes;
+  private readonly type?: Types;
 
-  constructor(callback: Function, theme: Themes = Themes.Light) {
+  constructor(callback: Function, theme: Themes = Themes.Light, type: Types = Types.Classic) {
     this.items = []
     this.onClick = callback
     this.activeId = 0
     this.theme = theme
+    this.type = type
   }
 
   public addItem(item: TabMenuItem) {
@@ -74,11 +81,11 @@ class TabsManager {
 
     return (
       <MenuStyles
-        className={cn(className, className + "--" + this.theme)}
+        className={cn(className, className + "--" + this.theme, className + "--" + this.type)}
         onClick={(e) => this.onClickMenu(e)}
       >
         <div className={itemsClassName}>{items}</div>
-        <div className={dividerClassName}></div>
+        {this.type === Types.Classic && (<div className={dividerClassName}></div>)}
       </MenuStyles>
     )
   }
@@ -91,7 +98,8 @@ class TabsManager {
     const className = baseClassName + "__content"
 
     return (
-      <ContentStyles className={cn(className, className + "--" + this.theme)}>
+      <ContentStyles
+        className={cn(className, className + "--" + this.theme, className + "--" + this.type)}>
         {items.at(selected)}
       </ContentStyles>
     )
@@ -236,6 +244,31 @@ const MenuStyles = styled.div`
   .${baseClassName}__TabButtonCounter {
     margin-left: 10px;
   }
+
+  &.TabsMenu__menus--buttons {
+    .active:before {
+      display: none;
+    }
+
+    .TabsMenu__links-items {
+      outline: 2px solid ${({theme}) => theme.colors.stroke.divider};
+      border-radius: ${({theme}) => theme.border.radius};
+      gap: 3px;
+      padding: 4px;
+    }
+
+    button.${baseClassName}__TabButton {
+      color: ${({theme}) => theme.colors.text.black};
+      padding: 10px 59px;
+      border-radius: ${({theme}) => theme.border.radius};
+      &:hover {
+        background: ${({theme}) => theme.colors.background.lightBlue};
+      }
+      &.active {
+        background: ${({theme}) => theme.colors.main};
+        color: ${({theme}) => theme.colors.text.white};
+      }
+  }
 `
 
-export {TabsManager, TabMenuItem, Themes}
+export {TabsManager, TabMenuItem, Themes, Types}

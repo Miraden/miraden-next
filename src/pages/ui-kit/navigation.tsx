@@ -1,9 +1,13 @@
 import {BlankLayout} from "@/modules/Base/BlankLayout";
 import UIKitHead from "@/modules/UIKitTest/UIKitHead";
 import styled from "styled-components";
-import {TabMenuItem, TabsManager, Themes} from "@/components/ui/TabsMenu";
+import {
+  TabMenuItem,
+  TabsManager,
+  Themes,
+  Types
+} from "@/components/ui/TabsMenu";
 import React, {useCallback, useState} from "react";
-import {TabButtons} from "@/components/ui";
 
 const NavigationsPage = () => {
   let [selected, setSelected] = useState<number>(0);
@@ -16,6 +20,11 @@ const NavigationsPage = () => {
     setSelectedDark(state);
   }, []);
 
+  let [selectedButton, setSelectedButton] = useState<number>(0);
+  const handleSelectButton = useCallback((state: number) => {
+    setSelectedButton(state);
+  }, []);
+
   return (
     <BlankLayout>
       <UIKitHead
@@ -24,29 +33,22 @@ const NavigationsPage = () => {
         backUrl={"/ui-kit"}
       />
       <StyledNavigation className={"Container"}>
-        <div
-          className={"NavSection"}>{renderClassic(selected, selectedDark, handleSelect, handleSelectDark)}</div>
-        <TabButtons
-          tabs={[
-            {label: "Text", id: "1"},
-            {label: "Text", id: "2"},
-          ]}
-          defaultTabId={"1"}
-        />
+        <div className={"NavSection"}>{renderClassic(selected, selectedDark, handleSelect, handleSelectDark)}</div>
+        <div className={"NavSection"}>{renderTabs(selectedButton, handleSelectButton)}</div>
       </StyledNavigation>
     </BlankLayout>
   )
 }
 
 function renderClassic(selected: number, selectedDark: number, handleSelect: Function, handleSelectDark: Function): JSX.Element {
-  const tabsManager = new TabsManager(handleSelect, Themes.Light)
+  const tabsManager = new TabsManager(handleSelect, Themes.Light, Types.Classic)
   tabsManager.addItem(new TabMenuItem('Tab classic', 0, (<div>first</div>)))
   tabsManager.addItem(new TabMenuItem('Tab classic', 1, (<div>second</div>)))
   tabsManager.addItem(new TabMenuItem('Tab classic', 4, (<div>archived</div>)))
   tabsManager.addItem(new TabMenuItem('Tab classic', 4, (
     <div>disabled</div>), true))
 
-  const tabsManagerDark = new TabsManager(handleSelectDark, Themes.Dark)
+  const tabsManagerDark = new TabsManager(handleSelectDark, Themes.Dark, Types.Classic)
   tabsManagerDark.addItem(new TabMenuItem('Tab classic', 1, (<div>first</div>)))
   tabsManagerDark.addItem(new TabMenuItem('Tab classic', 1, (<div>second</div>)))
   tabsManagerDark.addItem(new TabMenuItem('Tab classic', 1, (<div>disabled</div>), true))
@@ -66,10 +68,28 @@ function renderClassic(selected: number, selectedDark: number, handleSelect: Fun
   )
 }
 
+function renderTabs(selected: number, selectedButtons: Function): JSX.Element {
+  const tabsManager = new TabsManager(selectedButtons, Themes.Light, Types.Buttons)
+  tabsManager.addItem(new TabMenuItem('Text', 0, (<div>first</div>)))
+  tabsManager.addItem(new TabMenuItem('Text', 0, (<div>second</div>)))
+
+  return(
+    <>
+      <h3 className={"Font_Accent_20_B NavSectionHeadline"}>{"Tab Buttons"}</h3>
+      <div>
+        {tabsManager.renderMenus(selected)}
+      </div>
+      <div>
+        {tabsManager.renderContent(selected)}
+      </div>
+    </>
+  )
+}
+
 const StyledNavigation = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
 
   .NavSectionHeadline {
     text-transform: uppercase;
