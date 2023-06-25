@@ -184,6 +184,14 @@ const MenuStyles = styled.div`
           color: ${({theme}) => theme.colors.background.grey};
         }
       }
+
+      button.${baseClassName}__TabButton:hover {
+        color: ${({theme}) => theme.colors.white};
+
+        .${baseClassName}__TabButtonCounter {
+          color: ${({theme}) => theme.colors.white};
+        }
+      }
     }
 
     button.${baseClassName}__TabButton {
@@ -208,6 +216,14 @@ const MenuStyles = styled.div`
 
       .${baseClassName}__TabButtonCounter {
         color: ${({theme}) => theme.colors.text.grey};
+      }
+
+      &.disabled:hover {
+        color: ${({theme}) => theme.colors.background.grey};
+
+        .${baseClassName}__TabButtonCounter {
+          color: ${({theme}) => theme.colors.background.grey};
+        }
       }
     }
 
@@ -261,14 +277,16 @@ const MenuStyles = styled.div`
       color: ${({theme}) => theme.colors.text.black};
       padding: 10px 59px;
       border-radius: ${({theme}) => theme.border.radius};
+
       &:hover {
         background: ${({theme}) => theme.colors.background.lightBlue};
       }
+
       &.active {
         background: ${({theme}) => theme.colors.main};
         color: ${({theme}) => theme.colors.text.white};
       }
-  }
+    }
 `
 
 export {TabsManager, TabMenuItem, Themes, Types}
