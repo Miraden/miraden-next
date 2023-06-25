@@ -44,11 +44,11 @@ function renderPrimary(): JSX.Element {
         <div className={"Buttons__group"}>
           <div className="Buttons__GroupTitle Font_Accent_20_B">{"Medium"}</div>
           <Button compact>Button</Button>
-          <Button compact rightIcon={<StarIcon/>}>Right icon</Button>
-          <Button compact leftIcon={<StarIcon/>}>Left Icon</Button>
+          <Button compact rightIcon={<StarIcon/>}>Button</Button>
+          <Button compact leftIcon={<StarIcon/>}>Button</Button>
           <Button compact disabled>Button</Button>
-          <Button compact disabled rightIcon={<StarIcon/>}>Right icon</Button>
-          <Button compact disabled leftIcon={<StarIcon/>}>Left Icon</Button>
+          <Button compact disabled rightIcon={<StarIcon/>}>Button</Button>
+          <Button compact disabled leftIcon={<StarIcon/>}>Button</Button>
         </div>
       </div>
     </>
@@ -135,9 +135,15 @@ function renderHeader(): JSX.Element {
       <h3 className={"Font_24_120 ButtonsHeadline"}>{"Header"}</h3>
       <div className="HeaderButtons Buttons__group">
         <Button header>Header</Button>
+        <Button header disabled>Header</Button>
+        <Button header active>Active</Button>
         <Button header leftIcon={<StarIcon/>}>Header</Button>
+        <Button header disabled leftIcon={<StarIcon/>}>Header</Button>
         <Button header rightIcon={<StarIcon/>}>Header</Button>
+        <Button header active rightIcon={<StarIcon/>}>Active</Button>
+        <Button header disabled rightIcon={<StarIcon/>}>Header</Button>
         <Button header rightIcon={<StarIcon/>}></Button>
+        <Button header disabled rightIcon={<StarIcon/>}></Button>
       </div>
     </>
   )
@@ -150,12 +156,14 @@ function renderRequest(): JSX.Element {
       <div className={"Buttons__wrap"}>
         <div className={"Buttons__group"}>
           <Button request>Button</Button>
-          <Button request disabled>Button</Button>
+          <Button request disabled>Disabled</Button>
+          <Button request active>Active</Button>
         </div>
 
         <div className={"Buttons__group"}>
           <Button request compact>Button</Button>
-          <Button request disabled compact>Button</Button>
+          <Button request disabled compact>Disabled</Button>
+          <Button request compact active>Active</Button>
         </div>
       </div>
     </>
@@ -247,7 +255,7 @@ const StyledButtons = styled.div`
 
   .Buttons__group {
     button {
-      margin-bottom: 20px;
+      margin-bottom: 23px;
 
       &:last-child {
         margin-bottom: 0;

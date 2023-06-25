@@ -177,7 +177,7 @@ const theme = {
       black: "#2A344A",
       white: "#FFF",
       grey: "#7786A5",
-      disabled: "#B8C6E3",
+      disabled: "#C3D1ED",
       warning: "#FFD64C",
       error: "#F34942",
       success: "#0AB258"
