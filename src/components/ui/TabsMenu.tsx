@@ -136,6 +136,12 @@ const MenuStyles = styled.div`
     border-radius: 4px;
     color: ${({theme}) => theme.colors.text.black};
 
+    &:hover {
+      .${baseClassName}__TabButtonCounter {
+        color: ${({theme}) => theme.colors.main};
+      }
+    }
+
     &:focus-visible {
       .TabsMenu__TabButtonCounter {
         color: ${({theme}) => theme.colors.main};
