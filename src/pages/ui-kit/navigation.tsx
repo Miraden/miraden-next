@@ -8,6 +8,9 @@ import {
   Types
 } from "@/components/ui/TabsMenu";
 import React, {useCallback, useState} from "react";
+import {TagItem, Tags} from "@/components/ui/Tags";
+import {ArrowIcon, CrossIcon, StarIcon} from "@/icons";
+import {Tag} from "@/components/ui";
 
 const NavigationsPage = () => {
   let [selected, setSelected] = useState<number>(0);
@@ -33,8 +36,11 @@ const NavigationsPage = () => {
         backUrl={"/ui-kit"}
       />
       <StyledNavigation className={"Container"}>
-        <div className={"NavSection"}>{renderClassic(selected, selectedDark, handleSelect, handleSelectDark)}</div>
-        <div className={"NavSection"}>{renderTabs(selectedButton, handleSelectButton)}</div>
+        <div
+          className={"NavSection"}>{renderClassic(selected, selectedDark, handleSelect, handleSelectDark)}</div>
+        <div
+          className={"NavSection"}>{renderTabs(selectedButton, handleSelectButton)}</div>
+        <div className={"NavSection"}>{renderTags()}</div>
       </StyledNavigation>
     </BlankLayout>
   )
@@ -50,8 +56,10 @@ function renderClassic(selected: number, selectedDark: number, handleSelect: Fun
 
   const tabsManagerDark = new TabsManager(handleSelectDark, Themes.Dark, Types.Classic)
   tabsManagerDark.addItem(new TabMenuItem('Tab classic', 1, (<div>first</div>)))
-  tabsManagerDark.addItem(new TabMenuItem('Tab classic', 1, (<div>second</div>)))
-  tabsManagerDark.addItem(new TabMenuItem('Tab classic', 1, (<div>disabled</div>), true))
+  tabsManagerDark.addItem(new TabMenuItem('Tab classic', 1, (
+    <div>second</div>)))
+  tabsManagerDark.addItem(new TabMenuItem('Tab classic', 1, (
+    <div>disabled</div>), true))
 
   return (
     <>
@@ -73,7 +81,7 @@ function renderTabs(selected: number, selectedButtons: Function): JSX.Element {
   tabsManager.addItem(new TabMenuItem('Text', 0, (<div>first</div>)))
   tabsManager.addItem(new TabMenuItem('Text', 0, (<div>second</div>)))
 
-  return(
+  return (
     <>
       <h3 className={"Font_Accent_20_B NavSectionHeadline"}>{"Tab Buttons"}</h3>
       <div>
@@ -86,10 +94,36 @@ function renderTabs(selected: number, selectedButtons: Function): JSX.Element {
   )
 }
 
+function renderTags(): JSX.Element {
+  return (
+    <>
+      <h3 className={"Font_Accent_20_B NavSectionHeadline"}>{"Tags"}</h3>
+      <Tags>
+        <TagItem label={"Tab"}/>
+      </Tags>
+      <Tags>
+        <TagItem label={"Tab"}/>
+        <TagItem label={"Tab"}/>
+        <TagItem label={"Tab"}/>
+      </Tags>
+      <Tags>
+        <TagItem label={"Tab"} leftIcon={<StarIcon/>}/>
+      </Tags>
+      <Tags>
+        <TagItem label={"Tab"} rightIcon={<StarIcon/>}/>
+      </Tags>
+    </>
+  )
+}
+
 const StyledNavigation = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
+
+  .NavSection {
+
+  }
 
   .NavSectionHeadline {
     text-transform: uppercase;

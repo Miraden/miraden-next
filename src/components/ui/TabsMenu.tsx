@@ -241,6 +241,7 @@ const MenuStyles = styled.div`
   .${baseClassName}__links-items {
     display: flex;
     gap: 27px;
+    width: fit-content;
 
     button.disabled {
       background-color: transparent;
