@@ -459,6 +459,10 @@ const StyledButton = styled.a`
     color: ${({theme}) => theme.colors.text.grey};
     padding: 8px 13px;
 
+    .Button__rightIconContainer svg path {
+      fill: ${({theme}) => theme.colors.text.grey};
+    }
+
     &:hover {
       background: ${({theme}) => theme.colors.background.lightBlue};
     }
@@ -470,7 +474,11 @@ const StyledButton = styled.a`
 
     &.active {
       background: ${({theme}) => theme.colors.background.white};
-      outline: 2px solid ${({theme}) => theme.colors.stroke.lightGrey}
+      outline: 2px solid ${({theme}) => theme.colors.stroke.lightGrey};
+
+      .Button__rightIconContainer svg {
+        transform: rotate(180deg);
+      }
     }
   }
 

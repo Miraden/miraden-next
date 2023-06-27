@@ -2,6 +2,7 @@ import styled from "styled-components";
 import cn from "classnames";
 import {BackIcon20} from "@/icons";
 import {Button} from "@/components/ui";
+import {ArrowsIcon} from "@/icons/ArrowsIcon";
 
 interface Props {
   className?: string,
@@ -28,11 +29,7 @@ function UIKitHead(args: Props) {
             href={props.backUrl}
             className="Application__headButton"
           >
-            <BackIcon20
-              width={20}
-              height={20}
-              className="Application__headArrow"
-            />
+            <ArrowsIcon left attr={{className: "Application__headArrow"}}/>
           </Button>
         }
         <h1 className="Font_52_120">{props.title}</h1>
@@ -46,6 +43,10 @@ const StyledHead = styled.div`
   color: ${({theme}) => theme.colors.text.grey};
   padding: 6px 0;
   margin-bottom: 20px;
+
+  .Application__headArrow path {
+    fill: white;
+  }
 
   .UIKit__header {
     display: flex;

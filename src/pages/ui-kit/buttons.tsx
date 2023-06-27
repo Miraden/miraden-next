@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {BlankLayout} from "@/modules/Base/BlankLayout";
 import UIKitHead from "@/modules/UIKitTest/UIKitHead";
 import {theme} from "../../../styles/tokens";
+import {ArrowsIcon} from "@/icons/ArrowsIcon";
 
 const mobile = theme.breakpoints.mobile.max + "px"
 const tablet = theme.breakpoints.tablet.max + "px"
@@ -212,7 +213,7 @@ function renderSort(): JSX.Element {
       <h3 className={"Font_24_120 ButtonsHeadline"}>{"Sort"}</h3>
       <div className={"Buttons__wrap"}>
         <div className={"Buttons__group"}>
-          <Button sort rightIcon={<ArrowIcon/>}>Sort</Button>
+          <Button sort rightIcon={<ArrowsIcon bottom/>}>Sort</Button>
         </div>
       </div>
     </>
