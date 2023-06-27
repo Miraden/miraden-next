@@ -16,9 +16,8 @@ const UIKit = ({className}: UIKitProps) => {
         <CustomLink href="/ui-kit/buttons">
           Buttons
         </CustomLink>
-        <CustomLink href="/ui-kit/icons">
-          Icons
-        </CustomLink>
+        <CustomLink href="/ui-kit/icons">Icons</CustomLink>
+        <CustomLink href="/ui-kit/iconex">Iconex</CustomLink>
         <CustomLink href="/ui-kit/stickers">
           Stickers
         </CustomLink>

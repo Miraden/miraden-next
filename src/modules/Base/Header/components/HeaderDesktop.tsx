@@ -3,7 +3,7 @@ import {
   AboutUsIcon,
   FaqIcon,
   HomeIcon,
-  ListItemsIcon,
+  ListIcon,
   MiradenLogo,
   MiradenLogoMobile,
   PricingHeaderIcon,
@@ -35,7 +35,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
           </Link>
           <Button
             header
-            leftIcon={<ListItemsIcon />}
+            leftIcon={<ListIcon />}
             className="Header__navButton"
           >
             лента заявок

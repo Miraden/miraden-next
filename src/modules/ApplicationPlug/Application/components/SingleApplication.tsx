@@ -3,7 +3,7 @@ import { PricingSelect } from "@/components/ui/PricingDropdown/PricingSelect";
 import {
   BuildYearIcon,
   KebabIcon,
-  ListItemsIcon,
+  ListIcon,
   PointIconFooter,
   SquareIcon,
 } from "@/icons";
@@ -84,7 +84,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__pricingInfo">
           <div>
-            <ListItemsIcon className="ListIcon" />
+            <ListIcon className="ListIcon" />
             <p className="Color_blue_primary Font_16_140">1 268</p>
           </div>
           <div>

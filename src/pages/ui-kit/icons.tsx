@@ -21,7 +21,7 @@ import {
   HomeIcon,
   InfoIcon,
   Kebab24Icon,
-  ListItemsIcon,
+  ListIcon,
   MapIcon,
   MessagesIcon,
   MinusIcon,
@@ -91,8 +91,6 @@ import {StarIconFilled} from "@/icons/StarIconFilled";
 import {UnpublishedIcon} from "@/icons/UnpublishedIcon";
 import {ViberIcon} from "@/icons/ViberIcon";
 import {WalletIcon} from "@/icons/WalletIcon";
-import TestIcon from "@/icons/TestIcon";
-import Test from "react-dropzone/typings/tests/all";
 
 export default function IconsPage() {
   return (
@@ -134,7 +132,7 @@ export default function IconsPage() {
           <InviteModalIcon/>
           <Kebab24Icon/>
           <LikeIcon/>
-          <ListItemsIcon/>
+          <ListIcon/>
           <LivingSquareIcon/>
           <LocationIcon/>
           <MapIcon/>

@@ -2,6 +2,7 @@ import {FC} from "react";
 import styled from "styled-components";
 import cn from "classnames";
 import {BackIcon20} from "@/icons";
+import {ArrowsIcon} from "@/icons/ArrowsIcon";
 
 enum Types {
   Dotted = 'dotted',
@@ -17,7 +18,7 @@ type Props = {
 const Pagination: FC<Props> = (props: Props) => {
   return (
     <StyledPagination className={cn("Pagination", props.className, "Pagination--" + props.type)}>
-      {props.type === Types.Pages && (<a href={"#"} className={"Pagination__prev Pagination__button"}><BackIcon20/></a>)}
+      {props.type === Types.Pages && (<a href={"#"} className={"Pagination__prev Pagination__button"}><ArrowsIcon left/></a>)}
       <div className={"Pagination__nav"}>
         {[...Array(props.total)].map((x, i) =>
           <a className={"Pagination__link Pagination__button"} href={"#"} key={i}>
@@ -25,7 +26,7 @@ const Pagination: FC<Props> = (props: Props) => {
           </a>
         )}
       </div>
-      {props.type === Types.Pages && (<a href={"#"} className={"Pagination__prev Pagination__button"}><BackIcon20/></a>)}
+      {props.type === Types.Pages && (<a href={"#"} className={"Pagination__prev Pagination__button"}><ArrowsIcon right/></a>)}
     </StyledPagination>
   )
 }
@@ -63,6 +64,10 @@ const StyledPagination = styled.div`
       &:active, &.active {
         background: ${({theme}) => theme.colors.main};
         color: white;
+
+        svg path {
+          fill: white;
+        }
       }
 
       &:focus-visible {

@@ -1,8 +1,9 @@
 import { FC, SVGAttributes } from "react";
+import styled from "styled-components";
 
 const WebMoneyIcon: FC<SVGAttributes<SVGElement>> = (props) => {
   return (
-    <svg
+    <StyledSvg
       width="42"
       height="42"
       fill="none"
@@ -21,8 +22,16 @@ const WebMoneyIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         d="m17.943 19.987 3.909-3.426 3.52 3.805-3.909 3.425-3.52-3.804ZM20.722 26.564l3.91-3.425 3.52 3.804-3.91 3.426-3.52-3.805ZM15.141 13.495l3.909-3.425 3.519 3.805-3.91 3.425-3.518-3.805ZM22.317 11.645l2.932-2.569 2.639 2.854-2.932 2.57-2.639-2.855ZM27.526 23.413l2.932-2.57 2.64 2.855-2.932 2.569-2.64-2.854ZM30.104 29.183l2.93-2.57 2.64 2.854-2.931 2.569-2.64-2.853ZM31.284 15.973l1.955-1.713 1.76 1.902-1.954 1.713-1.76-1.902ZM28.789 10.316l1.954-1.712 1.76 1.902-1.955 1.712-1.76-1.902ZM33.782 21.619l1.954-1.713 1.76 1.902-1.955 1.713-1.76-1.902ZM25.017 17.384l2.931-2.57 2.64 2.854-2.93 2.569-2.64-2.853Z"
         fill="#0068A3"
       />
-    </svg>
+    </StyledSvg>
   );
 };
+
+const StyledSvg = styled.svg`
+  &:hover {
+    path {
+      fill: ${({theme}) => theme.colors.text.disabled};
+    }
+  }
+`
 
 export { WebMoneyIcon };

@@ -6,7 +6,7 @@ import {
   BackIcon20,
   HomeIcon,
   KebabIcon,
-  ListItemsIcon,
+  ListIcon,
   PlusIcon,
 } from "@/icons";
 import { FilterIcon } from "@/icons/FilterIcon";
@@ -495,7 +495,7 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
       <div className="Application__Footer">
         <div className="Application__FooterButtons">
           <Button tertiary className="FooterButton Font_12_16">
-            <ListItemsIcon />
+            <ListIcon />
             Лента
           </Button>
           <Button tertiary className="FooterButton Font_12_16">

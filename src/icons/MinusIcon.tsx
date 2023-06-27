@@ -1,22 +1,47 @@
 import { FC, SVGAttributes } from "react";
+import {theme} from "../../styles/tokens";
 
-const MinusIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+interface Props {
+  filled?: boolean
+  attr?: FC<SVGAttributes<SVGElement>>
+}
+
+const strokePath = "M 3,8.25 A 0.75,0.75 0 0 0 2.25,9 0.75,0.75 0 0 0 3,9.75 H 15 A 0.75,0.75 0 0 0 15.75,9 0.75,0.75 0 0 0 15,8.25 Z"
+const filledPath = ""
+
+const MinusIcon = (props: Props) => {
   return (
     <svg
-      width="18"
-      height="18"
-      fill="none"
+      width="18px"
+      height="18px"
       xmlns="http://www.w3.org/2000/svg"
-      {...props}
+      {...props.attr}
     >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M2.25 9A.75.75 0 0 1 3 8.25h12a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 2.25 9Z"
-        fill="#2A344A"
-      />
+      {props.filled ? getFilled() : getStroke()}
     </svg>
   );
 };
+
+function getStroke(): JSX.Element {
+  return (
+    <>
+      <path
+        d={strokePath}
+        fill={theme.colors.text.black}
+      />
+    </>
+  )
+}
+
+function getFilled(): JSX.Element {
+  return (
+    <>
+      <path
+        d={filledPath}
+        fill={theme.colors.text.black}
+      />
+    </>
+  )
+}
 
 export { MinusIcon };

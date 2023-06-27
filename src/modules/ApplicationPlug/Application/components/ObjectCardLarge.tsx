@@ -4,7 +4,7 @@ import {
   BuildYearIcon,
   Kebab24Icon,
   KebabIcon,
-  ListItemsIcon,
+  ListIcon,
   PointIconFooter,
   SleepsIcon,
   SquareIcon,
@@ -173,7 +173,7 @@ const ObjectCardLarge = ({
               </div>
               <div className="ObjectCardLarge__footerInfo ">
                 <div>
-                  <ListItemsIcon className="ListItemIcon" />{" "}
+                  <ListIcon className="ListItemIcon" />{" "}
                   <p className="Font_16_140 Color_blue_primary">{list}</p>
                 </div>
                 <div>

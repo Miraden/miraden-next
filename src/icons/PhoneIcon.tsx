@@ -1,6 +1,11 @@
-import { FC, SVGAttributes } from "react";
+import {FC, SVGAttributes} from "react";
 
-const PhoneIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+interface Props {
+  filled?: boolean
+  attr?: FC<SVGAttributes<SVGElement>>
+}
+
+const PhoneIcon = (props: Props) => {
   return (
     <svg
       width="18"
@@ -19,4 +24,22 @@ const PhoneIcon: FC<SVGAttributes<SVGElement>> = (props) => {
   );
 };
 
-export { PhoneIcon };
+const PhoneRoundIcon = (props: Props) => {
+  return (
+    <svg
+      width="60px"
+      height="60px"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props.attr}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M30 55C43.8071 55 55 43.8071 55 30C55 16.1929 43.8071 5 30 5C16.1929 5 5 16.1929 5 30C5 43.8071 16.1929 55 30 55ZM26.5694 33.4306C30.0857 36.9469 34.2564 38.4772 35.885 36.8486L36.9573 35.7763C37.6976 35.036 37.6781 33.8162 36.9136 33.0518L35.2527 31.3909C34.4883 30.6265 33.2685 30.6069 32.5283 31.3472L32.2979 31.5775C31.8983 31.9772 31.2535 32.0163 30.8034 31.6449C30.3693 31.2867 29.937 30.9005 29.5182 30.4818C29.0995 30.063 28.7133 29.6307 28.3551 29.1966C27.9837 28.7465 28.0228 28.1017 28.4225 27.7021L28.6528 27.4717C29.3931 26.7315 29.3735 25.5117 28.6091 24.7473L26.9482 23.0864C26.1838 22.3219 24.964 22.3024 24.2237 23.0427L23.1514 24.115C21.5228 25.7436 23.0531 29.9143 26.5694 33.4306Z"
+        fill="#0AB258"
+      />
+    </svg>
+  );
+}
+
+export { PhoneIcon, PhoneRoundIcon };

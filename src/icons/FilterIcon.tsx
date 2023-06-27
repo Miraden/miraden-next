@@ -1,16 +1,47 @@
-import { FC, SVGAttributes } from "react";
+import {FC, SVGAttributes} from "react";
+import {theme} from "../../styles/tokens";
 
-const FilterIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+interface Props {
+  filled?: boolean
+  attr?: FC<SVGAttributes<SVGElement>>
+}
+
+const strokePath = "M15.75 6C16.1642 6 16.5 5.66421 16.5 5.25C16.5 4.83579 16.1642 4.5 15.75 4.5V6ZM2.25 12C1.83579 12 1.5 12.3358 1.5 12.75C1.5 13.1642 1.83579 13.5 2.25 13.5L2.25 12ZM8.25 6L15.75 6V4.5L8.25 4.5V6ZM1.5 5.25C1.5 6.49264 2.50736 7.5 3.75 7.5V6C3.33579 6 3 5.66421 3 5.25H1.5ZM3.75 7.5C4.99264 7.5 6 6.49264 6 5.25H4.5C4.5 5.66421 4.16421 6 3.75 6V7.5ZM6 5.25C6 4.00736 4.99264 3 3.75 3V4.5C4.16421 4.5 4.5 4.83579 4.5 5.25H6ZM3.75 3C2.50736 3 1.5 4.00736 1.5 5.25H3C3 4.83579 3.33579 4.5 3.75 4.5V3ZM9.75 12L2.25 12L2.25 13.5L9.75 13.5V12ZM15 12.75C15 13.1642 14.6642 13.5 14.25 13.5V15C15.4926 15 16.5 13.9926 16.5 12.75H15ZM14.25 13.5C13.8358 13.5 13.5 13.1642 13.5 12.75H12C12 13.9926 13.0074 15 14.25 15V13.5ZM13.5 12.75C13.5 12.3358 13.8358 12 14.25 12V10.5C13.0074 10.5 12 11.5074 12 12.75H13.5ZM14.25 12C14.6642 12 15 12.3358 15 12.75H16.5C16.5 11.5074 15.4926 10.5 14.25 10.5V12Z"
+const filledPath = "M 3.75 3 C 2.5162464 3 1.5 4.0162464 1.5 5.25 C 1.5 6.4837536 2.5162464 7.5 3.75 7.5 C 4.9837535 7.5 6 6.4837536 6 5.25 C 6 4.0162464 4.9837535 3 3.75 3 z M 8.25 4.5 A 0.75 0.75 0 0 0 7.5 5.25 A 0.75 0.75 0 0 0 8.25 6 L 15.75 6 A 0.75 0.75 0 0 0 16.5 5.25 A 0.75 0.75 0 0 0 15.75 4.5 L 8.25 4.5 z M 14.25 10.5 C 13.016246 10.5 12 11.516246 12 12.75 C 12 13.983754 13.016246 15 14.25 15 C 15.483754 15 16.5 13.983754 16.5 12.75 C 16.5 11.516246 15.483754 10.5 14.25 10.5 z M 2.25 12 A 0.75 0.75 0 0 0 1.5 12.75 A 0.75 0.75 0 0 0 2.25 13.5 L 9.75 13.5 A 0.75 0.75 0 0 0 10.5 12.75 A 0.75 0.75 0 0 0 9.75 12 L 2.25 12 z "
+
+const FilterIcon = (props: Props) => {
   return (
-    <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M1.5 5.25a2.25 2.25 0 1 1 4.5 0 2.25 2.25 0 0 1-4.5 0Zm2.25-.75a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm12 1.5h-7.5V4.5h7.5a.75.75 0 0 1 0 1.5Zm-1.5 6a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5Zm-2.25.75a2.25 2.25 0 1 1 4.5 0 2.25 2.25 0 0 1-4.5 0ZM9.75 12v1.5h-7.5a.75.75 0 0 1 0-1.5h7.5Z"
-        fill="#4E6AF3"
-      />
+    <svg
+      width="18px"
+      height="18px"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props.attr}
+    >
+      {props.filled ? getFilled() : getStroke()}
     </svg>
   );
 };
 
-export { FilterIcon };
+function getStroke(): JSX.Element {
+  return (
+    <>
+      <path
+        d={strokePath}
+        fill={theme.colors.text.black}
+      />
+    </>
+  )
+}
+
+function getFilled(): JSX.Element {
+  return (
+    <>
+      <path
+        d={filledPath}
+        fill={theme.colors.text.black}
+      />
+    </>
+  )
+}
+
+export {FilterIcon};
