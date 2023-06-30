@@ -36,6 +36,7 @@ const TextInput = ({
 }: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
+  const hasLabel: boolean = label !== undefined
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
@@ -59,7 +60,7 @@ const TextInput = ({
   };
 
   return (
-    <StyledTextInput className={cn(className, (isRequired && "TextInput__IsRequired"))}>
+    <StyledTextInput className={cn(className, (isRequired && "TextInput__IsRequired"), (hasLabel && "TextInput__hasLabel"))}>
       <StyledTextInputField
         className={cn({
           FieldInput__labelWarning: warning,
@@ -68,7 +69,7 @@ const TextInput = ({
         })}
       >
         {maxLength && (
-          <StyledTextInputCounter>
+          <StyledTextInputCounter hasLabel={hasLabel}>
             {value.length}/{maxLength}
           </StyledTextInputCounter>
         )}
@@ -82,6 +83,7 @@ const TextInput = ({
           disabled={disabled}
           className="TextInput"
           isRequired={isRequired}
+          hasLabel={hasLabel}
         />
         {icon && <div className="Icon__container">{icon}</div>}
         <StyledTextInputLabel isFocused={isFocused} className="TextInput">
@@ -190,12 +192,13 @@ const StyledTextInputField = styled.div`
   width: fit-content;
 `;
 
-const StyledTextInputInput = styled.input<{ isRequired: boolean }>`
+const StyledTextInputInput = styled.input<{ isRequired: boolean, hasLabel: boolean }>`
   position: relative;
   border: none;
   width: 100%;
   border-radius: ${({theme}) => theme.border.radius};
   padding: ${({ isRequired }) => (isRequired ? "18px 18px 4px 20px;" : "18px 18px 4px 20px;")};
+  padding: ${({ hasLabel }) => (hasLabel ? "18px 18px 4px 20px;" : "18px 18px 18px 20px;")};
   font-size: 16px;
   line-height: 24px;
   outline: 2px solid ${({theme}) => theme.colors.fields.stroke};
@@ -232,12 +235,12 @@ const StyledTextInputLabel = styled.label<{ isFocused: boolean }>`
   }
 `;
 
-const StyledTextInputCounter = styled.div`
+const StyledTextInputCounter = styled.div<{ hasLabel: boolean }>`
   position: absolute;
   height: 50%;
   z-index: 10;
   right: 20px;
-  top: 36%;
+  top: ${({ hasLabel }) => (hasLabel ? "36%" : "32%")};
   align-self: flex-end;
   font-size: 12px;
   color: #808080;
