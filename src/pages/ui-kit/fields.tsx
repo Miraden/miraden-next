@@ -67,10 +67,10 @@ export default function FieldsPage() {
         </div>
 
         <div className={"Fields_row Dropdowns"}>
-          <DropdownInput className={"Input"} options={options} placeholder={"Select"} />
-          <DropdownInput warning className={"Input"} options={options} message={"Message"} placeholder={"Select"} />
+          <DropdownInput options={options} placeholder={"Select"} />
+          <DropdownInput options={options} message={"Message"} placeholder={"Select"} />
           <DropdownInput error className={"Input"} message={"Error message"} placeholder={"Select"} />
-          <DropdownInput disabled className={"Input"} placeholder={"Select"}/>
+          <DropdownInput disabled placeholder={"Select"}/>
         </div>
 
         <div className={"Fields_row"}>
@@ -82,7 +82,7 @@ export default function FieldsPage() {
         </div>
 
         <div className={"Fields_row"}>
-          <Sort />
+          <DropdownInput options={options} className={"Sort"} placeholder={"Без диапазона"} />
         </div>
       </StyledFields>
     </BlankLayout>
@@ -93,6 +93,7 @@ const StyledFields = styled.div`
   display: flex;
   gap: 20px;
   flex-direction: column;
+  margin-bottom: 20px;
 
   .Fields_row {
     display: flex;
@@ -104,5 +105,9 @@ const StyledFields = styled.div`
     > div {
       width: 100%;
     }
+  }
+
+  .Sort {
+    width: 150px;
   }
 `;

@@ -58,9 +58,9 @@ const DropdownInput: FC<Props> = ({
       warning={warning}
     >
       <button
-        className={
+        className={cn(
           showDropDown ? `DropdownInput_select_active` : `DropdownInput_select`
-        }
+        )}
         onClick={(): void => toggleDropDown()}
         onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
           dismissHandler(e)
@@ -104,46 +104,45 @@ const StyledDropdownInput = styled.div<Props>`
 
   &.Dropdown_warning {
     .DropdownInput_select {
-      background: ${({ theme }) => theme.colors.fields.bgValidation};
-      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeValidation};
+      background: ${({theme}) => theme.colors.fields.bgValidation};
+      outline: 2px solid ${({theme}) => theme.colors.fields.strokeValidation};
 
       &:hover {
-        background: ${({ theme }) => theme.colors.fields.bgValidation};
-        outline: 2px solid
-          ${({ theme }) => theme.colors.fields.strokeValidation};
+        background: ${({theme}) => theme.colors.fields.bgValidation};
+        outline: 2px solid ${({theme}) => theme.colors.fields.strokeValidation};
       }
     }
 
     .DropdownInput_select_active {
-      background: ${({ theme }) => theme.colors.fields.bgValidation};
-      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeValidation};
+      background: ${({theme}) => theme.colors.fields.bgValidation};
+      outline: 2px solid ${({theme}) => theme.colors.fields.strokeValidation};
     }
 
     .Dropdown__menu_active {
-      background: ${({ theme }) => theme.colors.fields.bgValidation};
-      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeValidation};
+      background: ${({theme}) => theme.colors.fields.bgValidation};
+      outline: 2px solid ${({theme}) => theme.colors.fields.strokeValidation};
     }
   }
 
   &.Dropdown_error {
     .DropdownInput_select {
-      background: ${({ theme }) => theme.colors.fields.bgError};
-      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeError};
+      background: ${({theme}) => theme.colors.fields.bgError};
+      outline: 2px solid ${({theme}) => theme.colors.fields.strokeError};
 
       &:hover {
-        background: ${({ theme }) => theme.colors.fields.bgError};
-        outline: 2px solid ${({ theme }) => theme.colors.fields.strokeError};
+        background: ${({theme}) => theme.colors.fields.bgError};
+        outline: 2px solid ${({theme}) => theme.colors.fields.strokeError};
       }
     }
 
     .DropdownInput_select_active {
-      background: ${({ theme }) => theme.colors.fields.bgError};
-      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeError};
+      background: ${({theme}) => theme.colors.fields.bgError};
+      outline: 2px solid ${({theme}) => theme.colors.fields.strokeError};
     }
 
     .Dropdown__menu_active {
-      background: ${({ theme }) => theme.colors.fields.bgError};
-      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeError};
+      background: ${({theme}) => theme.colors.fields.bgError};
+      outline: 2px solid ${({theme}) => theme.colors.fields.strokeError};
     }
   }
 
@@ -165,13 +164,13 @@ const StyledDropdownInput = styled.div<Props>`
 
   .Error__message {
     margin-top: 4px;
-    color: ${({ theme }) => theme.colors.error};
+    color: ${({theme}) => theme.colors.error};
   }
 
   .DropdownInput_selectContainer {
     position: relative;
     background: #fff;
-    border-radius: 10px;
+    border-radius: ${({theme}) => theme.border.radius};
   }
 
   .DropdownInput_select_active {
@@ -180,9 +179,8 @@ const StyledDropdownInput = styled.div<Props>`
     background: #fff;
     padding: 21px 20px;
     border: none;
-    outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
-    border-radius: ${({ theme }) => theme.border.radius}
-      ${({ theme }) => theme.border.radius} 0 0;
+    outline: 2px solid ${({theme}) => theme.colors.fields.strokeHover};
+    border-radius: ${({theme}) => theme.border.radius} ${({theme}) => theme.border.radius} 0 0;
 
     .DropdownInput_selectLabel {
       svg {
@@ -194,15 +192,15 @@ const StyledDropdownInput = styled.div<Props>`
 
   .DropdownInput_select {
     &:hover {
-      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
+      outline: 2px solid ${({theme}) => theme.colors.fields.strokeHover};
     }
 
-    outline: 2px solid ${({ theme }) => theme.colors.fields.stroke};
+    outline: 2px solid ${({theme}) => theme.colors.fields.stroke};
     width: 100%;
     max-width: 300px;
     padding: 21px 20px;
     border: none;
-    border-radius: ${({ theme }) => theme.border.radius};
+    border-radius: ${({theme}) => theme.border.radius};
     overflow: hidden;
     background: ${props => (props.error ? '#FFF5F5' : 'auto')};
     background: ${props => (props.disabled ? '#EFF3FB' : 'auto')};
@@ -221,7 +219,7 @@ const StyledDropdownInput = styled.div<Props>`
     font-size: 16px;
 
     svg path {
-      fill: ${({ theme }) => theme.colors.fields.title};
+      fill: ${({theme}) => theme.colors.fields.title};
     }
   }
 
@@ -240,6 +238,34 @@ const StyledDropdownInput = styled.div<Props>`
     padding: 11px 10px;
     background: rgba(255, 255, 255, 0.85);
     border-radius: 3px;
+  }
+
+  &.Sort {
+    .DropdownInput_selectLabel {
+      font-size: 14px;
+    }
+
+    .DropdownInput_select {
+      padding: 9px 10px 9px 15px;
+
+      &:hover {
+        background: ${({theme}) => theme.colors.background.lightBlue};
+      }
+    }
+
+    .DropdownInput_select_active {
+      padding: 9px 10px 9px 15px;
+    }
+
+    .Dropdown__menu_active {
+      top: 10px;
+      left: -15px;
+      width: calc(100% + 25px);
+    }
+
+    .Dropdown__menu_item {
+      padding: 10px 10px 10px 15px;
+    }
   }
 `
 
