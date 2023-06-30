@@ -1,17 +1,17 @@
-import { CheckIcon } from "@/icons/CheckIcon";
-import cn from "classnames";
-import { FC } from "react";
-import styled from "styled-components";
+import cn from 'classnames'
+import { FC } from 'react'
+import styled from 'styled-components'
+import { CheckSmallLineIcon } from '@/icons/CheckLineIcon'
 
 type Props = {
-  selectedOption: string;
-  setSelectedOption: (option: string) => void;
-  options: string[];
-  showDropDown: boolean;
-  toggleDropDown: Function;
-  optionSelection: Function;
-  className?: string;
-};
+  selectedOption: string
+  setSelectedOption: (option: string) => void
+  options: string[]
+  showDropDown: boolean
+  toggleDropDown: Function
+  optionSelection: Function
+  className?: string
+}
 
 const SortDropdown: FC<Props> = ({
   selectedOption,
@@ -39,12 +39,8 @@ const SortDropdown: FC<Props> = ({
             >
               <span className="SortDropdown__menuItem">
                 <p>{option}</p>
-                <CheckIcon
-                  className={
-                    selectedOption === option
-                      ? "CheckIcon_selected"
-                      : "CheckIcon"
-                  }
+                <CheckSmallLineIcon
+                  attr={{}}
                 />
               </span>
             </div>

@@ -188,6 +188,7 @@ const theme = {
       text: "#2A344A",
       description: "#94A5CA",
       bgValidation: "#FFFBF4",
+      bgError: "#FFF5F5",
       stroke: "#E1EDFD",
       strokeHover: "#CDDEF4",
       strokeFocused: "#4E6AF3",

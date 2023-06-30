@@ -3,13 +3,14 @@ import cn from "classnames";
 import { FC, useState } from "react";
 import styled from "styled-components";
 import { SortDropdown } from "./SortDropdown";
+import {ArrowsIcon} from "@/icons/ArrowsIcon";
 
 interface Props {
   className?: string;
 }
 
 const Sort: FC<Props> = ({ className }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
+  const [showDropDown, setShowDropDown] = useState<boolean>(true);
   const [selectOption, setSelectOption] = useState<string>("");
   const [selectedOption, setSelectedOption] = useState<string>("");
   const options = () => {
@@ -29,7 +30,7 @@ const Sort: FC<Props> = ({ className }) => {
 
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {
-      setShowDropDown(false);
+      setShowDropDown(true);
     }
   };
   const optionSelection = (option: string, index: number): void => {
@@ -54,7 +55,7 @@ const Sort: FC<Props> = ({ className }) => {
       >
         <div className="DropdownInput_selectLabel Text_14_16">
           {selectedOption ? selectedOption : "Без диапазона"}
-          <ArrowIcon />
+          <ArrowsIcon bottom />
         </div>
         {showDropDown && (
           <SortDropdown
@@ -92,15 +93,8 @@ const StyledDropdownInput = styled.div<Props>`
     padding: 10px 10px 10px 15px;
     border: none;
     transition: 0.15s ease-in;
-    box-shadow: 0 0 0 2px #d4ddee inset;
     .DropdownInput_selectLabel {
       color: #2a344a;
-    }
-    div {
-      svg {
-        margin-left: 12px;
-        transition: 0.15s ease-in;
-      }
     }
   }
 
@@ -129,11 +123,6 @@ const StyledDropdownInput = styled.div<Props>`
 
     div {
       width: 100%;
-      svg {
-        margin-left: 12px;
-        transition: 0.2s ease-in;
-        transform: rotate(-180deg);
-      }
     }
   }
 
@@ -144,13 +133,6 @@ const StyledDropdownInput = styled.div<Props>`
     font-size: 14px;
     line-height: 16px;
     color: #7786a5;
-    svg {
-      width: 16px;
-      height: 16px;
-      path {
-        stroke: #7786a5;
-      }
-    }
   }
 
   .DropdownInput_inputContainer {

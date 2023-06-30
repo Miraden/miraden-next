@@ -16,6 +16,7 @@ interface Props {
   onKeyPress?: any;
   isRequired?: boolean;
   name?: string;
+  message?: string
 }
 
 const TextInput = ({
@@ -30,7 +31,8 @@ const TextInput = ({
   onKeyPress,
   values,
   isRequired = false,
-  name
+  name,
+  message
 }: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -89,10 +91,10 @@ const TextInput = ({
       {warning && (
         <div className="Warning__message">
           <WarningIcon />
-          <span className="Text_12_16">Warning</span>
+          <span className="Font_fields_description">{message}</span>
         </div>
       )}
-      {error && <div className="Error__message Text_12_16">Error</div>}
+      {error && <div className="Error__message Font_fields_description">{message}</div>}
     </StyledTextInput>
   );
 };
@@ -101,7 +103,7 @@ const StyledTextInput = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: auto;
 
   &.TextInput__IsRequired .TextInput::after {
     content: "*";
@@ -109,11 +111,18 @@ const StyledTextInput = styled.div`
     margin-right: 5px;
   }
 
+  .Icon__container {
+    svg path {
+      fill: ${({ theme }) => theme.colors.fields.title};
+    }
+  }
+
   .FieldInput__disabled {
     input {
       background: #eff3fb !important;
       box-shadow: none;
       pointer-events: none;
+      outline: none;
     }
     label {
       color: #b8c6e3 !important;
@@ -140,7 +149,7 @@ const StyledTextInput = styled.div`
     width: 18px;
     height: 18px;
     position: absolute;
-    right: 20px;
+    right: 28px;
     top: calc(50% - 8px);
   }
 
@@ -161,15 +170,15 @@ const StyledTextInput = styled.div`
 
   .FieldInput__labelWarning {
     input {
-      box-shadow: 0px 0px 0px 2px #ffeac1 inset !important;
-      background-color: #fffbf4;
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeValidation};
+      background-color: ${({ theme }) => theme.colors.fields.bgValidation};
     }
   }
 
   .FieldInput__labelError {
     input {
-      box-shadow: 0px 0px 0px 2px #ffd8d8 inset;
-      background-color: #fff5f5;
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeError};
+      background-color: ${({ theme }) => theme.colors.fields.bgError};
     }
   }
 `;
@@ -178,27 +187,28 @@ const StyledTextInputField = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
+  width: fit-content;
 `;
 
 const StyledTextInputInput = styled.input<{ isRequired: boolean }>`
-  width: 100%;
   position: relative;
   border: none;
-  box-shadow: 0 0 0 2px #e1edfd inset;
-  border-radius: 10px;
-  padding: ${({ isRequired }) => (isRequired ? "18px 58px 4px 20px;" : "18px 58px 18px 20px;")};
+  width: 100%;
+  border-radius: ${({theme}) => theme.border.radius};
+  padding: ${({ isRequired }) => (isRequired ? "18px 18px 4px 20px;" : "18px 18px 4px 20px;")};
   font-size: 16px;
   line-height: 24px;
-  height: 60px;
-  outline: none;
+  outline: 2px solid ${({theme}) => theme.colors.fields.stroke};
   transition: 0.1s;
+  color: ${({theme}) => theme.colors.fields.text};
+  height: 60px;
 
   &:hover {
-    box-shadow: 0 0 0 2px #cddef4 inset;
+    outline: 2px solid ${({theme}) => theme.colors.fields.strokeHover};
     cursor: text;
   }
   &:focus {
-    box-shadow: 0 0 0 2px #4e6af3 inset;
+    outline: 2px solid ${({theme}) => theme.colors.fields.strokeFocused};
   }
   .TextInput::before {
     content: "*";
@@ -216,7 +226,7 @@ const StyledTextInputLabel = styled.label<{ isFocused: boolean }>`
       isFocused ? "translateY(0)" : "translateY(-50%)"};
     font-size: ${({ isFocused }) => (isFocused ? "12px" : "16px")};
     line-height: 20px;
-    color: #7786a5;
+    color: ${({theme}) => theme.colors.fields.title};
     pointer-events: none;
     transition: 0.1s;
   }

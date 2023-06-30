@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
-import { Checkbox } from "./CheckBox";
+import {Checkbox} from "./CheckBox";
+import cn from "classnames";
 
 interface Option {
   label: string;
@@ -12,7 +13,7 @@ interface Props {
   placeholder?: string;
 }
 
-const DropdownInputCheckbox: React.FC<Props> = ({ options, placeholder }) => {
+const DropdownInputCheckbox: React.FC<Props> = ({options, placeholder}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -49,17 +50,27 @@ const DropdownInputCheckbox: React.FC<Props> = ({ options, placeholder }) => {
   };
 
   return (
-    <Container ref={containerRef}>
+    <Container ref={containerRef} className={cn({
+      DropDownInputCheckbox: true,
+      DropDownInputCheckbox_active: isOpen
+    })}
+    >
       <Input
         type="text"
         placeholder="Select"
         value={selectedOptions.map((o) => o.label).join(", ")}
         onClick={toggleDropdown}
         readOnly
-        className="Text_14_140"
+        className={cn({
+          DropDownInput_active: isOpen
+        })}
       />
       {isOpen && (
-        <Dropdown>
+        <Dropdown className={cn({
+          DropDown_active: isOpen,
+          DropDown: true
+        })}
+        >
           {options.map((option) => (
             <Checkbox
               onChange={() => handleOptionClick(option)}
@@ -67,6 +78,7 @@ const DropdownInputCheckbox: React.FC<Props> = ({ options, placeholder }) => {
               checked={selectedOptions.some((o) => o.value === option.value)}
               label={option.label}
               isSelected={selectedOptions.some((o) => o.value === option.value)}
+              className={"Font_body_alt"}
             />
           ))}
         </Dropdown>
@@ -78,36 +90,52 @@ const DropdownInputCheckbox: React.FC<Props> = ({ options, placeholder }) => {
 const Container = styled.div`
   position: relative;
   display: inline-block;
-  color: #2a344a;
 `;
 
 const Input = styled.input`
   padding: 18px 20px;
   max-width: 300px;
   width: 100%;
-  box-shadow: 0 0 0 2px #e1edfd inset;
-  border-radius: 10px;
+  outline: 2px solid ${({theme}) => theme.colors.fields.stroke};
+  border-radius: ${({ theme }) => theme.border.radius};
   cursor: pointer;
   border: none;
-  color: #2a344a;
+  color: ${({ theme }) => theme.colors.fields.title};
+
+  &:hover {
+    outline: 2px solid ${({theme}) => theme.colors.fields.strokeHover};
+  }
+
+  &.DropDownInput_active {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    outline: 2px solid ${({theme}) => theme.colors.fields.strokeHover};
+  }
 `;
 
 const Dropdown = styled.div`
   position: absolute;
-  top: calc(100% + 2px);
+  top: 61px;
   left: 0;
   width: 100%;
   border: none;
   max-height: 200px;
   overflow-y: auto;
-  box-shadow: 0 0 0 2px #e1edfd inset;
+  outline: 2px solid ${({theme}) => theme.colors.fields.stroke};
   border-radius: 10px;
   z-index: 1;
+  background: #fff;
 
-  label {
+  &.DropDown_active {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    outline: 2px solid ${({theme}) => theme.colors.fields.strokeHover};
+  }
+
+  label.Checkbox {
     padding: 12px 20px 13px 20px;
     width: 100%;
-    color: #2a344a;
+
     :hover {
       background: #f1f7ff;
     }
@@ -120,12 +148,11 @@ const Option = styled.div<{ isSelected: boolean }>`
   height: 40px;
   padding: 8px;
   cursor: pointer;
-  background-color: ${({ isSelected }) =>
-    isSelected ? "#f0f0f0" : "transparent"};
+  background-color: ${({isSelected}) => isSelected ? "#f0f0f0" : "transparent"};
 
   &:hover {
-    background-color: #f0f0f0;
+    background-color: ${({theme}) => theme.colors.stroke.lightGrey};
   }
 `;
 
-export { DropdownInputCheckbox };
+export {DropdownInputCheckbox};

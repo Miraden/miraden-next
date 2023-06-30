@@ -1,17 +1,22 @@
-import { ArrowIcon, WarningIcon } from "@/icons";
-import cn from "classnames";
-import { FC, useState } from "react";
-import styled from "styled-components";
-import { Dropdown } from "./Dropdown";
+import { ArrowIcon, WarningIcon } from '@/icons'
+import cn from 'classnames'
+import React, { FC, useState } from 'react'
+import styled from 'styled-components'
+import { Dropdown } from './Dropdown'
+import { ArrowsIcon } from '@/icons/ArrowsIcon'
+import { theme } from '../../../styles/tokens'
 
 interface Props {
-  className?: string;
-  disabled?: boolean;
-  warning?: boolean;
-  error?: boolean;
-  placeholder?: string;
-  options?: Array<string>;
+  className?: string
+  disabled?: boolean
+  warning?: boolean
+  error?: boolean
+  placeholder?: string
+  options?: Array<string>
+  message?: string
 }
+
+const borderRadius = theme.border.radius
 
 const DropdownInput: FC<Props> = ({
   className,
@@ -20,30 +25,33 @@ const DropdownInput: FC<Props> = ({
   error,
   placeholder,
   options = [],
+  message,
 }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectOption, setSelectOption] = useState<string>("");
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [activeOption, setActiveOption] = useState<string>('')
 
-  const selectOptions = options.length ? options : ["Нет подходящих вариантов"];
+  const selectOptions = options.length ? options : ['Нет подходящих вариантов']
 
   const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
-  };
+    setShowDropDown(!showDropDown)
+  }
 
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {
-      setShowDropDown(false);
+      setShowDropDown(false)
     }
-  };
+  }
 
   const optionSelection = (option: string): void => {
-    setSelectOption(option);
-  };
+    setActiveOption(option)
+  }
 
   return (
     <StyledDropdownInput
       className={cn(className, {
         Dropdown_disabled: disabled,
+        Dropdown_warning: warning,
+        Dropdown_error: error,
       })}
       disabled={disabled}
       error={error}
@@ -59,42 +67,96 @@ const DropdownInput: FC<Props> = ({
         }
         tabIndex={disabled ? -1 : undefined}
       >
-        <div className="DropdownInput_selectLabel Text_16_24">
-          {selectOption ? selectOption : placeholder}
-          <ArrowIcon width={18} height={18} />
+        <div className="DropdownInput_selectLabel Font_fields_description">
+          {activeOption ? (
+            <span>{activeOption}</span>
+          ) : (
+            <span>{placeholder}</span>
+          )}
+          <ArrowsIcon bottom />
         </div>
         {showDropDown && (
           <Dropdown
             className="DropdownInput_selectContainer"
             options={selectOptions}
             showDropDown={false}
+            selectedOption={activeOption}
             toggleDropDown={(): void => toggleDropDown()}
             optionSelection={optionSelection}
           />
-        )}{" "}
+        )}{' '}
       </button>
       {warning && (
-        <div className="Warning__message Text_12_16">
+        <div className="Warning__message Font_fields_description">
           <WarningIcon />
-          <span>Warning</span>
+          <span>{message}</span>
         </div>
       )}
-      {error && <div className="Error__message Text_12_16">Error</div>}
+      {error && (
+        <div className="Error__message Font_fields_description">{message}</div>
+      )}
     </StyledDropdownInput>
-  );
-};
+  )
+}
 
 const StyledDropdownInput = styled.div<Props>`
-  pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
+  pointer-events: ${props => (props.disabled ? 'none' : 'auto')};
+
+  &.Dropdown_warning {
+    .DropdownInput_select {
+      background: ${({ theme }) => theme.colors.fields.bgValidation};
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeValidation};
+
+      &:hover {
+        background: ${({ theme }) => theme.colors.fields.bgValidation};
+        outline: 2px solid
+          ${({ theme }) => theme.colors.fields.strokeValidation};
+      }
+    }
+
+    .DropdownInput_select_active {
+      background: ${({ theme }) => theme.colors.fields.bgValidation};
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeValidation};
+    }
+
+    .Dropdown__menu_active {
+      background: ${({ theme }) => theme.colors.fields.bgValidation};
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeValidation};
+    }
+  }
+
+  &.Dropdown_error {
+    .DropdownInput_select {
+      background: ${({ theme }) => theme.colors.fields.bgError};
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeError};
+
+      &:hover {
+        background: ${({ theme }) => theme.colors.fields.bgError};
+        outline: 2px solid ${({ theme }) => theme.colors.fields.strokeError};
+      }
+    }
+
+    .DropdownInput_select_active {
+      background: ${({ theme }) => theme.colors.fields.bgError};
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeError};
+    }
+
+    .Dropdown__menu_active {
+      background: ${({ theme }) => theme.colors.fields.bgError};
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeError};
+    }
+  }
 
   .Warning__message {
     display: flex;
     margin-top: 4px;
     align-items: center;
+
     div {
       display: flex;
       align-items: center;
     }
+
     span {
       margin-left: 8px;
       color: #94a5ca;
@@ -116,59 +178,38 @@ const StyledDropdownInput = styled.div<Props>`
     width: 100%;
     max-width: 300px;
     background: #fff;
-    border-radius: 10px;
-    padding: 18px 20px;
+    padding: 21px 20px;
     border: none;
-    transition: 0.15s ease-in;
-    box-shadow: 0 0 0 2px #e1edfd inset;
+    outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
+    border-radius: ${({ theme }) => theme.border.radius}
+      ${({ theme }) => theme.border.radius} 0 0;
 
-    div {
+    .DropdownInput_selectLabel {
       svg {
-        transition: 0.15s ease-in;
-        path {
-          stroke: #7786a5;
-        }
+        transform: rotate(180deg);
+        transition: 0.2s ease-in;
       }
     }
   }
 
   .DropdownInput_select {
-    &:focus {
-      box-shadow: 0 0 0 2px #4e6af3 inset;
-      div {
-        color: #2a344a;
-      }
-    }
     &:hover {
-      box-shadow: 0 0 0 2px #cddef4 inset;
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
     }
-    outline: none;
+
+    outline: 2px solid ${({ theme }) => theme.colors.fields.stroke};
     width: 100%;
     max-width: 300px;
-    padding: 18px 20px;
+    padding: 21px 20px;
     border: none;
-    border-radius: 10px;
+    border-radius: ${({ theme }) => theme.border.radius};
     overflow: hidden;
-    box-shadow: 0 0 0 2px #e1edfd inset;
-    box-shadow: ${(props) =>
-      props.error ? "0 0 0 2px #FFD8D8 inset !important" : "none"};
-    box-shadow: ${(props) =>
-      props.warning ? "0 0 0 2px #FFEAC1 inset !important" : "none"};
-    box-shadow: ${(props) =>
-      props.disabled ? "none" : "0 0 0 2px #e1edfd inset"};
-    background: ${(props) => (props.error ? "#FFF5F5" : "auto")};
-    background: ${(props) => (props.warning ? "#FFFBF4" : "auto")};
-    background: ${(props) => (props.disabled ? "#EFF3FB" : "auto")};
+    background: ${props => (props.error ? '#FFF5F5' : 'auto')};
+    background: ${props => (props.disabled ? '#EFF3FB' : 'auto')};
+    position: relative;
 
-    div {
-      width: 100%;
-      svg {
-        transition: 0.2s ease-in;
-        transform: rotate(-180deg);
-        path {
-          stroke: ${(props) => (props.disabled ? "#B8C6E3" : "#7786a5")};
-        }
-      }
+    svg {
+      transition: 0.2s ease-in;
     }
   }
 
@@ -176,8 +217,12 @@ const StyledDropdownInput = styled.div<Props>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: ${(props) => (props.disabled ? "#B8C6E3" : "#7786a5")};
+    color: ${props => (props.disabled ? '#B8C6E3' : '#7786a5')};
     font-size: 16px;
+
+    svg path {
+      fill: ${({ theme }) => theme.colors.fields.title};
+    }
   }
 
   .DropdownInput_inputContainer {
@@ -196,6 +241,6 @@ const StyledDropdownInput = styled.div<Props>`
     background: rgba(255, 255, 255, 0.85);
     border-radius: 3px;
   }
-`;
+`
 
-export { DropdownInput };
+export { DropdownInput }

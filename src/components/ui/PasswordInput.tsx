@@ -1,8 +1,9 @@
-import { WarningIcon } from "@/icons";
+import {WarningIcon} from "@/icons";
 import cn from "classnames";
-import Link from "next/link";
-import React, { ReactNode, useState } from "react";
+import React, {ReactNode, useState} from "react";
 import styled from "styled-components";
+import {HideIcon} from "@/icons/HideIcon";
+import {EyeIcon} from "@/icons/EyeIcon";
 
 interface Props {
   warning?: boolean;
@@ -13,9 +14,10 @@ interface Props {
   label?: string;
   onChange?: any;
   name?: string
+  message?: string
 }
 
-const PasswordInput = ({ warning, error, icon, disabled, className, label, onChange, name }: Props) => {
+const PasswordInput = ({ warning, error, icon, disabled, className, label, onChange, name, message }: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -44,7 +46,7 @@ const PasswordInput = ({ warning, error, icon, disabled, className, label, onCha
   };
 
   return (
-    <StyledPasswordInput className={className}>
+    <StyledPasswordInput className={cn(className, (label ? "" : "PasswordInput__noLabel"))}>
       <StyledPasswordInputField
         className={cn({
           PasswordInput__labelWarning: warning,
@@ -60,15 +62,16 @@ const PasswordInput = ({ warning, error, icon, disabled, className, label, onCha
           type={showPassword ? "text" : "password"}
           disabled={disabled}
           name={name}
+          isPasswordView={showPassword}
         />
-        {icon && (
-          <button onClick={togglePassword} type={"button"} className="Icon__container">
-            {icon}
-          </button>
+        <button onClick={togglePassword} type={"button"} className="Icon__container">
+          {showPassword ? (<EyeIcon />) : (<HideIcon/>)}
+        </button>
+        {label && (
+          <StyledPasswordInputLabel disabled isFocused={isFocused}>
+            {label}
+          </StyledPasswordInputLabel>
         )}
-        <StyledPasswordInputLabel disabled isFocused={isFocused}>
-          {label}
-        </StyledPasswordInputLabel>
       </StyledPasswordInputField>
       <div
         className={cn("PasswordInput__bottom", {
@@ -80,10 +83,10 @@ const PasswordInput = ({ warning, error, icon, disabled, className, label, onCha
         {warning && (
           <div className="Warning__message">
             <WarningIcon />
-            <span className="Text_12_16">Warning</span>
+            <span className="Font_fields_description">{message}</span>
           </div>
         )}
-        {error && <div className="Error__message Text_12_16">Error</div>}
+        {error && <div className="Error__message Font_fields_description">{message}</div>}
       </div>
     </StyledPasswordInput>
   );
@@ -95,9 +98,16 @@ const StyledPasswordInput = styled.div`
   flex-direction: column;
   width: 100%;
 
+  &.PasswordInput__noLabel {
+    input {
+      padding: 18px 18px 18px 20px;
+    }
+  }
+
   .PasswordInput__disabled {
     input {
-      background: #eff3fb !important;
+      background: ${({ theme }) => theme.colors.background.disabled};
+      outline: none;
       box-shadow: none;
       pointer-events: none;
     }
@@ -106,7 +116,7 @@ const StyledPasswordInput = styled.div`
     }
 
     .RestorePassword {
-      color: #b8c6e3;
+      color: ${({ theme }) => theme.colors.text.disabled};
       pointer-events: none;
     }
 
@@ -114,7 +124,7 @@ const StyledPasswordInput = styled.div`
       pointer-events: none;
 
       svg path {
-        fill: #b8c6e3 !important;
+        fill: ${({ theme }) => theme.colors.text.disabled};
       }
     }
   }
@@ -125,6 +135,10 @@ const StyledPasswordInput = styled.div`
     position: absolute;
     right: 20px;
     top: calc(50% - 8px);
+
+    svg path {
+      fill: ${({ theme }) => theme.colors.fields.title};
+    }
   }
 
   .PasswordInput__bottom {
@@ -142,7 +156,7 @@ const StyledPasswordInput = styled.div`
     margin-top: 4px;
     span {
       margin-left: 8px;
-      color: #94a5ca;
+      color: ${({ theme }) => theme.colors.fields.description};
     }
   }
 
@@ -153,15 +167,15 @@ const StyledPasswordInput = styled.div`
 
   .PasswordInput__labelWarning {
     input {
-      box-shadow: 0px 0px 0px 2px #ffeac1 inset !important;
-      background-color: #fffbf4;
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeValidation};
+      background-color: ${({ theme }) => theme.colors.fields.bgValidation};
     }
   }
 
   .PasswordInput__labelError {
     input {
-      box-shadow: 0px 0px 0px 2px #ffd8d8 inset;
-      background-color: #fff5f5;
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeError};
+      background-color: ${({ theme }) => theme.colors.fields.strokeErrorBg};
     }
   }
 `;
@@ -172,22 +186,21 @@ const StyledPasswordInputField = styled.div`
   flex-direction: column;
 `;
 
-const StyledPasswordInputInput = styled.input`
+const StyledPasswordInputInput = styled.input<{isPasswordView: boolean}>`
   position: relative;
   border: none;
-  box-shadow: 0 0 0 2px #e1edfd inset;
-  border-radius: 10px;
-  padding: 18px 58px 18px 20px;
+  outline: 2px solid ${({ theme }) => theme.colors.fields.stroke};
+  border-radius: ${({ theme }) => theme.border.radius};
+  padding: 18px 18px 4px 20px;
   font-size: 16px;
   line-height: 24px;
   height: 60px;
-  outline: none;
   transition: 0.1s;
   &:focus {
-    box-shadow: 0 0 0 2px #4e6af3 inset;
+    outline: 2px solid ${({ theme }) => theme.colors.fields.strokeFocused};
   }
   &:hover {
-    box-shadow: 0 0 0 2px #cddef4 inset;
+    outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
   }
 `;
 
@@ -199,12 +212,10 @@ const StyledPasswordInputLabel = styled.label<{
   position: absolute;
   top: ${({ isFocused }) => (isFocused ? "6px" : "50%")};
   left: ${({ isFocused }) => (isFocused ? "20px" : "20px")};
-  display: ${({ isFocused }) => (isFocused ? "none" : "block")};
-  transform: ${({ isFocused }) =>
-    isFocused ? "translateY(0)" : "translateY(-50%)"};
+  transform: ${({ isFocused }) => isFocused ? "translateY(0)" : "translateY(-50%)"};
   font-size: ${({ isFocused }) => (isFocused ? "12px" : "16px")};
-  line-height: 20px;
-  color: #7786a5;
+  line-height: 24px;
+  color: ${({ theme }) => theme.colors.fields.title};
   pointer-events: none;
   transition: 0.1s;
 `;

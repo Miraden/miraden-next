@@ -27,6 +27,7 @@ const Search = ({
   const [selectedOption, setSelectedOption] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<string[]>(options);
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const [isFocused, setFocused] = useState(false)
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value;
@@ -50,6 +51,7 @@ const Search = ({
       setSearchValue("");
     }
     setIsOptionsOpen(false);
+    setFocused(false)
   };
 
   const handleClearClick = () => {
@@ -57,24 +59,40 @@ const Search = ({
     setSearchValue("");
   };
 
+  const onFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    !disabled && setIsOptionsOpen(true)
+    setFocused(true)
+  }
+
   return (
-    <SearchContainer className={cn(className, { Search_disabled: disabled })}>
-      <SearchIcon className="Search__searchIcon" />
+    <SearchContainer className={cn(className, {
+      Search_container_disabled: disabled,
+      Search_focused: isFocused
+    })}>
+      <SearchIcon
+        attr={{
+          className: "Search__searchIcon"
+        }}
+      />
       {!rightIcon && (
         <CrossIcon
-          className="Search__crossIcon"
-          onClick={handleClearClick}
-          style={{ opacity: selectedOption ? 1 : 0 }}
+          attr={{
+            className: "Search__crossIcon",
+            onClick:handleClearClick,
+            style:{ opacity: selectedOption ? 1 : 0 }
+        }}
         />
       )}
       {rightIcon && (
         <>
           <CrossIcon
-            className="Search__crossIconWithButton"
-            onClick={handleClearClick}
-            width={18}
-            height={18}
-            style={{ opacity: selectedOption ? 1 : 0 }}
+            attr={{
+              className: "Search__crossIconWithButton",
+              onClick: handleClearClick,
+              style:{ opacity: selectedOption ? 1 : 0 },
+              width: 18,
+              height: 18
+            }}
           />
           <button className="Search__rightIcon" onClick={onClick}>
             {rightIcon}
@@ -88,7 +106,7 @@ const Search = ({
         value={searchValue}
         onChange={handleSearchChange}
         onBlur={handleBlur}
-        onFocus={() => !disabled && setIsOptionsOpen(true)}
+        onFocus={onFocus}
         className={cn("Text_16_24", { Search_disabled: disabled })}
         disabled={disabled}
       />
@@ -119,9 +137,10 @@ const Search = ({
 const SearchContainer = styled.div`
   position: relative;
   cursor: pointer;
-  .Search_disabled .Search__searchIcon {
-    svg path {
-      fill: red !important;
+
+  &.Search_focused {
+    .Search__searchIcon path {
+      fill: ${({theme}) => theme.colors.main}
     }
   }
 
@@ -148,26 +167,6 @@ const SearchContainer = styled.div`
     right: 80px;
   }
 
-  .Search_disabled {
-    background: #eff3fb !important;
-    box-shadow: none;
-    pointer-events: none;
-    color: "#B8C6E3" !important;
-    :focus-within {
-      pointer-events: none;
-    }
-
-    &::placeholder {
-      color: #b8c6e3;
-    }
-
-    .Search__searchIcon {
-      svg path {
-        fill: #b8c6e3 !important;
-      }
-    }
-  }
-
   .Search__crossIcon {
     position: absolute;
     width: 18px;
@@ -177,7 +176,7 @@ const SearchContainer = styled.div`
     z-index: 21;
     opacity: 0;
     path {
-      fill: #2a344a !important;
+      fill: ${({theme}) => theme.colors.fields.title}
     }
   }
 
@@ -188,10 +187,38 @@ const SearchContainer = styled.div`
     top: 22px;
     left: 20px;
     z-index: 21;
+
+    path {
+      fill: ${({theme}) => theme.colors.fields.title}
+    }
   }
 
   :focus-within .Search__crossIcon {
     opacity: 1 !important;
+  }
+
+  &.Search_container_disabled {
+    .Search__searchIcon {
+      path {
+        fill: ${({theme}) => theme.colors.text.disabled};
+      }
+    }
+  }
+
+  .Search_disabled {
+    background: ${({theme}) => theme.colors.background.disabled};
+    box-shadow: none;
+    pointer-events: none;
+    outline: none;
+    color: ${({theme}) => theme.colors.text.disabled};
+
+    &:focus-within {
+      pointer-events: none;
+    }
+
+    &::placeholder {
+      color: ${({theme}) => theme.colors.text.disabled};
+    }
   }
 `;
 
@@ -199,7 +226,7 @@ const Input = styled.input`
   position: relative;
   height: 60px;
   padding: 18px 20px 18px 48px;
-  box-shadow: 0 0 0 2px #e1edfd inset;
+  outline: 2px solid ${({theme}) => theme.colors.fields.stroke};
   font-size: 16px;
   border: none;
   border-radius: 10px;
@@ -208,19 +235,21 @@ const Input = styled.input`
   z-index: 20;
 
   &::placeholder {
-    color: #7786a5;
+    color: ${({theme}) => theme.colors.fields.title};
+    opacity: 1;
+    outline: 2px solid ${({theme}) => theme.colors.text.grey};
   }
 
   &:hover {
-    box-shadow: 0 0 0 2px #cddef4 inset;
+    outline: 2px solid ${({theme}) => theme.colors.fields.strokeHover};
   }
 
   &:focus {
-    outline: none;
-    box-shadow: 0 0 0 2px #4e6af3 inset;
+    outline: 2px solid ${({theme}) => theme.colors.fields.strokeFocused};
 
     &::placeholder {
-      color: #2a344a;
+      outline: 2px solid ${({theme}) => theme.colors.text.grey};
+      color: transparent;
     }
   }
 `;
@@ -232,7 +261,7 @@ const OptionsContainer = styled.ul`
   left: 0;
   right: 0;
   background-color: white;
-  border-radius: 0 0px 10px 10px;
+  border-radius: 0 0 10px 10px;
   box-shadow: 0 0 0 2px #e1edfd inset;
   list-style: none;
   padding: 0;

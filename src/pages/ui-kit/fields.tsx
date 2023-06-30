@@ -8,10 +8,10 @@ import {DropdownInput} from "@/components/ui/DropdownInput";
 import {DropdownInputCheckbox} from "@/components/ui/DropdownInputCheckbox";
 import {Sort} from "@/components/ui/Sort/Sort";
 import {TextInput} from "@/components/ui/TextInput";
-import {PenIcon, ShowPassIcon} from "@/icons";
-import Head from "next/head";
-import Link from "next/link";
 import styled from "styled-components";
+import {BlankLayout} from "@/modules/Base/BlankLayout";
+import UIKitHead from "@/modules/UIKitTest/UIKitHead";
+import {EditIcon} from "@/icons/EditIcon";
 
 const options = ["Select 1", "Select 2", "Select 3", "Select 4"];
 
@@ -23,48 +23,86 @@ const options2 = [
 
 export default function FieldsPage() {
   return (
-    <>
-      <Head>
-        <title>Miraden</title>
-        <meta name="description" content="Miraden" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="Container">
-        <Link href="/ui-kit">Go back</Link>
-        <h1 className="Font_52_120">Fields</h1>
-        <StyledFields className="Fields">
-          <TextInput />
-          <TextInput disabled />
-          <TextInput maxLength={40} />
-          <TextInput maxLength={40} disabled />
-          <TextInput icon={<PenIcon />} />
-          <TextInput icon={<PenIcon />} disabled />
-          <TextInput maxLength={40} warning />
-          <TextInput maxLength={40} error />
-          <TextAreaInput maxLength={500} />
-          <TextAreaInput maxLength={500} warning />
+    <BlankLayout>
+      <UIKitHead title={"Fields"} className={"Container"} backUrl={"/ui-kit"}/>
+      <StyledFields className="Fields Container">
+        <div className={"Fields_row"}>
+          <TextInput label={"Text"} className={"Input"} />
+          <TextInput disabled label={"Text"} className={"Input"} />
+          <TextInput warning label={"Text"} className={"Input"} message={"Warning"} />
+          <TextInput error label={"Text"} className={"Input"} message={"Error"} />
+        </div>
+
+        <div className={"Fields_row"}>
+          <TextInput maxLength={40} className={"Input"} />
+          <TextInput maxLength={40} warning className={"Input"} message={"Warning"} />
+          <TextInput maxLength={40} disabled className={"Input"} />
+          <TextInput maxLength={40} error className={"Input"} />
+        </div>
+
+        <div className={"Fields_row"}>
+          <TextInput label={"Text"} icon={<EditIcon />} className={"Input"} />
+          <TextInput label={"Text"} warning message={"Warning"} icon={<EditIcon />} className={"Input"} />
+          <TextInput icon={<EditIcon />} error message={"Error"} className={"Input"} />
+          <TextInput icon={<EditIcon />} disabled className={"Input"} />
+        </div>
+
+        <div className={"Fields_row"}>
+          <TextAreaInput maxLength={500} label={"Text"} />
+          <TextAreaInput maxLength={500} warning message={"Warning"} />
           <TextAreaInput maxLength={500} error />
           <TextAreaInput maxLength={500} disabled />
-          <PasswordInput icon={<ShowPassIcon />} />
-          <PasswordInput icon={<ShowPassIcon />} disabled />
-          <Search options={options} />
-          <Search options={options} disabled />
-          <DropdownInput />
-          <DropdownInput warning />
-          <DropdownInput error />
-          <DropdownInput disabled />
-          <MessageInput />
+        </div>
+
+        <div className={"Fields_row"}>
+          <PasswordInput label="password" className={"Input"} />
+          <PasswordInput warning className={"Input"} message={"Warning"} />
+          <PasswordInput error className={"Input"} />
+          <PasswordInput label="password" disabled className={"Input"} />
+        </div>
+
+        <div className={"Fields_row"}>
+          <Search options={options} placeholder={"Text"} className={"Input"} />
+          <Search options={options} placeholder={"Text"} disabled className={"Input"} />
+        </div>
+
+        <div className={"Fields_row Dropdowns"}>
+          <DropdownInput className={"Input"} options={options} placeholder={"Select"} />
+          <DropdownInput warning className={"Input"} options={options} message={"Message"} placeholder={"Select"} />
+          <DropdownInput error className={"Input"} message={"Error message"} placeholder={"Select"} />
+          <DropdownInput disabled className={"Input"} placeholder={"Select"}/>
+        </div>
+
+        <div className={"Fields_row"}>
           <DropdownInputCheckbox options={options2} />
+        </div>
+
+        <div className={"Fields_row"}>
+          <MessageInput className={"Input"} />
+        </div>
+
+        <div className={"Fields_row"}>
           <Sort />
-        </StyledFields>
-      </main>
-    </>
+        </div>
+      </StyledFields>
+    </BlankLayout>
   );
 }
 
 const StyledFields = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 300px);
-  grid-gap: 20px;
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+
+  .Fields_row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .Dropdowns {
+    > div {
+      width: 100%;
+    }
+  }
 `;
