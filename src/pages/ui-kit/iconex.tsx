@@ -76,7 +76,7 @@ import {UploadIcon} from "@/icons/UploadIcon";
 import {MenuMeatBallIcon} from "@/icons/MenuMeatballIcon";
 import {MenuKebebIcon} from "@/icons/MenuKebebIcon";
 import {StretchIcon} from "@/icons/StretchIcon";
-import {PaperclipIcon} from "@/icons/PaperclipIcon";
+import {PaperClip24Icon, PaperclipIcon} from "@/icons/PaperclipIcon";
 import {CheckDoubleIcon} from "@/icons/CheckDoubleIcon";
 import {PassportIcon} from "@/icons/PassportIcon";
 import {PageIcon} from "@/icons/PageIcon";
@@ -207,6 +207,7 @@ export default function Iconex() {
           <KeyIcon/>
           <TariffIcon attr={{width: 28, height: 28}}/>
           <HandHelloIcon/>
+          <PaperClip24Icon/>
         </div>
         <div className={"IconsRow"}>
           <VisaIcon className={"PaymentIcon"}/>

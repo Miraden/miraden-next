@@ -1,5 +1,5 @@
 import { PenIcon, PlusIcon } from '@/icons'
-import { PaperclipIcon } from '@/icons/PaperclipIcon'
+import {PaperClip24Icon, PaperclipIcon} from '@/icons/PaperclipIcon'
 import { SendMessageIcon } from '@/icons/SendMessageIcon'
 import { ObjectsList } from '@/modules/ApplicationsChatsAll/components/ObjectsList'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -50,7 +50,7 @@ const MessageInput = ({ className }: Props) => {
     <StyledMessageInput className={className}>
       {value.length === 0 ? (
         <button>
-          <PaperclipIcon attr={{className:"MessageInput__button_paperclipMobile"}} />
+          <PaperClip24Icon attr={{className:"MessageInput__button_paperclipMobile MessageInput__button_paperclip"}} />
         </button>
       ) : null}
       <InputWrapper>
@@ -81,7 +81,7 @@ const MessageInput = ({ className }: Props) => {
         )}
         {value.length === 0 ? (
           <button>
-            <PaperclipIcon attr={{className: "MessageInput__button_paperclip"}} />
+            <PaperClip24Icon attr={{className: "MessageInput__button_paperclip"}} />
           </button>
         ) : null}
       </ButtonWrapper>
@@ -95,17 +95,11 @@ const StyledMessageInput = styled.div`
   align-items: center;
   background-color: #ffffff;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: ${({theme}) => theme.border.radius};
   box-sizing: border-box;
 
   :hover {
     outline: 2px solid ${({theme}) => theme.colors.fields.stroke};
-  }
-
-  svg {
-    path {
-      fill: ${({theme}) => theme.colors.text.grey};
-    }
   }
 
   .MessageInput__button_paperclipMobile {
@@ -114,9 +108,15 @@ const StyledMessageInput = styled.div`
     margin-left: 20px;
   }
 
+  .MessageInput__button_paperclip {
+    path {
+      stroke: ${({theme}) => theme.colors.text.grey};
+    }
+  }
+
   @media (max-width: 576px) {
     padding: 16px 20px;
-    border-radius: 10px 10px 0 0;
+    border-radius: ${({theme}) => theme.border.radius} ${({theme}) => theme.border.radius} 0 0;
 
     .MessageInput__button_paperclipMobile {
       display: flex;
@@ -127,7 +127,7 @@ const StyledMessageInput = styled.div`
 
 const InputWrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: baseline;
   position: relative;
   flex: 1;
 
