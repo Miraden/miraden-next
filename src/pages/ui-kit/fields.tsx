@@ -78,7 +78,7 @@ export default function FieldsPage() {
         </div>
 
         <div className={"Fields_row"}>
-          <MessageInput className={"Input"} />
+          <MessageInput />
         </div>
 
         <div className={"Fields_row"}>

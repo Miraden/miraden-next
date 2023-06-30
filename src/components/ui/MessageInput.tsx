@@ -1,56 +1,56 @@
-import { PenIcon, PlusIcon } from "@/icons";
-import { PaperclipIcon } from "@/icons/PaperclipIcon";
-import { SendMessageIcon } from "@/icons/SendMessageIcon";
-import { ObjectsList } from "@/modules/ApplicationsChatsAll/components/ObjectsList";
-import { useCallback, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import { Button } from "./Button";
+import { PenIcon, PlusIcon } from '@/icons'
+import { PaperclipIcon } from '@/icons/PaperclipIcon'
+import { SendMessageIcon } from '@/icons/SendMessageIcon'
+import { ObjectsList } from '@/modules/ApplicationsChatsAll/components/ObjectsList'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { Button } from './Button'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const MessageInput = ({ className }: Props) => {
-  const [value, setValue] = useState<string>("");
+  const [value, setValue] = useState<string>('')
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value);
-  };
+    setValue(e.target.value)
+  }
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null)
   useEffect(() => {
-    const textarea = textareaRef.current;
+    const textarea = textareaRef.current
 
     const adjustTextareaHeight = () => {
       if (textarea && textarea.value.length === 0) {
-        textarea.style.height = "24px";
-        return;
+        textarea.style.height = '24px'
+        return
       }
       if (textarea) {
-        textarea.style.height = "auto";
-        textarea.style.height = `${textarea.scrollHeight + 2}px`;
+        textarea.style.height = 'auto'
+        textarea.style.height = `${textarea.scrollHeight + 2}px`
       }
-    };
+    }
 
     if (textarea) {
-      textarea.addEventListener("input", adjustTextareaHeight);
+      textarea.addEventListener('input', adjustTextareaHeight)
 
       return () => {
-        textarea.removeEventListener("input", adjustTextareaHeight);
-      };
+        textarea.removeEventListener('input', adjustTextareaHeight)
+      }
     }
-  }, [textareaRef]);
+  }, [textareaRef])
 
-  const [objectsListOpen, setObjectsListOpen] = useState(false);
+  const [objectsListOpen, setObjectsListOpen] = useState(false)
 
   const handleObjectsListOpen = useCallback(() => {
-    setObjectsListOpen(!objectsListOpen);
-  }, [objectsListOpen]);
+    setObjectsListOpen(!objectsListOpen)
+  }, [objectsListOpen])
 
   return (
     <StyledMessageInput className={className}>
       {value.length === 0 ? (
         <button>
-          <PaperclipIcon className="MessageInput__button_paperclipMobile" />
+          <PaperclipIcon attr={{className:"MessageInput__button_paperclipMobile"}} />
         </button>
       ) : null}
       <InputWrapper>
@@ -81,14 +81,14 @@ const MessageInput = ({ className }: Props) => {
         )}
         {value.length === 0 ? (
           <button>
-            <PaperclipIcon className="MessageInput__button_paperclip" />
+            <PaperclipIcon attr={{className: "MessageInput__button_paperclip"}} />
           </button>
         ) : null}
       </ButtonWrapper>
       {objectsListOpen && <ObjectsList onClose={handleObjectsListOpen} />}
     </StyledMessageInput>
-  );
-};
+  )
+}
 
 const StyledMessageInput = styled.div`
   display: flex;
@@ -97,8 +97,15 @@ const StyledMessageInput = styled.div`
   padding: 10px;
   border-radius: 10px;
   box-sizing: border-box;
+
   :hover {
-    box-shadow: 0 0 0 2px #c7d2e9;
+    outline: 2px solid ${({theme}) => theme.colors.fields.stroke};
+  }
+
+  svg {
+    path {
+      fill: ${({theme}) => theme.colors.text.grey};
+    }
   }
 
   .MessageInput__button_paperclipMobile {
@@ -106,6 +113,7 @@ const StyledMessageInput = styled.div`
     align-items: center;
     margin-left: 20px;
   }
+
   @media (max-width: 576px) {
     padding: 16px 20px;
     border-radius: 10px 10px 0 0;
@@ -115,7 +123,7 @@ const StyledMessageInput = styled.div`
       margin-left: 0;
     }
   }
-`;
+`
 
 const InputWrapper = styled.div`
   display: flex;
@@ -133,7 +141,7 @@ const InputWrapper = styled.div`
       display: none;
     }
   }
-`;
+`
 
 const Input = styled.textarea`
   border: none;
@@ -149,7 +157,7 @@ const Input = styled.textarea`
   ::-webkit-scrollbar {
     display: none;
   }
-`;
+`
 
 const Placeholder = styled.span`
   position: absolute;
@@ -158,13 +166,14 @@ const Placeholder = styled.span`
   transform: translateY(-50%);
   font-size: 16px;
   color: #808080;
-`;
+`
 
 const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-left: 12px;
   align-self: flex-end;
+  transition: all 0.2s ease 0s;
 
   .MessageInput__button_paperclip {
     display: none;
@@ -187,20 +196,20 @@ const ButtonWrapper = styled.div`
 
   @media (max-width: 576px) {
     .MessageInput__button_default {
+      transition: all 0.2s ease 0s;
       padding: 2px;
       border-radius: 50%;
+      width: 24px;
+      height: 24px;
 
       .Button__iconContainer {
         margin-right: 0;
       }
+
       span {
         margin-right: 0;
 
         display: none;
-      }
-      svg {
-        width: 24px;
-        height: 24px;
       }
     }
 
@@ -208,6 +217,6 @@ const ButtonWrapper = styled.div`
       display: none;
     }
   }
-`;
+`
 
-export { MessageInput };
+export { MessageInput }

@@ -41,13 +41,7 @@ const SortAppsDropdown: FC<Props> = ({
             >
               <span className="SortAppsDropdown__menuItem">
                 <p>{option}</p>
-                <CheckIcon
-                  className={
-                    selectedOption === option
-                      ? "CheckIcon_selected"
-                      : "CheckIcon"
-                  }
-                />
+                <CheckIcon/>
               </span>
             </div>
           );
