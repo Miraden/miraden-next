@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, {useCallback, useState} from "react";
 import styled from "styled-components";
 import {ObjectCardLarge} from "./components/ObjectCardLarge";
-import {TabMenuItem, TabsManager} from "@/components/ui/TabsMenu";
+import {TabMenuItem, TabsManager, StyledMenu} from "@/components/ui/TabsMenu";
 import {BackIcon20} from "@/icons";
 
 interface ApplicationProps {
@@ -89,6 +89,11 @@ const applicationsArray = [
   },
 ];
 
+const tabsManager = new TabsManager()
+tabsManager.addItem(new TabMenuItem('Все', 0, renderTabAll()))
+tabsManager.addItem(new TabMenuItem('Опубликованные', 3, renderTabPublished()))
+tabsManager.addItem(new TabMenuItem('В архиве', 1, renderTabArchived()))
+
 const ApplicationFull = ({className}: ApplicationProps) => {
 
   const [selected, setSelected] = useState<number>(0);
@@ -97,22 +102,30 @@ const ApplicationFull = ({className}: ApplicationProps) => {
     setSelected(state);
   }, []);
 
-  const tabsManager = new TabsManager(handleSelect)
-  tabsManager.addItem(new TabMenuItem('Все', 0, renderTabAll()))
-  tabsManager.addItem(new TabMenuItem('Опубликованные', 3, renderTabPublished()))
-  tabsManager.addItem(new TabMenuItem('В архиве', 1, renderTabArchived()))
+  tabsManager.setCallback(handleSelect)
 
   return (
     <StyledApplication className={className}>
       <div className={cn("Application__wrapper")}>
-        <StyledMenu>
-          <div className="Menu">
-            <div className={'Menu__header Font_headline_3'}>
-              <h1 className="Font_headline_3">Мои заявки</h1>
-            </div>
-            {tabsManager.renderMenus(selected)}
-            {tabsManager.renderMenuFooter(selected)}
+        <StyledMenu className={cn(tabsManager.getClasses())}>
+          <div className={'Menu__header Font_headline_3'}>
+            <Button
+              secondary
+              href="/applications-full"
+              className="Menu__header_backButton"
+            >
+              <BackIcon20
+                width={20}
+                height={20}
+                className="Menu__header_backArrow"
+              />
+            </Button>
+            <h1 className="Font_headline_3">
+              Хочу купить 3-х комнатную квартиру на Кипре
+            </h1>
           </div>
+          {tabsManager.renderMenus(selected)}
+          {tabsManager.renderMenuFooter(selected)}
         </StyledMenu>
         {tabsManager.renderContent(selected)}
         <ApplicationsFooter/>
@@ -531,58 +544,5 @@ const StyledApplication = styled.section`
     }
   }
 `;
-
-const StyledMenu = styled.div`
-  .Menu {
-    background: #fff;
-    border-radius: ${({ theme }) => theme.border.radius};
-    padding: 20px 20px 10px;
-    margin-top: 30px;
-  }
-
-  .MenuHasSort {
-    padding-bottom: 0;
-  }
-
-  .Menu__header {
-    display: flex;
-    align-items: baseline;
-
-    &_backButton {
-      padding: 4px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-right: 10px;
-      background: rgb(255, 255, 255);
-      height: 28px;
-      width: 28px;
-    }
-  }
-
-  .TabsMenu__menus {
-    width: 100%;
-    margin-top: 30px;
-  }
-
-  .Applications__searchBar {
-    outline: none;
-    padding-left: 0;
-    padding-right: 0;
-    gap: 20px;
-
-    svg {
-      min-width: 18px;
-    }
-
-    &:hover {
-      outline: none;
-    }
-  }
-
-  .Sort {
-    position: relative;
-    z-index: 40;
-  }
-`
 
 export {ApplicationFull};

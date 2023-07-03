@@ -1,7 +1,7 @@
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import UIKitHead from '@/modules/UIKitTest/UIKitHead'
 import React, { useCallback, useState } from 'react'
-import { TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
+import { TabMenuItem, TabsManager, StyledMenu } from '@/components/ui/TabsMenu'
 import styled from 'styled-components'
 import { BackIcon20 } from '@/icons'
 import { Button, Search } from '@/components/ui'
@@ -43,8 +43,7 @@ const MenuPage = () => {
     <BlankLayout className={'bodyChecker'}>
       <UIKitHead title={'Menu'} className={'Container'} backUrl={'/ui-kit'} />
       <StyledLayout className={'Container'}>
-        <StyledMenu>
-          <div className="Menu">
+        <StyledMenu className={cn(tabsManager.getClasses())}>
             <div className={'Menu__header Font_headline_3'}>
               <Button
                 secondary
@@ -63,7 +62,6 @@ const MenuPage = () => {
             </div>
             {tabsManager.renderMenus(selected)}
             {tabsManager.renderMenuFooter(selected)}
-          </div>
         </StyledMenu>
       </StyledLayout>
     </BlankLayout>
@@ -74,59 +72,6 @@ const StyledLayout = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-`
-
-const StyledMenu = styled.div`
-  .Menu {
-    background: #fff;
-    border-radius: ${({ theme }) => theme.border.radius};
-    padding: 20px 20px 10px;
-    margin-top: 30px;
-  }
-
-  .MenuHasSort {
-    padding-bottom: 0;
-  }
-
-  .Menu__header {
-    display: flex;
-    align-items: baseline;
-
-    &_backButton {
-      padding: 4px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-right: 10px;
-      background: rgb(255, 255, 255);
-      height: 28px;
-      width: 28px;
-    }
-  }
-
-  .TabsMenu__menus {
-    width: 100%;
-    margin-top: 30px;
-  }
-
-  .Applications__searchBar {
-    outline: none;
-    padding-left: 0;
-    padding-right: 0;
-    gap: 20px;
-
-    svg {
-      min-width: 18px;
-    }
-
-    &:hover {
-      outline: none;
-    }
-  }
-
-  .Sort {
-    position: relative;
-    z-index: 40;
-  }
 `
 
 export default MenuPage
