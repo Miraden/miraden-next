@@ -7,6 +7,7 @@ const checkColors = {
 
 const Layout = createGlobalStyle`
   .Container {
+    width: 100%;
     max-width: calc(1170px + 2 * 40px);
     margin-left: auto;
     margin-right: auto;

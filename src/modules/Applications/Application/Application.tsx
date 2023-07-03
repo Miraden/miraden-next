@@ -206,7 +206,7 @@ function renderUsersSearch(handler: Function): JSX.Element {
       className={cn("Applications__searchBar")}
       rightIcon={<FilterIcon/>}
       onClick={handler}
-      withFilter/>
+      withSort/>
   )
 }
 

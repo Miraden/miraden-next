@@ -9,6 +9,8 @@ const Global = createGlobalStyle`
     font-weight: 400;
     color: ${theme.colors.text};
     -webkit-font-smoothing: antialiased;
+    display: flex;
+    flex-direction: column;
 
     button, input:hover {
       cursor: pointer;
@@ -23,6 +25,19 @@ const Global = createGlobalStyle`
 
   body > div[data-test-id=overlay-container] {
     z-index: 100;
+  }
+
+  #__next {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex-grow: 1;
   }
 `;
 

@@ -431,7 +431,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
                 className="Applications__searchBar"
                 rightIcon={<FilterIcon />}
                 onClick={handleShowFilter}
-                withFilter
+                withSort
               />
             </div>
             <ul className="Applications__list">

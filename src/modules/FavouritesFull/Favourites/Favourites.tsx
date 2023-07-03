@@ -165,7 +165,7 @@ const Favourites = ({ className }: ApplicationProps) => {
                 })}
                 rightIcon={<FilterIcon />}
                 onClick={handleShowFilter}
-                withFilter
+                withSort
               />
             </div>
 

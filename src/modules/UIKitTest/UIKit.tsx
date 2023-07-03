@@ -50,6 +50,7 @@ const UIKit = ({className}: UIKitProps) => {
         </CustomLink>
         <CustomLink href="/ui-kit/navigation">Navigations</CustomLink>
         <CustomLink href="/ui-kit/pagination">Pagination</CustomLink>
+        <CustomLink href="/ui-kit/menu">Menu</CustomLink>
       </div>
     </StyledUIKit>
   );

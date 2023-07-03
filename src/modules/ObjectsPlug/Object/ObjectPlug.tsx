@@ -444,7 +444,7 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
                 })}
                 rightIcon={<FilterIcon />}
                 onClick={handleShowFilter}
-                withFilter
+                withSort
               />
             </div>
             <ul className="Applications__list">
