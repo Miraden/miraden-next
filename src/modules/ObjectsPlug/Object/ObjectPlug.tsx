@@ -6,7 +6,8 @@ import { FilterIcon } from '@/icons/FilterIcon'
 import cn from 'classnames'
 import React, { useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
+import { TabMenuItem, TabsManager, StyledMenu } from '@/components/ui/TabsMenu'
+import {BackIcon20} from "@/icons";
 
 interface ApplicationProps {
   className?: string
@@ -238,6 +239,8 @@ const recommendArray = [
   },
 ]
 
+const tabsManager = new TabsManager()
+
 const ObjectPlug = ({ className }: ApplicationProps) => {
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.Lead)
   const [showFilter, setShowFilter] = useState(false)
@@ -278,7 +281,6 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
     }
   }
 
-  const tabsManager = new TabsManager()
   tabsManager.setCallback(handleSelect)
   tabsManager.addItem(new TabMenuItem('Заявка', 0, <div></div>))
   tabsManager.addItem(new TabMenuItem('Отклики', 0, <div></div>))
@@ -312,14 +314,23 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
       })}
     >
       <div className={cn('Application__wrapper')}>
-        <StyledMenu>
-          <div className="Menu">
-            <div className={'Menu__header Font_headline_3'}>
-              <h1 className="Font_headline_3">Мои заявки</h1>
-            </div>
-            {tabsManager.renderMenus(selected)}
-            {tabsManager.renderMenuFooter(selected)}
+        <StyledMenu className={cn(tabsManager.getClasses())}>
+          <div className={'Menu__header Font_headline_3'}>
+            <Button
+              secondary
+              href="/applications-full"
+              className="Menu__header_backButton"
+            >
+              <BackIcon20
+                width={20}
+                height={20}
+                className="Menu__header_backArrow"
+              />
+            </Button>
+            <h1 className="Font_headline_3">Мои заявки</h1>
           </div>
+          {tabsManager.renderMenus(selected)}
+          {tabsManager.renderMenuFooter(selected)}
         </StyledMenu>
       </div>
 
@@ -835,59 +846,6 @@ const StyledApplication = styled.section`
         top: 28px;
       }
     }
-  }
-`
-
-const StyledMenu = styled.div`
-  .Menu {
-    background: #fff;
-    border-radius: ${({ theme }) => theme.border.radius};
-    padding: 20px 20px 10px;
-    margin-top: 30px;
-  }
-
-  .MenuHasSort {
-    padding-bottom: 0;
-  }
-
-  .Menu__header {
-    display: flex;
-    align-items: baseline;
-
-    &_backButton {
-      padding: 4px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-right: 10px;
-      background: rgb(255, 255, 255);
-      height: 28px;
-      width: 28px;
-    }
-  }
-
-  .TabsMenu__menus {
-    width: 100%;
-    margin-top: 30px;
-  }
-
-  .Applications__searchBar {
-    outline: none;
-    padding-left: 0;
-    padding-right: 0;
-    gap: 20px;
-
-    svg {
-      min-width: 18px;
-    }
-
-    &:hover {
-      outline: none;
-    }
-  }
-
-  .Sort {
-    position: relative;
-    z-index: 40;
   }
 `
 

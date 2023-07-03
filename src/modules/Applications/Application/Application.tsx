@@ -29,6 +29,7 @@ enum TabsMenuState {
 }
 
 const tabsManager = new TabsManager()
+tabsManager.addItem(new TabMenuItem('Заявка', 0, <>{renderLead()}</>))
 
 const Application = ({ className }: ApplicationProps) => {
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.Lead)
@@ -71,7 +72,7 @@ const Application = ({ className }: ApplicationProps) => {
   useLockBodyScroll(showFilter && mQuery.matches)
 
   tabsManager.setCallback(handleSelect)
-  tabsManager.addItem(new TabMenuItem('Заявка', 0, <>{renderLead()}</>))
+
   tabsManager.addItem(
     new TabMenuItem(
       'Отклики',

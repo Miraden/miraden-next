@@ -107,26 +107,15 @@ const ApplicationFull = ({className}: ApplicationProps) => {
   return (
     <StyledApplication className={className}>
       <div className={cn("Application__wrapper")}>
-        <StyledMenu className={cn(tabsManager.getClasses())}>
-          <div className={'Menu__header Font_headline_3'}>
-            <Button
-              secondary
-              href="/applications-full"
-              className="Menu__header_backButton"
-            >
-              <BackIcon20
-                width={20}
-                height={20}
-                className="Menu__header_backArrow"
-              />
-            </Button>
-            <h1 className="Font_headline_3">
-              Хочу купить 3-х комнатную квартиру на Кипре
-            </h1>
-          </div>
-          {tabsManager.renderMenus(selected)}
-          {tabsManager.renderMenuFooter(selected)}
-        </StyledMenu>
+        <>
+          <StyledMenu className={cn(tabsManager.getClasses())}>
+            <div className={'Menu__header Font_headline_3'}>
+              <h1 className="Font_headline_3">Мои заявки</h1>
+            </div>
+            {tabsManager.renderMenus(selected)}
+            {tabsManager.renderMenuFooter(selected)}
+          </StyledMenu>
+        </>
         {tabsManager.renderContent(selected)}
         <ApplicationsFooter/>
       </div>
