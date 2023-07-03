@@ -27,6 +27,7 @@ const Layout = createGlobalStyle`
     margin-right: auto;
     padding-left: 20px;
     padding-right: 20px;
+    width: 100%;
   }
 
   .ContainerApp {

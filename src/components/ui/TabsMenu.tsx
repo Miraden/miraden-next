@@ -8,22 +8,29 @@ class TabMenuItem {
   private readonly label: string
   private readonly count: number
   private readonly content: JSX.Element
+  private readonly menuFooter?: JSX.Element
   private readonly isDisabled: boolean
 
   constructor(
     label: string,
     count: number,
     content: JSX.Element,
+    menuFooter?: JSX.Element,
     isDisabled: boolean = false
   ) {
     this.label = label
     this.content = content
     this.count = count
     this.isDisabled = isDisabled
+    this.menuFooter = menuFooter
   }
 
   getContent(): JSX.Element {
     return this.content
+  }
+
+  getMenuFooter(): JSX.Element | undefined {
+    return this.menuFooter
   }
 
   getMenu(id: number, active: boolean = false): JSX.Element {
@@ -106,6 +113,14 @@ class TabsManager {
         )}
       </MenuStyles>
     )
+  }
+
+  public renderMenuFooter(selected: number): JSX.Element {
+    const items = this.items.map((i, idx) => {
+      return i.getMenuFooter()
+    })
+
+    return <>{items.at(selected)}</>
   }
 
   public renderContent(selected: number): JSX.Element {
@@ -293,6 +308,7 @@ const MenuStyles = styled.div`
 
   &.TabsMenu__menus--buttons {
     overflow: visible;
+
     .active:before {
       display: none;
     }

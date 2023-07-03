@@ -1,23 +1,23 @@
-import {Button, Search} from "@/components/ui";
-import {useLockBodyScroll} from "@/hooks/useLockBodyScroll";
-import {BackIcon20} from "@/icons";
-import {FilterIcon} from "@/icons/FilterIcon";
-import {ApplicationsFooter} from "@/modules/Base/ApplicationsFooter";
-import cn from "classnames";
-import {useCallback, useEffect, useRef, useState} from "react";
-import styled from "styled-components";
-import {SellerCard} from "./components/SellerCard";
-import {SingleApplication} from "./components/SingleApplication";
-import {SingleApplicationSideBar} from "./components/SingleApplicationSideBar";
-import {TabMenuItem, TabsManager} from "@/components/ui/TabsMenu";
-import {ApplicationsFilter} from "@/components/ui/ApplicationsFilter";
-import {ObjectCard} from "./components/ObjectCard";
-import * as DataProvider from "./DataProfiver";
+import { Button, Search } from '@/components/ui'
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
+import { BackIcon20 } from '@/icons'
+import { FilterIcon } from '@/icons/FilterIcon'
+import { ApplicationsFooter } from '@/modules/Base/ApplicationsFooter'
+import cn from 'classnames'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { SellerCard } from './components/SellerCard'
+import { SingleApplication } from './components/SingleApplication'
+import { SingleApplicationSideBar } from './components/SingleApplicationSideBar'
+import { TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
+import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
+import { ObjectCard } from './components/ObjectCard'
+import * as DataProvider from './DataProfiver'
 
-const BaseClassName: string = "Application"
+const BaseClassName: string = 'Application'
 
 interface ApplicationProps {
-  className?: string;
+  className?: string
 }
 
 enum TabsMenuState {
@@ -25,55 +25,119 @@ enum TabsMenuState {
   Requests = 1,
   Executors = 2,
   Refusals = 3,
-  Recommended = 4
+  Recommended = 4,
 }
 
-const Application = ({className}: ApplicationProps) => {
-  const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.Lead);
+const Application = ({ className }: ApplicationProps) => {
+  const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.Lead)
   const handleSelect = useCallback((option: TabsMenuState) => {
-    setSelected(option);
-  }, []);
+    setSelected(option)
+  }, [])
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false)
   const handleOpenModal = useCallback(() => {
-    setIsOpenModal(true);
-  }, []);
+    setIsOpenModal(true)
+  }, [])
 
-  const [submit, setSubmit] = useState(false);
-  useLockBodyScroll(isOpenModal);
+  const [submit, setSubmit] = useState(false)
+  useLockBodyScroll(isOpenModal)
 
   const [mQuery, setMQuery] = useState({
-    matches: typeof window !== "undefined" && window.innerWidth <= 1440,
-  });
+    matches: typeof window !== 'undefined' && window.innerWidth <= 1440,
+  })
   const handleChange = useCallback(
-    (e: any) => setMQuery({matches: e.matches}),
+    (e: any) => setMQuery({ matches: e.matches }),
     []
-  );
+  )
 
-  const [showFilter, setShowFilter] = useState(false);
+  const [showFilter, setShowFilter] = useState(false)
   const handleShowFilter = useCallback(() => {
-    setShowFilter(!showFilter);
-  }, [showFilter]);
+    setShowFilter(!showFilter)
+  }, [showFilter])
 
-  const [selectedContent, setSelectedContent] = useState("1");
+  const [selectedContent, setSelectedContent] = useState('1')
   const handleTabClick = (tabId: string) => {
-    setSelectedContent(tabId);
-  };
+    setSelectedContent(tabId)
+  }
 
   useEffect(() => {
-    let mediaQuery = window.matchMedia("(max-width: 1440px)");
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
-  }, [handleChange]);
+    let mediaQuery = window.matchMedia('(max-width: 1440px)')
+    mediaQuery.addEventListener('change', handleChange)
+    return () => mediaQuery.removeEventListener('change', handleChange)
+  }, [handleChange])
 
-  useLockBodyScroll(showFilter && mQuery.matches);
+  useLockBodyScroll(showFilter && mQuery.matches)
 
-  const tabsManager = new TabsManager(handleSelect)
-  tabsManager.addItem(new TabMenuItem('Заявка', 0, (<>{renderLead()}</>)))
-  tabsManager.addItem(new TabMenuItem('Отклики', DataProvider.requestsUsers.length, (<>{renderUsersSearch(handleShowFilter)}{renderRequests(selectedContent)}</>)))
-  tabsManager.addItem(new TabMenuItem('Исполнители', DataProvider.executorsUsers.length, (<>{renderUsersSearch(handleShowFilter)}{renderExecutors()}</>)))
-  tabsManager.addItem(new TabMenuItem('Отказы', DataProvider.refusalsUsers.length, (<>{renderRefusals()}</>)))
-  tabsManager.addItem(new TabMenuItem('Рекомендуемые', DataProvider.recommendUsers.length, (<>{renderUsersSearch(handleShowFilter)}{renderRecommended(submit, handleOpenModal)}</>)))
+  const tabsManager = new TabsManager()
+  tabsManager.setCallback(handleSelect)
+  tabsManager.addItem(new TabMenuItem('Заявка', 0, <>{renderLead()}</>))
+  tabsManager.addItem(
+    new TabMenuItem(
+      'Отклики',
+      DataProvider.requestsUsers.length,
+      <>{renderRequests(selectedContent)}</>,
+      (
+        <Search
+          options={[
+            'Сначала агентства',
+            'Сначала PRO',
+            'Сначала самые надежные',
+          ]}
+          placeholder="Поиск"
+          className={cn('Applications__searchBar')}
+          rightIcon={<FilterIcon />}
+          withSort={true}
+        />
+      )
+    )
+  )
+  tabsManager.addItem(
+    new TabMenuItem(
+      'Исполнители',
+      DataProvider.executorsUsers.length,
+      <>{renderExecutors()}</>
+    )
+  )
+  tabsManager.addItem(
+    new TabMenuItem(
+      'Отказы',
+      DataProvider.refusalsUsers.length,
+      <>{renderRefusals()}</>,
+      (
+        <Search
+          options={[
+            'Сначала агентства',
+            'Сначала PRO',
+            'Сначала самые надежные',
+          ]}
+          placeholder="Поиск"
+          className={cn('Applications__searchBar')}
+          rightIcon={<FilterIcon />}
+          withSort={true}
+        />
+      )
+    )
+  )
+  tabsManager.addItem(
+    new TabMenuItem(
+      'Рекомендуемые',
+      DataProvider.recommendUsers.length,
+      <>{renderRecommended(submit, handleOpenModal)}</>,
+      (
+        <Search
+          options={[
+            'Сначала агентства',
+            'Сначала PRO',
+            'Сначала самые надежные',
+          ]}
+          placeholder="Поиск"
+          className={cn('Applications__searchBar')}
+          rightIcon={<FilterIcon />}
+          withSort={true}
+        />
+      )
+    )
+  )
   const activeState: TabsMenuState = statesFromNumber(selected)
 
   const showLeadSidebar = activeState === TabsMenuState.Lead
@@ -82,31 +146,37 @@ const Application = ({className}: ApplicationProps) => {
   return (
     <>
       <StyledApplication
-        className={cn(className, stateToClassName(activeState))}>
+        className={cn(className, stateToClassName(activeState))}
+      >
         <div
-          className={cn("Application__wrapper", {
+          className={cn('Application__wrapper', {
             IsOpenSidebar: showLeadSidebar,
-            IsOpenFilter: isShowFilter
-          })}>
-          <div className="Application__headContainer">
-            <div className="Application__head">
-              <Button
-                href="/applications-full"
-                className="Application__headButton"
-              >
-                <BackIcon20
-                  width={20}
-                  height={20}
-                  className="Application__headArrow"
-                />
-              </Button>
-
-              <h1 className="Font_32_120 lg:Font_26_120_500">
-                Хочу купить 3-х комнатную квартиру на Кипре
-              </h1>
+            IsOpenFilter: isShowFilter,
+          })}
+        >
+          <StyledMenu>
+            <div className="Menu">
+              <div className={'Menu__header Font_headline_3'}>
+                <Button
+                  secondary
+                  href="/applications-full"
+                  className="Menu__header_backButton"
+                >
+                  <BackIcon20
+                    width={20}
+                    height={20}
+                    className="Menu__header_backArrow"
+                  />
+                </Button>
+                <h1 className="Font_headline_3">
+                  Хочу купить 3-х комнатную квартиру на Кипре. Хочу купить 3-х
+                  комнатную квартиру на Кипре
+                </h1>
+              </div>
+              {tabsManager.renderMenus(selected)}
+              {tabsManager.renderMenuFooter(selected)}
             </div>
-            {tabsManager.renderMenus(selected)}
-          </div>
+          </StyledMenu>
 
           {tabsManager.renderContent(selected)}
         </div>
@@ -115,13 +185,16 @@ const Application = ({className}: ApplicationProps) => {
 
         {isShowFilter && renderFilter(handleShowFilter, handleTabClick)}
 
-        {!isShowFilter && <ApplicationsFooter/>}
+        {!isShowFilter && <ApplicationsFooter />}
       </StyledApplication>
     </>
-  );
-};
+  )
+}
 
-function renderRecommended(isSubmit: boolean, handleOpenModal: Function): JSX.Element {
+function renderRecommended(
+  isSubmit: boolean,
+  handleOpenModal: Function
+): JSX.Element {
   return (
     <>
       <ul className="Applications__list">
@@ -201,19 +274,19 @@ function renderExecutors(): JSX.Element {
 function renderUsersSearch(handler: Function): JSX.Element {
   return (
     <Search
-      options={[]}
+      options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
       placeholder="Поиск"
-      className={cn("Applications__searchBar")}
-      rightIcon={<FilterIcon/>}
-      onClick={handler}
-      withSort/>
+      className={cn('Applications__searchBar')}
+      rightIcon={<FilterIcon />}
+      withSort={true}
+    />
   )
 }
 
 function renderRequests(selected: string): JSX.Element {
   return (
     <div>
-      {selected === "1" && (
+      {selected === '1' && (
         <ul className="Applications__list">
           {DataProvider.requestsUsers.map((performer, index) => (
             <li key={index}>
@@ -234,7 +307,7 @@ function renderRequests(selected: string): JSX.Element {
         </ul>
       )}
 
-      {selected === "2" && (
+      {selected === '2' && (
         <ul className="Applications__list">
           {DataProvider.objects.map((object, index) => (
             <li key={index}>
@@ -267,7 +340,6 @@ function renderRequests(selected: string): JSX.Element {
           ))}
         </ul>
       )}
-
     </div>
   )
 }
@@ -275,7 +347,7 @@ function renderRequests(selected: string): JSX.Element {
 function renderLeadPaymentOptions(): JSX.Element {
   return (
     <>
-      <SingleApplicationSideBar className="SingleApplicationSideBar"/>
+      <SingleApplicationSideBar className="SingleApplicationSideBar" />
     </>
   )
 }
@@ -283,7 +355,7 @@ function renderLeadPaymentOptions(): JSX.Element {
 function renderLead(): JSX.Element {
   return (
     <>
-      <SingleApplication/>
+      <SingleApplication />
     </>
   )
 }
@@ -333,22 +405,22 @@ function statesFromNumber(val: number | string): TabsMenuState {
 }
 
 function stateToClassName(val: TabsMenuState): string {
-  let found: string = BaseClassName + "__Lead"
+  let found: string = BaseClassName + '__Lead'
   switch (val) {
     case TabsMenuState.Lead:
-      found = BaseClassName + "__Lead"
+      found = BaseClassName + '__Lead'
       break
     case TabsMenuState.Recommended:
-      found = BaseClassName + "__Recommended"
+      found = BaseClassName + '__Recommended'
       break
     case TabsMenuState.Refusals:
-      found = BaseClassName + "__Refusals"
+      found = BaseClassName + '__Refusals'
       break
     case TabsMenuState.Executors:
-      found = BaseClassName + "__Executors"
+      found = BaseClassName + '__Executors'
       break
     case TabsMenuState.Requests:
-      found = BaseClassName + "__Requests"
+      found = BaseClassName + '__Requests'
       break
   }
 
@@ -370,27 +442,9 @@ const StyledApplication = styled.section`
     grid-column: 5 / span 10;
   }
 
-  .Application__headButton {
-    padding: 4px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-right: 10px;
-    background: #fff;
-
-    :hover {
-      background: #f1f7ff;
-    }
-
-    :focus {
-      background: #fff;
-    }
-
-    :active {
-      background: #e1edfd;
-    }
-  }
-
-  &.Application__Requests, &.Application__Recommended, &.Application__Executors {
+  &.Application__Requests,
+  &.Application__Recommended,
+  &.Application__Executors {
     .Application__headContainer {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
@@ -412,17 +466,6 @@ const StyledApplication = styled.section`
   .Applications__filter {
     overflow: auto;
     height: calc(100vh - 114px);
-  }
-
-  .Color_blue_primary {
-    color: #4e6af3;
-  }
-
-  .Application__headTabsBar_whiteSpace {
-    width: 100%;
-    height: 10px;
-    border-radius: 0 0 10px 10px;
-    background: #fff;
   }
 
   .TabButton__counter {
@@ -478,7 +521,7 @@ const StyledApplication = styled.section`
     ::before {
       position: absolute;
       top: 32px;
-      content: "";
+      content: '';
       background: #4e6af3;
       width: 100%;
       height: 4px;
@@ -843,6 +886,59 @@ const StyledApplication = styled.section`
       }
     }
   }
-`;
+`
 
-export {Application};
+const StyledMenu = styled.div`
+  .Menu {
+    background: #fff;
+    border-radius: ${({ theme }) => theme.border.radius};
+    padding: 20px 20px 10px;
+    margin-top: 30px;
+  }
+
+  .MenuHasSort {
+    padding-bottom: 0;
+  }
+
+  .Menu__header {
+    display: flex;
+    align-items: baseline;
+
+    &_backButton {
+      padding: 4px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-right: 10px;
+      background: rgb(255, 255, 255);
+      height: 28px;
+      width: 28px;
+    }
+  }
+
+  .TabsMenu__menus {
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  .Applications__searchBar {
+    outline: none;
+    padding-left: 0;
+    padding-right: 0;
+    gap: 20px;
+
+    svg {
+      min-width: 18px;
+    }
+
+    &:hover {
+      outline: none;
+    }
+  }
+
+  .Sort {
+    position: relative;
+    z-index: 40;
+  }
+`
+
+export { Application }

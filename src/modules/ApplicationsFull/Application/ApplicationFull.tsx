@@ -6,6 +6,7 @@ import React, {useCallback, useState} from "react";
 import styled from "styled-components";
 import {ObjectCardLarge} from "./components/ObjectCardLarge";
 import {TabMenuItem, TabsManager} from "@/components/ui/TabsMenu";
+import {BackIcon20} from "@/icons";
 
 interface ApplicationProps {
   className?: string;
@@ -104,12 +105,15 @@ const ApplicationFull = ({className}: ApplicationProps) => {
   return (
     <StyledApplication className={className}>
       <div className={cn("Application__wrapper")}>
-        <div className="Application__headContainer">
-          <div className="Application__head">
-            <h1 className="Font_32_120 lg:Font_26_120_500">Мои заявки</h1>
+        <StyledMenu>
+          <div className="Menu">
+            <div className={'Menu__header Font_headline_3'}>
+              <h1 className="Font_headline_3">Мои заявки</h1>
+            </div>
+            {tabsManager.renderMenus(selected)}
+            {tabsManager.renderMenuFooter(selected)}
           </div>
-          {tabsManager.renderMenus(selected)}
-        </div>
+        </StyledMenu>
         {tabsManager.renderContent(selected)}
         <ApplicationsFooter/>
       </div>
@@ -527,5 +531,58 @@ const StyledApplication = styled.section`
     }
   }
 `;
+
+const StyledMenu = styled.div`
+  .Menu {
+    background: #fff;
+    border-radius: ${({ theme }) => theme.border.radius};
+    padding: 20px 20px 10px;
+    margin-top: 30px;
+  }
+
+  .MenuHasSort {
+    padding-bottom: 0;
+  }
+
+  .Menu__header {
+    display: flex;
+    align-items: baseline;
+
+    &_backButton {
+      padding: 4px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-right: 10px;
+      background: rgb(255, 255, 255);
+      height: 28px;
+      width: 28px;
+    }
+  }
+
+  .TabsMenu__menus {
+    width: 100%;
+    margin-top: 30px;
+  }
+
+  .Applications__searchBar {
+    outline: none;
+    padding-left: 0;
+    padding-right: 0;
+    gap: 20px;
+
+    svg {
+      min-width: 18px;
+    }
+
+    &:hover {
+      outline: none;
+    }
+  }
+
+  .Sort {
+    position: relative;
+    z-index: 40;
+  }
+`
 
 export {ApplicationFull};

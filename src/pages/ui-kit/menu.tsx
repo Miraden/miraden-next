@@ -13,7 +13,22 @@ const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
 
 const tabsManager = new TabsManager()
-tabsManager.addItem(new TabMenuItem('Все', 0, <div></div>))
+tabsManager.addItem(
+  new TabMenuItem(
+    'Все',
+    0,
+    <div>content</div>,
+    (
+      <Search
+        options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
+        placeholder="Поиск"
+        className={cn('Applications__searchBar')}
+        rightIcon={<FilterIcon />}
+        withSort={true}
+      />
+    )
+  )
+)
 tabsManager.addItem(new TabMenuItem('Опубликованные', 1, <div></div>))
 tabsManager.addItem(new TabMenuItem('В архиве', 4, <div></div>))
 
@@ -28,77 +43,30 @@ const MenuPage = () => {
     <BlankLayout className={'bodyChecker'}>
       <UIKitHead title={'Menu'} className={'Container'} backUrl={'/ui-kit'} />
       <StyledLayout className={'Container'}>
-        {renderOnlyLinks(tabsManager, selected)}
-        {renderWithSearch(tabsManager, selected)}
+        <StyledMenu>
+          <div className="Menu">
+            <div className={'Menu__header Font_headline_3'}>
+              <Button
+                secondary
+                href="/applications-full"
+                className="Menu__header_backButton"
+              >
+                <BackIcon20
+                  width={20}
+                  height={20}
+                  className="Menu__header_backArrow"
+                />
+              </Button>
+              <h1 className="Font_headline_3">
+                Хочу купить 3-х комнатную квартиру на Кипре
+              </h1>
+            </div>
+            {tabsManager.renderMenus(selected)}
+            {tabsManager.renderMenuFooter(selected)}
+          </div>
+        </StyledMenu>
       </StyledLayout>
     </BlankLayout>
-  )
-}
-
-function renderWithSearch(
-  instance: TabsManager,
-  selected: number
-): JSX.Element {
-  return (
-    <StyledMenu>
-      <div className="Menu MenuHasSort">
-        <div className={'Menu__header Font_headline_3'}>
-          <Button
-            secondary
-            href="/applications-full"
-            className="Menu__header_backButton"
-          >
-            <BackIcon20
-              width={20}
-              height={20}
-              className="Menu__header_backArrow"
-            />
-          </Button>
-          <h1 className="Font_headline_3">
-            Хочу купить 3-х комнатную квартиру на Кипре
-          </h1>
-        </div>
-        {instance.renderMenus(selected)}
-        <Search
-          options={[
-            'Сначала агентства',
-            'Сначала PRO',
-            'Сначала самые надежные',
-          ]}
-          placeholder="Поиск"
-          className={cn('Applications__searchBar')}
-          rightIcon={<FilterIcon />}
-          withSort={true}
-        />
-      </div>
-    </StyledMenu>
-  )
-}
-
-function renderOnlyLinks(instance: TabsManager, selected: number): JSX.Element {
-  return (
-    <StyledMenu>
-      <div className="Menu">
-        <div className={'Menu__header Font_headline_3'}>
-          <Button
-            secondary
-            href="/applications-full"
-            className="Menu__header_backButton"
-          >
-            <BackIcon20
-              width={20}
-              height={20}
-              className="Menu__header_backArrow"
-            />
-          </Button>
-          <h1 className="Font_headline_3">
-            Хочу купить 3-х комнатную квартиру на Кипре. Хочу купить 3-х
-            комнатную квартиру на Кипре
-          </h1>
-        </div>
-        {instance.renderMenus(selected)}
-      </div>
-    </StyledMenu>
   )
 }
 
@@ -113,6 +81,7 @@ const StyledMenu = styled.div`
     background: #fff;
     border-radius: ${({ theme }) => theme.border.radius};
     padding: 20px 20px 10px;
+    margin-top: 30px;
   }
 
   .MenuHasSort {
