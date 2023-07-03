@@ -28,9 +28,6 @@ enum TabsMenuState {
   Recommended = 4,
 }
 
-const tabsManager = new TabsManager()
-tabsManager.addItem(new TabMenuItem('Заявка', 0, <>{renderLead()}</>))
-
 const Application = ({ className }: ApplicationProps) => {
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.Lead)
   const handleSelect = useCallback((option: TabsMenuState) => {
@@ -71,8 +68,9 @@ const Application = ({ className }: ApplicationProps) => {
 
   useLockBodyScroll(showFilter && mQuery.matches)
 
+  const [tabsManager, setTabsManager] = useState<TabsManager>(new TabsManager())
   tabsManager.setCallback(handleSelect)
-
+  tabsManager.addItem(new TabMenuItem('Заявка', 0, <>{renderLead()}</>))
   tabsManager.addItem(
     new TabMenuItem(
       'Отклики',
@@ -80,15 +78,12 @@ const Application = ({ className }: ApplicationProps) => {
       <>{renderRequests(selectedContent)}</>,
       (
         <Search
-          options={[
-            'Сначала агентства',
-            'Сначала PRO',
-            'Сначала самые надежные',
-          ]}
+          options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
           placeholder="Поиск"
           className={cn('Applications__searchBar')}
-          rightIcon={<FilterIcon />}
+          filterIcon={<FilterIcon />}
           withSort={true}
+          onFilterClick={handleShowFilter}
         />
       )
     )
@@ -114,7 +109,8 @@ const Application = ({ className }: ApplicationProps) => {
           ]}
           placeholder="Поиск"
           className={cn('Applications__searchBar')}
-          rightIcon={<FilterIcon />}
+          filterIcon={<FilterIcon />}
+          onFilterClick={handleShowFilter}
           withSort={true}
         />
       )
@@ -134,7 +130,8 @@ const Application = ({ className }: ApplicationProps) => {
           ]}
           placeholder="Поиск"
           className={cn('Applications__searchBar')}
-          rightIcon={<FilterIcon />}
+          filterIcon={<FilterIcon />}
+          onFilterClick={handleShowFilter}
           withSort={true}
         />
       )
@@ -276,7 +273,7 @@ function renderUsersSearch(handler: Function): JSX.Element {
       options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
       placeholder="Поиск"
       className={cn('Applications__searchBar')}
-      rightIcon={<FilterIcon />}
+      filterIcon={<FilterIcon />}
       withSort={true}
     />
   )

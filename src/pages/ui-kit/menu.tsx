@@ -8,36 +8,43 @@ import { Button, Search } from '@/components/ui'
 import cn from 'classnames'
 import { FilterIcon } from '@/icons/FilterIcon'
 import { theme } from '../../../styles/tokens'
+import {ApplicationsFilter} from "@/components/ui/ApplicationsFilter";
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
-
-const tabsManager = new TabsManager()
-tabsManager.addItem(
-  new TabMenuItem(
-    'Все',
-    0,
-    <div>content</div>,
-    (
-      <Search
-        options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
-        placeholder="Поиск"
-        className={cn('Applications__searchBar')}
-        rightIcon={<FilterIcon />}
-        withSort={true}
-      />
-    )
-  )
-)
-tabsManager.addItem(new TabMenuItem('Опубликованные', 1, <div></div>))
-tabsManager.addItem(new TabMenuItem('В архиве', 4, <div></div>))
 
 const MenuPage = () => {
   let [selected, setSelected] = useState<number>(0)
   const handleSelect = useCallback((state: number) => {
     setSelected(state)
   }, [])
+
+  const [showFilter, setShowFilter] = useState(false)
+  const handleShowFilter = useCallback(() => {
+    setShowFilter(!showFilter)
+  }, [showFilter])
+
+  const [tabsManager, setTabsManager] = useState<TabsManager>(new TabsManager())
   tabsManager.setCallback(handleSelect)
+  tabsManager.addItem(
+    new TabMenuItem(
+      'Все',
+      0,
+      <div>content</div>,
+      (
+        <Search
+          options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
+          placeholder="Поиск"
+          className={cn('Applications__searchBar')}
+          filterIcon={<FilterIcon />}
+          onFilterClick={handleShowFilter}
+          withSort={true}
+        />
+      )
+    )
+  )
+  tabsManager.addItem(new TabMenuItem('Опубликованные', 1, <div></div>))
+  tabsManager.addItem(new TabMenuItem('В архиве', 4, <div></div>))
 
   return (
     <BlankLayout className={'bodyChecker'}>

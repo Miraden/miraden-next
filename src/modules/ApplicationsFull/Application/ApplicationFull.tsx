@@ -89,11 +89,6 @@ const applicationsArray = [
   },
 ];
 
-const tabsManager = new TabsManager()
-tabsManager.addItem(new TabMenuItem('Все', 0, renderTabAll()))
-tabsManager.addItem(new TabMenuItem('Опубликованные', 3, renderTabPublished()))
-tabsManager.addItem(new TabMenuItem('В архиве', 1, renderTabArchived()))
-
 const ApplicationFull = ({className}: ApplicationProps) => {
 
   const [selected, setSelected] = useState<number>(0);
@@ -102,7 +97,11 @@ const ApplicationFull = ({className}: ApplicationProps) => {
     setSelected(state);
   }, []);
 
+  const [tabsManager, setTabsManager] = useState<TabsManager>(new TabsManager())
   tabsManager.setCallback(handleSelect)
+  tabsManager.addItem(new TabMenuItem('Все', 0, renderTabAll()))
+  tabsManager.addItem(new TabMenuItem('Опубликованные', 3, renderTabPublished()))
+  tabsManager.addItem(new TabMenuItem('В архиве', 1, renderTabArchived()))
 
   return (
     <StyledApplication className={className}>

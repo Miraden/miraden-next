@@ -7,18 +7,11 @@ import cn from 'classnames'
 import React, { useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { TabMenuItem, TabsManager, StyledMenu } from '@/components/ui/TabsMenu'
-import {BackIcon20} from "@/icons";
+import { BackIcon20 } from '@/icons'
 
 interface ApplicationProps {
   className?: string
 }
-
-type Option =
-  | 'application'
-  | 'requests'
-  | 'performers'
-  | 'refusals'
-  | 'recommended'
 
 enum TabsMenuState {
   Lead = 0,
@@ -28,224 +21,12 @@ enum TabsMenuState {
   Recommended = 4,
 }
 
-const recommendArray = [
-  {
-    name: 'Ангелина Синичкина',
-    type: 'seller',
-    isVerified: true,
-    isPro: true,
-    rating: 4.8,
-    image: '/images/avatar.jpg',
-    status: 'Агентство недвижимости',
-    agencyName: 'HomeSweet',
-    isOnline: true,
-    unreadMessages: 0,
-    isRefusal: true,
-    isRecommend: true,
-  },
-  {
-    name: 'Андрей Макеев',
-    type: 'seller',
-    isVerified: true,
-    isPro: false,
-    image: '/images/avatar.jpg',
-    status: 'Агентство недвижимости',
-    agencyName: 'Realhome',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: 'Валентина Антонова',
-    type: 'object',
-    isVerified: true,
-    isPro: false,
-    rating: 5.0,
-    image: '/images/avatar.jpg',
-    status: 'Риелтор',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: 'Константин Гриндин',
-    type: 'seller',
-    isVerified: true,
-    isPro: true,
-    image: '/images/avatar.jpg',
-    status: 'Собственник',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: 'Ангелина Синичкина',
-    type: 'seller',
-    isVerified: true,
-    isPro: true,
-    rating: 4.8,
-    image: '/images/avatar.jpg',
-    status: 'Агентство недвижимости',
-    agencyName: 'HomeSweet',
-    isOnline: true,
-    unreadMessages: 0,
-    isRefusal: true,
-    isRecommend: true,
-  },
-  {
-    name: 'Андрей Макеев',
-    type: 'seller',
-    isVerified: true,
-    isPro: false,
-    image: '/images/avatar.jpg',
-    status: 'Агентство недвижимости',
-    agencyName: 'Realhome',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: 'Валентина Антонова',
-    type: 'object',
-    isVerified: true,
-    isPro: false,
-    rating: 5.0,
-    image: '/images/avatar.jpg',
-    status: 'Риелтор',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: 'Константин Гриндин',
-    type: 'seller',
-    isVerified: true,
-    isPro: true,
-    image: '/images/avatar.jpg',
-    status: 'Собственник',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: 'Ангелина Синичкина',
-    type: 'seller',
-    isVerified: true,
-    isPro: true,
-    rating: 4.8,
-    image: '/images/avatar.jpg',
-    status: 'Агентство недвижимости',
-    agencyName: 'HomeSweet',
-    isOnline: true,
-    unreadMessages: 0,
-    isRefusal: true,
-    isRecommend: true,
-  },
-  {
-    name: 'Андрей Макеев',
-    type: 'seller',
-    isVerified: true,
-    isPro: false,
-    image: '/images/avatar.jpg',
-    status: 'Агентство недвижимости',
-    agencyName: 'Realhome',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: 'Валентина Антонова',
-    type: 'object',
-    isVerified: true,
-    isPro: false,
-    rating: 5.0,
-    image: '/images/avatar.jpg',
-    status: 'Риелтор',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: 'Константин Гриндин',
-    type: 'seller',
-    isVerified: true,
-    isPro: true,
-    image: '/images/avatar.jpg',
-    status: 'Собственник',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: 'Ангелина Синичкина',
-    type: 'seller',
-    isVerified: true,
-    isPro: true,
-    rating: 4.8,
-    image: '/images/avatar.jpg',
-    status: 'Агентство недвижимости',
-    agencyName: 'HomeSweet',
-    isOnline: true,
-    unreadMessages: 0,
-    isRefusal: true,
-    isRecommend: true,
-  },
-  {
-    name: 'Андрей Макеев',
-    type: 'seller',
-    isVerified: true,
-    isPro: false,
-    image: '/images/avatar.jpg',
-    status: 'Агентство недвижимости',
-    agencyName: 'Realhome',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: 'Валентина Антонова',
-    type: 'object',
-    isVerified: true,
-    isPro: false,
-    rating: 5.0,
-    image: '/images/avatar.jpg',
-    status: 'Риелтор',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-  {
-    name: 'Константин Гриндин',
-    type: 'seller',
-    isVerified: true,
-    isPro: true,
-    image: '/images/avatar.jpg',
-    status: 'Собственник',
-    isOnline: false,
-    unreadMessages: 0,
-    isRecommend: true,
-    isRefusal: true,
-  },
-]
-
-const tabsManager = new TabsManager()
-
 const ObjectPlug = ({ className }: ApplicationProps) => {
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.Lead)
   const [showFilter, setShowFilter] = useState(false)
   const [selectedContent, setSelectedContent] = useState('1')
   const startY = useRef<number>(0)
+  const [tabsManager, setTabsManager] = useState<TabsManager>(new TabsManager())
 
   const handleSelect = useCallback((option: number) => {
     setSelected(option)
@@ -291,19 +72,14 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
       'Рекомендуемые',
       16,
       <div></div>,
-      (
-        <Search
-          options={[
-            'Сначала агентства',
-            'Сначала PRO',
-            'Сначала самые надежные',
-          ]}
-          placeholder="Поиск"
-          className={cn('Applications__searchBar')}
-          rightIcon={<FilterIcon />}
-          withSort={true}
-        />
-      )
+      <Search
+        options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
+        placeholder="Поиск"
+        className={cn('Applications__searchBar')}
+        filterIcon={<FilterIcon />}
+        withSort={true}
+        onFilterClick={handleShowFilter}
+      />
     )
   )
 

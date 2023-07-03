@@ -11,9 +11,9 @@ interface SearchProps {
   disabled?: boolean
   className?: string
   placeholder?: string
-  rightIcon?: ReactNode
-  onClick?: any
+  filterIcon?: ReactNode
   withSort?: boolean
+  onFilterClick?: any
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
@@ -24,9 +24,9 @@ const Search = ({
   disabled,
   className,
   placeholder,
-  rightIcon,
-  onClick,
+  filterIcon,
   withSort,
+  onFilterClick,
 }: SearchProps) => {
   const [searchValue, setSearchValue] = useState('')
   const [selectedOption, setSelectedOption] = useState('')
@@ -93,35 +93,22 @@ const Search = ({
 
       {withSort && (
         <>
-          <MenuSort options={["Сначала агентства", "Сначала PRO", "Сначала самые надежные"]} />
+          <MenuSort
+            options={[
+              'Сначала агентства',
+              'Сначала PRO',
+              'Сначала самые надежные',
+            ]}
+          />
         </>
       )}
 
-      {rightIcon && (
+      {filterIcon && (
         <>
-          <Button secondary className="Search__rightIcon" onClick={onClick}>
-            {rightIcon}
+          <Button secondary className="Search__rightIcon" onClick={onFilterClick}>
+            {filterIcon}
           </Button>
         </>
-      )}
-      {isOptionsOpen && searchValue && (
-        <OptionsContainer>
-          {filteredOptions.map(option => (
-            <Option key={option} onMouseDown={() => handleOptionClick(option)}>
-              {option
-                .split(new RegExp(`(${searchValue})`, 'gi'))
-                .map((substring, index) =>
-                  substring.toLowerCase() === searchValue.toLowerCase() ? (
-                    <HighlightedSubstring key={index}>
-                      {substring}
-                    </HighlightedSubstring>
-                  ) : (
-                    <span key={index}>{substring}</span>
-                  )
-                )}
-            </Option>
-          ))}
-        </OptionsContainer>
       )}
     </SearchContainer>
   )

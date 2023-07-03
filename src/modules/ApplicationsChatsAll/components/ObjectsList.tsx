@@ -219,9 +219,9 @@ const ObjectsList = ({ className, onClose }: Props) => {
             <Search
               options={[]}
               placeholder="Поиск"
-              rightIcon={<FilterIcon />}
+              filterIcon={<FilterIcon />}
               className="ObjectsList__search"
-              onClick={handleOpenFilter}
+              onShowFilterClick={handleOpenFilter}
             />
           </div>
 

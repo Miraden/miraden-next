@@ -163,8 +163,8 @@ const Favourites = ({ className }: ApplicationProps) => {
                 className={cn("Applications__searchBar", {
                   FilterOpen: !showFilter,
                 })}
-                rightIcon={<FilterIcon />}
-                onClick={handleShowFilter}
+                filterIcon={<FilterIcon />}
+                onShowFilterClick={handleShowFilter}
                 withSort
               />
             </div>
