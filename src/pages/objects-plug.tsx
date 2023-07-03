@@ -8,12 +8,6 @@ export default function ObjectsPlug() {
     <>
       <Head>
         <title>Miraden</title>
-        <meta name="description" content="Miraden" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
       </Head>
       <StyledMainApplications>
         <Header isAuthorized />

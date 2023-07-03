@@ -221,7 +221,7 @@ const ObjectsList = ({ className, onClose }: Props) => {
               placeholder="Поиск"
               filterIcon={<FilterIcon />}
               className="ObjectsList__search"
-              onShowFilterClick={handleOpenFilter}
+              onFilterClick={handleOpenFilter}
             />
           </div>
 

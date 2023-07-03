@@ -1,103 +1,131 @@
-import { Button, Search } from "@/components/ui";
-import { ApplicationsFilter } from "@/components/ui/ApplicationsFilter";
-import {
-  Applications,
-  HomeIcon,
-  KebabIcon,
-  ListIcon,
-  PlusIcon,
-} from "@/icons";
-import { FilterIcon } from "@/icons/FilterIcon";
-import { ObjectCard } from "@/modules/Applications/Application/components/ObjectCard";
-import cn from "classnames";
-import Image from "next/image";
-import { useCallback, useRef, useState } from "react";
-import styled from "styled-components";
+import { Button, Search } from '@/components/ui'
+import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
+import { Applications, HomeIcon, KebabIcon, ListIcon, PlusIcon } from '@/icons'
+import { FilterIcon } from '@/icons/FilterIcon'
+import { ObjectCard } from '@/modules/Applications/Application/components/ObjectCard'
+import cn from 'classnames'
+import Image from 'next/image'
+import React, { useCallback, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
+
 interface ApplicationProps {
-  className?: string;
+  className?: string
 }
+
 const objectsArray = [
   {
-    title: "3-х комнатная квартира на Кипре для ВНЖ",
-    location: "Северный Кипр",
-    id: "1445",
+    title: '3-х комнатная квартира на Кипре для ВНЖ',
+    location: 'Северный Кипр',
+    id: '1445',
     cashBack: 6,
     yieldCount: 8,
-    year: "2022",
-    square: "294",
+    year: '2022',
+    square: '294',
     rooms: 10,
     sleeps: 6,
     baths: 2,
-    price: "158 000",
-    status: "Собственник",
-    name: "Анастасия Петрова",
-    image: "/images/avatar.jpg",
+    price: '158 000',
+    status: 'Собственник',
+    name: 'Анастасия Петрова',
+    image: '/images/avatar.jpg',
     isBooked: false,
     isUnpublished: false,
-    image1: "/images/img.jpg",
-    image2: "/images/img.jpg",
-    image3: "/images/img.jpg",
-    firstInstallment: "34 000 $",
-    singleCost: "1 200 $",
-    firstInstallmentPercent: "30 %",
+    image1: '/images/img.jpg',
+    image2: '/images/img.jpg',
+    image3: '/images/img.jpg',
+    firstInstallment: '34 000 $',
+    singleCost: '1 200 $',
+    firstInstallmentPercent: '30 %',
   },
   {
-    title: "3-х комнатная квартира на Кипре для ВНЖ",
-    location: "Северный Кипр",
-    id: "1445",
+    title: '3-х комнатная квартира на Кипре для ВНЖ',
+    location: 'Северный Кипр',
+    id: '1445',
     cashBack: 6,
     yieldCount: 8,
-    year: "2022",
-    square: "294",
+    year: '2022',
+    square: '294',
     rooms: 10,
     sleeps: 6,
     baths: 2,
-    price: "158 000",
-    status: "Собственник",
-    name: "Анастасия Петрова",
-    image: "/images/avatar.jpg",
+    price: '158 000',
+    status: 'Собственник',
+    name: 'Анастасия Петрова',
+    image: '/images/avatar.jpg',
     isBooked: true,
     isUnpublished: false,
-    image1: "/images/img.jpg",
-    image2: "/images/img.jpg",
-    image3: "/images/img.jpg",
-    firstInstallment: "34 000 $",
-    singleCost: "1 200 $",
-    firstInstallmentPercent: "30 %",
+    image1: '/images/img.jpg',
+    image2: '/images/img.jpg',
+    image3: '/images/img.jpg',
+    firstInstallment: '34 000 $',
+    singleCost: '1 200 $',
+    firstInstallmentPercent: '30 %',
   },
-];
-type Option = "objects" | "applications" | "users";
+]
+
+enum TabsMenuState {
+  Objects = 0,
+  Leads = 1,
+  Users = 2,
+}
 
 const Favourites = ({ className }: ApplicationProps) => {
-  const [selected, setSelected] = useState<Option | null>("objects");
-  const [selectedContent, setSelectedContent] = useState("1");
-  const startY = useRef<number>(0);
+  const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.Objects)
+  const [selectedContent, setSelectedContent] = useState('1')
+  const startY = useRef<number>(0)
 
   const handleTabClick = (tabId: string) => {
-    setSelectedContent(tabId);
-  };
+    setSelectedContent(tabId)
+  }
 
-  const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+  const handleSelect = useCallback((option: number) => {
+    setSelected(option)
+  }, [])
   const handleTouchStart = (event: TouchEvent) => {
-    const touch = event.touches[0];
-    startY.current = touch.pageY;
-  };
+    const touch = event.touches[0]
+    startY.current = touch.pageY
+  }
 
   const handleTouchEnd = (event: TouchEvent) => {
-    const touch = event.changedTouches[0];
-    const deltaY = touch.pageY - startY.current;
+    const touch = event.changedTouches[0]
+    const deltaY = touch.pageY - startY.current
 
     if (deltaY > 50) {
-      setShowFilter(false);
+      setShowFilter(false)
     }
-  };
+  }
 
-  const [showFilter, setShowFilter] = useState(false);
+  const [showFilter, setShowFilter] = useState(false)
   const handleShowFilter = useCallback(() => {
-    setShowFilter(!showFilter);
-  }, [showFilter]);
+    setShowFilter(!showFilter)
+  }, [showFilter])
+
+  const [tabsManager, setTabsManager] = useState<TabsManager>(new TabsManager())
+  tabsManager.setCallback(handleSelect)
+  tabsManager.addItem(
+    new TabMenuItem(
+      'Объекты',
+      0,
+      <>{renderObjects()}</>,
+      (
+        <Search
+          options={[
+            'Сначала агентства',
+            'Сначала PRO',
+            'Сначала самые надежные',
+          ]}
+          placeholder="Поиск"
+          className={cn('Applications__searchBar')}
+          filterIcon={<FilterIcon />}
+          withSort={true}
+          onFilterClick={handleShowFilter}
+        />
+      )
+    )
+  )
+  tabsManager.addItem(new TabMenuItem('Заявки', 0, <>{renderLeads()}</>,))
+  tabsManager.addItem(new TabMenuItem('Пользователи', 0, <>{renderUsers()}</>,))
 
   return (
     <StyledApplication
@@ -106,131 +134,20 @@ const Favourites = ({ className }: ApplicationProps) => {
       })}
     >
       <div
-        className={cn("Application__wrapper", {
+        className={cn('Application__wrapper', {
           IsOpenFilter: showFilter,
         })}
       >
-        <div className="Application__headContainer">
-          <div className="Application__head">
-            <h1 className="Font_32_120 lg:Font_26_120_500">Избранное</h1>
-          </div>
-          <div className="Application__headTabsContainer">
-            <div className="Application__headTabs">
-              <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "objects",
-                })}
-                onClick={() => handleSelect("objects")}
-                active={selected === "objects"}
-                tertiary
-              >
-                Объекты{" "}
-                <p className="TabButton__counter Color_text_grey">
-                  {objectsArray.length}
-                </p>
-              </Button>
-              <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "applications",
-                })}
-                onClick={() => handleSelect("applications")}
-                active={selected === "applications"}
-                tertiary
-              >
-                Заявки
-              </Button>
-              <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "users",
-                })}
-                onClick={() => handleSelect("users")}
-                active={selected === "users"}
-                tertiary
-              >
-                Пользователи
-              </Button>
+        <>
+          <StyledMenu className={cn(tabsManager.getClasses())}>
+            <div className={'Menu__header Font_headline_3'}>
+              <h1 className="Font_headline_3">Избранное</h1>
             </div>
-            <div className="Application__headTabsBar" />
-          </div>
-        </div>
-
-        {selected === "objects" && (
-          <>
-            <div>
-              <Search
-                options={[]}
-                placeholder="Поиск"
-                className={cn("Applications__searchBar", {
-                  FilterOpen: !showFilter,
-                })}
-                filterIcon={<FilterIcon />}
-                onShowFilterClick={handleShowFilter}
-                withSort
-              />
-            </div>
-
-            <ul className="ApplicationsList">
-              {objectsArray.map((object, index) => (
-                <li key={index}>
-                  <ObjectCard
-                    title={object.title}
-                    location={object.location}
-                    image1={object.image1}
-                    image2={object.image2}
-                    image3={object.image3}
-                    id={object.id}
-                    firstInstallment={object.firstInstallment}
-                    firstInstallmentPercent={object.firstInstallmentPercent}
-                    singleCost={object.singleCost}
-                    sleeps={object.sleeps}
-                    baths={object.baths}
-                    year={object.year}
-                    square={object.square}
-                    rooms={object.rooms}
-                    yieldCount={object.yieldCount}
-                    price={object.price}
-                    name={object.name}
-                    image={object.image}
-                    status={object.status}
-                    href=""
-                  />
-                </li>
-              ))}
-            </ul>
-          </>
-        )}
-        {selected === "applications" && (
-          <>
-            <div className="Applications__headTabsBar_whiteSpace" />
-
-            <div className="Application__body">
-              <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
-              <h2>Нет созданных заявок</h2>
-              <p className="Color_text_grey">
-                Но вы можете сделать это прямо сейчас!{" "}
-              </p>
-              <Button className="CreateApp__button" href="/customer/create-1">
-                Создать заявку
-              </Button>
-            </div>
-          </>
-        )}
-        {selected === "users" && (
-          <>
-            <div className="Applications__headTabsBar_whiteSpace" />
-
-            <div className="Application__body">
-              <Image
-                src="/images/application.svg"
-                alt=""
-                width={150}
-                height={120}
-              />
-              <h2>No archived applications</h2>
-              <p className="Color_text_grey">No archived</p>
-            </div>
-          </>
-        )}
+            {tabsManager.renderMenus(selected)}
+            {tabsManager.renderMenuFooter(selected)}
+          </StyledMenu>
+        </>
+        {tabsManager.renderContent(selected)}
       </div>
       {showFilter && (
         <>
@@ -259,15 +176,15 @@ const Favourites = ({ className }: ApplicationProps) => {
           </Button>
           <Button tertiary className="FooterButton Font_12_16">
             <Applications />
-            Мои заявки
+            Мои заявки
           </Button>
           <div className="PlusIconContainer">
             <Button>
-              <PlusIcon attr={{width: 24, height: 24}} />
+              <PlusIcon attr={{ width: 24, height: 24 }} />
             </Button>
           </div>
           <Button tertiary className="FooterButton Font_12_16">
-            <HomeIcon attr={{width: 18, height: 18}} />
+            <HomeIcon attr={{ width: 18, height: 18 }} />
             Объекты
           </Button>
           <Button tertiary className="FooterButton Font_12_16">
@@ -277,8 +194,70 @@ const Favourites = ({ className }: ApplicationProps) => {
         </div>
       </div>
     </StyledApplication>
-  );
-};
+  )
+}
+
+function renderObjects(): JSX.Element {
+  return (
+    <ul className="ApplicationsList">
+      {objectsArray.map((object, index) => (
+        <li key={index}>
+          <ObjectCard
+            title={object.title}
+            location={object.location}
+            image1={object.image1}
+            image2={object.image2}
+            image3={object.image3}
+            id={object.id}
+            firstInstallment={object.firstInstallment}
+            firstInstallmentPercent={object.firstInstallmentPercent}
+            singleCost={object.singleCost}
+            sleeps={object.sleeps}
+            baths={object.baths}
+            year={object.year}
+            square={object.square}
+            rooms={object.rooms}
+            yieldCount={object.yieldCount}
+            price={object.price}
+            name={object.name}
+            image={object.image}
+            status={object.status}
+            href=""
+          />
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function renderLeads(): JSX.Element {
+  return (
+    <>
+      <div className="Application__body">
+        <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
+        <h2>Нет созданных заявок</h2>
+        <p className="Color_text_grey">
+          Но вы можете сделать это прямо сейчас!{' '}
+        </p>
+        <Button className="CreateApp__button" href="/customer/create-1">
+          Создать заявку
+        </Button>
+      </div>
+    </>
+  )
+}
+
+function renderUsers(): JSX.Element {
+  return (
+    <>
+      <div className="Application__body">
+        <Image src="/images/application.svg" alt="" width={150} height={120} />
+        <h2>No archived applications</h2>
+        <p className="Color_text_grey">No archived</p>
+      </div>
+    </>
+  )
+}
 
 const StyledApplication = styled.section`
   position: relative;
@@ -292,9 +271,11 @@ const StyledApplication = styled.section`
   &.Test {
     padding-right: 0 !important;
   }
+
   .TabButton__counter {
     margin-left: 10px;
   }
+
   .Application__wrapper {
     min-width: 970px;
     max-width: 970px;
@@ -318,121 +299,10 @@ const StyledApplication = styled.section`
     height: calc(100vh - 114px);
   }
 
-  .Application__headTabsBar_whiteSpace {
-    width: 100%;
-    height: 10px;
-    border-radius: 0 0 10px 10px;
-    background: #fff;
-  }
-
-  .Applications__searchBar {
-    padding: 0;
-    input {
-      border-radius: 0 0 10px 10px;
-      box-shadow: none !important;
-    }
-
-    .Search__rightIcon:hover {
-      svg {
-        path {
-          fill: #4e6af3;
-        }
-      }
-    }
-  }
-
   .SingleChatInfoideBar {
     position: absolute;
     right: -420px;
     top: 94px;
-  }
-
-  .Application__headContainer {
-    margin-top: 30px;
-    padding: 20px 20px 0 20px;
-    background: #fff;
-    border-radius: 10px 10px 0 0;
-  }
-
-  .Application__head {
-    display: flex;
-    align-items: center;
-  }
-
-  .Application__headTabs {
-    display: flex;
-    margin-top: 30px;
-    button {
-      padding: 0;
-    }
-    button:not(:first-child) {
-      margin-left: 30px;
-    }
-  }
-  .Application__TabButton {
-    :active {
-      background: transparent !important;
-    }
-  }
-
-  .Application__headTabButton {
-    position: relative;
-    ::before {
-      position: absolute;
-      top: 35px;
-      content: "";
-      background: #4e6af3;
-      width: 100%;
-      height: 4px;
-      border-radius: 10px;
-    }
-
-    p {
-      color: #4e6af3;
-    }
-
-    :hover {
-      background: #f1f7ff;
-    }
-    :focus {
-      background: #fff;
-    }
-
-    :active {
-      background: #e1edfd;
-    }
-  }
-
-  .Application__headTabsBar {
-    margin-top: 15px;
-    width: 100%;
-    background: #e1edfd;
-    height: 4px;
-    border-radius: 10px;
-  }
-
-  .Applications__headTabsBar_whiteSpace {
-    width: 100%;
-    height: 10px;
-    border-radius: 0 0 10px 10px;
-    background: #fff;
-  }
-
-  .Application__head {
-    display: flex;
-    align-items: center;
-  }
-
-  .Applications__headTabs {
-    display: flex;
-    margin-top: 30px;
-    overflow: auto;
-    button {
-      padding: 0;
-    }
-    button:not(:first-child) {
-      margin-left: 30px;
-    }
   }
 
   .Application__body {
@@ -474,7 +344,7 @@ const StyledApplication = styled.section`
 
   .ApplicationsList {
     margin-top: 20px;
-    height: 100vh;
+    height: auto;
 
     li:not(:first-child) {
       margin-top: 10px;
@@ -529,12 +399,15 @@ const StyledApplication = styled.section`
         }
       }
     }
+
     span {
       display: flex;
       flex-direction: column;
       align-items: center;
+
       svg {
         margin-bottom: 2px;
+
         path {
           fill: #7786a5;
         }
@@ -614,16 +487,15 @@ const StyledApplication = styled.section`
       max-width: 355px;
     }
   }
+
   .Applications__filterMobile {
     display: none;
   }
+
   @media (max-width: 1024px) {
     display: flex;
 
     flex-direction: column;
-    .Application__headContainer {
-      margin-top: 0;
-    }
 
     .TestFilter {
       transform: none;
@@ -647,27 +519,17 @@ const StyledApplication = styled.section`
     }
   }
   @media (max-width: 660px) {
-    .Application__headContainer {
-      padding-right: 0;
-    }
-
-    .Application__headTabsContainer {
-      overflow: auto;
-
-      ::-webkit-scrollbar {
-        display: none;
-      }
-    }
-  }
 
   @media (max-width: 576px) {
     .ApplicationsList {
       padding-left: 0;
       padding-right: 0;
     }
+
     .TestFilter {
       display: none;
     }
+
     .Applications__filterMobileContainer {
       position: absolute;
       z-index: 999;
@@ -675,6 +537,7 @@ const StyledApplication = styled.section`
       height: 100vh;
       top: -58px;
     }
+
     .Application__FooterButtons {
       display: flex;
       justify-content: center;
@@ -699,6 +562,6 @@ const StyledApplication = styled.section`
       }
     }
   }
-`;
+`
 
-export { Favourites };
+export { Favourites }

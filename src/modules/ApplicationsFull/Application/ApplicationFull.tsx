@@ -1,15 +1,14 @@
-import {Button} from "@/components/ui";
-import {ApplicationsFooter} from "@/modules/Base/ApplicationsFooter";
-import cn from "classnames";
-import Image from "next/image";
-import React, {useCallback, useState} from "react";
-import styled from "styled-components";
-import {ObjectCardLarge} from "./components/ObjectCardLarge";
-import {TabMenuItem, TabsManager, StyledMenu} from "@/components/ui/TabsMenu";
-import {BackIcon20} from "@/icons";
+import { Button } from '@/components/ui'
+import { ApplicationsFooter } from '@/modules/Base/ApplicationsFooter'
+import cn from 'classnames'
+import Image from 'next/image'
+import React, { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { ObjectCardLarge } from './components/ObjectCardLarge'
+import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 
 interface ApplicationProps {
-  className?: string;
+  className?: string
 }
 
 const applicationsArray = [
