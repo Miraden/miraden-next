@@ -33,7 +33,7 @@ const HeaderMobile = ({ className, isAuthorized }: Props) => {
               onClick={handleOpenMenu}
             >
               {isOpen ? (
-                <CrossIcon className="HeaderMobile__closeIcon" />
+                <CrossIcon attr={{className: "HeaderMobile__closeIcon"}} />
               ) : (
                 <BurgerIcon />
               )}

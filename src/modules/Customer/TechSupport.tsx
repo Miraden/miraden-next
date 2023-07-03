@@ -33,7 +33,7 @@ const TechSupport = ({
             onClick={onClose}
             className="TechSupport__closeButton"
           >
-            <CrossIcon width={24} height={24} className="CrossIcon" />
+            <CrossIcon attr={{width: 24, height: 24, className: "CrossIcon"}} />
           </Button>
         </div>
         <div className="TechSupport__body">
@@ -47,7 +47,7 @@ const TechSupport = ({
             </button>
 
             <button className="TechSupport__button" onClick={handleButtonClick}>
-              <TelegramIcon width={42} height={42} />
+              <TelegramIcon attr={{ width: 42, height: 42}} />
               <span className="Font_16_140">WhatsApp</span>
             </button>
           </div>

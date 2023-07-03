@@ -206,7 +206,7 @@ const ObjectsList = ({ className, onClose }: Props) => {
             <div className="ObjectsList__head">
               <h2 className="Font_32_120">Мои объекты</h2>
               <button onClick={onClose} className="CloseButton">
-                <CrossIcon width={24} height={24} className="CloseIcon" />
+                <CrossIcon attr={{width: 24, height: 24, className: "CloseIcon"}} />
               </button>
             </div>
             <div className="ObjectsList__linkContainer Font_14_140 Color_blue_primary">

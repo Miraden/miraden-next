@@ -15,7 +15,7 @@ const InviteModal = ({ className, onClick, closeModal, onSubmit }: Props) => {
     <StyledInviteModal className={className}>
       <StyledModalContent>
         <button onClick={closeModal} className="CloseButton">
-          <CrossIcon className="CrossIcon" width={24} height={24} />
+          <CrossIcon attr={{className: "CrossIcon", width: 24, height: 24}} />
         </button>
         <InviteModalIcon />
 

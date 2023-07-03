@@ -76,7 +76,7 @@ const OpenContacts = () => {
             <p>Telegram</p>
           </div>
           <div className="Contacts__locationInfo">
-            <TelegramIcon width={20} height={20} />
+            <TelegramIcon attr={{width: 20, height: 20}} />
 
             <p>@anastasia_real_estate</p>
           </div>

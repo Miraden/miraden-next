@@ -206,7 +206,7 @@ const SearchReg = ({ options, mapButtonLabel, onClick }: SearchProps) => {
   return (
     <SearchRegContainer ref={ref}>
       <div className={`Search__container ${isFocused ? "focused" : ""}`}>
-        <SearchIcon className="Search__searchIcon" />
+        <SearchIcon attr={{className: "Search__searchIcon"}} />
         <SearchInput
           type="text"
           placeholder="Укажите город"
@@ -217,10 +217,7 @@ const SearchReg = ({ options, mapButtonLabel, onClick }: SearchProps) => {
         />
         {searchText && (
           <CrossIcon
-            className="Search__crossIcon"
-            width={18}
-            height={18}
-            onClick={handleRemoveResults}
+            attr={{className: "Search__crossIcon", width: 18, height: 18}}
           />
         )}
         <button className="Search__mapButton" onClick={onClick}>

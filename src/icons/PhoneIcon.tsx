@@ -2,7 +2,7 @@ import {FC, SVGAttributes} from "react";
 
 interface Props {
   filled?: boolean
-  attr?: FC<SVGAttributes<SVGElement>>
+  attr?: SVGAttributes<SVGElement>
 }
 
 const PhoneIcon = (props: Props) => {

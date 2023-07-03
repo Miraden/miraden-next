@@ -42,11 +42,7 @@ const SortChatsDropdown: FC<Props> = ({
               <span className="SortChatsDropdown__menuItem">
                 <p>{option}</p>
                 <CheckIcon
-                  className={
-                    selectedOption === option
-                      ? "CheckIcon_selected"
-                      : "CheckIcon"
-                  }
+                  attr={{className: (selectedOption === option ? "CheckIcon_selected" : "CheckIcon")}}
                 />
               </span>
             </div>

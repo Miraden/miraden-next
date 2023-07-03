@@ -66,7 +66,7 @@ const ApplicationsFilter = ({
         <div className="ApplicationsFilter__head">
           <h2 className="Font_12_16_600">фильтр выключен</h2>
           <Button tertiary onClick={onClick} className="CloseFilter">
-            <CrossIcon width={24} height={24} />
+            <CrossIcon attr={{width: 24, height: 24 }} />
           </Button>
         </div>
       </div>

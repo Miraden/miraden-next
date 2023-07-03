@@ -23,7 +23,7 @@ const HeaderUserMenu = () => {
             header
             className="HeaderUserMenu__linkButton"
             active={currentUrl.includes("favourites")}
-            leftIcon={<StarIcon className="HeaderUserMenu__favorites" />}
+            leftIcon={<StarIcon attr={{className: "HeaderUserMenu__favorites"}} />}
           ></Button>
           <Button
             header

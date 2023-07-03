@@ -40,7 +40,7 @@ const CurrencySelect: FC<Props> = ({
               <span className="CurrencySelect__menuItem">
                 <p className="Font_14_140">{option}</p>
                 {selectedOption === option && (
-                  <CheckIcon className="CheckIcon_selected" />
+                  <CheckIcon attr={{className: "CheckIcon_selected"}} />
                 )}
               </span>
             </div>

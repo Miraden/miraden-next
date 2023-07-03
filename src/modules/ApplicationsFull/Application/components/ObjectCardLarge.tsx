@@ -173,7 +173,7 @@ const ObjectCardLarge = ({
               </div>
               <div className="ObjectCardLarge__footerInfo ">
                 <div>
-                  <ListIcon className="ListItemIcon" />{" "}
+                  <ListIcon attr={{className: "ListItemIcon"}} />{" "}
                   <p className="Font_16_140 Color_blue_primary">{list}</p>
                 </div>
                 <div>

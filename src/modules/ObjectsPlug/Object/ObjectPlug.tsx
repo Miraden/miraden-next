@@ -504,12 +504,12 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
           </Button>
           <div className="PlusIconContainer">
             <Button>
-              <PlusIcon width={24} height={24} />
+              <PlusIcon attr={{width: 24, height: 24}} />
             </Button>
           </div>
 
           <Button tertiary className="FooterButton Font_12_16">
-            <HomeIcon width={18} height={18} />
+            <HomeIcon attr={{width: 18, height: 18}} />
             Объекты
           </Button>
           <Button tertiary className="FooterButton Font_12_16">

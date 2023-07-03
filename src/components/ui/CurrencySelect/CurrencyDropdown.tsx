@@ -41,13 +41,7 @@ const CurrencyDropdown: FC<Props> = ({
             >
               <span className="CurrencyDropdown__menuItem">
                 <p className="Font_14_140">{option}</p>
-                <CheckIcon
-                  className={
-                    selectedOption === option
-                      ? "CheckIcon_selected"
-                      : "CheckIcon"
-                  }
-                />
+                <CheckIcon attr={{className: (selectedOption === option ? "CheckIcon_selected" : "CheckIcon")}}/>
               </span>
             </div>
           );

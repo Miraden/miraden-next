@@ -84,7 +84,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__pricingInfo">
           <div>
-            <ListIcon className="ListIcon" />
+            <ListIcon attr={{className: "ListIcon"}} />
             <p className="Color_blue_primary Font_16_140">1 268</p>
           </div>
           <div>
@@ -209,7 +209,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <CreditCardIcon width={18} height={18} />
+            <CreditCardIcon attr={{width: 18, height: 18}} />
             <p>Способ покупки</p>
           </div>
           <div className="SingleApplication__locationInfo">

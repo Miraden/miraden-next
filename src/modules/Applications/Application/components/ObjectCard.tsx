@@ -231,7 +231,7 @@ const ObjectCard = ({
                       <MessagesIcon className="PhoneIcon" />
                     </Button>
                     <Button>
-                      <PhoneIcon className="PhoneIcon" />
+                      <PhoneIcon attr={{className: "PhoneIcon"}} />
                     </Button>
                   </div>
                 ) : (

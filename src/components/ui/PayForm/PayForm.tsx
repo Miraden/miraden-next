@@ -47,7 +47,7 @@ const PayForm = ({
                 ref={el => setRef(el)}
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => onCloseHandler(e)
                 }>
-                <CrossIcon width={24} height={24} className="CrossIcon"/>
+                <CrossIcon attr={{width: 24, height: 24, className: "CrossIcon"}}/>
               </button>
             </div>
             <PayFormContent

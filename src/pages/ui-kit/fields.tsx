@@ -67,10 +67,10 @@ export default function FieldsPage() {
         </div>
 
         <div className={"Fields_row Dropdowns"}>
-          <DropdownInput options={options} placeholder={"Select"} />
-          <DropdownInput options={options} message={"Message"} placeholder={"Select"} />
-          <DropdownInput error className={"Input"} message={"Error message"} placeholder={"Select"} />
-          <DropdownInput disabled placeholder={"Select"}/>
+          <DropdownInput options={options} placeholder={"Select"} optionsVisible={false} />
+          <DropdownInput options={options} message={"Message"} optionsVisible={false} placeholder={"Select"} />
+          <DropdownInput error className={"Input"} message={"Error message"} optionsVisible={false} placeholder={"Select"} />
+          <DropdownInput disabled placeholder={"Select"} optionsVisible={false}/>
         </div>
 
         <div className={"Fields_row"}>
@@ -82,7 +82,7 @@ export default function FieldsPage() {
         </div>
 
         <div className={"Fields_row"}>
-          <DropdownInput options={options} className={"Sort"} placeholder={"Без диапазона"} />
+          <DropdownInput options={options} className={"Sort"} placeholder={"Без диапазона"} optionsVisible={false} />
         </div>
       </StyledFields>
     </BlankLayout>

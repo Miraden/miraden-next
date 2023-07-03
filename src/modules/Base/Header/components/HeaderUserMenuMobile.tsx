@@ -34,7 +34,7 @@ const HeaderUserMenuMobile = () => {
             header
             href="/favourites-full"
             className="HeaderUserMenu__linkButton"
-            leftIcon={<StarIcon className="HeaderUserMenu__favorites" />}
+            leftIcon={<StarIcon attr={{className: "HeaderUserMenu__favorites"}} />}
             active={currentUrl.includes("favourites")}
           ></Button>
           <Button

@@ -12,7 +12,7 @@ const options = [
     optionName: "Поиск недвижимости",
     image1: "./images/miraden/1.png",
     image2: "./images/miraden/2.png",
-    icon: <HomeIcon width={28} height={28} />,
+    icon: <HomeIcon attr={{width: 28, height: 28}} />,
     text: "Персональный каталог объектов, собранный из предложений продавцов в реальном времени",
     id: 1,
   },
