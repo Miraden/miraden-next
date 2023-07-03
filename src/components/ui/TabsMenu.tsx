@@ -148,7 +148,7 @@ const ContentStyles = styled.div``
 const MenuStyles = styled.div`
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: 100%;
   overflow: auto;
 
   button.${baseClassName}__TabButton {
@@ -292,6 +292,7 @@ const MenuStyles = styled.div`
   }
 
   &.TabsMenu__menus--buttons {
+    overflow: visible;
     .active:before {
       display: none;
     }

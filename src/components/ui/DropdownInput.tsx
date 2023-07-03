@@ -1,6 +1,6 @@
 import { ArrowIcon, WarningIcon } from '@/icons'
 import cn from 'classnames'
-import React, { FC, useState } from 'react'
+import React, {FC, useDebugValue, useState} from 'react'
 import styled from 'styled-components'
 import { Dropdown } from './Dropdown'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
@@ -14,7 +14,7 @@ interface Props {
   placeholder?: string
   options?: Array<string>
   message?: string
-  optionsVisible: boolean
+  icon?: JSX.Element
 }
 
 const borderRadius = theme.border.radius
@@ -27,9 +27,9 @@ const DropdownInput: FC<Props> = ({
   placeholder,
   options = [],
   message,
-  optionsVisible = false,
+  icon
 }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(optionsVisible)
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
   const [activeOption, setActiveOption] = useState<string>('')
 
   const selectOptions = options.length ? options : ['Нет подходящих вариантов']
@@ -55,7 +55,6 @@ const DropdownInput: FC<Props> = ({
         Dropdown_warning: warning,
         Dropdown_error: error,
       })}
-      optionsVisible={optionsVisible}
       disabled={disabled}
       error={error}
       warning={warning}
@@ -76,13 +75,14 @@ const DropdownInput: FC<Props> = ({
           ) : (
             <span>{placeholder}</span>
           )}
-          <ArrowsIcon bottom />
+          <ArrowsIcon bottom attr={{className: "DropdownInput__arrow"}} />
+          {icon}
         </div>
         {showDropDown && (
           <Dropdown
             className="DropdownInput_selectContainer"
             options={selectOptions}
-            showDropDown={optionsVisible}
+            showDropDown={true}
             selectedOption={activeOption}
             toggleDropDown={(): void => toggleDropDown()}
             optionSelection={optionSelection}

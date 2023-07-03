@@ -3,6 +3,7 @@ import { DropdownInput } from '@/components/ui/DropdownInput'
 import { Button } from '@/components/ui'
 import { SwapIcon } from '@/icons/SwapIcon'
 import React, { useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
   className?: string
@@ -20,28 +21,69 @@ const tablet = theme.breakpoints.tablet.max + 'px'
 const MenuSort = (args: Props) => {
   const props = Object.assign(DefaultProps, args)
 
-  const [optionsVisible, setOptionsVisible] = useState(false)
-  const handleSortClick = (event: React.MouseEvent<HTMLElement>) => {
-    setOptionsVisible(!optionsVisible)
-  }
-
   return (
-    <>
+    <Styled>
       <DropdownInput
-        optionsVisible={optionsVisible}
+        icon={<SwapIcon attr={{ className: 'Sort__mobile' }} />}
         options={props.options}
         className={'Sort'}
         placeholder={'Без диапазона'}
       />
-      <Button
-        secondary
-        className={'Sort__mobile'}
-        onClick={e => handleSortClick(e)}
-      >
-        <SwapIcon />
-      </Button>
-    </>
+    </Styled>
   )
 }
+
+const Styled = styled.div`
+  display: flex;
+  gap: 20px;
+
+  .Sort__mobile {
+    display: none;
+  }
+
+  .Dropdown__menu_active {
+    border-radius: 10px;
+    margin-top: 5px;
+  }
+
+  .DropdownInput_select_active {
+    border-radius: 10px;
+  }
+
+  @media (max-width: ${mobile}) {
+    .Sort .DropdownInput_select,
+    .Sort .DropdownInput_select_active {
+      padding: 8px;
+      outline: none;
+
+      &:hover {
+        outline: none;
+      }
+
+      .Sort__mobile {
+        margin: 0;
+      }
+
+      svg {
+        transform: rotate(0);
+      }
+    }
+
+    .DropdownInput_selectLabel {
+      & > span {
+        display: none;
+      }
+
+      .DropdownInput__arrow {
+        display: none;
+      }
+
+      .Sort__mobile {
+        display: block;
+        margin: 0;
+        padding: 0;
+      }
+    }
+`
 
 export { MenuSort }

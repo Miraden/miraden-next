@@ -158,12 +158,6 @@ const StyledMenu = styled.div`
     position: relative;
     z-index: 40;
   }
-
-  @media (max-width: ${mobile}) {
-    .Sort {
-      display: none;
-    }
-  }
 `
 
 export default MenuPage
