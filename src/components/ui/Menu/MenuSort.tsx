@@ -23,7 +23,6 @@ const MenuSort = (args: Props) => {
   const [optionsVisible, setOptionsVisible] = useState(false)
   const handleSortClick = (event: React.MouseEvent<HTMLElement>) => {
     setOptionsVisible(!optionsVisible)
-    console.log(optionsVisible)
   }
 
   return (

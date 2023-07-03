@@ -1,10 +1,7 @@
-import { CrossIcon, SearchIcon } from '@/icons'
+import { SearchIcon } from '@/icons'
 import cn from 'classnames'
 import React, { ReactNode, useState } from 'react'
 import styled from 'styled-components'
-import { SortApps } from './SortApps/SortApps'
-import { DropdownInput } from '@/components/ui/DropdownInput'
-import { SwapIcon } from '@/icons/SwapIcon'
 import { Button } from '@/components/ui/Button'
 import { theme } from '../../../styles/tokens'
 import { MenuSort } from '@/components/ui/Menu/MenuSort'
@@ -96,7 +93,7 @@ const Search = ({
 
       {withSort && (
         <>
-          <MenuSort options={[]} />
+          <MenuSort options={["Сначала агентства", "Сначала PRO", "Сначала самые надежные"]} />
         </>
       )}
 
