@@ -109,7 +109,7 @@ const StyledTextInput = styled.div`
 
   &.TextInput__IsRequired .TextInput::after {
     content: "*";
-    color: red;
+    color: ${({ theme }) => theme.colors.text.error};
     margin-right: 5px;
   }
 
@@ -189,7 +189,7 @@ const StyledTextInputField = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: fit-content;
+  width: auto;
 `;
 
 const StyledTextInputInput = styled.input<{ isRequired: boolean, hasLabel: boolean }>`

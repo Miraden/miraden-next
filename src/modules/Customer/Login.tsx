@@ -110,6 +110,7 @@ const Login = ({className}: Props) => {
               className={"Reg__email"}
               name={"Login_form[email]"}
               isRequired={true}
+              label={"Электронная почта"}
               values={email}
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => onEmailChange(event)}
             />
@@ -213,6 +214,7 @@ const StyledRegStep1 = styled.section`
 
   .Reg__email {
     margin-top: 40px;
+    width: 100%;
   }
 
   .Reg__password {
@@ -308,11 +310,6 @@ const StyledRegStep1 = styled.section`
       span {
         text-align: start;
       }
-    }
-
-    .Reg__email {
-      margin-top: 4px;
-      margin-bottom: 0;
     }
 
     .Reg__password {
