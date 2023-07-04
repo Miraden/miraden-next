@@ -1,17 +1,12 @@
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import UIKitHead from '@/modules/UIKitTest/UIKitHead'
 import React, { useCallback, useState } from 'react'
-import { TabMenuItem, TabsManager, StyledMenu } from '@/components/ui/TabsMenu'
+import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import styled from 'styled-components'
 import { BackIcon20 } from '@/icons'
 import { Button, Search } from '@/components/ui'
 import cn from 'classnames'
 import { FilterIcon } from '@/icons/FilterIcon'
-import { theme } from '../../../styles/tokens'
-import {ApplicationsFilter} from "@/components/ui/ApplicationsFilter";
-
-const mobile = theme.breakpoints.mobile.max + 'px'
-const tablet = theme.breakpoints.tablet.max + 'px'
 
 const MenuPage = () => {
   let [selected, setSelected] = useState<number>(0)
@@ -33,9 +28,13 @@ const MenuPage = () => {
       <div>content</div>,
       (
         <Search
-          options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
+          options={[
+            'Сначала агентства',
+            'Сначала PRO',
+            'Сначала самые надежные',
+          ]}
           placeholder="Поиск"
-          className={cn('Applications__searchBar')}
+          className={''}
           filterIcon={<FilterIcon />}
           onFilterClick={handleShowFilter}
           withSort={true}
@@ -43,33 +42,34 @@ const MenuPage = () => {
       )
     )
   )
-  tabsManager.addItem(new TabMenuItem('Опубликованные', 1, <div></div>))
-  tabsManager.addItem(new TabMenuItem('В архиве', 4, <div></div>))
+  tabsManager.addItem(new TabMenuItem('Опубликованные', 1, <div>2</div>))
+  tabsManager.addItem(new TabMenuItem('В архиве', 4, <div>3</div>))
 
   return (
     <BlankLayout className={'bodyChecker'}>
       <UIKitHead title={'Menu'} className={'Container'} backUrl={'/ui-kit'} />
       <StyledLayout className={'Container'}>
         <StyledMenu className={cn(tabsManager.getClasses())}>
-            <div className={'Menu__header Font_headline_3'}>
-              <Button
-                secondary
-                href="/applications-full"
-                className="Menu__header_backButton"
-              >
-                <BackIcon20
-                  width={20}
-                  height={20}
-                  className="Menu__header_backArrow"
-                />
-              </Button>
-              <h1 className="Font_headline_3">
-                Хочу купить 3-х комнатную квартиру на Кипре
-              </h1>
-            </div>
-            {tabsManager.renderMenus(selected)}
-            {tabsManager.renderMenuFooter(selected)}
+          <div className={'Menu__header Font_headline_3'}>
+            <Button
+              secondary
+              href="/applications-full"
+              className="Menu__header_backButton"
+            >
+              <BackIcon20
+                width={20}
+                height={20}
+                className="Menu__header_backArrow"
+              />
+            </Button>
+            <h1 className="Font_headline_3">
+              Хочу купить 3-х комнатную квартиру на Кипре
+            </h1>
+          </div>
+          {tabsManager.renderMenus(selected)}
+          {tabsManager.renderMenuFooter(selected)}
         </StyledMenu>
+        {tabsManager.renderContent(selected)}
       </StyledLayout>
     </BlankLayout>
   )

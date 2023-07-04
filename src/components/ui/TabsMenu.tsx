@@ -384,6 +384,11 @@ const StyledMenu = styled.div`
     padding-bottom: 0;
   }
 
+  .Search__menu {
+    outline: none;
+    padding: 0;
+  }
+
   .Menu__header {
     display: flex;
     align-items: baseline;

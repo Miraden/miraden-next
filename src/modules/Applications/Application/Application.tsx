@@ -80,7 +80,6 @@ const Application = ({ className }: ApplicationProps) => {
         <Search
           options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
           placeholder="Поиск"
-          className={cn('Applications__searchBar')}
           filterIcon={<FilterIcon />}
           withSort={true}
           onFilterClick={handleShowFilter}
@@ -264,18 +263,6 @@ function renderExecutors(): JSX.Element {
         ))}
       </ul>
     </div>
-  )
-}
-
-function renderUsersSearch(handler: Function): JSX.Element {
-  return (
-    <Search
-      options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
-      placeholder="Поиск"
-      className={cn('Applications__searchBar')}
-      filterIcon={<FilterIcon />}
-      withSort={true}
-    />
   )
 }
 

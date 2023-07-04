@@ -17,7 +17,6 @@ interface SearchProps {
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
-const tablet = theme.breakpoints.tablet.max + 'px'
 
 const Search = ({
   options,
@@ -29,87 +28,59 @@ const Search = ({
   onFilterClick,
 }: SearchProps) => {
   const [searchValue, setSearchValue] = useState('')
-  const [selectedOption, setSelectedOption] = useState('')
-  const [filteredOptions, setFilteredOptions] = useState<string[]>(options)
-  const [isOptionsOpen, setIsOptionsOpen] = useState(false)
   const [isFocused, setFocused] = useState(false)
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value
     setSearchValue(searchValue)
-
-    const filteredOptions = options.filter(option =>
-      option.toLowerCase().startsWith(searchValue.toLowerCase())
-    )
-    setFilteredOptions(filteredOptions)
-    setIsOptionsOpen(true)
-  }
-
-  const handleOptionClick = (option: string) => {
-    setSelectedOption(option)
-    setSearchValue(option)
-    setIsOptionsOpen(false)
   }
 
   const handleBlur = () => {
-    setIsOptionsOpen(false)
     setFocused(false)
   }
 
-  const handleClearClick = () => {
-    setSelectedOption('')
-    setSearchValue('')
-  }
-
   const onFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    !disabled && setIsOptionsOpen(true)
     setFocused(true)
   }
 
   return (
     <SearchContainer
-      className={cn(className, {
+      className={cn(className, 'Search__menu', {
         Search_container_disabled: disabled,
         Search_focused: isFocused,
         Search_has_sort: withSort,
       })}
     >
-      <SearchIcon
-        attr={{
-          className: 'Search__searchIcon',
-        }}
-      />
+      <div className={'Search__input'}>
+        <SearchIcon
+          attr={{
+            className: 'Search__searchIcon',
+          }}
+        />
+        <Input
+          type="text"
+          placeholder={placeholder}
+          value={searchValue}
+          onChange={handleSearchChange}
+          onBlur={handleBlur}
+          onFocus={onFocus}
+          className={cn('Text_16_24', { Search_disabled: disabled })}
+          disabled={disabled}
+        />
+      </div>
+      <div className={'Search__options'}>
+        {withSort && <MenuSort options={options} />}
 
-      <Input
-        type="text"
-        placeholder={placeholder}
-        value={searchValue}
-        onChange={handleSearchChange}
-        onBlur={handleBlur}
-        onFocus={onFocus}
-        className={cn('Text_16_24', { Search_disabled: disabled })}
-        disabled={disabled}
-      />
-
-      {withSort && (
-        <>
-          <MenuSort
-            options={[
-              'Сначала агентства',
-              'Сначала PRO',
-              'Сначала самые надежные',
-            ]}
-          />
-        </>
-      )}
-
-      {filterIcon && (
-        <>
-          <Button secondary className="Search__rightIcon" onClick={onFilterClick}>
+        {filterIcon && (
+          <Button
+            secondary
+            className="Search__filterIcon"
+            onClick={onFilterClick}
+          >
             {filterIcon}
           </Button>
-        </>
-      )}
+        )}
+      </div>
     </SearchContainer>
   )
 }
@@ -123,6 +94,19 @@ const SearchContainer = styled.div`
   border-radius: ${({ theme }) => theme.border.radius};
   padding: 0 20px;
   gap: 10px;
+
+  .Search__input {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    gap: 10px;
+  }
+
+  .Search__options {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
 
   &:hover {
     outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
@@ -144,7 +128,7 @@ const SearchContainer = styled.div`
     }
   }
 
-  .Search__rightIcon {
+  .Search__filterIcon {
     padding: 8px;
     height: auto;
     line-height: 0;
@@ -178,18 +162,6 @@ const SearchContainer = styled.div`
 
     @media (max-width: ${mobile}) {
       display: block;
-    }
-  }
-
-  .Search__crossIcon {
-    position: relative;
-    width: 18px;
-    height: 18px;
-    z-index: 21;
-    opacity: 0;
-
-    path {
-      fill: ${({ theme }) => theme.colors.fields.title};
     }
   }
 
@@ -263,38 +235,6 @@ const Input = styled.input`
       opacity: 0;
     }
   }
-`
-
-const OptionsContainer = styled.ul`
-  position: absolute;
-  z-index: 19;
-  top: 48px;
-  left: 0;
-  right: 0;
-  background-color: white;
-  border-radius: 0 0 10px 10px;
-  box-shadow: 0 0 0 2px #e1edfd inset;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`
-
-const Option = styled.li`
-  padding: 12px 20px 13px 20px;
-  cursor: pointer;
-  color: #b8c6e3;
-
-  &:hover {
-    background-color: #d4ddee;
-  }
-
-  :first-child {
-    margin-top: 12px;
-  }
-`
-
-const HighlightedSubstring = styled.span`
-  color: #2a344a;
 `
 
 export { Search }

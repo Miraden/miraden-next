@@ -116,7 +116,6 @@ const Favourites = ({ className }: ApplicationProps) => {
             'Сначала самые надежные',
           ]}
           placeholder="Поиск"
-          className={cn('Applications__searchBar')}
           filterIcon={<FilterIcon />}
           withSort={true}
           onFilterClick={handleShowFilter}
@@ -138,15 +137,13 @@ const Favourites = ({ className }: ApplicationProps) => {
           IsOpenFilter: showFilter,
         })}
       >
-        <>
-          <StyledMenu className={cn(tabsManager.getClasses())}>
-            <div className={'Menu__header Font_headline_3'}>
-              <h1 className="Font_headline_3">Избранное</h1>
-            </div>
-            {tabsManager.renderMenus(selected)}
-            {tabsManager.renderMenuFooter(selected)}
-          </StyledMenu>
-        </>
+        <StyledMenu className={cn(tabsManager.getClasses())}>
+          <div className={'Menu__header Font_headline_3'}>
+            <h1 className="Font_headline_3">Избранное</h1>
+          </div>
+          {tabsManager.renderMenus(selected)}
+          {tabsManager.renderMenuFooter(selected)}
+        </StyledMenu>
         {tabsManager.renderContent(selected)}
       </div>
       {showFilter && (
@@ -324,22 +321,6 @@ const StyledApplication = styled.section`
     margin-top: 30px;
     padding: 10px 24px;
     width: fit-content;
-  }
-
-  .Application__headArrow {
-    transform: rotate(-90deg);
-
-    path {
-      stroke: #7786a5;
-    }
-  }
-
-  .Applications__headTabsBar {
-    margin-top: 15px;
-    width: 100%;
-    background: #e1edfd;
-    height: 4px;
-    border-radius: 10px;
   }
 
   .ApplicationsList {
@@ -545,20 +526,6 @@ const StyledApplication = styled.section`
       div,
       button:not(:first-child) {
         margin-left: 5px;
-      }
-    }
-
-    .Application__headTabs {
-      margin-top: 16px;
-    }
-
-    .Application__headTabsBar {
-      margin-top: 8px;
-    }
-
-    .Application__headTabButton {
-      ::before {
-        top: 28px;
       }
     }
   }

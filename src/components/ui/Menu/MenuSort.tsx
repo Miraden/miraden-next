@@ -1,8 +1,7 @@
 import { theme } from '../../../../styles/tokens'
 import { DropdownInput } from '@/components/ui/DropdownInput'
-import { Button } from '@/components/ui'
 import { SwapIcon } from '@/icons/SwapIcon'
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
 interface Props {
@@ -16,7 +15,6 @@ const DefaultProps: Props = {
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
-const tablet = theme.breakpoints.tablet.max + 'px'
 
 const MenuSort = (args: Props) => {
   const props = Object.assign(DefaultProps, args)
