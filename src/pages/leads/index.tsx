@@ -15,7 +15,7 @@ import {
   leadsSampleFavorites,
   leadsSampleMyRequests,
   leadsSampleSimilar,
-} from '@/pages/leads/LeadsProvider'
+} from '@/modules/Leads/LeadsProvider'
 import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
 import { Pagination, Types as PaginationType } from '@/components/ui/Pagination'
 
