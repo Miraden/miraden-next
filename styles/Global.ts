@@ -11,6 +11,7 @@ const Global = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     display: flex;
     flex-direction: column;
+    background: ${theme.colors.background.lightGrey};
 
     button, input:hover {
       cursor: pointer;
@@ -38,6 +39,7 @@ const Global = createGlobalStyle`
     flex-direction: column;
     height: 100%;
     flex-grow: 1;
+    padding-bottom: 20px;
   }
 `;
 

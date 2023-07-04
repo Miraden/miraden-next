@@ -35,8 +35,10 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
           </Link>
           <Button
             header
+            href="/leads"
             leftIcon={<ListIcon />}
             className="Header__navButton"
+            active={currentUrl.includes("leads")}
           >
             лента заявок
           </Button>
