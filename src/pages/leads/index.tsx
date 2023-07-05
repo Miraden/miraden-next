@@ -4,26 +4,24 @@ import { BlankLayout } from '@/modules/Base/BlankLayout'
 import React, { useCallback, useEffect, useState } from 'react'
 import AuthManager from '@/modules/Security/Authentication/AuthManager'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
-import { Search } from '@/components/ui'
-import { FilterIcon } from '@/icons/FilterIcon'
 import cn from 'classnames'
 import styled from 'styled-components'
-import { ObjectCardLarge } from '@/modules/ApplicationsFull/Application/components/ObjectCardLarge'
-import {
-  leadsSampleAimExecutant,
-  leadsSampleAll,
-  leadsSampleFavorites,
-  leadsSampleMyRequests,
-  leadsSampleSimilar,
-} from '@/modules/Leads/LeadsProvider'
+import { leadsGetAll, leadsSampleAll } from '@/modules/Leads/LeadsProvider'
 import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
-import { Pagination, Types as PaginationType } from '@/components/ui/Pagination'
+import { Search } from '@/components/ui'
+import { FilterIcon } from '@/icons/FilterIcon'
+import {
+  ApiResponse,
+  ApiResponseStructure,
+  HttpCodes,
+} from '@/infrastructure/Network/Http/ApiResponse'
+import { LeadCard } from '@/modules/Leads/components/LeadCard'
 
 enum TabsMenuState {
   All = 0,
   Similar = 1,
-  MyRequests = 3,
-  IamExecutant = 4,
+  MyRequests = 2,
+  IamExecutant = 3,
   Favorites = 4,
 }
 
@@ -45,60 +43,51 @@ export default function LeadsPage(): JSX.Element {
   }, [showFilter])
 
   const [tabsManager, setTabsManager] = useState<TabsManager>(new TabsManager())
+  useEffect(() => {
+    tabsManager.setActive(selected)
+  }, [selected, tabsManager])
+
+  const [leadsAll, setLeadsAll] = useState<typeof ApiResponseStructure>()
+  useEffect(() => {
+    const data = leadsGetAll()
+    data.then(async res => {
+      const response = new ApiResponse()
+      const a = response.makeFromString(res)
+
+      if (a.code === HttpCodes.OK) {
+        setLeadsAll(a)
+      }
+    })
+  }, [selected])
+
   tabsManager.setCallback(handleSelect)
-  tabsManager.addItem(
-    new TabMenuItem(
-      'Все',
-      leadsSampleAll.length,
-      <>{renderObject(leadsSampleAll)}</>,
-      (
-        <Search
-          options={[
-            'Сначала агентства',
-            'Сначала PRO',
-            'Сначала самые надежные',
-          ]}
-          placeholder="Поиск"
-          filterIcon={<FilterIcon />}
-          withSort={true}
-          onFilterClick={handleShowFilter}
-        />
-      )
+  tabsManager.addItem(new TabMenuItem('Все'))
+  tabsManager.addItem(new TabMenuItem('Подходящие'))
+  tabsManager.addItem(new TabMenuItem('Мои отклики'))
+  tabsManager.addItem(new TabMenuItem('Я исполнитель'))
+  tabsManager.addItem(new TabMenuItem('Избранное'))
+
+  if (selected === TabsMenuState.All) {
+    const currentItem = tabsManager.getItem(TabsMenuState.All)
+    // @ts-ignore
+    const count = leadsAll?.metadata.pages.items
+
+    currentItem?.updateCount(count)
+    currentItem?.updateMenuFooter(
+      <Search
+        options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
+        placeholder="Поиск"
+        filterIcon={<FilterIcon />}
+        withSort={true}
+        onFilterClick={handleShowFilter}
+      />
     )
-  )
-  tabsManager.addItem(
-    new TabMenuItem(
-      'Подходящие',
-      leadsSampleSimilar.length,
-      <>{renderObject(leadsSampleSimilar)}</>
-    )
-  )
-  tabsManager.addItem(
-    new TabMenuItem(
-      'Мои отклики',
-      leadsSampleMyRequests.length,
-      <>{renderObject(leadsSampleMyRequests)}</>
-    )
-  )
-  tabsManager.addItem(
-    new TabMenuItem(
-      'Я исполнитель',
-      leadsSampleAimExecutant.length,
-      <>{renderObject(leadsSampleAimExecutant)}</>
-    )
-  )
-  tabsManager.addItem(
-    new TabMenuItem(
-      'Избранное',
-      leadsSampleFavorites.length,
-      <>{renderObject(leadsSampleFavorites)}</>
-    )
-  )
+  }
 
   return (
     <>
       <Head>
-        <title>Miraden</title>
+        <title>Miraden - Заявки</title>
       </Head>
       <BlankLayout>
         <Header isAuthorized={isUserAuth} />
@@ -109,7 +98,7 @@ export default function LeadsPage(): JSX.Element {
                 isOpenFilter: showFilter,
               })}
             >
-              <StyledMenu className={cn(tabsManager.getClasses())}>
+              <StyledMenu className={cn('Menu', tabsManager.getClasses())}>
                 <div className={'Menu__header Font_headline_3'}>
                   <h1 className="Font_headline_3">Лента заявок</h1>
                 </div>
@@ -118,11 +107,17 @@ export default function LeadsPage(): JSX.Element {
               </StyledMenu>
 
               <div className="Leads__content">
-                {tabsManager.renderContent(selected)}
-                <Pagination total={10} type={PaginationType.Pages} />
+                {selected == TabsMenuState.All && <>{renderLead(leadsAll)}</>}
+
+                {selected == TabsMenuState.Similar && <>similar</>}
+                {selected == TabsMenuState.MyRequests && <>my requests</>}
+                {selected == TabsMenuState.IamExecutant && <>aim</>}
+                {selected == TabsMenuState.Favorites && <>favorites</>}
               </div>
             </div>
-            {showFilter && renderFilter(handleShowFilter, () => {})}
+            {showFilter &&
+              selected == TabsMenuState.All &&
+              renderFilter(handleShowFilter, () => {})}
           </div>
         </StyledLeads>
       </BlankLayout>
@@ -130,42 +125,86 @@ export default function LeadsPage(): JSX.Element {
   )
 }
 
-function renderObject(data: Array<any>): JSX.Element {
+function renderLead(
+  data: typeof ApiResponseStructure | undefined
+): JSX.Element {
+  const payload = data?.payload as Array<any>
+  if (typeof payload == 'undefined') return <></>
   return (
     <ul className="LeadsList">
-      {data.map((application, index) => (
+      {payload.map((item, index) => (
         <li key={index}>
-          <ObjectCardLarge
-            title={application.title}
-            location={application.location}
-            id={application.id}
-            year={application.year}
-            square={application.square}
-            rooms={application.rooms}
-            sleeps={application.sleeps}
-            baths={application.baths}
-            price={application.price}
-            firstInstallment={application.firstInstallment}
-            firstInstallmentPercent={application.firstInstallmentPercent}
-            yieldCount={application.yieldCount}
-            singleCost={application.singleCost}
-            deal={application.deal}
-            condition={application.condition}
-            type={application.type}
-            purpose={application.purpose}
-            isPublished={application.isPublished}
-            isTrue={application.isTrue}
-            publishedAt={application.publishedAt}
-            requestsCount={application.requestsCount}
-            watched={application.watched}
-            list={application.list}
-            messagesCount={application.messagesCount}
-            href="/applications"
+          <LeadCard
+            id={item.id}
+            title={item.wishes.title}
+            areas={{
+              total: item.areas.total.value,
+              living: item.areas.living.value,
+            }}
+            isTrue={true}
+            createdAt={formatCreatedDate(item.createdAt)}
+            location={item.city.country + ' / ' + item.city.name}
+            isPublished={true}
+            type={typeTranslate(item.type)}
+            status={statusTranslate(item.status)}
+            deadlineAt={formatDeadlineDate(item.deadlineAt)}
+            rooms={item.rooms}
+            purpose={item.purpose}
+            readyDeal={item.readyDeal}
+            rentPeriod={item.rentPeriod}
+            format={item.format}
+            budget={{
+              currency: item.budget.currency.symbol,
+              startFrom: item.budget.startFrom,
+              endTo: item.budget.endAt,
+            }}
+            purchaseType={'purchase'}
           />
         </li>
       ))}
     </ul>
   )
+}
+
+function statusTranslate(val: string): string {
+  switch (val) {
+    case 'secondary':
+      return 'Вторичная'
+    case 'new':
+      return 'Новая'
+    case 'any':
+      return 'Любая'
+  }
+  return ''
+}
+
+function typeTranslate(val: Object): Array<string> {
+  return ['Коммерческая', 'Апартаменты']
+}
+
+function formatDeadlineDate(val: string): string {
+  const date = new Date(val)
+
+  return date.getFullYear().toString()
+}
+
+function formatCreatedDate(val: string): string {
+  const date = new Date(val)
+  const months = [
+    'Января',
+    'Февраля',
+    'Марта',
+    'Апреля',
+    'Мая',
+    'Июня',
+    'Июля',
+    'Августа',
+    'Сентября',
+    'Октября',
+    'Ноября',
+    'Декабря',
+  ]
+  return date.getDate() + ' ' + months[date.getMonth()]
 }
 
 function renderFilter(handler: Function, tabHandler: Function): JSX.Element {
@@ -231,5 +270,6 @@ const StyledLeads = styled.div`
     background: #fff;
     border-radius: 10px;
     padding: 10px;
+    margin-top: 20px;
   }
 `

@@ -54,7 +54,6 @@ const StyledTag = styled.div`
   position: relative;
   display: flex;
   height: 30px;
-  margin-bottom: 20px;
 
   .TagsItem {
     display: flex;

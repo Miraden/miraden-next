@@ -1,37 +1,44 @@
 import styled from 'styled-components'
 import { Button } from '@/components/ui/Button'
 import cn from 'classnames'
-import { publicDecrypt, randomInt } from 'crypto'
 
 const baseClassName = 'TabsMenu'
 
 class TabMenuItem {
   private readonly label: string
-  private readonly count: number
-  private readonly content: JSX.Element
-  private readonly menuFooter?: JSX.Element
+  private count: number
+  private readonly content?: JSX.Element
+  private menuFooter?: JSX.Element
   private readonly isDisabled: boolean
 
   constructor(
     label: string,
-    count: number,
-    content: JSX.Element,
-    menuFooter?: JSX.Element,
+    count?: number,
+    content?: JSX.Element | undefined,
+    menuFooter?: JSX.Element | undefined,
     isDisabled: boolean = false
   ) {
     this.label = label
     this.content = content
-    this.count = count
+    this.count = count || 0
     this.isDisabled = isDisabled
     this.menuFooter = menuFooter
   }
 
-  getContent(): JSX.Element {
+  getContent(): JSX.Element | undefined {
     return this.content
+  }
+
+  public updateCount(val: number): void {
+    this.count = val
   }
 
   getMenuFooter(): JSX.Element | undefined {
     return this.menuFooter
+  }
+
+  public updateMenuFooter(node: JSX.Element): void {
+    this.menuFooter = node
   }
 
   getMenu(id: number, active: boolean = false): JSX.Element {
@@ -79,9 +86,9 @@ class TabsManager {
     theme: Themes = Themes.Light,
     type: Types = Types.Classic
   ) {
+    this.activeId = 0
     this.items = []
     this.onClick = callback
-    this.activeId = 0
     this.theme = theme
     this.type = type
     this.classes = ''
@@ -89,6 +96,10 @@ class TabsManager {
 
   public setCallback(callback: Function): void {
     this.onClick = callback
+  }
+
+  public setActive(val: number): void {
+    this.activeId = val
   }
 
   public addItem(item: TabMenuItem) {
@@ -104,6 +115,10 @@ class TabsManager {
     if (isExists) return
 
     this.items.push(item)
+  }
+
+  public getItem(selected: number): TabMenuItem | undefined {
+    return this.items.at(selected)
   }
 
   public renderMenus(selected: number) {
@@ -138,12 +153,6 @@ class TabsManager {
     const items = this.getFooterItems()
     const item = items.at(selected)
 
-    if (item) {
-      this.classes = 'Menu_has_footer'
-    } else {
-      this.classes = ''
-    }
-
     return <>{item}</>
   }
 
@@ -167,7 +176,16 @@ class TabsManager {
     )
   }
 
+  public appendClass(val: string): void {
+    this.classes = this.classes + ' ' + val
+  }
+
   public getClasses(): string {
+    if (this.isTabHasFooter()) {
+      this.classes = 'Menu_has_footer'
+    } else {
+      this.classes = ''
+    }
     return this.classes
   }
 
@@ -189,6 +207,14 @@ class TabsManager {
     return this.items.map((i: TabMenuItem, idx: number) => {
       return i.getMenuFooter()
     })
+  }
+
+  private isTabHasFooter(): boolean {
+    const selected = this.activeId
+    const items = this.getFooterItems()
+    const item = items.at(selected)
+
+    return !!item
   }
 }
 
@@ -387,6 +413,17 @@ const StyledMenu = styled.div`
   .Search__menu {
     outline: none;
     padding: 0;
+
+    &:hover {
+      outline: none;
+    }
+
+    .Search__input {
+      outline: none;
+      &:hover {
+        outline: none;
+      }
+    }
   }
 
   .Menu__header {

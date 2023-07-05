@@ -1,6 +1,6 @@
-interface ApiResponseStructure {
+interface ApiResponseType {
   code: number
-  payload?: object | null
+  payload?: object | null | Array<any>
   errors?: object | null
   metadata?: object | null
 }
@@ -14,7 +14,7 @@ enum HttpCodes {
   INTERNAL_SERVER_ERROR = 500,
 }
 
-const defaultResponse: ApiResponseStructure = {
+const ApiResponseStructure: ApiResponseType = {
   code: 0,
   payload: null,
   errors: null,
@@ -25,8 +25,8 @@ class ApiResponse {
   constructor() {
   }
 
-  makeFromString(json: object): ApiResponseStructure {
-    return Object.assign(defaultResponse, json)
+  makeFromString(json: object): typeof ApiResponseStructure {
+    return Object.assign(ApiResponseStructure, json)
   }
 }
 
@@ -59,4 +59,4 @@ function codeFromNumber(code: number): HttpCodes {
   return result
 }
 
-export {ApiResponse, HttpCodes}
+export {ApiResponse, HttpCodes, ApiResponseStructure}
