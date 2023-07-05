@@ -6,16 +6,11 @@ import AuthManager from '@/modules/Security/Authentication/AuthManager'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import cn from 'classnames'
 import styled from 'styled-components'
-import { leadsGetAll, leadsSampleAll } from '@/modules/Leads/LeadsProvider'
 import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
-import { Search } from '@/components/ui'
-import { FilterIcon } from '@/icons/FilterIcon'
 import {
-  ApiResponse,
-  ApiResponseStructure,
-  HttpCodes,
-} from '@/infrastructure/Network/Http/ApiResponse'
-import { LeadCard } from '@/modules/Leads/components/LeadCard'
+  LeadsAllProvider,
+  LeadsFavoritesProvider,
+} from '@/modules/Leads/LeadsProvider'
 
 enum TabsMenuState {
   All = 0,
@@ -47,19 +42,6 @@ export default function LeadsPage(): JSX.Element {
     tabsManager.setActive(selected)
   }, [selected, tabsManager])
 
-  const [leadsAll, setLeadsAll] = useState<typeof ApiResponseStructure>()
-  useEffect(() => {
-    const data = leadsGetAll()
-    data.then(async res => {
-      const response = new ApiResponse()
-      const a = response.makeFromString(res)
-
-      if (a.code === HttpCodes.OK) {
-        setLeadsAll(a)
-      }
-    })
-  }, [selected])
-
   tabsManager.setCallback(handleSelect)
   tabsManager.addItem(new TabMenuItem('Все'))
   tabsManager.addItem(new TabMenuItem('Подходящие'))
@@ -67,22 +49,30 @@ export default function LeadsPage(): JSX.Element {
   tabsManager.addItem(new TabMenuItem('Я исполнитель'))
   tabsManager.addItem(new TabMenuItem('Избранное'))
 
-  if (selected === TabsMenuState.All) {
-    const currentItem = tabsManager.getItem(TabsMenuState.All)
-    // @ts-ignore
-    const count = leadsAll?.metadata.pages.items
+  const [leadsAllProvider, setLeadsProvider] = useState<LeadsAllProvider>(
+    new LeadsAllProvider()
+  )
+  const [leadsFavoritesProvider, setFavoritesProvider] =
+    useState<LeadsFavoritesProvider>(new LeadsFavoritesProvider())
+  const [leadsAllData, setLeadsAllData] = useState<Object>([])
+  const [leadsFavoriteData, setLeadsFavoriteData] = useState<Object>([])
+  useEffect(() => {
+    if (selected == TabsMenuState.All) {
+      leadsAllProvider.fetchData().then(res => {
+        setLeadsAllData(res)
+        leadsAllProvider.setIsFinished(true)
+        leadsAllProvider.setFetchedData(res)
+      })
+    }
 
-    currentItem?.updateCount(count)
-    currentItem?.updateMenuFooter(
-      <Search
-        options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
-        placeholder="Поиск"
-        filterIcon={<FilterIcon />}
-        withSort={true}
-        onFilterClick={handleShowFilter}
-      />
-    )
-  }
+    if (selected == TabsMenuState.Favorites) {
+      leadsFavoritesProvider.fetchData().then(res => {
+        setLeadsFavoriteData(res)
+        leadsFavoritesProvider.setIsFinished(true)
+        leadsFavoritesProvider.setFetchedData(res)
+      })
+    }
+  }, [leadsAllProvider, leadsFavoritesProvider, selected])
 
   return (
     <>
@@ -107,12 +97,16 @@ export default function LeadsPage(): JSX.Element {
               </StyledMenu>
 
               <div className="Leads__content">
-                {selected == TabsMenuState.All && <>{renderLead(leadsAll)}</>}
+                {selected == TabsMenuState.All && (
+                  <>{leadsAllProvider.render()}</>
+                )}
 
                 {selected == TabsMenuState.Similar && <>similar</>}
                 {selected == TabsMenuState.MyRequests && <>my requests</>}
                 {selected == TabsMenuState.IamExecutant && <>aim</>}
-                {selected == TabsMenuState.Favorites && <>favorites</>}
+                {selected == TabsMenuState.Favorites && (
+                  <>{leadsFavoritesProvider.render()}</>
+                )}
               </div>
             </div>
             {showFilter &&
@@ -123,88 +117,6 @@ export default function LeadsPage(): JSX.Element {
       </BlankLayout>
     </>
   )
-}
-
-function renderLead(
-  data: typeof ApiResponseStructure | undefined
-): JSX.Element {
-  const payload = data?.payload as Array<any>
-  if (typeof payload == 'undefined') return <></>
-  return (
-    <ul className="LeadsList">
-      {payload.map((item, index) => (
-        <li key={index}>
-          <LeadCard
-            id={item.id}
-            title={item.wishes.title}
-            areas={{
-              total: item.areas.total.value,
-              living: item.areas.living.value,
-            }}
-            isTrue={true}
-            createdAt={formatCreatedDate(item.createdAt)}
-            location={item.city.country + ' / ' + item.city.name}
-            isPublished={true}
-            type={typeTranslate(item.type)}
-            status={statusTranslate(item.status)}
-            deadlineAt={formatDeadlineDate(item.deadlineAt)}
-            rooms={item.rooms}
-            purpose={item.purpose}
-            readyDeal={item.readyDeal}
-            rentPeriod={item.rentPeriod}
-            format={item.format}
-            budget={{
-              currency: item.budget.currency.symbol,
-              startFrom: item.budget.startFrom,
-              endTo: item.budget.endAt,
-            }}
-            purchaseType={'purchase'}
-          />
-        </li>
-      ))}
-    </ul>
-  )
-}
-
-function statusTranslate(val: string): string {
-  switch (val) {
-    case 'secondary':
-      return 'Вторичная'
-    case 'new':
-      return 'Новая'
-    case 'any':
-      return 'Любая'
-  }
-  return ''
-}
-
-function typeTranslate(val: Object): Array<string> {
-  return ['Коммерческая', 'Апартаменты']
-}
-
-function formatDeadlineDate(val: string): string {
-  const date = new Date(val)
-
-  return date.getFullYear().toString()
-}
-
-function formatCreatedDate(val: string): string {
-  const date = new Date(val)
-  const months = [
-    'Января',
-    'Февраля',
-    'Марта',
-    'Апреля',
-    'Мая',
-    'Июня',
-    'Июля',
-    'Августа',
-    'Сентября',
-    'Октября',
-    'Ноября',
-    'Декабря',
-  ]
-  return date.getDate() + ' ' + months[date.getMonth()]
 }
 
 function renderFilter(handler: Function, tabHandler: Function): JSX.Element {
@@ -258,6 +170,8 @@ const StyledLeads = styled.div`
     flex-direction: column;
     gap: 10px;
     margin-top: 20px;
+    position: relative;
+    min-height: 200px;
   }
 
   .Leads__content {

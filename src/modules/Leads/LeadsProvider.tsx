@@ -2,339 +2,218 @@ import {
   ApiRequest,
   ApiRequestMethods,
 } from '@/infrastructure/Network/Http/ApiRequest'
+import {
+  ApiResponse,
+  ApiResponseStructure,
+} from '@/infrastructure/Network/Http/ApiResponse'
+import React from 'react'
+import { LeadCard } from '@/modules/Leads/components/LeadCard'
+import Image from 'next/image'
+import { Button } from '@/components/ui'
 
-const leadsSampleAll = {
-  payload: [
-    {
-      id: 1,
-      createdAt: '2023-04-07 18:34:04',
-      locationDistance: 10,
-      format: 'buy',
-      status: 'secondary',
-      deadlineAt: '2023-04-07 20:10:45',
-      areas: {
-        total: {
-          value: 10,
-          unit: 'м²',
-        },
-        living: {
-          value: 1,
-          unit: 'м²',
-        },
-      },
-      rooms: {
-        total: 3,
-        beds: 2,
-        bathroom: 1,
-      },
-      purpose: 'rent',
-      readyDeal: 'monthOne',
-      rentPeriod: '2023-04-07 20:10:45',
-      purchaseType: 'any',
-      wishes: {
-        title: 'title',
-        text: 'some description',
-      },
-      paidOptions: {
-        accessAny: false,
-        pin: false,
-        autoTop: false,
-      },
-      isHidden: false,
-      tags: ['buy', 'commercial/apartments', 'secondary', 'rent'],
-      type: {
-        commercial: 'apartments',
-      },
-      city: {
-        id: 3,
-        name: 'Ларнака',
-        country: 'Кипр',
-      },
-      budget: {
-        startFrom: 10,
-        endAt: 20,
-        currency: {
-          id: 3,
-          code: 'RUB',
-          symbol: '₽',
-        },
-      },
-    },
-    {
-      id: 1,
-      createdAt: '2023-04-07 18:34:04',
-      locationDistance: 10,
-      format: 'buy',
-      status: 'secondary',
-      deadlineAt: '2023-04-07 20:10:45',
-      areas: {
-        total: {
-          value: 10,
-          unit: 'м²',
-        },
-        living: {
-          value: 1,
-          unit: 'м²',
-        },
-      },
-      rooms: {
-        total: 3,
-        beds: 2,
-        bathroom: 1,
-      },
-      purpose: 'rent',
-      readyDeal: 'monthOne',
-      rentPeriod: '2023-04-07 20:10:45',
-      purchaseType: 'any',
-      wishes: {
-        title: 'title',
-        text: 'some description',
-      },
-      paidOptions: {
-        accessAny: false,
-        pin: false,
-        autoTop: false,
-      },
-      isHidden: false,
-      tags: ['buy', 'commercial/apartments', 'secondary', 'rent'],
-      type: {
-        commercial: 'apartments',
-      },
-      city: {
-        id: 3,
-        name: 'Ларнака',
-        country: 'Кипр',
-      },
-      budget: {
-        startFrom: 10,
-        endAt: 20,
-        currency: {
-          id: 3,
-          code: 'RUB',
-          symbol: '₽',
-        },
-      },
-    },
-    {
-      id: 1,
-      createdAt: '2023-04-07 18:34:04',
-      locationDistance: 10,
-      format: 'buy',
-      status: 'secondary',
-      deadlineAt: '2023-04-07 20:10:45',
-      areas: {
-        total: {
-          value: 10,
-          unit: 'м²',
-        },
-        living: {
-          value: 1,
-          unit: 'м²',
-        },
-      },
-      rooms: {
-        total: 3,
-        beds: 2,
-        bathroom: 1,
-      },
-      purpose: 'rent',
-      readyDeal: 'monthOne',
-      rentPeriod: '2023-04-07 20:10:45',
-      purchaseType: 'any',
-      wishes: {
-        title: 'title',
-        text: 'some description',
-      },
-      paidOptions: {
-        accessAny: false,
-        pin: false,
-        autoTop: false,
-      },
-      isHidden: false,
-      tags: ['buy', 'commercial/apartments', 'secondary', 'rent'],
-      type: {
-        commercial: 'apartments',
-      },
-      city: {
-        id: 3,
-        name: 'Ларнака',
-        country: 'Кипр',
-      },
-      budget: {
-        startFrom: 10,
-        endAt: 20,
-        currency: {
-          id: 3,
-          code: 'RUB',
-          symbol: '₽',
-        },
-      },
-    },
-  ],
-  metadata: {
-    pages: {
-      total: 1,
-      current: 1,
-      items: 3,
-    },
-  },
+class LeadsAllProvider {
+  private isFetchCompleted: boolean
+  private data?: typeof ApiResponseStructure | null
+  private payload: Array<any>
+
+  constructor() {
+    this.isFetchCompleted = false
+    this.data = null
+    this.payload = []
+  }
+
+  public fetchData(): Promise<any> {
+    return leadsGetAll()
+  }
+
+  public setFetchedData(data: typeof ApiResponseStructure): void {
+    this.data = data
+    if (typeof data.payload == 'object') {
+      this.payload = data.payload as Array<any>
+    }
+  }
+
+  public setIsFinished(val: boolean): void {
+    this.isFetchCompleted = val
+  }
+
+  public render(): JSX.Element {
+    if (!this.isFetchCompleted) {
+      return <ul className="LeadsList">Loading...</ul>
+    }
+
+    if (this.payload.length == 0) {
+      return renderEmptyLeads()
+    }
+    return renderLead(this.payload)
+  }
 }
 
-const leadsSampleSimilar = [
-  {
-    title: 'Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ',
-    location: 'Кипр / Лимассол / Все районы',
-    id: '1445',
-    price: '158 000 – 230 000',
-    year: '2022',
-    square: '294 м²',
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    yieldCount: 8,
-    firstInstallment: '12000 €',
-    firstInstallmentPercent: '20%',
-    singleCost: '120 €',
-    deal: 'Покупка',
-    type: 'Жилая | Квартира / апартаменты',
-    condition: 'Новая',
-    purpose: 'Для инвестиций (сдавать в аренду)',
-    isPublished: true,
-    isTrue: true,
-    publishedAt: 'Создана 12 января',
-    requestsCount: 5,
-    watched: 264,
-    list: 1268,
-  },
-]
+class LeadsFavoritesProvider {
+  private isFetchCompleted: boolean
+  private data?: typeof ApiResponseStructure | null
+  private payload: Array<any>
 
-const leadsSampleMyRequests = [
-  {
-    title: 'Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ',
-    location: 'Кипр / Лимассол / Все районы',
-    id: '1445',
-    price: '158 000 – 230 000',
-    year: '2022',
-    square: '294 м²',
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    yieldCount: 8,
-    firstInstallment: '12000 €',
-    firstInstallmentPercent: '20%',
-    singleCost: '120 €',
-    deal: 'Покупка',
-    type: 'Жилая | Квартира / апартаменты',
-    condition: 'Новая',
-    purpose: 'Для инвестиций (сдавать в аренду)',
-    isPublished: true,
-    isTrue: true,
-    publishedAt: 'Создана 12 января',
-    watched: 264,
-    list: 1268,
-    messagesCount: 10,
-  },
-]
+  constructor() {
+    this.isFetchCompleted = false
+    this.data = null
+    this.payload = []
+  }
 
-const leadsSampleAimExecutant = [
-  {
-    title: 'Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ',
-    location: 'Кипр / Лимассол / Все районы',
-    id: '1445',
-    price: '158 000 – 230 000',
-    year: '2022',
-    square: '294 м²',
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    yieldCount: 8,
-    firstInstallment: '12000 €',
-    firstInstallmentPercent: '20%',
-    singleCost: '120 €',
-    deal: 'Покупка',
-    type: 'Жилая | Квартира / апартаменты',
-    condition: 'Новая',
-    purpose: 'Для инвестиций (сдавать в аренду)',
-    isPublished: true,
-    isTrue: false,
-    publishedAt: 'Создана 12 января',
-    watched: 264,
-    list: 1268,
-  },
-  {
-    title: 'Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ',
-    location: 'Кипр / Лимассол / Все районы',
-    id: '1445',
-    price: '158 000 – 230 000',
-    year: '2022',
-    square: '294 м²',
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    yieldCount: 8,
-    firstInstallment: '12000 €',
-    firstInstallmentPercent: '20%',
-    singleCost: '120 €',
-    deal: 'Покупка',
-    type: 'Жилая | Квартира / апартаменты',
-    condition: 'Новая',
-    purpose: 'Для инвестиций (сдавать в аренду)',
-    isPublished: true,
-    isTrue: true,
-    publishedAt: 'Создана 12 января',
-    requestsCount: 5,
-    watched: 264,
-    list: 1268,
-  },
-]
+  public fetchData(): Promise<any> {
+    return leadsGetFavorites()
+  }
 
-const leadsSampleFavorites = [
-  {
-    title: 'Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ',
-    location: 'Кипр / Лимассол / Все районы',
-    id: '1445',
-    price: '158 000 – 230 000',
-    year: '2022',
-    square: '294 м²',
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    yieldCount: 8,
-    firstInstallment: '12000 €',
-    firstInstallmentPercent: '20%',
-    singleCost: '120 €',
-    deal: 'Покупка',
-    type: 'Жилая | Квартира / апартаменты',
-    condition: 'Новая',
-    purpose: 'Для инвестиций (сдавать в аренду)',
-    isPublished: true,
-    isTrue: true,
-    publishedAt: 'Создана 12 января',
-    watched: 264,
-    list: 1268,
-    messagesCount: 10,
-  },
-]
+  public setFetchedData(data: typeof ApiResponseStructure): void {
+    this.data = data
+    if (typeof data.payload == 'object') {
+      this.payload = data.payload as Array<any>
+    }
+  }
+
+  public setIsFinished(val: boolean): void {
+    this.isFetchCompleted = val
+  }
+
+  public render(): JSX.Element {
+    if (!this.isFetchCompleted) {
+      return <ul className="LeadsList">Loading...</ul>
+    }
+
+    if (this.payload.length == 0) {
+      return renderEmptyLeads()
+    }
+    return renderLead(this.payload)
+  }
+}
+
+function renderEmptyLeads(): JSX.Element {
+  return (
+    <>
+      <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
+      <h2>Нет созданных заявок</h2>
+      <p className="Color_text_grey">Но вы можете сделать это прямо сейчас! </p>
+      <Button className="CreateApp__button" compact>
+        Создать заявку
+      </Button>
+    </>
+  )
+}
 
 async function leadsGetAll(): Promise<any> {
   const apiRequest: ApiRequest = new ApiRequest()
   const headers: HeadersInit = {
     'Content-Type': 'application/x-www-form-urlencoded',
-    "Authorization": 'Bearer ' + localStorage.getItem('token')
+    Authorization: 'Bearer ' + localStorage.getItem('token'),
   }
 
-  return apiRequest.fetch({
-    method: ApiRequestMethods.GET,
-    headers: headers,
-    endpoint: "/leads",
-  })
+  return apiRequest
+    .fetch({
+      method: ApiRequestMethods.GET,
+      headers: headers,
+      endpoint: '/leads',
+    })
+    .then(async res => {
+      const response = new ApiResponse()
+      return response.makeFromString(res)
+    })
 }
 
-export {
-  leadsSampleAll,
-  leadsSampleAimExecutant,
-  leadsSampleFavorites,
-  leadsSampleMyRequests,
-  leadsSampleSimilar,
-  leadsGetAll
+async function leadsGetFavorites(): Promise<any> {
+  const apiRequest: ApiRequest = new ApiRequest()
+  const headers: HeadersInit = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    Authorization: 'Bearer ' + localStorage.getItem('token'),
+  }
+
+  return apiRequest
+    .fetch({
+      method: ApiRequestMethods.GET,
+      headers: headers,
+      endpoint: '/leads/favorites',
+    })
+    .then(async res => {
+      const response = new ApiResponse()
+      return response.makeFromString(res)
+    })
 }
+
+function statusTranslate(val: string): string {
+  switch (val) {
+    case 'secondary':
+      return 'Вторичная'
+    case 'new':
+      return 'Новая'
+    case 'any':
+      return 'Любая'
+  }
+  return ''
+}
+
+function typeTranslate(val: Object): Array<string> {
+  return ['Коммерческая', 'Апартаменты']
+}
+
+function formatDeadlineDate(val: string): string {
+  const date = new Date(val)
+
+  return date.getFullYear().toString()
+}
+
+function formatCreatedDate(val: string): string {
+  const date = new Date(val)
+  const months = [
+    'Января',
+    'Февраля',
+    'Марта',
+    'Апреля',
+    'Мая',
+    'Июня',
+    'Июля',
+    'Августа',
+    'Сентября',
+    'Октября',
+    'Ноября',
+    'Декабря',
+  ]
+  return date.getDate() + ' ' + months[date.getMonth()]
+}
+
+function renderLead(data: Array<any>): JSX.Element {
+  return (
+    <ul className="LeadsList">
+      {data.map((item, index) => (
+        <li key={index}>
+          <LeadCard
+            id={item.id}
+            title={item.wishes.title}
+            areas={{
+              total: item.areas.total.value,
+              living: item.areas.living.value,
+            }}
+            isTrue={true}
+            createdAt={formatCreatedDate(item.createdAt)}
+            location={item.city.country + ' / ' + item.city.name}
+            isPublished={true}
+            type={typeTranslate(item.type)}
+            status={statusTranslate(item.status)}
+            deadlineAt={formatDeadlineDate(item.deadlineAt)}
+            rooms={item.rooms}
+            purpose={item.purpose}
+            readyDeal={item.readyDeal}
+            rentPeriod={item.rentPeriod}
+            format={item.format}
+            budget={{
+              currency: item.budget.currency.symbol,
+              startFrom: item.budget.startFrom,
+              endTo: item.budget.endAt,
+            }}
+            purchaseType={'purchase'}
+          />
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+export { leadsGetFavorites, leadsGetAll, LeadsAllProvider, LeadsFavoritesProvider }
