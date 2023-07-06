@@ -9,7 +9,7 @@ import {
 import React from 'react'
 import { LeadCard } from '@/modules/Leads/components/LeadCard'
 import Image from 'next/image'
-import { Button } from '@/components/ui'
+import { Button, Link as CustomLink } from '@/components/ui'
 
 class LeadsAllProvider {
   private isFetchCompleted: boolean
@@ -40,6 +40,17 @@ class LeadsAllProvider {
   public render(): JSX.Element {
     if (!this.isFetchCompleted) {
       return <ul className="LeadsList">Loading...</ul>
+    }
+
+    if (isSessionExpired(this.data)) {
+      return (
+        <>
+          Session expired
+          <CustomLink href="/user/login" underlined>
+            Relogin
+          </CustomLink>
+        </>
+      )
     }
 
     if (this.payload.length == 0) {
@@ -80,11 +91,35 @@ class LeadsFavoritesProvider {
       return <ul className="LeadsList">Loading...</ul>
     }
 
+    if (isSessionExpired(this.data)) {
+      return (
+        <>
+          Session expired
+          <CustomLink href="/user/login" underlined>
+            Relogin
+          </CustomLink>
+        </>
+      )
+    }
+
     if (this.payload.length == 0) {
       return renderEmptyLeads()
     }
     return renderLead(this.payload)
   }
+}
+
+function isSessionExpired(
+  data: typeof ApiResponseStructure | null | undefined
+): boolean {
+  if (!data) return false
+  if (!data.errors) return false
+
+  if ('security' in data.errors) {
+    return data.errors.security === 'Expired JWT token'
+  }
+
+  return false
 }
 
 function renderEmptyLeads(): JSX.Element {
@@ -216,4 +251,9 @@ function renderLead(data: Array<any>): JSX.Element {
   )
 }
 
-export { leadsGetFavorites, leadsGetAll, LeadsAllProvider, LeadsFavoritesProvider }
+export {
+  leadsGetFavorites,
+  leadsGetAll,
+  LeadsAllProvider,
+  LeadsFavoritesProvider,
+}

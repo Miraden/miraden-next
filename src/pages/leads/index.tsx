@@ -20,10 +20,11 @@ enum TabsMenuState {
   Favorites = 4,
 }
 
+const authManger = new AuthManager()
+
 export default function LeadsPage(): JSX.Element {
   const [isUserAuth, setUserAuth] = useState(false)
   useEffect(() => {
-    const authManger = new AuthManager()
     setUserAuth(authManger.isUserHasToken())
   }, [isUserAuth])
 
