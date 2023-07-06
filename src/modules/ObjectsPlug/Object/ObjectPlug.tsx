@@ -103,7 +103,7 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
                 className="Menu__header_backArrow"
               />
             </Button>
-            <h1 className="Font_headline_3">Мои заявки</h1>
+            <h1 className="Font_headline_3">Мои объекты</h1>
           </div>
           {tabsManager.renderMenus(selected)}
           {tabsManager.renderMenuFooter(selected)}
