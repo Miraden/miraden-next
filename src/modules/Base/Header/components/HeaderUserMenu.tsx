@@ -19,10 +19,10 @@ const HeaderUserMenu = () => {
             href="/chats-all"
           ></Button>
           <Button
-            href="/favourites-full"
+            href="/favorites"
             header
             className="HeaderUserMenu__linkButton"
-            active={currentUrl.includes("favourites")}
+            active={currentUrl === '/favorites'}
             leftIcon={<StarIcon attr={{className: "HeaderUserMenu__favorites"}} />}
           ></Button>
           <Button
@@ -30,7 +30,7 @@ const HeaderUserMenu = () => {
             className="HeaderUserMenu__linkButton"
             leftIcon={<WalletIcon />}
           >
-            0 €
+            0 €
           </Button>
         </div>
 

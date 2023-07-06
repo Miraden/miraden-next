@@ -8,61 +8,11 @@ import Image from 'next/image'
 import React, { useCallback, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
+import { ObjectsDataProvider } from '@/modules/Objects/ObjectsDataProvider'
 
 interface ApplicationProps {
   className?: string
 }
-
-const objectsArray = [
-  {
-    title: '3-х комнатная квартира на Кипре для ВНЖ',
-    location: 'Северный Кипр',
-    id: '1445',
-    cashBack: 6,
-    yieldCount: 8,
-    year: '2022',
-    square: '294',
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    price: '158 000',
-    status: 'Собственник',
-    name: 'Анастасия Петрова',
-    image: '/images/avatar.jpg',
-    isBooked: false,
-    isUnpublished: false,
-    image1: '/images/img.jpg',
-    image2: '/images/img.jpg',
-    image3: '/images/img.jpg',
-    firstInstallment: '34 000 $',
-    singleCost: '1 200 $',
-    firstInstallmentPercent: '30 %',
-  },
-  {
-    title: '3-х комнатная квартира на Кипре для ВНЖ',
-    location: 'Северный Кипр',
-    id: '1445',
-    cashBack: 6,
-    yieldCount: 8,
-    year: '2022',
-    square: '294',
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    price: '158 000',
-    status: 'Собственник',
-    name: 'Анастасия Петрова',
-    image: '/images/avatar.jpg',
-    isBooked: true,
-    isUnpublished: false,
-    image1: '/images/img.jpg',
-    image2: '/images/img.jpg',
-    image3: '/images/img.jpg',
-    firstInstallment: '34 000 $',
-    singleCost: '1 200 $',
-    firstInstallmentPercent: '30 %',
-  },
-]
 
 enum TabsMenuState {
   Objects = 0,
@@ -197,7 +147,7 @@ const Favourites = ({ className }: ApplicationProps) => {
 function renderObjects(): JSX.Element {
   return (
     <ul className="ApplicationsList">
-      {objectsArray.map((object, index) => (
+      {ObjectsDataProvider.map((object, index) => (
         <li key={index}>
           <ObjectCard
             title={object.title}

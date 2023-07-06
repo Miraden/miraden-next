@@ -3,11 +3,11 @@ import { FavouritesFullLayout } from '@/modules/FavouritesFull/FavouritesFullLay
 import Head from 'next/head'
 import styled from 'styled-components'
 
-export default function FavouritesFullPage() {
+export default function FavoritesPage() {
   return (
     <>
       <Head>
-        <title>Miraden</title>
+        <title>Miraden - Избранное</title>
       </Head>
       <StyledMainApplications>
         <Header isAuthorized />
