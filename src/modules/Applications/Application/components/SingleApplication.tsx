@@ -26,7 +26,7 @@ interface Props {
 
 const currencyOptions = ["€", "$", "£", "₽"];
 
-let price = "158 000 – 230 000 ";
+let price = "158 000 – 230 000 ";
 let yieldCount = 8;
 let firstInstallment = "30";
 
@@ -58,7 +58,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__headDropdown">
           <p className="Color_text_disabled">
-            <span>Создана</span> 12 января <span>, 12:09</span>
+            <span>Создана</span> 12 января <span>, 12:09</span>
           </p>
           <Button
             tertiary
@@ -113,7 +113,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         <div className="SingleApplication__structureInfoContent">
           <BuildYearIcon width={18} height={18} />
           <div>
-            <p className="Font_24_120">294 м²</p>
+            <p className="Font_24_120">294 м²</p>
             <p className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Год постройки</p>
           </div>
         </div>
@@ -127,7 +127,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         <div className="SingleApplication__structureInfoContent">
           <LivingSquareIcon width={18} height={18} />
           <div>
-            <p className="Font_24_120">194 м²</p>
+            <p className="Font_24_120">194 м²</p>
             <p className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Жилая площадь</p>
           </div>
         </div>{" "}

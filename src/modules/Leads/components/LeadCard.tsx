@@ -62,7 +62,7 @@ const LeadCard = (props: LeadProps) => {
       </div>
       <div className="Leads__head">
         <h5 className={'Font_headline_5'}>
-          <Link href={'/leads/' + props.id.toString()}>{props.title}</Link>
+          <Link href={'/lead/' + props.id.toString()}>{props.title}</Link>
         </h5>
       </div>
       <div className="Leads__location Font_body_alt">
@@ -144,11 +144,6 @@ const LeadCard = (props: LeadProps) => {
       </div>
     </StyledLeads>
   )
-}
-
-function formatCreatedAt(date: string): string {
-  const d = new Date(date)
-  return ''
 }
 
 const StyledLeads = styled.div`

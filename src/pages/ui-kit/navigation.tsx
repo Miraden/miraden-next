@@ -59,11 +59,11 @@ function renderClassic(
   handleSelectDark: Function
 ): JSX.Element {
   const tabsManager = new TabsManager(handleSelect, Themes.Light, Types.Classic)
-  tabsManager.addItem(new TabMenuItem('Tab classic', 0, <div>first</div>))
-  tabsManager.addItem(new TabMenuItem('Tab classic', 1, <div>second</div>))
-  tabsManager.addItem(new TabMenuItem('Tab classic', 4, <div>archived</div>))
+  tabsManager.addItem(new TabMenuItem('Tab classic 1', 0, <div>first</div>))
+  tabsManager.addItem(new TabMenuItem('Tab classic 2', 1, <div>second</div>))
+  tabsManager.addItem(new TabMenuItem('Tab classic 3', 4, <div>archived</div>))
   tabsManager.addItem(
-    new TabMenuItem('Tab classic', 4, <div>disabled</div>, <></>, true)
+    new TabMenuItem('Tab classic 4', 4, <div>disabled</div>, <></>, true)
   )
 
   const tabsManagerDark = new TabsManager(
@@ -71,8 +71,8 @@ function renderClassic(
     Themes.Dark,
     Types.Classic
   )
-  tabsManagerDark.addItem(new TabMenuItem('Tab classic', 1, <div>first</div>))
-  tabsManagerDark.addItem(new TabMenuItem('Tab classic', 1, <div>second</div>))
+  tabsManagerDark.addItem(new TabMenuItem('Tab classic 1', 1, <div>first</div>))
+  tabsManagerDark.addItem(new TabMenuItem('Tab classic 2', 1, <div>second</div>))
   tabsManagerDark.addItem(
     new TabMenuItem('Tab classic', 1, <div>disabled</div>, <></>, true)
   )
@@ -82,6 +82,7 @@ function renderClassic(
       <h3 className={'Font_Accent_20_B NavSectionHeadline'}>{'Tab Classic'}</h3>
       <div>
         {tabsManager.renderMenus(selected)}
+        {tabsManager.renderMenuFooter(selected)}
         {tabsManager.renderContent(selected)}
       </div>
       <div>
@@ -98,8 +99,8 @@ function renderTabs(selected: number, selectedButtons: Function): JSX.Element {
     Themes.Light,
     Types.Buttons
   )
-  tabsManager.addItem(new TabMenuItem('Text', 0, <div>first</div>))
-  tabsManager.addItem(new TabMenuItem('Text', 0, <div>second</div>))
+  tabsManager.addItem(new TabMenuItem('Text 1', 0, <div>first</div>))
+  tabsManager.addItem(new TabMenuItem('Text 2', 0, <div>second</div>))
 
   return (
     <>
