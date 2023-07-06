@@ -38,18 +38,18 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
             href="/leads"
             leftIcon={<ListIcon />}
             className="Header__navButton"
-            active={currentUrl.includes("leads")}
+            active={currentUrl === '/leads'}
           >
             лента заявок
           </Button>
           {isAuthorized ? (
             <>
               <Button
-                href="/applications-full"
+                href="/leads/my"
                 header
                 leftIcon={<ApplicationsListIcon />}
                 className={cn("Header__navButton")}
-                active={currentUrl.includes("application")}
+                active={currentUrl === '/leads/my'}
               >
                 мои заявки
               </Button>

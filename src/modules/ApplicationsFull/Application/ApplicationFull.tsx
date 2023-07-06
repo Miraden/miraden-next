@@ -151,7 +151,7 @@ function renderTabAll() {
             watched={application.watched}
             list={application.list}
             messagesCount={application.messagesCount}
-            href="/applications"
+            href="/lead/1"
           />
         </li>
       ))}
