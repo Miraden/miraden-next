@@ -9,6 +9,8 @@ import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
 import { FilterIcon } from '@/icons/FilterIcon'
 import { Search } from '@/components/ui'
 import { ObjectCardLarge } from '@/modules/FavouritesFull/Favourites/components/ObjectCardLarge'
+import { ObjectsDataProvider } from '@/modules/Objects/ObjectsDataProvider'
+import { ObjectCard } from '@/modules/Applications/Application/components/ObjectCard'
 
 enum TabsMenuState {
   All = 0,
@@ -74,8 +76,12 @@ export default function MyObjectsPage(): JSX.Element {
               </StyledMenu>
               <div className="Objects__content">
                 {selected == TabsMenuState.All && <>{renderObjectsList()}</>}
-                {selected == TabsMenuState.Published && <>{renderObjectsList()}</>}
-                {selected == TabsMenuState.Archived && <>{renderObjectsList()}</>}
+                {selected == TabsMenuState.Published && (
+                  <>{renderObjectsList()}</>
+                )}
+                {selected == TabsMenuState.Archived && (
+                  <>{renderObjectsList()}</>
+                )}
               </div>
             </div>
 
@@ -92,36 +98,32 @@ export default function MyObjectsPage(): JSX.Element {
 function renderObjectsList(): JSX.Element {
   return (
     <ul className="ObjectsList">
-    <li>
-      <ObjectCardLarge
-        title={'Title'}
-        location={'Кипр'}
-        id={'1'}
-        cashBack={2}
-        yieldCount={2}
-        square={'10'}
-        rooms={2}
-        baths={1}
-        sleeps={1}
-        price={'100 000'}
-        status={'Новая'}
-        name={'Name'}
-        isBooked={false}
-        year={'2022'}
-        agencyName={'Agency'}
-        isTrue={true}
-        publishedAt={'2022 10-02-01'}
-        requestsCount={2}
-        watched={1}
-        list={7}
-        messagesCount={4}
-        purpose={'Аренда'}
-        type={'Квартира'}
-        condition={'Коммерческая / Апартаменты'}
-        deal={'Deal'}
-        href={'/object/1'}
-      />
-    </li>
+      {ObjectsDataProvider.map((object, index) => (
+        <li key={index}>
+          <ObjectCard
+            title={object.title}
+            location={object.location}
+            image1={object.image1}
+            image2={object.image2}
+            image3={object.image3}
+            id={object.id}
+            firstInstallment={object.firstInstallment}
+            firstInstallmentPercent={object.firstInstallmentPercent}
+            singleCost={object.singleCost}
+            sleeps={object.sleeps}
+            baths={object.baths}
+            year={object.year}
+            square={object.square}
+            rooms={object.rooms}
+            yieldCount={object.yieldCount}
+            price={object.price}
+            name={object.name}
+            image={object.image}
+            status={object.status}
+            href="/object/1"
+          />
+        </li>
+      ))}
     </ul>
   )
 }
