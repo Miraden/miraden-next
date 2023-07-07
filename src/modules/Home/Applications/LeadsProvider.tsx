@@ -64,6 +64,7 @@ class LeadsLastProvider {
   }
 
   public getLeadsByLocation(name: string): Array<any> {
+    if(this.payload == null) return []
     const payload = this.payload as Object
     if (name in payload) {
       // @ts-ignore
@@ -75,6 +76,7 @@ class LeadsLastProvider {
 
   public getLinks(): Array<string> {
     const payload = this.payload
+    if(payload == null) return []
     let links: Array<string> = []
     Object.keys(payload).forEach(function (link) {
       links.push(link)
