@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
 import {
   LeadsAllProvider,
-  LeadsFavoritesProvider,
+  LeadsFavoritesProvider, LeadsIamExecutantProvider, LeadsMyRequestsProvider,
 } from '@/modules/Leads/LeadsProvider'
 
 enum TabsMenuState {
@@ -50,13 +50,14 @@ export default function LeadsPage(): JSX.Element {
   tabsManager.addItem(new TabMenuItem('Я исполнитель'))
   tabsManager.addItem(new TabMenuItem('Избранное'))
 
-  const [leadsAllProvider, setLeadsProvider] = useState<LeadsAllProvider>(
-    new LeadsAllProvider()
-  )
-  const [leadsFavoritesProvider, setFavoritesProvider] =
-    useState<LeadsFavoritesProvider>(new LeadsFavoritesProvider())
+  const [leadsAllProvider, setLeadsProvider] = useState<LeadsAllProvider>(new LeadsAllProvider())
+  const [leadsFavoritesProvider, setFavoritesProvider] = useState<LeadsFavoritesProvider>(new LeadsFavoritesProvider())
+  const [leadsExecutantProvider, setExecutantProvider] = useState<LeadsIamExecutantProvider>(new LeadsIamExecutantProvider())
+  const [myRequestsProvider, setMyRequestsProvider] = useState<LeadsMyRequestsProvider>(new LeadsMyRequestsProvider())
   const [leadsAllData, setLeadsAllData] = useState<Object>([])
   const [leadsFavoriteData, setLeadsFavoriteData] = useState<Object>([])
+  const [leadsExecutantData, setLeadsExecutantData] = useState<Object>([])
+  const [myRequestsData, setMyRequestsData] = useState<Object>([])
   useEffect(() => {
     if (selected == TabsMenuState.All) {
       leadsAllProvider.fetchData().then(res => {
@@ -73,7 +74,23 @@ export default function LeadsPage(): JSX.Element {
         leadsFavoritesProvider.setFetchedData(res)
       })
     }
-  }, [leadsAllProvider, leadsFavoritesProvider, selected])
+
+    if(selected == TabsMenuState.IamExecutant) {
+      leadsExecutantProvider.fetchData().then(res => {
+        setLeadsExecutantData(res)
+        leadsExecutantProvider.setIsFinished(true)
+        leadsExecutantProvider.setFetchedData(res)
+      })
+    }
+
+    if(selected == TabsMenuState.MyRequests) {
+      myRequestsProvider.fetchData().then(res => {
+        setMyRequestsData(res)
+        myRequestsProvider.setIsFinished(true)
+        myRequestsProvider.setFetchedData(res)
+      })
+    }
+  }, [leadsAllProvider, leadsExecutantProvider, leadsFavoritesProvider, myRequestsProvider, selected])
 
   return (
     <>
@@ -103,8 +120,12 @@ export default function LeadsPage(): JSX.Element {
                 )}
 
                 {selected == TabsMenuState.Similar && <>similar</>}
-                {selected == TabsMenuState.MyRequests && <>my requests</>}
-                {selected == TabsMenuState.IamExecutant && <>aim</>}
+                {selected == TabsMenuState.MyRequests && (
+                  <>{myRequestsProvider.render()}</>
+                )}
+                {selected == TabsMenuState.IamExecutant && (
+                  <>{leadsExecutantProvider.render()}</>
+                )}
                 {selected == TabsMenuState.Favorites && (
                   <>{leadsFavoritesProvider.render()}</>
                 )}
@@ -186,5 +207,11 @@ const StyledLeads = styled.div`
     border-radius: 10px;
     padding: 10px;
     margin-top: 20px;
+  }
+
+  .Leads_empty {
+    text-align: center;
+    margin: 100px auto 0;
+    max-width: 320px;
   }
 `

@@ -113,6 +113,104 @@ class LeadsFavoritesProvider {
   }
 }
 
+class LeadsIamExecutantProvider {
+  private isFetchCompleted: boolean
+  private data?: typeof ApiResponseStructure | null
+  private payload: Array<any>
+
+  constructor() {
+    this.isFetchCompleted = false
+    this.data = null
+    this.payload = []
+  }
+
+  public fetchData(): Promise<any> {
+    return getAimExecutant()
+  }
+
+  public setFetchedData(data: typeof ApiResponseStructure): void {
+    this.data = data
+    if (typeof data.payload == 'object') {
+      this.payload = data.payload as Array<any>
+    }
+  }
+
+  public setIsFinished(val: boolean): void {
+    this.isFetchCompleted = val
+  }
+
+  public render(): JSX.Element {
+    if (!this.isFetchCompleted) {
+      return <ul className="LeadsList">Loading...</ul>
+    }
+
+    if (isAccessDenied(this.data)) {
+      return (
+        <>
+          Session expired or invalid token
+          <CustomLink href="/user/login" underlined>
+            Login
+          </CustomLink>
+        </>
+      )
+    }
+
+    if (this.payload.length == 0) {
+      return renderEmptyLeads()
+    }
+    return renderLead(this.payload)
+  }
+}
+
+class LeadsMyRequestsProvider {
+  private isFetchCompleted: boolean
+  private data?: typeof ApiResponseStructure | null
+  private payload: Array<any>
+
+  constructor() {
+    this.isFetchCompleted = false
+    this.data = null
+    this.payload = []
+  }
+
+  public fetchData(): Promise<any> {
+    return getMyRequests()
+  }
+
+  public setFetchedData(data: typeof ApiResponseStructure): void {
+    this.data = data
+    if (typeof data.payload == 'object') {
+      this.payload = data.payload as Array<any>
+    }
+  }
+
+  public setIsFinished(val: boolean): void {
+    this.isFetchCompleted = val
+  }
+
+  public render(): JSX.Element {
+    if (!this.isFetchCompleted) {
+      return <ul className="LeadsList">Loading...</ul>
+    }
+
+    if (isAccessDenied(this.data)) {
+      return (
+        <>
+          Session expired or invalid token
+          <CustomLink href="/user/login" underlined>
+            Login
+          </CustomLink>
+        </>
+      )
+    }
+
+    if (this.payload.length == 0) {
+      return renderEmptyLeads()
+    }
+    return renderLead(this.payload)
+  }
+}
+
 function isAccessDenied(
   data: typeof ApiResponseStructure | null | undefined
 ): boolean {
@@ -131,14 +229,10 @@ function isAccessDenied(
 
 function renderEmptyLeads(): JSX.Element {
   return (
-    <>
+    <div className={"Leads_empty"}>
       <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
-      <h2>Нет созданных заявок</h2>
-      <p className="Color_text_grey">Но вы можете сделать это прямо сейчас! </p>
-      <Button className="CreateApp__button" compact>
-        Создать заявку
-      </Button>
-    </>
+      <h2>Нет заявок</h2>
+    </div>
   )
 }
 
@@ -173,6 +267,44 @@ async function leadsGetFavorites(): Promise<any> {
       method: ApiRequestMethods.GET,
       headers: headers,
       endpoint: '/leads/favorites',
+    })
+    .then(async res => {
+      const response = new ApiResponse()
+      return response.makeFromString(res)
+    })
+}
+
+async function getAimExecutant(): Promise<any> {
+  const apiRequest: ApiRequest = new ApiRequest()
+  const headers: HeadersInit = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    Authorization: 'Bearer ' + localStorage.getItem('token'),
+  }
+
+  return apiRequest
+    .fetch({
+      method: ApiRequestMethods.GET,
+      headers: headers,
+      endpoint: '/leads/aimexecutant',
+    })
+    .then(async res => {
+      const response = new ApiResponse()
+      return response.makeFromString(res)
+    })
+}
+
+async function getMyRequests(): Promise<any> {
+  const apiRequest: ApiRequest = new ApiRequest()
+  const headers: HeadersInit = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    Authorization: 'Bearer ' + localStorage.getItem('token'),
+  }
+
+  return apiRequest
+    .fetch({
+      method: ApiRequestMethods.GET,
+      headers: headers,
+      endpoint: '/leads/my/requests',
     })
     .then(async res => {
       const response = new ApiResponse()
@@ -259,8 +391,8 @@ function renderLead(data: Array<any>): JSX.Element {
 }
 
 export {
-  leadsGetFavorites,
-  leadsGetAll,
   LeadsAllProvider,
   LeadsFavoritesProvider,
+  LeadsIamExecutantProvider,
+  LeadsMyRequestsProvider
 }
