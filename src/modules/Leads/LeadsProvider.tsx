@@ -42,12 +42,12 @@ class LeadsAllProvider {
       return <ul className="LeadsList">Loading...</ul>
     }
 
-    if (isSessionExpired(this.data)) {
+    if (isAccessDenied(this.data)) {
       return (
         <>
-          Session expired
+          Session expired or invalid token
           <CustomLink href="/user/login" underlined>
-            Relogin
+            Login
           </CustomLink>
         </>
       )
@@ -91,12 +91,12 @@ class LeadsFavoritesProvider {
       return <ul className="LeadsList">Loading...</ul>
     }
 
-    if (isSessionExpired(this.data)) {
+    if (isAccessDenied(this.data)) {
       return (
         <>
-          Session expired
+          Session expired or invalid token
           <CustomLink href="/user/login" underlined>
-            Relogin
+            Login
           </CustomLink>
         </>
       )
@@ -109,7 +109,7 @@ class LeadsFavoritesProvider {
   }
 }
 
-function isSessionExpired(
+function isAccessDenied(
   data: typeof ApiResponseStructure | null | undefined
 ): boolean {
   if (!data) return false
@@ -117,6 +117,10 @@ function isSessionExpired(
 
   if ('security' in data.errors) {
     return data.errors.security === 'Expired JWT token'
+  }
+
+  if ('security' in data.errors) {
+    return data.errors.security === 'Invalid JWT token'
   }
 
   return false
