@@ -305,7 +305,6 @@ const StyledSellerCard = styled.a`
   }
 
   @media (max-width: 670px) {
-    padding: 10px;
     .SellerCard__imageContainer {
       min-width: 72px;
     }
