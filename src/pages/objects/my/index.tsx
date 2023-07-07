@@ -8,7 +8,6 @@ import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
 import { FilterIcon } from '@/icons/FilterIcon'
 import { Search } from '@/components/ui'
-import { ObjectCardLarge } from '@/modules/FavouritesFull/Favourites/components/ObjectCardLarge'
 import { ObjectsDataProvider } from '@/modules/Objects/ObjectsDataProvider'
 import { ObjectCard } from '@/modules/Applications/Application/components/ObjectCard'
 

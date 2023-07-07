@@ -42,11 +42,11 @@ const HeaderUserMenu = () => {
           >
             создать
           </Button>
-          <button>
+          <Button href={"/profile"} className={"UserName"}>
             <div className="User Font_16_140 Color_white">
               <span>A</span>
             </div>
-          </button>
+          </Button>
         </div>
       </div>
     </StyledHeaderUserMenu>
@@ -59,6 +59,14 @@ const StyledHeaderUserMenu = styled.div`
   .HeaderUserMenu__buttons {
     display: flex;
     align-items: center;
+  }
+
+  .HeaderUserMenu__buttons {
+    gap: 20px;
+  }
+
+  .UserName {
+    padding: 0;
   }
 
   .HeaderUserMenu__links {
