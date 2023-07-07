@@ -21,14 +21,11 @@ class LeadsLastProvider {
 
   public fetchData(): Promise<any> {
     const apiRequest: ApiRequest = new ApiRequest()
-    const headers: HeadersInit = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    }
 
     return apiRequest
       .fetch({
         method: ApiRequestMethods.GET,
-        headers: headers,
+        headers: {},
         endpoint: '/leads/last',
       })
       .then(async res => {

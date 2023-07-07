@@ -33,9 +33,9 @@ class ApiRequest {
 
   async fetch({ method, headers, body, endpoint }: Props): Promise<Object> {
     const uri: string = this.getUrl() + endpoint
-    const _headers: HeadersInit = Object.assign(defaultHeaders, headers)
+    const _headers: HeadersInit = Object.assign(headers, defaultHeaders)
 
-    const payload = {
+    const payload: RequestInit = {
       method: method,
       headers: _headers,
       body: undefined
