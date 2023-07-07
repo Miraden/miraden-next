@@ -53,6 +53,10 @@ class LeadsAllProvider {
       )
     }
 
+    if (this.payload == null) {
+      return <></>
+    }
+
     if (this.payload.length == 0) {
       return renderEmptyLeads()
     }
@@ -116,11 +120,10 @@ function isAccessDenied(
   if (!data.errors) return false
 
   if ('security' in data.errors) {
-    return data.errors.security === 'Expired JWT token'
-  }
-
-  if ('security' in data.errors) {
-    return data.errors.security === 'Invalid JWT token'
+    return (
+      data.errors.security === 'Expired JWT token' ||
+      data.errors.security === 'Invalid JWT token'
+    )
   }
 
   return false
