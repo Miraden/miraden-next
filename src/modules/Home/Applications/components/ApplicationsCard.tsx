@@ -18,6 +18,8 @@ interface Props {
   baths: number;
   price: string;
   application: any;
+  createdAt: string;
+  href: string;
 }
 
 const ApplicationsCard = ({
@@ -30,18 +32,18 @@ const ApplicationsCard = ({
   baths,
   price,
   application,
+  createdAt,
+  href,
 }: Props) => {
   return (
-    <StyledApplicationsCard className={className}>
+    <StyledApplicationsCard className={className} href={href}>
       <div>
         <div className="Card__head">
           <div className="Card__headContent">
             <Sticker theme="black">true</Sticker>
-            <span className="Card__headDivider Color_text_grey">От</span>
-            <span className="Color_blue_primary">Агентство</span>
           </div>
 
-          <p className="Color_text_disabled">3 часа назад</p>
+          <p className="Color_text_disabled">{createdAt}</p>
         </div>
         <p className="Card__title Font_18_120">{title}</p>
         <div className="Card__location">
@@ -70,8 +72,7 @@ const ApplicationsCard = ({
           </div>
         </div>
         <div className="Card__price">
-          <p className="Color_blue_primary Font_16_120">{price} €</p>
-          <Button>Предложить</Button>
+          <p className="Color_blue_primary Font_16_120">{price}</p>
         </div>
       </div>
     </StyledApplicationsCard>

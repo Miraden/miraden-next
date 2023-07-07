@@ -1,268 +1,74 @@
-import { Button, RequestButton } from "@/components/ui";
-import { SetStateAction, useState } from "react";
-import styled from "styled-components";
-import { ApplicationsCard } from "./components/ApplicationsCard";
-
-const applications = [
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Черногория",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Черногория",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Таиланд / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Таиланд / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Испания / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Испания",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Черногория",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Черногория",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Таиланд / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Таиланд / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Кипр / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Испания / Лимассол / Все районы",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре",
-    location: "Испания",
-    year: 2022,
-    square: 294,
-    sleeps: 6,
-    baths: 2,
-    price: "158 000 – 230 000",
-  },
-];
+import { Button } from '@/components/ui'
+import { SetStateAction, useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { ApplicationsCard } from './components/ApplicationsCard'
+import { LeadsLastProvider } from '@/modules/Home/Applications/LeadsProvider'
+import { theme } from '../../../../styles/tokens'
+import cn from 'classnames'
 
 const Applications = () => {
-  const [location, setLocation] = useState("Кипр");
-
-  const filteredApplications = applications.filter((app) =>
-    location ? app.location.includes(location) : true
-  );
+  const [location, setLocation] = useState<string>('')
 
   const handleButtonClick = (location: SetStateAction<string>) => {
-    setLocation(location);
-  };
+    setLocation(location)
+  }
 
-  const hasSpainLocation = applications.some((app) =>
-    app.location.includes("Испания")
-  );
+  const [leadsLastProvider, setLeadsProvider] = useState<LeadsLastProvider>(
+    new LeadsLastProvider()
+  )
+  const [leadsAllData, setLeadsAllData] = useState<Object>([])
+  useEffect(() => {
+    leadsLastProvider.fetchData().then(res => {
+      setLeadsAllData(res)
+      leadsLastProvider.setIsFinished(true)
+      leadsLastProvider.setFetchedData(res)
+      const firstLink = leadsLastProvider.getLinks().at(0) as string
+      setLocation(firstLink)
+    })
+  }, [leadsLastProvider])
 
-  const hasCyprusLocation = applications.some((app) =>
-    app.location.includes("Кипр")
-  );
-  const hasThailandLocation = applications.some((app) =>
-    app.location.includes("Таиланд")
-  );
-  const hasMontenegroLocation = applications.some((app) =>
-    app.location.includes("Черногория")
-  );
-
-  const renderApplications = (apps: any[]) => {
-    return apps.map((app) => (
+  const renderLeadsLocation = () => {
+    const items = leadsLastProvider.getLeadsByLocation(location)
+    return items.map(lead => (
       <ApplicationsCard
         className="Card"
-        key={app.title}
-        application={app}
-        title={app.title}
-        year={app.year}
-        sleeps={app.sleeps}
-        square={app.square}
-        baths={app.baths}
-        price={app.price}
-        location={app.location}
+        href={'/lead/' + lead.id}
+        key={lead.id}
+        application={[]}
+        title={lead.wishes.title}
+        year={2022}
+        sleeps={lead.rooms.beds}
+        square={lead.areas.total.value}
+        baths={lead.rooms.bathroom}
+        price={
+          lead.budget.startFrom +
+          ' - ' +
+          lead.budget.endAt +
+          ' ' +
+          lead.budget.currency.symbol
+        }
+        location={lead.city.country + ' / ' + lead.city.name}
+        createdAt={formatCreatedDate(lead.createdAt)}
       />
-    ));
-  };
+    ))
+  }
+
+  const renderLinks = () => {
+    if (!leadsLastProvider.isFinished()) {
+      return <Button disabled>Loading...</Button>
+    }
+    const links = leadsLastProvider.getLinks()
+    return links.map(name => (
+      <Button
+        key={name}
+        request
+        onClick={() => handleButtonClick(name)}
+        active={location === name}
+      >
+        {name}
+      </Button>
+    ))
+  }
 
   return (
     <StyledApplications>
@@ -271,94 +77,71 @@ const Applications = () => {
           <h2 className="Font_44_120 sm:Font_26_120">
             Новые <mark className="Color_blue_primary">заявки</mark>
           </h2>
-          <div className="Applications__tabs">
-            {hasCyprusLocation && (
-              <RequestButton
-                onClick={() => handleButtonClick("Кипр")}
-                active={location === "Кипр"}
-              >
-                Кипр
-              </RequestButton>
-            )}
-            {hasMontenegroLocation && (
-              <RequestButton
-                onClick={() => handleButtonClick("Черногория")}
-                active={location === "Черногория"}
-              >
-                Черногория
-              </RequestButton>
-            )}
-
-            {hasThailandLocation && (
-              <RequestButton
-                onClick={() => handleButtonClick("Таиланд")}
-                active={location === "Таиланд"}
-              >
-                Таиланд
-              </RequestButton>
-            )}
-
-            {hasSpainLocation && (
-              <RequestButton
-                onClick={() => setLocation("Испания")}
-                active={location === "Испания"}
-              >
-                Испания
-              </RequestButton>
-            )}
-          </div>
+          <div className="Applications__tabs">{renderLinks()}</div>
         </div>
 
         <div className="Applications__tabsMobile sm:FullBleed">
-          {hasCyprusLocation && (
-            <RequestButton
-              onClick={() => handleButtonClick("Кипр")}
-              active={location === "Кипр"}
-            >
-              Кипр
-            </RequestButton>
-          )}
-          {hasMontenegroLocation && (
-            <RequestButton
-              onClick={() => handleButtonClick("Черногория")}
-              active={location === "Черногория"}
-            >
-              Черногория
-            </RequestButton>
-          )}
-
-          {hasThailandLocation && (
-            <RequestButton
-              onClick={() => handleButtonClick("Таиланд")}
-              active={location === "Таиланд"}
-            >
-              Таиланд
-            </RequestButton>
-          )}
-
-          {hasSpainLocation && (
-            <RequestButton
-              onClick={() => setLocation("Испания")}
-              active={location === "Испания"}
-            >
-              Испания
-            </RequestButton>
-          )}
+          {renderLinks()}
         </div>
 
-        <div className="Applications__list">
-          {renderApplications(filteredApplications).slice(0, 9)}
+        <div
+          className={cn('Applications__list', {
+            inProgress: !leadsLastProvider.isFinished(),
+          })}
+        >
+          {leadsLastProvider.isFinished() && renderLeadsLocation()}
+          {!leadsLastProvider.isFinished() && renderProgressLocations()}
         </div>
-        <div className="Applications__listTablet sm:FullBleed">
-          {renderApplications(filteredApplications).slice(0, 6)}
+
+        <div
+          className={cn('Applications__listTablet sm:FullBleed', {
+            inProgress: !leadsLastProvider.isFinished(),
+          })}
+        >
+          {leadsLastProvider.isFinished() && renderLeadsLocation()}
+          {!leadsLastProvider.isFinished() && renderProgressLocations()}
         </div>
-        <div className="Applications__openMoreContainer">
-          <Button className="Applications__openMore">Открыть еще 2 543</Button>
-        </div>
+
+        {leadsLastProvider.isFinished() && (
+          <div className="Applications__openMoreContainer">
+            <Button href={'/leads'} className="Applications__openMore">
+              Открыть еще {leadsLastProvider.getTotalLocations()}
+            </Button>
+          </div>
+        )}
       </div>
     </StyledApplications>
-  );
-};
+  )
+}
+
+function formatCreatedDate(val: string): string {
+  const date = new Date(val)
+  const months = [
+    'Января',
+    'Февраля',
+    'Марта',
+    'Апреля',
+    'Мая',
+    'Июня',
+    'Июля',
+    'Августа',
+    'Сентября',
+    'Октября',
+    'Ноября',
+    'Декабря',
+  ]
+  return date.getDate() + ' ' + months[date.getMonth()]
+}
+
+function renderProgressLocations(): JSX.Element {
+  return (
+    <div className={'LeadInProgress'}>
+      <div className={'LeadProgressItem'}>Loading...</div>
+      <div className={'LeadProgressItem'}>Loading...</div>
+      <div className={'LeadProgressItem'}>Loading...</div>
+    </div>
+  )
+}
 
 const StyledApplications = styled.section`
   padding-top: 66px;
@@ -373,6 +156,7 @@ const StyledApplications = styled.section`
   .Applications__tabs,
   .Applications__tabsMobile {
     display: flex;
+
     button:not(:first-child) {
       margin-left: 10px;
     }
@@ -395,6 +179,10 @@ const StyledApplications = styled.section`
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 30px;
     margin-top: 50px;
+
+    &.inProgress {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 
   .Applications__listTablet {
@@ -408,8 +196,26 @@ const StyledApplications = styled.section`
   .Applications__openMore {
     width: 100%;
     grid-column-start: 2;
-    margin: 0 auto;
-    margin-top: 30px;
+    margin: 30px auto 0;
+  }
+
+  .LeadInProgress {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+  }
+
+  .LeadProgressItem {
+    position: relative;
+    background: #fff;
+    width: 100%;
+    border-radius: ${theme.border.radius};
+    min-height: 255px;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    color: ${theme.colors.background.lightGrey};
   }
 
   @media (max-width: 1280px) {
@@ -487,6 +293,6 @@ const StyledApplications = styled.section`
       padding-left: 20px;
     }
   }
-`;
+`
 
-export { Applications };
+export { Applications }

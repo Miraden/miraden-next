@@ -62,7 +62,6 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
               >
                 мои объекты
               </Button>
-              <More />
             </>
           ) : (
             <>
