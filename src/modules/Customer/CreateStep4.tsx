@@ -238,14 +238,14 @@ const CreateStep4 = ({ className }: Props) => {
             <div className="Reg__footerBack">
               <Button
                 secondary
-                href="/customer/create-step-3"
+                href="/lead/add/3"
                 className="Reg__goBackButton"
               >
                 Назад
               </Button>
               <Button
                 secondary
-                href="/customer/create-step-3"
+                href="/lead/add/4"
                 leftIcon={<ArrowIcon />}
                 className="Reg__goBackButtonMobile"
               ></Button>
@@ -265,7 +265,7 @@ const CreateStep4 = ({ className }: Props) => {
                 <p className="Color_blue_primary Font_16_140">317</p>
               </div>
 
-              <Button disabled={!selected} href="/customer/create-step-5">
+              <Button disabled={!selected} href="/lead/add/5">
                 Далее
               </Button>
             </div>

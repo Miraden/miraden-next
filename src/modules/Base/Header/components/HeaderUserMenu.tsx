@@ -36,7 +36,7 @@ const HeaderUserMenu = () => {
 
         <div className="HeaderUserMenu__buttons">
           <Button
-            href="/customer/create-1"
+            href="/lead/add"
             leftIcon={<PlusIcon />}
             className="HeaderUserMenu__createButton Font_12_16_600"
           >

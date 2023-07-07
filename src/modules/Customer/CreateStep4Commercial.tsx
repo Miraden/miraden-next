@@ -234,7 +234,7 @@ const CreateStep4Commercial = ({ className }: Props) => {
             <div className="Reg__footerBack">
               <Button
                 secondary
-                href="/customer/create-step-3"
+                href="/lead/add/3"
                 className="Reg__goBackButton"
               >
                 Назад
@@ -264,14 +264,14 @@ const CreateStep4Commercial = ({ className }: Props) => {
               {selected === "secondary" ? (
                 <Button
                   disabled={!selected}
-                  href="/customer/create-commercial-step-5"
+                  href="/lead/add/5&commercial"
                 >
                   Далее
                 </Button>
               ) : (
                 <Button
                   disabled={!selected}
-                  href="/customer/create-commercial-step-5"
+                  href="/lead/add/5&commercial"
                 >
                   Далее
                 </Button>

@@ -15,9 +15,9 @@ const CreateStep2 = ({ className }: Props) => {
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
     if (option === "buy") {
-      window.location.href = "/customer/create-step-3"; // Переход на страницу при выборе "Хочу купить"
+      window.location.href = "/lead/add/3"; // Переход на страницу при выборе "Хочу купить"
     } else if (option === "sell") {
-      window.location.href = "/customer/rent-range-step-5"; // Переход на страницу при выборе "Хочу арендовать"
+      window.location.href = "/lead/add/5?sell"; // Переход на страницу при выборе "Хочу арендовать"
     }
   }, []);
 
@@ -53,14 +53,14 @@ const CreateStep2 = ({ className }: Props) => {
             <div className="Reg__footerBack">
               <Button
                 secondary
-                href="/customer/create-step-1"
+                href="/lead/add/1"
                 className="Reg__goBackButton"
               >
                 Назад
               </Button>
               <Button
                 secondary
-                href="/customer/create-step-1"
+                href="/lead/add/1"
                 leftIcon={<ArrowIcon />}
                 className="Reg__goBackButtonMobile"
               ></Button>
@@ -80,11 +80,11 @@ const CreateStep2 = ({ className }: Props) => {
                 <p className="Color_blue_primary Font_16_140">317</p>
               </div>
               {selected === "sell" ? (
-                <Button disabled={!selected} href="/customer/rent-range-step">
+                <Button disabled={!selected} href="/lead/add/5?sell">
                   Далее
                 </Button>
               ) : (
-                <Button disabled={!selected} href="/customer/create-step-3">
+                <Button disabled={!selected} href="/lead/add/3">
                   Далее
                 </Button>
               )}

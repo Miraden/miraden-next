@@ -85,14 +85,14 @@ const CreateCommercialStep6 = ({ className }: Props) => {
             <div className="Reg__footerBack">
               <Button
                 secondary
-                href="/customer/create-commercial-step-5"
+                href="/lead/add/5&commercial"
                 className="Reg__goBackButton"
               >
                 Назад
               </Button>
               <Button
                 secondary
-                href="/customer/create-commercial-step-5"
+                href="/lead/add/5&commercial"
                 leftIcon={<ArrowIcon />}
                 className="Reg__goBackButtonMobile"
               ></Button>
@@ -113,7 +113,7 @@ const CreateCommercialStep6 = ({ className }: Props) => {
               </div>
               <Button
                 disabled={selected.length === 0}
-                href="/customer/create-step-8"
+                href="lead/add/8"
               >
                 Далее
               </Button>

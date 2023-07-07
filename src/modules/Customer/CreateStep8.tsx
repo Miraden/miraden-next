@@ -15,7 +15,7 @@ const CreateStep8 = ({ className }: Props) => {
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
 
-    let url = "/customer/create-step-9";
+    let url = "/lead/add/9";
 
     if (url) {
       window.location.href = url;
@@ -78,14 +78,14 @@ const CreateStep8 = ({ className }: Props) => {
             <div className="Reg__footerBack">
               <Button
                 secondary
-                href="/customer/create-step-7"
+                href="/lead/add/7"
                 className="Reg__goBackButton"
               >
                 Назад
               </Button>
               <Button
                 secondary
-                href="/customer/create-step-7"
+                href="/lead/add/7"
                 leftIcon={<ArrowIcon />}
                 className="Reg__goBackButtonMobile"
               ></Button>
@@ -104,7 +104,7 @@ const CreateStep8 = ({ className }: Props) => {
                 </span>
                 <p className="Color_blue_primary Font_16_140">317</p>
               </div>
-              <Button disabled={!selected} href="/customer/create-step-9">
+              <Button disabled={!selected} href="/lead/add/9">
                 Далее
               </Button>
             </div>

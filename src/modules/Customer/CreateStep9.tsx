@@ -125,14 +125,14 @@ const CreateStep9 = ({ className }: Props) => {
             <div className="Reg__footerBack">
               <Button
                 secondary
-                href="/customer/create-step-8"
+                href="/lead/add/8"
                 className="Reg__goBackButton"
               >
                 Назад
               </Button>
               <Button
                 secondary
-                href="/customer/create-step-8"
+                href="/lead/add/8"
                 leftIcon={<ArrowIcon />}
                 className="Reg__goBackButtonMobile"
               ></Button>
@@ -153,7 +153,7 @@ const CreateStep9 = ({ className }: Props) => {
               </div>
               <Button
                 disabled={!selected || (!fromValue && !toValue)}
-                href="/customer/create-step-10"
+                href="/lead/add/10"
               >
                 Далее
               </Button>

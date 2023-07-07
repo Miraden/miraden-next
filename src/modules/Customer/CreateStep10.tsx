@@ -171,14 +171,14 @@ const CreateStep10 = ({ className }: Props) => {
             <div className="Reg__footerBack">
               <Button
                 secondary
-                href="/customer/create-step-9"
+                href="/lead/add/9"
                 className="Reg__goBackButton"
               >
                 Назад
               </Button>
               <Button
                 secondary
-                href="/customer/create-step-9"
+                href="/lead/add/9"
                 leftIcon={<ArrowIcon />}
                 className="Reg__goBackButtonMobile"
               ></Button>
@@ -197,7 +197,7 @@ const CreateStep10 = ({ className }: Props) => {
                 </span>
                 <p className="Color_blue_primary Font_16_140">317</p>
               </div>
-              <Button href="/customer/create-step-11">Далее</Button>
+              <Button href="/lead/add/11">Далее</Button>
             </div>
           </div>
         </div>

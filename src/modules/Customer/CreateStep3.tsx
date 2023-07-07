@@ -163,14 +163,14 @@ const CreateStep3 = ({ className }: Props) => {
             <div className="Reg__footerBack">
               <Button
                 secondary
-                href="/customer/create-step-2"
+                href="/lead/add/2"
                 className="Reg__goBackButton"
               >
                 Назад
               </Button>
               <Button
                 secondary
-                href="/customer/create-step-2"
+                href="/lead/add/2"
                 leftIcon={<ArrowIcon />}
                 className="Reg__goBackButtonMobile"
               ></Button>
@@ -192,7 +192,7 @@ const CreateStep3 = ({ className }: Props) => {
               {isCommercialChecked ? (
                 <Button
                   disabled={!selected}
-                  href="/customer/create-commercial-step-4"
+                  href="/lead/add/4?commercial"
                 >
                   Далее
                 </Button>
@@ -201,7 +201,7 @@ const CreateStep3 = ({ className }: Props) => {
                   {selected === "land" ? (
                     <Button
                       disabled={!selected}
-                      href="/customer/create-step-6-land"
+                      href="/lead/add/6&land"
                     >
                       Далее
                     </Button>
@@ -212,14 +212,14 @@ const CreateStep3 = ({ className }: Props) => {
                       selected === "house" ? (
                         <Button
                           disabled={!selected}
-                          href="/customer/create-step-4-full"
+                          href="/lead/add/4&full"
                         >
                           Далее
                         </Button>
                       ) : (
                         <Button
                           disabled={!selected}
-                          href="/customer/create-step-4"
+                          href="/lead/add/4"
                         >
                           Далее
                         </Button>

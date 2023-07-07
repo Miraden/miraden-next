@@ -53,7 +53,7 @@ const CreateStep11 = ({ className }: Props) => {
               </Button>
               <Button
                 secondary
-                href="/customer/create-step-10"
+                href="/lead/add/10"
                 leftIcon={<ArrowIcon />}
                 className="Reg__goBackButtonMobile"
               ></Button>

@@ -382,7 +382,7 @@ const CreateStep1 = ({ className }: Props) => {
             <div className="Reg__footerBack">
               <Button
                 secondary
-                href="/customer/create-1"
+                href="/lead/add"
                 className="Reg__goBackButton"
               >
                 Назад
@@ -411,7 +411,7 @@ const CreateStep1 = ({ className }: Props) => {
 
               <Button
                 disabled={!selected || (!selectedCity && !allCitiesActive)}
-                href="/customer/create-step-2"
+                href="/lead/add/2"
               >
                 Далее
               </Button>

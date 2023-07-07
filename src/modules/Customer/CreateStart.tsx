@@ -150,7 +150,7 @@ const CreateStart = ({ className }: Props) => {
                 className="Reg__goBackButtonMobile"
               ></Button>
             </div>
-            <Button href="/customer/create-step-1">Далее</Button>
+            <Button href="/lead/add/1">Далее</Button>
           </div>
         </div>
       </div>
