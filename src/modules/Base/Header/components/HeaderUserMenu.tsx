@@ -15,8 +15,8 @@ const HeaderUserMenu = () => {
             header
             className="HeaderUserMenu__linkButton"
             leftIcon={<MessagesIcon />}
-            active={currentUrl.includes("all")}
-            href="/chats-all"
+            active={currentUrl === '/chats'}
+            href="/chats"
           ></Button>
           <Button
             href="/favorites"
