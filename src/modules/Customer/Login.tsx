@@ -64,7 +64,7 @@ const Login = ({className}: Props) => {
     result.then(async (res) => {
       const responseModule = (await import('@/infrastructure/Network/Http/ApiResponse')).ApiResponse
       const ApiResponse = new responseModule()
-      const a = ApiResponse.makeFromString(res)
+      const a = ApiResponse.makeFromObject(res)
       if (a.code === HttpCodes.OK) {
         setLoginHasErrors(false)
         // @ts-ignore

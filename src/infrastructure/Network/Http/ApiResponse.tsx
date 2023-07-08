@@ -5,6 +5,12 @@ interface ApiResponseType {
   metadata?: object | null
 }
 
+interface ApiPagesType {
+  total: number
+  current: number
+  items: number
+}
+
 enum HttpCodes {
   OK = 200,
   BAD_REQUEST = 401,
@@ -21,12 +27,34 @@ const ApiResponseStructure: ApiResponseType = {
   metadata: null,
 }
 
+const ApiPagesStructure: ApiPagesType = {
+  total: 0,
+  current: 0,
+  items: 0,
+}
+
 class ApiResponse {
+  private response: typeof ApiResponseStructure
+
   constructor() {
+    this.response = Object.assign(ApiResponseStructure, {})
   }
 
-  makeFromString(json: object): typeof ApiResponseStructure {
-    return Object.assign(ApiResponseStructure, json)
+  makeFromObject(json: object): typeof ApiResponseStructure {
+    this.response = Object.assign(ApiResponseStructure, json)
+    return this.response
+  }
+
+  getPages(): ApiPagesType | null {
+    if (!this.response.metadata) return null
+
+    const meta: Object = this.response.metadata
+    if (!('pages' in meta)) {
+      return null
+    }
+
+    // @ts-ignore
+    return Object.assign(ApiPagesStructure, meta['pages'])
   }
 }
 
@@ -59,4 +87,4 @@ function codeFromNumber(code: number): HttpCodes {
   return result
 }
 
-export {ApiResponse, HttpCodes, ApiResponseStructure}
+export { ApiResponse, HttpCodes, ApiResponseStructure, ApiPagesStructure }

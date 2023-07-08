@@ -1,16 +1,14 @@
 import Head from 'next/head'
 import { Header } from '@/modules/Base/Header'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { MouseEvent, useCallback, useEffect, useState } from 'react'
 import AuthManager from '@/modules/Security/Authentication/AuthManager'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import cn from 'classnames'
 import styled from 'styled-components'
 import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
-import {
-  LeadsAllProvider,
-  LeadsFavoritesProvider, LeadsIamExecutantProvider, LeadsMyRequestsProvider,
-} from '@/modules/Leads/LeadsProvider'
+import { LeadsDataProvider } from '@/modules/Leads/LeadsProvider'
+import { UrlManager } from '@/infrastructure/Routes/UrlManager'
 
 enum TabsMenuState {
   All = 0,
@@ -20,9 +18,13 @@ enum TabsMenuState {
   Favorites = 4,
 }
 
+const PAGE_KEY: string = 'p'
+
 const authManger = new AuthManager()
 
 export default function LeadsPage(): JSX.Element {
+  const [itemPage, setItemPage] = useState<number>(1)
+
   const [isUserAuth, setUserAuth] = useState(false)
   useEffect(() => {
     setUserAuth(authManger.isUserHasToken())
@@ -43,6 +45,8 @@ export default function LeadsPage(): JSX.Element {
     tabsManager.setActive(selected)
   }, [selected, tabsManager])
 
+  const [urlManager, setUrlManager] = useState<UrlManager>(new UrlManager())
+
   tabsManager.setCallback(handleSelect)
   tabsManager.addItem(new TabMenuItem('Все'))
   tabsManager.addItem(new TabMenuItem('Подходящие'))
@@ -50,47 +54,80 @@ export default function LeadsPage(): JSX.Element {
   tabsManager.addItem(new TabMenuItem('Я исполнитель'))
   tabsManager.addItem(new TabMenuItem('Избранное'))
 
-  const [leadsAllProvider, setLeadsProvider] = useState<LeadsAllProvider>(new LeadsAllProvider())
-  const [leadsFavoritesProvider, setFavoritesProvider] = useState<LeadsFavoritesProvider>(new LeadsFavoritesProvider())
-  const [leadsExecutantProvider, setExecutantProvider] = useState<LeadsIamExecutantProvider>(new LeadsIamExecutantProvider())
-  const [myRequestsProvider, setMyRequestsProvider] = useState<LeadsMyRequestsProvider>(new LeadsMyRequestsProvider())
-  const [leadsAllData, setLeadsAllData] = useState<Object>([])
-  const [leadsFavoriteData, setLeadsFavoriteData] = useState<Object>([])
-  const [leadsExecutantData, setLeadsExecutantData] = useState<Object>([])
-  const [myRequestsData, setMyRequestsData] = useState<Object>([])
-  useEffect(() => {
-    if (selected == TabsMenuState.All) {
-      leadsAllProvider.fetchData().then(res => {
+  const [leadsProvider, setLeadsProvider] = useState<LeadsDataProvider>(
+    new LeadsDataProvider()
+  )
+
+  const onPageHandler = useCallback(
+    (e: any) => {
+      const target = e.target.closest('button')
+      if (!target) return
+
+      const page: number = target.getAttribute('data-page') as number
+      setItemPage(page)
+      setLeadsAllData([])
+      urlManager.updatePath(urlManager.getPath())
+      urlManager.updateQuery(PAGE_KEY, page)
+      const newUrl: string = urlManager.getPath() + urlManager.getQuery()
+      leadsProvider.setUrl(newUrl)
+      leadsProvider.fetchData().then(res => {
+        leadsProvider.setCurrentPage(page)
         setLeadsAllData(res)
-        leadsAllProvider.setIsFinished(true)
-        leadsAllProvider.setFetchedData(res)
       })
+    },
+    [leadsProvider, urlManager]
+  )
+
+  const [leadsAllData, setLeadsAllData] = useState<Object>([])
+  useEffect(() => {
+    leadsProvider.setPageCallback(onPageHandler)
+    if (selected == TabsMenuState.All) {
+      setLeadsAllData([])
+      urlManager.deleteQuery(PAGE_KEY)
+      leadsProvider.setIsFinished(false)
+      leadsProvider.setUrl('/leads')
+      leadsProvider.fetchData().then(res => {
+        const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
+        leadsProvider.setCurrentPage(parseInt(page))
+        setLeadsAllData(res)
+      })
+    }
+
+    if (selected == TabsMenuState.Similar) {
+      urlManager.deleteQuery(PAGE_KEY)
+      setLeadsAllData([])
     }
 
     if (selected == TabsMenuState.Favorites) {
-      leadsFavoritesProvider.fetchData().then(res => {
-        setLeadsFavoriteData(res)
-        leadsFavoritesProvider.setIsFinished(true)
-        leadsFavoritesProvider.setFetchedData(res)
+      setLeadsAllData([])
+      urlManager.deleteQuery(PAGE_KEY)
+      leadsProvider.setIsFinished(false)
+      leadsProvider.setUrl('/leads/favorites')
+      leadsProvider.fetchData().then(res => {
+        setLeadsAllData(res)
       })
     }
 
-    if(selected == TabsMenuState.IamExecutant) {
-      leadsExecutantProvider.fetchData().then(res => {
-        setLeadsExecutantData(res)
-        leadsExecutantProvider.setIsFinished(true)
-        leadsExecutantProvider.setFetchedData(res)
+    if (selected == TabsMenuState.IamExecutant) {
+      setLeadsAllData([])
+      urlManager.deleteQuery(PAGE_KEY)
+      leadsProvider.setIsFinished(false)
+      leadsProvider.setUrl('/leads/aimexecutant')
+      leadsProvider.fetchData().then(res => {
+        setLeadsAllData(res)
       })
     }
 
-    if(selected == TabsMenuState.MyRequests) {
-      myRequestsProvider.fetchData().then(res => {
-        setMyRequestsData(res)
-        myRequestsProvider.setIsFinished(true)
-        myRequestsProvider.setFetchedData(res)
+    if (selected == TabsMenuState.MyRequests) {
+      setLeadsAllData([])
+      urlManager.deleteQuery(PAGE_KEY)
+      leadsProvider.setIsFinished(false)
+      leadsProvider.setUrl('/leads/my/requests')
+      leadsProvider.fetchData().then(res => {
+        setLeadsAllData(res)
       })
     }
-  }, [leadsAllProvider, leadsExecutantProvider, leadsFavoritesProvider, myRequestsProvider, selected])
+  }, [leadsProvider, onPageHandler, selected, urlManager])
 
   return (
     <>
@@ -114,22 +151,7 @@ export default function LeadsPage(): JSX.Element {
                 {tabsManager.renderMenuFooter(selected)}
               </StyledMenu>
 
-              <div className="Leads__content">
-                {selected == TabsMenuState.All && (
-                  <>{leadsAllProvider.render()}</>
-                )}
-
-                {selected == TabsMenuState.Similar && <>similar</>}
-                {selected == TabsMenuState.MyRequests && (
-                  <>{myRequestsProvider.render()}</>
-                )}
-                {selected == TabsMenuState.IamExecutant && (
-                  <>{leadsExecutantProvider.render()}</>
-                )}
-                {selected == TabsMenuState.Favorites && (
-                  <>{leadsFavoritesProvider.render()}</>
-                )}
-              </div>
+              <div className="Leads__content">{leadsProvider.render()}</div>
             </div>
             {showFilter &&
               selected == TabsMenuState.All &&
@@ -206,7 +228,6 @@ const StyledLeads = styled.div`
     background: #fff;
     border-radius: 10px;
     padding: 10px;
-    margin-top: 20px;
   }
 
   .Leads_empty {

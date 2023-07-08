@@ -1,32 +1,79 @@
-import {FC} from "react";
-import styled from "styled-components";
-import cn from "classnames";
-import {BackIcon20} from "@/icons";
-import {ArrowsIcon} from "@/icons/ArrowsIcon";
+import { FC, MouseEventHandler } from 'react'
+import styled from 'styled-components'
+import cn from 'classnames'
+import { ArrowsIcon } from '@/icons/ArrowsIcon'
+import { Button } from '@/components/ui/Button'
 
 enum Types {
   Dotted = 'dotted',
-  Pages = 'pages'
+  Pages = 'pages',
 }
 
 type Props = {
   className?: string
   type?: Types
   total: number
+  current?: number
+  onClick?: MouseEventHandler<HTMLDivElement>
 }
 
 const Pagination: FC<Props> = (props: Props) => {
+  const renderCurrent = (id: number): JSX.Element => {
+    return (
+      <span
+        className={cn('Pagination__link Pagination__button active')}
+        key={id}
+      >
+        {props.type === Types.Pages && id}
+      </span>
+    )
+  }
+
+  const renderAsLink = (id: number): JSX.Element => {
+    return (
+      <Button
+        secondary
+        attr={{ 'data-page': id }}
+        className={'Pagination__link Pagination__button'}
+        key={id}
+      >
+        {props.type === Types.Pages && id}
+      </Button>
+    )
+  }
+
   return (
-    <StyledPagination className={cn("Pagination", props.className, "Pagination--" + props.type)}>
-      {props.type === Types.Pages && (<a href={"#"} className={"Pagination__prev Pagination__button"}><ArrowsIcon left/></a>)}
-      <div className={"Pagination__nav"}>
+    <StyledPagination
+      className={cn('Pagination', props.className, 'Pagination--' + props.type)}
+      onClick={props.onClick}
+    >
+      {props.type === Types.Pages && (
+        <Button
+          secondary
+          href={'#'}
+          disabled={props.total <= 1}
+          className={cn('Pagination__prev Pagination__button')}
+        >
+          <ArrowsIcon left />
+        </Button>
+      )}
+
+      <div className={'Pagination__nav'}>
         {[...Array(props.total)].map((x, i) =>
-          <a className={"Pagination__link Pagination__button"} href={"#"} key={i}>
-            {props.type === Types.Pages && i +1 }
-          </a>
+          i + 1 == props.current ? renderCurrent(i + 1) : renderAsLink(i + 1)
         )}
       </div>
-      {props.type === Types.Pages && (<a href={"#"} className={"Pagination__prev Pagination__button"}><ArrowsIcon right/></a>)}
+
+      {props.type === Types.Pages && (
+        <Button
+          secondary
+          href={'#'}
+          disabled={props.total <= 1}
+          className={cn('Pagination__prev Pagination__button')}
+        >
+          <ArrowsIcon right />
+        </Button>
+      )}
     </StyledPagination>
   )
 }
@@ -56,13 +103,15 @@ const StyledPagination = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 0;
 
       &:hover {
-        background: ${({theme}) => theme.colors.button.secondary.bg.hover};
+        background: ${({ theme }) => theme.colors.button.secondary.bg.hover};
       }
 
-      &:active, &.active {
-        background: ${({theme}) => theme.colors.main};
+      &:active,
+      &.active {
+        background: ${({ theme }) => theme.colors.main};
         color: white;
 
         svg path {
@@ -71,8 +120,8 @@ const StyledPagination = styled.div`
       }
 
       &:focus-visible {
-        outline: 2px solid ${({theme}) => theme.colors.stroke.focused};
-        background: ${({theme}) => theme.colors.fields.stroke};
+        outline: 2px solid ${({ theme }) => theme.colors.stroke.focused};
+        background: ${({ theme }) => theme.colors.fields.stroke};
       }
     }
   }
@@ -85,23 +134,25 @@ const StyledPagination = styled.div`
     .Pagination__button {
       width: 8px;
       height: 8px;
+      padding: 0;
       border-radius: 100%;
-      background: ${({theme}) => theme.colors.background.disabled};
+      background: ${({ theme }) => theme.colors.background.disabled};
 
       &:hover {
-        background: ${({theme}) => theme.colors.main};
+        background: ${({ theme }) => theme.colors.main};
       }
 
-      &:active, &.active {
-        background: ${({theme}) => theme.colors.main};
+      &:active,
+      &.active {
+        background: ${({ theme }) => theme.colors.main};
       }
 
       &:focus-visible {
-        outline: 2px solid ${({theme}) => theme.colors.stroke.focused};
-        background: ${({theme}) => theme.colors.fields.stroke};
+        outline: 2px solid ${({ theme }) => theme.colors.stroke.focused};
+        background: ${({ theme }) => theme.colors.fields.stroke};
       }
     }
   }
 `
 
-export {Pagination, Types}
+export { Pagination, Types }

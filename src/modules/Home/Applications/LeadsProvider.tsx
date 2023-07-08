@@ -30,7 +30,7 @@ class LeadsLastProvider {
       })
       .then(async res => {
         const response = new ApiResponse()
-        return response.makeFromString(res)
+        return response.makeFromObject(res)
       })
   }
 
