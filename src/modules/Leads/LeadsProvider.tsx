@@ -9,7 +9,7 @@ import {
 import React from 'react'
 import { LeadCard } from '@/modules/Leads/components/LeadCard'
 import Image from 'next/image'
-import { Button, Link as CustomLink } from '@/components/ui'
+import { Link as CustomLink } from '@/components/ui'
 
 class LeadsAllProvider {
   private isFetchCompleted: boolean

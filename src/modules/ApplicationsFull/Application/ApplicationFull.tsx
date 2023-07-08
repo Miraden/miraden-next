@@ -2,193 +2,116 @@ import { Button } from '@/components/ui'
 import { ApplicationsFooter } from '@/modules/Base/ApplicationsFooter'
 import cn from 'classnames'
 import Image from 'next/image'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { ObjectCardLarge } from './components/ObjectCardLarge'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
+import { MyLeadsCustomerDataProvider as DataProvider } from '@/modules/ApplicationsFull/Application/LeadCustomerDataProvider'
 
 interface ApplicationProps {
   className?: string
 }
 
-const applicationsArray = [
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ",
-    location: "Кипр / Лимассол / Все районы",
-    id: "1445",
-    price: "158 000 – 230 000",
-    year: "2022",
-    square: "294 м²",
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    yieldCount: 8,
-    firstInstallment: "12000 €",
-    firstInstallmentPercent: "20%",
-    singleCost: "120 €",
-    deal: "Покупка",
-    type: "Жилая | Квартира / апартаменты",
-    condition: "Новая",
-    purpose: "Для инвестиций (сдавать в аренду)",
-    isPublished: true,
-    isTrue: true,
-    publishedAt: "Создана 12 января",
-    requestsCount: 5,
-    watched: 264,
-    list: 1268,
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ",
-    location: "Кипр / Лимассол / Все районы",
-    id: "1445",
-    price: "158 000 – 230 000",
-    year: "2022",
-    square: "294 м²",
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    yieldCount: 8,
-    firstInstallment: "12000 €",
-    firstInstallmentPercent: "20%",
-    singleCost: "120 €",
-    deal: "Покупка",
-    type: "Жилая | Квартира / апартаменты",
-    condition: "Новая",
-    purpose: "Для инвестиций (сдавать в аренду)",
-    isPublished: true,
-    isTrue: true,
-    publishedAt: "Создана 12 января",
-    watched: 264,
-    list: 1268,
-    messagesCount: 10,
-  },
-  {
-    title: "Куплю 3-х комнатную квартиру на Кипре для инвестиций и ВНЖ",
-    location: "Кипр / Лимассол / Все районы",
-    id: "1445",
-    price: "158 000 – 230 000",
-    year: "2022",
-    square: "294 м²",
-    rooms: 10,
-    sleeps: 6,
-    baths: 2,
-    yieldCount: 8,
-    firstInstallment: "12000 €",
-    firstInstallmentPercent: "20%",
-    singleCost: "120 €",
-    deal: "Покупка",
-    type: "Жилая | Квартира / апартаменты",
-    condition: "Новая",
-    purpose: "Для инвестиций (сдавать в аренду)",
-    isPublished: true,
-    isTrue: false,
-    publishedAt: "Создана 12 января",
-    watched: 264,
-    list: 1268,
-  },
-];
+enum TabsMenuState {
+  All = 0,
+  Published = 1,
+  Archived = 2,
+}
 
-const ApplicationFull = ({className}: ApplicationProps) => {
+const ApplicationFull = ({ className }: ApplicationProps) => {
+  const [selectedTab, setSelectedTab] = useState<number>(0)
 
-  const [selected, setSelected] = useState<number>(0);
-
-  const handleSelect = useCallback((state: number) => {
-    setSelected(state);
-  }, []);
+  const handleSelectTabs = useCallback((state: number) => {
+    setSelectedTab(state)
+  }, [])
 
   const [tabsManager, setTabsManager] = useState<TabsManager>(new TabsManager())
-  tabsManager.setCallback(handleSelect)
-  tabsManager.addItem(new TabMenuItem('Все', 0, renderTabAll()))
-  tabsManager.addItem(new TabMenuItem('Опубликованные', 3, renderTabPublished()))
-  tabsManager.addItem(new TabMenuItem('В архиве', 1, renderTabArchived()))
+  tabsManager.setCallback(handleSelectTabs)
+  tabsManager.addItem(new TabMenuItem('Все'))
+  tabsManager.addItem(new TabMenuItem('Опубликованные'))
+  tabsManager.addItem(new TabMenuItem('В архиве'))
+
+  const [allProvider, setDataProvider] = useState<DataProvider>(
+    new DataProvider()
+  )
+  const [allData, setAllData] = useState<Array<Object>>([])
+  useEffect(() => {
+    if (selectedTab == TabsMenuState.All) {
+      setAllData([])
+      allProvider.fetchData('/leads/my').then(res => {
+        setAllData(res)
+        allProvider.setIsFinished(true)
+        allProvider.setFetchedData(res)
+      })
+    }
+
+    if (selectedTab == TabsMenuState.Published) {
+      setAllData([])
+      allProvider.fetchData('/leads/my?f=published').then(res => {
+        setAllData(res)
+        allProvider.setIsFinished(true)
+        allProvider.setFetchedData(res)
+      })
+    }
+
+    if (selectedTab == TabsMenuState.Archived) {
+      setAllData([])
+      allProvider.fetchData('/leads/my?f=archived').then(res => {
+        setAllData(res)
+        allProvider.setIsFinished(true)
+        allProvider.setFetchedData(res)
+      })
+    }
+  }, [allProvider, selectedTab])
 
   return (
     <StyledApplication className={className}>
-      <div className={cn("Application__wrapper")}>
+      <div className={cn('Application__wrapper')}>
         <>
           <StyledMenu className={cn(tabsManager.getClasses())}>
             <div className={'Menu__header Font_headline_3'}>
               <h1 className="Font_headline_3">Мои заявки</h1>
             </div>
-            {tabsManager.renderMenus(selected)}
-            {tabsManager.renderMenuFooter(selected)}
+            {tabsManager.renderMenus(selectedTab)}
+            {tabsManager.renderMenuFooter(selectedTab)}
           </StyledMenu>
         </>
-        {tabsManager.renderContent(selected)}
-        <ApplicationsFooter/>
+        {allProvider.render()}
+        <ApplicationsFooter />
       </div>
     </StyledApplication>
-  );
-};
-
-function renderTabAll() {
-  return (
-    <ul className="ApplicationsList">
-      {applicationsArray.map((application, index) => (
-        <li key={index}>
-          <ObjectCardLarge
-            title={application.title}
-            location={application.location}
-            id={application.id}
-            year={application.year}
-            square={application.square}
-            rooms={application.rooms}
-            sleeps={application.sleeps}
-            baths={application.baths}
-            price={application.price}
-            firstInstallment={application.firstInstallment}
-            firstInstallmentPercent={application.firstInstallmentPercent}
-            yieldCount={application.yieldCount}
-            singleCost={application.singleCost}
-            deal={application.deal}
-            condition={application.condition}
-            type={application.type}
-            purpose={application.purpose}
-            isPublished={application.isPublished}
-            isTrue={application.isTrue}
-            publishedAt={application.publishedAt}
-            requestsCount={application.requestsCount}
-            watched={application.watched}
-            list={application.list}
-            messagesCount={application.messagesCount}
-            href="/lead/1"
-          />
-        </li>
-      ))}
-    </ul>
-  );
+  )
 }
 
 function renderTabPublished() {
   return (
     <>
       <div className="Application__body">
-        <Image src="/images/apps/4.svg" alt="" width={200} height={200}/>
+        <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
         <h2>Нет созданных заявок</h2>
         <p className="Color_text_grey">
-          Но вы можете сделать это прямо сейчас!{" "}
+          Но вы можете сделать это прямо сейчас!{' '}
         </p>
         <Button className="CreateApp__button" compact>
           Создать заявку
         </Button>
       </div>
     </>
-  );
+  )
 }
 
 function renderTabArchived() {
   return (
     <>
       <div className="Application__body">
-        <Image src="/images/apps/5.svg" alt="" width={200} height={200}/>
+        <Image src="/images/apps/5.svg" alt="" width={200} height={200} />
         <h2>Нет заявок в архиве</h2>
         <p className="Color_text_grey">
-          Если заявка больше не актуальна, вы можете отправить ее в архив,
-          а по необходимости восстановить обратно
+          Если заявка больше не актуальна, вы можете отправить ее в архив, а по
+          необходимости восстановить обратно
         </p>
       </div>
     </>
-  );
+  )
 }
 
 const StyledApplication = styled.section`
@@ -216,7 +139,7 @@ const StyledApplication = styled.section`
     margin-top: 30px;
     padding: 20px 20px 10px 20px;
     background: #fff;
-    border-radius: ${({theme}) => theme.border.radius};
+    border-radius: ${({ theme }) => theme.border.radius};
   }
 
   .Application__head {
@@ -255,7 +178,7 @@ const StyledApplication = styled.section`
     ::before {
       position: absolute;
       top: 35px;
-      content: "";
+      content: '';
       background: #4e6af3;
       width: 100%;
       height: 4px;
@@ -271,33 +194,13 @@ const StyledApplication = styled.section`
     }
   }
 
-  .Application__headTabsBar {
-    margin-top: 15px;
-    width: 100%;
-    background: #e1edfd;
-    height: 4px;
-    border-radius: 10px;
-  }
-
-  .Applications__headTabsBar_whiteSpace {
-    width: 100%;
-    height: 10px;
-    border-radius: 0 0 10px 10px;
-    background: #fff;
-  }
-
-  .Applications__headTabs {
+  .LeadsList {
     display: flex;
-    margin-top: 30px;
-    overflow: auto;
-
-    button {
-      padding: 0;
-    }
-
-    button:not(:first-child) {
-      margin-left: 30px;
-    }
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+    position: relative;
+    min-height: 200px;
   }
 
   .Application__body {
@@ -530,6 +433,6 @@ const StyledApplication = styled.section`
       padding-top: 40px;
     }
   }
-`;
+`
 
-export {ApplicationFull};
+export { ApplicationFull }
