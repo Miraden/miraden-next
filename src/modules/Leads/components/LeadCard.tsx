@@ -47,6 +47,9 @@ interface LeadProps {
   purchaseType: {}
 }
 
+const mobile = theme.breakpoints.mobile.max + 'px'
+const tablet = theme.breakpoints.tablet.max + 'px'
+
 const LeadCard = (props: LeadProps) => {
   return (
     <StyledLeads>
@@ -192,6 +195,7 @@ const StyledLeads = styled.div`
     display: flex;
     gap: 10px;
     margin-bottom: 26px;
+    flex-wrap: wrap;
 
     .Tags {
       border-radius: 5px;
@@ -265,6 +269,16 @@ const StyledLeads = styled.div`
 
   .Leads__price_range {
     color: ${theme.colors.main};
+  }
+
+  @media (max-width: ${mobile}) {
+    .Leads__tags {
+      display: none;
+    }
+
+    .Leads__footer-right {
+      display: none;
+    }
   }
 `
 

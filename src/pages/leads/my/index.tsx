@@ -5,12 +5,6 @@ import styled from 'styled-components'
 import React from 'react'
 import { ApplicationFull } from '@/modules/ApplicationsFull/Application'
 
-enum TabsMenuState {
-  All = 0,
-  Published = 1,
-  Archived = 2,
-}
-
 export default function MyLeadsPage(): JSX.Element {
   return (
     <>

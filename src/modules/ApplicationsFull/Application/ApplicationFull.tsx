@@ -1,7 +1,5 @@
-import { Button } from '@/components/ui'
 import { ApplicationsFooter } from '@/modules/Base/ApplicationsFooter'
 import cn from 'classnames'
-import Image from 'next/image'
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
@@ -37,6 +35,7 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
   useEffect(() => {
     if (selectedTab == TabsMenuState.All) {
       setAllData([])
+      allProvider.setIsFinished(false)
       allProvider.fetchData('/leads/my').then(res => {
         setAllData(res)
         allProvider.setIsFinished(true)
@@ -46,6 +45,7 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
 
     if (selectedTab == TabsMenuState.Published) {
       setAllData([])
+      allProvider.setIsFinished(false)
       allProvider.fetchData('/leads/my?f=published').then(res => {
         setAllData(res)
         allProvider.setIsFinished(true)
@@ -55,6 +55,7 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
 
     if (selectedTab == TabsMenuState.Archived) {
       setAllData([])
+      allProvider.setIsFinished(false)
       allProvider.fetchData('/leads/my?f=archived').then(res => {
         setAllData(res)
         allProvider.setIsFinished(true)
@@ -82,38 +83,6 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
   )
 }
 
-function renderTabPublished() {
-  return (
-    <>
-      <div className="Application__body">
-        <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
-        <h2>Нет созданных заявок</h2>
-        <p className="Color_text_grey">
-          Но вы можете сделать это прямо сейчас!{' '}
-        </p>
-        <Button className="CreateApp__button" compact>
-          Создать заявку
-        </Button>
-      </div>
-    </>
-  )
-}
-
-function renderTabArchived() {
-  return (
-    <>
-      <div className="Application__body">
-        <Image src="/images/apps/5.svg" alt="" width={200} height={200} />
-        <h2>Нет заявок в архиве</h2>
-        <p className="Color_text_grey">
-          Если заявка больше не актуальна, вы можете отправить ее в архив, а по
-          необходимости восстановить обратно
-        </p>
-      </div>
-    </>
-  )
-}
-
 const StyledApplication = styled.section`
   position: relative;
   width: 100%;
@@ -135,65 +104,6 @@ const StyledApplication = styled.section`
     top: 94px;
   }
 
-  .Application__headContainer {
-    margin-top: 30px;
-    padding: 20px 20px 10px 20px;
-    background: #fff;
-    border-radius: ${({ theme }) => theme.border.radius};
-  }
-
-  .Application__head {
-    display: flex;
-    align-items: center;
-  }
-
-  .Application__headTabs {
-    display: flex;
-    margin-top: 30px;
-
-    button {
-      padding: 0;
-
-      :hover {
-        p {
-          color: #4e6af3 !important;
-        }
-      }
-    }
-
-    button:not(:first-child) {
-      margin-left: 30px;
-    }
-  }
-
-  .Application__TabButton {
-    :active {
-      background: transparent !important;
-    }
-  }
-
-  .Application__headTabButton {
-    position: relative;
-
-    ::before {
-      position: absolute;
-      top: 35px;
-      content: '';
-      background: #4e6af3;
-      width: 100%;
-      height: 4px;
-      border-radius: 10px;
-    }
-
-    p {
-      color: #4e6af3;
-    }
-
-    :active {
-      background: transparent !important;
-    }
-  }
-
   .LeadsList {
     display: flex;
     flex-direction: column;
@@ -201,20 +111,10 @@ const StyledApplication = styled.section`
     margin-top: 20px;
     position: relative;
     min-height: 200px;
-  }
 
-  .Application__body {
-    padding-top: 100px;
-    margin: 0 auto;
-    text-align: -webkit-center;
-    max-width: 320px;
-
-    h2 {
-      margin-top: 20px;
-    }
-
-    p {
-      margin-top: 10px;
+    .Leads_empty {
+      margin: 0 auto;
+      text-align: center;
     }
   }
 
@@ -222,31 +122,6 @@ const StyledApplication = styled.section`
     margin-top: 30px;
     padding: 10px 24px;
     width: fit-content;
-  }
-
-  .Application__headArrow {
-    transform: rotate(-90deg);
-
-    path {
-      stroke: #7786a5;
-    }
-  }
-
-  .Applications__headTabsBar {
-    margin-top: 15px;
-    width: 100%;
-    background: #e1edfd;
-    height: 4px;
-    border-radius: 10px;
-  }
-
-  .ApplicationsList {
-    height: 100vh;
-    margin-top: 20px;
-
-    li:not(:first-child) {
-      margin-top: 10px;
-    }
   }
 
   .Application__Footer {
@@ -364,19 +239,6 @@ const StyledApplication = styled.section`
 
   @media (max-width: 1024px) {
     padding-bottom: 120px;
-    .Application__headContainer {
-      margin-top: 0;
-    }
-
-    .ApplicationsList {
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-
-    .Application__body {
-      padding-top: 120px;
-    }
-
     .Application__Footer {
       display: block;
     }
@@ -384,24 +246,6 @@ const StyledApplication = styled.section`
 
   @media (max-width: 767px) {
     padding-bottom: 0;
-    .ApplicationsList {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-
-  @media (max-width: 660px) {
-    .Application__headContainer {
-      padding-right: 0;
-    }
-
-    .Application__headTabsContainer {
-      overflow: auto;
-
-      ::-webkit-scrollbar {
-        display: none;
-      }
-    }
   }
 
   @media (max-width: 576px) {
@@ -413,24 +257,6 @@ const StyledApplication = styled.section`
       button:not(:first-child) {
         margin-left: 5px;
       }
-    }
-
-    .Application__headTabs {
-      margin-top: 16px;
-    }
-
-    .Application__headTabsBar {
-      margin-top: 8px;
-    }
-
-    .Application__headTabButton {
-      ::before {
-        top: 28px;
-      }
-    }
-
-    .Application__body {
-      padding-top: 40px;
     }
   }
 `

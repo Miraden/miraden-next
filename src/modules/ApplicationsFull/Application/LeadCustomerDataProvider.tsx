@@ -175,9 +175,11 @@ function formatCreatedDate(val: string): string {
 
 function renderEmptyLeads(): JSX.Element {
   return (
-    <div className={'Leads_empty'}>
-      <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
-      <h2>Нет заявок</h2>
+    <div className={"LeadsList"}>
+      <div className={'Leads_empty'}>
+        <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
+        <h2>Нет заявок</h2>
+      </div>
     </div>
   )
 }
