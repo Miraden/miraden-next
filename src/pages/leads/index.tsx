@@ -231,4 +231,46 @@ const StyledLeads = styled.div`
     margin: 100px auto 0;
     max-width: 320px;
   }
+
+  @media (max-width: 1660px) {
+    .LeadsWrapper {
+      padding-left: 0;
+      padding-right: 0;
+      grid-gap: 15px;
+    }
+
+    .LeadsContent {
+      grid-column: 5 / span 10;
+      width: 100%;
+
+      &.IsOpenSidebar,
+      &.IsOpenFilter {
+        grid-column: 1 / span 11;
+      }
+    }
+  }
+
+  @media (max-width: 1441px) {
+    .LeadsWrapper {
+      grid-gap: 20px;
+      padding-left: 0;
+      padding-right: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .LeadsContent {
+      margin: 0 auto;
+      grid-column: 1 / span 14;
+      width: 100%;
+      max-width: 970px;
+      min-width: unset;
+
+      &.IsOpenFilter,
+      &.IsOpenSidebar {
+        grid-column: 1 / span 18;
+        max-width: 970px;
+      }
+    }
+  }
 `
