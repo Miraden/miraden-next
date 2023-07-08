@@ -14,17 +14,17 @@ interface FooterProps {
 }
 
 const linksLeft = [
-  { label: "Лента заявок" },
-  { label: "О нас" },
-  { label: "Тарифы" },
-  { label: "FAQ" },
+  { label: "Лента заявок", href: "/leads" },
+  { label: "О нас", href: '/about' },
+  { label: "Тарифы", href: '/tariffs' },
+  { label: "FAQ", href: '/faq' },
 ];
 
 const linksRight = [
-  { label: "Получить подборку" },
-  { label: "Подписаться на рассылку" },
-  { label: "Регистрация" },
-  { label: "Вход" },
+  { label: "Получить подборку", href: '/' },
+  { label: "Подписаться на рассылку", href: '/' },
+  { label: "Регистрация", href: '/user/register' },
+  { label: "Вход", href: '/user/login' },
 ];
 
 const Footer = ({ className }: FooterProps) => {
@@ -64,7 +64,7 @@ const Footer = ({ className }: FooterProps) => {
             <ul className="Footer__navLinksLeft">
               {linksLeft.map((link, index) => (
                 <li key={index}>
-                  <Link href="/" className="Font_16_20 lg:Font_14_140">
+                  <Link href={link.href} className="Font_16_20 lg:Font_14_140">
                     <p>{link.label}</p>
                   </Link>
                 </li>
@@ -73,7 +73,7 @@ const Footer = ({ className }: FooterProps) => {
             <ul className="Footer__navLinksRight">
               {linksRight.map((link, index) => (
                 <li key={index} className="Font_16_20 lg:Font_14_140">
-                  <Link href="/">
+                  <Link href={link.href}>
                     <p>{link.label}</p>
                   </Link>
                 </li>

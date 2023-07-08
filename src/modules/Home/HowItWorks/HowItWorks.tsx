@@ -1,4 +1,4 @@
-import { RequestButton } from "@/components/ui";
+import {Button, RequestButton} from "@/components/ui";
 import Image from "next/image";
 import { useState } from "react";
 import styled from "styled-components";
@@ -22,16 +22,17 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
           <div className="HowItWorks__head">
             <h2 className="Font_44_120 sm:Font_26_120">Как это работает?</h2>
             <div className="HowItWorks__tabs">
-              <RequestButton
+              <Button
+                request
                 onClick={toggleTab}
                 active={isCustomerTab}
                 className="Test Font_16_20"
               >
                 Для заказчика
-              </RequestButton>
-              <RequestButton onClick={toggleTab} active={!isCustomerTab}>
+              </Button>
+              <Button request onClick={toggleTab} active={!isCustomerTab}>
                 Для исполнителя
-              </RequestButton>
+              </Button>
             </div>
           </div>
           {isCustomerTab ? (
