@@ -24,6 +24,7 @@ const authManger = new AuthManager()
 
 export default function LeadsPage(): JSX.Element {
   const [itemPage, setItemPage] = useState<number>(1)
+  const [urlManager, setUrlManager] = useState<UrlManager>(new UrlManager())
 
   const [isUserAuth, setUserAuth] = useState(false)
   useEffect(() => {
@@ -33,6 +34,7 @@ export default function LeadsPage(): JSX.Element {
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.All)
   const handleSelect = useCallback((option: TabsMenuState) => {
     setSelected(option)
+    urlManager.deleteQuery(PAGE_KEY)
   }, [])
 
   const [showFilter, setShowFilter] = useState(false)
@@ -44,8 +46,6 @@ export default function LeadsPage(): JSX.Element {
   useEffect(() => {
     tabsManager.setActive(selected)
   }, [selected, tabsManager])
-
-  const [urlManager, setUrlManager] = useState<UrlManager>(new UrlManager())
 
   tabsManager.setCallback(handleSelect)
   tabsManager.addItem(new TabMenuItem('Все'))
@@ -83,7 +83,6 @@ export default function LeadsPage(): JSX.Element {
     leadsProvider.setPageCallback(onPageHandler)
     if (selected == TabsMenuState.All) {
       setLeadsAllData([])
-      urlManager.deleteQuery(PAGE_KEY)
       leadsProvider.setIsFinished(false)
       leadsProvider.setUrl('/leads')
       leadsProvider.fetchData().then(res => {
@@ -100,7 +99,6 @@ export default function LeadsPage(): JSX.Element {
 
     if (selected == TabsMenuState.Favorites) {
       setLeadsAllData([])
-      urlManager.deleteQuery(PAGE_KEY)
       leadsProvider.setIsFinished(false)
       leadsProvider.setUrl('/leads/favorites')
       leadsProvider.fetchData().then(res => {
@@ -110,7 +108,6 @@ export default function LeadsPage(): JSX.Element {
 
     if (selected == TabsMenuState.IamExecutant) {
       setLeadsAllData([])
-      urlManager.deleteQuery(PAGE_KEY)
       leadsProvider.setIsFinished(false)
       leadsProvider.setUrl('/leads/aimexecutant')
       leadsProvider.fetchData().then(res => {
@@ -120,7 +117,6 @@ export default function LeadsPage(): JSX.Element {
 
     if (selected == TabsMenuState.MyRequests) {
       setLeadsAllData([])
-      urlManager.deleteQuery(PAGE_KEY)
       leadsProvider.setIsFinished(false)
       leadsProvider.setUrl('/leads/my/requests')
       leadsProvider.fetchData().then(res => {
