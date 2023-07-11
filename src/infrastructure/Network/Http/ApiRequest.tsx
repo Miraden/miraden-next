@@ -10,7 +10,7 @@ enum ApiRequestMethods {
 interface Props {
   method: ApiRequestMethods
   headers: HeadersInit
-  body?: string
+  body?: string|FormData
   endpoint: string
 }
 

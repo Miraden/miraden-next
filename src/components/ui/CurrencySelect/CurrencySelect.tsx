@@ -38,6 +38,7 @@ const CurrencySelect: FC<Props> = ({ className, options }) => {
   return (
     <StyledDropdownInput className={cn({ className })} options={options}>
       <button
+        type={"button"}
         className={
           showDropDown ? `DropdownInput_select_active` : `DropdownInput_select`
         }

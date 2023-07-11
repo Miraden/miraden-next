@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   basePath: "/miraden-next-ts",
 };
 
 module.exports = {
-  reactStrictMode: true,
+  reactStrictMode: false,
 };

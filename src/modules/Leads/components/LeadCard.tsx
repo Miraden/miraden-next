@@ -23,7 +23,7 @@ interface LeadProps {
   title: string
   location: string
   isPublished: boolean
-  type?: Array<string>
+  type?: string
   status: string
   deadlineAt: string
   areas: {
@@ -36,7 +36,7 @@ interface LeadProps {
     bathroom: number
   }
   purpose: string
-  readyDeal: string
+  readyDeal?: string
   format: string
   rentPeriod: string
   budget: {
@@ -85,12 +85,16 @@ const LeadCard = (props: LeadProps) => {
             <TagItem label={props.readyDeal} />
           </Tags>
         )}
-        <Tags>
-          <TagItem label={props.type?.at(0)} />
-          <TagItem label={props.type?.at(1)} />
-        </Tags>
+        {props.type && (
+          <Tags>
+            <TagItem label={Object.values(props.type).at(0)} />
+          </Tags>
+        )}
         <Tags>
           <TagItem label={props.status} />
+        </Tags>
+        <Tags>
+          <TagItem label={props.format} />
         </Tags>
         <Tags>
           <TagItem label={props.purpose} />
@@ -113,11 +117,11 @@ const LeadCard = (props: LeadProps) => {
         </p>
         <p>
           <BedIcon />
-          <span>{props.rooms.total}</span>
+          <span>{props.rooms.beds}</span>
         </p>
         <p>
           <BathsIcon />
-          <span>{props.rooms.beds}</span>
+          <span>{props.rooms.bathroom}</span>
         </p>
       </div>
       <div className="Leads__footer">

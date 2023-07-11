@@ -75,8 +75,8 @@ const ApplicationsFilter = ({
         <TabButtons
           className="ApplicationsFilter__tabs"
           tabs={[
-            { label: "Продавцы", id: "1", content: <SellerContent /> },
-            { label: "Объекты", id: "2", content: <ObjectsContent /> },
+            { label: "Продавцы", id: "1", name: "sellers",  content: <SellerContent /> },
+            { label: "Объекты", id: "2", name: "objects", content: <ObjectsContent /> },
           ]}
           defaultTabId="1"
           onTabClick={onTabClick}
@@ -84,7 +84,7 @@ const ApplicationsFilter = ({
       </div>
       <div className="ApplicationsFilter__footer">
         <RequestButton active onClick={onClick} className="">
-          Найдено 145 объектов
+          Найдено 145 объектов
         </RequestButton>
       </div>
     </StyledApplicationsFilter>
@@ -444,10 +444,11 @@ const ObjectsContent = () => {
           <TabButtons
             className="ObjectsContent__tabs"
             tabs={[
-              { label: "Вся", id: "1" },
-              { label: "Новая", id: "2" },
-              { label: "Вторичная", id: "3" },
+              { label: "Вся", id: "1", name: "any" },
+              { label: "Новая", id: "2", name: "new" },
+              { label: "Вторичная", id: "3", name: "secondary" },
             ]}
+            onTabClick={() => {}}
             defaultTabId="1"
           />
         </div>

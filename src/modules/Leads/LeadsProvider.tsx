@@ -167,97 +167,15 @@ function renderEmptyLeads(): JSX.Element {
   )
 }
 
-async function leadsGetAll(): Promise<any> {
-  const apiRequest: ApiRequest = new ApiRequest()
-  const headers: HeadersInit = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: 'Bearer ' + localStorage.getItem('token'),
-  }
-
-  return apiRequest
-    .fetch({
-      method: ApiRequestMethods.GET,
-      headers: headers,
-      endpoint: '/leads',
-    })
-    .then(async res => {
-      const response = new ApiResponse()
-      console.log(response.getPages())
-      return response.makeFromObject(res)
-    })
-}
-
-async function leadsGetFavorites(): Promise<any> {
-  const apiRequest: ApiRequest = new ApiRequest()
-  const headers: HeadersInit = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: 'Bearer ' + localStorage.getItem('token'),
-  }
-
-  return apiRequest
-    .fetch({
-      method: ApiRequestMethods.GET,
-      headers: headers,
-      endpoint: '/leads/favorites',
-    })
-    .then(async res => {
-      const response = new ApiResponse()
-      return response.makeFromObject(res)
-    })
-}
-
-async function getAimExecutant(): Promise<any> {
-  const apiRequest: ApiRequest = new ApiRequest()
-  const headers: HeadersInit = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: 'Bearer ' + localStorage.getItem('token'),
-  }
-
-  return apiRequest
-    .fetch({
-      method: ApiRequestMethods.GET,
-      headers: headers,
-      endpoint: '/leads/aimexecutant',
-    })
-    .then(async res => {
-      const response = new ApiResponse()
-      return response.makeFromObject(res)
-    })
-}
-
-async function getMyRequests(): Promise<any> {
-  const apiRequest: ApiRequest = new ApiRequest()
-  const headers: HeadersInit = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: 'Bearer ' + localStorage.getItem('token'),
-  }
-
-  return apiRequest
-    .fetch({
-      method: ApiRequestMethods.GET,
-      headers: headers,
-      endpoint: '/leads/my/requests',
-    })
-    .then(async res => {
-      const response = new ApiResponse()
-      return response.makeFromObject(res)
-    })
-}
-
-function statusTranslate(val: string): string {
+function formatTranslate(val: string): string {
   switch (val) {
-    case 'secondary':
-      return 'Вторичная'
-    case 'new':
-      return 'Новая'
-    case 'any':
-      return 'Любая'
+    case 'rent':
+      return 'Аренда'
+    case 'buy':
+      return 'Покупка'
   }
-  return ''
-}
 
-function typeTranslate(val: Object): Array<string> {
-  return ['Коммерческая', 'Апартаменты']
+  return ''
 }
 
 function formatDeadlineDate(val: string): string {
@@ -302,14 +220,13 @@ function renderLead(data: Array<any>): JSX.Element {
               createdAt={formatCreatedDate(item.createdAt)}
               location={item.city.country + ' / ' + item.city.name}
               isPublished={true}
-              type={typeTranslate(item.type)}
-              status={statusTranslate(item.status)}
+              type={item.type}
+              status={item.status}
               deadlineAt={formatDeadlineDate(item.deadlineAt)}
               rooms={item.rooms}
               purpose={item.purpose}
-              readyDeal={item.readyDeal}
               rentPeriod={item.rentPeriod}
-              format={item.format}
+              format={formatTranslate(item.format)}
               budget={{
                 currency: item.budget.currency.symbol,
                 startFrom: item.budget.startFrom,

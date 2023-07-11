@@ -58,6 +58,7 @@ const DropdownLocationInput: FC<Props> = ({
             ? `DropdownLocationInput_select_active`
             : `DropdownLocationInput_select`
         }
+        type={"button"}
         onClick={(): void => toggleDropDown()}
         onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
           dismissHandler(e)
@@ -114,7 +115,7 @@ const StyledDropdownLocationInput = styled.div<Props>`
     width: 100%;
     background: #fff;
     border-radius: 10px;
-    padding: 18px 20px;
+    padding: 12px 20px;
     border: none;
     transition: 0.15s ease-in;
     box-shadow: 0 0 0 2px #e1edfd inset;
@@ -141,7 +142,7 @@ const StyledDropdownLocationInput = styled.div<Props>`
     }
     outline: none;
     width: 100%;
-    padding: 18px 20px;
+    padding: 12px 20px;
     border: none;
     border-radius: 10px;
     overflow: hidden;

@@ -59,8 +59,8 @@ const ApplicationsFilterMobile = ({
         <TabButtons
           className="ApplicationsFilterMobile__tabs"
           tabs={[
-            { label: "Продавцы", id: "1", content: <SellerContent /> },
-            { label: "Объекты", id: "2", content: <ObjectsContent /> },
+            { label: "Продавцы", id: "1", content: <SellerContent />, name: "sellers" },
+            { label: "Объекты", id: "2", content: <ObjectsContent />, name: "objects" },
           ]}
           defaultTabId="1"
           onTabClick={onTabClick}
@@ -367,11 +367,12 @@ const ObjectsContent = () => {
           <TabButtons
             className="ObjectsContent__tabs"
             tabs={[
-              { label: "Вся", id: "1" },
-              { label: "Новая", id: "2" },
-              { label: "Вторичная", id: "3" },
+              { label: "Вся", id: "1", name: 'any' },
+              { label: "Новая", id: "2", name: 'new' },
+              { label: "Вторичная", id: "3", name: 'secondary' },
             ]}
             defaultTabId="1"
+            onTabClick={() => {}}
           />
         </div>
       </div>

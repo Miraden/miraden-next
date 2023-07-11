@@ -93,7 +93,7 @@ const Button: FC<Props> = ({
         href={href}
         {...attr}
         onClick={onClick}
-        className={cn(`${className} Font_button_medium`, {
+        className={cn(className, `Font_button_medium`, {
           Button_primary: !secondary,
           Button_secondary: secondary,
           Button_tertiary: tertiary,

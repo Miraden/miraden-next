@@ -47,6 +47,7 @@ class TabMenuItem {
     return (
       <Button
         tertiary
+        type={"button"}
         className={btnClassName}
         active={active}
         disabled={this.isDisabled}

@@ -17,6 +17,7 @@ interface Props {
   isRequired?: boolean;
   name?: string;
   message?: string
+  placeholder?: string
 }
 
 const TextInput = ({
@@ -32,7 +33,8 @@ const TextInput = ({
   values,
   isRequired = false,
   name,
-  message
+  message,
+  placeholder
 }: Props) => {
   const [value, setValue] = useState("");
   const [isFocused, setIsFocused] = useState(false);
@@ -84,6 +86,7 @@ const TextInput = ({
           className="TextInput"
           isRequired={isRequired}
           hasLabel={hasLabel}
+          placeholder={placeholder}
         />
         {icon && <div className="Icon__container">{icon}</div>}
         <StyledTextInputLabel isFocused={isFocused} className="TextInput">

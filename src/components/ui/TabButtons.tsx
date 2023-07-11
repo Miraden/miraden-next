@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, {ReactNode, useState} from "react";
 import styled from "styled-components";
+import {Label} from "@/components/ui/Radio";
 
 type TabButtonsProps = {
-  tabs: { label: string; id: string; content?: React.ReactNode }[];
+  tabs: { label: string; id: string; content?: React.ReactNode, name: string }[];
   defaultTabId: string;
-  onTabClick?: (tabId: string) => void;
+  onTabClick: Function;
   className?: string;
   selectedTab?: any;
 };
@@ -37,9 +38,15 @@ const TabButtons: React.FC<TabButtonsProps> = ({
         <Tabs>
           {tabs.map((tab) => (
             <Button
+              type={"button"}
               className="Font_16_20 TabButton"
               key={tab.id}
-              onClick={() => handleTabClick(tab.id)}
+              data-id={tab.id}
+              data-name={tab.name}
+              onClick={(e) => {
+                setActiveTabId(tab.id)
+                onTabClick(e)
+              }}
               active={tab.id === activeTabId}
             >
               {tab.label}
@@ -48,7 +55,7 @@ const TabButtons: React.FC<TabButtonsProps> = ({
         </Tabs>
       </div>
 
-      <Content>{activeTab?.content}</Content>
+      {activeTab?.content && <Content>{activeTab?.content}</Content>}
     </div>
   );
 };

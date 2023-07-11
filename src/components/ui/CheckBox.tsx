@@ -1,5 +1,5 @@
 import cn from "classnames";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { CheckboxIcon } from "@/icons";
 
@@ -9,9 +9,12 @@ interface CheckboxProps {
   checked?: boolean;
   label?: string;
   isSelected?: any;
-  onChange?: () => void;
+  onChange?: (e: any) => void;
   onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
   className?: string;
+  dataLabel?: string
+  name?: string
+  value?: string
 }
 
 const Checkbox = ({
@@ -23,6 +26,9 @@ const Checkbox = ({
   isSelected,
   className,
   onChange,
+  dataLabel,
+  name,
+  value
 }: CheckboxProps) => {
   const [isChecked, setIsChecked] = useState(checked || false);
 
@@ -30,35 +36,24 @@ const Checkbox = ({
     setIsChecked(checked || false);
   }, [checked]);
 
-  const handleClick = (e: React.MouseEvent<HTMLLabelElement>) => {
-    setIsChecked(!isChecked);
-    if (onChange) {
-      onChange();
-    }
-    e.preventDefault();
-    e.stopPropagation();
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setIsChecked(e.target.checked);
     if (onChange) {
-      onChange();
+      onChange(e);
     }
   };
 
   return (
-    <StyledModalCheckbox className={cn(className, { ErrorCheckbox: error })}>
-      <label onClick={handleClick} className="Checkbox">
+    <StyledModalCheckbox data-label={dataLabel} className={cn(className, "Checkbox", { ErrorCheckbox: error })}>
         <input
           className="[ Checkbox__input ]"
           type="checkbox"
           onChange={handleChange}
           checked={isChecked}
           tabIndex={0}
+          name={name}
+          value={value}
           disabled={disabled}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
         />
         <span
           className={cn("[ Checkbox__iconContainer ]", {
@@ -72,18 +67,16 @@ const Checkbox = ({
           )}
         </span>
         <span className="Checkbox__label">{label}</span>
-      </label>
     </StyledModalCheckbox>
-  );
+  )
 };
 
 const StyledModalCheckbox = styled.div`
-  .Checkbox {
-    display: flex;
-    cursor: pointer;
-    width: fit-content;
-    align-items: center;
-  }
+  display: flex;
+  cursor: pointer;
+  width: fit-content;
+  align-items: center;
+  position: relative;
 
   .Checkbox__label {
     margin-left: 10px;
@@ -96,11 +89,12 @@ const StyledModalCheckbox = styled.div`
   }
 
   .Checkbox__input {
-    width: 0;
-    height: 0;
     opacity: 0;
     margin: 0;
     padding: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
   }
 
   .ErrorCheckbox {
@@ -128,11 +122,6 @@ const StyledModalCheckbox = styled.div`
   .Checkbox__input:checked + .Checkbox__iconContainer {
     border: 2px solid ${({ theme }) => theme.colors.blue["default"]};
     background: ${({ theme }) => theme.colors.blue["default"]};
-  }
-
-  .Checkbox__input:focus + .Checkbox__iconContainer {
-    outline: 2px solid ${({ theme }) => theme.colors.stroke["purple"]};
-    border: 2px solid ${({ theme }) => theme.colors.blue["default"]};
   }
 
   .Checkbox__input:disabled + .Checkbox__iconContainer {
