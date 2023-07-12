@@ -167,17 +167,6 @@ function renderEmptyLeads(): JSX.Element {
   )
 }
 
-function formatTranslate(val: string): string {
-  switch (val) {
-    case 'rent':
-      return 'Аренда'
-    case 'buy':
-      return 'Покупка'
-  }
-
-  return ''
-}
-
 function formatDeadlineDate(val: string): string {
   const date = new Date(val)
 
@@ -226,7 +215,7 @@ function renderLead(data: Array<any>): JSX.Element {
               rooms={item.rooms}
               purpose={item.purpose}
               rentPeriod={item.rentPeriod}
-              format={formatTranslate(item.format)}
+              format={item.format}
               budget={{
                 currency: item.budget.currency.symbol,
                 startFrom: item.budget.startFrom,

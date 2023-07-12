@@ -820,12 +820,12 @@ const AreaSection = (props: SectionProps) => {
             <TextInput
               className={'Input'}
               placeholder={'От'}
-              name={`[${FORM_NAME}][livingArea][from]`}
+              name={`${FORM_NAME}[livingArea][from]`}
             />
             <TextInput
               className={'Input'}
               placeholder={'До'}
-              name={`[${FORM_NAME}][totalArea][to]`}
+              name={`${FORM_NAME}[livingArea][to]`}
             />
           </div>
         </div>
@@ -835,12 +835,12 @@ const AreaSection = (props: SectionProps) => {
             <TextInput
               className={'Input'}
               placeholder={'От'}
-              name={`[${FORM_NAME}][landArea][from]`}
+              name={`${FORM_NAME}[steadArea][from]`}
             />
             <TextInput
               className={'Input'}
               placeholder={'До'}
-              name={`[${FORM_NAME}][landArea][to]`}
+              name={`${FORM_NAME}[steadArea][to]`}
             />
           </div>
         </div>
@@ -856,12 +856,12 @@ const AreaSection = (props: SectionProps) => {
           <TextInput
             className={'Input'}
             placeholder={'От'}
-            name={`[${FORM_NAME}][totalArea][from]`}
+            name={`${FORM_NAME}[totalArea][from]`}
           />
           <TextInput
             className={'Input'}
             placeholder={'До'}
-            name={`[${FORM_NAME}][totalArea][to]`}
+            name={`${FORM_NAME}[totalArea][to]`}
           />
         </div>
       </div>

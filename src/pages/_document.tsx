@@ -40,7 +40,7 @@ export default class MyDocument extends Document {
 
   render(): ReactElement {
     return (
-      <Html lang="en">
+      <Html lang="ru">
         <Head>
           <meta name="theme-color" content="#2A344A"/>
           <meta name="description" content="Miraden"/>
