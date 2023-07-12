@@ -28,6 +28,8 @@ const linksRight = [
   { label: "Вход", href: '/user/login' },
 ];
 
+const Year: number = new Date().getFullYear()
+
 const Footer = ({ className }: FooterProps) => {
   return (
     <StyledFooter>
@@ -133,11 +135,11 @@ const Footer = ({ className }: FooterProps) => {
       <StyledFooterBottom>
         <div className="Container">
           <div className="Footer__addLinks  Font_14_140 lg:Font_12_16">
+            <p className="Footer__rights">&copy; {Year} Все права защищены</p>
             <p className="Footer__address">
               <PointIconFooter width={16} hanging={16} />
               <span>10314 Estonia. Tallinn 10314 Lelle Street 22</span>
             </p>
-            <p className="Footer__rights">&copy; 2023 Все права защищены</p>
             <Link href="https://faq.miraden.com/legal/privacy-policy/" className="Footer__privacyPolicy">
               Политика конфиденциальности и обработки данных{" "}
             </Link>
@@ -150,7 +152,6 @@ const Footer = ({ className }: FooterProps) => {
 
 const StyledFooter = styled.footer`
   position: relative;
-  bottom: -20px;
 `;
 
 const StyledFooterSocialMobile = styled.div`
@@ -161,7 +162,6 @@ const StyledFooterSocialMobile = styled.div`
   }
 
   @media (max-width: 576px) {
-    margin-top: -20px;
     display: flex;
     flex-direction: column;
     padding-top: 32px;
@@ -246,7 +246,6 @@ const StyledFooterTop = styled.div`
   color: #7786a5;
   max-width: 1880px;
   position: relative;
-  bottom: 20px;
   margin: 0 auto;
   border-radius: 10px 10px 0 0;
   background: #fff;
@@ -496,10 +495,9 @@ const StyledFooterTop = styled.div`
 
 const StyledFooterBottom = styled.div`
   border-top: 1px solid #e1edfd;
-  padding: 20px 0;
+  padding: 20px 0 20px;
   max-width: 1880px;
   position: relative;
-  bottom: 20px;
   margin: 0 auto;
   border-radius: 0 0 10px 10px;
   background: #fff;
@@ -510,18 +508,21 @@ const StyledFooterBottom = styled.div`
   }
 
   .Footer__addLinks {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    display: flex;
     grid-gap: 30px;
     align-items: center;
+    justify-content: space-between;
+
     a {
       color: ${theme.colors.text.grey};
       display: flex;
       align-items: center;
+
       &:hover {
         color: ${theme.colors.main};
         text-decoration: none;
       }
+
       span {
         margin-left: 5px;
       }
@@ -532,6 +533,7 @@ const StyledFooterBottom = styled.div`
     display: flex;
     align-items: center;
     grid-column: 1 / span 4;
+
     span {
       margin-left: 5px;
     }
@@ -548,6 +550,7 @@ const StyledFooterBottom = styled.div`
     a {
       color: #7786a5;
       padding: 0;
+
       :hover {
         transition: 0.15s ease;
 
@@ -559,20 +562,20 @@ const StyledFooterBottom = styled.div`
   @media (max-width: 1024px) {
     .Footer__addLinks {
       grid-gap: 20px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
     }
   }
 
-  @media (max-width: 960px) {
+  @media (max-width: 576px) {
+    padding-bottom: 44px;
     .Footer__addLinks {
       display: flex;
       flex-direction: column;
       text-align: center;
       grid-gap: 10px;
     }
-  }
-
-  @media (max-width: 576px) {
-    margin-top: 16px;
   }
 `;
 

@@ -173,8 +173,8 @@ const FAQ = () => {
 };
 
 const StyledFAQ = styled.section`
-  padding-top: 150px;
-  padding-bottom: 248px;
+  padding-top: 194px;
+  padding-bottom: 130px;
 
   .FAQ {
     display: grid;
@@ -210,7 +210,7 @@ const StyledFAQ = styled.section`
 
   @media (max-width: 1024px) {
     padding-top: 100px;
-    padding-bottom: 120px;
+    padding-bottom: 80px;
 
     .FAQ {
       display: flex;
@@ -228,7 +228,8 @@ const StyledFAQ = styled.section`
   }
 
   @media (max-width: 576px) {
-    padding-bottom: 120px;
+    padding-bottom: 100px;
+    padding-top: 100px;
 
     .FAQ__description {
       margin-top: 20px;

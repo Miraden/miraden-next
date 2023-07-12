@@ -20,7 +20,7 @@ const Applications = () => {
   useEffect(() => {
     leadsLastProvider.fetchData().then(res => {
       setLeadsAllData(res)
-      leadsLastProvider.setIsFinished(true)
+      leadsLastProvider.setIsFinished(false)
       leadsLastProvider.setFetchedData(res)
       const firstLink = leadsLastProvider.getLinks().at(0) as string
       setLocation(firstLink)
@@ -55,7 +55,14 @@ const Applications = () => {
 
   const renderLinks = () => {
     if (!leadsLastProvider.isFinished()) {
-      return <Button disabled>Loading...</Button>
+      return (
+        <>
+          <Button disabled>Loading...</Button>
+          <Button disabled>Loading...</Button>
+          <Button disabled>Loading...</Button>
+          <Button disabled>Loading...</Button>
+        </>
+      )
     }
     const links = leadsLastProvider.getLinks()
     return links.map(name => (
@@ -126,6 +133,7 @@ function renderProgressLocations(): JSX.Element {
       <div className={'LeadProgressItem'}>Loading...</div>
       <div className={'LeadProgressItem'}>Loading...</div>
       <div className={'LeadProgressItem'}>Loading...</div>
+      <div className={'LeadProgressItem'}>Loading...</div>
     </div>
   )
 }
@@ -156,7 +164,6 @@ const StyledApplications = styled.section`
   }
 
   .Applications__list,
-  .Applications__listTablet,
   .Applications__openMoreContainer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -179,10 +186,10 @@ const StyledApplications = styled.section`
   }
 
   .LeadInProgress {
-    display: flex;
+    display: grid;
     gap: 30px;
     width: 100%;
-    flex-wrap: wrap;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .LeadProgressItem {
@@ -198,6 +205,12 @@ const StyledApplications = styled.section`
     color: ${theme.colors.background.lightGrey};
   }
 
+  @media (min-width: ${theme.breakpoints.desktop.min + "px"}) {
+    .LeadProgressItem:nth-child(4n) {
+      display: none;
+    }
+  }
+
   @media (max-width: 1280px) {
     .Applications__list,
     .Applications__listTablet {
@@ -205,8 +218,13 @@ const StyledApplications = styled.section`
     }
   }
 
-  @media (max-width: 1024px) {
+  @media (min-width: ${theme.breakpoints.tablet.min + "px"}) and (max-width: ${theme.breakpoints.tablet.max + "px"}) {
     padding-bottom: 100px;
+
+    .Applications__list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
     .Applications__head {
       flex-direction: column;
       overflow-x: auto;
@@ -237,39 +255,61 @@ const StyledApplications = styled.section`
       }
     }
 
-    .Card {
-      grid-column: span 2;
-    }
-
     .Applications__openMore {
       grid-column: 2 / span 2;
     }
-  }
 
-  @media (max-width: 720px) {
-    .Applications__listTablet,
-    .Applications__openMoreContainer {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .Applications__tabsMobile {
-      display: flex;
-      margin-top: 20px;
-      overflow-x: scroll;
+    .LeadInProgress {
+      display: grid;
+      grid-gap: 12px;
+      grid-template-columns: repeat(2,1fr);
     }
   }
 
   @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
+    padding-top: 50px;
+    .Container {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
     .Applications__list {
       grid-template-columns: repeat(1,1fr);
+      margin-top: 40px;
     }
     .Applications__tabsMobile {
       padding-left: 20px;
     }
 
     .LeadInProgress {
+      display: grid;
+      grid-template-columns: repeat(1,1fr);
       gap: 12px;
+    }
+
+    .Applications__tabs {
+      margin-top: 20px;
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    .Applications__head {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .Applications__openMoreContainer {
+      display: flex;
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+
+    .LeadProgressItem:nth-child(4n),
+    .LeadProgressItem:nth-child(3n) {
+      display: none;
     }
   }
 `

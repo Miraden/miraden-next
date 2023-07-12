@@ -41,6 +41,10 @@ const Global = createGlobalStyle`
     flex-grow: 1;
     padding-bottom: 20px;
   }
+
+  .nobr {
+    white-space: nowrap;
+  }
 `;
 
 export { Global };

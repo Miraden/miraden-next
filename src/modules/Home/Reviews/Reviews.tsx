@@ -218,9 +218,9 @@ const Reviews = () => {
 };
 
 const StyledReviews = styled.section`
-  padding-top: 70px;
   padding-left: 20px;
   padding-right: 20px;
+  margin-top: 26px;
 
   .Reviews__top {
     width: 100%;
@@ -234,9 +234,6 @@ const StyledReviews = styled.section`
     max-width: 1880px;
     width: 100%;
     margin: 0 auto;
-    /* display: flex;
-    border-radius: 10px;
-    overflow: hidden; */
   }
 
   .Reviews__bottom {
@@ -265,9 +262,8 @@ const StyledReviews = styled.section`
   }
 
   .Reviews__tabs {
-    display: none !important;
     background: #ffffff;
-    display: flex;
+    display: none;
     white-space: nowrap;
     overflow-x: hidden;
     button:not(:first-child) {
@@ -316,7 +312,9 @@ const StyledReviews = styled.section`
     transform: rotate(180deg);
   }
 
-  @media (max-width: 1024px) {
+  @media (min-width: ${theme.breakpoints.tablet.min + "px"}) and (max-width: ${theme.breakpoints.tablet.max + "px"}) {
+    margin-top: 0;
+
     .Reviews__head {
       flex-direction: column;
       align-items: start;
@@ -335,7 +333,7 @@ const StyledReviews = styled.section`
     }
 
     .Reviews__tabs {
-      display: flex !important;
+      display: flex;
       padding-top: 20px;
 
       button {
@@ -346,6 +344,7 @@ const StyledReviews = styled.section`
     .Reviews__agencys {
       grid-gap: 10px;
     }
+
   }
 
   @media (max-width: 960px) {
@@ -378,14 +377,36 @@ const StyledReviews = styled.section`
     }
   }
 
-  @media (max-width: 576px) {
+  @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
     padding-top: 65px;
+    margin-top: 0;
+
+    .Reviews__tabs {
+      display: flex;
+    }
+
     .Reviews__agencys {
       grid-template-columns: repeat(2, 1fr);
     }
 
     .Reviews__buttonsContainer {
       display: none;
+    }
+
+    .Reviews__tabsDesktop {
+      display: none;
+    }
+
+    .Reviews__bottom {
+      padding-bottom: 22px;
+    }
+
+    .Reviews__top {
+      padding-top: 20px;
+    }
+
+    .Reviews__head {
+      padding-bottom: 20px;
     }
   }
 `;

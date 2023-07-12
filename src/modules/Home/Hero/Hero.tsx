@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui";
 import styled from "styled-components";
 import { HeroStats } from "./HeroStats";
+import {theme} from "../../../../styles/tokens";
+import Image from "next/image";
 
 interface HeroProps {
   className?: string;
@@ -13,8 +15,7 @@ const Hero = ({ className }: HeroProps) => {
         <div className="Hero__content">
           <h1 className="Font_headline_1 HeroTitle">
             Персональный подбор от{" "}
-            <mark className="Color_blue_primary">риелторов и застройщиков</mark>{" "}
-            из 7 стран мира
+            <mark className="Color_blue_primary">риелторов и застройщиков</mark>{" "} <span className="nobr">из 7 стран</span> мира
           </h1>
           <p className="Hero__description Font_body_base">
             Создайте анонимную заявку и получите предложения от независимых
@@ -22,7 +23,7 @@ const Hero = ({ className }: HeroProps) => {
           </p>
           <Button href={"/lead/add"} className="Hero__mainButton">Оставить заявку</Button>
         </div>
-        <img
+        <Image
           alt=""
           src="/images/HomeHero.svg"
           width={468}
@@ -48,6 +49,7 @@ const StyledHero = styled.section`
 
   .HeroTitle {
     font-weight: 700;
+    font-size: 50px;
   }
 
   .Hero__content {
@@ -57,6 +59,8 @@ const StyledHero = styled.section`
   .Hero__description {
     margin-top: 25px;
     max-width: 470px;
+    font-size: 22px;
+    color: #3B4A69;
   }
 
   .Hero__mainButton {
@@ -69,6 +73,9 @@ const StyledHero = styled.section`
 
   .Hero__image {
     grid-column: 8 / span 5;
+    width: 470px;
+    height: 360px;
+
     img {
       flex-shrink: 0;
     }
@@ -78,7 +85,7 @@ const StyledHero = styled.section`
     margin-top: 80px;
   }
 
-  @media (max-width: 1440px) {
+  @media (min-width: ${theme.breakpoints.desktop.min + "px"}) and (max-width: ${theme.breakpoints.desktop.max + "px"}) {
     .Hero {
       grid-gap: 20px;
     }
@@ -92,8 +99,8 @@ const StyledHero = styled.section`
     }
   }
 
-  @media (max-width: 1024px) {
-    padding-top: 140px;
+  @media (min-width: ${theme.breakpoints.tablet.min + "px"}) and (max-width: ${theme.breakpoints.tablet.max + "px"}) {
+    padding-top: 80px;
     padding-bottom: 34px;
 
     .Hero {
@@ -103,15 +110,21 @@ const StyledHero = styled.section`
       grid-gap: 0;
     }
 
+    .HeroTitle {
+      font-size: 50px;
+    }
+
     .Hero__content {
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
+      padding: 0 20px;
     }
 
     .Hero__description {
       max-width: 460px;
+      font-size: 22px;
     }
 
     .Hero__mainButton {
@@ -121,14 +134,21 @@ const StyledHero = styled.section`
     }
 
     .Hero__image {
-      margin-top: 70px;
-      width: 460px;
-      height: 355px;
+      margin-top: 60px;
+      width: 350px;
+      height: 286px;
     }
   }
 
-  @media (max-width: 576px) {
+  @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
     padding-top: 60px;
+    padding-bottom: 50px;
+
+    .Hero {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+    }
 
     .Hero__stats {
       margin-top: 50px;
@@ -145,10 +165,18 @@ const StyledHero = styled.section`
       max-width: unset;
     }
 
+    .HeroTitle {
+      font-size: 32px;
+    }
+
+    .Hero__description {
+      font-size: 16px;
+    }
+
     .Hero__image {
-      margin-top: 48px;
       width: 274px;
       height: 210px;
+      margin: 0 auto;
     }
   }
 `;

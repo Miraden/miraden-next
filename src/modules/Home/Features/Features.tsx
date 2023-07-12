@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { FeaturesDesktop, FeaturesMobile } from "./components";
+import {theme} from "../../../../styles/tokens";
 
 interface FeatureProps {
   className?: string;
@@ -76,7 +77,7 @@ const StyledFeatures = styled.section`
     display: none;
   }
 
-  @media (max-width: 960px) {
+  @media (min-width: ${theme.breakpoints.tablet.min + "px"}) and (max-width: ${theme.breakpoints.tablet.max + "px"}) {
     padding-top: 100px;
     padding-bottom: 100px;
 
@@ -89,9 +90,17 @@ const StyledFeatures = styled.section`
     }
   }
 
-  @media (max-width: 576px) {
+  @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
     padding-top: 100px;
     padding-bottom: 35px;
+
+    .Features__desktop {
+      display: none;
+    }
+
+    .Features__mobile {
+      display: flex;
+    }
   }
 `;
 

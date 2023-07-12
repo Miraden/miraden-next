@@ -174,7 +174,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
 const StyledHowItWorks = styled.section`
   display: flex;
   justify-content: center;
-  padding: 0 20px 0 20px;
+  padding: 75px 20px 0 20px;
 
   .HowItWorks {
     background: #ffffff;
@@ -195,6 +195,7 @@ const StyledHowItWorks = styled.section`
 
   .HowItWorks__tabs {
     display: flex;
+
     button:not(:first-child) {
       margin-left: 10px;
     }
@@ -213,6 +214,7 @@ const StyledHowItWorks = styled.section`
 
     li {
       /* max-width: 320px; */
+
       p {
         max-width: 320px;
       }
@@ -232,6 +234,7 @@ const StyledHowItWorks = styled.section`
     position: relative;
     display: flex;
     align-items: flex-end;
+
     img {
       flex-shrink: 0;
       object-fit: contain;
@@ -247,7 +250,6 @@ const StyledHowItWorks = styled.section`
     padding: 8px;
     border-radius: 50%;
     background: #4e6af3;
-    height: fit-content;
     color: #ffffff;
     flex-shrink: 0;
   }
@@ -261,6 +263,7 @@ const StyledHowItWorks = styled.section`
   }
 
   @media (max-width: 1024px) {
+    padding-top: 0;
     .HowItWorks {
       padding-top: 20px;
       padding-bottom: 20px;
@@ -269,6 +272,7 @@ const StyledHowItWorks = styled.section`
     .HowItWorks__head {
       flex-direction: column;
       align-items: start;
+
       button {
         margin-top: 20px;
         padding: 10px 15px;
@@ -293,6 +297,7 @@ const StyledHowItWorks = styled.section`
         margin-top: 48px;
       }
     }
+
     .HowItWorks__imageContainer {
       min-width: 196px;
       height: 220px;
@@ -308,7 +313,7 @@ const StyledHowItWorks = styled.section`
   }
 
   @media (max-width: 576px) {
-    padding: 0;
+    padding: 25px 0 0 0;
 
     .HowItWorks__head {
       button {
@@ -318,6 +323,7 @@ const StyledHowItWorks = styled.section`
 
     .HowItWorks__list {
       margin-top: 20px;
+
       li {
         flex-direction: column;
       }
@@ -334,6 +340,7 @@ const StyledHowItWorks = styled.section`
       align-self: center;
       width: 260px;
       justify-content: center;
+
       img {
         /* width: 141px; */
         height: 202px;

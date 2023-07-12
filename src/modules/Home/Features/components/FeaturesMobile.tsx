@@ -81,18 +81,18 @@ const FeaturesMobile = ({ className }: FeatureProps) => {
                   </p>
 
                   <div className="Features__imagesContainer">
-                    <img
+                    <Image
                       src={image1}
                       alt=""
                       width={312}
-                      height={655}
+                      height={657}
                       className="Features__image1"
                     />
-                    <img
+                    <Image
                       src={image2}
                       alt=""
                       width={312}
-                      height={655}
+                      height={657}
                       className="Features__image2"
                     />
                   </div>
@@ -169,6 +169,7 @@ const StyledFeaturesMobile = styled.section`
     padding: 20px 20px 40px 20px;
     background: #fff;
     border-radius: 10px;
+    width: 100%;
     svg {
       path {
         fill: #fff !important;
@@ -241,9 +242,11 @@ const StyledFeaturesMobile = styled.section`
     max-width: 470px;
     height: 724px;
     margin-top: 60px;
+    margin-left: auto;
+    margin-right: auto;
     img {
       background: #eef1f5;
-      box-shadow: 0px 2px 13px rgba(34, 49, 77, 0.05),
+      box-shadow: 0 2px 13px rgba(34, 49, 77, 0.05),
         20px 20px 50px rgba(34, 49, 77, 0.2);
       border-radius: 25px;
     }
@@ -253,12 +256,14 @@ const StyledFeaturesMobile = styled.section`
     position: absolute;
     z-index: 20;
     left: 0;
+    padding: 15px;
   }
 
   .Features__image2 {
     position: absolute;
     top: 69px;
     right: 0;
+    padding: 15px;
   }
 
   @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
