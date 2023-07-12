@@ -69,6 +69,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
                 header
                 leftIcon={<AboutUsIcon />}
                 className="Header__navButton"
+                href={"#about"}
               >
                 о нас
               </Button>
@@ -83,6 +84,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
                 header
                 leftIcon={<FaqIcon />}
                 className="Header__navButton"
+                href={"https://faq.miraden.com"}
               >
                 FAQ
               </Button>

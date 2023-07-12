@@ -1,4 +1,4 @@
-import { RequestButton } from "@/components/ui";
+import {Button, RequestButton} from "@/components/ui";
 import { useKeenSlider } from "keen-slider/react";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
@@ -16,57 +16,65 @@ import { LevelsLogo } from "./components/logos/LevelsLogo";
 import { RealtyLogo } from "./components/logos/RealtyLogo";
 import { RemaxLogo } from "./components/logos/RemaxLogo";
 import { SothebysLogo } from "./components/logos/SothebysLogo";
+import {theme} from "../../../../styles/tokens";
 
 const reviews = [
   {
-    name: "Андрей Макеев",
+    name: "Анна Петрова",
     role: "Клиент",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "./images/avatar.jpg",
+    title: "Меня приятно удивил персональный каталог",
+    text: "Изначально думала что это портал зарубежной недвижимости, но оказалось что это что-то новое ). Оставила заявки на подбор объектов неделю назад, но до сих пор мне каждый день поступают новые интересные предложения от продавцов. ",
+    image: "/images/user_01.jpg",
+    isVerified: true,
+    isPro: false
   },
   {
     name: "Андрей Макеев",
     role: "Клиент",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "./images/avatar.jpg",
+    title: "Доволен работой сервиса",
+    text: "Я очень доволен, что на этом сайте познакомился с риэлтором Daniil Velnekov. Он оказал полное сопровождение в поиске и аренде 3-х комнатной виллы на Бали. Если ищите недвижимость за границей, значит вы по адресу!",
+    image: "/images/user_02.jpg",
+    isVerified: false,
+    isPro: true
   },
   {
-    name: "Андрей Макеев",
+    name: "Екатерина Цюпка",
     role: "Клиент",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "./images/avatar.jpg",
+    title: "Предоставили широкий выбор недвижимости в Черногории.",
+    text: "Узнала о сайте от знакомых. У меня остались хорошие впечатления после использования этого сервиса. Получила больше 30 вариантов недвижимости от разных агентов и собственников. На каждой странице недвижимости есть подробная информация, фото, видео и удобный чат с продавцами.",
+    image: "/images/user_03.jpg",
+    rating: "5.0",
+    isVerified: true,
+    isPro: true
   },
   {
-    name: "Андрей Макеев",
+    name: "Светлана Гридасова",
     role: "Клиент",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "./images/avatar.jpg",
+    title: "Нашла студию в Дубае!",
+    text: "Хороший портал по поиску агентов, застройщиков и самой недвижимости. Хочу отметить то, что объекты продавцов можно удобно отфильтровать, чтобы найти подходящий вариант... Также я была довольна работой агентства, которое нашла на сайте. Спасибо Lihoms!!!",
+    image: "/images/user_04.jpg",
+    rating: "4.9",
+    isVerified: false,
+    isPro: true
   },
   {
-    name: "Андрей Макеев",
+    name: "Евгений Поляков",
     role: "Клиент",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "./images/avatar.jpg",
+    title: "Спасибо за удобный сервис поиска недвижимости",
+    text: "Искал апартаменты на С. Кипре для инвестиций. Miraden оказался тем сайтом, где я получил больше всего предложений и быстро нашел то, что надо! Еще хочу отметить работу поддержки. Возникли вопросы по оплате брони, но мне быстро ответили и помогли.",
+    image: "/images/user_05.jpg",
+    isVerified: false,
+    isPro: false
   },
   {
-    name: "Андрей Макеев",
+    name: "Александр Антонов",
     role: "Клиент",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "./images/avatar.jpg",
-  },
-  {
-    name: "Андрей Макеев",
-    role: "Клиент",
-    title: "Сопровождали во всем и разъясняли каждую деталь",
-    text: "Хочу выразить благодарность Анастасии за её работу. Сотрудничать начали в середине февраля и так как квартиру искали по большому количеству критериев — закончили в марте. Понравилось больше всего, что сопровождали во всем, и разъясняли каждую деталь. Будем обращаться ещё!",
-    image: "./images/avatar.jpg",
-  },
+    title: "Нашел участок на Пхукете с шикарным видом!",
+    text: "Понравилось то, что можно оставить заявку с подробным описанием один раз и больше не тратить время на одинаковые разговоры. Причем размещение заявки бесплатно, но я заказал дополнительную рекламу и это дало свой результат!",
+    image: "/images/user_06.jpg",
+    isVerified: true,
+    isPro: true
+  }
 ];
 
 const agecnyReviews = [
@@ -145,25 +153,25 @@ const Reviews = () => {
           <div className="Reviews__head">
             <h2 className="Font_44_120 sm:Font_26_120">Нам доверяют</h2>
             <div className="Reviews__tabsDesktop">
-              <RequestButton onClick={handleClickClient} active={!isAgency}>
+              <Button request onClick={handleClickClient} active={!isAgency}>
                 Клиенты
-              </RequestButton>
+              </Button>
 
-              <RequestButton onClick={handleClickAgency} active={isAgency}>
+              <Button request onClick={handleClickAgency} active={isAgency}>
                 Агентства недвижимости
-              </RequestButton>
+              </Button>
             </div>
           </div>
         </div>
       </div>
       <div className="Reviews__tabs Container">
-        <RequestButton onClick={handleClickClient} active={!isAgency}>
+        <Button request onClick={handleClickClient} active={!isAgency}>
           Клиенты
-        </RequestButton>
+        </Button>
 
-        <RequestButton onClick={handleClickAgency} active={isAgency}>
+        <Button request onClick={handleClickAgency} active={isAgency}>
           Агентства недвижимости
-        </RequestButton>
+        </Button>
       </div>
       <div className="Reviews__bottom">
         <div className="Container">
@@ -185,6 +193,9 @@ const Reviews = () => {
                     role={review.role}
                     name={review.name}
                     image={review.image}
+                    rating={review.rating}
+                    isPro={review.isPro}
+                    isVerified={review.isVerified}
                   />
                 </div>
               ))}
@@ -285,8 +296,8 @@ const StyledReviews = styled.section`
     grid-column: span 2;
     padding-top: 24px;
     padding-bottom: 24px;
-    box-shadow: 0 0 0 2px inset #f1f7ff;
-    border-radius: 10px;
+    outline: 2px solid ${theme.colors.stroke.divider};
+    border-radius: ${theme.border.radius};
     display: flex;
     align-items: center;
     justify-content: center;

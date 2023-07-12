@@ -2,6 +2,8 @@ import { Sticker } from "@/components/ui";
 import { VerifiedIcon } from "@/icons";
 import { StarIconFilled } from "@/icons/StarIconFilled";
 import styled from "styled-components";
+import Image from "next/image";
+import {theme} from "../../../../../styles/tokens";
 
 interface Props {
   className?: string;
@@ -10,25 +12,35 @@ interface Props {
   image: string;
   title: string;
   text: string;
+  rating?: string;
+  isVerified: boolean;
+  isPro: boolean;
 }
 
-const ReviewCard = ({ className, name, role, image, text, title }: Props) => {
+const ReviewCard = ({ className, name, role, image, text, title, rating, isVerified, isPro }: Props) => {
   return (
     <StyledReviewCard className={className}>
       <div className="Card__head">
-        <img src={image} alt="" width={72} height={72} />
+        <Image src={image} alt="" width={72} height={72} />
         <div className="Card__userInfo">
           <p className="Font_16_140">{name}</p>
           <p className="Font_14_140 Color_blue_primary">{role}</p>
           <div className="Card__userInfoStatus">
-            <Sticker theme="black">PRO</Sticker>
-            <VerifiedIcon className="VerifiedIcon" />
-            <StarIconFilled
-              width={14}
-              hanging={14}
-              className="Card__userInfoStar"
-            />
-            <p className="Font_14_140 Rating Color_text_grey">4.8</p>
+            {isPro && (
+              <Sticker theme="black">PRO</Sticker>
+            )}
+            {isVerified && <VerifiedIcon className="VerifiedIcon" />}
+            {rating && (
+              <div className={"Card__userRating"}>
+                <StarIconFilled
+                  width={14}
+                  hanging={14}
+                  className="Card__userInfoStar"
+                />
+                <p className="Font_14_140 Rating Color_text_grey">{rating}</p>
+              </div>
+            )}
+            {!rating && <p className={"Font_14_140 Rating Color_text_grey"}>Без рейтинга</p>}
           </div>
         </div>
       </div>
@@ -50,8 +62,9 @@ const ReviewCard = ({ className, name, role, image, text, title }: Props) => {
 const StyledReviewCard = styled.div`
   background: #fff;
   padding: 20px;
-  box-shadow: 0 0 0 2px inset #e1edfd;
+  outline: 2px solid ${theme.colors.stroke.divider};
   border-radius: 10px;
+  height: 100%;
 
   .Card__head {
     display: flex;
@@ -65,6 +78,13 @@ const StyledReviewCard = styled.div`
   .Card__userInfoStatus {
     display: flex;
     margin-top: 9px;
+    gap: 5px;
+  }
+
+  .Card__userRating {
+    display: flex;
+    gap: 5px;
+    align-items: center;
   }
 
   .VerifiedIcon {
@@ -72,14 +92,9 @@ const StyledReviewCard = styled.div`
   }
 
   .Card__userInfoStar {
-    margin-left: 10px;
     path {
       fill: #7786a5;
     }
-  }
-
-  .Rating {
-    margin-left: 5px;
   }
 
   .Card__starsCount {

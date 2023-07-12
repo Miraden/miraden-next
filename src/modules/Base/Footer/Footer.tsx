@@ -8,6 +8,7 @@ import {
 import { FacebookIconFooter } from "@/icons/FacebookIconFooter";
 import { InstagramIconFooter } from "@/icons/InstagramIconFooter";
 import styled from "styled-components";
+import {theme} from "../../../../styles/tokens";
 
 interface FooterProps {
   className?: string;
@@ -15,14 +16,14 @@ interface FooterProps {
 
 const linksLeft = [
   { label: "Лента заявок", href: "/leads" },
-  { label: "О нас", href: '/about' },
+  { label: "О нас", href: '#about' },
   { label: "Тарифы", href: '/tariffs' },
-  { label: "FAQ", href: '/faq' },
+  { label: "FAQ", href: 'https://faq.miraden.com/' },
 ];
 
 const linksRight = [
-  { label: "Получить подборку", href: '/' },
-  { label: "Подписаться на рассылку", href: '/' },
+  { label: "Создать заявку", href: '/lead/add' },
+  { label: "Поддержка", href: 'https://t.me/miraden_support' },
   { label: "Регистрация", href: '/user/register' },
   { label: "Вход", href: '/user/login' },
 ];
@@ -42,8 +43,12 @@ const Footer = ({ className }: FooterProps) => {
                 Miraden — биржа заявок в сфере зарубежной недвижимости
               </p>
               <div className="Footer__socialLinks">
-                <FacebookIconFooter />
-                <InstagramIconFooter />
+                <a href={"https://www.facebook.com/miradencom"} target={"_blank"}>
+                  <FacebookIconFooter />
+                </a>
+                <a href={"https://www.instagram.com/miradencom/"} target={"_blank"}>
+                  <InstagramIconFooter />
+                </a>
               </div>
             </div>
           </StyledFooterTopMobile>
@@ -57,8 +62,12 @@ const Footer = ({ className }: FooterProps) => {
                 Miraden — биржа заявок в сфере зарубежной недвижимости
               </p>
               <div className="Footer__socialLinks">
-                <FacebookIconFooter />
-                <InstagramIconFooter />
+                <a href={"https://www.facebook.com/miradencom"} target={"_blank"}>
+                  <FacebookIconFooter />
+                </a>
+                <a href={"https://www.instagram.com/miradencom/"} target={"_blank"}>
+                  <InstagramIconFooter />
+                </a>
               </div>
             </div>
             <ul className="Footer__navLinksLeft">
@@ -81,14 +90,15 @@ const Footer = ({ className }: FooterProps) => {
             </ul>
 
             <div className="Footer__contacts Font_14_140">
-              <p>Заходите в наш Telegram канал и будьте в курсе новых заявок</p>
+              <p>Заходите в наш Telegram канал и будьте в курсе новых заявок</p>
               <Button
                 leftIcon={<TelegramPureIcon />}
                 className="Footer__telegramLink"
+                href={"https://t.me/miradencom"}
               >
                 Telegram
               </Button>
-              <Link href="/" className="Font_16_20 lg:Font_14_140">
+              <Link href="mailto: info@miraden.com" className="Font_16_20 lg:Font_14_140">
                 info@miraden.com
               </Link>
             </div>
@@ -99,7 +109,7 @@ const Footer = ({ className }: FooterProps) => {
       <StyledFooterSocialMobile>
         <div className="Footer__contactsMobile Font_14_140">
           <p className="Color_text_grey">
-            Заходите в наш Telegram канал <br /> и будьте в курсе новых заявок
+            Заходите в наш Telegram канал <br /> и будьте в курсе новых заявок
           </p>
           <Button
             leftIcon={<TelegramPureIcon />}
@@ -108,8 +118,12 @@ const Footer = ({ className }: FooterProps) => {
             Telegram
           </Button>
           <div className="Footer__socialLinksMobile">
-            <FacebookIconFooter />
-            <InstagramIconFooter />
+            <a href={"https://www.facebook.com/miradencom"} target={"_blank"}>
+              <FacebookIconFooter />
+            </a>
+            <a href={"https://www.instagram.com/miradencom/"} target={"_blank"}>
+              <InstagramIconFooter />
+            </a>
           </div>
           <Link href="/" className="Font_16_20 lg:Font_14_140">
             info@miraden.com
@@ -123,8 +137,8 @@ const Footer = ({ className }: FooterProps) => {
               <PointIconFooter width={16} hanging={16} />
               <span>10314 Estonia. Tallinn 10314 Lelle Street 22</span>
             </p>
-            <p className="Footer__rights">© 2023 Все права защищены</p>
-            <Link href="" className="Footer__privacyPolicy">
+            <p className="Footer__rights">&copy; 2023 Все права защищены</p>
+            <Link href="https://faq.miraden.com/legal/privacy-policy/" className="Footer__privacyPolicy">
               Политика конфиденциальности и обработки данных{" "}
             </Link>
           </div>
@@ -291,10 +305,13 @@ const StyledFooterTop = styled.div`
     a {
       color: #7786a5;
       padding: 0;
-      :hover {
+      &:hover {
         transition: 0.15s ease;
-
-        color: #4e6af3;
+        text-decoration: none;
+        color: ${theme.colors.main};
+      }
+      &:focus-visible, &:focus {
+        outline: none;
       }
     }
 
@@ -308,10 +325,13 @@ const StyledFooterTop = styled.div`
     a {
       color: #7786a5;
       padding: 0;
-      :hover {
+      &:hover {
         transition: 0.15s ease;
-
-        color: #4e6af3;
+        text-decoration: none;
+        color: ${theme.colors.main};
+      }
+      &:focus-visible &:focus, &:active {
+        outline: none;
       }
     }
     li:not(:first-child) {
@@ -322,13 +342,14 @@ const StyledFooterTop = styled.div`
   .Footer__contacts {
     grid-column: 11 / span 2;
 
-    a {
-      color: #7786a5;
-      padding: 0;
-      :hover {
-        transition: 0.15s ease;
-
-        color: #4e6af3;
+    .Link {
+      color: ${theme.colors.text.grey};
+      &:hover {
+        text-decoration: none;
+        color: ${theme.colors.main};
+      }
+      &:focus {
+        outline: none;
       }
     }
   }
@@ -494,8 +515,13 @@ const StyledFooterBottom = styled.div`
     grid-gap: 30px;
     align-items: center;
     a {
+      color: ${theme.colors.text.grey};
       display: flex;
       align-items: center;
+      &:hover {
+        color: ${theme.colors.main};
+        text-decoration: none;
+      }
       span {
         margin-left: 5px;
       }

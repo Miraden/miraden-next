@@ -6,6 +6,8 @@ import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { HeaderMenu } from "./HeaderMenu";
 import { HeaderUserMenuMobile } from "./HeaderUserMenuMobile";
+import {Cross24Icon} from "@/icons/CrossIcon";
+import {Burger24Icon} from "@/icons/BurgerIcon";
 
 interface Props {
   className?: string;
@@ -33,9 +35,9 @@ const HeaderMobile = ({ className, isAuthorized }: Props) => {
               onClick={handleOpenMenu}
             >
               {isOpen ? (
-                <CrossIcon attr={{className: "HeaderMobile__closeIcon"}} />
+                <Cross24Icon attr={{className: "HeaderMobile__closeIcon"}} />
               ) : (
-                <BurgerIcon />
+                <Burger24Icon />
               )}
             </button>
             {isOpen && <HeaderMenu isOpen={isOpen} />}
@@ -80,6 +82,10 @@ const StyledHeaderMobile = styled.header`
 
   .HeaderMobile__menuButton {
     padding: 8px 8px 2px 8px;
+
+    svg path {
+      fill: #fff;
+    }
   }
 
   .HeaderMobile__closeIcon {

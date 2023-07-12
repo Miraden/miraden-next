@@ -98,8 +98,6 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                   </div>
                 </li>
               </ul>
-
-              <VideoContainer videoLink="https://www.youtube.com/embed/hPr-Yc92qaY" />
             </>
           ) : (
             <>
@@ -165,7 +163,6 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                   </div>
                 </li>
               </ul>
-              <VideoContainer videoLink="https://www.youtube.com/embed/hPr-Yc92qaY" />
             </>
           )}
         </div>

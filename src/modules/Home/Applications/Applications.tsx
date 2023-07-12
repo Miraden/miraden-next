@@ -80,21 +80,8 @@ const Applications = () => {
           <div className="Applications__tabs">{renderLinks()}</div>
         </div>
 
-        <div className="Applications__tabsMobile sm:FullBleed">
-          {renderLinks()}
-        </div>
-
         <div
           className={cn('Applications__list', {
-            inProgress: !leadsLastProvider.isFinished(),
-          })}
-        >
-          {leadsLastProvider.isFinished() && renderLeadsLocation()}
-          {!leadsLastProvider.isFinished() && renderProgressLocations()}
-        </div>
-
-        <div
-          className={cn('Applications__listTablet sm:FullBleed', {
             inProgress: !leadsLastProvider.isFinished(),
           })}
         >
@@ -168,10 +155,6 @@ const StyledApplications = styled.section`
     }
   }
 
-  .Applications__tabsMobile {
-    display: none;
-  }
-
   .Applications__list,
   .Applications__listTablet,
   .Applications__openMoreContainer {
@@ -183,10 +166,6 @@ const StyledApplications = styled.section`
     &.inProgress {
       grid-template-columns: repeat(1, 1fr);
     }
-  }
-
-  .Applications__listTablet {
-    display: none;
   }
 
   .Applications__openMoreContainer {
@@ -203,6 +182,7 @@ const StyledApplications = styled.section`
     display: flex;
     gap: 30px;
     width: 100%;
+    flex-wrap: wrap;
   }
 
   .LeadProgressItem {
@@ -241,10 +221,6 @@ const StyledApplications = styled.section`
       margin-top: 20px;
     }
 
-    .Applications__list {
-      display: none;
-    }
-
     .Applications__listTablet,
     .Applications__openMoreContainer {
       margin-top: 40px;
@@ -277,10 +253,6 @@ const StyledApplications = styled.section`
       flex-direction: column;
     }
 
-    .Applications__tabs {
-      display: none;
-    }
-
     .Applications__tabsMobile {
       display: flex;
       margin-top: 20px;
@@ -288,9 +260,16 @@ const StyledApplications = styled.section`
     }
   }
 
-  @media (max-width: 576px) {
+  @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
+    .Applications__list {
+      grid-template-columns: repeat(1,1fr);
+    }
     .Applications__tabsMobile {
       padding-left: 20px;
+    }
+
+    .LeadInProgress {
+      gap: 12px;
     }
   }
 `

@@ -24,7 +24,7 @@ const HeaderUserMenuMobile = () => {
       <div className="HeaderUserMenu">
         <div className="HeaderUserMenu__links">
           <Button
-            href="/chats-all"
+            href="/chats"
             header
             className="HeaderUserMenu__linkButton"
             leftIcon={<MessagesIcon />}
@@ -32,7 +32,7 @@ const HeaderUserMenuMobile = () => {
           ></Button>
           <Button
             header
-            href="/favourites-full"
+            href="/favorites"
             className="HeaderUserMenu__linkButton"
             leftIcon={<StarIcon attr={{className: "HeaderUserMenu__favorites"}} />}
             active={currentUrl.includes("favourites")}
@@ -42,7 +42,7 @@ const HeaderUserMenuMobile = () => {
             className="HeaderUserMenu__linkButton"
             leftIcon={<WalletIcon />}
           >
-            0 €
+            0 €
           </Button>
         </div>
         <button onClick={handleOpenMenu}>

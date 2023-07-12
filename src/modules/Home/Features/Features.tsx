@@ -61,7 +61,7 @@ const Features = ({ className }: FeatureProps) => {
   const activeOption = options[activeOptionIndex];
 
   return (
-    <StyledFeatures>
+    <StyledFeatures id={"about"}>
       <FeaturesDesktop className="Features__desktop" />
       <FeaturesMobile className="Features__mobile" />
     </StyledFeatures>

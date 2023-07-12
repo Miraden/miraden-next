@@ -11,20 +11,20 @@ const Hero = ({ className }: HeroProps) => {
     <StyledHero className={className}>
       <div className="Container Hero">
         <div className="Hero__content">
-          <h1 className="Font_50_120 sm:Font_26_120">
-            Риелторы и застройщики{" "}
-            <mark className="Color_blue_primary">Испании</mark> сделают для вас
-            персональный подбор
+          <h1 className="Font_headline_1 HeroTitle">
+            Персональный подбор от{" "}
+            <mark className="Color_blue_primary">риелторов и застройщиков</mark>{" "}
+            из 7 стран мира
           </h1>
-          <p className="Hero__description Font_22_160 sm:Font_16_24 Color_grey_dark">
+          <p className="Hero__description Font_body_base">
             Создайте анонимную заявку и получите предложения от независимых
             продавцов
           </p>
-          <Button className="Hero__mainButton">Оставить заявку</Button>
+          <Button href={"/lead/add"} className="Hero__mainButton">Оставить заявку</Button>
         </div>
         <img
           alt=""
-          src="./images/HomeHero.svg"
+          src="/images/HomeHero.svg"
           width={468}
           height={385}
           className="Hero__image"
@@ -44,6 +44,10 @@ const StyledHero = styled.section`
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-gap: 30px;
+  }
+
+  .HeroTitle {
+    font-weight: 700;
   }
 
   .Hero__content {

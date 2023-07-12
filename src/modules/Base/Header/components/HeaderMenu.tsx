@@ -26,43 +26,47 @@ const HeaderMenu = ({ className, isOpen }: Props) => {
   return (
     <StyledHeaderMenu className={cn("", className)}>
       <div className="HeaderMenu__links Font_12_16_600">
-        <Link href="/">лента заявок</Link>
+        <Link href="/leads">лента заявок</Link>
         <HeaderAccordion
           className="HeaderMenu__accordion Font_12_16_600"
           title="о нас"
           expanded={expanded}
           onChange={handleChange}
         >
-          <Link href="/">о miraden</Link>
+          <Link href="#about">о miraden</Link>
           <Link href="/">философия</Link>
           <Link href="/">команда</Link>
         </HeaderAccordion>
-        <Link href="/">тарифы</Link>
-        <Link href="/">FAQ</Link>
-        <Link href="/">ПОЛУЧИТЬ ПОДБОРКУ</Link>
+        <Link href="/tariffs">тарифы</Link>
+        <Link href="https://faq.miraden.com">FAQ</Link>
+        <Link href="/lead/add">Создать заявку</Link>
         <Link href="/">ПОДПИСАТЬСЯ НА РАССЫЛКУ</Link>
-        <Link href="/">РЕГИСТРАЦИЯ</Link>
-        <Link href="/">ВХОД</Link>
+        <Link href="/user/register">РЕГИСТРАЦИЯ</Link>
+        <Link href="/user/login">ВХОД</Link>
         <HeaderLanguageAccordion />
       </div>
       <div className="HeaderMenu__contacts">
         <p className="HeaderMenu__telegramLink Font_14_140">
-          Заходите в наш Telegram канал 
+          Заходите в наш Telegram канал
           <br />
-          и будьте в курсе новых заявок
+          и будьте в курсе новых заявок
         </p>
-        <Button leftIcon={<TelegramPureIcon />} className="HeaderMenu__button">
+        <Button
+          leftIcon={<TelegramPureIcon />}
+          className="HeaderMenu__button"
+          href={"https://t.me/miradencom"}
+        >
           Telegram
         </Button>
         <div className="HeaderMenu__socialLinks">
-          <Link href="">
+          <Link href="https://www.facebook.com" target={"_blank"}>
             <FacebookIcon />
           </Link>
-          <Link href="">
+          <Link href="https://www.instagram.com" target={"_blank"}>
             <InstagramIcon />
           </Link>
         </div>
-        <Link href="" className="HeaderMenu__emailLink Font_16_140_400">
+        <Link href="mailto: info@miraden.com" className="HeaderMenu__emailLink Font_16_140_400">
           info@miraden.com
         </Link>
       </div>

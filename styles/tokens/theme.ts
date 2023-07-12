@@ -218,7 +218,7 @@ const theme = {
     },
     mobile: {
       max: 576-1,
-      min: 0,
+      min: 340,
     }
   },
   border: {

@@ -1,6 +1,9 @@
 import { CatalogIcon, CommunityIcon, DealsIcon, HomeIcon } from "@/icons";
 import cn from "classnames";
 import styled from "styled-components";
+import {HomeIcon24} from "@/icons/HomeIcon";
+import Image from "next/image";
+import {theme} from "../../../../../styles/tokens";
 
 interface FeatureProps {
   className?: string;
@@ -8,33 +11,37 @@ interface FeatureProps {
 
 const options = [
   {
+    label: "search",
     optionName: "Поиск недвижимости",
-    image1: "./images/miraden/1.png",
-    image2: "./images/miraden/2.png",
-    icon: <HomeIcon attr={{width: 28, height: 28}} />,
+    image1: "/images/miraden/1.png",
+    image2: "/images/miraden/2.png",
+    icon: <HomeIcon24 />,
     text: "Персональный каталог объектов, собранный из предложений продавцов в реальном времени",
     id: 1,
   },
   {
+    label: "leads",
     optionName: "Биржа заявок",
-    image1: "./images/miraden/3.png",
-    image2: "./images/miraden/4.png",
+    image1: "/images/miraden/3.png",
+    image2: "/images/miraden/4.png",
     icon: <CatalogIcon width={28} height={28} />,
     text: "Реальные заявки на покупку или аренду недвижимости из разных стран мира",
     id: 2,
   },
   {
+    label: "sellers",
     optionName: "Независимые продавцы",
-    image1: "./images/miraden/5.png",
-    image2: "./images/miraden/6.png",
+    image1: "/images/miraden/5.png",
+    image2: "/images/miraden/6.png",
     icon: <CommunityIcon width={28} height={28} />,
     text: "Собственники, риелторы и застройщики, готовые сделать персональное предложение",
     id: 3,
   },
   {
+    label: "service",
     optionName: "Партнерские сделки",
-    image1: "./images/miraden/7.png",
-    image2: "./images/miraden/8.png",
+    image1: "/images/miraden/7.png",
+    image2: "/images/miraden/8.png",
     icon: <DealsIcon width={28} height={28} />,
     text: "Удобный сервис для прозрачной работы между застройщиками и риелторами",
     id: 4,
@@ -48,8 +55,8 @@ const FeaturesMobile = ({ className }: FeatureProps) => {
           <div className="Features__options">
             <h2 className="Font_44_120 sm:Font_26_120 ">Miraden — это</h2>
             <div className="Features__tabs">
-              {options.map(({ id, optionName, icon, text, image1, image2 }) => (
-                <button key={id} className={cn("Features__tabButtonActive")}>
+              {options.map(({ id, optionName, icon, text, image1, image2, label }) => (
+                <button key={id} className={cn("Features__tabButtonActive", label)}>
                   <div className="Features__tabHead">
                     <div
                       className={cn("Features__iconContainer", "IconContainer")}
@@ -115,6 +122,7 @@ const StyledFeaturesMobile = styled.section`
     flex-direction: column;
     align-items: flex-start;
     margin-top: 40px;
+
     button:not(:first-child) {
       margin-top: 20px;
     }
@@ -133,13 +141,14 @@ const StyledFeaturesMobile = styled.section`
           fill: #4e6af3;
         }
       }
+
       h3 {
         color: #4e6af3;
       }
     }
   }
 
-  .Features__tabButton:nth-of-type(2n) {
+  .Features__tabButtonActive:nth-of-type(2n) {
     .Features__imagesContainer {
       .Features__image1 {
         right: 0;
@@ -229,7 +238,6 @@ const StyledFeaturesMobile = styled.section`
   .Features__imagesContainer {
     position: relative;
     width: 100%;
-    margin: 0 auto;
     max-width: 470px;
     height: 724px;
     margin-top: 60px;
@@ -253,7 +261,7 @@ const StyledFeaturesMobile = styled.section`
     right: 0;
   }
 
-  @media (max-width: 576px) {
+  @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
     .Features__iconContainer {
       padding: 10px;
       svg {
@@ -285,9 +293,11 @@ const StyledFeaturesMobile = styled.section`
         border-radius: 15px;
         width: 172px;
         height: 358px;
+        padding: 10px;
       }
     }
   }
+
 `;
 
 export { FeaturesMobile };

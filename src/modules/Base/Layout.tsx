@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { Footer } from './Footer'
 import { Header } from './Header/Header'
 import AuthManager from '@/modules/Security/Authentication/AuthManager'
+import {theme} from "../../../styles/tokens";
 
 interface LayoutProps {
   children?: ReactNode
@@ -31,4 +32,5 @@ const StyledHomePage = styled.div`
   flex-direction: column;
   height: 100%;
   flex-grow: 1;
+  color: ${theme.colors.black};
 `
