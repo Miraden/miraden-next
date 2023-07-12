@@ -56,6 +56,7 @@ export default function LeadsPage(): JSX.Element {
   const filterHandler = useCallback((e: any) => {
     const form = document.getElementsByTagName('form')[0]
     const data = new FormData(form)
+    // @ts-ignore
     const queryString = new URLSearchParams(data).toString()
     setLeadsAllData([])
     leadsProvider.setIsFinished(false)

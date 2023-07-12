@@ -20,7 +20,7 @@ const Applications = () => {
   useEffect(() => {
     leadsLastProvider.fetchData().then(res => {
       setLeadsAllData(res)
-      leadsLastProvider.setIsFinished(false)
+      leadsLastProvider.setIsFinished(true)
       leadsLastProvider.setFetchedData(res)
       const firstLink = leadsLastProvider.getLinks().at(0) as string
       setLocation(firstLink)

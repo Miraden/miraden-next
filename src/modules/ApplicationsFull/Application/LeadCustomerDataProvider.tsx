@@ -111,8 +111,8 @@ function renderLead(data: Array<any>): JSX.Element {
             createdAt={formatCreatedDate(item.createdAt)}
             location={item.city.country + ' / ' + item.city.name}
             isPublished={true}
-            type={typeTranslate(item.type)}
-            status={statusTranslate(item.status)}
+            type={item.type}
+            status={item.status}
             deadlineAt={formatDeadlineDate(item.deadlineAt)}
             rooms={item.rooms}
             purpose={item.purpose}
@@ -130,22 +130,6 @@ function renderLead(data: Array<any>): JSX.Element {
       ))}
     </ul>
   )
-}
-
-function statusTranslate(val: string): string {
-  switch (val) {
-    case 'secondary':
-      return 'Вторичная'
-    case 'new':
-      return 'Новая'
-    case 'any':
-      return 'Любая'
-  }
-  return ''
-}
-
-function typeTranslate(val: Object): Array<string> {
-  return ['Коммерческая', 'Апартаменты']
 }
 
 function formatDeadlineDate(val: string): string {
