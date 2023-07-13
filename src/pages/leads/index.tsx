@@ -22,16 +22,15 @@ enum TabsMenuState {
 
 const PAGE_KEY: string = 'p'
 
-const authManger = new AuthManager()
-
 export default function LeadsPage(): JSX.Element {
   const [itemPage, setItemPage] = useState<number>(1)
   const [urlManager, setUrlManager] = useState<UrlManager>(new UrlManager())
+  const [authManager, setAuthManager] = useState<AuthManager>(new AuthManager())
 
   const [isUserAuth, setUserAuth] = useState(false)
   useEffect(() => {
-    setUserAuth(authManger.isUserHasToken())
-  }, [isUserAuth])
+    setUserAuth(authManager.isUserHasToken())
+  }, [isUserAuth, authManager])
 
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.All)
   const handleSelect = useCallback((option: TabsMenuState) => {

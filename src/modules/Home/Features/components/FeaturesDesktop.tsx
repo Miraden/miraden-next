@@ -3,6 +3,7 @@ import cn from "classnames";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import {HomeIcon24} from "@/icons/HomeIcon";
+import Image from "next/image";
 
 interface FeatureProps {
   className?: string;
@@ -117,14 +118,14 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
                 })}
               >
                 <div className="Features__imagesContainer">
-                  <img
+                  <Image
                     src={image1}
                     alt=""
                     width={312}
                     height={655}
                     className="Features__image1"
                   />
-                  <img
+                  <Image
                     src={image2}
                     alt=""
                     width={312}
@@ -235,6 +236,7 @@ const StyledFeaturesDesktop = styled.section`
     img {
       background: #eef1f5;
       border-radius: 25px;
+      padding: 15px;
     }
   }
 

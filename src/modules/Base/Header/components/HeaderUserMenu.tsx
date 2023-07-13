@@ -65,7 +65,7 @@ const StyledHeaderUserMenu = styled.div`
     gap: 20px;
   }
 
-  .UserName {
+  .Button_regular.UserName {
     padding: 0;
   }
 
