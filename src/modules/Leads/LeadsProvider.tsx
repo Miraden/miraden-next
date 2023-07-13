@@ -21,6 +21,7 @@ class LeadsDataProvider {
   private currentPage: number
   private url: string
   private onPageClick: Function
+  private isUserAuth: boolean
 
   constructor() {
     this.isFetchCompleted = false
@@ -30,6 +31,12 @@ class LeadsDataProvider {
     this.currentPage = 1
     this.url = ''
     this.onPageClick = () => {}
+    this.isUserAuth = false
+    console.log('data provider')
+  }
+
+  public setUserAuthState(val: boolean): void {
+    this.isUserAuth = val
   }
 
   public setUrl(value: string): void {
@@ -42,9 +49,12 @@ class LeadsDataProvider {
 
   public fetchData(): Promise<any> {
     const apiRequest: ApiRequest = new ApiRequest()
-    const headers: HeadersInit = {
+    let headers: HeadersInit = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }
+
+    if(this.isUserAuth) {
+      headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
     }
 
     const apiResponse: ApiResponse = new ApiResponse()

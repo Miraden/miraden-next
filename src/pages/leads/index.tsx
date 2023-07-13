@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Header } from '@/modules/Base/Header'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import AuthManager from '@/modules/Security/Authentication/AuthManager'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import cn from 'classnames'
@@ -11,6 +11,7 @@ import { UrlManager } from '@/infrastructure/Routes/UrlManager'
 import { Search } from '@/components/ui'
 import { FilterIcon } from '@/icons/FilterIcon'
 import { LeadFilter } from '@/modules/Leads/LeadFilter'
+import { theme } from '../../../styles/tokens'
 
 enum TabsMenuState {
   All = 0,
@@ -22,35 +23,29 @@ enum TabsMenuState {
 
 const PAGE_KEY: string = 'p'
 
+const authManager = new AuthManager()
+const leadsProvider = new LeadsDataProvider()
+const tabsManager = new TabsManager()
+const urlManager = new UrlManager()
+
 export default function LeadsPage(): JSX.Element {
   const [itemPage, setItemPage] = useState<number>(1)
-  const [urlManager, setUrlManager] = useState<UrlManager>(new UrlManager())
-  const [authManager, setAuthManager] = useState<AuthManager>(new AuthManager())
-
-  const [isUserAuth, setUserAuth] = useState(false)
+  const [isUserAuth, setIsUserAuth] = useState<boolean>(false)
   useEffect(() => {
-    setUserAuth(authManager.isUserHasToken())
-  }, [isUserAuth, authManager])
+    setIsUserAuth(authManager.isUserHasToken)
+    leadsProvider.setUserAuthState(authManager.isUserHasToken())
+  }, [isUserAuth])
 
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.All)
   const handleSelect = useCallback((option: TabsMenuState) => {
     setSelected(option)
     urlManager.deleteQuery(PAGE_KEY)
-  }, [urlManager])
+  }, [])
 
   const [showFilter, setShowFilter] = useState(false)
   const handleShowFilter = useCallback(() => {
     setShowFilter(!showFilter)
   }, [showFilter])
-
-  const [tabsManager, setTabsManager] = useState<TabsManager>(new TabsManager())
-  useEffect(() => {
-    tabsManager.setActive(selected)
-  }, [selected, tabsManager])
-
-  const [leadsProvider, setLeadsProvider] = useState<LeadsDataProvider>(
-    new LeadsDataProvider()
-  )
 
   const filterHandler = useCallback((e: any) => {
     const form = document.getElementsByTagName('form')[0]
@@ -64,38 +59,37 @@ export default function LeadsPage(): JSX.Element {
       const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
       leadsProvider.setCurrentPage(parseInt(page))
       setLeadsAllData(res)
-      history.pushState(null, '', urlManager.getPath() + "?" + queryString)
+      history.pushState(null, '', urlManager.getPath() + '?' + queryString)
     })
-  }, [leadsProvider, urlManager])
+  }, [])
 
-  tabsManager.setCallback(handleSelect)
-  tabsManager.addItem(new TabMenuItem('Все'))
-  tabsManager.addItem(new TabMenuItem('Подходящие'))
-  tabsManager.addItem(new TabMenuItem('Мои отклики'))
-  tabsManager.addItem(new TabMenuItem('Я исполнитель'))
-  tabsManager.addItem(new TabMenuItem('Избранное'))
+  useEffect(() => {
+    tabsManager.setCallback(handleSelect)
+    tabsManager.addItem(new TabMenuItem('Все'))
+    tabsManager.addItem(new TabMenuItem('Подходящие'))
+    tabsManager.addItem(new TabMenuItem('Мои отклики'))
+    tabsManager.addItem(new TabMenuItem('Я исполнитель'))
+    tabsManager.addItem(new TabMenuItem('Избранное'))
+  }, [handleSelect])
 
-  const onPageHandler = useCallback(
-    (e: any) => {
-      const target = e.target.closest('button')
-      if (!target) return
+  const onPageHandler = useCallback((e: any) => {
+    const target = e.target.closest('button')
+    if (!target) return
 
-      const page: number = target.getAttribute('data-page') as number
-      setItemPage(page)
-      setLeadsAllData([])
-      urlManager.updatePath(urlManager.getPath())
-      urlManager.updateQuery(PAGE_KEY, page)
-      const newUrl: string = urlManager.getPath() + urlManager.getQuery()
-      leadsProvider.setUrl(newUrl)
-      leadsProvider.fetchData().then(res => {
-        leadsProvider.setCurrentPage(page)
-        setLeadsAllData(res)
-      })
-    },
-    [leadsProvider, urlManager]
-  )
+    const page: number = target.getAttribute('data-page') as number
+    setItemPage(page)
+    setLeadsAllData([])
+    urlManager.updatePath(urlManager.getPath())
+    urlManager.updateQuery(PAGE_KEY, page)
+    const newUrl: string = urlManager.getPath() + urlManager.getQuery()
+    leadsProvider.setUrl(newUrl)
+    leadsProvider.fetchData().then(res => {
+      leadsProvider.setCurrentPage(page)
+      setLeadsAllData(res)
+    })
+  }, [])
 
-  if(selected == TabsMenuState.All) {
+  if (selected == TabsMenuState.All) {
     const current = tabsManager.getItem(selected)
     current?.updateMenuFooter(
       <Search
@@ -111,6 +105,7 @@ export default function LeadsPage(): JSX.Element {
   const [leadsAllData, setLeadsAllData] = useState<Object>([])
   useEffect(() => {
     leadsProvider.setPageCallback(onPageHandler)
+
     if (selected == TabsMenuState.All) {
       setLeadsAllData([])
       leadsProvider.setIsFinished(false)
@@ -154,7 +149,7 @@ export default function LeadsPage(): JSX.Element {
         setLeadsAllData(res)
       })
     }
-  }, [leadsProvider, onPageHandler, selected, urlManager])
+  }, [onPageHandler, selected])
 
   return (
     <>
@@ -163,7 +158,7 @@ export default function LeadsPage(): JSX.Element {
       </Head>
       <BlankLayout>
         <Header isAuthorized={isUserAuth} />
-        <StyledLeads className={'ContainerFull'}>
+        <StyledLeads className={cn('ContainerFull', { userAuth: isUserAuth })}>
           <div className={'LeadsWrapper'}>
             <div
               className={cn('LeadsContent', {
@@ -174,7 +169,7 @@ export default function LeadsPage(): JSX.Element {
                 <div className={'Menu__header Font_headline_3'}>
                   <h1 className="Font_headline_3">Лента заявок</h1>
                 </div>
-                {tabsManager.renderMenus(selected)}
+                {isUserAuth && tabsManager.renderMenus(selected)}
                 {tabsManager.renderMenuFooter(selected)}
               </StyledMenu>
 
@@ -182,13 +177,17 @@ export default function LeadsPage(): JSX.Element {
                 {selected == TabsMenuState.All && leadsProvider.render()}
                 {selected == TabsMenuState.Similar && <></>}
                 {selected == TabsMenuState.MyRequests && leadsProvider.render()}
-                {selected == TabsMenuState.IamExecutant && leadsProvider.render()}
+                {selected == TabsMenuState.IamExecutant &&
+                  leadsProvider.render()}
                 {selected == TabsMenuState.Favorites && leadsProvider.render()}
               </div>
             </div>
             {showFilter && (
               <div className="Leads__filter">
-                <LeadFilter onChange={filterHandler} onCloseClick={handleShowFilter} />
+                <LeadFilter
+                  onChange={filterHandler}
+                  onCloseClick={handleShowFilter}
+                />
               </div>
             )}
           </div>
@@ -206,6 +205,13 @@ const StyledLeads = styled.div`
   padding-right: 20px;
   display: flex;
   position: relative;
+
+  &:not(.userAuth) {
+    .Menu__header {
+      border-bottom: 4px solid ${theme.colors.stroke.divider};
+      padding-bottom: 30px;
+    }
+  }
 
   .Leads__filter {
     position: sticky;
