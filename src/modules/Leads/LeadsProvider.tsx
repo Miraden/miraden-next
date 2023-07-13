@@ -22,6 +22,7 @@ class LeadsDataProvider {
   private url: string
   private onPageClick: Function
   private isUserAuth: boolean
+  private lang: string
 
   constructor() {
     this.isFetchCompleted = false
@@ -32,7 +33,11 @@ class LeadsDataProvider {
     this.url = ''
     this.onPageClick = () => {}
     this.isUserAuth = false
-    console.log('data provider')
+    this.lang = ''
+  }
+
+  public setLang(val: string): void {
+    this.lang = val
   }
 
   public setUserAuthState(val: boolean): void {
@@ -136,7 +141,7 @@ class LeadsDataProvider {
 
     return (
       <>
-        {renderLead(this.payload)}
+        {renderLead(this.payload, this.lang)}
         {this.pages && this.pages.total > 1 && (
           <Pagination
             total={this.pages.total}
@@ -202,7 +207,7 @@ function formatCreatedDate(val: string): string {
   return date.getDate() + ' ' + months[date.getMonth()]
 }
 
-function renderLead(data: Array<any>): JSX.Element {
+function renderLead(data: Array<any>, lang: string): JSX.Element {
   return (
     <>
       <ul className="LeadsList">
@@ -228,8 +233,8 @@ function renderLead(data: Array<any>): JSX.Element {
               format={item.format}
               budget={{
                 currency: item.budget.currency.symbol,
-                startFrom: item.budget.startFrom,
-                endTo: item.budget.endAt,
+                startFrom: new Intl.NumberFormat(lang).format(item.budget.startFrom),
+                endTo: new Intl.NumberFormat(lang).format(item.budget.endAt),
               }}
               purchaseType={'purchase'}
             />

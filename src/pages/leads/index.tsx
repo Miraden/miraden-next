@@ -12,6 +12,7 @@ import { Search } from '@/components/ui'
 import { FilterIcon } from '@/icons/FilterIcon'
 import { LeadFilter } from '@/modules/Leads/LeadFilter'
 import { theme } from '../../../styles/tokens'
+import LangManager from "@/infrastructure/Intl/LangManager";
 
 enum TabsMenuState {
   All = 0,
@@ -27,6 +28,7 @@ const authManager = new AuthManager()
 const leadsProvider = new LeadsDataProvider()
 const tabsManager = new TabsManager()
 const urlManager = new UrlManager()
+const langManager = new LangManager()
 
 export default function LeadsPage(): JSX.Element {
   const [itemPage, setItemPage] = useState<number>(1)
@@ -34,6 +36,7 @@ export default function LeadsPage(): JSX.Element {
   useEffect(() => {
     setIsUserAuth(authManager.isUserHasToken)
     leadsProvider.setUserAuthState(authManager.isUserHasToken())
+    leadsProvider.setLang(langManager.getClientLang())
   }, [isUserAuth])
 
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.All)
