@@ -7,6 +7,7 @@ import { StarIconFilled } from "@/icons/StarIconFilled";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { InviteModal } from "./InviteModal";
+import Image from "next/image";
 
 interface SellerCardProps {
   className?: string;
@@ -74,7 +75,7 @@ const SellerCard = ({
         <div className="SellerCard">
           <div className="SellerCard__content">
             <div className="SellerCard__imageContainer">
-              <img src={image} alt="" width={72} height={72} />
+              <Image src={image} alt="" width={72} height={72} />
               {isOnline && <div className="SellerCard__onlineDot" />}
               {isPerformer && (
                 <div className="SellerCard__performerIcon">

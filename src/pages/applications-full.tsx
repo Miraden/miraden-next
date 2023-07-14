@@ -5,10 +5,10 @@ import styled from "styled-components";
 import {useEffect, useState} from "react";
 import AuthManager from "@/modules/Security/Authentication/AuthManager";
 
+const authManger = new AuthManager()
+
 export default function ApplicationsFull() {
   const [isUserAuth, setUserAuth] = useState(false);
-
-  const authManger = new AuthManager()
 
   useEffect(() => {
     setUserAuth(authManger.isUserHasToken())

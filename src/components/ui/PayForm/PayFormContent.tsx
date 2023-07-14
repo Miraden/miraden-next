@@ -57,7 +57,7 @@ const PayFormContent = ({
 
       onOptionSelect?.(option);
     },
-    [selectedOption, totalTax, onOptionSelect]
+    [selectedOption, onOptionSelect, totalTax, setTotalPay]
   );
 
   return (

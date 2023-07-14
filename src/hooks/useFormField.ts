@@ -36,7 +36,7 @@ export const useFormField = (
         return !options.mask ? e.target.value : options.mask(e);
       });
     },
-    []
+    [options]
   );
   const onFocus = useCallback(() => {
     setIsFocus(true);

@@ -2,6 +2,7 @@ import { DropzoneIcon } from "@/icons";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import styled from "styled-components";
+import Image from "next/image";
 
 const ImageUploader: React.FC = () => {
   const onDrop = useCallback((acceptedFiles: any) => {}, []);
@@ -30,7 +31,7 @@ const ImageUploader: React.FC = () => {
       <div className="ImageUploader__imagesList">
         {acceptedFiles.map((file) => (
           <div key={file.name}>
-            <img src={URL.createObjectURL(file)} alt={file.name} />
+            <Image src={URL.createObjectURL(file)} alt={file.name} />
           </div>
         ))}
       </div>
@@ -46,8 +47,7 @@ const StyledDropzone = styled.div`
   align-items: center;
   justify-items: center;
   cursor: pointer;
-  border: 1px solid #d4ddee;
-  border-style: dashed;
+  border: 1px dashed #d4ddee;
   border-radius: 10px;
 
   :hover {
@@ -56,6 +56,7 @@ const StyledDropzone = styled.div`
 
   .ImageUploader__text {
     margin-top: 15px;
+
     span {
       color: #4e6af3;
     }

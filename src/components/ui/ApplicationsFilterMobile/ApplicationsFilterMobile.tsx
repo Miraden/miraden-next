@@ -6,7 +6,7 @@ import { Checkbox } from "../CheckBox";
 import { CurrencySelect } from "../CurrencySelect/CurrencySelect";
 import { DropdownLocationInput } from "../DropdownLocationInput/DropdownLocationInput";
 import { NumberInputNoLabel } from "../NumberInputNoLabel";
-import { RequestButton } from "../RequestButton";
+import { RequestButton } from "@/components/ui";
 import { TabButtons } from "../TabButtons";
 interface FilterProps {
   className?: string;
@@ -113,7 +113,7 @@ const StyledApplicationsFilterMobile = styled.div`
     height: 100%;
     overflow-y: auto;
     .TabButtons__container {
-      padding: 0px 30px;
+      padding: 0 30px;
     }
   }
 `;
@@ -346,7 +346,7 @@ const ObjectsContent = () => {
       <div className="ObjectsContent__wrapperContainerPricing">
         <h3 className="ObjectsContent__currency Font_16_140">
           <span>Цена в </span>
-          <CurrencySelect options={currency} />
+          <CurrencySelect options={[{label: "евро", id: 2}, {label: "доллар", id: 1}, {label: "рубль", id: 3}]} />
         </h3>
         <div className="ObjectsContent__price">
           <NumberInputNoLabel
