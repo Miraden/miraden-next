@@ -1,18 +1,23 @@
 import { ArrowIcon } from "@/icons/ArrowIcon";
 import cn from "classnames";
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import styled from "styled-components";
 import { CurrencyDropdown } from "./CurrencyDropdown";
 
+export interface OptionPrice {
+  label: string
+  id: number
+}
+
 interface Props {
   className?: string;
-  options: string[];
+  options: OptionPrice[];
 }
 
 const CurrencySelect: FC<Props> = ({ className, options }) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectOption, setSelectOption] = useState<string>("");
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [selectOption, setSelectOption] = useState<OptionPrice>({label: "евро", id: 2});
+  const [selectedOption, setSelectedOption] = useState<OptionPrice>({label: "евро", id: 2});
 
   const toggleDropDown = () => {
     setShowDropDown(!showDropDown);
@@ -24,15 +29,9 @@ const CurrencySelect: FC<Props> = ({ className, options }) => {
     }
   };
 
-  const optionSelection = (option: string, index: number): void => {
+  const optionSelection = (option: OptionPrice, index: number): void => {
     setSelectedOption(option);
     setSelectOption(option);
-  };
-
-  // Функция для преобразования значения selectedOption
-  const formatSelectedOption = (option: string): string => {
-    const formattedOption = option.toLowerCase().split(",")[0];
-    return formattedOption;
   };
 
   return (
@@ -48,13 +47,13 @@ const CurrencySelect: FC<Props> = ({ className, options }) => {
         }
       >
         <div className="DropdownInput_selectLabel Color_blue_primary">
-          {selectedOption ? formatSelectedOption(selectedOption) : "евро"}
+          {selectedOption.label}
           <ArrowIcon />
         </div>
         {showDropDown && (
           <CurrencyDropdown
             className="DropdownInput_selectContainer"
-            selectedOption={selectedOption}
+            selectedOption={selectedOption.label}
             setSelectedOption={setSelectedOption}
             optionSelection={optionSelection}
             showDropDown={true}
@@ -62,6 +61,7 @@ const CurrencySelect: FC<Props> = ({ className, options }) => {
             options={options}
           />
         )}
+        <input type="hidden" name={"f[price][unit]"} value={selectedOption.id}/>
       </button>
     </StyledDropdownInput>
   );

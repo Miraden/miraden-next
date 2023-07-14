@@ -238,7 +238,7 @@ const BudgetSection = (props: SectionProps) => {
     <div className="ObjectsContent__wrapper budgetSection filterSection filterSection--padding">
       <h3 className="ObjectsContent__currency Font_16_140">
         <span>Цена в </span>
-        <CurrencySelect options={["Eвро", "Доллар"]} />
+        <CurrencySelect options={[{label: "евро", id: 2}, {label: "доллар", id: 1}, {label: "рубль", id: 3}]} />
       </h3>
       <div className="ObjectsContent__price">
         <div className="ObjectsContent_total_area">
@@ -246,12 +246,12 @@ const BudgetSection = (props: SectionProps) => {
             <TextInput
               className={'Input'}
               placeholder={'От'}
-              name={`[${FORM_NAME}][budget][from]`}
+              name={`${FORM_NAME}[price][from]`}
             />
             <TextInput
               className={'Input'}
               placeholder={'До'}
-              name={`[${FORM_NAME}][budget][to]`}
+              name={`${FORM_NAME}[price][to]`}
             />
           </div>
         </div>

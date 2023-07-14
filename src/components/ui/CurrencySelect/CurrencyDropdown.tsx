@@ -2,11 +2,14 @@ import { CheckIcon } from "@/icons/CheckIcon";
 import cn from "classnames";
 import { FC } from "react";
 import styled from "styled-components";
+import {CheckSmallLineIcon} from "@/icons/CheckLineIcon";
+import {OptionPrice} from "@/components/ui/CurrencySelect/CurrencySelect";
+import {theme} from "../../../../styles/tokens";
 
 type Props = {
   selectedOption: string;
-  setSelectedOption: (option: string) => void;
-  options: string[];
+  setSelectedOption: (option: OptionPrice) => void;
+  options: OptionPrice[];
   showDropDown: boolean;
   toggleDropDown: Function;
   optionSelection: Function;
@@ -30,18 +33,18 @@ const CurrencyDropdown: FC<Props> = ({
             : "CurrencyDropdown__menu"
         }
       >
-        {options.map((option: string, index: number): JSX.Element => {
+        {options.map((option: OptionPrice, index: number): JSX.Element => {
           return (
             <div
               key={index}
               onClick={(): void => {
                 setSelectedOption(option);
               }}
-              className={cn(`${selectedOption === option ? "selected" : ""}`)}
+              className={cn(`${selectedOption === option.label ? "selected" : ""}`)}
             >
               <span className="CurrencyDropdown__menuItem">
-                <p className="Font_14_140">{option}</p>
-                <CheckIcon attr={{className: (selectedOption === option ? "CheckIcon_selected" : "CheckIcon")}}/>
+                <p className="Font_14_140">{option.label}</p>
+                <CheckSmallLineIcon attr={{className: (selectedOption === option.label ? "CheckIcon_selected" : "CheckIcon")}}/>
               </span>
             </div>
           );
@@ -62,7 +65,7 @@ const StyledCurrencyDropdown = styled.div`
   }
 
   .CurrencyDropdown__menu_active {
-    box-shadow: 0 0 0 2px #e1edfd inset;
+    outline: 2px solid #e1edfd;
     position: absolute;
     z-index: 2;
     top: 4px;
@@ -109,6 +112,10 @@ const StyledCurrencyDropdown = styled.div`
       align-items: center;
       flex-shrink: 0;
       margin-left: 10px;
+
+      path {
+        fill: ${theme.colors.main};
+      }
     }
 
     .CheckIcon {
