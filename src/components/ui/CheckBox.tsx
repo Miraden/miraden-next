@@ -54,6 +54,7 @@ const Checkbox = ({
           name={name}
           value={value}
           disabled={disabled}
+          onClick={onClick}
         />
         <span
           className={cn("[ Checkbox__iconContainer ]", {

@@ -1,20 +1,20 @@
-import { CheckIcon } from "@/icons/CheckIcon";
-import cn from "classnames";
-import { FC } from "react";
-import styled from "styled-components";
-import {CheckSmallLineIcon} from "@/icons/CheckLineIcon";
-import {OptionPrice} from "@/components/ui/CurrencySelect/CurrencySelect";
-import {theme} from "../../../../styles/tokens";
+import { CheckIcon } from '@/icons/CheckIcon'
+import cn from 'classnames'
+import { FC } from 'react'
+import styled from 'styled-components'
+import { CheckSmallLineIcon } from '@/icons/CheckLineIcon'
+import { theme } from '../../../../styles/tokens'
+import { CurrencyStruct } from '@/infrastructure/Currencies/CurrencyProvider'
 
 type Props = {
-  selectedOption: string;
-  setSelectedOption: (option: OptionPrice) => void;
-  options: OptionPrice[];
-  showDropDown: boolean;
-  toggleDropDown: Function;
-  optionSelection: Function;
-  className?: string;
-};
+  selectedOption: string
+  setSelectedOption: (option: CurrencyStruct) => void
+  options: CurrencyStruct[]
+  showDropDown: boolean
+  toggleDropDown: Function
+  optionSelection: Function
+  className?: string
+}
 
 const CurrencyDropdown: FC<Props> = ({
   selectedOption,
@@ -33,18 +33,19 @@ const CurrencyDropdown: FC<Props> = ({
             : "CurrencyDropdown__menu"
         }
       >
-        {options.map((option: OptionPrice, index: number): JSX.Element => {
+        {options.map((option: CurrencyStruct, index: number): JSX.Element => {
           return (
             <div
               key={index}
               onClick={(): void => {
                 setSelectedOption(option);
+                optionSelection(option)
               }}
-              className={cn(`${selectedOption === option.label ? "selected" : ""}`)}
+              className={cn(`${selectedOption === option.code ? "selected" : ""}`)}
             >
               <span className="CurrencyDropdown__menuItem">
-                <p className="Font_14_140">{option.label}</p>
-                <CheckSmallLineIcon attr={{className: (selectedOption === option.label ? "CheckIcon_selected" : "CheckIcon")}}/>
+                <p className="Font_14_140">{option.label}, {option.symbol}</p>
+                <CheckSmallLineIcon attr={{className: (selectedOption === option.code ? "CheckIcon_selected" : "CheckIcon")}}/>
               </span>
             </div>
           );

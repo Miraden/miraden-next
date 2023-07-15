@@ -4,10 +4,19 @@ import styled from 'styled-components'
 import { theme } from '../../../styles/tokens'
 import { DropdownLocationInput } from '@/components/ui/DropdownLocationInput/DropdownLocationInput'
 import { CurrencySelect } from '@/components/ui/CurrencySelect/CurrencySelect'
-import React, { useCallback, useState } from 'react'
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import cn from 'classnames'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
 import { TextInput } from '@/components/ui/TextInput'
+import LocationsProvider, {
+  CitiesStruct,
+  CountriesStruct,
+  instanceOfCountries,
+  LocationView,
+} from '@/infrastructure/Locations/LocationsProvider'
+import CurrencyProvider, {
+  CurrencyStruct,
+} from '@/infrastructure/Currencies/CurrencyProvider'
 
 interface FilterProps {
   className?: string
@@ -20,25 +29,68 @@ interface SectionProps {
   className?: string
 }
 
+interface LeadFilterFormStruct {
+  format?: string
+  location?: CountriesStruct | CitiesStruct
+  status?: string
+  estateType?: {
+    commercial?: string[]
+    living?: string[]
+  }
+  rooms?: {
+    total?: number
+    beds?: number
+    baths?: number
+  }
+  totalArea?: {
+    from?: number
+    to?: number
+  }
+  livingArea?: {
+    from?: number
+    to?: number
+  }
+  steadArea?: {
+    from?: number
+    to?: number
+  }
+  buildDate?: {
+    from?: number
+    to?: number
+  }
+  purpose?: string[]
+  readyDeal?: string[]
+  author?: string[]
+  isTrue?: boolean
+  price?: {
+    from?: number
+    to?: number
+    unit?: number
+  }
+}
+
+let FilterForm: LeadFilterFormStruct = {}
+
 const FORM_NAME: string = 'f'
 const SectionHSpace = '30px'
 
 const LeadFilter = (props: FilterProps) => {
+  useEffect(() => ResetForm(), [])
   const onResetHandler = useCallback((e: any) => {
-    const form = e.target.closest('form')
-    form.reset()
+    ResetForm()
   }, [])
 
   return (
-    <StyledApplicationsFilter
-      name={FORM_NAME}
-      className={props.className}
-      onChange={props.onChange}
-    >
+    <StyledApplicationsFilter name={FORM_NAME} className={props.className}>
       <div className="Filter__headContainer">
         <div className="ApplicationsFilter__head">
           <div className="Font_Accent_12_caps">фильтр выключен</div>
-          <div className={"Font_Accent_12_caps filterRest"} onClick={onResetHandler}>Сбросить</div>
+          <div
+            className={'Font_Accent_12_caps filterRest'}
+            onClick={onResetHandler}
+          >
+            Сбросить
+          </div>
           <Button
             type={'button'}
             tertiary
@@ -65,42 +117,37 @@ const LeadFilter = (props: FilterProps) => {
 }
 
 const FormatSection = (props: SectionProps) => {
-  const [inputValue, setInputValue] = useState<string>('')
-  const onTypeHandler = useCallback((e: any) => {
-    const target = e.target
-    const typeName = target.closest('.Button').getAttribute('data-name')
-    setInputValue(typeName)
-  }, [])
+  const [selected, setSelected] = useState<string>('')
+  const onTypeHandler = useCallback(
+    (e: any): void => {
+      const target = e.target
+      const typeName = target.closest('.Button').getAttribute('data-name')
+      setSelected(typeName)
+      FilterForm.format = typeName
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
 
   return (
     <div className="ObjectsContent__type filterSection formatSection filterSection--padding">
       <div className="ObjectsContent__wrapperContainer">
         <StyledType className={'ObjectsContent__tabs'}>
-          <div
-            className={'Button'}
-            data-name={'buy'}
-            style={{ position: 'relative' }}
-          >
+          <div className={'Button'} data-name={'buy'}>
             <input
               onClick={onTypeHandler}
               type="radio"
-              name={`${FORM_NAME}[format]`}
               value={'buy'}
-              checked={inputValue === 'buy'}
+              checked={FilterForm.format === 'buy'}
             />
             <span>Покупка</span>
           </div>
-          <div
-            className={'Button'}
-            data-name={'rent'}
-            style={{ position: 'relative' }}
-          >
+          <div className={'Button'} data-name={'rent'}>
             <input
               onClick={onTypeHandler}
               type="radio"
-              name={`${FORM_NAME}[format]`}
               value={'rent'}
-              checked={inputValue === 'rent'}
+              checked={FilterForm.format === 'rent'}
             />
             <span>Аренда</span>
           </div>
@@ -111,6 +158,21 @@ const FormatSection = (props: SectionProps) => {
 }
 
 const LocationSection = (props: SectionProps) => {
+  const [locations, setLocations] = useState<any[]>([])
+  const [isReady, setReady] = useState<boolean>(false)
+  useEffect(() => {
+    const provider: LocationsProvider = new LocationsProvider()
+    provider.fetch(LocationView.Countries).then(res => {
+      setLocations(provider.getList())
+      setReady(true)
+    })
+  }, [])
+
+  const onChange = (location: CountriesStruct | CitiesStruct): void => {
+    FilterForm.location = location
+    props.onChange(SerializeData(FilterForm))
+  }
+
   return (
     <div className="ObjectsContent__wrapperContainer locationSection filterSection filterSection--padding">
       <h3 className="ObjectsContent__locations Font_16_140">
@@ -119,12 +181,9 @@ const LocationSection = (props: SectionProps) => {
       <DropdownLocationInput
         className="ObjectsContent__locationsSelect"
         placeholder="Все страны"
-        options={[
-          { label: 'Турция', subOptions: ['1', '2', '3', '4'] },
-          { label: 'Кипр', subOptions: ['52', '43', '23', '41'] },
-          { label: 'Черногория', subOptions: ['11', '242', '43', '45'] },
-          { label: 'Северный Кипр', subOptions: ['11', '22', '34', '43'] },
-        ]}
+        options={locations}
+        onChange={onChange}
+        disabled={!isReady}
       />
     </div>
   )
@@ -136,7 +195,6 @@ const EstateSection = (props: SectionProps) => {
   const toggleContentHandler = useCallback(() => {
     setIsMoreContentVisible(!isMoreContentVisible)
   }, [isMoreContentVisible])
-
 
   const renderMore = () => {
     return (
@@ -174,56 +232,46 @@ const EstateSection = (props: SectionProps) => {
 }
 
 const EstateTypeSection = (props: SectionProps) => {
-  const [inputValue, setInputValue] = useState<string>('any')
-  const onTypeHandler = useCallback((e: any) => {
-    const target = e.target
-    const typeName = target.closest('.Button').getAttribute('data-name')
-    setInputValue(typeName)
-  }, [])
+  const [selected, setSelected] = useState<string>('any')
+  const onTypeHandler = useCallback(
+    (e: any) => {
+      const target = e.target
+      const typeName = target.closest('.Button').getAttribute('data-name')
+      setSelected(typeName)
+      FilterForm.status = typeName
+      if (props.onChange) props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
 
   return (
     <div className="ObjectsContent__type filterSubSection collapsable-row">
       <div className="ObjectsContent__wrapperContainer">
         <StyledType className={'ObjectsContent__tabs'}>
-          <div
-            className={'Button'}
-            data-name={'any'}
-            style={{ position: 'relative' }}
-          >
+          <div className={'Button'} data-name={'any'}>
             <input
               onClick={onTypeHandler}
               type="radio"
-              name={`${FORM_NAME}[status]`}
-              value={'any'}
-              checked={inputValue === 'any'}
+              name={'status'}
+              checked={FilterForm.status === 'any'}
             />
             <span>Вся</span>
           </div>
-          <div
-            className={'Button'}
-            data-name={'new'}
-            style={{ position: 'relative' }}
-          >
+          <div className={'Button'} data-name={'new'}>
             <input
               onClick={onTypeHandler}
               type="radio"
-              name={`${FORM_NAME}[status]`}
-              value={'new'}
-              checked={inputValue == 'new'}
+              name={'status'}
+              checked={FilterForm.status === 'new'}
             />
             <span>Новая</span>
           </div>
-          <div
-            className={'Button'}
-            data-name={'secondary'}
-            style={{ position: 'relative' }}
-          >
+          <div className={'Button'} data-name={'secondary'}>
             <input
               onClick={onTypeHandler}
               type="radio"
-              name={`${FORM_NAME}[status]`}
-              value={'secondary'}
-              checked={inputValue == 'secondary'}
+              name={'status'}
+              checked={FilterForm.status === 'secondary'}
             />
             <span>Вторичная</span>
           </div>
@@ -234,11 +282,52 @@ const EstateTypeSection = (props: SectionProps) => {
 }
 
 const BudgetSection = (props: SectionProps) => {
+  const [currencies, setCurrencies] = useState<any[]>([])
+  const [isCurrencyReady, setCurrencyReady] = useState<boolean>(false)
+  const [defaultCurrency, setCurrencyDefault] = useState<CurrencyStruct>()
+  useEffect(() => {
+    const provider: CurrencyProvider = new CurrencyProvider()
+    provider.fetch().then(res => {
+      const list: CurrencyStruct[] = provider.getList()
+      FilterForm.price = FilterForm.price || {}
+      FilterForm.price.unit = provider.findDefault().id
+      setCurrencies(list)
+      setCurrencyDefault(provider.findDefault())
+      setCurrencyReady(true)
+    })
+  }, [])
+
+  const onPressFrom = (val: ChangeEvent<HTMLInputElement>) => {
+    const price: number = parseInt(val.target.value)
+    FilterForm.price = FilterForm.price || {}
+    FilterForm.price.from = price
+    props.onChange(SerializeData(FilterForm))
+  }
+
+  const onPressTo = (val: ChangeEvent<HTMLInputElement>) => {
+    const price: number = parseInt(val.target.value)
+    FilterForm.price = FilterForm.price || {}
+    FilterForm.price.to = price
+    props.onChange(SerializeData(FilterForm))
+  }
+
+  const onCurrencyChange = (val: any) => {
+    FilterForm.price = FilterForm.price || {}
+    FilterForm.price.unit = val.id
+    props.onChange(SerializeData(FilterForm))
+  }
+
   return (
     <div className="ObjectsContent__wrapper budgetSection filterSection filterSection--padding">
       <h3 className="ObjectsContent__currency Font_16_140">
         <span>Цена в </span>
-        <CurrencySelect options={[{label: "евро", id: 2}, {label: "доллар", id: 1}, {label: "рубль", id: 3}]} />
+        {isCurrencyReady && (
+          <CurrencySelect
+            defaultCurrency={defaultCurrency}
+            currencies={currencies}
+            onChange={onCurrencyChange}
+          />
+        )}
       </h3>
       <div className="ObjectsContent__price">
         <div className="ObjectsContent_total_area">
@@ -247,11 +336,13 @@ const BudgetSection = (props: SectionProps) => {
               className={'Input'}
               placeholder={'От'}
               name={`${FORM_NAME}[price][from]`}
+              onChange={onPressFrom}
             />
             <TextInput
               className={'Input'}
               placeholder={'До'}
               name={`${FORM_NAME}[price][to]`}
+              onChange={onPressTo}
             />
           </div>
         </div>
@@ -261,44 +352,48 @@ const BudgetSection = (props: SectionProps) => {
 }
 
 const LivingTypeSection = (props: SectionProps) => {
+  const onClick = useCallback(
+    (e: any) => {
+      const container = e.target.closest('.CheckboxContainer')
+      const inputs = container.getElementsByTagName('input')
+      const checked = Array.from(inputs).map((i: any) => {
+        if (i.checked) {
+          return i.value
+        }
+      })
+
+      const ch: string[] = checked.filter(i => i !== undefined)
+      FilterForm.estateType = FilterForm.estateType || {}
+      FilterForm.estateType.living = ch
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
   return (
     <div className={'ObjectsContent__wrapperContainer filterSubSection'}>
       <h4 className="Font_body_base">Жилая</h4>
-      <div className={'CheckboxContainer'}>
+      <div className={'CheckboxContainer'} onClick={onClick}>
         <Checkbox
           label={'Квартира / апартаменты'}
           dataLabel={'apartments'}
-          name={`${FORM_NAME}[estateType][]`}
           value="apartments"
         />
         <Checkbox
           label={'Пентхаус'}
           dataLabel={'penthouse'}
-          name={`${FORM_NAME}[estateType][]`}
           value="penthouse"
         />
         <Checkbox
           label={'Таунхаус'}
           dataLabel={'townhouse'}
-          name={`${FORM_NAME}[estateType][]`}
           value="townhouse"
         />
-        <Checkbox
-          label={'Вилла'}
-          dataLabel={'villa'}
-          name={`${FORM_NAME}[estateType][]`}
-          value="villa"
-        />
-        <Checkbox
-          label={'Дуплекс'}
-          dataLabel={'duplex'}
-          name={`${FORM_NAME}[estateType][]`}
-          value="duplex"
-        />
+        <Checkbox label={'Вилла'} dataLabel={'villa'} value="villa" />
+        <Checkbox label={'Дуплекс'} dataLabel={'duplex'} value="duplex" />
         <Checkbox
           label={'Земельный участок'}
           dataLabel={'duplex'}
-          name={`${FORM_NAME}[estateType][]`}
           value="stead"
         />
       </div>
@@ -307,56 +402,46 @@ const LivingTypeSection = (props: SectionProps) => {
 }
 
 const CommercialTypeSection = (props: SectionProps) => {
+  const onClick = useCallback(
+    (e: any) => {
+      const container = e.target.closest('.CheckboxContainer')
+      const inputs = container.getElementsByTagName('input')
+      const checked = Array.from(inputs).map((i: any) => {
+        if (i.checked) {
+          return i.value
+        }
+      })
+
+      const ch: string[] = checked.filter(i => i !== undefined)
+      FilterForm.estateType = FilterForm.estateType || {}
+      FilterForm.estateType.commercial = ch
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
   return (
     <div className={'ObjectsContent__wrapperContainer filterSubSection'}>
       <h4 className="Font_body_base">Коммерческая</h4>
-      <div className={'CheckboxContainer'}>
-        <Checkbox
-          label={'Офис'}
-          dataLabel={'office'}
-          name={`${FORM_NAME}[estateType][]`}
-          value={'office'}
-        />
-        <Checkbox
-          label={'Гостиница'}
-          dataLabel={'hotel'}
-          name={`${FORM_NAME}[estateType][]`}
-          value={'hotel'}
-        />
-        <Checkbox
-          label={'Магазин'}
-          dataLabel={'trade'}
-          name={`${FORM_NAME}[estateType][]`}
-          value={'trade'}
-        />
-        <Checkbox
-          label={'Общепит'}
-          dataLabel={'catering'}
-          name={`${FORM_NAME}[estateType][]`}
-          value={'catering'}
-        />
-        <Checkbox
-          label={'Склад'}
-          dataLabel={'warehouse'}
-          name={`${FORM_NAME}[estateType][]`}
-          value={'warehouse'}
-        />
+      <div className={'CheckboxContainer'} onClick={onClick}>
+        <Checkbox label={'Офис'} dataLabel={'office'} value={'office'} />
+        <Checkbox label={'Гостиница'} dataLabel={'hotel'} value={'hotel'} />
+        <Checkbox label={'Магазин'} dataLabel={'trade'} value={'trade'} />
+        <Checkbox label={'Общепит'} dataLabel={'catering'} value={'catering'} />
+        <Checkbox label={'Склад'} dataLabel={'warehouse'} value={'warehouse'} />
         <Checkbox
           label={'Производство'}
           dataLabel={'manufacture'}
-          name={`${FORM_NAME}[estateType][]`}
           value={'manufacture'}
         />
         <Checkbox
           label={'Производство'}
           dataLabel={'manufacture'}
-          name={`${FORM_NAME}[estateType][]`}
           value={'manufacture'}
         />
         <Checkbox
           label={'Свободное назначение'}
           dataLabel={'freePurpose'}
-          name={`${FORM_NAME}[estateType][]`}
           value={'freePurpose'}
         />
       </div>
@@ -365,6 +450,24 @@ const CommercialTypeSection = (props: SectionProps) => {
 }
 
 const BuildDateSection = (props: SectionProps) => {
+  const onClick = useCallback(
+    (e: any) => {
+      const type = e.target.getAttribute('name')
+      const value = e.target.value
+      FilterForm.buildDate = FilterForm.buildDate || {}
+
+      if (type === 'from') {
+        FilterForm.buildDate.from = value
+      }
+
+      if (type === 'to') {
+        FilterForm.buildDate.to = value
+      }
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
   return (
     <div className="ObjectsContent__wrapperContainer filterSubSection">
       <div className="ObjectsContent_year">
@@ -373,12 +476,14 @@ const BuildDateSection = (props: SectionProps) => {
           <TextInput
             className={'Input'}
             placeholder={'От'}
-            name={`[${FORM_NAME}][buildDate][from]`}
+            name={'from'}
+            onChange={onClick}
           />
           <TextInput
             className={'Input'}
             placeholder={'До'}
-            name={`[${FORM_NAME}][buildDate][to]`}
+            name={'to'}
+            onChange={onClick}
           />
         </div>
       </div>
@@ -393,12 +498,45 @@ const RoomsSection = (props: SectionProps) => {
     setIsMoreContentVisible(!isMoreContentVisible)
   }, [isMoreContentVisible])
 
+  const onBedsClick = useCallback(
+    (e: any) => {
+      const rooms = parseInt(e.target.value)
+      FilterForm.rooms = FilterForm.rooms || {}
+      FilterForm.rooms.beds = rooms
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
+  const onBathsClick = useCallback(
+    (e: any) => {
+      const rooms = parseInt(e.target.value)
+      FilterForm.rooms = FilterForm.rooms || {}
+      FilterForm.rooms.baths = rooms
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
+  const onTotalClick = useCallback(
+    (e: any) => {
+      const rooms = parseInt(e.target.value)
+      FilterForm.rooms = FilterForm.rooms || {}
+      FilterForm.rooms.total = rooms
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
   const renderMoreContent = () => {
     return (
       <>
         <div className="ObjectsContent_bedsRooms collapsable-row">
           <h4 className="Font_Accent_16_S">Спален</h4>
-          <StyledRooms className="ObjectsContent__buttons">
+          <StyledRooms
+            className="ObjectsContent__buttons"
+            onClick={onBedsClick}
+          >
             <li>
               <div className={'Button'} data-name={'1'}>
                 <input
@@ -463,7 +601,10 @@ const RoomsSection = (props: SectionProps) => {
         </div>
         <div className="ObjectsContent_bathsRooms collapsable-row">
           <h4 className="Font_Accent_16_S">Санузлов</h4>
-          <StyledRooms className="ObjectsContent__buttons">
+          <StyledRooms
+            className="ObjectsContent__buttons"
+            onClick={onBathsClick}
+          >
             <li>
               <div className={'Button'} data-name={'1'}>
                 <input
@@ -534,7 +675,7 @@ const RoomsSection = (props: SectionProps) => {
     <div className="ObjectsContent__wrapperContainer roomsSection filterSection filterSection--padding">
       <div className="ObjectsContent_allRooms collapsable-row">
         <h4 className="Font_Accent_16_S">Всего комнат</h4>
-        <StyledRooms className="ObjectsContent__buttons">
+        <StyledRooms className="ObjectsContent__buttons" onClick={onTotalClick}>
           <li>
             <div className={'Button'} data-name={'1'}>
               <input
@@ -616,10 +757,28 @@ const PurposeSection = (props: SectionProps) => {
     setSectionVisible(!isSectionVisible)
   }, [isSectionVisible])
 
+  const onClick = useCallback(
+    (e: any) => {
+      const container = e.target.closest('.CheckboxContainer')
+      const inputs = container.getElementsByTagName('input')
+      const checked = Array.from(inputs).map((i: any) => {
+        if (i.checked) {
+          return i.value
+        }
+      })
+
+      const ch: string[] = checked.filter(i => i !== undefined)
+      FilterForm.purpose = FilterForm.purpose || []
+      FilterForm.purpose = ch
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
   const renderFields = () => {
     return (
       <div className={'filterSectionFields'}>
-        <div className={'CheckboxContainer'}>
+        <div className={'CheckboxContainer'} onClick={onClick}>
           <Checkbox
             label={'Для проживания'}
             dataLabel={'live'}
@@ -663,9 +822,12 @@ const PurposeSection = (props: SectionProps) => {
 
   return (
     <div
-      className={cn('ObjectsContent__wrapperContainer purposeSection filterSection', {
-        isSectionVisible: isSectionVisible,
-      })}
+      className={cn(
+        'ObjectsContent__wrapperContainer purposeSection filterSection',
+        {
+          isSectionVisible: isSectionVisible,
+        }
+      )}
     >
       <div className={'filterSectionTitle'} onClick={visibleHandler}>
         <h3 className="Font_Accent_16_S">Цель сделки</h3>
@@ -683,44 +845,56 @@ const ReadyDealSection = (props: SectionProps) => {
     setSectionVisible(!isSectionVisible)
   }, [isSectionVisible])
 
+  const onClick = useCallback(
+    (e: any) => {
+      const container = e.target.closest('.CheckboxContainer')
+      const inputs = container.getElementsByTagName('input')
+      const checked = Array.from(inputs).map((i: any) => {
+        if (i.checked) {
+          return i.value
+        }
+      })
+
+      const ch: string[] = checked.filter(i => i !== undefined)
+      FilterForm.readyDeal = FilterForm.readyDeal || []
+      FilterForm.readyDeal = ch
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
   const renderFields = () => {
     return (
       <div className={'filterSectionFields'}>
-        <div className={'CheckboxContainer'}>
+        <div className={'CheckboxContainer'} onClick={onClick}>
           <Checkbox
             label={'Срочно'}
             dataLabel={'immediately'}
-            name={`${FORM_NAME}[readyDeal][]`}
             value={'immediately'}
           />
           <Checkbox
             label={'Через 1 месяц'}
             dataLabel={'monthOne'}
-            name={`${FORM_NAME}[readyDeal][]`}
             value={'monthOne'}
           />
           <Checkbox
             label={'Через 2 месяца'}
             dataLabel={'monthTwo'}
-            name={`${FORM_NAME}[readyDeal][]`}
             value={'monthTwo'}
           />
           <Checkbox
             label={'Через 3 месяца'}
-            dataLabel={'monthTwo'}
-            name={`${FORM_NAME}[readyDeal][]`}
+            dataLabel={'monthThree'}
             value={'monthThree'}
           />
           <Checkbox
             label={'Сразу как найду'}
             dataLabel={'whenFound'}
-            name={`${FORM_NAME}[readyDeal][]`}
             value={'whenFound'}
           />
           <Checkbox
             label={'Пока просто изучаю'}
             dataLabel={'monitoring'}
-            name={`${FORM_NAME}[readyDeal][]`}
             value={'monitoring'}
           />
         </div>
@@ -730,9 +904,12 @@ const ReadyDealSection = (props: SectionProps) => {
 
   return (
     <div
-      className={cn('ObjectsContent__wrapperContainer readySection filterSection', {
-        isSectionVisible: isSectionVisible,
-      })}
+      className={cn(
+        'ObjectsContent__wrapperContainer readySection filterSection',
+        {
+          isSectionVisible: isSectionVisible,
+        }
+      )}
     >
       <div className={'filterSectionTitle'} onClick={visibleHandler}>
         <h3 className="Font_Accent_16_S">Готовность к сделке</h3>
@@ -791,9 +968,12 @@ const AuthorSection = (props: SectionProps) => {
 
   return (
     <div
-      className={cn('ObjectsContent__wrapperContainer authorSection filterSection', {
-        isSectionVisible: isSectionVisible,
-      })}
+      className={cn(
+        'ObjectsContent__wrapperContainer authorSection filterSection',
+        {
+          isSectionVisible: isSectionVisible,
+        }
+      )}
     >
       <div className={'filterSectionTitle'} onClick={visibleHandler}>
         <h3 className="Font_Accent_16_S">Автор заявки</h3>
@@ -811,6 +991,61 @@ const AreaSection = (props: SectionProps) => {
     setIsMoreContentVisible(!isMoreContentVisible)
   }, [isMoreContentVisible])
 
+  const onLivingClick = useCallback(
+    (e: any) => {
+      const type = e.target.getAttribute('name')
+      const value = e.target.value
+      FilterForm.livingArea = FilterForm.livingArea || {}
+      if (type === 'from') {
+        FilterForm.livingArea.from = value
+      }
+
+      if (type === 'to') {
+        FilterForm.livingArea.to = value
+      }
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
+  const onTotalClick = useCallback(
+    (e: any) => {
+      const type = e.target.getAttribute('name')
+      const value = e.target.value
+      FilterForm.totalArea = FilterForm.totalArea || {}
+
+      if (type === 'from') {
+        FilterForm.totalArea.from = value
+      }
+
+      if (type === 'to') {
+        FilterForm.totalArea.to = value
+      }
+
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
+  const onSteadClick = useCallback(
+    (e: any) => {
+      const type = e.target.getAttribute('name')
+      const value = e.target.value
+      FilterForm.steadArea = FilterForm.steadArea || {}
+
+      if (type === 'from') {
+        FilterForm.steadArea.from = value
+      }
+
+      if (type === 'to') {
+        FilterForm.steadArea.to = value
+      }
+
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
   const renderMoreContent = () => {
     return (
       <>
@@ -820,12 +1055,15 @@ const AreaSection = (props: SectionProps) => {
             <TextInput
               className={'Input'}
               placeholder={'От'}
-              name={`${FORM_NAME}[livingArea][from]`}
+              onChange={onLivingClick}
+              name={'from'}
             />
             <TextInput
               className={'Input'}
               placeholder={'До'}
-              name={`${FORM_NAME}[livingArea][to]`}
+              data-type={'from'}
+              onChange={onLivingClick}
+              name={'to'}
             />
           </div>
         </div>
@@ -835,12 +1073,14 @@ const AreaSection = (props: SectionProps) => {
             <TextInput
               className={'Input'}
               placeholder={'От'}
-              name={`${FORM_NAME}[steadArea][from]`}
+              name={'from'}
+              onChange={onSteadClick}
             />
             <TextInput
               className={'Input'}
               placeholder={'До'}
-              name={`${FORM_NAME}[steadArea][to]`}
+              name={'to'}
+              onChange={onSteadClick}
             />
           </div>
         </div>
@@ -856,12 +1096,14 @@ const AreaSection = (props: SectionProps) => {
           <TextInput
             className={'Input'}
             placeholder={'От'}
-            name={`${FORM_NAME}[totalArea][from]`}
+            name={'from'}
+            onChange={onTotalClick}
           />
           <TextInput
             className={'Input'}
             placeholder={'До'}
-            name={`${FORM_NAME}[totalArea][to]`}
+            name={'to'}
+            onChange={onTotalClick}
           />
         </div>
       </div>
@@ -882,7 +1124,9 @@ const AreaSection = (props: SectionProps) => {
 const TrueSection = (props: SectionProps) => {
   return (
     <div
-      className={cn('ObjectsContent__wrapperContainer trueSection filterSection isSectionVisible')}
+      className={cn(
+        'ObjectsContent__wrapperContainer trueSection filterSection isSectionVisible'
+      )}
     >
       <div className={'filterSectionFields'}>
         <div className={'CheckboxContainer'}>
@@ -896,6 +1140,142 @@ const TrueSection = (props: SectionProps) => {
       </div>
     </div>
   )
+}
+
+const SerializeData = (data: LeadFilterFormStruct): string => {
+  let str: FormData = new FormData()
+
+  if (data.format) {
+    str.append('f[format]', data.format)
+  }
+
+  if (data.status) {
+    str.append('f[status]', data.status)
+  }
+
+  if (data.estateType) {
+    const type = data.estateType
+    const keyLiving: string = 'f[estateType][living][]'
+    const keyCommercial: string = 'f[estateType][commercial][]'
+
+    if (type.living) {
+      type.living.map(i => {
+        str.append(keyLiving, i)
+      })
+    }
+
+    if (type.commercial) {
+      type.commercial.map(i => {
+        str.append(keyCommercial, i)
+      })
+    }
+  }
+
+  if (data.location) {
+    const location = data.location
+    console.log(location)
+    const isCountries = instanceOfCountries(location)
+    let locationKey = 'f[location]'
+    if (isCountries) {
+      locationKey += '[country]'
+    } else {
+      locationKey += '[city]'
+    }
+
+    const id: string = location.id.toString()
+    str.append(locationKey, id)
+  }
+
+  if (data.rooms) {
+    const total: number | undefined = data.rooms.total
+    const baths: number | undefined = data.rooms.baths
+    const beds: number | undefined = data.rooms.beds
+    const key = 'f[rooms]'
+    const totalKey: string = key + '[total]'
+    const bedsKey: string = key + '[beds]'
+    const bathsKey: string = key + '[baths]'
+    if (total) {
+      str.append(totalKey, total.toString())
+    }
+
+    if (beds) {
+      str.append(bedsKey, beds.toString())
+    }
+
+    if (baths) {
+      str.append(bathsKey, baths.toString())
+    }
+  }
+
+  if (data.price) {
+    const cur: number | undefined = data.price.unit
+    const from: number | undefined = data.price.from
+    const to: number | undefined = data.price.to
+    const key: string = 'f[price]'
+    const priceFromKey: string = key + '[from]'
+    const priceToKey: string = key + '[to]'
+    const unitKey: string = key + '[unit]'
+    if (cur) str.append(unitKey, cur.toString())
+    if (from) str.append(priceFromKey, from.toString())
+    if (to) str.append(priceToKey, to.toString())
+  }
+
+  if (data.livingArea) {
+    const key: string = 'f[livingArea]'
+    const fromKey: string = key + '[from]'
+    const toKey: string = key + '[to]'
+    const from: number | undefined = data.livingArea.from
+    const to: number | undefined = data.livingArea.to
+    if (from) str.append(fromKey, from.toString())
+    if (to) str.append(toKey, to.toString())
+  }
+
+  if (data.totalArea) {
+    const key: string = 'f[totalArea]'
+    const fromKey: string = key + '[from]'
+    const toKey: string = key + '[to]'
+    const from: number | undefined = data.totalArea.from
+    const to: number | undefined = data.totalArea.to
+    if (from) str.append(fromKey, from.toString())
+    if (to) str.append(toKey, to.toString())
+  }
+
+  if (data.steadArea) {
+    const key: string = 'f[steadArea]'
+    const fromKey: string = key + '[from]'
+    const toKey: string = key + '[to]'
+    const from: number | undefined = data.steadArea.from
+    const to: number | undefined = data.steadArea.to
+    if (from) str.append(fromKey, from.toString())
+    if (to) str.append(toKey, to.toString())
+  }
+
+  if (data.purpose) {
+    const key: string = 'f[purpose][]'
+    data.purpose.map(i => {
+      str.append(key, i)
+    })
+  }
+
+  if (data.readyDeal) {
+    const key: string = 'f[readyDeal][]'
+    data.readyDeal.map(i => {
+      str.append(key, i)
+    })
+  }
+
+  // @ts-ignore
+  return new URLSearchParams(str).toString()
+}
+
+const ResetForm = (): void => {
+  const collection = document.getElementsByTagName('form')
+  if (collection.length === 0) return
+
+  const form = collection[0]
+
+  form.reset()
+  FilterForm = {}
 }
 
 const StyledType = styled.div`

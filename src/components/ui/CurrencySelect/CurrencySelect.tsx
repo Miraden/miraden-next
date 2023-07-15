@@ -1,43 +1,42 @@
-import { ArrowIcon } from "@/icons/ArrowIcon";
-import cn from "classnames";
-import React, { FC, useState } from "react";
-import styled from "styled-components";
-import { CurrencyDropdown } from "./CurrencyDropdown";
-
-export interface OptionPrice {
-  label: string
-  id: number
-}
+import { ArrowIcon } from '@/icons/ArrowIcon'
+import cn from 'classnames'
+import React, { FC, useState } from 'react'
+import styled from 'styled-components'
+import { CurrencyDropdown } from './CurrencyDropdown'
+import { CurrencyStruct } from '@/infrastructure/Currencies/CurrencyProvider'
 
 interface Props {
-  className?: string;
-  options: OptionPrice[];
+  className?: string
+  currencies: CurrencyStruct[]
+  onChange?: Function
+  defaultCurrency?: CurrencyStruct
 }
 
-const CurrencySelect: FC<Props> = ({ className, options }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectOption, setSelectOption] = useState<OptionPrice>({label: "евро", id: 2});
-  const [selectedOption, setSelectedOption] = useState<OptionPrice>({label: "евро", id: 2});
+const CurrencySelect: FC<Props> = ({ className, currencies, onChange, defaultCurrency }) => {
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [selectOption, setSelectOption] = useState<any>(defaultCurrency)
+  const [selectedOption, setSelectedOption] = useState<any>(defaultCurrency)
 
   const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
-  };
+    setShowDropDown(!showDropDown)
+  }
 
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {
-      setShowDropDown(false);
+      setShowDropDown(false)
     }
-  };
+  }
 
-  const optionSelection = (option: OptionPrice, index: number): void => {
-    setSelectedOption(option);
-    setSelectOption(option);
-  };
+  const optionSelection = (option: CurrencyStruct, index: number): void => {
+    setSelectedOption(option)
+    setSelectOption(option)
+    if (onChange) onChange(option)
+  }
 
   return (
-    <StyledDropdownInput className={cn({ className })} options={options}>
+    <StyledDropdownInput className={cn({ className })} currencies={currencies} defaultCurrency={defaultCurrency}>
       <button
-        type={"button"}
+        type={'button'}
         className={
           showDropDown ? `DropdownInput_select_active` : `DropdownInput_select`
         }
@@ -53,24 +52,24 @@ const CurrencySelect: FC<Props> = ({ className, options }) => {
         {showDropDown && (
           <CurrencyDropdown
             className="DropdownInput_selectContainer"
-            selectedOption={selectedOption.label}
+            selectedOption={selectedOption.code}
             setSelectedOption={setSelectedOption}
             optionSelection={optionSelection}
             showDropDown={true}
             toggleDropDown={(): void => toggleDropDown()}
-            options={options}
+            options={currencies}
           />
         )}
-        <input type="hidden" name={"f[price][unit]"} value={selectedOption.id}/>
       </button>
     </StyledDropdownInput>
-  );
-};
+  )
+}
 
 const StyledDropdownInput = styled.div<Props>`
   max-width: fit-content;
   position: relative;
   margin-left: 4px;
+
   .DropdownInput_selectContainer {
     right: 10px;
     position: relative;
@@ -81,9 +80,11 @@ const StyledDropdownInput = styled.div<Props>`
     max-width: 300px;
     border: none;
     transition: 0.15s ease-in;
+
     .DropdownInput_selectLabel {
       color: #4e6af3 !important;
     }
+
     div {
       svg {
         margin-left: 3px;
@@ -95,6 +96,7 @@ const StyledDropdownInput = styled.div<Props>`
   .DropdownInput_select {
     &:focus {
       /* box-shadow: 0 0 0 2px #f845fc inset; */
+
       div {
         color: #4e6af3;
       }
@@ -103,6 +105,7 @@ const StyledDropdownInput = styled.div<Props>`
     &:active {
       outline: none;
     }
+
     outline: none;
     width: 100%;
     border: none;
@@ -110,6 +113,7 @@ const StyledDropdownInput = styled.div<Props>`
 
     div {
       width: 100%;
+
       svg {
         margin-left: 3px;
         transition: 0.2s ease-in;
@@ -124,9 +128,11 @@ const StyledDropdownInput = styled.div<Props>`
     align-items: center;
 
     color: #4e6af3;
+
     svg {
       width: 16px;
       height: 16px;
+
       path {
         stroke: #7786a5;
       }
@@ -149,6 +155,6 @@ const StyledDropdownInput = styled.div<Props>`
     background: rgba(255, 255, 255, 0.85);
     border-radius: 3px;
   }
-`;
+`
 
-export { CurrencySelect };
+export { CurrencySelect }

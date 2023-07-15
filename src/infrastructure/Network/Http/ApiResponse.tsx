@@ -1,11 +1,11 @@
-interface ApiResponseType {
+export interface ApiResponseType {
   code: number
   payload?: object | null | Array<any>
   errors?: object | null
   metadata?: object | null
 }
 
-interface ApiPagesType {
+export interface ApiPagesType {
   total: number
   current: number
   items: number

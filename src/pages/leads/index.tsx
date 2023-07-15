@@ -50,19 +50,14 @@ export default function LeadsPage(): JSX.Element {
     setShowFilter(!showFilter)
   }, [showFilter])
 
-  const filterHandler = useCallback((e: any) => {
-    const form = document.getElementsByTagName('form')[0]
-    const data = new FormData(form)
-    // @ts-ignore
-    const queryString = new URLSearchParams(data).toString()
+  const filterHandler = useCallback((e: string) => {
     setLeadsAllData([])
     leadsProvider.setIsFinished(false)
-    leadsProvider.setUrl('/leads?' + queryString)
+    leadsProvider.setUrl('/leads?' + e)
     leadsProvider.fetchData().then(res => {
       const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
       leadsProvider.setCurrentPage(parseInt(page))
       setLeadsAllData(res)
-      history.pushState(null, '', urlManager.getPath() + '?' + queryString)
     })
   }, [])
 

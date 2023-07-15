@@ -423,7 +423,7 @@ const ObjectsContent = () => {
       <div className="ObjectsContent__wrapperContainerPricing">
         <h3 className="ObjectsContent__currency Font_16_140">
           <span>Цена в </span>
-          <CurrencySelect options={[{label: "евро", id: 2}, {label: "доллар", id: 1}, {label: "рубль", id: 3}]} />
+          <CurrencySelect currencies={[{label: "евро", id: 2}, {label: "доллар", id: 1}, {label: "рубль", id: 3}]} />
         </h3>
         <div className="ObjectsContent__price">
           <NumberInputNoLabel

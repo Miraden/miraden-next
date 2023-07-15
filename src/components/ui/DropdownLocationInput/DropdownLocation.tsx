@@ -1,30 +1,31 @@
 import { MapIcon } from "@/icons";
 import { FC, useState } from "react";
 import styled from "styled-components";
-
-type Option = {
-  label: string;
-  subOptions: string[];
-};
+import {
+  CitiesStruct,
+  CountriesStruct
+} from "@/infrastructure/Locations/LocationsProvider";
 
 type Props = {
-  options: Option[];
+  locations: CountriesStruct[];
   showDropDown: boolean;
   toggleDropDown: Function;
   optionSelection: Function;
   className?: string;
+  onCitySelected?: Function
+  onCountrySelected?: Function
 };
 
 const DropdownLocation: FC<Props> = ({
-  options,
+  locations,
   optionSelection,
   className,
+  onCitySelected,
+  onCountrySelected
 }: Props): JSX.Element => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const [selectedSubOption, setSelectedSubOption] = useState<string | null>(
-    null
-  );
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [selectedOption, setSelectedOption] = useState<string | null>(null)
+  const [selectedSubOption, setSelectedSubOption] = useState<string | null>(null)
 
   const onMouseEnterHandler = (option: string): void => {
     setSelectedOption(option);
@@ -37,18 +38,26 @@ const DropdownLocation: FC<Props> = ({
     setShowDropDown(false);
   };
 
-  const onClickHandler = (option: string, subOption?: string): void => {
-    if (subOption) {
-      optionSelection(`${option}, ${subOption}`);
-      setSelectedOption(option);
-      setSelectedSubOption(subOption);
+  const onClickHandler = (countryName: string, cityName?: string): void => {
+    if (cityName) {
+      optionSelection(`${countryName}, ${cityName}`);
+      setSelectedOption(countryName);
+      setSelectedSubOption(cityName);
     } else {
-      optionSelection(option);
-      setSelectedOption(option);
+      optionSelection(countryName);
+      setSelectedOption(countryName);
       setSelectedSubOption(null);
     }
     setShowDropDown(false);
   };
+
+  const onCountryClick = (country?: CountriesStruct): void => {
+    if(onCountrySelected) onCountrySelected(country)
+  }
+
+  const onCityClick = (city: CitiesStruct): void => {
+    if(onCitySelected) onCitySelected(city)
+  }
 
   return (
     <StyledDropdownLocation className={className}>
@@ -57,53 +66,50 @@ const DropdownLocation: FC<Props> = ({
           <div className="DropdownLocation__menu_active">
             <p
               className={selectedOption === "Все страны" ? "active" : ""}
-              onMouseEnter={(): void => {
-                onMouseEnterHandler("Все страны");
-              }}
+              onMouseEnter={(): void => onMouseEnterHandler("Все страны")}
               onMouseLeave={onMouseLeaveHandler}
-              onClick={(): void => onClickHandler("Все страны")}
+              onClick={(): void => {
+                onClickHandler("Все страны")
+                onCountryClick(undefined)
+              }}
             >
               Все страны
             </p>
 
-            {options.map((option: Option, index: number): JSX.Element => {
+            {locations.map((country: CountriesStruct, index: number): JSX.Element => {
               return (
                 <div
                   key={index}
-                  onMouseEnter={(): void => {
-                    onMouseEnterHandler(option.label);
-                  }}
+                  onMouseEnter={(): void => onMouseEnterHandler(country.name)}
                   onMouseLeave={onMouseLeaveHandler}
                 >
                   <div className="Options">
                     <p
-                      className={
-                        selectedOption === option.label ? "active" : ""
-                      }
-                      onClick={(): void => onClickHandler(option.label)}
+                      className={selectedOption === country.name ? "active" : ""}
+                      onClick={(): void => {
+                        onClickHandler(country.name)
+                        onCountryClick(country)
+                      }}
                     >
-                      {option.label}
+                      {country.name}
                     </p>
-                    {showDropDown && selectedOption === option.label && (
+                    {showDropDown && selectedOption === country.name && (
                       <div className="SubOptions">
-                        {option.subOptions.map(
+                        {country.cities.map(
                           (
-                            subOption: string,
-                            subIndex: number
+                            city: CitiesStruct,
+                            cityKey: number
                           ): JSX.Element => {
                             return (
                               <p
-                                key={subIndex}
-                                className={
-                                  selectedSubOption === subOption
-                                    ? "active"
-                                    : ""
-                                }
-                                onClick={(): void =>
-                                  onClickHandler(option.label, subOption)
-                                }
+                                key={cityKey}
+                                className={selectedSubOption === city.name ? "active" : ""}
+                                onClick={() => {
+                                  onClickHandler(country.name, city.name)
+                                  onCityClick(city)
+                                }}
                               >
-                                {subOption}
+                                {city.name}
                               </p>
                             );
                           }
@@ -114,9 +120,9 @@ const DropdownLocation: FC<Props> = ({
                 </div>
               );
             })}
-            <div className="MapButton__container ">
+            <div className="MapButton__container">
               <a className="MapButton">
-                <MapIcon className="MapIcon " />
+                <MapIcon className="MapIcon" />
                 <span>На карте</span>
               </a>
             </div>
@@ -151,9 +157,11 @@ const StyledDropdownLocation = styled.div`
     right: 0;
     top: 0;
     width: 50%;
+    height: calc(100% - 50px);
+    overflow-y: auto;
     border-left: 1px solid #e1edfd;
     p:first-child {
-      margin-top: 44px;
+      margin-top: 0;
     }
 
     p {
@@ -204,7 +212,7 @@ const StyledDropdownLocation = styled.div`
   }
 
   .DropdownLocation__menu_active {
-    box-shadow: 0 0 0 2px #e1edfd inset;
+    outline: 2px solid #e1edfd;
 
     position: absolute;
     z-index: 2;
