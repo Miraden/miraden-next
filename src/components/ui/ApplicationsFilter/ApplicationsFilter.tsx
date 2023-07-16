@@ -413,17 +413,14 @@ const ObjectsContent = () => {
           className="ObjectsContent__locationsSelect"
           placeholder="Все страны"
           options={[
-            { label: "Турция", subOptions: ["1", "2", "3", "4"] },
-            { label: "Кипр", subOptions: ["52", "43", "23", "41"] },
-            { label: "Черногория", subOptions: ["11", "242", "43", "45"] },
-            { label: "Северный Кипр", subOptions: ["11", "22", "34", "43"] },
+            { name: "Турция", id: 1, cities: [{name: "Test", id: 1}] },
           ]}
         />
       </div>
       <div className="ObjectsContent__wrapperContainerPricing">
         <h3 className="ObjectsContent__currency Font_16_140">
           <span>Цена в </span>
-          <CurrencySelect currencies={[{label: "евро", id: 2}, {label: "доллар", id: 1}, {label: "рубль", id: 3}]} />
+          <CurrencySelect currencies={[{symbol: "e", code: "E", value: 1.00, id: 1, label: "Евро", isDefault: true}]} />
         </h3>
         <div className="ObjectsContent__price">
           <NumberInputNoLabel

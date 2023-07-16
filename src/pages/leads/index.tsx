@@ -71,6 +71,49 @@ export default function LeadsPage(): JSX.Element {
     tabsManager.addItem(new TabMenuItem('Избранное'))
   }, [handleSelect])
 
+  const onSearchChange = useCallback((e: string) => {
+    let url = '/leads'
+    const currentUrl = urlManager.getQuery()
+    const uri = new URLSearchParams(currentUrl)
+
+    if (e.length === 0) {
+      uri.delete('f[search]')
+      history.pushState(null, '', urlManager.getPath() + '?' + uri.toString())
+      setLeadsAllData([])
+      leadsProvider.setUrl(url)
+      leadsProvider.setIsFinished(false)
+      leadsProvider.fetchData().then(res => {
+        const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
+        leadsProvider.setCurrentPage(parseInt(page))
+        setLeadsAllData(res)
+        history.pushState(null, '', urlManager.getPath() + '?' + uri.toString())
+      })
+      return
+    }
+
+    if (e.length < 3) {
+      uri.delete('f[search]')
+      history.pushState(null, '', urlManager.getPath() + '?' + uri.toString())
+      return
+    }
+
+    setLeadsAllData([])
+    leadsProvider.setIsFinished(false)
+    if (!uri.get('f[search]')) {
+      uri.append('f[search]', e)
+    } else {
+      uri.set('f[search]', e)
+    }
+    url = '/leads?' + uri.toString()
+    leadsProvider.setUrl(url)
+    leadsProvider.fetchData().then(res => {
+      const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
+      leadsProvider.setCurrentPage(parseInt(page))
+      setLeadsAllData(res)
+      history.pushState(null, '', urlManager.getPath() + '?' + uri.toString())
+    })
+  }, [])
+
   const onSortChange = useCallback((e: any) => {
     setLeadsAllData([])
     leadsProvider.setIsFinished(false)
@@ -116,6 +159,7 @@ export default function LeadsPage(): JSX.Element {
         placeholder="Поиск"
         filterIcon={<FilterIcon />}
         withSort={true}
+        onSearchChange={onSearchChange}
         onSortChange={onSortChange}
         onFilterClick={handleShowFilter}
       />
