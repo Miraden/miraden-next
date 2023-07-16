@@ -15,6 +15,7 @@ interface Props {
   options?: Array<string>
   message?: string
   icon?: JSX.Element
+  selected: Function
 }
 
 const borderRadius = theme.border.radius
@@ -27,7 +28,8 @@ const DropdownInput: FC<Props> = ({
   placeholder,
   options = [],
   message,
-  icon
+  icon,
+  selected
 }) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false)
   const [activeOption, setActiveOption] = useState<string>('')
@@ -46,6 +48,7 @@ const DropdownInput: FC<Props> = ({
 
   const optionSelection = (option: string): void => {
     setActiveOption(option)
+    selected(option)
   }
 
   return (
@@ -58,6 +61,7 @@ const DropdownInput: FC<Props> = ({
       disabled={disabled}
       error={error}
       warning={warning}
+      selected={selected}
     >
       <button
         className={cn(

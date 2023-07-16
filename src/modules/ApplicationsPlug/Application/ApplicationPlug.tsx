@@ -62,7 +62,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
       <></>,
       (
         <Search
-          options={[
+          sort={[
             'Сначала агентства',
             'Сначала PRO',
             'Сначала самые надежные',
@@ -88,7 +88,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
       <></>,
       (
         <Search
-          options={[
+          sort={[
             'Сначала агентства',
             'Сначала PRO',
             'Сначала самые надежные',
@@ -110,7 +110,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
       <></>,
       (
         <Search
-          options={[
+          sort={[
             'Сначала агентства',
             'Сначала PRO',
             'Сначала самые надежные',

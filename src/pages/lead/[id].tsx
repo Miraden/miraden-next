@@ -79,7 +79,7 @@ const LeadEntry = () => {
     const current = tabsManager.getItem(selected)
     current?.updateMenuFooter(
       <Search
-        options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
+        sort={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
         placeholder="Поиск"
         filterIcon={<FilterIcon />}
         withSort={true}

@@ -62,8 +62,8 @@ export default function FieldsPage() {
         </div>
 
         <div className={"Fields_row"}>
-          <Search options={options} placeholder={"Text"} className={"Input"} />
-          <Search options={options} placeholder={"Text"} disabled className={"Input"} />
+          <Search sort={options} placeholder={"Text"} className={"Input"} />
+          <Search sort={options} placeholder={"Text"} disabled className={"Input"} />
         </div>
 
         <div className={"Fields_row Dropdowns"}>

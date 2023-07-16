@@ -217,7 +217,7 @@ const ObjectsList = ({ className, onClose }: Props) => {
             </div>
 
             <Search
-              options={[]}
+              sort={[]}
               placeholder="Поиск"
               filterIcon={<FilterIcon />}
               className="ObjectsList__search"

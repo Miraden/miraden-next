@@ -1,17 +1,19 @@
 import { theme } from '../../../../styles/tokens'
 import { DropdownInput } from '@/components/ui/DropdownInput'
 import { SwapIcon } from '@/icons/SwapIcon'
-import React from 'react'
+import React, {useCallback} from 'react'
 import styled from 'styled-components'
 
 interface Props {
   className?: string
   options: string[]
+  onSelect?: Function
 }
 
 const DefaultProps: Props = {
   className: undefined,
   options: [],
+  onSelect: () => {}
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
@@ -19,13 +21,18 @@ const mobile = theme.breakpoints.mobile.max + 'px'
 const MenuSort = (args: Props) => {
   const props = Object.assign(DefaultProps, args)
 
+  const selectedCallback = useCallback((e: any) => {
+    if(props.onSelect) props.onSelect(e)
+  }, [props])
+
   return (
     <Styled>
       <DropdownInput
         icon={<SwapIcon attr={{ className: 'Sort__mobile' }} />}
         options={props.options}
         className={'Sort'}
-        placeholder={'Без диапазона'}
+        placeholder={'Сортировать'}
+        selected={selectedCallback}
       />
     </Styled>
   )

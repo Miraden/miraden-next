@@ -28,7 +28,7 @@ const MenuPage = () => {
       <div>content</div>,
       (
         <Search
-          options={[
+          sort={[
             'Сначала агентства',
             'Сначала PRO',
             'Сначала самые надежные',

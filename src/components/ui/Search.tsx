@@ -1,31 +1,33 @@
 import { SearchIcon } from '@/icons'
 import cn from 'classnames'
-import React, { ReactNode, useState } from 'react'
+import React, {ReactNode, useCallback, useState} from 'react'
 import styled from 'styled-components'
 import { Button } from '@/components/ui/Button'
 import { theme } from '../../../styles/tokens'
 import { MenuSort } from '@/components/ui/Menu/MenuSort'
 
 interface SearchProps {
-  options: string[]
+  sort: string[]
   disabled?: boolean
   className?: string
   placeholder?: string
   filterIcon?: ReactNode
   withSort?: boolean
   onFilterClick?: any
+  onSortChange?: Function
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 
 const Search = ({
-  options,
+  sort,
   disabled,
   className,
   placeholder,
   filterIcon,
   withSort,
   onFilterClick,
+  onSortChange
 }: SearchProps) => {
   const [searchValue, setSearchValue] = useState('')
   const [isFocused, setFocused] = useState(false)
@@ -42,6 +44,10 @@ const Search = ({
   const onFocus = (event: React.FocusEvent<HTMLInputElement>) => {
     setFocused(true)
   }
+
+  const onSortSelect = useCallback((e: any) => {
+    if(onSortChange) onSortChange(e)
+  }, [onSortChange])
 
   return (
     <SearchContainer
@@ -69,7 +75,7 @@ const Search = ({
         />
       </div>
       <div className={'Search__options'}>
-        {withSort && <MenuSort options={options} />}
+        {withSort && <MenuSort options={sort} onSelect={onSortSelect} />}
 
         {filterIcon && (
           <Button

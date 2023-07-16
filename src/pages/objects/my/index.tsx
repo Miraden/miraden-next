@@ -42,7 +42,7 @@ export default function MyObjectsPage(): JSX.Element {
     const current = tabsManager.getItem(selected)
     current?.updateMenuFooter(
       <Search
-        options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
+        sort={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
         placeholder="Поиск"
         className={cn('Applications__searchBar')}
         filterIcon={<FilterIcon />}

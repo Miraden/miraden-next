@@ -60,7 +60,7 @@ const Favourites = ({ className }: ApplicationProps) => {
       <>{renderObjects()}</>,
       (
         <Search
-          options={[
+          sort={[
             'Сначала агентства',
             'Сначала PRO',
             'Сначала самые надежные',

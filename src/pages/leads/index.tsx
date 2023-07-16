@@ -12,7 +12,7 @@ import { Search } from '@/components/ui'
 import { FilterIcon } from '@/icons/FilterIcon'
 import { LeadFilter } from '@/modules/Leads/LeadFilter'
 import { theme } from '../../../styles/tokens'
-import LangManager from "@/infrastructure/Intl/LangManager";
+import LangManager from '@/infrastructure/Intl/LangManager'
 
 enum TabsMenuState {
   All = 0,
@@ -58,6 +58,7 @@ export default function LeadsPage(): JSX.Element {
       const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
       leadsProvider.setCurrentPage(parseInt(page))
       setLeadsAllData(res)
+      history.pushState(null, '', urlManager.getPath() + '?' + e)
     })
   }, [])
 
@@ -69,6 +70,26 @@ export default function LeadsPage(): JSX.Element {
     tabsManager.addItem(new TabMenuItem('Я исполнитель'))
     tabsManager.addItem(new TabMenuItem('Избранное'))
   }, [handleSelect])
+
+  const onSortChange = useCallback((e: any) => {
+    setLeadsAllData([])
+    leadsProvider.setIsFinished(false)
+    const currentUrl = urlManager.getQuery()
+    const uri = new URLSearchParams(currentUrl)
+    if (e === 'Сначала дороже') {
+      uri.set('f[sort][price]', 'desc')
+    }
+    if (e === 'Сначала дешевле') {
+      uri.set('f[sort][price]', 'asc')
+    }
+    leadsProvider.setUrl('/leads?' + uri.toString())
+    leadsProvider.fetchData().then(res => {
+      const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
+      leadsProvider.setCurrentPage(parseInt(page))
+      setLeadsAllData(res)
+      history.pushState(null, '', urlManager.getPath() + '?' + uri.toString())
+    })
+  }, [])
 
   const onPageHandler = useCallback((e: any) => {
     const target = e.target.closest('button')
@@ -91,10 +112,11 @@ export default function LeadsPage(): JSX.Element {
     const current = tabsManager.getItem(selected)
     current?.updateMenuFooter(
       <Search
-        options={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
+        sort={['Сначала дешевле', 'Сначала дороже']}
         placeholder="Поиск"
         filterIcon={<FilterIcon />}
         withSort={true}
+        onSortChange={onSortChange}
         onFilterClick={handleShowFilter}
       />
     )
@@ -105,9 +127,13 @@ export default function LeadsPage(): JSX.Element {
     leadsProvider.setPageCallback(onPageHandler)
 
     if (selected == TabsMenuState.All) {
+      let url = '/leads'
+      if (urlManager.getQuery()) {
+        url += urlManager.getQuery()
+      }
       setLeadsAllData([])
       leadsProvider.setIsFinished(false)
-      leadsProvider.setUrl('/leads')
+      leadsProvider.setUrl(url)
       leadsProvider.fetchData().then(res => {
         const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
         leadsProvider.setCurrentPage(parseInt(page))
