@@ -125,6 +125,8 @@ function renderLead(data: Array<any>): JSX.Element {
               endTo: item.budget.endAt,
             }}
             purchaseType={'purchase'}
+            author={item.author}
+            isPinned={item.isPinned}
           />
         </li>
       ))}
