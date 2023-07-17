@@ -88,12 +88,6 @@ const LeadCard = (props: LeadProps) => {
         <Tags>
           <TagItem className={"Leads__id"} label={"ID " + props.id.toString()} />
         </Tags>
-
-        {props.readyDeal && (
-          <Tags>
-            <TagItem label={props.readyDeal} />
-          </Tags>
-        )}
         {props.type && (
           <Tags>
             <TagItem label={Object.values(props.type).at(0)} />
