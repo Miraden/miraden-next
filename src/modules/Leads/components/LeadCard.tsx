@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { theme } from '../../../../styles/tokens'
 import { Button, Sticker } from '@/components/ui'
-import { BathsIcon, BuildYearIcon, PointIconFooter, StarIcon } from '@/icons'
+import { BathsIcon, StarIcon } from '@/icons'
 import { TagItem, Tags } from '@/components/ui/Tags'
 import React from 'react'
 import { BuildingIcon } from '@/icons/BuildingIcon'
@@ -45,6 +45,7 @@ interface LeadProps {
     endTo: string
   }
   purchaseType: {}
+  author: string
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
@@ -56,6 +57,7 @@ const LeadCard = (props: LeadProps) => {
       <div className="Leads__info">
         <div className="Leads__info--left">
           {props.isTrue && <Sticker theme="black">True</Sticker>}
+          <div className={"Leads__info--author Font_button_small"}>Заявка от {props.author}</div>
         </div>
         <div className="Leads__info--right">
           <p className="Font_14_140 Color_text_disabled Published">
@@ -173,6 +175,14 @@ const StyledLeads = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+  }
+
+  .Leads__info--left {
+    display: flex;
+    align-items: center;
+    line-height: 1;
+    gap: 10px;
+    color: ${theme.colors.text.grey};
   }
 
   .Leads__head {

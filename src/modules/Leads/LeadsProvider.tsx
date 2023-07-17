@@ -237,6 +237,7 @@ function renderLead(data: Array<any>, lang: string): JSX.Element {
                 endTo: new Intl.NumberFormat(lang).format(item.budget.endAt),
               }}
               purchaseType={'purchase'}
+              author={item.author}
             />
           </li>
         ))}
