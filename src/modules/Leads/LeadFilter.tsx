@@ -54,10 +54,6 @@ interface LeadFilterFormStruct {
     from?: number
     to?: number
   }
-  buildDate?: {
-    from?: number
-    to?: number
-  }
   purpose?: string[]
   readyDeal?: string[]
   author?: string[]
@@ -201,7 +197,6 @@ const EstateSection = (props: SectionProps) => {
       <>
         <LivingTypeSection onChange={props.onChange} />
         <CommercialTypeSection onChange={props.onChange} />
-        <BuildDateSection onChange={props.onChange} />
       </>
     )
   }
@@ -444,48 +439,6 @@ const CommercialTypeSection = (props: SectionProps) => {
           dataLabel={'freePurpose'}
           value={'freePurpose'}
         />
-      </div>
-    </div>
-  )
-}
-
-const BuildDateSection = (props: SectionProps) => {
-  const onClick = useCallback(
-    (e: any) => {
-      const type = e.target.getAttribute('name')
-      const value = e.target.value
-      FilterForm.buildDate = FilterForm.buildDate || {}
-
-      if (type === 'from') {
-        FilterForm.buildDate.from = value
-      }
-
-      if (type === 'to') {
-        FilterForm.buildDate.to = value
-      }
-      props.onChange(SerializeData(FilterForm))
-    },
-    [props]
-  )
-
-  return (
-    <div className="ObjectsContent__wrapperContainer filterSubSection">
-      <div className="ObjectsContent_year">
-        <h4 className="Font_body_base">Год постройки</h4>
-        <div className="ObjectsContent__price">
-          <TextInput
-            className={'Input'}
-            placeholder={'От'}
-            name={'from'}
-            onChange={onClick}
-          />
-          <TextInput
-            className={'Input'}
-            placeholder={'До'}
-            name={'to'}
-            onChange={onClick}
-          />
-        </div>
       </div>
     </div>
   )
@@ -927,38 +880,57 @@ const AuthorSection = (props: SectionProps) => {
     setSectionVisible(!isSectionVisible)
   }, [isSectionVisible])
 
+  const onClick = useCallback(
+    (e: any) => {
+      const container = e.target.closest('.CheckboxContainer')
+
+      const inputs = container.getElementsByTagName('input')
+      const checked = Array.from(inputs).map((i: any) => {
+        if (i.checked) {
+          return i.value
+        }
+      })
+
+      const ch: string[] = checked.filter(i => i !== undefined)
+      FilterForm.author = FilterForm.author || []
+      FilterForm.author = ch
+      props.onChange(SerializeData(FilterForm))
+    },
+    [props]
+  )
+
   const renderSection = () => {
     return (
       <div className={'filterSectionFields'}>
-        <div className={'CheckboxContainer'}>
+        <div className={'CheckboxContainer'} onClick={onClick}>
           <Checkbox
             label={'Клиент'}
             dataLabel={'client'}
-            name={`[${FORM_NAME}][author][]`}
+            name={'client'}
             value={'client'}
           />
           <Checkbox
             label={'Риелтор'}
-            dataLabel={'rieltor'}
-            name={`[${FORM_NAME}][author][]`}
-            value={'rieltor'}
+            dataLabel={'realtor'}
+            name={'client'}
+            value={'realtor'}
           />
           <Checkbox
             label={'Агентство недвижимости'}
             dataLabel={'realEstate'}
-            name={`[${FORM_NAME}][author][]`}
-            value={'realEstate'}
+            name={'client'}
+            value={'estate'}
           />
           <Checkbox
             label={'Застройщик'}
             dataLabel={'builder'}
-            name={`[${FORM_NAME}][author][]`}
+            name={'client'}
             value={'builder'}
           />
           <Checkbox
             label={'Собственник'}
             dataLabel={'owner'}
-            name={`[${FORM_NAME}][author][]`}
+            name={'client'}
             value={'owner'}
           />
         </div>
@@ -1260,6 +1232,13 @@ const SerializeData = (data: LeadFilterFormStruct): string => {
   if (data.readyDeal) {
     const key: string = 'f[readyDeal][]'
     data.readyDeal.map(i => {
+      str.append(key, i)
+    })
+  }
+
+  if (data.author) {
+    const key: string = 'f[author][]'
+    data.author.map(i => {
       str.append(key, i)
     })
   }
