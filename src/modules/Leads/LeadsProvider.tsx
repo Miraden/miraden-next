@@ -238,6 +238,7 @@ function renderLead(data: Array<any>, lang: string): JSX.Element {
               }}
               purchaseType={'purchase'}
               author={item.author}
+              isPinned={item.isPinned}
             />
           </li>
         ))}

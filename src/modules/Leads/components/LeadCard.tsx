@@ -13,6 +13,9 @@ import { LayersIcon } from '@/icons/LayersIcon'
 import { CallIcon } from '@/icons/CallIcon'
 import { LocationIcon } from '@/icons/LocationIcon'
 import Link from 'next/link'
+import {PricingSelect} from "@/components/ui/PricingDropdown/PricingSelect";
+import cn from "classnames";
+import {PinIcon} from "@/icons/PinIcon";
 
 interface LeadProps {
   id: number
@@ -46,14 +49,18 @@ interface LeadProps {
   }
   purchaseType: {}
   author: string
+  isPinned: boolean
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
 
 const LeadCard = (props: LeadProps) => {
+  const price: string = props.budget.startFrom + " – " + props.budget.endTo
+
   return (
-    <StyledLeads>
+    <StyledLeads className={cn({isPinned: props.isPinned})}>
+      {props.isPinned && <div className={"Leads__PinnedIcon"}><PinIcon filled={true}/></div>}
       <div className="Leads__info">
         <div className="Leads__info--left">
           {props.isTrue && <Sticker theme="black">True</Sticker>}
@@ -79,7 +86,7 @@ const LeadCard = (props: LeadProps) => {
           <TagItem leftIcon={<StarIcon />} />
         </Tags>
         <Tags>
-          <TagItem label={props.id.toString()} />
+          <TagItem className={"Leads__id"} label={"ID " + props.id.toString()} />
         </Tags>
 
         {props.readyDeal && (
@@ -129,8 +136,15 @@ const LeadCard = (props: LeadProps) => {
       <div className="Leads__footer">
         <div className="Leads__footer-left">
           <div className="Leads__price_range Font_Accent_20_B">
-            {props.budget.startFrom} – {props.budget.endTo}&nbsp;
-            {props.budget.currency}
+            <PricingSelect
+              options={["€", "$", "£", "₽"]}
+              price={price}
+              yieldCount={8}
+              yieldCountPercent={30}
+              firstInstallment={"30"}
+              firstInstallmentPercent={"30"}
+              singleCost={"30"}
+            />
           </div>
         </div>
         <div className="Leads__footer-right">
@@ -162,6 +176,13 @@ const StyledLeads = styled.div`
   width: 100%;
   flex-direction: column;
   padding: 20px;
+  position: relative;
+
+  .Leads__PinnedIcon {
+    position: absolute;
+    left: -6px;
+    top: -8px;
+  }
 
   &:hover {
     outline: 2px solid ${theme.colors.stroke.lightGrey};
@@ -197,7 +218,7 @@ const StyledLeads = styled.div`
     margin-bottom: 15px;
 
     svg {
-      margin-right: 10px;
+      margin-right: 5px;
 
       path {
         fill: ${theme.colors.text.grey};
@@ -282,6 +303,10 @@ const StyledLeads = styled.div`
   }
 
   .Leads__price_range {
+    color: ${theme.colors.main};
+  }
+
+  .Leads__id {
     color: ${theme.colors.main};
   }
 
