@@ -24,13 +24,13 @@ export default function CheckboxesPage() {
 
           <div className={"Controls__section"}>
             <h2>Toggle</h2>
-            <ToggleButton label={"Toggle"} />
-            <ToggleButton disabled />
+            <ToggleButton state={true} label={"Toggle"} />
+            <ToggleButton state={true} disabled />
           </div>
 
           <div className={"Controls__section Controls__onGray"}>
             <h2>Grey bg</h2>
-            <ToggleButton label={"Label"} disabled className={"Controls__onGray"} />
+            <ToggleButton state={true} label={"Label"} disabled className={"Controls__onGray"} />
             <Checkbox className={"Controls__onGray"} disabled />
             <Radio className={"Controls__onGray"} disabled />
           </div>

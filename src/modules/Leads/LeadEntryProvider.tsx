@@ -61,6 +61,10 @@ class LeadEntryProvider {
     })
   }
 
+  public getPayload(): any {
+    return this.payload
+  }
+
   public setIsFinished(val: boolean): void {
     this.isFetchCompleted = val
   }
@@ -126,7 +130,7 @@ class LeadEntryProvider {
         isPinned={true}
         rentPeriod={this.payload.rentPeriod}
         title={this.payload.wishes.title}
-        isHidden={!this.payload.isHidden}
+        isHidden={this.payload.isHidden}
       />
     )
   }

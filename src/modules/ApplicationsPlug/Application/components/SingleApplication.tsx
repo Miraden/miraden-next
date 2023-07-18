@@ -50,7 +50,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
     <StyledSingleApplication className={className}>
       <div className="SingleApplication__head">
         <div className="SingleApplication__headToggle">
-          <ToggleButton className="SingleApplication__headToggleButton" />
+          <ToggleButton state={true} className="SingleApplication__headToggleButton" />
           <Sticker theme="black" className="SingleApplication__headSticker">
             TRUE
           </Sticker>

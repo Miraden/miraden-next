@@ -65,7 +65,7 @@ interface LeadEntryStruct {
   author: string
   isPinned: boolean
   responseState?: CustomerState
-  isHidden: boolean
+  isHidden?: boolean
 }
 
 const currencyOptions = ['€', '$', '£', '₽']
@@ -96,10 +96,10 @@ const SingleApplication = (props: LeadEntryStruct) => {
     <StyledSingleApplication className={props.className}>
       <div className="SingleApplication__head">
         <div className="SingleApplication__headToggle">
-          <ToggleButton
-            state={props.isHidden}
+          {props.isHidden !== undefined && <ToggleButton
+            state={!props.isHidden}
             className="SingleApplication__headToggleButton"
-          />
+          />}
           {props.isTrue && <Sticker theme="black">TRUE</Sticker>}
           <p className="Font_14_140">Заявка № {props.id}</p>
         </div>

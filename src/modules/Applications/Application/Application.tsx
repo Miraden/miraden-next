@@ -338,7 +338,7 @@ function renderLeadPaymentOptions(): JSX.Element {
 function renderLead(): JSX.Element {
   return (
     <>
-      <SingleApplication />
+
     </>
   )
 }
