@@ -58,7 +58,7 @@ class LeadsDataProvider {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    if(this.isUserAuth) {
+    if (this.isUserAuth) {
       headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
     }
 
@@ -233,7 +233,9 @@ function renderLead(data: Array<any>, lang: string): JSX.Element {
               format={item.format}
               budget={{
                 currency: item.budget.currency.symbol,
-                startFrom: new Intl.NumberFormat(lang).format(item.budget.startFrom),
+                startFrom: new Intl.NumberFormat(lang).format(
+                  item.budget.startFrom
+                ),
                 endTo: new Intl.NumberFormat(lang).format(item.budget.endAt),
               }}
               purchaseType={'purchase'}

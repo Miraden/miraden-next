@@ -8,8 +8,6 @@ import cn from 'classnames'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import { BackIcon20 } from '@/icons'
 import { Button, Search } from '@/components/ui'
-import { theme } from '../../../styles/tokens'
-import { SingleApplication } from '@/modules/Applications/Application/components/SingleApplication'
 import { FilterIcon } from '@/icons/FilterIcon'
 import * as DataProvider from '@/modules/Applications/Application/DataProfiver'
 import { SellerCard } from '@/modules/Applications/Application/components/SellerCard'
@@ -17,6 +15,10 @@ import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
 import { SingleApplicationSideBar } from '@/modules/Applications/Application/components/SingleApplicationSideBar'
 import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
 import { ApplicationsFooter } from '@/modules/Base/ApplicationsFooter'
+import { LeadEntryProvider } from '@/modules/Leads/LeadEntryProvider'
+import { UrlManager } from '@/infrastructure/Routes/UrlManager'
+import { NextRouter, useRouter } from 'next/router'
+import LangManager from '@/infrastructure/Intl/LangManager'
 
 enum TabsMenuState {
   Lead = 0,
@@ -26,7 +28,16 @@ enum TabsMenuState {
   Recommended = 4,
 }
 
+const leadDataProvider = new LeadEntryProvider()
+const urlManager = new UrlManager()
+const tabsManager = new TabsManager()
+const langManager = new LangManager()
+
 const LeadEntry = () => {
+  const router: NextRouter = useRouter()
+  const query = router.query
+  const leadId: number = parseInt(query['id'] as string) as number
+
   const [isUserAuth, setUserAuth] = useState(false)
   useEffect(() => {
     const authManger = new AuthManager()
@@ -67,26 +78,40 @@ const LeadEntry = () => {
 
   useLockBodyScroll(showFilter && mQuery.matches)
 
-  const [tabsManager, setTabsManager] = useState<TabsManager>(new TabsManager())
-  tabsManager.setCallback(handleSelect)
-  tabsManager.addItem(new TabMenuItem('Заявка'))
-  tabsManager.addItem(new TabMenuItem('Отклики'))
-  tabsManager.addItem(new TabMenuItem('Исполнители'))
-  tabsManager.addItem(new TabMenuItem('Отказы'))
-  tabsManager.addItem(new TabMenuItem('Рекомендуемые'))
+  useEffect(() => {
+    tabsManager.setCallback(handleSelect)
+    tabsManager.addItem(new TabMenuItem('Заявка'))
+    tabsManager.addItem(new TabMenuItem('Отклики'))
+    tabsManager.addItem(new TabMenuItem('Исполнители'))
+    tabsManager.addItem(new TabMenuItem('Отказы'))
+    tabsManager.addItem(new TabMenuItem('Рекомендуемые'))
+  }, [handleSelect])
 
-  if (selected == TabsMenuState.Requests) {
-    const current = tabsManager.getItem(selected)
-    current?.updateMenuFooter(
-      <Search
-        sort={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
-        placeholder="Поиск"
-        filterIcon={<FilterIcon />}
-        withSort={true}
-        onFilterClick={handleShowFilter}
-      />
-    )
-  }
+  const [leadsData, setLeadsAllData] = useState<Object>({})
+  useEffect(() => {
+    if (selected == TabsMenuState.Lead) {
+      if (!leadId) return
+      setLeadsAllData({})
+      leadDataProvider.setIsFinished(false)
+      leadDataProvider.setLang(langManager.getClientLang())
+      leadDataProvider.fetchById(leadId).then(res => {
+        setLeadsAllData(res)
+      })
+    }
+
+    if (selected == TabsMenuState.Requests) {
+      const current = tabsManager.getItem(selected)
+      current?.updateMenuFooter(
+        <Search
+          sort={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
+          placeholder="Поиск"
+          filterIcon={<FilterIcon />}
+          withSort={true}
+          onFilterClick={handleShowFilter}
+        />
+      )
+    }
+  }, [handleShowFilter, leadId, selected])
 
   const showLeadSidebar = selected == TabsMenuState.Lead
 
@@ -129,7 +154,7 @@ const LeadEntry = () => {
               </StyledMenu>
 
               <div className="Leads__content">
-                {selected == TabsMenuState.Lead && <SingleApplication />}
+                {selected == TabsMenuState.Lead && leadDataProvider.render()}
                 {selected == TabsMenuState.Requests && (
                   <div className={'PageLead'}>{renderRequests()}</div>
                 )}

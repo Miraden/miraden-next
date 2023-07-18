@@ -1,20 +1,27 @@
 import cn from "classnames";
 import styled from "styled-components";
+import {useCallback, useState} from "react";
 
 interface ToggleButtonProps {
   disabled?: boolean;
   className?: string;
   label?: string;
+  state: boolean
 }
 
-const ToggleButton = ({ className, disabled, label }: ToggleButtonProps) => {
+const ToggleButton = ({ className, disabled, label, state }: ToggleButtonProps) => {
+  const [isChecked, setChecked] = useState<boolean>(state)
+  const onClick = useCallback((e: any) => {
+    setChecked(!isChecked)
+  }, [isChecked])
+
   return (
     <StyledToggleButton className={className}>
       <label className={cn("ToggleButton__switch", { Disabled: disabled })}>
-        <input type="checkbox" disabled={disabled} />
+        <input type="checkbox" checked={isChecked} disabled={disabled} onClick={onClick} />
         <span className="ToggleButton__slider Round"></span>
       </label>
-      <span className="ToggleButton__label">{label}</span>
+      {label && <span className="ToggleButton__label">{label}</span>}
     </StyledToggleButton>
   );
 };

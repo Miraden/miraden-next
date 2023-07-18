@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { Header } from '@/modules/Base/Header'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import AuthManager from '@/modules/Security/Authentication/AuthManager'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import cn from 'classnames'

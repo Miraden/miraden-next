@@ -1,75 +1,112 @@
-import { Button, Sticker, ToggleButton } from "@/components/ui";
-import { PricingSelect } from "@/components/ui/PricingDropdown/PricingSelect";
-import {
-  BuildYearIcon,
-  Kebab24Icon,
-  ListIcon,
-  PointIconFooter,
-  SquareIcon,
-} from "@/icons";
-import { BuildingIcon } from "@/icons/BuildingIcon";
-import { CashIcon } from "@/icons/CashIcon";
-import { CreditCardIcon } from "@/icons/CreditCardIcon";
-import { DealIcon } from "@/icons/DealIcon";
-import { EyeIcon } from "@/icons/EyeIcon";
-import { LikeIcon } from "@/icons/LikeIcon";
-import { LivingSquareIcon } from "@/icons/LivingSquareIcon";
-import { PurposeCheckIcon } from "@/icons/PurposeCheckIcon";
-import { RoomsIcon } from "@/icons/RoomsIcon";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { Sticker, ToggleButton } from '@/components/ui'
+import { PricingSelect } from '@/components/ui/PricingDropdown/PricingSelect'
+import { BuildYearIcon, ListIcon, PointIconFooter, SquareIcon } from '@/icons'
+import { CashIcon } from '@/icons/CashIcon'
+import { CreditCardIcon } from '@/icons/CreditCardIcon'
+import { EyeIcon } from '@/icons/EyeIcon'
+import { LikeIcon } from '@/icons/LikeIcon'
+import { LivingSquareIcon } from '@/icons/LivingSquareIcon'
+import { PurposeCheckIcon } from '@/icons/PurposeCheckIcon'
+import { RoomsIcon } from '@/icons/RoomsIcon'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { CustomerState } from '@/modules/Leads/components/LeadCard'
+import { theme } from '../../../../../styles/tokens'
+import { ApartmentIcon } from '@/icons/ApartmentIcon'
+import TimerIcon from '@/icons/TimerIcon'
 
-interface Props {
-  className?: string;
-  someContent?: string;
+interface Location {
+  id: number
+  city: string
+  country: string
 }
 
-const currencyOptions = ["€", "$", "£", "₽"];
+interface EstateType {
+  type: string
+  name: string
+}
 
-let price = "158 000 – 230 000 ";
-let yieldCount = 8;
-let firstInstallment = "30";
+interface Areas {
+  value: number
+  unit: string
+}
 
-let firstInstallmentPercent = "30";
+interface LeadEntryStruct {
+  className?: string
+  someContent?: string
+  id: number
+  isTrue: boolean
+  createdAt: string
+  title: string
+  description: string
+  location: Location
+  type: EstateType
+  status: string
+  deadlineAt: string
+  areas: {
+    total: Areas
+    living: Areas
+  }
+  rooms: {
+    total: number
+    beds: number
+    bathroom: number
+  }
+  purpose: string
+  readyDeal?: string
+  format: string
+  rentPeriod: string
+  budget: {
+    currency: string
+    startFrom: string
+    endTo: string
+  }
+  purchaseType: string
+  author: string
+  isPinned: boolean
+  responseState?: CustomerState
+  isHidden: boolean
+}
 
-let singleCost = "30";
-const SingleApplication = ({ className, someContent }: Props) => {
-  const [openDropdown, setOpenDropdown] = useState(false);
+const currencyOptions = ['€', '$', '£', '₽']
+
+let yieldCount = 8
+let firstInstallment = '30'
+
+let firstInstallmentPercent = '30'
+
+let singleCost = '30'
+
+const SingleApplication = (props: LeadEntryStruct) => {
+  const price: string = props.budget.startFrom + ' – ' + props.budget.endTo
+
+  const [openDropdown, setOpenDropdown] = useState(false)
 
   const handleOpenDropdown = useCallback(() => {
-    setOpenDropdown(!openDropdown);
-  }, [openDropdown]);
+    setOpenDropdown(!openDropdown)
+  }, [openDropdown])
 
-  const [openText, setOpenText] = useState(false);
+  const [openText, setOpenText] = useState(false)
 
   const handleOpenText = useCallback(() => {
-    setOpenText(!openText);
-  }, [openText]);
+    setOpenText(!openText)
+  }, [openText])
 
   return (
-    <StyledSingleApplication className={className}>
+    <StyledSingleApplication className={props.className}>
       <div className="SingleApplication__head">
         <div className="SingleApplication__headToggle">
-          <ToggleButton className="SingleApplication__headToggleButton" />
-          <Sticker theme="black" className="SingleApplication__headSticker">
-            TRUE
-          </Sticker>
-          <p className="Font_14_140">Заявка № 10445</p>
+          <ToggleButton
+            state={props.isHidden}
+            className="SingleApplication__headToggleButton"
+          />
+          {props.isTrue && <Sticker theme="black">TRUE</Sticker>}
+          <p className="Font_14_140">Заявка № {props.id}</p>
         </div>
         <div className="SingleApplication__headDropdown">
-          <p className="Color_text_disabled">
-            <span>Создана</span> 12 января <span>, 12:09</span>
+          <p className="Lead__createdAt Font_body_alt">
+            <span>Создана</span> {props.createdAt}
           </p>
-          <Button
-            tertiary
-            className="ObjectCard__button"
-            onClick={handleOpenDropdown}
-          >
-            <Kebab24Icon />
-          </Button>
-          {openDropdown && (
-            <SingleApplicationDropdown someContent={someContent} />
-          )}
         </div>
       </div>
       <div className="SingleApplication__pricing">
@@ -86,7 +123,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__pricingInfo">
           <div>
-            <ListIcon attr={{className: "ListIcon"}} />
+            <ListIcon attr={{ className: 'ListIcon' }} />
             <p className="Color_blue_primary Font_16_140">1 268</p>
           </div>
           <div>
@@ -110,33 +147,53 @@ const SingleApplication = ({ className, someContent }: Props) => {
         />
       </div>
       <div className="SingleApplication__structureInfo">
+
         <div className="SingleApplication__structureInfoContent">
-          <BuildYearIcon width={18} height={18} />
-          <div>
-            <p className="Font_24_120">294 м²</p>
-            <p className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Год постройки</p>
+          <div className="SingleApplication__structureInfoContent__head">
+            <BuildYearIcon width={18} height={18} />
+            <div className={"Font_headline_4"}>{formatDeadlineDate(props.deadlineAt)}</div>
+          </div>
+          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+            Год постройки
           </div>
         </div>
+
         <div className="SingleApplication__structureInfoContent">
-          <SquareIcon width={18} height={18} />
-          <div>
-            <p className="Font_24_120">2022</p>
-            <p className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Общая площадь</p>
+          <div className="SingleApplication__structureInfoContent__head">
+            <SquareIcon width={18} height={18} />
+            <div className="Font_headline_4">{props.areas.total.value} {props.areas.total.unit}</div>
           </div>
-        </div>{" "}
+          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Общая площадь</div>
+        </div>
+
         <div className="SingleApplication__structureInfoContent">
-          <LivingSquareIcon width={18} height={18} />
-          <div>
-            <p className="Font_24_120">194 м²</p>
-            <p className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Жилая площадь</p>
+          <div className="SingleApplication__structureInfoContent__head">
+            <LivingSquareIcon width={18} height={18} />
+            <div className="Font_headline_4">{props.areas.living.value} {props.areas.living.unit}</div>
           </div>
-        </div>{" "}
+          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Жилая площадь</div>
+        </div>
+
         <div className="SingleApplication__structureInfoContent">
-          <RoomsIcon width={18} height={18} />
-          <div>
-            <p className="Font_24_120">10</p>
-            <p className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Комнат</p>
+          <div className="SingleApplication__structureInfoContent__head">
+            <RoomsIcon width={18} height={18} />
+            <div className="Font_headline_4">{props.rooms.total}</div>
           </div>
+          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Комнат</div>
+        </div>
+        <div className="SingleApplication__structureInfoContent">
+          <div className="SingleApplication__structureInfoContent__head">
+            <RoomsIcon width={18} height={18} />
+            <p className="Font_headline_4">{props.rooms.beds}</p>
+          </div>
+          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Спален</div>
+        </div>
+        <div className="SingleApplication__structureInfoContent">
+          <div className="SingleApplication__structureInfoContent__head">
+            <RoomsIcon width={18} height={18} />
+            <div className="Font_headline_4">{props.rooms.bathroom}</div>
+          </div>
+          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Санузлов</div>
         </div>
       </div>
       <div className="Divider"></div>
@@ -147,8 +204,8 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p>Локация</p>
           </div>
           <div className="SingleApplication__locationInfo">
-            <p>Кипр</p>
-            <p>Лимассол</p>
+            <p>{props.location.country}</p>
+            <p>{props.location.city}</p>
           </div>
         </div>
         <div className="SingleApplication__location">
@@ -157,17 +214,17 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p>Формат сделки</p>
           </div>
           <div>
-            <p className="SingleApplication__locationInfo">Покупка</p>
+            <p className="SingleApplication__locationInfo">{props.format}</p>
           </div>
         </div>
         <div className="SingleApplication__location">
           <div>
-            <BuildingIcon width={18} height={18} />
+            <ApartmentIcon />
             <p>Тип</p>
           </div>
           <div className="SingleApplication__locationInfo">
-            <p>Жилая</p>
-            <p>Дом / вилла</p>
+            <p>{Object.keys(props.type)[0]}</p>
+            <p>{Object.values(props.type)[0]}</p>
           </div>
         </div>
         <div className="SingleApplication__location">
@@ -176,8 +233,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p>Состояние</p>
           </div>
           <div className="SingleApplication__locationInfo">
-            <p>Новая</p>
-            <p>Ввод в эксплуатацию через 6 – 10 месяцев</p>
+            <p>{props.status}</p>
           </div>
         </div>
         <div className="SingleApplication__location">
@@ -186,9 +242,12 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p>Площадь</p>
           </div>
           <div className="SingleApplication__locationInfo">
-            <p>Общая — 294 м²</p>
-            <p>Жилая — 194 м²</p>
-            <p>Участок земли — 100 м²</p>
+            <p>
+              Общая — {props.areas.total.value} {props.areas.total.unit}
+            </p>
+            <p>
+              Жилая — {props.areas.living.value} {props.areas.living.unit}
+            </p>
           </div>
         </div>
         <div className="SingleApplication__location">
@@ -197,9 +256,9 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p>Комнаты</p>
           </div>
           <div className="SingleApplication__locationInfo">
-            <p>Всего — 10</p>
-            <p>Спальни — 6</p>
-            <p>Санузлы — 2</p>
+            <p>Всего — {props.rooms.total}</p>
+            <p>Спальни — {props.rooms.beds}</p>
+            <p>Санузлы — {props.rooms.bathroom}</p>
           </div>
         </div>
         <div className="SingleApplication__location">
@@ -208,28 +267,25 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p>Цель покупки</p>
           </div>
           <div className="SingleApplication__locationInfo">
-            <p>Для инвестиций (сдавать в аренду)</p>
-            <p>ВНЖ</p>
+            <p>{props.purpose}</p>
           </div>
         </div>
         <div className="SingleApplication__location">
           <div>
-            <DealIcon width={18} height={18} />
+            <TimerIcon />
             <p>Срочность</p>
           </div>
           <div className="SingleApplication__locationInfo">
-            <p>Через 1 месяц</p>
+            <p>{props.readyDeal}</p>
           </div>
         </div>
         <div className="SingleApplication__location">
           <div>
-            <CreditCardIcon attr={{width: 18, height: 18}} />
+            <CreditCardIcon attr={{ width: 18, height: 18 }} />
             <p>Способ покупки</p>
           </div>
           <div className="SingleApplication__locationInfo">
-            <p>В рассрочку</p>
-            <p>Первый взнос — 30%</p>
-            <p>Безналичный расчет</p>
+            <p>{props.purchaseType}</p>
           </div>
         </div>
         <div className="SingleApplication__location">
@@ -238,62 +294,13 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p>Пожелания</p>
           </div>
           <div className="SingleApplication__locationInfoText">
-            <p className="SingleApplication__locationInfo">
-              {openText ? (
-                <span>
-                  Добраться до острова можно двумя способами: воздушным и
-                  морским. Для иностранных туристов открыты аэропорты в Ларнаке
-                  и Пафосе и морские порты в Лимассоле и Ларнаке. Всего на
-                  острове 15 аэропортов, из них 7 крупных. Более 230 рейсов в
-                  неделю, выполняемые 33-мя авиакомпаниями, связывают Кипр с
-                  Западной и Восточной Европой, Африкой и Ближним Востоком
-                  <br /> <br />
-                  Плюс пассажирские и грузовые чартерные рейсы. Добраться до
-                  острова можно двумя способами: воздушным и морским. Для
-                  иностранных туристов открыты аэропорты в Ларнаке и Пафосе и
-                  морские порты в Лимассоле и Ларнаке. Всего на острове 15
-                  аэропортов, из них 7 крупных. Более 230 рейсов в неделю,
-                  выполняемые 33-мя авиакомпаниями, связывают Кипр с Западной и
-                  Восточной Европой, Африкой и Ближним Востоком. Плюс
-                  пассажирские и грузовые чартерные рейсы.
-                  <br />
-                  <br />А тут будет какой-то нереально длинный текст, понимаете?
-                </span>
-              ) : (
-                <span>
-                  Добраться до острова можно двумя способами: воздушным и
-                  морским. Для иностранных туристов открыты аэропорты в Ларнаке
-                  и Пафосе и морские порты в Лимассоле и Ларнаке. Всего на
-                  острове 15 аэропортов, из них 7 крупных. Более 230 рейсов в
-                  неделю, выполняемые 33-мя авиакомпаниями, связывают Кипр с
-                  Западной и Восточной Европой, Африкой и Ближним Востоком
-                  <br /> <br />
-                  Плюс пассажирские и грузовые чартерные рейсы. Добраться до
-                  острова можно двумя способами: воздушным и морским. Для
-                  иностранных туристов открыты аэропорты в Ларнаке и Пафосе и
-                  морские порты в Лимассоле и Ларнаке. Всего на острове 15
-                  аэропортов, из них 7 крупных. Более 230 рейсов в неделю,
-                  выполняемые 33-мя авиакомпаниями, связывают Кипр с Западной и
-                  Восточной Европой, Африкой и Ближним Востоком. Плюс
-                  пассажирские и грузовые чартерные рейсы
-                </span>
-              )}
-            </p>
-            {!openText ? (
-              <button onClick={handleOpenText} className="Color_blue_primary">
-                Открыть больше
-              </button>
-            ) : (
-              <button onClick={handleOpenText} className="Color_blue_primary">
-                Свернуть
-              </button>
-            )}
+            <div className="SingleApplication__locationInfo" dangerouslySetInnerHTML={{__html: props.description}}></div>
           </div>
         </div>
       </div>
     </StyledSingleApplication>
-  );
-};
+  )
+}
 
 const StyledSingleApplication = styled.div`
   background: #ffffff;
@@ -316,6 +323,7 @@ const StyledSingleApplication = styled.div`
   .SingleApplication__headToggle {
     display: flex;
     align-items: center;
+    gap: 10px;
   }
 
   .SingleApplication__headToggleButton {
@@ -398,6 +406,7 @@ const StyledSingleApplication = styled.div`
     align-items: center;
     padding: 20px 20px 18px;
     margin-bottom: 3px;
+    justify-content: space-between;
   }
 
   .Divider {
@@ -408,24 +417,30 @@ const StyledSingleApplication = styled.div`
 
   .SingleApplication__structureInfoContent {
     display: flex;
+    flex-direction: column;
+
+    &__head {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
 
     &__label {
       margin-top: 4px;
     }
 
     svg {
-      margin-top: 5.5px;
-      margin-right: 15px;
-    }
-  }
 
-  .SingleApplication__structureInfoContent:not(:first-child) {
-    margin-left: 45px;
+    }
   }
 
   .SingleApplication__fullInfo {
     display: flex;
     flex-direction: column;
+
+    svg path {
+      fill: ${theme.colors.text.grey};
+    }
   }
 
   .SingleApplication__location {
@@ -472,6 +487,10 @@ const StyledSingleApplication = styled.div`
       border-left: 2px solid #c7d2e9;
       padding-left: 10px;
     }
+  }
+
+  .Lead__createdAt {
+    color: ${theme.colors.text.grey};
   }
 
   @media (max-width: 767px) {
@@ -551,32 +570,12 @@ const StyledSingleApplication = styled.div`
       }
     }
   }
-`;
+`
 
-const SingleApplicationDropdown = ({ someContent }: Props) => {
-  return (
-    <StyledSingleApplicationDropdown>
-      <a href="" className="Font_12_16">
-        {someContent ? someContent : "Какой-то контент"}
-      </a>
-    </StyledSingleApplicationDropdown>
-  );
-};
+function formatDeadlineDate(val: string): string {
+  const date = new Date(val)
 
-const StyledSingleApplicationDropdown = styled.div`
-  position: absolute;
-  right: 0;
-  top: 34px;
-  background: #fff;
-  padding: 10px 15px;
-  box-shadow: 0 0 0 2px #d4ddee;
-  border-radius: 10px;
-  :hover {
-    background: #f1f7ff;
-  }
-  a:hover {
-    color: #4e6af3;
-  }
-`;
+  return date.getFullYear().toString()
+}
 
-export { SingleApplication };
+export { SingleApplication }
