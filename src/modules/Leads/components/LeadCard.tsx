@@ -17,6 +17,13 @@ import {PricingSelect} from "@/components/ui/PricingDropdown/PricingSelect";
 import cn from "classnames";
 import {PinIcon} from "@/icons/PinIcon";
 
+export enum CustomerState {
+  NEWBIE = "NEWBIE",
+  CANDIDATE = "CANDIDATE",
+  EXECUTANT = "EXECUTANT",
+  REJECTED = "REJECTED"
+}
+
 interface LeadProps {
   id: number
   className?: string
@@ -50,6 +57,7 @@ interface LeadProps {
   purchaseType: {}
   author: string
   isPinned: boolean
+  responseState?: CustomerState
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
@@ -156,7 +164,10 @@ const LeadCard = (props: LeadProps) => {
               <span>10</span>
             </div>
           </div>
-          <Button className={'Leads__button_action'}>Предложить</Button>
+          {props.responseState === undefined && <Button className={'Leads__button_action'}>Предложить</Button> }
+          {props.responseState === CustomerState.CANDIDATE && <Button href={"/chats"} secondary className={'Leads__button_action'}>Написать в чат</Button> }
+          {props.responseState === CustomerState.NEWBIE && <Button href={"/chats"} secondary className={'Leads__button_action'}>Написать в чат</Button> }
+          {props.responseState === CustomerState.EXECUTANT && <Button href={"/chats"} secondary className={'Leads__button_action Leads__customer-executant'}>Написать в чат</Button> }
         </div>
       </div>
     </StyledLeads>
@@ -184,6 +195,11 @@ const StyledLeads = styled.div`
     h5 {
       color: ${theme.colors.main};
     }
+  }
+
+  .Leads__customer-executant {
+    color: ${theme.colors.text.success};
+    background: ${theme.colors.background.green};
   }
 
   .Leads__info {
