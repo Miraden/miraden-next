@@ -70,6 +70,8 @@ const LeadEntry = () => {
     []
   )
 
+  const [showLeadSidebar, setLeadShowSidebar] = useState<boolean>(false)
+
   useEffect(() => {
     let mediaQuery = window.matchMedia('(max-width: 1440px)')
     mediaQuery.addEventListener('change', handleChange)
@@ -95,12 +97,17 @@ const LeadEntry = () => {
       leadDataProvider.setIsFinished(false)
       leadDataProvider.setLang(langManager.getClientLang())
       leadDataProvider.fetchById(leadId).then(res => {
+        const payload = leadDataProvider.getPayload()
+        if(payload.iamOwner) {
+          setLeadShowSidebar(payload.iamOwner)
+        }
         setLeadsAllData(res)
       })
     }
 
     if (selected == TabsMenuState.Requests) {
       const current = tabsManager.getItem(selected)
+      setLeadShowSidebar(false)
       current?.updateMenuFooter(
         <Search
           sort={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
@@ -111,9 +118,20 @@ const LeadEntry = () => {
         />
       )
     }
-  }, [handleShowFilter, leadId, selected])
 
-  const showLeadSidebar = selected == TabsMenuState.Lead
+    if(selected == TabsMenuState.Refusals) {
+      setLeadShowSidebar(false)
+    }
+
+    if(selected == TabsMenuState.Executants) {
+      setLeadShowSidebar(false)
+    }
+
+    if(selected == TabsMenuState.Recommended) {
+      setLeadShowSidebar(false)
+    }
+
+  }, [handleShowFilter, leadId, selected])
 
   return (
     <>
