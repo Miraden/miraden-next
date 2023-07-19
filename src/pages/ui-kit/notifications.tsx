@@ -16,12 +16,12 @@ export default function NotificationsPage() {
         <Link href="/ui-kit">Go back</Link>
         <h1 className="Font_52_120">Notifications</h1>
         <StyledNotifications>
-          <Notification />
-          <Notification error />
-          <Notification success />
-          <Notification compact />
-          <Notification compact error />
-          <Notification compact success />
+          <Notification message={"Message"} title={"Title"} />
+          <Notification error message={"Notify error"} title={"Title"} />
+          <Notification success message={"Notify success"} title={"Title"} />
+          <Notification compact title={"Title"} />
+          <Notification compact error title={"Title"} />
+          <Notification compact success title={"Title"} />
         </StyledNotifications>
       </main>
     </>

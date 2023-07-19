@@ -66,6 +66,7 @@ interface LeadEntryStruct {
   isPinned: boolean
   responseState?: CustomerState
   isHidden?: boolean
+  onHideButtonClick?: Function
 }
 
 const currencyOptions = ['€', '$', '£', '₽']
@@ -80,17 +81,10 @@ let singleCost = '30'
 const SingleApplication = (props: LeadEntryStruct) => {
   const price: string = props.budget.startFrom + ' – ' + props.budget.endTo
 
-  const [openDropdown, setOpenDropdown] = useState(false)
-
-  const handleOpenDropdown = useCallback(() => {
-    setOpenDropdown(!openDropdown)
-  }, [openDropdown])
-
-  const [openText, setOpenText] = useState(false)
-
-  const handleOpenText = useCallback(() => {
-    setOpenText(!openText)
-  }, [openText])
+  const onHiddenButtonClick = useCallback((e: any) => {
+    const input = e.target.closest('input')
+    if(props.onHideButtonClick) props.onHideButtonClick(input.checked)
+  }, [props])
 
   return (
     <StyledSingleApplication className={props.className}>
@@ -98,7 +92,9 @@ const SingleApplication = (props: LeadEntryStruct) => {
         <div className="SingleApplication__headToggle">
           {props.isHidden !== undefined && <ToggleButton
             state={!props.isHidden}
+            disabled={false}
             className="SingleApplication__headToggleButton"
+            onChange={onHiddenButtonClick}
           />}
           {props.isTrue && <Sticker theme="black">TRUE</Sticker>}
           <p className="Font_14_140">Заявка № {props.id}</p>

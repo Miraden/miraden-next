@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import cn from 'classnames'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import { BackIcon20 } from '@/icons'
-import { Button, Search } from '@/components/ui'
+import { Button, Notification, Search } from '@/components/ui'
 import { FilterIcon } from '@/icons/FilterIcon'
 import * as DataProvider from '@/modules/Applications/Application/DataProfiver'
 import { SellerCard } from '@/modules/Applications/Application/components/SellerCard'
@@ -90,6 +90,9 @@ const LeadEntry = () => {
   }, [handleSelect])
 
   const [leadsData, setLeadsAllData] = useState<Object>({})
+  const [notifyVisible, setNotifyVisible] = useState<boolean>(false)
+  const [leadVisibilityStatus, setLeadVisibilityStatus] =
+    useState<boolean>(false)
   useEffect(() => {
     if (selected == TabsMenuState.Lead) {
       if (!leadId) return
@@ -98,16 +101,24 @@ const LeadEntry = () => {
       leadDataProvider.setLang(langManager.getClientLang())
       leadDataProvider.fetchById(leadId).then(res => {
         const payload = leadDataProvider.getPayload()
-        if(!payload) {
+        if (!payload) {
           leadDataProvider.setIsFinished(true)
           setLeadsAllData([])
         }
-        if(payload) {
-          if(payload.iamOwner) {
+        if (payload) {
+          if (payload.iamOwner) {
             setLeadShowSidebar(payload.iamOwner)
           }
           setLeadsAllData(res)
         }
+      })
+      leadDataProvider.onToggleEvent((e: any) => {
+        setNotifyVisible(true)
+        const payload = leadDataProvider.getPayload()
+        setLeadVisibilityStatus(payload.isHidden)
+        setTimeout(() => {
+          setNotifyVisible(false)
+        }, 3000)
       })
     }
 
@@ -125,18 +136,17 @@ const LeadEntry = () => {
       )
     }
 
-    if(selected == TabsMenuState.Refusals) {
+    if (selected == TabsMenuState.Refusals) {
       setLeadShowSidebar(false)
     }
 
-    if(selected == TabsMenuState.Executants) {
+    if (selected == TabsMenuState.Executants) {
       setLeadShowSidebar(false)
     }
 
-    if(selected == TabsMenuState.Recommended) {
+    if (selected == TabsMenuState.Recommended) {
       setLeadShowSidebar(false)
     }
-
   }, [handleShowFilter, leadId, selected])
 
   return (
@@ -200,6 +210,19 @@ const LeadEntry = () => {
             {showFilter && renderFilter(handleShowFilter, () => {})}
             {!showFilter && <ApplicationsFooter />}
           </div>
+          {notifyVisible && (
+            <div className={'Notifications'}>
+              <Notification
+                success
+                title={'Доступ к заявке'}
+                message={
+                  leadVisibilityStatus
+                    ? 'Заявку видят все'
+                    : 'Заявка доступна только вам'
+                }
+              />
+            </div>
+          )}
         </StyledLead>
       </BlankLayout>
     </>
@@ -388,6 +411,14 @@ const StyledLead = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  .Notifications {
+    position: absolute;
+    z-index: 1000;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   @media (max-width: 1660px) {

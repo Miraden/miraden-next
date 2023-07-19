@@ -7,13 +7,15 @@ interface ToggleButtonProps {
   className?: string;
   label?: string;
   state: boolean
+  onChange?: Function
 }
 
-const ToggleButton = ({ className, disabled, label, state }: ToggleButtonProps) => {
+const ToggleButton = ({ className, disabled, label, state, onChange }: ToggleButtonProps) => {
   const [isChecked, setChecked] = useState<boolean>(state)
   const onClick = useCallback((e: any) => {
     setChecked(!isChecked)
-  }, [isChecked])
+    if(onChange) onChange(e)
+  }, [isChecked, onChange])
 
   return (
     <StyledToggleButton className={className}>

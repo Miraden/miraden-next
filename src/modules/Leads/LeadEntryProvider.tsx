@@ -2,6 +2,7 @@ import {
   ApiResponse,
   ApiResponseStructure,
   ApiResponseType,
+  HttpCodes,
 } from '@/infrastructure/Network/Http/ApiResponse'
 import {
   ApiRequest,
@@ -17,6 +18,7 @@ class LeadEntryProvider {
   private payload: any
   private url: string
   private lang: string
+  private onHideToggle?: Function
 
   constructor() {
     this.isFetchCompleted = false
@@ -24,6 +26,11 @@ class LeadEntryProvider {
     this.payload = {}
     this.url = ''
     this.lang = ''
+    this.onHideToggle = () => {}
+  }
+
+  public onToggleEvent(callback: Function): void {
+    this.onHideToggle = callback
   }
 
   public setLang(val: string): void {
@@ -34,10 +41,10 @@ class LeadEntryProvider {
     this.url = '/lead/' + id
     const apiRequest: ApiRequest = new ApiRequest()
     let headers: HeadersInit = {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    if(localStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
       headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
     }
 
@@ -54,6 +61,45 @@ class LeadEntryProvider {
       })
 
     return response.then(async res => {
+      const p: ApiResponseType = apiResponse.makeFromObject(res)
+      this.data = p
+      if (typeof p.payload == 'object') {
+        this.payload = p.payload
+      }
+      this.isFetchCompleted = true
+      return p
+    })
+  }
+
+  public fetchVisibility(state: boolean, id: number): void {
+    const url: string = '/lead/' + id + '/update'
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }
+
+    const apiResponse: ApiResponse = new ApiResponse()
+    const data = new FormData()
+    data.append('isVisible', state.toString())
+    // @ts-ignore
+    const body = new URLSearchParams(data).toString()
+    const response = apiRequest
+      .fetch({
+        method: ApiRequestMethods.PATCH,
+        body: body,
+        headers: headers,
+        endpoint: url,
+      })
+      .then(async res => {
+        const p: ApiResponseType = apiResponse.makeFromObject(res)
+        if (p.code === HttpCodes.OK) {
+          if (this.onHideToggle) this.onHideToggle('Visibility changed')
+        }
+        return res
+      })
+
+    response.then(async res => {
       const p: ApiResponseType = apiResponse.makeFromObject(res)
       this.data = p
       if (typeof p.payload == 'object') {
@@ -96,6 +142,10 @@ class LeadEntryProvider {
       return <></>
     }
 
+    const onHideButtonClick = (status: boolean) => {
+      this.fetchVisibility(status, this.payload.id)
+    }
+
     return (
       <SingleApplication
         id={this.payload.id}
@@ -134,6 +184,7 @@ class LeadEntryProvider {
         rentPeriod={this.payload.rentPeriod}
         title={this.payload.wishes.title}
         isHidden={this.payload.isHidden}
+        onHideButtonClick={onHideButtonClick}
       />
     )
   }
@@ -144,8 +195,6 @@ function isTokenError(
 ): boolean {
   if (!data) return false
   if (!data.errors) return false
-
-  console.log(data.errors)
 
   if ('security' in data.errors) {
     return (
