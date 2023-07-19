@@ -98,10 +98,16 @@ const LeadEntry = () => {
       leadDataProvider.setLang(langManager.getClientLang())
       leadDataProvider.fetchById(leadId).then(res => {
         const payload = leadDataProvider.getPayload()
-        if(payload.iamOwner) {
-          setLeadShowSidebar(payload.iamOwner)
+        if(!payload) {
+          leadDataProvider.setIsFinished(true)
+          setLeadsAllData([])
         }
-        setLeadsAllData(res)
+        if(payload) {
+          if(payload.iamOwner) {
+            setLeadShowSidebar(payload.iamOwner)
+          }
+          setLeadsAllData(res)
+        }
       })
     }
 

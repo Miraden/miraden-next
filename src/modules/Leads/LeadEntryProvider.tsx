@@ -34,8 +34,11 @@ class LeadEntryProvider {
     this.url = '/lead/' + id
     const apiRequest: ApiRequest = new ApiRequest()
     let headers: HeadersInit = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+
+    if(localStorage.getItem('token')) {
+      headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
     }
 
     const apiResponse: ApiResponse = new ApiResponse()
@@ -142,10 +145,13 @@ function isTokenError(
   if (!data) return false
   if (!data.errors) return false
 
+  console.log(data.errors)
+
   if ('security' in data.errors) {
     return (
       data.errors.security === 'Expired JWT token' ||
-      data.errors.security === 'Invalid JWT token'
+      data.errors.security === 'Invalid JWT token' ||
+      data.errors.security === 'Missing JWT token'
     )
   }
 
