@@ -110,6 +110,118 @@ class LeadEntryProvider {
     })
   }
 
+  public fetchSellersRequests(id: number): Promise<any> {
+    const url: string = '/lead/' + id + '/responses/sellers'
+
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }
+
+    const apiResponse: ApiResponse = new ApiResponse()
+    const response = apiRequest
+      .fetch({
+        method: ApiRequestMethods.GET,
+        headers: headers,
+        endpoint: url,
+      })
+      .then(async res => {
+        const p: ApiResponseType = apiResponse.makeFromObject(res)
+        return res
+      })
+
+    return response.then(async res => {
+      const p: ApiResponseType = apiResponse.makeFromObject(res)
+      this.isFetchCompleted = true
+      return p
+    })
+  }
+
+  public fetchExecutants(id: number): Promise<any> {
+    const url: string = '/lead/' + id + '/executants'
+
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }
+
+    const apiResponse: ApiResponse = new ApiResponse()
+    const response = apiRequest
+      .fetch({
+        method: ApiRequestMethods.GET,
+        headers: headers,
+        endpoint: url,
+      })
+      .then(async res => {
+        const p: ApiResponseType = apiResponse.makeFromObject(res)
+        return res
+      })
+
+    return response.then(async res => {
+      const p: ApiResponseType = apiResponse.makeFromObject(res)
+      this.isFetchCompleted = true
+      return p
+    })
+  }
+
+  public fetchRejected(id: number): Promise<any> {
+    const url: string = '/lead/' + id + '/rejected'
+
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }
+
+    const apiResponse: ApiResponse = new ApiResponse()
+    const response = apiRequest
+      .fetch({
+        method: ApiRequestMethods.GET,
+        headers: headers,
+        endpoint: url,
+      })
+      .then(async res => {
+        const p: ApiResponseType = apiResponse.makeFromObject(res)
+        return res
+      })
+
+    return response.then(async res => {
+      const p: ApiResponseType = apiResponse.makeFromObject(res)
+      this.isFetchCompleted = true
+      return p
+    })
+  }
+
+  public fetchRecommended(id: number): Promise<any> {
+    const url: string = '/lead/' + id + '/recommended'
+
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }
+
+    const apiResponse: ApiResponse = new ApiResponse()
+    const response = apiRequest
+      .fetch({
+        method: ApiRequestMethods.GET,
+        headers: headers,
+        endpoint: url,
+      })
+      .then(async res => {
+        const p: ApiResponseType = apiResponse.makeFromObject(res)
+        return res
+      })
+
+    return response.then(async res => {
+      const p: ApiResponseType = apiResponse.makeFromObject(res)
+      this.isFetchCompleted = true
+      return p
+    })
+  }
+
   public getPayload(): any {
     return this.payload
   }

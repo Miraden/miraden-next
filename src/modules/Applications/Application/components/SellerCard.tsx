@@ -12,6 +12,7 @@ import Image from "next/image";
 interface SellerCardProps {
   className?: string;
   name?: string;
+  surname?: string;
   isPro?: boolean;
   rating?: number;
   isVerified?: boolean;
@@ -45,6 +46,7 @@ const SellerCard = ({
   onClick,
   submit,
   href,
+  surname
 }: SellerCardProps) => {
   const [openDropdown, setOpenDropdown] = useState(false);
 
@@ -75,7 +77,7 @@ const SellerCard = ({
         <div className="SellerCard">
           <div className="SellerCard__content">
             <div className="SellerCard__imageContainer">
-              <Image src={image} alt="" width={72} height={72} />
+              <img src={image} alt="" width={72} height={72} />
               {isOnline && <div className="SellerCard__onlineDot" />}
               {isPerformer && (
                 <div className="SellerCard__performerIcon">
@@ -89,7 +91,7 @@ const SellerCard = ({
               )}
             </div>
             <div className="SellerCard__info">
-              <p className="Font_16_140">{name}</p>
+              <p className="Font_16_140">{name} {surname}</p>
               <p className="SellerCard__status Font_14_140 Color_blue_primary">
                 {status?.includes("Агентство") ? (
                   <>
@@ -121,7 +123,7 @@ const SellerCard = ({
                   <>
                     {!isPro && (
                       <p className="Font_14_140 Color_text_disabled">
-                        Без рейтинга
+                        Без рейтинга
                       </p>
                     )}
                   </>

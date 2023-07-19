@@ -95,6 +95,10 @@ const LeadEntry = () => {
   const [leadVisibilityStatus, setLeadVisibilityStatus] = useState<boolean>(false)
   const [leadTitle, setLeadTitle] = useState<string>("")
   const [IamLeadOwner, setIamLeadOwner] = useState<boolean>(false)
+  const [sellersRequests, setSellersRequests] = useState<Object[]>([])
+  const [executants, setExecutants] = useState<Object[]>([])
+  const [rejectedUsers, setRejectedUsers] = useState<Object[]>([])
+  const [recommendedUsers, setRecommendedUsers] = useState<Object[]>([])
   useEffect(() => {
     if (selected == TabsMenuState.Lead) {
       if (!leadId) return
@@ -127,6 +131,8 @@ const LeadEntry = () => {
     }
 
     if (selected == TabsMenuState.Requests) {
+      if (!leadId) return
+      setLeadsAllData([])
       const current = tabsManager.getItem(selected)
       setLeadShowSidebar(false)
       current?.updateMenuFooter(
@@ -138,18 +144,53 @@ const LeadEntry = () => {
           onFilterClick={handleShowFilter}
         />
       )
+      leadDataProvider.setIsFinished(false)
+      leadDataProvider.fetchSellersRequests(leadId).then((res) => {
+        leadDataProvider.setLang(langManager.getClientLang())
+        leadDataProvider.setIsFinished(true)
+        const payload = res.payload as Object[]
+        setSellersRequests(payload)
+      })
     }
 
     if (selected == TabsMenuState.Refusals) {
+      if (!leadId) return
+      setLeadsAllData([])
+      const current = tabsManager.getItem(selected)
       setLeadShowSidebar(false)
+      leadDataProvider.setIsFinished(false)
+      leadDataProvider.fetchRejected(leadId).then((res) => {
+        leadDataProvider.setLang(langManager.getClientLang())
+        leadDataProvider.setIsFinished(true)
+        const payload = res.payload as Object[]
+        setRejectedUsers(payload)
+      })
     }
 
     if (selected == TabsMenuState.Executants) {
+      if (!leadId) return
+      setLeadsAllData([])
       setLeadShowSidebar(false)
+      leadDataProvider.setIsFinished(false)
+      leadDataProvider.fetchExecutants(leadId).then((res) => {
+        leadDataProvider.setLang(langManager.getClientLang())
+        const payload = res.payload as Object[]
+        setExecutants(payload)
+        leadDataProvider.setIsFinished(true)
+      })
     }
 
     if (selected == TabsMenuState.Recommended) {
+      if (!leadId) return
+      setLeadsAllData([])
       setLeadShowSidebar(false)
+      leadDataProvider.setIsFinished(false)
+      leadDataProvider.fetchRecommended(leadId).then((res) => {
+        leadDataProvider.setLang(langManager.getClientLang())
+        leadDataProvider.setIsFinished(true)
+        const payload = res.payload as Object[]
+        setRecommendedUsers(payload)
+      })
     }
   }, [handleShowFilter, leadId, selected])
 
@@ -197,18 +238,16 @@ const LeadEntry = () => {
               <div className="Leads__content">
                 {selected == TabsMenuState.Lead && leadDataProvider.render()}
                 {selected == TabsMenuState.Requests && (
-                  <div className={'PageLead'}>{renderRequests()}</div>
+                  <div className={'PageLead'}>{renderRequests(sellersRequests)}</div>
                 )}
                 {selected == TabsMenuState.Executants && (
-                  <div className={'PageLead'}>{renderExecutors()}</div>
+                  <div className={'PageLead'}>{renderRequests(executants)}</div>
                 )}
                 {selected == TabsMenuState.Refusals && (
-                  <div className={'PageLead'}>{renderRefusals()}</div>
+                  <div className={'PageLead'}>{renderRequests(rejectedUsers)}</div>
                 )}
                 {selected == TabsMenuState.Recommended && (
-                  <div className={'PageLead'}>
-                    {renderRecommended(submit, handleOpenModal)}
-                  </div>
+                  <div className={'PageLead'}>{renderRequests(recommendedUsers)}</div>
                 )}
               </div>
             </div>
@@ -266,11 +305,11 @@ function renderRecommended(
   )
 }
 
-function renderExecutors(): JSX.Element {
+function renderExecutors(data: any): JSX.Element {
   return (
     <div>
       <ul className="Applications__list">
-        {DataProvider.executorsUsers.map((performer, index) => (
+        {data.map((performer: any, index: number) => (
           <li key={index}>
             <SellerCard
               isPerformer={performer.isPerformer}
@@ -291,22 +330,19 @@ function renderExecutors(): JSX.Element {
   )
 }
 
-function renderRequests(): JSX.Element {
+function renderRequests(data: any): JSX.Element {
   return (
     <ul className="Applications__list">
-      {DataProvider.requestsUsers.map((performer, index) => (
+      {data.map((performer: any, index: number) => (
         <li key={index}>
           <SellerCard
             isPerformer={true}
             name={performer.name}
-            isPro={performer.isPro}
-            isVerified={performer.isVerified}
+            surname={performer.surname}
+            isPro={performer.isRolePro}
+            isVerified={performer.isPassportVerified}
             rating={performer.rating}
-            image={performer.image}
-            status={performer.status}
-            agencyName={performer.agencyName}
-            isOnline={performer.isOnline}
-            unreadMessages={performer.unreadMessages}
+            image={performer.photo}
           />
         </li>
       ))}
