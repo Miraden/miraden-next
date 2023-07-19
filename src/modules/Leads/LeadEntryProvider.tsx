@@ -148,6 +148,7 @@ class LeadEntryProvider {
 
     return (
       <SingleApplication
+        className={"PageLead"}
         id={this.payload.id}
         isTrue={true}
         createdAt={formatCreatedDate(this.payload.createdAt)}

@@ -19,6 +19,7 @@ import { LeadEntryProvider } from '@/modules/Leads/LeadEntryProvider'
 import { UrlManager } from '@/infrastructure/Routes/UrlManager'
 import { NextRouter, useRouter } from 'next/router'
 import LangManager from '@/infrastructure/Intl/LangManager'
+import {theme} from "../../../styles/tokens";
 
 enum TabsMenuState {
   Lead = 0,
@@ -91,8 +92,9 @@ const LeadEntry = () => {
 
   const [leadsData, setLeadsAllData] = useState<Object>({})
   const [notifyVisible, setNotifyVisible] = useState<boolean>(false)
-  const [leadVisibilityStatus, setLeadVisibilityStatus] =
-    useState<boolean>(false)
+  const [leadVisibilityStatus, setLeadVisibilityStatus] = useState<boolean>(false)
+  const [leadTitle, setLeadTitle] = useState<string>("")
+  const [IamLeadOwner, setIamLeadOwner] = useState<boolean>(false)
   useEffect(() => {
     if (selected == TabsMenuState.Lead) {
       if (!leadId) return
@@ -108,7 +110,9 @@ const LeadEntry = () => {
         if (payload) {
           if (payload.iamOwner) {
             setLeadShowSidebar(payload.iamOwner)
+            setIamLeadOwner(true)
           }
+          setLeadTitle(payload.wishes.title)
           setLeadsAllData(res)
         }
       })
@@ -162,6 +166,7 @@ const LeadEntry = () => {
               className={cn('LeadContent', {
                 IsOpenFilter: showFilter,
                 IsOpenSidebar: showLeadSidebar,
+                IamLeadOwner: IamLeadOwner
               })}
             >
               <StyledMenu
@@ -179,12 +184,14 @@ const LeadEntry = () => {
                       className="Menu__header_backArrow"
                     />
                   </Button>
-                  <h1 className="Font_headline_3">
-                    Хочу купить 3-х комнатную квартиру на Кипре
-                  </h1>
+                  <h1 className="Font_headline_3">{leadTitle}</h1>
                 </div>
-                {tabsManager.renderMenus(selected)}
-                {tabsManager.renderMenuFooter(selected)}
+                {IamLeadOwner && (
+                  <>
+                  {tabsManager.renderMenus(selected)}
+                  {tabsManager.renderMenuFooter(selected)}
+                  </>
+                )}
               </StyledMenu>
 
               <div className="Leads__content">
@@ -373,15 +380,55 @@ const StyledLead = styled.div`
     padding-right: 55px;
   }
 
+  .IamLeadOwner {
+    &.LeadContent {
+      grid-gap: 20px;
+    }
+
+    .PageLead {
+      border-radius: ${theme.border.radius};
+    }
+
+    .PageHeader {
+      border-radius: ${theme.border.radius};
+    }
+
+    .SingleApplication__head {
+      border-top: none;
+    }
+  }
+
+  .SingleApplication__head {
+    border-top: 1px solid ${theme.colors.stroke.divider};
+    padding: 15px 22px;
+  }
+
+  .PageLead {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .PageHeader {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
   .LeadContent {
     min-width: 970px;
     max-width: 970px;
     grid-column: 5 / span 10;
+    grid-gap: 0;
+    display: grid;
+
+    &:not(.IamLeadOwner) {
+      .PageHeader {
+        padding-bottom: 20px;
+      }
+    }
   }
 
   .PageLead {
     padding: 0;
-    margin-top: 20px;
   }
 
   .Filter {

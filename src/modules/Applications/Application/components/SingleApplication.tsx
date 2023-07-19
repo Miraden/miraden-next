@@ -15,6 +15,9 @@ import { theme } from '../../../../../styles/tokens'
 import { ApartmentIcon } from '@/icons/ApartmentIcon'
 import TimerIcon from '@/icons/TimerIcon'
 
+const mobile = theme.breakpoints.mobile.max + "px"
+const tablet = theme.breakpoints.tablet.max + "px"
+
 interface Location {
   id: number
   city: string
@@ -142,54 +145,57 @@ const SingleApplication = (props: LeadEntryStruct) => {
           singleCost={singleCost}
         />
       </div>
-      <div className="SingleApplication__structureInfo">
 
-        <div className="SingleApplication__structureInfoContent">
-          <div className="SingleApplication__structureInfoContent__head">
-            <BuildYearIcon width={18} height={18} />
-            <div className={"Font_headline_4"}>{formatDeadlineDate(props.deadlineAt)}</div>
-          </div>
-          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
-            Год постройки
-          </div>
-        </div>
+      <div className="SingleApplication__structureInfo_scrollable">
+        <div className="SingleApplication__structureInfo">
 
-        <div className="SingleApplication__structureInfoContent">
-          <div className="SingleApplication__structureInfoContent__head">
-            <SquareIcon width={18} height={18} />
-            <div className="Font_headline_4">{props.areas.total.value} {props.areas.total.unit}</div>
+          <div className="SingleApplication__structureInfoContent">
+            <div className="SingleApplication__structureInfoContent__head">
+              <BuildYearIcon width={18} height={18} />
+              <div className={"Font_headline_4"}>{formatDeadlineDate(props.deadlineAt)}</div>
+            </div>
+            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+              Год постройки
+            </div>
           </div>
-          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Общая площадь</div>
-        </div>
 
-        <div className="SingleApplication__structureInfoContent">
-          <div className="SingleApplication__structureInfoContent__head">
-            <LivingSquareIcon width={18} height={18} />
-            <div className="Font_headline_4">{props.areas.living.value} {props.areas.living.unit}</div>
+          <div className="SingleApplication__structureInfoContent">
+            <div className="SingleApplication__structureInfoContent__head">
+              <SquareIcon width={18} height={18} />
+              <div className="Font_headline_4">{props.areas.total.value} {props.areas.total.unit}</div>
+            </div>
+            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Общая площадь</div>
           </div>
-          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Жилая площадь</div>
-        </div>
 
-        <div className="SingleApplication__structureInfoContent">
-          <div className="SingleApplication__structureInfoContent__head">
-            <RoomsIcon width={18} height={18} />
-            <div className="Font_headline_4">{props.rooms.total}</div>
+          <div className="SingleApplication__structureInfoContent">
+            <div className="SingleApplication__structureInfoContent__head">
+              <LivingSquareIcon width={18} height={18} />
+              <div className="Font_headline_4">{props.areas.living.value} {props.areas.living.unit}</div>
+            </div>
+            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Жилая площадь</div>
           </div>
-          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Комнат</div>
-        </div>
-        <div className="SingleApplication__structureInfoContent">
-          <div className="SingleApplication__structureInfoContent__head">
-            <RoomsIcon width={18} height={18} />
-            <p className="Font_headline_4">{props.rooms.beds}</p>
+
+          <div className="SingleApplication__structureInfoContent">
+            <div className="SingleApplication__structureInfoContent__head">
+              <RoomsIcon width={18} height={18} />
+              <div className="Font_headline_4">{props.rooms.total}</div>
+            </div>
+            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Комнат</div>
           </div>
-          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Спален</div>
-        </div>
-        <div className="SingleApplication__structureInfoContent">
-          <div className="SingleApplication__structureInfoContent__head">
-            <RoomsIcon width={18} height={18} />
-            <div className="Font_headline_4">{props.rooms.bathroom}</div>
+          <div className="SingleApplication__structureInfoContent">
+            <div className="SingleApplication__structureInfoContent__head">
+              <RoomsIcon width={18} height={18} />
+              <p className="Font_headline_4">{props.rooms.beds}</p>
+            </div>
+            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Спален</div>
           </div>
-          <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Санузлов</div>
+          <div className="SingleApplication__structureInfoContent">
+            <div className="SingleApplication__structureInfoContent__head">
+              <RoomsIcon width={18} height={18} />
+              <div className="Font_headline_4">{props.rooms.bathroom}</div>
+            </div>
+            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Санузлов</div>
+          </div>
         </div>
       </div>
       <div className="Divider"></div>
@@ -301,7 +307,6 @@ const SingleApplication = (props: LeadEntryStruct) => {
 const StyledSingleApplication = styled.div`
   background: #ffffff;
   border-radius: 10px;
-  margin-top: 20px;
   padding: 0 20px 20px;
 
   .SingleApplication__pricingSelectMobile {
@@ -354,6 +359,12 @@ const StyledSingleApplication = styled.div`
     padding: 20px 20px 19px 16px;
   }
 
+  .SingleApplication__pricingSelect {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 120%;
+  }
+
   .SingleApplication__pricingInfo {
     display: flex;
 
@@ -397,12 +408,18 @@ const StyledSingleApplication = styled.div`
     }
   }
 
+  .SingleApplication__structureInfo_scrollable {
+    width: 100%;
+    overflow-x: auto;
+  }
+
   .SingleApplication__structureInfo {
     display: flex;
     align-items: center;
     padding: 20px 20px 18px;
     margin-bottom: 3px;
     justify-content: space-between;
+    gap: 40px;
   }
 
   .Divider {
@@ -414,6 +431,7 @@ const StyledSingleApplication = styled.div`
   .SingleApplication__structureInfoContent {
     display: flex;
     flex-direction: column;
+    min-width: fit-content;
 
     &__head {
       display: flex;
@@ -423,10 +441,6 @@ const StyledSingleApplication = styled.div`
 
     &__label {
       margin-top: 4px;
-    }
-
-    svg {
-
     }
   }
 
@@ -519,10 +533,6 @@ const StyledSingleApplication = styled.div`
       }
     }
 
-    .SingleApplication__structureInfo {
-      display: none;
-    }
-
     .SingleApplication__pricing {
       .SingleApplication__pricingSelect {
         display: none;
@@ -564,6 +574,12 @@ const StyledSingleApplication = styled.div`
       button {
         margin-left: 32px;
       }
+    }
+  }
+
+  @media (max-width: ${tablet}) {
+    .SingleApplication__pricingSelect {
+      font-size: 26px;
     }
   }
 `

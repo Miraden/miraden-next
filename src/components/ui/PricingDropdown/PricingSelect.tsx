@@ -101,11 +101,11 @@ const StyledDropdownInput = styled.div<Props>`
 
   .DropdownInput_select_active {
     width: 100%;
-    max-width: 300px;
     border: none;
     transition: 0.15s ease-in;
     .DropdownInput_selectLabel {
       color: #4e6af3 !important;
+      white-space: nowrap;
     }
     div {
       svg {
