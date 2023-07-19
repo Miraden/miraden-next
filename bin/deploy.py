@@ -40,6 +40,7 @@ class onServer:
         self.buildNext()
         self.activateRelease()
         self.clearTmpDir()
+        self.restartNode()
 
     def command(self, cmd):
         ssh = subprocess.Popen("ssh {host} '{cmd}'".format(host=host,cmd=cmd), shell=True, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -107,6 +108,14 @@ class onServer:
     def setupEnv(self):
         print("Setup environment...", end=" ", flush=True)
         result = self.command("cp {envFile} {releaseDir}".format(envFile=self.envFile, releaseDir=self.releasePath))
+        if result is False:
+            print(bcolors.FAIL + "[FAILED]" + bcolors.ENDC)
+        else:
+            print(bcolors.OKGREEN + "[OK]" + bcolors.ENDC)
+
+    def restartNode(self):
+        print("Restarting node ...", end=" ", flush=True)
+        result = self.command("sudo supervisorctl restart nextjs:*")
         if result is False:
             print(bcolors.FAIL + "[FAILED]" + bcolors.ENDC)
         else:
