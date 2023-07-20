@@ -8,7 +8,7 @@ import {
   ApiResponseStructure,
 } from '@/infrastructure/Network/Http/ApiResponse'
 import React from 'react'
-import { LeadCard } from '@/modules/Leads/components/LeadCard'
+import { LeadCard, LeadCardContext } from '@/modules/Leads/components/LeadCard'
 import Image from 'next/image'
 import { Link as CustomLink } from '@/components/ui'
 import { Pagination, Types as PaginationType } from '@/components/ui/Pagination'
@@ -242,6 +242,7 @@ function renderLead(data: Array<any>, lang: string): JSX.Element {
               author={item.author}
               isPinned={item.isPinned}
               responseState={item.responseState}
+              context={LeadCardContext.COMMON}
             />
           </li>
         ))}

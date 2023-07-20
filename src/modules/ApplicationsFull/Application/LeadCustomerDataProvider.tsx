@@ -8,7 +8,7 @@ import {
   ApiRequest,
   ApiRequestMethods,
 } from '@/infrastructure/Network/Http/ApiRequest'
-import { LeadCard } from '@/modules/Leads/components/LeadCard'
+import { LeadCard, LeadCardContext } from '@/modules/Leads/components/LeadCard'
 import Image from 'next/image'
 
 class MyLeadsCustomerDataProvider {
@@ -127,6 +127,7 @@ function renderLead(data: Array<any>): JSX.Element {
             purchaseType={'purchase'}
             author={item.author}
             isPinned={item.isPinned}
+            context={LeadCardContext.COMMON}
           />
         </li>
       ))}

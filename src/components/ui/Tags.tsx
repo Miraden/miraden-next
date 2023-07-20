@@ -61,10 +61,10 @@ const StyledTag = styled.div`
     position: relative;
     line-height: 1;
     padding: 0 5px;
+    white-space: nowrap;
     border-right: 1px solid ${({theme}) => theme.colors.stroke.lightGrey};
 
     .Button__leftIconContainer {
-      margin-right: 5px;
 
       svg {
         width: 18px;

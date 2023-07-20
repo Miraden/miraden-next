@@ -66,7 +66,7 @@ const PricingSelect: FC<Props> = ({
         }
       >
         <div className="DropdownInput_selectLabel Color_blue_primary sm:Font_14_16_600">
-          {price + selectedOption ? price + selectedOption : price}
+          {price + " " + selectedOption ? price +  " " + selectedOption : price}
           <ArrowIcon />
         </div>
         {showDropDown && (
@@ -93,7 +93,6 @@ const PricingSelect: FC<Props> = ({
 const StyledDropdownInput = styled.div<Props>`
   max-width: fit-content;
   position: relative;
-  margin-left: 4px;
   .DropdownInput_selectContainer {
     right: 10px;
     position: relative;

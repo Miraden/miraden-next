@@ -32,6 +32,7 @@ class onServer:
         self.tmpDir = "/tmp/deploy/"
         self.envFile = "~/www/env/.env"
         print(bcolors.OKBLUE + "[Remote]" + bcolors.ENDC)
+        self.stopInstance()
         self.makeTmpDir()
         self.makeReleaseDir()
         self.untar()
@@ -40,7 +41,7 @@ class onServer:
         self.buildNext()
         self.activateRelease()
         self.clearTmpDir()
-        self.restartNode()
+        self.restartInstance()
 
     def command(self, cmd):
         ssh = subprocess.Popen("ssh {host} '{cmd}'".format(host=host,cmd=cmd), shell=True, stdout=subprocess.PIPE, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -113,9 +114,17 @@ class onServer:
         else:
             print(bcolors.OKGREEN + "[OK]" + bcolors.ENDC)
 
-    def restartNode(self):
-        print("Restarting node ...", end=" ", flush=True)
+    def restartInstance(self):
+        print("Restarting instance ...", end=" ", flush=True)
         result = self.command("sudo supervisorctl restart nextjs:*")
+        if result is False:
+            print(bcolors.FAIL + "[FAILED]" + bcolors.ENDC)
+        else:
+            print(bcolors.OKGREEN + "[OK]" + bcolors.ENDC)
+
+    def stopInstance(self):
+        print("Stopping running instance...", end=" ", flush=True)
+        result = self.command("sudo supervisorctl stop nextjs:*")
         if result is False:
             print(bcolors.FAIL + "[FAILED]" + bcolors.ENDC)
         else:
@@ -177,6 +186,7 @@ class onHost:
             print(bcolors.FAIL + "[FAILED]" + bcolors.ENDC)
         else:
             print(bcolors.OKGREEN + "[OK]" + bcolors.ENDC)
+
 
 if __name__ == '__main__':
     onHost()

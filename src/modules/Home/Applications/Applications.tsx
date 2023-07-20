@@ -1,10 +1,10 @@
 import { Button } from '@/components/ui'
 import { SetStateAction, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { ApplicationsCard } from './components/ApplicationsCard'
 import { LeadsLastProvider } from '@/modules/Home/Applications/LeadsProvider'
 import { theme } from '../../../../styles/tokens'
 import cn from 'classnames'
+import { LeadCard, LeadCardContext } from '@/modules/Leads/components/LeadCard'
 
 const Applications = () => {
   const [location, setLocation] = useState<string>('')
@@ -29,26 +29,32 @@ const Applications = () => {
 
   const renderLeadsLocation = () => {
     const items = leadsLastProvider.getLeadsByLocation(location)
-    return items.map(lead => (
-      <ApplicationsCard
-        className="Card"
-        href={'/lead/' + lead.id}
-        key={lead.id}
-        application={[]}
-        title={lead.wishes.title}
-        year={2022}
-        sleeps={lead.rooms.beds}
-        square={lead.areas.total.value}
-        baths={lead.rooms.bathroom}
-        price={
-          lead.budget.startFrom +
-          ' - ' +
-          lead.budget.endAt +
-          ' ' +
-          lead.budget.currency.symbol
-        }
-        location={lead.city.country + ' / ' + lead.city.name}
-        createdAt={formatCreatedDate(lead.createdAt)}
+    return items.map((item, key) => (
+      <LeadCard
+        className={'HomeLastLead'}
+        key={key}
+        id={item.id}
+        title={item.wishes.title}
+        areas={{
+          total: item.areas.total.value,
+          living: item.areas.living.value,
+        }}
+        isTrue={item.isTrue}
+        createdAt={formatCreatedDate(item.createdAt)}
+        location={item.city.country + ' / ' + item.city.name}
+        isPublished={item.isPublished}
+        rooms={item.rooms}
+        rentPeriod={item.rentPeriod}
+        budget={{
+          currency: item.budget.currency.symbol,
+          startFrom: new Intl.NumberFormat('ru').format(item.budget.startFrom),
+          endTo: new Intl.NumberFormat('ru').format(item.budget.endAt),
+        }}
+        purchaseType={item.purchaseType}
+        author={item.author}
+        isPinned={item.isPinned}
+        responseState={item.responseState}
+        context={LeadCardContext.HOME}
       />
     ))
   }
@@ -127,6 +133,12 @@ function formatCreatedDate(val: string): string {
   return date.getDate() + ' ' + months[date.getMonth()]
 }
 
+function formatDeadlineDate(val: string): string {
+  const date = new Date(val)
+
+  return date.getFullYear().toString()
+}
+
 function renderProgressLocations(): JSX.Element {
   return (
     <div className={'LeadInProgress'}>
@@ -172,6 +184,26 @@ const StyledApplications = styled.section`
 
     &.inProgress {
       grid-template-columns: repeat(1, 1fr);
+    }
+  }
+
+  .HomeLastLead {
+    padding: 15px 20px;
+
+    .Leads__tags {
+      margin-bottom: 0;
+    }
+
+    .Lead__stats {
+      grid-area: leadStats;
+      align-items: center;
+      justify-content: flex-end;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .Leads__price_range {
+      font-size: 16px;
     }
   }
 

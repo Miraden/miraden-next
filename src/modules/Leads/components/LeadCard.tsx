@@ -3,7 +3,7 @@ import { theme } from '../../../../styles/tokens'
 import { Button, Sticker } from '@/components/ui'
 import { BathsIcon, StarIcon } from '@/icons'
 import { TagItem, Tags } from '@/components/ui/Tags'
-import React from 'react'
+import React, {useEffect} from 'react'
 import { BuildingIcon } from '@/icons/BuildingIcon'
 import { AreaIcon } from '@/icons/AreaIcon'
 import { PlanningIcon } from '@/icons/PlanningIcon'
@@ -24,6 +24,11 @@ export enum CustomerState {
   REJECTED = "REJECTED"
 }
 
+export enum LeadCardContext {
+  COMMON = "COMMON",
+  HOME = "HOME"
+}
+
 interface LeadProps {
   id: number
   className?: string
@@ -34,20 +39,20 @@ interface LeadProps {
   location: string
   isPublished: boolean
   type?: string
-  status: string
-  deadlineAt: string
+  status?: string
+  deadlineAt?: string
   areas: {
-    total: number
-    living: number
+    total?: number
+    living?: number
   }
   rooms: {
-    total: number
-    beds: number
-    bathroom: number
+    total?: number
+    beds?: number
+    bathroom?: number
   }
-  purpose: string
+  purpose?: string
   readyDeal?: string
-  format: string
+  format?: string
   rentPeriod: string
   budget: {
     currency: string
@@ -58,6 +63,7 @@ interface LeadProps {
   author: string
   isPinned: boolean
   responseState?: CustomerState
+  context: LeadCardContext
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
@@ -67,15 +73,19 @@ const LeadCard = (props: LeadProps) => {
   const price: string = props.budget.startFrom + " – " + props.budget.endTo
 
   return (
-    <StyledLeads className={cn({isPinned: props.isPinned})}>
+    <StyledLeads className={cn({isPinned: props.isPinned}, props.className)}>
       {props.isPinned && <div className={"Leads__PinnedIcon"}><PinIcon filled={true}/></div>}
       <div className="Leads__info">
         <div className="Leads__info--left">
           {props.isTrue && <Sticker theme="black">True</Sticker>}
-          <div className={"Leads__info--author Font_button_small"}>Заявка от {props.author}</div>
+          <div className={"Leads__info--author Font_button_small"}>
+            {props.context === LeadCardContext.COMMON && "Заявка от "}
+            {props.context === LeadCardContext.HOME && "От "}
+            {props.author}
+          </div>
         </div>
         <div className="Leads__info--right">
-          <p className="Font_14_140 Color_text_disabled Published">
+          <p className="Font_14_140 Published">
             Создана {props.createdAt}
           </p>
         </div>
@@ -90,55 +100,71 @@ const LeadCard = (props: LeadProps) => {
         <p>{props.location}</p>
       </div>
       <div className="Leads__tags Font_button_small">
-        <Tags>
-          <TagItem leftIcon={<StarIcon />} />
-        </Tags>
-        <Tags>
-          <TagItem className={"Leads__id"} label={"ID " + props.id.toString()} />
-        </Tags>
-        {props.type && (
+        <div className="Leads__tags-left">
           <Tags>
-            <TagItem label={Object.values(props.type).at(0)} />
+            <TagItem className={"Leads__tags-favorite"} leftIcon={<StarIcon />} />
           </Tags>
-        )}
-        <Tags>
-          <TagItem label={props.status} />
-        </Tags>
-        <Tags>
-          <TagItem label={props.format} />
-        </Tags>
-        <Tags>
-          <TagItem label={props.purpose} />
-        </Tags>
+          <Tags>
+            <TagItem className={"Leads__id"} label={"ID " + props.id.toString()} />
+          </Tags>
+          {props.type && (
+            <Tags>
+              <TagItem label={Object.values(props.type).at(0)} />
+            </Tags>
+          )}
+          {props.status && (
+            <Tags>
+              <TagItem label={props.status} />
+            </Tags>
+          )}
+
+          {props.format && (
+            <Tags>
+              <TagItem label={props.format} />
+            </Tags>
+          )}
+          {props.purpose && (
+            <Tags>
+              <TagItem label={props.purpose} />
+            </Tags>
+          )}
+        </div>
+        <div className="Leads__tags-right">
+          {props.context === LeadCardContext.HOME && <LeadStats/>}
+        </div>
       </div>
-      <div className="Leads__props Font_Accent_16_S">
-        <p>
-          <BuildingIcon />
-          <span>{props.deadlineAt}</span>
-        </p>
-        <p>
-          <AreaIcon />
-          <span>
+      {props.deadlineAt && (
+        <div className="Leads__props Font_Accent_16_S">
+          <p>
+            <BuildingIcon />
+            <span>{props.deadlineAt}</span>
+          </p>
+          <p>
+            <AreaIcon />
+            <span>
             {props.areas.total} м <sup>2</sup>
           </span>
-        </p>
-        <p>
-          <PlanningIcon />
-          <span>{props.areas.living}</span>
-        </p>
-        <p>
-          <BedIcon />
-          <span>{props.rooms.beds}</span>
-        </p>
-        <p>
-          <BathsIcon />
-          <span>{props.rooms.bathroom}</span>
-        </p>
-      </div>
+          </p>
+          <p>
+            <PlanningIcon />
+            <span>{props.areas.living}</span>
+          </p>
+          <p>
+            <BedIcon />
+            <span>{props.rooms.beds}</span>
+          </p>
+          <p>
+            <BathsIcon />
+            <span>{props.rooms.bathroom}</span>
+          </p>
+        </div>
+      )}
+
       <div className="Leads__footer">
         <div className="Leads__footer-left">
           <div className="Leads__price_range Font_Accent_20_B">
-            <PricingSelect
+            {props.context === LeadCardContext.COMMON &&
+              <PricingSelect
               options={["€", "$", "£", "₽"]}
               price={price}
               yieldCount={8}
@@ -146,24 +172,12 @@ const LeadCard = (props: LeadProps) => {
               firstInstallment={"30"}
               firstInstallmentPercent={"30"}
               singleCost={"30"}
-            />
+            />}
+            {props.context === LeadCardContext.HOME && price + " " + props.budget.currency}
           </div>
         </div>
         <div className="Leads__footer-right">
-          <div className="Lead__stats Font_Accent_16_S">
-            <div className={'Lead__stats-item'}>
-              <EyeIcon />
-              <span>29</span>
-            </div>
-            <div className={'Lead__stats-item'}>
-              <LayersIcon />
-              <span>9</span>
-            </div>
-            <div className={'Lead__stats-item'}>
-              <CallIcon />
-              <span>10</span>
-            </div>
-          </div>
+          {props.context === LeadCardContext.COMMON && <LeadStats/>}
           {props.responseState === undefined && <Button className={'Leads__button_action'}>Предложить</Button> }
           {props.responseState === CustomerState.CANDIDATE && <Button href={"/chats"} secondary className={'Leads__button_action'}>Написать в чат</Button> }
           {props.responseState === CustomerState.NEWBIE && <Button href={"/chats"} secondary className={'Leads__button_action'}>Написать в чат</Button> }
@@ -172,6 +186,39 @@ const LeadCard = (props: LeadProps) => {
       </div>
     </StyledLeads>
   )
+}
+
+const LeadStats = (): JSX.Element => {
+  return <div className="Lead__stats Font_Accent_16_S">
+    <div className={'Lead__stats-item'}>
+      <EyeIcon />
+      <span>29</span>
+    </div>
+    <div className={'Lead__stats-item'}>
+      <LayersIcon />
+      <span>9</span>
+    </div>
+    <div className={'Lead__stats-item'}>
+      <CallIcon />
+      <span>10</span>
+    </div>
+  </div>
+}
+
+const PriceHome = (): JSX.Element => {
+  return <></>
+}
+
+const PriceCommon = (price: string): JSX.Element => {
+  return <PricingSelect
+    options={["€", "$", "£", "₽"]}
+    price={price}
+    yieldCount={8}
+    yieldCountPercent={30}
+    firstInstallment={"30"}
+    firstInstallmentPercent={"30"}
+    singleCost={"30"}
+  />
 }
 
 const StyledLeads = styled.div`
@@ -206,6 +253,10 @@ const StyledLeads = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+
+    .Published {
+      color: ${theme.colors.text.grey};
+    }
   }
 
   .Leads__info--left {
@@ -223,7 +274,8 @@ const StyledLeads = styled.div`
   .Leads__location {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: start;
+    flex-grow: 1;
     color: ${theme.colors.text.grey};
     margin-bottom: 15px;
 
@@ -241,9 +293,25 @@ const StyledLeads = styled.div`
     gap: 10px;
     margin-bottom: 26px;
     flex-wrap: wrap;
+    justify-content: space-between;
 
     .Tags {
       border-radius: 5px;
+    }
+
+    &-left {
+      display: flex;
+      gap: 10px;
+    }
+
+    &-right {
+      display: flex;
+    }
+
+    &-favorite {
+      svg path {
+        fill: ${theme.colors.main};
+      }
     }
   }
 
@@ -279,7 +347,10 @@ const StyledLeads = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10px;
     border-top: 1px solid ${theme.colors.stroke.divider};
+    flex-wrap: wrap;
+    gap: 10px;
 
     &-right {
       display: flex;
@@ -321,13 +392,6 @@ const StyledLeads = styled.div`
   }
 
   @media (max-width: ${mobile}) {
-    .Leads__tags {
-      display: none;
-    }
-
-    .Leads__footer-right {
-      display: none;
-    }
   }
 `
 
