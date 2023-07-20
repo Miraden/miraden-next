@@ -29,11 +29,14 @@ class onServer:
     def __init__(self):
         self.currentRelease = "~/www/current"
         self.releasePath = "~/www/releases/" + release
+        self.releasesPath = "~/www/releases/"
         self.tmpDir = "/tmp/deploy/"
         self.envFile = "~/www/env/.env"
+        self.keepReleases = 2
         print(bcolors.OKBLUE + "[Remote]" + bcolors.ENDC)
         self.stopInstance()
         self.makeTmpDir()
+        self.removeOlder()
         self.makeReleaseDir()
         self.untar()
         self.setupEnv()
@@ -129,6 +132,28 @@ class onServer:
             print(bcolors.FAIL + "[FAILED]" + bcolors.ENDC)
         else:
             print(bcolors.OKGREEN + "[OK]" + bcolors.ENDC)
+
+    def removeOlder(self):
+        print("Removing old releases...")
+        keep = self.command("cd {releasesPath} && ls --sort=t --reverse | tail -{count}".format(count=self.keepReleases, releasesPath=self.releasesPath)).decode('utf-8').split("\n")
+        for i in keep:
+            if i == '':
+                keep.remove(i)
+        all = self.command("cd {releasesPath} && ls".format(releasesPath=self.releasesPath)).decode('utf-8').split("\n")
+        for i in all:
+            if i == '':
+                all.remove(i)
+
+        if len(all) <= len(keep):
+            return
+
+        for i in all:
+            if i not in keep:
+                remove = self.command("rm -rf {file}".format(file=self.releasesPath + i))
+                if remove is False:
+                    print(bcolors.FAIL + "rm error: {file}".format(file=self.releasesPath + i) + bcolors.ENDC)
+                else:
+                    print(bcolors.OKGREEN + "{file} [OK]".format(file=self.releasesPath + i) + bcolors.ENDC)
 
 class onHost:
     def __init__(self):
