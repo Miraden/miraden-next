@@ -9,7 +9,6 @@ import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import { BackIcon20 } from '@/icons'
 import { Button, Notification, Search } from '@/components/ui'
 import { FilterIcon } from '@/icons/FilterIcon'
-import * as DataProvider from '@/modules/Applications/Application/DataProfiver'
 import { SellerCard } from '@/modules/Applications/Application/components/SellerCard'
 import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
 import { SingleApplicationSideBar } from '@/modules/Applications/Application/components/SingleApplicationSideBar'
@@ -19,13 +18,13 @@ import { LeadEntryProvider } from '@/modules/Leads/LeadEntryProvider'
 import { UrlManager } from '@/infrastructure/Routes/UrlManager'
 import { NextRouter, useRouter } from 'next/router'
 import LangManager from '@/infrastructure/Intl/LangManager'
-import {theme} from "../../../styles/tokens";
+import { theme } from '../../../styles/tokens'
 
 enum TabsMenuState {
   Lead = 0,
   Requests = 1,
   Executants = 2,
-  Refusals = 3,
+  Rejected = 3,
   Recommended = 4,
 }
 
@@ -153,7 +152,7 @@ const LeadEntry = () => {
       })
     }
 
-    if (selected == TabsMenuState.Refusals) {
+    if (selected == TabsMenuState.Rejected) {
       if (!leadId) return
       setLeadsAllData([])
       const current = tabsManager.getItem(selected)
@@ -238,16 +237,16 @@ const LeadEntry = () => {
               <div className="Leads__content">
                 {selected == TabsMenuState.Lead && leadDataProvider.render()}
                 {selected == TabsMenuState.Requests && (
-                  <div className={'PageLead'}>{renderRequests(sellersRequests)}</div>
+                  <div className={'PageLead'}>{renderUsers(sellersRequests)}</div>
                 )}
                 {selected == TabsMenuState.Executants && (
-                  <div className={'PageLead'}>{renderRequests(executants)}</div>
+                  <div className={'PageLead'}>{renderUsers(executants)}</div>
                 )}
-                {selected == TabsMenuState.Refusals && (
-                  <div className={'PageLead'}>{renderRequests(rejectedUsers)}</div>
+                {selected == TabsMenuState.Rejected && (
+                  <div className={'PageLead'}>{renderUsers(rejectedUsers)}</div>
                 )}
                 {selected == TabsMenuState.Recommended && (
-                  <div className={'PageLead'}>{renderRequests(recommendedUsers)}</div>
+                  <div className={'PageLead'}>{renderUsers(recommendedUsers)}</div>
                 )}
               </div>
             </div>
@@ -275,62 +274,7 @@ const LeadEntry = () => {
   )
 }
 
-function renderRecommended(
-  isSubmit: boolean,
-  handleOpenModal: Function
-): JSX.Element {
-  return (
-    <>
-      <ul className="Applications__list">
-        {DataProvider.recommendUsers.map((recommend, index) => (
-          <li key={index}>
-            <SellerCard
-              isRecommend={recommend.isRecommend}
-              name={recommend.name}
-              isPro={recommend.isPro}
-              isVerified={recommend.isVerified}
-              rating={recommend.rating}
-              image={recommend.image}
-              status={recommend.status}
-              agencyName={recommend.agencyName}
-              isOnline={recommend.isOnline}
-              unreadMessages={recommend.unreadMessages}
-              onClick={handleOpenModal}
-              submit={isSubmit}
-            />
-          </li>
-        ))}
-      </ul>
-    </>
-  )
-}
-
-function renderExecutors(data: any): JSX.Element {
-  return (
-    <div>
-      <ul className="Applications__list">
-        {data.map((performer: any, index: number) => (
-          <li key={index}>
-            <SellerCard
-              isPerformer={performer.isPerformer}
-              name={performer.name}
-              isPro={performer.isPro}
-              isVerified={performer.isVerified}
-              rating={performer.rating}
-              image={performer.image}
-              status={performer.status}
-              agencyName={performer.agencyName}
-              isOnline={performer.isOnline}
-              unreadMessages={performer.unreadMessages}
-            />
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-function renderRequests(data: any): JSX.Element {
+function renderUsers(data: any): JSX.Element {
   return (
     <ul className="Applications__list">
       {data.map((performer: any, index: number) => (
@@ -360,31 +304,6 @@ function renderFilter(handler: Function, tabHandler: Function): JSX.Element {
           onClick={handler}
         />
       </div>
-    </>
-  )
-}
-
-function renderRefusals(): JSX.Element {
-  return (
-    <>
-      <ul className="Applications__list">
-        {DataProvider.refusalsUsers.map((refusal, index) => (
-          <li key={index}>
-            <SellerCard
-              isRefusal={refusal.isRefusal}
-              name={refusal.name}
-              isPro={refusal.isPro}
-              isVerified={refusal.isVerified}
-              rating={refusal.rating}
-              image={refusal.image}
-              status={refusal.status}
-              agencyName={refusal.agencyName}
-              isOnline={refusal.isOnline}
-              unreadMessages={refusal.unreadMessages}
-            />
-          </li>
-        ))}
-      </ul>
     </>
   )
 }
@@ -455,6 +374,7 @@ const StyledLead = styled.div`
     grid-column: 5 / span 10;
     grid-gap: 0;
     display: grid;
+    height: fit-content;
 
     &:not(.IamLeadOwner) {
       .PageHeader {

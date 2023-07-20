@@ -71,17 +71,7 @@ const ApplicationsFilter = ({
         </div>
       </div>
 
-      <div>
-        <TabButtons
-          className="ApplicationsFilter__tabs"
-          tabs={[
-            { label: "Продавцы", id: "1", name: "sellers",  content: <SellerContent /> },
-            { label: "Объекты", id: "2", name: "objects", content: <ObjectsContent /> },
-          ]}
-          defaultTabId="1"
-          onTabClick={onTabClick}
-        />
-      </div>
+      <SellerContent />
       <div className="ApplicationsFilter__footer">
         <RequestButton active onClick={onClick} className="">
           Найдено 145 объектов
@@ -205,20 +195,24 @@ const SellerContent = ({ onChange }: SellerProps) => {
       <div className="SellerContent__status">
         <div className="ObjectsContent__wrapperContainer">
           <h3 className="Font_16_140">Статус продавца</h3>
-          <Checkbox label="PRO аккаунт" onChange={onChange} />
-          <Checkbox label="Только с объектами" onChange={onChange} />
-          <Checkbox label="С проверенными документами" onChange={onChange} />
-          <Checkbox label="С рейтингом выше 4" onChange={onChange} />
+          <div className="CheckboxContainer">
+            <Checkbox label="PRO аккаунт" onChange={onChange} />
+            <Checkbox label="Только с объектами" onChange={onChange} />
+            <Checkbox label="С проверенными документами" onChange={onChange} />
+            <Checkbox label="С рейтингом выше 4" onChange={onChange} />
+          </div>
         </div>
       </div>
       <div className="SellerContent__type">
         <div className="ObjectsContent__wrapperContainer">
-          <h3 className="Font_16_140">Тип продавца</h3>
-          <Checkbox label="Клиент (ищу для себя)" />
-          <Checkbox label="Риелтор" />
-          <Checkbox label="Агентство недвижимости" />
-          <Checkbox label="Застройщик" />
-          <Checkbox label="Собственник" />
+          <h3 className="Font_16_140">Тип продавца</h3>
+          <div className="CheckboxContainer">
+            <Checkbox label="Клиент (ищу для себя)" />
+            <Checkbox label="Риелтор" />
+            <Checkbox label="Агентство недвижимости" />
+            <Checkbox label="Застройщик" />
+            <Checkbox label="Собственник" />
+          </div>
         </div>
       </div>
     </StyledSellerContent>
@@ -232,6 +226,13 @@ const StyledSellerContent = styled.div`
     label {
       margin-top: 10px;
     }
+  }
+
+  .CheckboxContainer {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   .ObjectsContent__wrapperContainer {
