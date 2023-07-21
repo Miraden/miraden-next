@@ -342,10 +342,7 @@ const StyledHowItWorks = styled.section`
       justify-content: center;
 
       img {
-        /* width: 141px; */
         height: 202px;
-        left: 50px;
-        position: absolute;
       }
     }
 
