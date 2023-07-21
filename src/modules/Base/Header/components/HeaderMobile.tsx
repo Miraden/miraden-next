@@ -50,7 +50,7 @@ const HeaderMobile = ({ className, isAuthorized }: Props) => {
                 <Link href="/" className="HeaderMobile__logoLink">
                   <MiradenLogoMobile />
                 </Link>
-                <Button className="HeaderMobile__enterButton Font_12_16_600">
+                <Button href={"/user/login"} className="HeaderMobile__enterButton Font_12_16_600">
                   вход
                 </Button>
               </>

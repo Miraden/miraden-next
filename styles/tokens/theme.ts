@@ -209,15 +209,15 @@ const theme = {
     sm: 576 - 1, // range 360px - 575px
     xs: 360, // range 0 - 375px,
     desktop: {
-      max: 1440 - 1,
+      max: 1440,
       min: 1024
     },
     tablet: {
-      max: 1024 - 1,
+      max: 1024,
       min: 576
     },
     mobile: {
-      max: 576-1,
+      max: 576,
       min: 340,
     }
   },

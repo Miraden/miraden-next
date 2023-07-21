@@ -24,10 +24,10 @@ const Hero = ({ className }: HeroProps) => {
           <Button href={"/lead/add"} className="Hero__mainButton">Оставить заявку</Button>
         </div>
         <Image
-          alt=""
-          src="/images/HomeHero.svg"
-          width={468}
-          height={385}
+          alt="Hero"
+          src="/images/HomeHero.png"
+          width={470}
+          height={360}
           className="Hero__image"
         />
       </div>
@@ -75,6 +75,7 @@ const StyledHero = styled.section`
     grid-column: 8 / span 5;
     width: 470px;
     height: 360px;
+    object-fit: contain;
 
     img {
       flex-shrink: 0;
@@ -91,11 +92,11 @@ const StyledHero = styled.section`
     }
 
     .Hero__content {
-      grid-column: 1 / span 6;
+      grid-column: 1 / span 7;
     }
 
     .Hero__image {
-      grid-column: 7 / span 6;
+      grid-column: 8 / span 5;
     }
   }
 

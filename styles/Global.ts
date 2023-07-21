@@ -45,6 +45,10 @@ const Global = createGlobalStyle`
   .nobr {
     white-space: nowrap;
   }
+
+  svg {
+    shape-rendering: geometricprecision;
+  }
 `;
 
 export { Global };

@@ -43,7 +43,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                     <Image
                       src="./images/howItWorks/1.svg"
                       alt=""
-                      width={320}
+                      width={220}
                       height={220}
                     />
                   </div>
@@ -63,7 +63,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                     <Image
                       src="./images/howItWorks/2.svg"
                       alt=""
-                      width={320}
+                      width={220}
                       height={220}
                     />
                   </div>
@@ -83,7 +83,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                     <Image
                       src="./images/howItWorks/3.svg"
                       alt=""
-                      width={320}
+                      width={220}
                       height={220}
                     />
                   </div>
@@ -107,7 +107,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                     <Image
                       src="/images/howItWorks/4.svg"
                       alt=""
-                      width={320}
+                      width={220}
                       height={220}
                     />
                   </div>
@@ -127,7 +127,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                     <Image
                       src="/images/howItWorks/5.svg"
                       alt=""
-                      width={320}
+                      width={220}
                       height={220}
                     />
                   </div>
@@ -147,7 +147,7 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
                     <Image
                       src="/images/howItWorks/6.svg"
                       alt=""
-                      width={320}
+                      width={220}
                       height={220}
                     />
                   </div>
