@@ -294,6 +294,7 @@ const StyledLeads = styled.div`
     margin-bottom: 26px;
     flex-wrap: wrap;
     justify-content: space-between;
+    overflow-x: auto;
 
     .Tags {
       border-radius: 5px;
