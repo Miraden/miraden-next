@@ -19,6 +19,7 @@ import { UrlManager } from '@/infrastructure/Routes/UrlManager'
 import { NextRouter, useRouter } from 'next/router'
 import LangManager from '@/infrastructure/Intl/LangManager'
 import { theme } from '../../../styles/tokens'
+import LeadOwnerCard from "@/modules/Leads/LeadOwnerCard";
 
 enum TabsMenuState {
   Lead = 0,
@@ -70,7 +71,8 @@ const LeadEntry = () => {
     []
   )
 
-  const [showLeadSidebar, setLeadShowSidebar] = useState<boolean>(false)
+  const [showOwnerSidebar, setShowOwnerSidebar] = useState<boolean>(false)
+  const [showGuestSidebar, setGuestSidebar] = useState<boolean>(false)
 
   useEffect(() => {
     let mediaQuery = window.matchMedia('(max-width: 1440px)')
@@ -112,9 +114,10 @@ const LeadEntry = () => {
         }
         if (payload) {
           if (payload.iamOwner) {
-            setLeadShowSidebar(payload.iamOwner)
+            setShowOwnerSidebar(payload.iamOwner)
             setIamLeadOwner(true)
           }
+          setGuestSidebar(!payload.iamOwner)
           setLeadTitle(payload.wishes.title)
           setLeadsAllData(res)
         }
@@ -133,7 +136,8 @@ const LeadEntry = () => {
       if (!leadId) return
       setLeadsAllData([])
       const current = tabsManager.getItem(selected)
-      setLeadShowSidebar(false)
+      setShowOwnerSidebar(false)
+      setGuestSidebar(false)
       current?.updateMenuFooter(
         <Search
           sort={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
@@ -155,8 +159,8 @@ const LeadEntry = () => {
     if (selected == TabsMenuState.Rejected) {
       if (!leadId) return
       setLeadsAllData([])
-      const current = tabsManager.getItem(selected)
-      setLeadShowSidebar(false)
+      setShowOwnerSidebar(false)
+      setGuestSidebar(false)
       leadDataProvider.setIsFinished(false)
       leadDataProvider.fetchRejected(leadId).then((res) => {
         leadDataProvider.setLang(langManager.getClientLang())
@@ -169,7 +173,8 @@ const LeadEntry = () => {
     if (selected == TabsMenuState.Executants) {
       if (!leadId) return
       setLeadsAllData([])
-      setLeadShowSidebar(false)
+      setShowOwnerSidebar(false)
+      setGuestSidebar(false)
       leadDataProvider.setIsFinished(false)
       leadDataProvider.fetchExecutants(leadId).then((res) => {
         leadDataProvider.setLang(langManager.getClientLang())
@@ -182,7 +187,8 @@ const LeadEntry = () => {
     if (selected == TabsMenuState.Recommended) {
       if (!leadId) return
       setLeadsAllData([])
-      setLeadShowSidebar(false)
+      setShowOwnerSidebar(false)
+      setGuestSidebar(false)
       leadDataProvider.setIsFinished(false)
       leadDataProvider.fetchRecommended(leadId).then((res) => {
         leadDataProvider.setLang(langManager.getClientLang())
@@ -205,7 +211,7 @@ const LeadEntry = () => {
             <div
               className={cn('LeadContent', {
                 IsOpenFilter: showFilter,
-                IsOpenSidebar: showLeadSidebar,
+                IsOpenSidebar: showOwnerSidebar || showGuestSidebar,
                 IamLeadOwner: IamLeadOwner
               })}
             >
@@ -250,7 +256,8 @@ const LeadEntry = () => {
                 )}
               </div>
             </div>
-            {showLeadSidebar && renderLeadPaymentOptions()}
+            {showOwnerSidebar && renderLeadPaymentOptions()}
+            {showGuestSidebar && <LeadOwnerCard/>}
 
             {showFilter && renderFilter(handleShowFilter, () => {})}
             {!showFilter && <ApplicationsFooter />}
