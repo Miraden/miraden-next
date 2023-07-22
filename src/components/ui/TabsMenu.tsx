@@ -445,6 +445,7 @@ const StyledMenu = styled.div`
   .TabsMenu__menus {
     width: 100%;
     margin-top: 30px;
+    overflow-x: auto;
   }
 
   .Applications__searchBar {

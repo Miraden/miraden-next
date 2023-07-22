@@ -469,11 +469,13 @@ const StyledLead = styled.div`
       width: 100%;
       max-width: 970px;
       min-width: unset;
+      display: flex;
+      flex-direction: column;
 
       &.IsOpenSidebar,
       &.IsOpenFilter {
-        grid-column: 1 / span 18;
-        max-width: 970px;
+        display: flex;
+        flex-direction: column;
       }
     }
 
@@ -514,6 +516,10 @@ const StyledLead = styled.div`
   @media (max-width: 576px) {
     .Filter {
       display: none;
+    }
+
+    .SingleApplicationSideBar {
+      min-width: 100%;
     }
   }
 `
