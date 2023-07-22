@@ -8,10 +8,11 @@ import {
   ApiResponseStructure,
 } from '@/infrastructure/Network/Http/ApiResponse'
 import React from 'react'
-import { LeadCard, LeadCardContext } from '@/modules/Leads/components/LeadCard'
+import { LeadCard } from '@/modules/Leads/components/LeadCard'
 import Image from 'next/image'
 import { Link as CustomLink } from '@/components/ui'
 import { Pagination, Types as PaginationType } from '@/components/ui/Pagination'
+import { WindowSize } from '@/hooks/useWindowSize'
 
 class LeadsDataProvider {
   private isFetchCompleted: boolean
@@ -23,6 +24,7 @@ class LeadsDataProvider {
   private onPageClick: Function
   private isUserAuth: boolean
   private lang: string
+  private windowSize: WindowSize
 
   constructor() {
     this.isFetchCompleted = false
@@ -34,6 +36,7 @@ class LeadsDataProvider {
     this.onPageClick = () => {}
     this.isUserAuth = false
     this.lang = ''
+    this.windowSize = { height: 0, width: 0 }
   }
 
   public setLang(val: string): void {
@@ -50,6 +53,10 @@ class LeadsDataProvider {
 
   public setPageCallback(call: Function): void {
     this.onPageClick = call
+  }
+
+  public setWindowSize(size: WindowSize): void {
+    this.windowSize = size
   }
 
   public fetchData(): Promise<any> {
@@ -141,7 +148,7 @@ class LeadsDataProvider {
 
     return (
       <>
-        {renderLead(this.payload, this.lang)}
+        {renderLead(this.payload, this.lang, this.windowSize)}
         {this.pages && this.pages.total > 1 && (
           <Pagination
             total={this.pages.total}
@@ -207,7 +214,7 @@ function formatCreatedDate(val: string): string {
   return date.getDate() + ' ' + months[date.getMonth()]
 }
 
-function renderLead(data: Array<any>, lang: string): JSX.Element {
+function renderLead(data: Array<any>, lang: string, windowSize: WindowSize): JSX.Element {
   return (
     <>
       <ul className="LeadsList">
@@ -242,7 +249,7 @@ function renderLead(data: Array<any>, lang: string): JSX.Element {
               author={item.author}
               isPinned={item.isPinned}
               responseState={item.responseState}
-              context={LeadCardContext.COMMON}
+              windowSize={windowSize}
             />
           </li>
         ))}

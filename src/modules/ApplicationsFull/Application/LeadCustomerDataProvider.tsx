@@ -10,16 +10,19 @@ import {
 } from '@/infrastructure/Network/Http/ApiRequest'
 import { LeadCard, LeadCardContext } from '@/modules/Leads/components/LeadCard'
 import Image from 'next/image'
+import {WindowSize} from "@/hooks/useWindowSize";
 
 class MyLeadsCustomerDataProvider {
   private isFetchCompleted: boolean
   private data?: typeof ApiResponseStructure | null
   private payload: Array<any>
+  private windowSize: WindowSize
 
   constructor() {
     this.isFetchCompleted = false
     this.data = null
     this.payload = []
+    this.windowSize = {height: 0, width: 0}
   }
 
   public fetchData(url: string): Promise<any> {
@@ -46,6 +49,10 @@ class MyLeadsCustomerDataProvider {
     if (typeof data.payload == 'object') {
       this.payload = data.payload as Array<any>
     }
+  }
+
+  public setWindowSize(size: WindowSize): void {
+    this.windowSize = size
   }
 
   public setIsFinished(val: boolean): void {
@@ -75,7 +82,7 @@ class MyLeadsCustomerDataProvider {
     if (this.payload.length == 0) {
       return renderEmptyLeads()
     }
-    return renderLead(this.payload)
+    return renderLead(this.payload, this.windowSize)
   }
 }
 
@@ -95,7 +102,7 @@ function isAccessDenied(
   return false
 }
 
-function renderLead(data: Array<any>): JSX.Element {
+function renderLead(data: Array<any>, windowSize: WindowSize): JSX.Element {
   return (
     <ul className="LeadsList">
       {data.map((item, index) => (
@@ -127,7 +134,7 @@ function renderLead(data: Array<any>): JSX.Element {
             purchaseType={'purchase'}
             author={item.author}
             isPinned={item.isPinned}
-            context={LeadCardContext.COMMON}
+            windowSize={windowSize}
           />
         </li>
       ))}

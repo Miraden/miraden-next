@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import { LeadsLastProvider } from '@/modules/Home/Applications/LeadsProvider'
 import { theme } from '../../../../styles/tokens'
 import cn from 'classnames'
-import { LeadCard, LeadCardContext } from '@/modules/Leads/components/LeadCard'
+import { LeadCard } from '@/modules/Leads/components/LeadCard'
+import {useWindowSize, WindowSize} from "@/hooks/useWindowSize";
 
 const Applications = () => {
   const [location, setLocation] = useState<string>('')
@@ -27,11 +28,11 @@ const Applications = () => {
     })
   }, [leadsLastProvider])
 
-  const renderLeadsLocation = () => {
+  const renderLeadsLocation = (windowSize: WindowSize) => {
     const items = leadsLastProvider.getLeadsByLocation(location)
     return items.map((item, key) => (
       <LeadCard
-        className={'HomeLastLead'}
+        className={'HomeLastLead LeadsList'}
         key={key}
         id={item.id}
         title={item.wishes.title}
@@ -54,7 +55,7 @@ const Applications = () => {
         author={item.author}
         isPinned={item.isPinned}
         responseState={item.responseState}
-        context={LeadCardContext.HOME}
+        windowSize={windowSize}
       />
     ))
   }
@@ -83,6 +84,8 @@ const Applications = () => {
     ))
   }
 
+  const s = useWindowSize()
+
   return (
     <StyledApplications>
       <div className="Container">
@@ -98,7 +101,7 @@ const Applications = () => {
             inProgress: !leadsLastProvider.isFinished(),
           })}
         >
-          {leadsLastProvider.isFinished() && renderLeadsLocation()}
+          {leadsLastProvider.isFinished() && renderLeadsLocation(s)}
           {!leadsLastProvider.isFinished() && renderProgressLocations()}
         </div>
 

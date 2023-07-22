@@ -4,6 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import { MyLeadsCustomerDataProvider as DataProvider } from '@/modules/ApplicationsFull/Application/LeadCustomerDataProvider'
+import {useWindowSize} from "@/hooks/useWindowSize";
 
 interface ApplicationProps {
   className?: string
@@ -32,6 +33,13 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
     new DataProvider()
   )
   const [allData, setAllData] = useState<Array<Object>>([])
+
+  const s = useWindowSize()
+  useEffect(() => {
+    allProvider.setWindowSize(s)
+  }, [allProvider, s])
+  allProvider.setWindowSize(s)
+
   useEffect(() => {
     if (selectedTab == TabsMenuState.All) {
       setAllData([])

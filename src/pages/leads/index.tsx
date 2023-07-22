@@ -13,6 +13,7 @@ import { FilterIcon } from '@/icons/FilterIcon'
 import { LeadFilter } from '@/modules/Leads/LeadFilter'
 import { theme } from '../../../styles/tokens'
 import LangManager from '@/infrastructure/Intl/LangManager'
+import {useWindowSize, WindowSize} from "@/hooks/useWindowSize";
 
 enum TabsMenuState {
   All = 0,
@@ -218,6 +219,11 @@ export default function LeadsPage(): JSX.Element {
       })
     }
   }, [onPageHandler, selected])
+
+  const s = useWindowSize()
+  useEffect(() => {
+    leadsProvider.setWindowSize(s)
+  }, [s])
 
   return (
     <>
