@@ -342,6 +342,10 @@ const StyledLead = styled.div`
     padding-right: 55px;
   }
 
+  .Leads__content {
+    margin-bottom: 20px;
+  }
+
   .IamLeadOwner {
     &.LeadContent {
       grid-gap: 20px;

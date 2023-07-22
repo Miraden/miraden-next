@@ -14,6 +14,7 @@ import { LeadFilter } from '@/modules/Leads/LeadFilter'
 import { theme } from '../../../styles/tokens'
 import LangManager from '@/infrastructure/Intl/LangManager'
 import {useWindowSize, WindowSize} from "@/hooks/useWindowSize";
+import {ApplicationsFooter} from "@/modules/Base/ApplicationsFooter";
 
 enum TabsMenuState {
   All = 0,
@@ -264,6 +265,7 @@ export default function LeadsPage(): JSX.Element {
                 />
               </div>
             )}
+            <ApplicationsFooter />
           </div>
         </StyledLeads>
       </BlankLayout>
@@ -327,6 +329,7 @@ const StyledLeads = styled.div`
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin-bottom: 20px;
   }
 
   .Pagination {

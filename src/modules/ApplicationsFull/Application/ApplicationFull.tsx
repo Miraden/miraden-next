@@ -132,75 +132,6 @@ const StyledApplication = styled.section`
     width: fit-content;
   }
 
-  .Application__Footer {
-    display: none;
-    border-top: 2px solid #eef1f5;
-
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    background: #fff;
-    padding: 10px;
-    border-radius: 10px 10px 0 0;
-  }
-
-  .Application__FooterButtons {
-    display: flex;
-    justify-content: center;
-
-    div,
-    button:not(:first-child) {
-      margin-left: 64px;
-    }
-  }
-
-  .PlusIconContainer {
-    padding: 2px;
-    background: #eef1f5;
-    border-radius: 50%;
-    transform: translate(0, -34px);
-
-    button {
-      background: #4e6af3;
-      width: fit-content;
-      height: fit-content;
-      padding: 10px !important;
-      border-radius: 50%;
-    }
-  }
-
-  .FooterButton {
-    padding: 5px 0 0 0;
-    max-width: 74px;
-    width: 100%;
-
-    :hover {
-      svg {
-        path {
-          fill: #4e6af3;
-        }
-      }
-    }
-
-    span {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      svg {
-        margin-bottom: 2px;
-
-        path {
-          fill: #7786a5;
-        }
-      }
-    }
-  }
-
-  .KebabIcon {
-    transform: rotate(90deg);
-  }
-
   @media (max-width: 1660px) {
     padding-left: 0;
     padding-right: 0;
@@ -242,29 +173,6 @@ const StyledApplication = styled.section`
       margin-left: 0;
       height: fit-content;
       padding-bottom: 120px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    padding-bottom: 120px;
-    .Application__Footer {
-      display: block;
-    }
-  }
-
-  @media (max-width: 767px) {
-    padding-bottom: 0;
-  }
-
-  @media (max-width: 576px) {
-    .Application__FooterButtons {
-      display: flex;
-      justify-content: center;
-
-      div,
-      button:not(:first-child) {
-        margin-left: 5px;
-      }
     }
   }
 `
