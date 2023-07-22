@@ -1,11 +1,10 @@
-import {Button, RequestButton} from "@/components/ui";
-import Image from "next/image";
-import { useState } from "react";
-import styled from "styled-components";
-import { VideoContainer } from "./components/VideoContainer";
+import { Button } from '@/components/ui'
+import Image from 'next/image'
+import { useState } from 'react'
+import styled from 'styled-components'
 
 interface HowItWorksProps {
-  className?: string;
+  className?: string
 }
 
 const HowItWorks = ({ className }: HowItWorksProps) => {
@@ -213,8 +212,6 @@ const StyledHowItWorks = styled.section`
     margin-top: 50px;
 
     li {
-      /* max-width: 320px; */
-
       p {
         max-width: 320px;
       }
@@ -283,6 +280,7 @@ const StyledHowItWorks = styled.section`
       flex-direction: column;
 
       li {
+        gap: 50px;
         max-width: unset;
         display: flex;
 
@@ -305,6 +303,7 @@ const StyledHowItWorks = styled.section`
 
     .HowItWorks__listItemContent {
       margin-top: 2px;
+      flex-grow: 1;
 
       p {
         color: #3b4a69;
@@ -325,6 +324,7 @@ const StyledHowItWorks = styled.section`
       margin-top: 20px;
 
       li {
+        gap: 22px;
         flex-direction: column;
       }
 
@@ -358,7 +358,6 @@ const StyledHowItWorks = styled.section`
 
     .HowItWorks__listItemContent {
       text-align: center;
-      margin-top: 24px;
       margin-left: 0;
       max-width: 280px;
       align-self: center;
