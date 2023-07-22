@@ -1,46 +1,152 @@
-import React from "react";
-import styled from "styled-components";
-import {theme} from "../../../styles/tokens";
-import {Button, Sticker} from "@/components/ui";
-import {LocationIcon} from "@/icons/LocationIcon";
-import {VerifiedIcon} from "@/icons";
-import {StarIconFilled} from "@/icons/StarIconFilled";
+import React, { useEffect, useReducer, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { theme } from '../../../styles/tokens'
+import { Button, Sticker } from '@/components/ui'
+import { LocationIcon } from '@/icons/LocationIcon'
+import { VerifiedIcon } from '@/icons'
+import { StarIconFilled } from '@/icons/StarIconFilled'
+import {
+  ApiRequest,
+  ApiRequestMethods,
+} from '@/infrastructure/Network/Http/ApiRequest'
+import {
+  ApiResponse,
+  ApiResponseStructure,
+  ApiResponseType,
+} from '@/infrastructure/Network/Http/ApiResponse'
 
-const LeadOwnerCard = (): JSX.Element => {
-  return <StyledCard className={"SingleApplicationSideBar"}>
-    <div className={"SideBar"}>
-      <div className="SideBar__head Font_Accent_12_caps">Заявка от</div>
-      <div className="LeadOwner Font_body_alt">
-        <div className="LeadOwner--photo"><img src="/user_06.jpg" alt=""/></div>
-        <div className="LeadOwner--name Font_headline_5">Светлана Гридасова</div>
-        <div className="LeadOwner--status">Агент — RealEstate</div>
-        <div className="LeadOwner--location"><LocationIcon/> Кипр, Лимассол</div>
-        <div className="LeadOwner--account_status"><span>На сайте 6 лет</span> <span className={"LeadOwner--accountDivider"}></span> <span className={"LeadOwner--online"}>В сети</span></div>
-        <div className="LeadOwner--info">
-          <VerifiedIcon className={"LeadOwner--verified"}/>
-          <Sticker theme="black" className="LeadOwner--sticker">pro</Sticker>
-          <div className="LeadOwner--rating">
-            <StarIconFilled
-              width={14}
-              height={14}
-              className="LeadOwner--ratingIcon"
-            />
-            <p className="Font_14_140">1.4</p>
+interface LeadOwnerProps {
+  leadId: number
+  className?: string
+}
+
+interface OwnerStruct {
+  id: number
+  photo?: string
+  name?: string
+  surname?: string
+  sellerStatus?: string
+  location?: string
+  isPro?: boolean
+  rating?: string
+  isPassportVerified?: boolean
+}
+
+class OwnerProvider {
+  private isFetchCompleted: boolean
+  private data?: typeof ApiResponseStructure | null
+  private payload: any
+
+  constructor() {
+    this.isFetchCompleted = false
+    this.data = null
+    this.payload = {}
+  }
+
+  public getPayload(): any {
+    return this.payload
+  }
+
+  public getOwner(): OwnerStruct {
+    return this.payload as OwnerStruct
+  }
+
+  public fetchByLeadId(id: number): Promise<any> {
+    const url = '/lead/' + id + '/owner'
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }
+
+    const apiResponse: ApiResponse = new ApiResponse()
+
+    const response = apiRequest
+      .fetch({
+        method: ApiRequestMethods.GET,
+        headers: headers,
+        endpoint: url,
+      })
+      .then(async res => {
+        return res
+      })
+
+    return response.then(async res => {
+      const p: ApiResponseType = apiResponse.makeFromObject(res)
+      this.data = p
+      if (typeof p.payload == 'object') {
+        this.payload = p.payload
+      }
+      this.isFetchCompleted = true
+      return p
+    })
+  }
+}
+
+const dataProvider: OwnerProvider = new OwnerProvider()
+
+const LeadOwnerCard = (props: LeadOwnerProps): JSX.Element => {
+  const [owner, setOwner] = useState<OwnerStruct>()
+  useEffect(() => {
+    dataProvider.fetchByLeadId(props.leadId).then(res => {
+      setOwner(dataProvider.getOwner())
+    })
+  }, [props.leadId])
+
+  return (
+    <StyledCard className={'SingleApplicationSideBar'}>
+      <div className={'SideBar'}>
+        <div className="SideBar__head Font_Accent_12_caps">Заявка от</div>
+        <div className="LeadOwner Font_body_alt">
+          <div className="LeadOwner--photo">
+            <img src={owner?.photo} alt="" />
+          </div>
+          <div className="LeadOwner--name Font_headline_5">
+            {owner?.name} {owner?.surname}
+          </div>
+          <div className="LeadOwner--status">{owner?.sellerStatus}</div>
+          <div className="LeadOwner--location">
+            <LocationIcon /> Кипр, Лимассол
+          </div>
+          <div className="LeadOwner--account_status">
+            <span>На сайте 6 лет</span>
+            <span className={'LeadOwner--accountDivider'}></span>{' '}
+            <span className={'LeadOwner--online'}>В сети</span>
+          </div>
+          <div className="LeadOwner--info">
+            <VerifiedIcon className={'LeadOwner--verified'} />
+            {owner?.isPro && (
+              <Sticker theme="black" className="LeadOwner--sticker">
+                pro
+              </Sticker>
+            )}
+            <div className="LeadOwner--rating">
+              <StarIconFilled
+                width={14}
+                height={14}
+                className="LeadOwner--ratingIcon"
+              />
+              <p className="Font_14_140">{owner?.rating}</p>
+            </div>
           </div>
         </div>
+        <div className="LeadSidebar--response">
+          <Button>Предложить</Button>
+        </div>
+        <div className="LeadSidebar--description Font_body_alt">
+          <p>
+            Сделайте предложение — это бесплатно. Если пользователь решит
+            обменяться контактами, тогда с вас будет списано:
+          </p>
+        </div>
+        <div className="LeadSidebar--price Font_Accent_16_S">10 €</div>
       </div>
-      <div className="LeadSidebar--response"><Button>Предложить</Button></div>
-      <div className="LeadSidebar--description Font_body_alt">
-        <p>Сделайте предложение — это бесплатно. Если пользователь решит обменяться контактами, тогда с вас будет списано:</p>
-      </div>
-      <div className="LeadSidebar--price Font_Accent_16_S">10 €</div>
-    </div>
 
-    <div className="SideBar__section">
-      <Button tertiary>Задать вопрос в чате</Button>
-      <Button tertiary>В избранное</Button>
-    </div>
-  </StyledCard>
+      <div className="SideBar__section">
+        <Button tertiary>Задать вопрос в чате</Button>
+        <Button tertiary>В избранное</Button>
+      </div>
+    </StyledCard>
+  )
 }
 
 const StyledCard = styled.div`
@@ -142,7 +248,6 @@ const StyledCard = styled.div`
     }
 
     &--verified {
-
     }
 
     &--rating {

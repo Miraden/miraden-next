@@ -257,7 +257,7 @@ const LeadEntry = () => {
               </div>
             </div>
             {showOwnerSidebar && renderLeadPaymentOptions()}
-            {showGuestSidebar && <LeadOwnerCard/>}
+            {showGuestSidebar && <LeadOwnerCard leadId={leadId}/>}
 
             {showFilter && renderFilter(handleShowFilter, () => {})}
             {!showFilter && <ApplicationsFooter />}
