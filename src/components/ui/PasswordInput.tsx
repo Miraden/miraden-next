@@ -130,7 +130,7 @@ const StyledPasswordInput = styled.div`
   }
 
   .Icon__container {
-    width: 18px;
+    width: 18px!important;
     height: 18px;
     position: absolute;
     right: 20px;
