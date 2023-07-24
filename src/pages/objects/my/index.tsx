@@ -29,13 +29,15 @@ export default function MyObjectsPage(): JSX.Element {
   useAuth({
     onSuccess: (): void => {
       setUserAuth(true)
-      setUserReady(true)
     },
 
     onFailure: (): void => {
       setUserAuth(false)
-      setUserReady(true)
     },
+
+    onResponse: (): void => {
+      setUserReady(true)
+    }
   })
 
   const [showFilter, setShowFilter] = useState(false)

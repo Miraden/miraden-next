@@ -12,13 +12,15 @@ export default function ObjectEntry(): JSX.Element {
   useAuth({
     onSuccess: (): void => {
       setUserAuth(true)
-      setUserReady(true)
     },
 
     onFailure: (): void => {
       setUserAuth(false)
-      setUserReady(true)
     },
+
+    onResponse: (): void => {
+      setUserReady(true)
+    }
   })
 
   return (

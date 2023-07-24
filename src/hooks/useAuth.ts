@@ -4,9 +4,10 @@ import AuthManager from '@/modules/Security/Authentication/AuthManager'
 export interface AuthStruct {
   onSuccess: Function
   onFailure: Function
+  onResponse: Function
 }
 
-const useAuth = ({ onSuccess, onFailure }: AuthStruct): void => {
+const useAuth = ({ onSuccess, onFailure, onResponse }: AuthStruct): void => {
   useEffect(() => {
     const authManager = new AuthManager()
     const tokenValidate: Promise<boolean> = authManager.isTokenValid()
@@ -14,6 +15,7 @@ const useAuth = ({ onSuccess, onFailure }: AuthStruct): void => {
     tokenValidate.then(async res => {
       if (res) onSuccess()
       if (!res) onFailure()
+      onResponse()
     })
   }, [])
 }

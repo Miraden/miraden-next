@@ -43,12 +43,14 @@ export default function LeadsPage(): JSX.Element {
     onSuccess: (): void => {
       setIsUserAuth(true)
       leadsProvider.setUserAuthState(true)
-      setUserReady(true)
     },
 
     onFailure: (): void => {
       setIsUserAuth(false)
       leadsProvider.setUserAuthState(false)
+    },
+
+    onResponse: (): void => {
       setUserReady(true)
     }
   })

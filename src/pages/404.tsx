@@ -12,11 +12,13 @@ export default function NotFoundPage() {
   useAuth({
     onSuccess: (): void => {
       setUserAuth(true)
-      setUserReady(true)
     },
 
     onFailure: (): void => {
       setUserAuth(false)
+    },
+
+    onResponse: (): void => {
       setUserReady(true)
     },
   })

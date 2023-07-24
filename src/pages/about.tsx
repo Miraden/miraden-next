@@ -18,6 +18,10 @@ export default function AboutPage() {
     onFailure: (): void => {
       setUserAuth(false)
     },
+
+    onResponse: (): void => {
+      setUserReady(true)
+    }
   })
 
   return (
