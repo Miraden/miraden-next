@@ -30,6 +30,11 @@ interface OwnerStruct {
   isPro?: boolean
   rating?: string
   isPassportVerified?: boolean
+  registeredTransl?: {
+    months?: string,
+    days?: string
+    years?: string
+  }
 }
 
 class OwnerProvider {
@@ -108,7 +113,7 @@ const LeadOwnerCard = (props: LeadOwnerProps): JSX.Element => {
             <LocationIcon /> Кипр, Лимассол
           </div>
           <div className="LeadOwner--account_status">
-            <span>На сайте 6 лет</span>
+            {owner?.registeredTransl && <span>На сайте {owner.registeredTransl.years} {owner.registeredTransl.months} {owner.registeredTransl.days}</span>}
             <span className={'LeadOwner--accountDivider'}></span>{' '}
             <span className={'LeadOwner--online'}>В сети</span>
           </div>

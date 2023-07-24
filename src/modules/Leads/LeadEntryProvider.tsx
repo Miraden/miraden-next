@@ -44,10 +44,6 @@ class LeadEntryProvider {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    if (localStorage.getItem('token')) {
-      headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
-    }
-
     const apiResponse: ApiResponse = new ApiResponse()
 
     const response = apiRequest

@@ -65,10 +65,6 @@ class LeadsDataProvider {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    if (this.isUserAuth) {
-      headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
-    }
-
     const apiResponse: ApiResponse = new ApiResponse()
 
     const response = apiRequest
@@ -125,17 +121,6 @@ class LeadsDataProvider {
   public render(): JSX.Element {
     if (!this.isFetchCompleted) {
       return <ul className="LeadsList">Loading...</ul>
-    }
-
-    if (isAccessDenied(this.data)) {
-      return (
-        <>
-          Session expired or invalid token
-          <CustomLink href="/user/login" underlined>
-            Login
-          </CustomLink>
-        </>
-      )
     }
 
     if (this.payload == null) {
