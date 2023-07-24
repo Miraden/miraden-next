@@ -16,7 +16,7 @@ const NotFoundLayout = () => {
             Главная страница
           </Button>
           <Button
-            href="/applications-full"
+            href="/leads"
             secondary
             compact
             className="NotFound__button"
@@ -24,7 +24,7 @@ const NotFoundLayout = () => {
             Лента заявок
           </Button>
           <Button
-            href="/customer/create-1"
+            href="/lead/add"
             secondary
             compact
             className="NotFound__button"
