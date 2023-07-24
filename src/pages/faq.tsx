@@ -9,13 +9,16 @@ import useAuth from '@/hooks/useAuth'
 
 export default function FaqPage(): JSX.Element {
   const [isUserAuth, setUserAuth] = useState(false)
+  const [userReady, setUserReady] = useState<boolean>(false)
   useAuth({
     onSuccess: (): void => {
       setUserAuth(true)
+      setUserReady(true)
     },
 
     onFailure: (): void => {
       setUserAuth(false)
+      setUserReady(true)
     },
   })
 
@@ -25,7 +28,7 @@ export default function FaqPage(): JSX.Element {
         <title>Miraden - FAQ</title>
       </Head>
       <BlankLayout>
-        <Header isAuthorized={isUserAuth} />
+        <Header isAuthorized={isUserAuth} isReady={userReady} />
         <StyledPage className={'ContainerFull'}>
           <div className={cn('PageWrapper')}>
             <div className={cn('PageContent')}>faq page</div>

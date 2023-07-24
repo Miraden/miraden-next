@@ -27,7 +27,7 @@ const HeaderMobile = ({ className, isAuthorized }: Props) => {
     <StyledHeaderMobile className={className}>
       <div className="Header__mobile">
         {isAuthorized ? (
-          <HeaderUserMenuMobile />
+          <HeaderUserMenuMobile isAuth={true} />
         ) : (
           <>
             <button

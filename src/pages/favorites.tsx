@@ -2,15 +2,32 @@ import { Header } from '@/modules/Base/Header'
 import { FavouritesFullLayout } from '@/modules/FavouritesFull/FavouritesFullLayout'
 import Head from 'next/head'
 import styled from 'styled-components'
+import {useState} from "react";
+import useAuth from "@/hooks/useAuth";
 
 export default function FavoritesPage() {
+  const [isUserAuth, setUserAuth] = useState<boolean>(false)
+  const [userReady, setUserReady] = useState<boolean>(false)
+
+  useAuth({
+    onSuccess: (): void => {
+      setUserAuth(true)
+      setUserReady(true)
+    },
+
+    onFailure: (): void => {
+      setUserAuth(false)
+      setUserReady(true)
+    },
+  })
+
   return (
     <>
       <Head>
         <title>Miraden - Избранное</title>
       </Head>
       <StyledMainApplications>
-        <Header isAuthorized />
+        <Header isAuthorized={isUserAuth} isReady={userReady} />
         <FavouritesFullLayout />
       </StyledMainApplications>
     </>

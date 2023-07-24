@@ -9,6 +9,7 @@ import useAuth from '@/hooks/useAuth'
 
 export default function AboutPage() {
   const [isUserAuth, setUserAuth] = useState(false)
+  const [userReady, setUserReady] = useState<boolean>(false)
   useAuth({
     onSuccess: (): void => {
       setUserAuth(true)
@@ -25,7 +26,7 @@ export default function AboutPage() {
         <title>Miraden - О нас</title>
       </Head>
       <BlankLayout>
-        <Header isAuthorized={isUserAuth} />
+        <Header isAuthorized={isUserAuth} isReady={userReady} />
         <StyledPage className={'ContainerFull'}>
           <div className={cn('PageWrapper')}>
             <div className={cn('PageContent')}>about page</div>

@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { HeaderMenu } from "./HeaderMenu";
 
 interface Props {
-  isAuth?: boolean
+  isAuth: boolean
 }
 
 const HeaderUserMenuMobile = (props: Props) => {

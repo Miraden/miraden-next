@@ -2,17 +2,33 @@ import Head from 'next/head'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import { Header } from '@/modules/Base/Header'
 import styled from 'styled-components'
-import React from 'react'
+import React, {useState} from 'react'
 import { ApplicationFull } from '@/modules/ApplicationsFull/Application'
+import useAuth from "@/hooks/useAuth";
 
 export default function MyLeadsPage(): JSX.Element {
+  const [isUserAuth, setUserAuth] = useState<boolean>(false)
+  const [userReady, setUserReady] = useState<boolean>(false)
+
+  useAuth({
+    onSuccess: (): void => {
+      setUserAuth(true)
+      setUserReady(true)
+    },
+
+    onFailure: (): void => {
+      setUserAuth(false)
+      setUserReady(true)
+    },
+  })
+
   return (
     <>
       <Head>
         <title>Miraden - Мои Заявки</title>
       </Head>
       <BlankLayout>
-        <Header isAuthorized={true} />
+        <Header isAuthorized={isUserAuth} isReady={userReady} />
         <StyledMyLeads className={'ContainerFull'}>
           <ApplicationFull className="Application" />
         </StyledMyLeads>

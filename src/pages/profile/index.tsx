@@ -1,18 +1,33 @@
 import Head from "next/head";
-import React from "react";
+import React, {useState} from "react";
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import cn from "classnames";
 import styled from "styled-components";
 import {Header} from "@/modules/Base/Header";
+import useAuth from "@/hooks/useAuth";
 
 export default function ProfilePage(): JSX.Element {
+  const [isUserAuth, setUserAuth] = useState(false)
+  const [userReady, setUserReady] = useState<boolean>(false)
+  useAuth({
+    onSuccess: (): void => {
+      setUserAuth(true)
+      setUserReady(true)
+    },
+
+    onFailure: (): void => {
+      setUserAuth(false)
+      setUserReady(true)
+    },
+  })
+
   return (
     <>
       <Head>
         <title>Miraden - Личный кабинет</title>
       </Head>
       <BlankLayout>
-        <Header isAuthorized={true} />
+        <Header isAuthorized={isUserAuth} isReady={userReady} />
         <StyledPage className={'ContainerFull'}>
           <div className={cn('PageWrapper')}>
             <div className={cn('PageContent')}>Profile page</div>

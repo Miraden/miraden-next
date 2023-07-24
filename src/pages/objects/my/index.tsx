@@ -10,6 +10,7 @@ import { FilterIcon } from '@/icons/FilterIcon'
 import { Search } from '@/components/ui'
 import { ObjectsDataProvider } from '@/modules/Objects/ObjectsDataProvider'
 import { ObjectCard } from '@/modules/Applications/Application/components/ObjectCard'
+import useAuth from "@/hooks/useAuth";
 
 enum TabsMenuState {
   All = 0,
@@ -22,6 +23,20 @@ export default function MyObjectsPage(): JSX.Element {
   const handleSelect = useCallback((option: TabsMenuState) => {
     setSelected(option)
   }, [])
+
+  const [isUserAuth, setUserAuth] = useState(false)
+  const [userReady, setUserReady] = useState<boolean>(false)
+  useAuth({
+    onSuccess: (): void => {
+      setUserAuth(true)
+      setUserReady(true)
+    },
+
+    onFailure: (): void => {
+      setUserAuth(false)
+      setUserReady(true)
+    },
+  })
 
   const [showFilter, setShowFilter] = useState(false)
   const handleShowFilter = useCallback(() => {
@@ -58,7 +73,7 @@ export default function MyObjectsPage(): JSX.Element {
         <title>Miraden - Мои объекты</title>
       </Head>
       <BlankLayout>
-        <Header isAuthorized={true} />
+        <Header isAuthorized={isUserAuth} isReady={userReady} />
         <StyledObjects className={'ContainerFull'}>
           <div className={'ObjectsWrapper'}>
             <div
