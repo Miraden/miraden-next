@@ -1,8 +1,17 @@
+import {
+  ApiRequest,
+  ApiRequestMethods,
+} from '@/infrastructure/Network/Http/ApiRequest'
+import {
+  ApiResponse,
+  ApiResponseType,
+  HttpCodes,
+} from '@/infrastructure/Network/Http/ApiResponse'
+
 const tokenName: string = 'token'
 
 class AuthManager {
-  constructor() {
-  }
+  constructor() {}
 
   isUserHasToken(): boolean {
     const token: string | null = localStorage.getItem(tokenName)
@@ -14,14 +23,43 @@ class AuthManager {
     return true
   }
 
-  isTokenValid(): boolean {
+  isTokenValid(): Promise<boolean> {
     const token = this.findToken()
     if (token === null) {
-      return false
+      return Promise.resolve(false)
     }
 
-    // api request to backend
-    return true;
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }
+
+    const apiResponse: ApiResponse = new ApiResponse()
+
+    const data = new FormData()
+    data.append('token', token)
+    // @ts-ignore
+    const body = new URLSearchParams(data).toString()
+
+    return apiRequest
+      .fetch({
+        method: ApiRequestMethods.PUT,
+        headers: headers,
+        endpoint: '/user/token/validate',
+        body: body,
+      })
+      .then(res => {
+        const p: ApiResponseType = apiResponse.makeFromObject(res)
+        if (p.code === HttpCodes.OK) {
+          return true
+        } else {
+          this.logout()
+          return false
+        }
+      })
+      .then(res => {
+        return res
+      })
   }
 
   authUser(token: string): void {

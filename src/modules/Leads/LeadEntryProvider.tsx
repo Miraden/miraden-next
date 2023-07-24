@@ -44,6 +44,10 @@ class LeadEntryProvider {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
+    if(localStorage.getItem('token')) {
+      headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+    }
+
     const apiResponse: ApiResponse = new ApiResponse()
 
     const response = apiRequest
@@ -258,7 +262,7 @@ class LeadEntryProvider {
       <SingleApplication
         className={"PageLead"}
         id={this.payload.id}
-        isTrue={true}
+        isTrue={this.payload.isTrue}
         createdAt={formatCreatedDate(this.payload.createdAt)}
         location={{
           id: this.payload.city.id,

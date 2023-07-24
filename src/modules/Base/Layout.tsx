@@ -1,21 +1,26 @@
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useState } from 'react'
 import styled from 'styled-components'
 import { Footer } from './Footer'
 import { Header } from './Header/Header'
-import AuthManager from '@/modules/Security/Authentication/AuthManager'
-import {theme} from "../../../styles/tokens";
+import { theme } from '../../../styles/tokens'
+import useAuth from '@/hooks/useAuth'
 
 interface LayoutProps {
   children?: ReactNode
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  const [isUserAuth, setUserAuth] = useState(false)
+  const [isUserAuth, setUserAuth] = useState<boolean>(false)
 
-  useEffect(() => {
-    const authManger = new AuthManager()
-    setUserAuth(authManger.isUserHasToken())
-  }, [isUserAuth])
+  useAuth({
+    onSuccess: (): void => {
+      setUserAuth(true)
+    },
+
+    onFailure: (): void => {
+      setUserAuth(false)
+    },
+  })
 
   return (
     <StyledHomePage>

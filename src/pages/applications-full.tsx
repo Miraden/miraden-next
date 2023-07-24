@@ -1,18 +1,22 @@
-import { ApplicationsFullLayout } from "@/modules/ApplicationsFull/ApplicationsFullLayout";
-import { Header } from "@/modules/Base/Header";
-import Head from "next/head";
-import styled from "styled-components";
-import {useEffect, useState} from "react";
-import AuthManager from "@/modules/Security/Authentication/AuthManager";
-
-const authManger = new AuthManager()
+import { ApplicationsFullLayout } from '@/modules/ApplicationsFull/ApplicationsFullLayout'
+import { Header } from '@/modules/Base/Header'
+import Head from 'next/head'
+import styled from 'styled-components'
+import { useState } from 'react'
+import useAuth from '@/hooks/useAuth'
 
 export default function ApplicationsFull() {
-  const [isUserAuth, setUserAuth] = useState(false);
+  const [isUserAuth, setUserAuth] = useState(false)
 
-  useEffect(() => {
-    setUserAuth(authManger.isUserHasToken())
-  }, [isUserAuth])
+  useAuth({
+    onSuccess: (): void => {
+      setUserAuth(true)
+    },
+
+    onFailure: (): void => {
+      setUserAuth(false)
+    },
+  })
 
   return (
     <>
@@ -21,11 +25,11 @@ export default function ApplicationsFull() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <StyledMainApplications>
-        <Header isAuthorized={isUserAuth}/>
+        <Header isAuthorized={isUserAuth} />
         <ApplicationsFullLayout />
       </StyledMainApplications>
     </>
-  );
+  )
 }
 
 const StyledMainApplications = styled.main`

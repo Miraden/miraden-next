@@ -2,7 +2,6 @@ import Head from 'next/head'
 import React, { useCallback, useEffect, useState } from 'react'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import { Header } from '@/modules/Base/Header'
-import AuthManager from '@/modules/Security/Authentication/AuthManager'
 import styled from 'styled-components'
 import cn from 'classnames'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
@@ -19,7 +18,8 @@ import { UrlManager } from '@/infrastructure/Routes/UrlManager'
 import { NextRouter, useRouter } from 'next/router'
 import LangManager from '@/infrastructure/Intl/LangManager'
 import { theme } from '../../../styles/tokens'
-import LeadOwnerCard from "@/modules/Leads/LeadOwnerCard";
+import LeadOwnerCard from '@/modules/Leads/LeadOwnerCard'
+import useAuth from '@/hooks/useAuth'
 
 enum TabsMenuState {
   Lead = 0,
@@ -40,10 +40,15 @@ const LeadEntry = () => {
   const leadId: number = parseInt(query['id'] as string) as number
 
   const [isUserAuth, setUserAuth] = useState(false)
-  useEffect(() => {
-    const authManger = new AuthManager()
-    setUserAuth(authManger.isUserHasToken())
-  }, [isUserAuth])
+  useAuth({
+    onSuccess: (): void => {
+      setUserAuth(true)
+    },
+
+    onFailure: (): void => {
+      setUserAuth(false)
+    }
+  })
 
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.Lead)
   const handleSelect = useCallback((option: TabsMenuState) => {

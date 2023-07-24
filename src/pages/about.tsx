@@ -1,19 +1,23 @@
 import Head from 'next/head'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import { Header } from '@/modules/Base/Header'
-import AuthManager from '@/modules/Security/Authentication/AuthManager'
 import styled from 'styled-components'
 import cn from 'classnames'
-import {Footer} from "@/modules/Base/Footer";
-
-const authManger = new AuthManager()
+import { Footer } from '@/modules/Base/Footer'
+import useAuth from '@/hooks/useAuth'
 
 export default function AboutPage() {
   const [isUserAuth, setUserAuth] = useState(false)
-  useEffect(() => {
-    setUserAuth(authManger.isUserHasToken())
-  }, [isUserAuth])
+  useAuth({
+    onSuccess: (): void => {
+      setUserAuth(true)
+    },
+
+    onFailure: (): void => {
+      setUserAuth(false)
+    },
+  })
 
   return (
     <>
@@ -24,9 +28,7 @@ export default function AboutPage() {
         <Header isAuthorized={isUserAuth} />
         <StyledPage className={'ContainerFull'}>
           <div className={cn('PageWrapper')}>
-            <div className={cn('PageContent')}>
-              about page
-            </div>
+            <div className={cn('PageContent')}>about page</div>
           </div>
         </StyledPage>
         <Footer />

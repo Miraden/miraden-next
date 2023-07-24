@@ -10,7 +10,6 @@ import {
 import React from 'react'
 import { LeadCard } from '@/modules/Leads/components/LeadCard'
 import Image from 'next/image'
-import { Link as CustomLink } from '@/components/ui'
 import { Pagination, Types as PaginationType } from '@/components/ui/Pagination'
 import { WindowSize } from '@/hooks/useWindowSize'
 
@@ -59,6 +58,46 @@ class LeadsDataProvider {
     this.windowSize = size
   }
 
+  public fetchAll(url: string): Promise<any> {
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }
+
+    const apiResponse: ApiResponse = new ApiResponse()
+
+    const response = apiRequest
+      .fetch({
+        method: ApiRequestMethods.GET,
+        headers: headers,
+        endpoint: url,
+      })
+      .then(async res => {
+        return res
+      })
+
+    const payload = response.then(async res => {
+      const p = apiResponse.makeFromObject(res)
+      this.data = p
+      if (typeof p.payload == 'object') {
+        this.payload = p.payload as Array<any>
+      }
+      this.isFetchCompleted = true
+      return p
+    })
+
+    response
+      .then(async res => {
+        return apiResponse.getPages()
+      })
+      .then(r => {
+        this.pages = r
+        return r
+      })
+
+    return payload
+  }
+
   public fetchData(): Promise<any> {
     const apiRequest: ApiRequest = new ApiRequest()
     let headers: HeadersInit = {
@@ -72,6 +111,129 @@ class LeadsDataProvider {
         method: ApiRequestMethods.GET,
         headers: headers,
         endpoint: this.url,
+      })
+      .then(async res => {
+        return res
+      })
+
+    const payload = response.then(async res => {
+      const p = apiResponse.makeFromObject(res)
+      this.data = p
+      if (typeof p.payload == 'object') {
+        this.payload = p.payload as Array<any>
+      }
+      this.isFetchCompleted = true
+      return p
+    })
+
+    response
+      .then(async res => {
+        return apiResponse.getPages()
+      })
+      .then(r => {
+        this.pages = r
+        return r
+      })
+
+    return payload
+  }
+
+  public fetchFavorites(url: string): Promise<any> {
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    }
+
+    const apiResponse: ApiResponse = new ApiResponse()
+
+    const response = apiRequest
+      .fetch({
+        method: ApiRequestMethods.GET,
+        headers: headers,
+        endpoint: url,
+      })
+      .then(async res => {
+        return res
+      })
+
+    const payload = response.then(async res => {
+      const p = apiResponse.makeFromObject(res)
+      this.data = p
+      if (typeof p.payload == 'object') {
+        this.payload = p.payload as Array<any>
+      }
+      this.isFetchCompleted = true
+      return p
+    })
+
+    response
+      .then(async res => {
+        return apiResponse.getPages()
+      })
+      .then(r => {
+        this.pages = r
+        return r
+      })
+
+    return payload
+  }
+
+  public fetchIamExecutant(url: string): Promise<any> {
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    }
+
+    const apiResponse: ApiResponse = new ApiResponse()
+
+    const response = apiRequest
+      .fetch({
+        method: ApiRequestMethods.GET,
+        headers: headers,
+        endpoint: url,
+      })
+      .then(async res => {
+        return res
+      })
+
+    const payload = response.then(async res => {
+      const p = apiResponse.makeFromObject(res)
+      this.data = p
+      if (typeof p.payload == 'object') {
+        this.payload = p.payload as Array<any>
+      }
+      this.isFetchCompleted = true
+      return p
+    })
+
+    response
+      .then(async res => {
+        return apiResponse.getPages()
+      })
+      .then(r => {
+        this.pages = r
+        return r
+      })
+
+    return payload
+  }
+
+  public fetchMyRequests(url: string): Promise<any> {
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+    }
+
+    const apiResponse: ApiResponse = new ApiResponse()
+
+    const response = apiRequest
+      .fetch({
+        method: ApiRequestMethods.GET,
+        headers: headers,
+        endpoint: url,
       })
       .then(async res => {
         return res
@@ -212,7 +374,7 @@ function renderLead(data: Array<any>, lang: string, windowSize: WindowSize): JSX
                 total: item.areas.total.value,
                 living: item.areas.living.value,
               }}
-              isTrue={true}
+              isTrue={item.isTrue}
               createdAt={formatCreatedDate(item.createdAt)}
               location={item.city.country + ' / ' + item.city.name}
               isPublished={true}

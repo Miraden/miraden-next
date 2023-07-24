@@ -1,17 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import AuthManager from '@/modules/Security/Authentication/AuthManager'
+import React, { useState } from 'react'
 import Head from 'next/head'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import { Header } from '@/modules/Base/Header'
 import styled from 'styled-components'
 import cn from 'classnames'
+import useAuth from '@/hooks/useAuth'
 
 export default function ObjectEntry(): JSX.Element {
   const [isUserAuth, setUserAuth] = useState(false)
-  useEffect(() => {
-    const authManger = new AuthManager()
-    setUserAuth(authManger.isUserHasToken())
-  }, [isUserAuth])
+  useAuth({
+    onSuccess: (): void => {
+      setUserAuth(true)
+    },
+
+    onFailure: (): void => {
+      setUserAuth(false)
+    },
+  })
+
   return (
     <>
       <Head>

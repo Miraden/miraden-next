@@ -15,6 +15,8 @@ interface Props {
   className?: string;
 }
 
+const authManager = new AuthManager()
+
 const Login = ({className}: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -28,8 +30,6 @@ const Login = ({className}: Props) => {
       setValid(true);
     }
   }, [email, password]);
-
-  const authManager = new AuthManager()
 
   function onPasswordChange(event: React.ChangeEvent<HTMLInputElement>): void {
 

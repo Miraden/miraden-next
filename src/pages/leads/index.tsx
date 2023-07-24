@@ -2,7 +2,6 @@ import Head from 'next/head'
 import { Header } from '@/modules/Base/Header'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import React, { useCallback, useEffect, useState } from 'react'
-import AuthManager from '@/modules/Security/Authentication/AuthManager'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import cn from 'classnames'
 import styled from 'styled-components'
@@ -13,8 +12,9 @@ import { FilterIcon } from '@/icons/FilterIcon'
 import { LeadFilter } from '@/modules/Leads/LeadFilter'
 import { theme } from '../../../styles/tokens'
 import LangManager from '@/infrastructure/Intl/LangManager'
-import {useWindowSize, WindowSize} from "@/hooks/useWindowSize";
-import {ApplicationsFooter} from "@/modules/Base/ApplicationsFooter";
+import { useWindowSize } from '@/hooks/useWindowSize'
+import { ApplicationsFooter } from '@/modules/Base/ApplicationsFooter'
+import useAuth from '@/hooks/useAuth'
 
 enum TabsMenuState {
   All = 0,
@@ -26,7 +26,6 @@ enum TabsMenuState {
 
 const PAGE_KEY: string = 'p'
 
-const authManager = new AuthManager()
 const leadsProvider = new LeadsDataProvider()
 const tabsManager = new TabsManager()
 const urlManager = new UrlManager()
@@ -36,10 +35,20 @@ export default function LeadsPage(): JSX.Element {
   const [itemPage, setItemPage] = useState<number>(1)
   const [isUserAuth, setIsUserAuth] = useState<boolean>(false)
   useEffect(() => {
-    setIsUserAuth(authManager.isUserHasToken)
-    leadsProvider.setUserAuthState(authManager.isUserHasToken())
     leadsProvider.setLang(langManager.getClientLang())
-  }, [isUserAuth])
+  }, [])
+
+  useAuth({
+    onSuccess: (): void => {
+      setIsUserAuth(true)
+      leadsProvider.setUserAuthState(true)
+    },
+
+    onFailure: (): void => {
+      setIsUserAuth(false)
+      leadsProvider.setUserAuthState(false)
+    }
+  })
 
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.All)
   const handleSelect = useCallback((option: TabsMenuState) => {
@@ -55,8 +64,7 @@ export default function LeadsPage(): JSX.Element {
   const filterHandler = useCallback((e: string) => {
     setLeadsAllData([])
     leadsProvider.setIsFinished(false)
-    leadsProvider.setUrl('/leads?' + e)
-    leadsProvider.fetchData().then(res => {
+    leadsProvider.fetchAll('/leads?' + e).then(res => {
       const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
       leadsProvider.setCurrentPage(parseInt(page))
       setLeadsAllData(res)
@@ -82,9 +90,8 @@ export default function LeadsPage(): JSX.Element {
       uri.delete('f[search]')
       history.pushState(null, '', urlManager.getPath() + '?' + uri.toString())
       setLeadsAllData([])
-      leadsProvider.setUrl(url)
       leadsProvider.setIsFinished(false)
-      leadsProvider.fetchData().then(res => {
+      leadsProvider.fetchAll(url).then(res => {
         const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
         leadsProvider.setCurrentPage(parseInt(page))
         setLeadsAllData(res)
@@ -107,8 +114,7 @@ export default function LeadsPage(): JSX.Element {
       uri.set('f[search]', e)
     }
     url = '/leads?' + uri.toString()
-    leadsProvider.setUrl(url)
-    leadsProvider.fetchData().then(res => {
+    leadsProvider.fetchAll(url).then(res => {
       const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
       leadsProvider.setCurrentPage(parseInt(page))
       setLeadsAllData(res)
@@ -127,8 +133,7 @@ export default function LeadsPage(): JSX.Element {
     if (e === 'Сначала дешевле') {
       uri.set('f[sort][price]', 'asc')
     }
-    leadsProvider.setUrl('/leads?' + uri.toString())
-    leadsProvider.fetchData().then(res => {
+    leadsProvider.fetchAll('/leads?' + uri.toString()).then(res => {
       const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
       leadsProvider.setCurrentPage(parseInt(page))
       setLeadsAllData(res)
@@ -146,8 +151,7 @@ export default function LeadsPage(): JSX.Element {
     urlManager.updatePath(urlManager.getPath())
     urlManager.updateQuery(PAGE_KEY, page)
     const newUrl: string = urlManager.getPath() + urlManager.getQuery()
-    leadsProvider.setUrl(newUrl)
-    leadsProvider.fetchData().then(res => {
+    leadsProvider.fetchAll(newUrl).then(res => {
       leadsProvider.setCurrentPage(page)
       setLeadsAllData(res)
     })
@@ -179,8 +183,7 @@ export default function LeadsPage(): JSX.Element {
       }
       setLeadsAllData([])
       leadsProvider.setIsFinished(false)
-      leadsProvider.setUrl(url)
-      leadsProvider.fetchData().then(res => {
+      leadsProvider.fetchAll(url).then(res => {
         const page: string = urlManager.getQueryByName(PAGE_KEY) || '1'
         leadsProvider.setCurrentPage(parseInt(page))
         setLeadsAllData(res)
@@ -196,8 +199,7 @@ export default function LeadsPage(): JSX.Element {
     if (selected == TabsMenuState.Favorites) {
       setLeadsAllData([])
       leadsProvider.setIsFinished(false)
-      leadsProvider.setUrl('/leads/favorites')
-      leadsProvider.fetchData().then(res => {
+      leadsProvider.fetchFavorites('/leads/favorites').then(res => {
         setLeadsAllData(res)
       })
     }
@@ -205,8 +207,7 @@ export default function LeadsPage(): JSX.Element {
     if (selected == TabsMenuState.IamExecutant) {
       setLeadsAllData([])
       leadsProvider.setIsFinished(false)
-      leadsProvider.setUrl('/leads/aimexecutant')
-      leadsProvider.fetchData().then(res => {
+      leadsProvider.fetchIamExecutant('/leads/aimexecutant').then(res => {
         setLeadsAllData(res)
       })
     }
@@ -214,8 +215,7 @@ export default function LeadsPage(): JSX.Element {
     if (selected == TabsMenuState.MyRequests) {
       setLeadsAllData([])
       leadsProvider.setIsFinished(false)
-      leadsProvider.setUrl('/leads/my/requests')
-      leadsProvider.fetchData().then(res => {
+      leadsProvider.fetchMyRequests('/leads/my/requests').then(res => {
         setLeadsAllData(res)
       })
     }
