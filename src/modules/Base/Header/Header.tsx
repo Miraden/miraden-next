@@ -1,27 +1,21 @@
 import styled from "styled-components";
 import { HeaderDesktop, HeaderMobile } from "./components";
+import cn from "classnames";
+import {theme} from "../../../../styles/tokens";
 
 interface HeaderProps {
-  isAuthorized?: boolean;
+  isAuthorized: boolean;
   className?: string;
+  isReady: boolean
 }
 
-const Header = ({ isAuthorized, className }: HeaderProps) => {
+const Header = ({ isAuthorized, className, isReady }: HeaderProps) => {
   return (
-    <StyledHeader className={className}>
+    <StyledHeader className={cn(className, {isReady: isReady})}>
       <div className="Header__topBlock" />
       <div className="Header">
-        {isAuthorized ? (
-          <>
-            <HeaderDesktop className="Header__desktop" isAuthorized />
-            <HeaderMobile className="Header__mobile" isAuthorized />
-          </>
-        ) : (
-          <>
-            <HeaderDesktop className="Header__desktop" />
-            <HeaderMobile className="Header__mobile" />
-          </>
-        )}
+        <HeaderDesktop className="Header__desktop" isAuthorized={isAuthorized} />
+        <HeaderMobile className="Header__mobile" isAuthorized={isAuthorized} />
       </div>
     </StyledHeader>
   );
@@ -57,7 +51,6 @@ const StyledHeader = styled.header`
     border-radius: 10px;
     color: white;
     background-color: #2a344a;
-  }
 
   .Header__mobile {
     display: none;

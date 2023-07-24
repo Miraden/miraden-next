@@ -8,20 +8,29 @@ import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { HeaderAccordion } from "./HeaderAccordion";
 import { HeaderLanguageAccordion } from "./HeaderLanguageAccordion";
+import AuthManager from "@/modules/Security/Authentication/AuthManager";
 
 interface Props {
   className?: string;
   isOpen?: boolean;
+  isAuth: boolean
 }
 
-const HeaderMenu = ({ className, isOpen }: Props) => {
+const HeaderMenu = ({ className, isOpen, isAuth }: Props) => {
   const [expanded, setExpanded] = useState();
+  const [isUserAuth, setUserAuth] = useState<boolean>(isAuth)
 
   const handleChange = useCallback(
     (panelId: any) => (isExpanded: boolean) =>
       isExpanded ? setExpanded(panelId) : setExpanded(undefined),
     []
   );
+
+  const onLogout = useCallback((e: any) => {
+    const authManager = new AuthManager()
+    authManager.logout()
+    setUserAuth(false)
+  }, [])
 
   return (
     <StyledHeaderMenu className={cn("", className)}>
@@ -42,7 +51,8 @@ const HeaderMenu = ({ className, isOpen }: Props) => {
         <Link href="/lead/add">Создать заявку</Link>
         <Link href="/">ПОДПИСАТЬСЯ НА РАССЫЛКУ</Link>
         <Link href="/user/register">РЕГИСТРАЦИЯ</Link>
-        <Link href="/user/login">ВХОД</Link>
+        {isUserAuth && <Link onClick={onLogout} href="#">Выход</Link> }
+        {!isUserAuth && <Link href="/user/login">Вход</Link> }
         <HeaderLanguageAccordion />
       </div>
       <div className="HeaderMenu__contacts">
@@ -92,11 +102,9 @@ const StyledHeaderMenu = styled.div`
     a {
       display: flex;
       width: 100%;
-      padding-left: 30px;
-      padding-right: 30px;
-      padding-top: 20px;
-      padding-bottom: 20px;
+      padding: 20px 30px;
       border-top: 1px solid rgba(119, 134, 165, 0.2);
+
       :hover {
         background: rgba(119, 134, 165, 0.2);
       }
@@ -109,6 +117,7 @@ const StyledHeaderMenu = styled.div`
     display: flex;
     align-items: start;
     flex-direction: column;
+
     a {
       border: none;
       font-size: 12px;
@@ -144,6 +153,7 @@ const StyledHeaderMenu = styled.div`
     margin-top: 50px;
     margin-bottom: 20px;
     transition: 0.15s ease;
+
     a:hover {
       opacity: 0.8;
     }

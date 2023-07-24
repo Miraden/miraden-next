@@ -7,7 +7,11 @@ import { useCallback, useState } from "react";
 import styled from "styled-components";
 import { HeaderMenu } from "./HeaderMenu";
 
-const HeaderUserMenuMobile = () => {
+interface Props {
+  isAuth?: boolean
+}
+
+const HeaderUserMenuMobile = (props: Props) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenMenu = useCallback(() => {
@@ -50,7 +54,7 @@ const HeaderUserMenuMobile = () => {
             <span>A</span>
           </div>
         </button>
-        {isOpen && <HeaderMenu isOpen={isOpen} />}
+        {isOpen && <HeaderMenu isOpen={isOpen} isAuth={props.isAuth} />}
       </div>
     </StyledHeaderUserMenuMobile>
   );

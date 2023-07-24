@@ -1,21 +1,21 @@
-import { Button } from "@/components/ui";
-import { useLockBodyScroll } from "@/hooks/useLockBodyScroll";
-import { BurgerIcon, CrossIcon, MiradenLogo, MiradenLogoMobile } from "@/icons";
-import Link from "next/link";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { HeaderMenu } from "./HeaderMenu";
-import { HeaderUserMenuMobile } from "./HeaderUserMenuMobile";
-import {Cross24Icon} from "@/icons/CrossIcon";
-import {Burger24Icon} from "@/icons/BurgerIcon";
+import { Button } from '@/components/ui'
+import { useLockBodyScroll } from '@/hooks/useLockBodyScroll'
+import { MiradenLogo, MiradenLogoMobile } from '@/icons'
+import Link from 'next/link'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { HeaderMenu } from './HeaderMenu'
+import { HeaderUserMenuMobile } from './HeaderUserMenuMobile'
+import { Cross24Icon } from '@/icons/CrossIcon'
+import { Burger24Icon } from '@/icons/BurgerIcon'
 
 interface Props {
-  className?: string;
-  isAuthorized?: boolean;
+  className?: string
+  isAuthorized: boolean
 }
 
 const HeaderMobile = ({ className, isAuthorized }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleOpenMenu = useCallback(() => {
     setIsOpen(!isOpen);
@@ -40,7 +40,7 @@ const HeaderMobile = ({ className, isAuthorized }: Props) => {
                 <Burger24Icon />
               )}
             </button>
-            {isOpen && <HeaderMenu isOpen={isOpen} />}
+            {isOpen && <HeaderMenu isOpen={isOpen} isAuth={isAuthorized} />}
             {isOpen ? (
               <div className="MiradenLogoContainer">
                 <MiradenLogo />
@@ -50,7 +50,7 @@ const HeaderMobile = ({ className, isAuthorized }: Props) => {
                 <Link href="/" className="HeaderMobile__logoLink">
                   <MiradenLogoMobile />
                 </Link>
-                <Button href={"/user/login"} className="HeaderMobile__enterButton Font_12_16_600">
+                <Button href={"/user/login"} className="HeaderMobile__enterButton Header_nav-ready Font_12_16_600">
                   вход
                 </Button>
               </>
@@ -104,6 +104,7 @@ const StyledHeaderMobile = styled.header`
   .HeaderMobile__enterButton {
     padding: 12px 24px;
     text-transform: uppercase;
+    position: relative;
   }
 `;
 

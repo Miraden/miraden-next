@@ -40,13 +40,16 @@ const LeadEntry = () => {
   const leadId: number = parseInt(query['id'] as string) as number
 
   const [isUserAuth, setUserAuth] = useState(false)
+  const [isUserReady, setUserReady] = useState<boolean>(false)
   useAuth({
     onSuccess: (): void => {
       setUserAuth(true)
+      setUserReady(true)
     },
 
     onFailure: (): void => {
       setUserAuth(false)
+      setUserReady(true)
     }
   })
 
@@ -210,7 +213,7 @@ const LeadEntry = () => {
         <title>Miraden - Заявка</title>
       </Head>
       <BlankLayout>
-        <Header isAuthorized={isUserAuth} />
+        <Header isAuthorized={isUserAuth} isReady={isUserReady} />
         <StyledLead className={'ContainerFull'}>
           <div className={cn('LeadWrapper')}>
             <div

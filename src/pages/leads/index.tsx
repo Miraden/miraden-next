@@ -34,6 +34,7 @@ const langManager = new LangManager()
 export default function LeadsPage(): JSX.Element {
   const [itemPage, setItemPage] = useState<number>(1)
   const [isUserAuth, setIsUserAuth] = useState<boolean>(false)
+  const [isUserReady, setUserReady] = useState<boolean>(false)
   useEffect(() => {
     leadsProvider.setLang(langManager.getClientLang())
   }, [])
@@ -42,11 +43,13 @@ export default function LeadsPage(): JSX.Element {
     onSuccess: (): void => {
       setIsUserAuth(true)
       leadsProvider.setUserAuthState(true)
+      setUserReady(true)
     },
 
     onFailure: (): void => {
       setIsUserAuth(false)
       leadsProvider.setUserAuthState(false)
+      setUserReady(true)
     }
   })
 
@@ -232,7 +235,7 @@ export default function LeadsPage(): JSX.Element {
         <title>Miraden - Заявки</title>
       </Head>
       <BlankLayout>
-        <Header isAuthorized={isUserAuth} />
+        <Header isAuthorized={isUserAuth} isReady={isUserReady} />
         <StyledLeads className={cn('ContainerFull', { userAuth: isUserAuth })}>
           <div className={'LeadsWrapper'}>
             <div

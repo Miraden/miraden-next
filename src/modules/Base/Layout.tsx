@@ -11,20 +11,23 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   const [isUserAuth, setUserAuth] = useState<boolean>(false)
+  const [userReady, setUserReady] = useState<boolean>(false)
 
   useAuth({
     onSuccess: (): void => {
       setUserAuth(true)
+      setUserReady(true)
     },
 
     onFailure: (): void => {
       setUserAuth(false)
+      setUserReady(true)
     },
   })
 
   return (
     <StyledHomePage>
-      <Header isAuthorized={isUserAuth} />
+      <Header isAuthorized={isUserAuth} isReady={userReady} />
       <main>{children}</main>
       <Footer />
     </StyledHomePage>

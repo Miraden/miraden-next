@@ -16,6 +16,7 @@ import styled from "styled-components";
 import { HeaderLocalization } from "./HeaderLocalization";
 import { HeaderUserMenu } from "./HeaderUserMenu";
 import { More } from "./MoreDropdown/More";
+import {useState} from "react";
 
 interface Props {
   className?: string;
@@ -37,7 +38,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
             header
             href="/leads"
             leftIcon={<ListIcon />}
-            className="Header__navButton"
+            className="Header__navButton Header_nav-ready"
             active={currentUrl === '/leads'}
           >
             лента заявок
@@ -48,7 +49,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
                 href="/leads/my"
                 header
                 leftIcon={<ApplicationsListIcon />}
-                className={cn("Header__navButton")}
+                className={cn("Header__navButton Header_nav-ready")}
                 active={currentUrl === '/leads/my'}
               >
                 мои заявки
@@ -57,7 +58,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
                 href="/objects/my"
                 header
                 leftIcon={<HomeIcon />}
-                className="Header__navButton"
+                className="Header__navButton Header_nav-ready"
                 active={currentUrl === '/objects/my'}
               >
                 мои объекты
@@ -68,7 +69,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
               <Button
                 header
                 leftIcon={<AboutUsIcon />}
-                className="Header__navButton"
+                className="Header__navButton Header_nav-ready"
                 href={"#about"}
               >
                 о нас
@@ -76,14 +77,14 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
               <Button
                 header
                 leftIcon={<PricingHeaderIcon />}
-                className="Header__navButton"
+                className="Header__navButton Header_nav-ready"
               >
                 тарифы
               </Button>
               <Button
                 header
                 leftIcon={<FaqIcon />}
-                className="Header__navButton"
+                className="Header__navButton Header_nav-ready"
                 href={"https://faq.miraden.com"}
               >
                 FAQ
@@ -99,10 +100,10 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
         ) : (
           <>
             <HeaderLocalization />
-            <Button header className="Header__enterButton" href="/user/login">
+            <Button header className="Header__enterButton Header_nav-ready" href="/user/login">
               вход
             </Button>
-            <Button className="Header__registrationButton Font_12_16_600" href="/user/register">
+            <Button className="Header__registrationButton Font_12_16_600 Header_nav-ready" href="/user/register">
               регистрация
             </Button>
           </>
@@ -133,6 +134,10 @@ const StyledHeaderDesktop = styled.div`
     margin-right: 30px;
   }
 
+  .Header__navButton {
+    position: relative;
+  }
+
   .Header__navButton:not(:first-child) {
     margin-right: 10px;
   }
@@ -144,12 +149,14 @@ const StyledHeaderDesktop = styled.div`
 
   .Header__enterButton {
     margin-left: 16px;
+    position: relative;
   }
 
   .Header__registrationButton {
     margin-left: 10px;
     padding: 12px 24px;
     text-transform: uppercase;
+    position: relative;
   }
 
   @media (max-width: 1220px) {
