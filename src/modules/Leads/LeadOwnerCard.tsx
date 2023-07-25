@@ -1,7 +1,13 @@
-import React, { useEffect, useReducer, useRef, useState } from 'react'
+import React, {
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState
+} from 'react'
 import styled from 'styled-components'
 import { theme } from '../../../styles/tokens'
-import { Button, Sticker } from '@/components/ui'
+import {Button, Notification, Sticker} from '@/components/ui'
 import { LocationIcon } from '@/icons/LocationIcon'
 import { VerifiedIcon } from '@/icons'
 import { StarIconFilled } from '@/icons/StarIconFilled'
@@ -14,10 +20,13 @@ import {
   ApiResponseStructure,
   ApiResponseType,
 } from '@/infrastructure/Network/Http/ApiResponse'
+import FavoritesProvider from "@/modules/Favorites/FavoritesProvider";
 
 interface LeadOwnerProps {
   leadId: number
   className?: string
+  isUserReady: boolean
+  isUserAuth: boolean
 }
 
 interface OwnerStruct {
@@ -30,11 +39,28 @@ interface OwnerStruct {
   isPro?: boolean
   rating?: string
   isPassportVerified?: boolean
+  inFavorite: boolean
+  leadOwnerId: number
   registeredTransl?: {
     months?: string,
     days?: string
     years?: string
   }
+}
+
+const OwnerStructDefault = {
+  id: 0,
+  inFavorite: false,
+  photo: '',
+  rating: '0',
+  isPro: false,
+  sellerStatus: '',
+  surname: '',
+  name: '',
+  location: '',
+  isPassportVerified: false,
+  registeredTransl: {},
+  leadOwnerId: 0,
 }
 
 class OwnerProvider {
@@ -63,6 +89,10 @@ class OwnerProvider {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
+    if(localStorage.getItem('token')) {
+      headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+    }
+
     const apiResponse: ApiResponse = new ApiResponse()
 
     const response = apiRequest
@@ -88,14 +118,27 @@ class OwnerProvider {
 }
 
 const dataProvider: OwnerProvider = new OwnerProvider()
+const favoritesProvider: FavoritesProvider = new FavoritesProvider()
 
 const LeadOwnerCard = (props: LeadOwnerProps): JSX.Element => {
-  const [owner, setOwner] = useState<OwnerStruct>()
+  const [owner, setOwner] = useState<OwnerStruct>(OwnerStructDefault)
   useEffect(() => {
     dataProvider.fetchByLeadId(props.leadId).then(res => {
       setOwner(dataProvider.getOwner())
     })
   }, [props.leadId])
+
+  const onClickFavorites = useCallback((e: any) => {
+    favoritesProvider.add(owner.leadOwnerId).then(res => {
+      owner.inFavorite = true
+      setNotifyFavoriteVisible(true)
+      setTimeout(() => {
+        setNotifyFavoriteVisible(false)
+      }, 3000)
+    })
+  }, [owner])
+
+  const [notifyFavoriteVisible, setNotifyFavoriteVisible] = useState<boolean>(false)
 
   return (
     <StyledCard className={'SingleApplicationSideBar'}>
@@ -148,8 +191,22 @@ const LeadOwnerCard = (props: LeadOwnerProps): JSX.Element => {
 
       <div className="SideBar__section">
         <Button tertiary>Задать вопрос в чате</Button>
-        <Button tertiary>В избранное</Button>
+        {props.isUserAuth && !owner?.inFavorite && <Button onClick={onClickFavorites} tertiary>В избранное</Button>}
       </div>
+
+      {notifyFavoriteVisible && (
+        <div className={'Notifications'}>
+          <Notification
+            success
+            title={'Избранное'}
+            message={
+              notifyFavoriteVisible
+                ? 'Пользователь в списке избранных'
+                : 'Пользователь удален из списка избранных'
+            }
+          />
+        </div>
+      )}
     </StyledCard>
   )
 }

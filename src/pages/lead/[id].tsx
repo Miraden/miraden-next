@@ -267,7 +267,7 @@ const LeadEntry = () => {
               </div>
             </div>
             {showOwnerSidebar && renderLeadPaymentOptions()}
-            {showGuestSidebar && <LeadOwnerCard leadId={leadId}/>}
+            {showGuestSidebar && <LeadOwnerCard leadId={leadId} isUserAuth={isUserAuth} isUserReady={isUserReady} />}
 
             {showFilter && renderFilter(handleShowFilter, () => {})}
             {!showFilter && <ApplicationsFooter />}
@@ -438,9 +438,9 @@ const StyledLead = styled.div`
   }
 
   .Notifications {
-    position: absolute;
+    position: fixed;
     z-index: 1000;
-    top: 20px;
+    top: 90px;
     left: 50%;
     transform: translateX(-50%);
   }
