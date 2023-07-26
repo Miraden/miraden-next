@@ -228,7 +228,7 @@ const StyledButton = styled.a`
     &:hover {
       background: ${({theme}) => theme.colors.button.primary.hover};
 
-      &:disabled {
+      &:disabled, &.disabled {
         cursor: unset;
         background: ${({theme}) => theme.colors.button.disabled.background};
         color: ${({theme}) => theme.colors.button.disabled.text};
@@ -252,7 +252,7 @@ const StyledButton = styled.a`
       background: ${({theme}) => theme.colors.button.primary.bg.click};
     }
 
-    &:disabled {
+    &:disabled. &.disabled {
       cursor: unset;
       background: ${({theme}) => theme.colors.button.disabled.background};
       color: ${({theme}) => theme.colors.button.disabled.text};

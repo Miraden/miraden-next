@@ -39,7 +39,6 @@ const Global = createGlobalStyle`
     flex-direction: column;
     height: 100%;
     flex-grow: 1;
-    padding-bottom: 20px;
   }
 
   .nobr {

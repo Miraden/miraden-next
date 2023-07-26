@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import { useKeenSlider } from "keen-slider/react";
-import Image from "next/image";
-import { useState } from "react";
-import styled from "styled-components";
+import { Button } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import { useKeenSlider } from 'keen-slider/react'
+import Image from 'next/image'
+import { useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const steps = [
@@ -60,7 +60,7 @@ const SliderDots = ({ count, currentSlide, onDotClick }: SliderDotsProps) => {
           key={index}
           className={currentSlide === index ? "active" : ""}
           onClick={() => onDotClick(index)}
-        />
+        ><span></span></button>
       ))}
     </div>
   );
@@ -88,7 +88,7 @@ const CreateStart = ({ className }: Props) => {
         <div className="Reg__headContainer">
           <div className="Reg__head">
             <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-              Как это работает?
+              Как это работает?
             </h1>
           </div>
         </div>
@@ -130,8 +130,8 @@ const CreateStart = ({ className }: Props) => {
           <SliderDots
             count={steps.length}
             currentSlide={currentSlide}
-            onDotClick={() => {
-              instanceRef.current?.moveToIdx;
+            onDotClick={(e: number) => {
+              instanceRef.current?.moveToIdx(e);
             }}
           />
         </div>
@@ -141,7 +141,7 @@ const CreateStart = ({ className }: Props) => {
           <div className="Reg__footer">
             <div className="Reg__footerBack">
               <Button secondary href="/" className="Reg__goBackButton">
-                На главную
+                На главную
               </Button>
               <Button
                 secondary
@@ -164,24 +164,28 @@ const StyledCreateStep1 = styled.section`
   margin-top: 150px;
 
   .slider-dots {
-    display: flex;
     justify-content: center;
-    margin-top: 64px;
+    margin-top: 36px;
     display: none;
   }
 
   .slider-dots button {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: none;
-    background-color: #eff3fb;
-    margin: 0 15px;
-    cursor: pointer;
-  }
+    background: none;
+    padding: 16px;
 
-  .slider-dots button.active {
-    background-color: #4e6af3;
+    span {
+      width: 8px;
+      height: 8px;
+      display: block;
+      border-radius: 50%;
+      border: none;
+      background-color: #eff3fb;
+      cursor: pointer;
+    }
+
+    &.active span {
+      background-color: #4e6af3;
+    }
   }
 
   .Reg__head {
@@ -224,7 +228,6 @@ const StyledCreateStep1 = styled.section`
     margin-left: 10px;
     margin-bottom: 10px;
     width: 28px;
-    height: 28px;
     display: flex;
     justify-content: center;
     padding: 4px;
@@ -316,9 +319,11 @@ const StyledCreateStep1 = styled.section`
 
   @media (max-width: 576px) {
     margin-top: 0;
-    height: 100vh;
+    height: 100%;
     .Reg {
       height: 100%;
+      display: flex;
+      flex-direction: column;
     }
     .slider-dots {
       display: flex;
@@ -339,11 +344,10 @@ const StyledCreateStep1 = styled.section`
 
     .Reg__options {
       padding: 48px 50px;
-      padding: 0;
       display: flex;
       flex-direction: column;
       grid-gap: 12px;
-      height: 642px;
+      flex-grow: 1;
     }
 
     .Reg__step {
@@ -398,7 +402,6 @@ const StyledCreateStep1 = styled.section`
     }
 
     .Reg__footerContainer {
-      position: fixed;
       bottom: 0;
       width: 100%;
       background: #fff;
