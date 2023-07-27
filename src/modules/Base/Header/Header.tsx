@@ -1,11 +1,10 @@
-import styled from "styled-components";
-import { HeaderDesktop, HeaderMobile } from "./components";
-import cn from "classnames";
-import {theme} from "../../../../styles/tokens";
+import styled from 'styled-components'
+import { HeaderDesktop, HeaderMobile } from './components'
+import cn from 'classnames'
 
 interface HeaderProps {
-  isAuthorized: boolean;
-  className?: string;
+  isAuthorized: boolean
+  className?: string
   isReady: boolean
 }
 
@@ -51,6 +50,7 @@ const StyledHeader = styled.header`
     border-radius: 10px;
     color: white;
     background-color: #2a344a;
+  }
 
   .Header__mobile {
     display: none;
