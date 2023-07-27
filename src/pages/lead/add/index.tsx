@@ -16,16 +16,30 @@ const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
 const mobile: string = theme.breakpoints.mobile.max + 'px'
 
-const workflow = new LeadMakerWorkFlow()
+let isNeedUpdate = true
 
 export default function AddLead(): JSX.Element {
   const [showPayForm, setShowPayForm] = useState<boolean>(false)
-  const [currentState, setCurrentState] = useState<SupportStates | LeadMakerStates>(
-    SupportStates.Intro
+  const [currentState, setCurrentState] = useState<
+    SupportStates | LeadMakerStates
+  >(SupportStates.Intro)
+  const [workflow, setWorkflow] = useState<LeadMakerWorkFlow>(
+    new LeadMakerWorkFlow()
   )
+
+  const [render, forceRender] = useState<boolean>(false)
+
   useEffect(() => {
+    const forceUpdate = (): void => {
+      if (isNeedUpdate) {
+        isNeedUpdate = false
+        forceRender(!render)
+      }
+    }
+
     workflow.rules(currentState)
     workflow.onState((direction: StateDirection): void => {
+      isNeedUpdate = !isNeedUpdate
       if (
         direction === StateDirection.Backward &&
         currentState === SupportStates.Intro
@@ -33,7 +47,6 @@ export default function AddLead(): JSX.Element {
         window.location.href = '/'
         return
       }
-
       if (
         direction === StateDirection.Forward &&
         currentState === SupportStates.Payment
@@ -42,11 +55,33 @@ export default function AddLead(): JSX.Element {
       }
       setCurrentState(workflow.getCurrentState())
     })
-  }, [currentState])
+
+    workflow.onContentChange(() => {
+      isNeedUpdate = !isNeedUpdate
+      forceUpdate()
+      console.log(workflow.getDataToSubmit())
+    })
+
+    forceUpdate()
+  }, [currentState, render, workflow])
 
   const onClosePayForm = useCallback((e: any) => {
     setShowPayForm(false)
   }, [])
+
+  const onPrevClick = useCallback(
+    (e: any) => {
+      workflow.onPrev(e)
+    },
+    [workflow]
+  )
+
+  const onNextClick = useCallback(
+    (e: any) => {
+      workflow.onNext(e)
+    },
+    [workflow]
+  )
 
   return (
     <>
@@ -81,8 +116,8 @@ export default function AddLead(): JSX.Element {
                     <div className="Steps__footerLeft">
                       <Button
                         secondary
-                        onClick={e => workflow.onPrev(e)}
-                        disabled={workflow.isPrevTransitionBlocked()}
+                        onClick={onPrevClick}
+                        disabled={workflow.isPrevTransitionLocked()}
                         className="Step__goBackButton"
                         leftIcon={<ArrowsIcon left={true} />}
                       >
@@ -113,8 +148,8 @@ export default function AddLead(): JSX.Element {
                         </div>
                       )}
                       <Button
-                        onClick={e => workflow.onNext(e)}
-                        disabled={workflow.isNextTransitionBlocked()}
+                        onClick={onNextClick}
+                        disabled={workflow.isNextTransitionLocked()}
                       >
                         {workflow.findData(currentState).nextUrlLabel}
                       </Button>

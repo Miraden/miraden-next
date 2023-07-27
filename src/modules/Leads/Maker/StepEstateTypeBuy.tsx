@@ -18,7 +18,7 @@ type Option =
   | 'landing'
   | 'free'
 
-const StepEstateType = (): JSX.Element => {
+const StepEstateTypeBuy = (): JSX.Element => {
   const [isResidentialChecked, setIsResidentialChecked] = useState(true)
   const [isCommercialChecked, setIsCommercialChecked] = useState(false)
   const [selected, setSelected] = useState<Option | null>(null)
@@ -223,4 +223,4 @@ const StyledRegStep1 = styled.section`
   }
 `
 
-export default StepEstateType
+export default StepEstateTypeBuy

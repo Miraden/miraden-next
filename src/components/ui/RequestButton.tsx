@@ -91,12 +91,8 @@ const StyledButton = styled.a`
   }
 
   &.isActive {
-    background: ${({ theme }) =>
-      theme.colors.button.request["isActive"]} !important;
-    color: ${({ theme }) => theme.colors.white};
-    :hover {
-      background: #414d65 !important;
-    }
+    background: ${({theme}) => theme.colors.button.request.bg.active};
+    color: ${({theme}) => theme.colors.button.request.text.active};
   }
 
   &.isActiveBlue {
@@ -118,7 +114,17 @@ const StyledButton = styled.a`
   }
 
   &.RequestButton {
-    background: ${({ theme }) => theme.colors.button.request["default"]};
+    background: ${({theme}) => theme.colors.button.request.bg.default};
+    color: ${({theme}) => theme.colors.button.request.text.default};
+
+    &.isActive {
+      background: ${({theme}) => theme.colors.button.request.bg.active};
+      color: ${({theme}) => theme.colors.button.request.text.active};
+    }
+
+    &:hover {
+      background: ${({theme}) => theme.colors.button.request.bg.hover};
+    }
   }
 
   &.Button_regular {

@@ -255,10 +255,10 @@ const SearchReg = ({ options, mapButtonLabel, onClick }: SearchProps) => {
 }
 
 interface Props {
-  className?: string
+  onFinished?: Function
 }
 
-const StepLocation = (): JSX.Element => {
+const StepLocation = (props: Props): JSX.Element => {
   const [selected, setSelected] = useState<Option | null>(null)
   const [showAllCities, setShowAllCities] = useState(false)
   const [selectedCity, setSelectedCity] = useState<string | null>(null)
@@ -278,11 +278,13 @@ const StepLocation = (): JSX.Element => {
     setSelectedCity(null)
     setShowAllCities(false)
     setNumCitiesToShow(5)
-  }, [])
+    if(props.onFinished) props.onFinished({country: option, city: selectedCity})
+  }, [props, selectedCity])
 
   const handleSelectCity = useCallback((city: string) => {
     setSelectedCity(city)
-  }, [])
+    if(props.onFinished) props.onFinished({city: city, country: selected})
+  }, [props, selected])
 
   const handleShowMoreCities = useCallback(() => {
     setShowAllCities(true)

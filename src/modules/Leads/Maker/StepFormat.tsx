@@ -1,25 +1,21 @@
-import styled from "styled-components";
-import {useCallback, useState} from "react";
-import {Button, RequestButton} from "@/components/ui";
-import {ArrowIcon} from "@/icons";
+import styled from 'styled-components'
+import { useCallback, useState } from 'react'
+import { Button } from '@/components/ui'
 
 interface Props {
-  className?: string;
+  className?: string
+  onChanged?: Function
 }
 
-type Option = "buy" | "sell";
+type Option = "buy" | "rent";
 
-const StepFormat = (): JSX.Element => {
+const StepFormat = (props: Props): JSX.Element => {
   const [selected, setSelected] = useState<Option | null>(null);
 
   const handleSelect = useCallback((option: Option) => {
     setSelected(option);
-    if (option === "buy") {
-      //window.location.href = "/lead/add/3"; // Переход на страницу при выборе "Хочу купить"
-    } else if (option === "sell") {
-      //window.location.href = "/lead/add/5?sell"; // Переход на страницу при выборе "Хочу арендовать"
-    }
-  }, []);
+    if(props.onChanged) props.onChanged(option)
+  }, [props]);
 
   return (
     <StyledRegStep1>
@@ -33,8 +29,8 @@ const StepFormat = (): JSX.Element => {
         </Button>
         <Button
           request
-          onClick={() => handleSelect("sell")}
-          active={selected === "sell"}
+          onClick={() => handleSelect("rent")}
+          active={selected === "rent"}
         >
           Хочу арендовать
         </Button>

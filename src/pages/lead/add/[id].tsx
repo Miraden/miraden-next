@@ -87,7 +87,7 @@ export default function MakeLeadSteps(): JSX.Element {
                       <Button
                         secondary
                         onClick={e => workflow.onPrev(e)}
-                        disabled={workflow.isPrevTransitionBlocked()}
+                        disabled={workflow.isPrevTransitionLocked()}
                         className="Step__goBackButton"
                         leftIcon={<ArrowsIcon left={true}/>}
                       >
@@ -113,7 +113,7 @@ export default function MakeLeadSteps(): JSX.Element {
                       </div>
                       <Button
                         onClick={e => workflow.onNext(e)}
-                        disabled={workflow.isNextTransitionBlocked()}
+                        disabled={workflow.isNextTransitionLocked()}
                       >
                         Далее
                       </Button>

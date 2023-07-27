@@ -1,11 +1,52 @@
 import StepLocation from '@/modules/Leads/Maker/StepLocation'
 import StepFormat from '@/modules/Leads/Maker/StepFormat'
-import StepEstateType from '@/modules/Leads/Maker/StepEstateType'
+import StepEstateTypeBuy from '@/modules/Leads/Maker/StepEstateTypeBuy'
 import LeadMakerIntro from '@/modules/Leads/Maker/LeadMakerIntro'
+import StepEstateTypeRent from '@/modules/Leads/Maker/StepEstateTypeRent'
 
 export enum StatesType {
   Steps = 'Steps',
   Support = 'Support',
+}
+
+export interface SubmitDataStruct {
+  location: {
+    city: string
+    country: string
+  }
+  format: string
+  estateType: {
+    type: string
+    value: string
+  }
+  estateStatus: string
+  deadlineAt: string
+  area: number
+  livingArea: number
+  rooms: number
+  beds: number
+  bathrooms: number
+  purpose: string
+  readyDeal: string
+  rentPeriod: {
+    start: string
+    end: string
+  }
+  budget: {
+    from: number
+    to: number
+    period: string
+    currency: number
+  }
+  purchase: {
+    type: string
+    firstPayment: string
+    format: string
+  }
+  wished: {
+    title: string
+    text: string
+  }
 }
 
 export enum StateDirection {
@@ -43,115 +84,45 @@ export interface LeadMakerStruct {
   prevUrlLabel: string
 }
 
-const FormData = [
-  {
-    state: LeadMakerStates.Location,
-    title: 'Укажите город или расположение недвижимости',
-    body: <StepLocation />,
-    url: LeadMakerDefaultUrl + LeadMakerStates.Location,
-    nextUrlLabel: 'Далее',
-    prevUrlLabel: 'Назад',
+let submitData: SubmitDataStruct = {
+  location: {
+    city: '',
+    country: '',
   },
-  {
-    state: LeadMakerStates.Format,
-    title: 'Укажите формат сделки с недвижимостью',
-    body: <StepFormat />,
-    url: LeadMakerDefaultUrl + LeadMakerStates.Format,
-    nextUrlLabel: 'Далее',
-    prevUrlLabel: 'Назад',
+  format: '',
+  estateType: {
+    type: '',
+    value: '',
   },
-  {
-    state: LeadMakerStates.EstateType,
-    title: 'Укажите тип недвижимости',
-    body: <StepEstateType />,
-    url: LeadMakerDefaultUrl + LeadMakerStates.EstateType,
-    nextUrlLabel: 'Далее',
-    prevUrlLabel: 'Назад',
+  estateStatus: '',
+  deadlineAt: '',
+  area: 0,
+  livingArea: 0,
+  rooms: 0,
+  beds: 0,
+  bathrooms: 0,
+  purpose: '',
+  readyDeal: '',
+  rentPeriod: {
+    start: '',
+    end: '',
   },
-  {
-    state: LeadMakerStates.EstateStatus,
-    title: 'Укажите состояние недвижимости',
-    body: <></>,
-    url: LeadMakerDefaultUrl + LeadMakerStates.EstateStatus,
-    nextUrlLabel: 'Далее',
-    prevUrlLabel: 'Назад',
+  budget: {
+    from: 0,
+    to: 0,
+    period: '',
+    currency: 0,
   },
-  {
-    state: LeadMakerStates.AreaTotal,
-    title: 'Укажите общую площадь недвижимости',
-    body: <></>,
-    url: LeadMakerDefaultUrl + LeadMakerStates.AreaTotal,
-    nextUrlLabel: 'Далее',
-    prevUrlLabel: 'Назад',
+  purchase: {
+    type: '',
+    firstPayment: '',
+    format: '',
   },
-  {
-    state: LeadMakerStates.RoomsTotal,
-    title: 'Укажите общее количество комнат',
-    body: <></>,
-    url: LeadMakerDefaultUrl + LeadMakerStates.RoomsTotal,
-    nextUrlLabel: 'Далее',
-    prevUrlLabel: 'Назад',
+  wished: {
+    title: '',
+    text: '',
   },
-  {
-    state: LeadMakerStates.Purpose,
-    title: 'Укажите цель покупки',
-    body: <></>,
-    url: LeadMakerDefaultUrl + LeadMakerStates.Purpose,
-    nextUrlLabel: 'Далее',
-    prevUrlLabel: 'Назад',
-  },
-  {
-    state: LeadMakerStates.ReadyDeal,
-    title: 'Когда готовы выходить на сделку?',
-    body: <></>,
-    url: LeadMakerDefaultUrl + LeadMakerStates.ReadyDeal,
-    nextUrlLabel: 'Далее',
-    prevUrlLabel: 'Назад',
-  },
-  {
-    state: LeadMakerStates.Budget,
-    title: 'Укажите примерный бюджет',
-    body: <></>,
-    url: LeadMakerDefaultUrl + LeadMakerStates.Budget,
-    nextUrlLabel: 'Далее',
-    prevUrlLabel: 'Назад',
-  },
-  {
-    state: LeadMakerStates.BuyFormat,
-    title: 'Укажите удобный способ покупки',
-    body: <></>,
-    url: LeadMakerDefaultUrl + LeadMakerStates.BuyFormat,
-    nextUrlLabel: 'Далее',
-    prevUrlLabel: 'Назад',
-  },
-  {
-    state: LeadMakerStates.Wishes,
-    title: 'Опишите ваши дополнительные пожелания',
-    body: <></>,
-    url: LeadMakerDefaultUrl + LeadMakerStates.Wishes,
-    nextUrlLabel: 'Далее',
-    prevUrlLabel: 'Назад',
-  },
-]
-
-const NonLeadData = [
-  {
-    title: 'Как это работает?',
-    body: <LeadMakerIntro />,
-    url: LeadMakerDefaultUrl,
-    nextUrlLabel: 'Начать',
-    prevUrlLabel: 'На главную',
-    state: SupportStates.Intro,
-  },
-  {
-    title: 'Получите больше просмотров и откликов',
-    body: <>Payment</>,
-    url: LeadMakerDefaultUrl,
-    nextUrlLabel: 'Оплатить',
-    prevUrlLabel: 'Назад',
-    state: SupportStates.Payment,
-  },
-]
+}
 
 class LeadMakerWorkFlow {
   private currentState: LeadMakerStates | SupportStates
@@ -160,6 +131,7 @@ class LeadMakerWorkFlow {
   private nextTransitionAllow: boolean
   private prevTransitionAllow: boolean
   private onStateCallback: Function
+  private contentChanged: Function
   private stateDirection: StateDirection
 
   constructor() {
@@ -170,6 +142,7 @@ class LeadMakerWorkFlow {
     this.prevTransitionAllow = true
     this.onStateCallback = (dir: StateDirection) => {}
     this.stateDirection = StateDirection.Forward
+    this.contentChanged = () => {}
   }
 
   public rules(state: LeadMakerStates | SupportStates): void {
@@ -180,66 +153,82 @@ class LeadMakerWorkFlow {
         this.prevState = SupportStates.Intro
         this.nextState = LeadMakerStates.Location
         break
+
       case LeadMakerStates.Location:
         this.prevState = SupportStates.Intro
         this.nextState = LeadMakerStates.Format
         break
+
       case LeadMakerStates.Format:
         this.prevState = LeadMakerStates.Location
         this.nextState = LeadMakerStates.EstateType
         break
+
       case LeadMakerStates.EstateType:
         this.prevState = LeadMakerStates.Format
         this.nextState = LeadMakerStates.EstateStatus
         break
+
       case LeadMakerStates.EstateStatus:
         this.prevState = LeadMakerStates.EstateType
         this.nextState = LeadMakerStates.AreaTotal
         break
+
       case LeadMakerStates.AreaTotal:
         this.prevState = LeadMakerStates.EstateStatus
         this.nextState = LeadMakerStates.RoomsTotal
         break
+
       case LeadMakerStates.RoomsTotal:
         this.prevState = LeadMakerStates.AreaTotal
         this.nextState = LeadMakerStates.Purpose
         break
+
       case LeadMakerStates.Purpose:
         this.prevState = LeadMakerStates.RoomsTotal
         this.nextState = LeadMakerStates.ReadyDeal
         break
+
       case LeadMakerStates.ReadyDeal:
         this.prevState = LeadMakerStates.Purpose
         this.nextState = LeadMakerStates.Budget
         break
+
       case LeadMakerStates.Budget:
         this.prevState = LeadMakerStates.ReadyDeal
         this.nextState = LeadMakerStates.BuyFormat
         break
+
       case LeadMakerStates.BuyFormat:
         this.prevState = LeadMakerStates.Budget
         this.nextState = LeadMakerStates.Wishes
         break
+
       case LeadMakerStates.Wishes:
         this.prevState = LeadMakerStates.BuyFormat
         this.nextState = SupportStates.Payment
         break
+
       case SupportStates.Payment:
         this.prevState = LeadMakerStates.Wishes
         break
     }
   }
 
-  public isNextTransitionBlocked(): boolean {
+  public isNextTransitionLocked(): boolean {
     return !this.nextTransitionAllow
   }
 
-  public isPrevTransitionBlocked(): boolean {
+  public isPrevTransitionLocked(): boolean {
     return !this.prevTransitionAllow
   }
 
-  public unblockNextTransition(): void {
+  public unlockNextTransition(): void {
     this.nextTransitionAllow = true
+  }
+
+  public lockNextTransition(): void {
+    this.nextTransitionAllow = false
   }
 
   public getCurrentState(): LeadMakerStates | SupportStates {
@@ -263,7 +252,7 @@ class LeadMakerWorkFlow {
     const isNonLeadType = StatesType.Support === this.isStateTypeOf(state)
 
     if (isFormType) {
-      const found = FormData.filter(i => {
+      const found = this.getFormData(this).filter(i => {
         if (i.state === state)
           return {
             title: i.title,
@@ -277,7 +266,7 @@ class LeadMakerWorkFlow {
       return found[0]
     }
 
-    const found = NonLeadData.filter(i => {
+    const found = this.getSupportData(this).filter(i => {
       if (state === i.state) {
         return {
           title: i.title,
@@ -305,7 +294,16 @@ class LeadMakerWorkFlow {
   }
 
   public onState(callback: Function): void {
+    if (this.getCurrentState() === SupportStates.Intro) {
+      this.unlockNextTransition()
+    } else {
+      this.lockNextTransition()
+    }
     this.onStateCallback = callback
+  }
+
+  public onContentChange(callback: Function): void {
+    this.contentChanged = callback
   }
 
   public calcProgress(state: LeadMakerStates | SupportStates): number {
@@ -331,6 +329,10 @@ class LeadMakerWorkFlow {
 
   public isCurrentProgressBarVisible(): boolean {
     return SupportStates.Payment !== this.currentState
+  }
+
+  public getDataToSubmit(): SubmitDataStruct {
+    return submitData
   }
 
   private goToState(state: LeadMakerStates | SupportStates): void {
@@ -374,6 +376,142 @@ class LeadMakerWorkFlow {
     }
 
     return StatesType.Steps
+  }
+
+  public getSupportData(context: LeadMakerWorkFlow): LeadMakerStruct[] {
+    const handler = (e: any) => {}
+
+    return [
+      {
+        title: 'Как это работает?',
+        body: <LeadMakerIntro />,
+        url: LeadMakerDefaultUrl,
+        nextUrlLabel: 'Начать',
+        prevUrlLabel: 'На главную',
+        state: SupportStates.Intro,
+      },
+      {
+        title: 'Получите больше просмотров и откликов',
+        body: <>Payment</>,
+        url: LeadMakerDefaultUrl,
+        nextUrlLabel: 'Оплатить',
+        prevUrlLabel: 'Назад',
+        state: SupportStates.Payment,
+      },
+    ]
+  }
+
+  private getFormData(context: LeadMakerWorkFlow): LeadMakerStruct[] {
+    const handler = () => {
+      context.unlockNextTransition()
+      if (context.contentChanged) context.contentChanged()
+    }
+
+    return [
+      {
+        state: LeadMakerStates.Location,
+        title: 'Укажите город или расположение недвижимости',
+        body: (
+          <StepLocation
+            onFinished={(e: any) => {
+              submitData.location.city = e.city
+              submitData.location.country = e.country
+              handler()
+            }}
+          />
+        ),
+        url: LeadMakerDefaultUrl + LeadMakerStates.Location,
+        nextUrlLabel: 'Далее',
+        prevUrlLabel: 'Назад',
+      },
+      {
+        state: LeadMakerStates.Format,
+        title: 'Укажите формат сделки с недвижимостью',
+        body: (
+          <StepFormat
+            onChanged={(e: any) => {
+              handler()
+              submitData.format = e
+            }}
+          />
+        ),
+        url: LeadMakerDefaultUrl + LeadMakerStates.Format,
+        nextUrlLabel: 'Далее',
+        prevUrlLabel: 'Назад',
+      },
+      {
+        state: LeadMakerStates.EstateType,
+        title: 'Укажите тип недвижимости',
+        body: <StepEstateTypeBuy />,
+        url: LeadMakerDefaultUrl + LeadMakerStates.EstateType,
+        nextUrlLabel: 'Далее',
+        prevUrlLabel: 'Назад',
+      },
+      {
+        state: LeadMakerStates.EstateStatus,
+        title: 'Укажите состояние недвижимости',
+        body: <></>,
+        url: LeadMakerDefaultUrl + LeadMakerStates.EstateStatus,
+        nextUrlLabel: 'Далее',
+        prevUrlLabel: 'Назад',
+      },
+      {
+        state: LeadMakerStates.AreaTotal,
+        title: 'Укажите общую площадь недвижимости',
+        body: <></>,
+        url: LeadMakerDefaultUrl + LeadMakerStates.AreaTotal,
+        nextUrlLabel: 'Далее',
+        prevUrlLabel: 'Назад',
+      },
+      {
+        state: LeadMakerStates.RoomsTotal,
+        title: 'Укажите общее количество комнат',
+        body: <></>,
+        url: LeadMakerDefaultUrl + LeadMakerStates.RoomsTotal,
+        nextUrlLabel: 'Далее',
+        prevUrlLabel: 'Назад',
+      },
+      {
+        state: LeadMakerStates.Purpose,
+        title: 'Укажите цель покупки',
+        body: <></>,
+        url: LeadMakerDefaultUrl + LeadMakerStates.Purpose,
+        nextUrlLabel: 'Далее',
+        prevUrlLabel: 'Назад',
+      },
+      {
+        state: LeadMakerStates.ReadyDeal,
+        title: 'Когда готовы выходить на сделку?',
+        body: <></>,
+        url: LeadMakerDefaultUrl + LeadMakerStates.ReadyDeal,
+        nextUrlLabel: 'Далее',
+        prevUrlLabel: 'Назад',
+      },
+      {
+        state: LeadMakerStates.Budget,
+        title: 'Укажите примерный бюджет',
+        body: <></>,
+        url: LeadMakerDefaultUrl + LeadMakerStates.Budget,
+        nextUrlLabel: 'Далее',
+        prevUrlLabel: 'Назад',
+      },
+      {
+        state: LeadMakerStates.BuyFormat,
+        title: 'Укажите удобный способ покупки',
+        body: <></>,
+        url: LeadMakerDefaultUrl + LeadMakerStates.BuyFormat,
+        nextUrlLabel: 'Далее',
+        prevUrlLabel: 'Назад',
+      },
+      {
+        state: LeadMakerStates.Wishes,
+        title: 'Опишите ваши дополнительные пожелания',
+        body: <></>,
+        url: LeadMakerDefaultUrl + LeadMakerStates.Wishes,
+        nextUrlLabel: 'Далее',
+        prevUrlLabel: 'Назад',
+      },
+    ]
   }
 }
 
