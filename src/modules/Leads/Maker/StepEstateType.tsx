@@ -4,7 +4,7 @@ import {
   findLeadEstateTypesSubLevelByRoot,
   LeadEstateTypes,
 } from '@/modules/Leads/LeadTypesDefintion'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 interface Props {
   onChanged?: (options: EstateTypeResult) => void
@@ -17,8 +17,13 @@ export interface EstateTypeResult {
 }
 
 const StepEstateType = (props: Props): JSX.Element => {
-  const [selectedRootLevel, setRootLevel] = useState<string>("")
+  const [selectedRootLevel, setRootLevel] = useState<string>('')
   const [selectedSubType, setSelectedSubtype] = useState<string>('')
+  const [showSubtypes, setShowSubtypes] = useState<boolean>(false)
+
+  useEffect(() => {
+    setShowSubtypes(selectedRootLevel.length > 0)
+  }, [selectedRootLevel.length])
 
   const onRootLevelChanged = useCallback(
     (e: any, label: string) => {
@@ -49,13 +54,15 @@ const StepEstateType = (props: Props): JSX.Element => {
         locale={'ru'}
         onChanged={onRootLevelChanged}
       />
-      <RenderSubLevelsByRoot
-        locale={'ru'}
-        selectedKey={selectedSubType}
-        className={'EstateTypes__subLevel'}
-        selectedRoot={selectedRootLevel}
-        onChanged={onSubLevelsChanged}
-      />
+      {showSubtypes && (
+        <RenderSubLevelsByRoot
+          locale={'ru'}
+          selectedKey={selectedSubType}
+          className={'EstateTypes__subLevel'}
+          selectedRoot={selectedRootLevel}
+          onChanged={onSubLevelsChanged}
+        />
+      )}
     </StyledRegStep1>
   )
 }
