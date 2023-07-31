@@ -387,7 +387,14 @@ class LeadMakerWorkFlow {
     this.statesManager.append({
       state: FormatRentStates.Area,
       title: 'Какая площадь',
-      body: <>area</>,
+      body: <StepArea
+        context={'rent'}
+        onChanged={e => {
+          submitData.area = e.total
+          submitData.livingArea = e.living
+          this.contentChanged(e)
+        }}
+      />,
       prevUrlLabel: 'Назад',
       nextUrlLabel: 'Вперед',
       nextState: FormatRentStates.Period,

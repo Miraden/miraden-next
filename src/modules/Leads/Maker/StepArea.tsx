@@ -55,6 +55,10 @@ const StepArea = (props: Props): JSX.Element => {
       {(props.context === 'land' || props.context === 'commercial') && (
         <RenderTotal selected={selectedTotal} onChanged={onTotal} />
       )}
+
+      {props.context === 'rent' && (
+        <RenderTotal selected={selectedTotal} onChanged={onTotal} />
+      )}
     </RenderStep>
   )
 }
