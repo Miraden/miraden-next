@@ -11,6 +11,7 @@ import StepBuyBudget from './StepBuyBudget'
 import StepPurchase from '@/modules/Leads/Maker/StepPurchase'
 import StepWishes from "@/modules/Leads/Maker/StepWishes";
 import StepPeriod from "@/modules/Leads/Maker/StepPeriod";
+import StepRentBudget from "@/modules/Leads/Maker/StepRentBudget";
 
 export enum StatesType {
   Steps = 'Steps',
@@ -425,13 +426,14 @@ class LeadMakerWorkFlow {
     })
     this.statesManager.append({
       state: FormatRentStates.Budget,
-      title: 'Бюджет',
+      title: 'Укажите примерный бюджет аренды',
       body: (
-        <StepBuyBudget
+        <StepRentBudget
           onChanged={e => {
             submitData.budget.currency = e.currencyId
             submitData.budget.from = e.from
             submitData.budget.to = e.to
+            submitData.budget.period = e.period
             this.contentChanged(e)
           }}
         />

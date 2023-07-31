@@ -1,9 +1,12 @@
-export interface LeadEstateTypesStruct {
-  label: string
+interface LocalisationStruct {
   name: {
     ru: string
     en: string
   }
+}
+
+export interface LeadEstateTypesStruct extends LocalisationStruct {
+  label: string
   subtypes?: LeadEstateTypesStruct[]
 }
 
@@ -497,24 +500,50 @@ export const LeadPurchasesFormats: LeadPurchasesFormatStruct[] = [
   {
     label: LeadPurchasesFormatEnum.Cash,
     name: {
-      ru: "Наличный",
-      en: "Cache"
-    }
+      ru: 'Наличный',
+      en: 'Cache',
+    },
   },
   {
     label: LeadPurchasesFormatEnum.NonCash,
     name: {
-      ru: "Безналичный",
-      en: "Non Cache"
-    }
+      ru: 'Безналичный',
+      en: 'Non Cache',
+    },
   },
   {
     label: LeadPurchasesFormatEnum.Crypto,
     name: {
-      ru: "Криптовалютой",
-      en: "Crypto"
-    }
-  }
+      ru: 'Криптовалютой',
+      en: 'Crypto',
+    },
+  },
+]
+
+export enum LeadPeriodEnum {
+  Night = 'night',
+  Month = 'month',
+}
+
+export interface LeadPeriodsStruct extends LocalisationStruct {
+  label: LeadPeriodEnum
+}
+
+export const LeadPeriods: LeadPeriodsStruct[] = [
+  {
+    label: LeadPeriodEnum.Night,
+    name: {
+      ru: 'За ночь',
+      en: 'Night',
+    },
+  },
+  {
+    label: LeadPeriodEnum.Month,
+    name: {
+      ru: 'За месяц',
+      en: 'Month',
+    },
+  },
 ]
 
 export { LeadEstateTypes }
