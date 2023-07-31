@@ -11,6 +11,7 @@ interface Props {
   label?: string
   className?: string
   message?: string
+  onChange?: (event: any) => void
 }
 
 const TextAreaInput = ({
@@ -21,6 +22,7 @@ const TextAreaInput = ({
   label,
   className,
   message,
+  onChange
 }: Props) => {
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
@@ -31,6 +33,7 @@ const TextAreaInput = ({
       return
     }
     setValue(inputValue)
+    if(onChange) onChange(event)
   }
 
   const handleFocus = () => {

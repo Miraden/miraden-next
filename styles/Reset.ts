@@ -33,11 +33,12 @@ const Reset = createGlobalStyle`
   /* Set core root defaults */
   html {
     scroll-behavior: auto;
+    height: 100%;
   }
 
   /* Set core body defaults */
   body {
-    min-height: 100vh;
+    height: 100%;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
   }

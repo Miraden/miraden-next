@@ -5,7 +5,6 @@ import cn from 'classnames'
 import styled from 'styled-components'
 import { theme } from '../../../../styles/tokens'
 import LeadMakerWorkFlow, {
-  LeadMakerStates,
   StateDirection,
   SupportStates,
 } from '@/modules/Leads/Maker/LeadMakerWorkFlow'
@@ -20,9 +19,9 @@ let isNeedUpdate = true
 
 export default function AddLead(): JSX.Element {
   const [showPayForm, setShowPayForm] = useState<boolean>(false)
-  const [currentState, setCurrentState] = useState<
-    SupportStates | LeadMakerStates
-  >(SupportStates.Intro)
+  const [currentState, setCurrentState] = useState<number | string>(
+    SupportStates.Intro
+  )
   const [workflow, setWorkflow] = useState<LeadMakerWorkFlow>(
     new LeadMakerWorkFlow()
   )
@@ -56,10 +55,10 @@ export default function AddLead(): JSX.Element {
       setCurrentState(workflow.getCurrentState())
     })
 
-    workflow.onContentChange(() => {
+    workflow.onContentChange((e: any) => {
       isNeedUpdate = !isNeedUpdate
       forceUpdate()
-      console.log(workflow.getDataToSubmit())
+      console.log(e)
     })
 
     forceUpdate()
