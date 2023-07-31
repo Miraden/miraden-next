@@ -501,7 +501,12 @@ class LeadMakerWorkFlow {
       this.statesManager.append({
         state: LeadMakerStates.Rooms,
         title: 'Количество комнат?',
-        body: <StepRooms onChanged={e => {}} />,
+        body: <StepRooms onChanged={e => {
+          submitData.rooms = e.rooms
+          submitData.beds = e.beds
+          submitData.bathrooms = e.baths
+          this.contentChanged(e)
+        }} />,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Вперед',
         prevState: LeadMakerStates.Area,
