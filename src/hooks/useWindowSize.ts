@@ -5,7 +5,7 @@ export interface WindowSize {
   height: number
 }
 
-const useWindowSize = (): WindowSize => {
+const useWindowSize = (callback?: Function): WindowSize => {
   const [windowSize, setWindowSize] = useState<WindowSize>({ width: 0, height: 0 })
 
   useEffect(() => {
@@ -14,6 +14,7 @@ const useWindowSize = (): WindowSize => {
         width: window.innerWidth,
         height: window.innerHeight,
       })
+      if(callback) callback()
     }
 
     window.addEventListener('resize', handleResize)

@@ -10,6 +10,7 @@ import StepReadyDeal from './StepReadyDeal'
 import StepBuyBudget from './StepBuyBudget'
 import StepPurchase from '@/modules/Leads/Maker/StepPurchase'
 import StepWishes from "@/modules/Leads/Maker/StepWishes";
+import StepPeriod from "@/modules/Leads/Maker/StepPeriod";
 
 export enum StatesType {
   Steps = 'Steps',
@@ -402,8 +403,12 @@ class LeadMakerWorkFlow {
     })
     this.statesManager.append({
       state: FormatRentStates.Period,
-      title: 'Срок аренды',
-      body: <>period</>,
+      title: 'Укажите период аренды',
+      body: <StepPeriod onChange={e => {
+        submitData.rentPeriod.start = e.dateFrom
+        submitData.rentPeriod.end = e.dateTo
+        this.contentChanged(e)
+      }}/>,
       prevUrlLabel: 'Назад',
       nextUrlLabel: 'Вперед',
       nextState: FormatRentStates.ReadyDeal,
