@@ -60,11 +60,7 @@ const Favourites = ({ className }: ApplicationProps) => {
       <>{renderObjects()}</>,
       (
         <Search
-          sort={[
-            'Сначала агентства',
-            'Сначала PRO',
-            'Сначала самые надежные',
-          ]}
+          sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
           placeholder="Поиск"
           filterIcon={<FilterIcon />}
           withSort={true}

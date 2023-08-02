@@ -3,17 +3,16 @@ import {
   PasswordInput,
   Search,
   TextAreaInput,
-} from "@/components/ui";
-import {DropdownInput} from "@/components/ui/DropdownInput";
-import {DropdownInputCheckbox} from "@/components/ui/DropdownInputCheckbox";
-import {Sort} from "@/components/ui/Sort/Sort";
-import {TextInput} from "@/components/ui/TextInput";
-import styled from "styled-components";
-import {BlankLayout} from "@/modules/Base/BlankLayout";
-import UIKitHead from "@/modules/UIKitTest/UIKitHead";
-import {EditIcon} from "@/icons/EditIcon";
+} from '@/components/ui'
+import { DropdownInputCheckbox } from '@/components/ui/DropdownInputCheckbox'
+import { TextInput } from '@/components/ui/TextInput'
+import styled from 'styled-components'
+import { BlankLayout } from '@/modules/Base/BlankLayout'
+import UIKitHead from '@/modules/UIKitTest/UIKitHead'
+import { EditIcon } from '@/icons/EditIcon'
+import {DropdownInput} from "@/components/ui/DropDowns/DropdownInput";
 
-const options = ["Select 1", "Select 2", "Select 3", "Select 4"];
+const options = ['Select 1', 'Select 2', 'Select 3', 'Select 4']
 
 const options2 = [
   { label: "Option 1", value: "option1" },
@@ -62,15 +61,15 @@ export default function FieldsPage() {
         </div>
 
         <div className={"Fields_row"}>
-          <Search sort={options} placeholder={"Text"} className={"Input"} />
-          <Search sort={options} placeholder={"Text"} disabled className={"Input"} />
+          <Search sort={options2} placeholder={"Text"} className={"Input"} />
+          <Search sort={options2} placeholder={"Text"} disabled className={"Input"} />
         </div>
 
         <div className={"Fields_row Dropdowns"}>
-          <DropdownInput options={options} placeholder={"Select"} selected={() => {}} />
-          <DropdownInput options={options} message={"Message"} placeholder={"Select"} selected={() => {}} />
-          <DropdownInput error className={"Input"} message={"Error message"} selected={() => {}} />
-          <DropdownInput disabled placeholder={"Select"} selected={() => {}} />
+          <DropdownInput options={options2} placeholder={"Select"} selected={(e: Forms.DropDownOption) => {}} />
+          <DropdownInput options={options2} message={"Message"} placeholder={"Select"} selected={(e: Forms.DropDownOption) => {}} />
+          <DropdownInput error className={"Input"} message={"Error message"} selected={(e: Forms.DropDownOption) => {}} />
+          <DropdownInput disabled placeholder={"Select"} selected={(e: Forms.DropDownOption) => {}} />
         </div>
 
         <div className={"Fields_row"}>
@@ -82,8 +81,9 @@ export default function FieldsPage() {
         </div>
 
         <div className={"Fields_row"}>
-          <DropdownInput options={options} className={"Sort"} placeholder={"Без диапазона"} selected={() => {}} />
+          <DropdownInput options={options2} className={"Sort"} placeholder={"Без диапазона"} selected={() => {}} />
         </div>
+
       </StyledFields>
     </BlankLayout>
   );

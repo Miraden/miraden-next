@@ -1,12 +1,12 @@
 import { theme } from '../../../../styles/tokens'
-import { DropdownInput } from '@/components/ui/DropdownInput'
+import { DropdownInput } from '@/components/ui/DropDowns/DropdownInput'
 import { SwapIcon } from '@/icons/SwapIcon'
 import React, {useCallback} from 'react'
 import styled from 'styled-components'
 
 interface Props {
   className?: string
-  options: string[]
+  options: Forms.DropDownOption[]
   onSelect?: Function
 }
 

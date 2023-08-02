@@ -1,441 +1,292 @@
-import { CreateStep1 } from '@/modules/Customer'
 import styled from 'styled-components'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { CrossIcon, MapIcon, SearchIcon } from '@/icons'
-import { MapContainer } from '@/modules/Customer/MapContainer'
-import { Button } from '@/components/ui'
+import React, { useCallback, useEffect, useState } from 'react'
+import LocationsProvider, {
+  CitiesStruct,
+  CountriesStruct,
+  LocationView,
+} from '@/infrastructure/Locations/LocationsProvider'
+import { MapIcon } from '@/icons'
+import { Button, Search } from '@/components/ui'
+import { theme } from '../../../../styles/tokens'
+import {
+  GoogleMapApi,
+  GoogleMapComponent,
+  GoogleMapLibLoader,
+  GoogleMapsLibEnum,
+} from '@/infrastructure/Google/map/GoogleMapApi'
+import MapLocation from '@/icons/MapLocation'
+import { DropdownInputCheckbox } from '@/components/ui/DropdownInputCheckbox'
+import {DropdownInput} from "@/components/ui/DropDowns/DropdownInput";
+import FormField from "@/components/ui/FormField";
 
 interface Props {
   className?: string
   mapButtonLabel?: string
+  onChanged: (selected: LocationResult) => void
 }
 
-const cityMap: Record<Option, { label: string; cities: string[] }> = {
-  turkey: {
-    label: 'Турция',
-    cities: [
-      'Аланья',
-      'Анталья',
-      'Стамбул',
-      'Кемер',
-      'Бодрум',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '0',
-      '11',
-    ],
-  },
-  cyprus: {
-    label: 'Кипр',
-    cities: [
-      'Лимассол',
-      'Пафос',
-      'Ларнака',
-      'Никосия',
-      'Айя-Напа',
-      '12',
-      '13',
-      '14',
-      '15',
-      '16',
-      '17',
-      '18',
-      '19',
-      '20',
-      '21',
-    ],
-  },
-  northCyprus: {
-    label: 'Северный Кипр',
-    cities: [
-      'Гирне',
-      'Фамагуста',
-      'Лефкоша',
-      'Искеле',
-      'Карпасия',
-      '22',
-      '23',
-      '24',
-      '25',
-      '26',
-      '27',
-      '28',
-      '29',
-      '30',
-      '31',
-    ],
-  },
-  montenegro: {
-    label: 'Черногория',
-    cities: [
-      'Будва',
-      'Котор',
-      'Тиват',
-      'Подгорица',
-      'Бар',
-      '32',
-      '33',
-      '34',
-      '35',
-      '36',
-      '37',
-      '38',
-      '39',
-      '40',
-      '41',
-    ],
-  },
-}
-type Option = 'turkey' | 'cyprus' | 'northCyprus' | 'montenegro'
-
-interface SearchProps {
-  options: { [key: string]: { label: string; cities: string[] } }
-  onClick?: any
-  mapButtonLabel?: string
+enum Views {
+  Map = 'map',
+  List = 'list',
 }
 
-interface SearchOptionProps {
-  selected: boolean
-  onClick: () => void
-  children?: any
-  mapButtonLabel?: string
-}
-
-interface SearchOptionItemProps {
-  selected: boolean
-  onClick: () => void
-  mapButtonLabel?: string
-}
-
-const SearchOptionItem = styled.li<SearchOptionItemProps>`
-  background-color: ${props => (props.selected ? '#ccc' : 'transparent')};
-  cursor: pointer;
-  padding: 8px;
-`
-
-const SearchOptionLocal = ({
-  selected,
-  onClick,
-  children,
-  searchText,
-  mapButtonLabel,
-}: SearchOptionProps &
-  React.HTMLProps<HTMLLIElement> & { searchText: string }) => {
-  const highlightedText = searchText
-    ? children
-        .toString()
-        .replace(
-          new RegExp(searchText, 'gi'),
-          (match: any) => `<mark>${match}</mark>`
-        )
-    : children
-  return (
-    <SearchOptionItem onClick={onClick} selected={selected}>
-      <div dangerouslySetInnerHTML={{ __html: highlightedText }} />
-    </SearchOptionItem>
-  )
-}
-
-const SearchReg = ({ options, mapButtonLabel, onClick }: SearchProps) => {
-  const [searchText, setSearchText] = useState('')
-  const [selectedOption, setSelectedOption] = useState<{
-    city: string
-    region: string
-  } | null>(null)
-  const [showDropdown, setShowDropdown] = useState(false)
-  const ref = useRef<HTMLDivElement>(null)
-
-  const handleSearchInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const value = event.target.value
-    setSearchText(value)
-    setSelectedOption(null)
-    setShowDropdown(value !== '')
-  }
-
-  const handleOptionClick = (option: { city: string; region: string }) => {
-    setSelectedOption(option)
-    setSearchText(option.city)
-    setShowDropdown(false)
-  }
-
-  const filteredOptions = Object.keys(options).reduce(
-    (
-      acc: { [key: string]: { label: string; cities: string[] } },
-      optionKey: string
-    ) => {
-      const option = options[optionKey]
-      const cities = option.cities.filter(city =>
-        city.toLowerCase().includes(searchText.toLowerCase())
-      )
-      if (cities.length) {
-        acc[optionKey] = {
-          ...option,
-          cities,
-        }
-      }
-      return acc
-    },
-    {}
-  )
-
-  const handleRemoveResults = () => {
-    setSearchText('')
-  }
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (ref.current && !ref.current.contains(event.target as Node)) {
-      setShowDropdown(false)
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside)
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside)
-    }
-  }, [])
-
-  const [isFocused, setIsFocused] = useState(false)
-
-  return (
-    <SearchRegContainer ref={ref}>
-      <div className={`Search__container ${isFocused ? 'focused' : ''}`}>
-        <SearchIcon attr={{ className: 'Search__searchIcon' }} />
-        <SearchInput
-          type="text"
-          placeholder="Укажите город"
-          value={searchText}
-          onChange={handleSearchInputChange}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-        />
-        {searchText && (
-          <CrossIcon
-            attr={{ className: 'Search__crossIcon', width: 18, height: 18 }}
-          />
-        )}
-        <button className="Search__mapButton" onClick={onClick}>
-          <MapIcon />
-          <p>{mapButtonLabel}</p>
-        </button>
-      </div>
-      {showDropdown && (
-        <SearchDropdown>
-          {Object.keys(filteredOptions).map(optionKey => (
-            <SearchOptionGroup key={optionKey} className="Font_14_16">
-              <SearchOptionList>
-                {filteredOptions[optionKey].cities.map(city => (
-                  <SearchOptionLocal
-                    key={city}
-                    selected={selectedOption?.city === city}
-                    onClick={() =>
-                      handleOptionClick({ city, region: optionKey })
-                    }
-                    searchText={searchText}
-                  >
-                    {city}
-                  </SearchOptionLocal>
-                ))}
-              </SearchOptionList>
-            </SearchOptionGroup>
-          ))}
-        </SearchDropdown>
-      )}
-    </SearchRegContainer>
-  )
-}
-
-interface Props {
-  onFinished?: Function
+export interface LocationResult {
+  countryId: number
+  cityId: number
 }
 
 const StepLocation = (props: Props): JSX.Element => {
-  const [selected, setSelected] = useState<Option | null>(null)
-  const [showAllCities, setShowAllCities] = useState(false)
-  const [selectedCity, setSelectedCity] = useState<string | null>(null)
-  const [numCitiesToShow, setNumCitiesToShow] = useState<number>(5)
-  const [allCitiesActive, setAllCitiesActive] = useState(false)
+  const [locations, setLocations] = useState<CountriesStruct[]>([])
+  const [view, setView] = useState<Views>(Views.List)
 
-  const [openMap, setOpenMap] = useState(false)
-  const [mapButtonLabel, setMapButtonLabel] = useState('На карте')
+  useEffect(() => {
+    if (view === Views.List) {
+      const provider: LocationsProvider = new LocationsProvider()
+      provider.fetch(LocationView.Countries).then(res => {
+        const data = provider.getList() as CountriesStruct[]
+        setLocations(data)
+      })
+    }
 
-  const handleOpenMap = useCallback(() => {
-    setOpenMap(!openMap)
-    setMapButtonLabel(openMap ? 'На карте' : 'Свернуть')
-  }, [openMap])
+    if (view === Views.Map) {
+    }
+  }, [view])
 
-  const handleSelect = useCallback((option: Option) => {
-    setSelected(option)
-    setSelectedCity(null)
-    setShowAllCities(false)
-    setNumCitiesToShow(5)
-    if(props.onFinished) props.onFinished({country: option, city: selectedCity})
-  }, [props, selectedCity])
+  const OnStateToggle = useCallback(
+    (e: any) => {
+      if (view === Views.Map) setView(Views.List)
+      if (view === Views.List) setView(Views.Map)
+    },
+    [view]
+  )
 
-  const handleSelectCity = useCallback((city: string) => {
-    setSelectedCity(city)
-    if(props.onFinished) props.onFinished({city: city, country: selected})
-  }, [props, selected])
-
-  const handleShowMoreCities = useCallback(() => {
-    setShowAllCities(true)
-    setNumCitiesToShow(prev => {
-      const option = cityMap[selected as Option]
-      return option ? option.cities.length : prev
-    })
-  }, [selected])
-
-  const handleHideExtraCities = useCallback(() => {
-    setShowAllCities(false)
-    setNumCitiesToShow(5)
-  }, [])
+  const onLocations = useCallback(
+    (selected: LocationResult) => {
+      props.onChanged(selected)
+    },
+    [props]
+  )
 
   return (
-    <StyledCreateStep1>
-      <SearchReg
-        options={cityMap}
-        onClick={handleOpenMap}
-        mapButtonLabel={mapButtonLabel}
-      />
-      {openMap ? (
-        <MapContainer />
-      ) : (
-        <div className="Reg__options">
-          <div className="Reg__optionsList">
-            {Object.keys(cityMap).map(option => (
-              <Button
-                request
-                key={option}
-                onClick={() => handleSelect(option as Option)}
-                active={selected === option}
-              >
-                {cityMap[option as Option].label}
-              </Button>
-            ))}
-          </div>
-          <div className="Reg__citiesContainer">
-            {selected && (
-              <>
-                <h2 className="Font_20_120 sm:Font_18_120_500">Город</h2>
-                <div className="Reg__cities">
-                  <Button
-                    request
-                    onClick={() => {
-                      setSelectedCity(null)
-                      setAllCitiesActive(true)
-                    }}
-                    active={allCitiesActive}
-                  >
-                    Все города
-                  </Button>
-                  {cityMap[selected].cities
-                    .slice(0, numCitiesToShow)
-                    .map(city => (
-                      <Button
-                        request
-                        key={city}
-                        onClick={() => {
-                          handleSelectCity(city)
-                          setAllCitiesActive(false)
-                        }}
-                        active={selectedCity === city && !allCitiesActive}
-                      >
-                        {city}
-                      </Button>
-                    ))}
-                  {cityMap[selected].cities.length > numCitiesToShow &&
-                    !showAllCities && (
-                      <Button
-                        request
-                        onClick={handleShowMoreCities}
-                        className="Color_blue_primary"
-                      >
-                        Ещё {numCitiesToShow}
-                      </Button>
-                    )}
-                  {showAllCities && (
-                    <Button
-                      request
-                      onClick={handleHideExtraCities}
-                      className="Color_blue_primary"
-                    >
-                      Скрыть
-                    </Button>
-                  )}
-                </div>
-              </>
-            )}
+    <StyledStep>
+      <div className="StepHeader">
+        <div className="StepHeader__left">
+          <RenderSearch />
+        </div>
+
+        <div className="StepHeader__right">
+          <div className="CountriesMap" onClick={OnStateToggle}>
+            <MapIcon />
+            <span>{getViewLabel(view)}</span>
           </div>
         </div>
-      )}
-    </StyledCreateStep1>
+      </div>
+
+      <div className="StepBody">
+        {view === Views.List && (
+          <RenderLocations locations={locations} onChanged={onLocations} />
+        )}
+        {view === Views.Map && <RenderMap />}
+      </div>
+    </StyledStep>
   )
 }
 
-const StyledCreateStep1 = styled.section`
-  .Reg__options {
-    padding: 41px 30px 0 30px;
+interface LocationsProps {
+  locations: CountriesStruct[]
+  onChanged: (selected: LocationResult) => void
+}
+
+const RenderLocations = (props: LocationsProps): JSX.Element => {
+  const anyCity = 0
+  const [selectedCountryId, setSelectedCountryId] = useState<number>(0)
+  const [selectedCityId, setSelectedCityId] = useState<number>(anyCity)
+  const [cities, setCities] = useState<CitiesStruct[]>([])
+  const [isCitiesVisible, setIsCitiesVisible] = useState<boolean>(false)
+
+  useEffect(() => {
+    setIsCitiesVisible(cities.length > 0)
+  }, [cities.length])
+
+  const onCountryClick = useCallback(
+    (country: CountriesStruct) => {
+      setSelectedCountryId(country.id)
+      setCities(findCitiesByCountry(country.id, props.locations))
+      setSelectedCityId(anyCity)
+      props.onChanged({ cityId: anyCity, countryId: country.id })
+    },
+    [props]
+  )
+
+  const onCityClick = useCallback(
+    (cityId: number) => {
+      setSelectedCityId(cityId)
+      props.onChanged({ cityId: cityId, countryId: selectedCountryId })
+    },
+    [props, selectedCountryId]
+  )
+
+  return (
+    <ListStyled>
+      <div className="ListRow">
+        {props.locations.map(country => {
+          return (
+            <Button
+              compact
+              request
+              key={country.id}
+              active={selectedCountryId === country.id}
+              onClick={e => onCountryClick(country)}
+            >
+              {country.name}
+            </Button>
+          )
+        })}
+      </div>
+      <div className="ListRowCities ListRow">
+        {isCitiesVisible && (
+          <>
+            <h5 className={'Font_headline_5'}>Город</h5>
+            <div className={'ListCities'}>
+              <Button
+                compact
+                request
+                key={anyCity}
+                active={selectedCityId === anyCity}
+                onClick={e => onCityClick(anyCity)}
+              >
+                Все города
+              </Button>
+              {cities.map(city => {
+                return (
+                  <Button
+                    compact
+                    request
+                    key={city.id}
+                    active={selectedCityId === city.id}
+                    onClick={e => onCityClick(city.id)}
+                  >
+                    {city.name}
+                  </Button>
+                )
+              })}
+            </div>
+          </>
+        )}
+      </div>
+    </ListStyled>
+  )
+}
+
+const RenderMap = (): JSX.Element => {
+  const radiusList = [
+    { label: 'Диапазон 1 км', value: 1 },
+    { label: 'Диапазон 10 км', value: 10 },
+    { label: 'Диапазон 20 км', value: 20 },
+  ]
+
+  return (
+    <MapStyled>
+      <FormField className={"MapRadius"}>
+        <DropdownInput options={radiusList} placeholder={"Инфраструктура"} selected={(e: Forms.DropDownOption) => {}} />
+      </FormField>
+      {/*<DropdownInput className={'MapRadius'} options={radiusList} placeholder={"Select"} selected={() => {}} />*/}
+    </MapStyled>
+  )
+}
+
+const RenderSearch = (): JSX.Element => {
+  const onChange = useCallback((e: any) => {
+    console.log(e)
+  }, [])
+
+  return (
+    <SearchStyled>
+      <Search
+        sort={[]}
+        placeholder={'Укажите город'}
+        onSearchChange={onChange}
+      />
+    </SearchStyled>
+  )
+}
+
+const getViewLabel = (view: Views): string => {
+  switch (view) {
+    case Views.Map:
+      return 'Свернуть'
+    case Views.List:
+      return 'На карте'
   }
+}
 
-  .Reg__optionsList {
+const findCitiesByCountry = (
+  countryId: number,
+  locations: CountriesStruct[]
+): CitiesStruct[] => {
+  let result: CitiesStruct[] = []
+  locations.map(country => {
+    if (country.id === countryId) {
+      result = country.cities
+    }
+  })
+
+  return result
+}
+
+const StyledStep = styled.section`
+  .StepHeader {
+    border-bottom: 2px solid #f1f7ff;
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    align-items: stretch;
+    justify-content: space-between;
+    padding: 0 30px;
+    color: ${theme.colors.button.tertiary.text.default};
+    gap: 30px;
 
-    button {
-      justify-content: flex-start;
-      width: fit-content;
-      padding: 10px 20px;
+    &__left,
+    &__right {
+      display: flex;
+      flex-grow: 1;
+    }
 
-      span {
-        text-align: initial;
-      }
+    &__left {
+      width: 82.47%;
+    }
+
+    &__right {
+      justify-content: flex-end;
     }
   }
 
-  .Reg__citiesContainer {
-    padding-top: 50px;
+  .StepBody {
+    height: 100%;
   }
 
-  .Reg__cities {
-    margin-top: 15px;
+  .CountriesMap {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 10px;
+    cursor: pointer;
+    white-space: nowrap;
 
-    button {
-      justify-content: flex-start;
-      width: fit-content;
-      padding: 10px 20px;
-
-      span {
-        text-align: initial;
-      }
+    svg path {
+      fill: ${theme.colors.button.tertiary.text.default};
     }
   }
 `
 
-const SearchRegContainer = styled.div`
+const SearchStyled = styled.div`
   position: relative;
-  border-bottom: 2px solid #f1f7ff;
-  padding: 10px 6px 10px 21px;
+  outline: none;
 
-  .Search__searchIcon {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    top: 20px;
-    left: 30px;
-    z-index: 21;
+  .Search__menu {
+    padding: 0;
+    outline: none;
+  }
+
+  .Search__input:hover {
+    outline: none;
   }
 
   .Search__container.focused .Search__searchIcon {
@@ -506,49 +357,50 @@ const SearchRegContainer = styled.div`
   }
 `
 
-const SearchInput = styled.input`
-  width: 100%;
-  font-size: 16px;
-  border: none;
-  margin-left: 40px;
-  outline: none;
+const ListStyled = styled.div`
+  padding: 30px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 
-  ::placeholder {
-    color: #7786a5;
+  .ListRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
-  :focus {
-    .Search__searchIcon {
+  .ListRowCities {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ListCities {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+`
+
+const MapStyled = styled.div`
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  .MapRadius {
+    position: absolute;
+    right: 34px;
+    top: 20px;
+    font-size: 14px;
+  }
+
+  .MapRadiusChoice {
+    .ChoicesSelector {
+      padding: 9px 18px;
     }
-  }
-`
 
-const SearchDropdown = styled.div`
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  max-height: 200px;
-  overflow-y: auto;
-  border-radius: 0 0 10px 10px;
-  border: 2px solid #f1f7ff;
-  background-color: #fff;
-  z-index: 1;
-`
-
-const SearchOptionGroup = styled.div`
-  padding-left: 22px;
-`
-
-const SearchOptionList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  color: #b8c6e3;
-
-  mark {
-    color: #2a344a;
-    background: transparent;
+    .ChoicesOptions {
+      top: 37px;
+    }
   }
 `
 

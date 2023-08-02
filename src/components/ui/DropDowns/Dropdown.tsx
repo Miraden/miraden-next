@@ -1,16 +1,16 @@
 import { FC, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import cn from 'classnames'
-import { CheckSmallLineIcon } from '@/icons/CheckLineIcon'
-import { theme } from '../../../styles/tokens'
+import {theme} from "../../../../styles/tokens";
+import {CheckSmallLineIcon} from "@/icons/CheckLineIcon";
 
 type Props = {
-  options: string[]
+  options: Forms.DropDownOption[]
   showDropDown: boolean
   toggleDropDown: Function
   optionSelection: Function
   className?: string
-  selectedOption?: string
+  selectedOption?: Forms.DropDownOption
 }
 
 const borderRadius = theme.border.radius
@@ -21,9 +21,9 @@ const Dropdown: FC<Props> = ({
   className,
   selectedOption,
 }: Props): JSX.Element => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [showDropDown, setShowDropDown] = useState<boolean>(true)
 
-  const onClickHandler = (option: string): void => {
+  const onClickHandler = (option: Forms.DropDownOption): void => {
     optionSelection(option)
   }
 
@@ -34,20 +34,22 @@ const Dropdown: FC<Props> = ({
   return (
     <StyledDropdown className={className} borderRadius={borderRadius}>
       <div
-        className={showDropDown ? `Dropdown__menu` : `Dropdown__menu_active`}
+        className={cn("Dropdown__menu", {
+          Dropdown__menu_active: showDropDown
+        })}
       >
-        {options.map((option: string, index: number): JSX.Element => {
+        {options.map((option): JSX.Element => {
           return (
             <div
-              key={index}
-              data-id={index}
+              key={option.value}
+              data-id={option.value}
               className={cn(
                 'Dropdown__menu_item',
                 `${selectedOption === option ? 'Dropdown__menu_selected' : ''}`
               )}
               onClick={(): void => onClickHandler(option)}
             >
-              <span>{option}</span>
+              <span>{option.label}</span>
               <CheckSmallLineIcon />
             </div>
           )
@@ -64,13 +66,13 @@ const StyledDropdown = styled.div<{ borderRadius: string }>`
   }
 
   .Dropdown__menu_active {
-    outline: 2px solid ${({theme}) => theme.colors.fields.strokeHover};
+    outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
 
     position: absolute;
     z-index: 2;
-    top: 20px;
-    left: -20px;
-    width: calc(100% + 40px);
+    top: 0;
+    left: 0;
+    width: 100%;
     background: #fff;
     border-radius: 0 0 ${borderRadius} ${borderRadius};
     max-height: 228px;
@@ -84,16 +86,23 @@ const StyledDropdown = styled.div<{ borderRadius: string }>`
       flex-direction: row;
       align-items: start;
       padding: 12px 20px 13px 20px;
-      color: ${({theme}) => theme.colors.text.black};
+      color: ${({ theme }) => theme.colors.text.black};
     }
 
     div:hover {
-      color: ${({theme}) => theme.colors.main};
-      background: ${({theme}) => theme.colors.grey.lightBlue};
+      color: ${({ theme }) => theme.colors.main};
+      background: ${({ theme }) => theme.colors.grey.lightBlue};
     }
   }
 
   .Dropdown__menu_item {
+    padding: 10px 20px;
+    display: flex;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.main};
+      background: ${({ theme }) => theme.colors.grey.lightBlue};
+    }
     svg {
       margin-left: 10px;
       opacity: 0;
@@ -102,14 +111,14 @@ const StyledDropdown = styled.div<{ borderRadius: string }>`
 
   .Dropdown__menu_selected {
     span {
-      color: ${({theme}) => theme.colors.main};
+      color: ${({ theme }) => theme.colors.main};
     }
 
     svg {
       opacity: 1;
 
       path {
-        fill: ${({theme}) => theme.colors.main};
+        fill: ${({ theme }) => theme.colors.main};
       }
     }
   }

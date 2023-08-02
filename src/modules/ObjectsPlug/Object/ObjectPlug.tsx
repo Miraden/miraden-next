@@ -73,7 +73,7 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
       16,
       <div></div>,
       <Search
-        sort={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
+        sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
         placeholder="Поиск"
         className={cn('Applications__searchBar')}
         filterIcon={<FilterIcon />}

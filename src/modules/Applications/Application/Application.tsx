@@ -78,7 +78,7 @@ const Application = ({ className }: ApplicationProps) => {
       <>{renderRequests(selectedContent)}</>,
       (
         <Search
-          sort={['Сначала агентства', 'Сначала PRO', 'Сначала самые надежные']}
+          sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
           placeholder="Поиск"
           filterIcon={<FilterIcon />}
           withSort={true}
@@ -101,11 +101,7 @@ const Application = ({ className }: ApplicationProps) => {
       <>{renderRefusals()}</>,
       (
         <Search
-          sort={[
-            'Сначала агентства',
-            'Сначала PRO',
-            'Сначала самые надежные',
-          ]}
+          sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
           placeholder="Поиск"
           className={cn('Applications__searchBar')}
           filterIcon={<FilterIcon />}
@@ -122,11 +118,7 @@ const Application = ({ className }: ApplicationProps) => {
       <>{renderRecommended(submit, handleOpenModal)}</>,
       (
         <Search
-          sort={[
-            'Сначала агентства',
-            'Сначала PRO',
-            'Сначала самые надежные',
-          ]}
+          sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
           placeholder="Поиск"
           className={cn('Applications__searchBar')}
           filterIcon={<FilterIcon />}

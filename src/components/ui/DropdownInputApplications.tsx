@@ -1,8 +1,8 @@
 import { ArrowIcon } from "@/icons";
 import cn from "classnames";
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import styled from "styled-components";
-import { Dropdown } from "./Dropdown";
+import {Dropdown} from "@/components/ui/DropDowns/Dropdown";
 
 interface Props {
   className?: string;
@@ -10,7 +10,7 @@ interface Props {
   warning?: boolean;
   error?: boolean;
   placeholder?: string;
-  options?: Array<string>;
+  options?: Forms.DropDownOption[];
 }
 
 const DropdownInputApplications: FC<Props> = ({
@@ -22,9 +22,7 @@ const DropdownInputApplications: FC<Props> = ({
   options = [],
 }) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectOption, setSelectOption] = useState<string>("");
-
-  const selectOptions = options.length ? options : ["Нет подходящих вариантов"];
+  const [selectOption, setSelectOption] = useState<Forms.DropDownOption>({label: '', value: 0});
 
   const toggleDropDown = () => {
     setShowDropDown(!showDropDown);
@@ -36,7 +34,7 @@ const DropdownInputApplications: FC<Props> = ({
     }
   };
 
-  const optionSelection = (option: string): void => {
+  const optionSelection = (option: Forms.DropDownOption): void => {
     setSelectOption(option);
   };
 
@@ -60,14 +58,15 @@ const DropdownInputApplications: FC<Props> = ({
       >
         <p className="Font_16_20 Color_blue_primary">Все заявки</p>
         <div className="DropdownInputApplications_selectLabel Text_16_24">
-          {selectOption ? selectOption : placeholder}
+          {selectOption.value ? selectOption.value : placeholder}
           <ArrowIcon width={18} height={18} />
         </div>
         {showDropDown && (
           <Dropdown
             className="DropdownInputApplications_selectContainer"
-            options={selectOptions}
+            options={options}
             showDropDown={false}
+            selectedOption={selectOption}
             toggleDropDown={(): void => toggleDropDown()}
             optionSelection={optionSelection}
           />

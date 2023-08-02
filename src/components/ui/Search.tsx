@@ -7,7 +7,7 @@ import { theme } from '../../../styles/tokens'
 import { MenuSort } from '@/components/ui/Menu/MenuSort'
 
 interface SearchProps {
-  sort: string[]
+  sort:  Forms.DropDownOption[]
   disabled?: boolean
   className?: string
   placeholder?: string

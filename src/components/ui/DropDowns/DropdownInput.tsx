@@ -1,10 +1,9 @@
-import { ArrowIcon, WarningIcon } from '@/icons'
 import cn from 'classnames'
-import React, {FC, useDebugValue, useState} from 'react'
+import React, { FC, useState } from 'react'
 import styled from 'styled-components'
 import { Dropdown } from './Dropdown'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
-import { theme } from '../../../styles/tokens'
+import { WarningIcon } from '@/icons'
 
 interface Props {
   className?: string
@@ -12,13 +11,11 @@ interface Props {
   warning?: boolean
   error?: boolean
   placeholder?: string
-  options?: Array<string>
+  options?: Forms.DropDownOption[]
   message?: string
   icon?: JSX.Element
-  selected: Function
+  selected: (option: Forms.DropDownOption) => void
 }
-
-const borderRadius = theme.border.radius
 
 const DropdownInput: FC<Props> = ({
   className,
@@ -29,12 +26,13 @@ const DropdownInput: FC<Props> = ({
   options = [],
   message,
   icon,
-  selected
+  selected,
 }) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false)
-  const [activeOption, setActiveOption] = useState<string>('')
-
-  const selectOptions = options.length ? options : ['Нет подходящих вариантов']
+  const [activeOption, setActiveOption] = useState<Forms.DropDownOption>({
+    label: '',
+    value: 0,
+  })
 
   const toggleDropDown = () => {
     setShowDropDown(!showDropDown)
@@ -46,7 +44,7 @@ const DropdownInput: FC<Props> = ({
     }
   }
 
-  const optionSelection = (option: string): void => {
+  const optionSelection = (option: Forms.DropDownOption): void => {
     setActiveOption(option)
     selected(option)
   }
@@ -60,13 +58,11 @@ const DropdownInput: FC<Props> = ({
       })}
       disabled={disabled}
       error={error}
-      warning={warning}
-      selected={selected}
     >
       <button
-        className={cn(
-          showDropDown ? `DropdownInput_select_active` : `DropdownInput_select`
-        )}
+        className={cn('DropdownInput_select Font_body_alt', {
+          DropdownInput_select_active: showDropDown,
+        })}
         onClick={(): void => toggleDropDown()}
         onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
           dismissHandler(e)
@@ -74,18 +70,18 @@ const DropdownInput: FC<Props> = ({
         tabIndex={disabled ? -1 : undefined}
       >
         <div className="DropdownInput_selectLabel Font_fields_description">
-          {activeOption ? (
-            <span>{activeOption}</span>
+          {activeOption.value ? (
+            <span>{activeOption.label}</span>
           ) : (
             <span>{placeholder}</span>
           )}
-          <ArrowsIcon bottom attr={{className: "DropdownInput__arrow"}} />
+          <ArrowsIcon bottom attr={{ className: 'DropdownInput__arrow' }} />
           {icon}
         </div>
         {showDropDown && (
           <Dropdown
             className="DropdownInput_selectContainer"
-            options={selectOptions}
+            options={options}
             showDropDown={true}
             selectedOption={activeOption}
             toggleDropDown={(): void => toggleDropDown()}
@@ -106,7 +102,7 @@ const DropdownInput: FC<Props> = ({
   )
 }
 
-const StyledDropdownInput = styled.div<Props>`
+const StyledDropdownInput = styled.div<{disabled: boolean|undefined, error: boolean|undefined}>`
   pointer-events: ${props => (props.disabled ? 'none' : 'auto')};
 
   &.Dropdown_warning {
@@ -181,26 +177,9 @@ const StyledDropdownInput = styled.div<Props>`
     border-radius: ${({ theme }) => theme.border.radius};
   }
 
-  .DropdownInput_select_active {
-    width: 100%;
-    max-width: 300px;
-    background: #fff;
-    padding: 21px 20px;
-    border: none;
-    outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
-    border-radius: ${({ theme }) => theme.border.radius}
-      ${({ theme }) => theme.border.radius} 0 0;
-
-    .DropdownInput_selectLabel {
-      svg {
-        transform: rotate(180deg);
-        transition: 0.2s ease-in;
-        margin-left: 10px;
-      }
-    }
-  }
-
   .DropdownInput_select {
+    background-color: #fff;
+
     &:hover {
       outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
     }
@@ -208,13 +187,29 @@ const StyledDropdownInput = styled.div<Props>`
     outline: 2px solid ${({ theme }) => theme.colors.fields.stroke};
     width: 100%;
     max-width: 300px;
-    padding: 21px 20px;
     border: none;
     border-radius: ${({ theme }) => theme.border.radius};
-    overflow: hidden;
     background: ${props => (props.error ? '#FFF5F5' : 'auto')};
     background: ${props => (props.disabled ? '#EFF3FB' : 'auto')};
     position: relative;
+
+    &_active {
+      width: 100%;
+      max-width: 300px;
+      background: #fff;
+      border: none;
+      outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
+      border-radius: ${({ theme }) => theme.border.radius}
+        ${({ theme }) => theme.border.radius} 0 0;
+
+      .DropdownInput_selectLabel {
+        svg {
+          transform: rotate(180deg);
+          transition: 0.2s ease-in;
+          margin-left: 10px;
+        }
+      }
+    }
 
     svg {
       transition: 0.2s ease-in;
@@ -228,6 +223,7 @@ const StyledDropdownInput = styled.div<Props>`
     align-items: center;
     color: ${props => (props.disabled ? '#B8C6E3' : '#7786a5')};
     font-size: 16px;
+    padding: 13px 20px;
 
     svg path {
       fill: ${({ theme }) => theme.colors.fields.title};
@@ -258,22 +254,9 @@ const StyledDropdownInput = styled.div<Props>`
     }
 
     .DropdownInput_select {
-      padding: 9px 10px 9px 15px;
-
       &:hover {
         background: ${({ theme }) => theme.colors.background.lightBlue};
       }
-    }
-
-    .DropdownInput_select_active {
-      padding: 9px 10px 9px 15px;
-    }
-
-    .Dropdown__menu_active {
-      top: 10px;
-      left: auto;
-      right: -10px;
-      width: fit-content;
     }
 
     .Dropdown__menu_item {
