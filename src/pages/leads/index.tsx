@@ -166,7 +166,7 @@ export default function LeadsPage(): JSX.Element {
     const current = tabsManager.getItem(selected)
     current?.updateMenuFooter(
       <Search
-        sort={['Сначала дешевле', 'Сначала дороже']}
+        sort={[{label: 'Сначала дешевле', value: 1}, {label: 'Сначала дороже', value: 2}]}
         placeholder="Поиск"
         filterIcon={<FilterIcon />}
         withSort={true}
