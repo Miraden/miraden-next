@@ -8,16 +8,15 @@ import LocationsProvider, {
 import { MapIcon } from '@/icons'
 import { Button, Search } from '@/components/ui'
 import { theme } from '../../../../styles/tokens'
-import {
-  GoogleMapApi,
-  GoogleMapComponent,
-  GoogleMapLibLoader,
-  GoogleMapsLibEnum,
-} from '@/infrastructure/Google/map/GoogleMapApi'
-import MapLocation from '@/icons/MapLocation'
-import { DropdownInputCheckbox } from '@/components/ui/DropdownInputCheckbox'
-import {DropdownInput} from "@/components/ui/DropDowns/DropdownInput";
-import FormField from "@/components/ui/FormField";
+import { DropdownInput } from '@/components/ui/DropDowns/DropdownInput'
+import FormField from '@/components/ui/FormField'
+import GoogleMap from '@/modules/Google/GoogleMap'
+import GoogleMapMarker from '@/modules/Google/GoogleMapMarker'
+import GoogleMapCircle from '@/modules/Google/GoogleMapCircle'
+import GoogleMapAutoComplete from '@/modules/Google/GoogleMapAutoComplete'
+import { GoogleAutoComplete } from '@/infrastructure/Google/places/GoogleAutoComplete'
+import { GeocoderManager } from '@/infrastructure/Google/geocoder/GeocoderManager'
+import GoogleMapGeocoder from '@/modules/Google/GoogleMapGeocoder'
 
 interface Props {
   className?: string
@@ -38,9 +37,17 @@ export interface LocationResult {
 const StepLocation = (props: Props): JSX.Element => {
   const [locations, setLocations] = useState<CountriesStruct[]>([])
   const [view, setView] = useState<Views>(Views.List)
+  const [autocompleteVisible, setAutocompleteVisibility] =
+    useState<boolean>(false)
+  const [searchResult, setSearchResult] = useState<
+    google.maps.GeocoderResult[]
+  >([])
+  const [selectedPlace, setSelectedPlace] =
+    useState<google.maps.GeocoderResult | null>(null)
 
   useEffect(() => {
     if (view === Views.List) {
+      unregisterMap()
       const provider: LocationsProvider = new LocationsProvider()
       provider.fetch(LocationView.Countries).then(res => {
         const data = provider.getList() as CountriesStruct[]
@@ -49,6 +56,8 @@ const StepLocation = (props: Props): JSX.Element => {
     }
 
     if (view === Views.Map) {
+      setAutocompleteVisibility(false)
+      setSearchResult([])
     }
   }, [view])
 
@@ -67,11 +76,38 @@ const StepLocation = (props: Props): JSX.Element => {
     [props]
   )
 
+  const onSearchResult = useCallback(
+    (result: google.maps.GeocoderResult[] | null) => {
+      const geocoder = window.Miraden.geocoder
+      geocoder.clearResults()
+      if (!result) {
+        setAutocompleteVisibility(false)
+        return
+      }
+      setAutocompleteVisibility(true)
+      setSearchResult(result)
+    },
+    []
+  )
+
   return (
     <StyledStep>
       <div className="StepHeader">
         <div className="StepHeader__left">
-          <RenderSearch />
+          {view === Views.Map && (
+            <>
+              <RenderSearch onResult={onSearchResult} />
+              <SearchAutoComplete
+                show={autocompleteVisible}
+                items={searchResult}
+                onSelect={(e: google.maps.GeocoderResult) => {
+                  setSelectedPlace(e)
+                  setAutocompleteVisibility(false)
+                }}
+              />
+            </>
+          )}
+          {view === Views.List && <SearchLocations />}
         </div>
 
         <div className="StepHeader__right">
@@ -86,7 +122,7 @@ const StepLocation = (props: Props): JSX.Element => {
         {view === Views.List && (
           <RenderLocations locations={locations} onChanged={onLocations} />
         )}
-        {view === Views.Map && <RenderMap />}
+        {view === Views.Map && <RenderMap place={selectedPlace} />}
       </div>
     </StyledStep>
   )
@@ -178,27 +214,154 @@ const RenderLocations = (props: LocationsProps): JSX.Element => {
   )
 }
 
-const RenderMap = (): JSX.Element => {
+interface MapProps {
+  place?: google.maps.GeocoderResult | null
+}
+
+const RenderMap = (props: MapProps): JSX.Element => {
   const radiusList = [
-    { label: 'Диапазон 1 км', value: 1 },
-    { label: 'Диапазон 10 км', value: 10 },
-    { label: 'Диапазон 20 км', value: 20 },
+    { label: 'Диапазон 1 км', value: 1_000 },
+    { label: 'Диапазон 10 км', value: 10_000 },
+    { label: 'Диапазон 20 км', value: 20_000 },
   ]
+  const DEFAULT_REGION = 'Cyprus'
+  const DEFAULT_RADIUS = radiusList[1]
+
+  const [Map, setMap] = useState<google.maps.Map>(window.Miraden.map)
+  const [CircleRadius, setCircleRadius] = useState<number>(DEFAULT_RADIUS.value)
+  const [pointCenter, setPointCenter] = useState<google.maps.LatLngLiteral>({lat: 0, lng: 0})
+
+  useEffect(() => {
+    if (!props.place) return
+    const location = props.place.geometry?.location
+    if (!location) return
+    setPointCenter({ lat: location.lat(), lng: location.lng() })
+    if (Map) Map.setCenter(location)
+  }, [Map, props.place])
+
+  const onLoad = useCallback(
+    (map: google.maps.Map) => {
+      setMap(map)
+
+      const mgr: GeocoderManager = new GeocoderManager()
+      mgr.setMap(map).makeService()
+      const geo = mgr.findByQuery(DEFAULT_REGION)
+      geo?.then(res => {
+        if(res.results.length === 0) return
+        const result = res.results[0]
+        const location = result.geometry?.location
+        setPointCenter({ lat: location.lat(), lng: location.lng() })
+        map.setCenter({ lat: location.lat(), lng: location.lng() })
+      })
+    },
+    []
+  )
+
+  const onRadius = useCallback((e: Forms.DropDownOption) => {
+    setCircleRadius(Number(e.value))
+  }, [])
+
+  const onMarkerDrag = useCallback((e: any) => {
+    const point = new google.maps.LatLng(e)
+    setPointCenter({ lat: point.lat(), lng: point.lng() })
+  }, [])
 
   return (
     <MapStyled>
-      <FormField className={"MapRadius"}>
-        <DropdownInput options={radiusList} placeholder={"Инфраструктура"} selected={(e: Forms.DropDownOption) => {}} />
+      <FormField className={'MapRadius'}>
+        <DropdownInput
+          options={radiusList}
+          placeholder={'Инфраструктура'}
+          selected={onRadius}
+        />
       </FormField>
-      {/*<DropdownInput className={'MapRadius'} options={radiusList} placeholder={"Select"} selected={() => {}} />*/}
+
+      <GoogleMap
+        onLoad={onLoad}
+        initialSettings={{
+          center: { lat: -34, lng: 151 },
+          zoom: 10,
+          disableDefaultUI: true,
+        }}
+      />
+
+      <GoogleMapCircle
+        Map={Map}
+        settings={{
+          strokeColor: '#000',
+          strokeOpacity: 0,
+          strokeWeight: 1,
+          fillColor: 'blue',
+          fillOpacity: 0.2,
+          map: Map,
+          center: pointCenter,
+          radius: CircleRadius,
+        }}
+      />
+
+      <GoogleMapMarker
+        Map={Map}
+        onDrag={onMarkerDrag}
+        settings={{
+          icon: '/icons/location.svg',
+          map: Map,
+          position: pointCenter,
+          draggable: true,
+        }}
+      />
     </MapStyled>
   )
 }
 
-const RenderSearch = (): JSX.Element => {
-  const onChange = useCallback((e: any) => {
-    console.log(e)
+interface SearchProps {
+  onResult?: (result: google.maps.GeocoderResult[] | null) => void
+}
+
+const RenderSearch = (props: SearchProps): JSX.Element => {
+  const [map, setMap] = useState<google.maps.Map>()
+  const [autoCompleteMgr, setAutoCompleteMgr] = useState<GoogleAutoComplete>()
+  const [geocoderMgr, setGeocoderMgr] = useState<GeocoderManager>()
+  const [searchResult, setSearchResult] = useState<
+    google.maps.GeocoderResult[]
+  >([])
+
+  useEffect(() => {
+    const handler = (e: any) => {
+      setMap(e.detail.map)
+    }
+    document.addEventListener('GoogleMapInit', handler)
   }, [])
+
+  const onResult = useCallback(
+    (result: google.maps.places.QueryAutocompletePrediction[] | null) => {
+      if (geocoderMgr === undefined) return
+      result?.map(async place => {
+        if (!place.place_id) return
+        const geocode = await geocoderMgr.geocodeByPlaceId(place.place_id)
+        if (geocode) geocoderMgr.addResult(geocode.results[0])
+      })
+      setSearchResult(geocoderMgr.getResults())
+      if (props.onResult) props.onResult(geocoderMgr.getResults())
+    },
+    [geocoderMgr, props]
+  )
+
+  const onChange = useCallback(
+    (q: string) => {
+      if (q.length == 0) {
+        geocoderMgr?.clearResults()
+        onResult(null)
+        return
+      }
+      autoCompleteMgr?.searchLocation(
+        q,
+        (result: google.maps.places.QueryAutocompletePrediction[] | null) => {
+          onResult(result)
+        }
+      )
+    },
+    [autoCompleteMgr, geocoderMgr, onResult]
+  )
 
   return (
     <SearchStyled>
@@ -207,7 +370,55 @@ const RenderSearch = (): JSX.Element => {
         placeholder={'Укажите город'}
         onSearchChange={onChange}
       />
+      <GoogleMapAutoComplete map={map} onReady={e => setAutoCompleteMgr(e)} />
+      <GoogleMapGeocoder map={map} onReady={e => {
+        setGeocoderMgr(e)
+      }} />
     </SearchStyled>
+  )
+}
+
+const SearchLocations = (): JSX.Element => {
+  return (
+    <>
+      <SearchStyled>
+        <Search sort={[]} placeholder={'Укажите город'} />
+      </SearchStyled>
+    </>
+  )
+}
+
+interface AutocompleteProps {
+  className?: string
+  items: google.maps.GeocoderResult[]
+  onSelect?: (selected: google.maps.GeocoderResult) => void
+  show: boolean
+}
+
+const SearchAutoComplete = (props: AutocompleteProps): JSX.Element => {
+  const onClick = useCallback(
+    (e: any) => {
+      if (props.onSelect) props.onSelect(e)
+    },
+    [props]
+  )
+
+  if (!props.show) return <></>
+
+  return (
+    <StyledAutocomplete className={'Search__AutocompleteBox'}>
+      {props.items.map((item: google.maps.GeocoderResult, idx) => {
+        return (
+          <div
+            className={'Search__AutocompleteBoxItem'}
+            key={idx}
+            onClick={e => onClick(item)}
+          >
+            {item.formatted_address}
+          </div>
+        )
+      })}
+    </StyledAutocomplete>
   )
 }
 
@@ -234,6 +445,32 @@ const findCitiesByCountry = (
   return result
 }
 
+const unregisterMap = (): void => {
+  if (window.Miraden.map) window.Miraden.map = undefined
+  if (window.Miraden.geocoder) window.Miraden.geocoder = undefined
+}
+
+const StyledAutocomplete = styled.div`
+  &.Search__AutocompleteBox {
+    position: absolute;
+    left: 0;
+    top: 60px;
+    width: 100%;
+    background: #fff;
+    z-index: 100;
+    border-top: 1px solid ${theme.colors.fields.stroke};
+  }
+
+  .Search__AutocompleteBoxItem {
+    padding: 10px 10px 10px 59px;
+    cursor: pointer;
+
+    &:hover {
+      background: ${theme.colors.background.lightBlue};
+    }
+  }
+`
+
 const StyledStep = styled.section`
   .StepHeader {
     border-bottom: 2px solid #f1f7ff;
@@ -243,6 +480,7 @@ const StyledStep = styled.section`
     padding: 0 30px;
     color: ${theme.colors.button.tertiary.text.default};
     gap: 30px;
+    position: relative;
 
     &__left,
     &__right {
@@ -269,6 +507,7 @@ const StyledStep = styled.section`
     gap: 10px;
     cursor: pointer;
     white-space: nowrap;
+    user-select: none;
 
     svg path {
       fill: ${theme.colors.button.tertiary.text.default};
@@ -279,10 +518,12 @@ const StyledStep = styled.section`
 const SearchStyled = styled.div`
   position: relative;
   outline: none;
+  width: 100%;
 
   .Search__menu {
     padding: 0;
     outline: none;
+    width: 100%;
   }
 
   .Search__input:hover {
@@ -391,6 +632,7 @@ const MapStyled = styled.div`
     right: 34px;
     top: 20px;
     font-size: 14px;
+    z-index: 1;
   }
 
   .MapRadiusChoice {

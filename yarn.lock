@@ -259,6 +259,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@googlemaps/js-api-loader@npm:^1.16.2":
+  version: 1.16.2
+  resolution: "@googlemaps/js-api-loader@npm:1.16.2"
+  dependencies:
+    fast-deep-equal: ^3.1.3
+  checksum: 122ee57cc6a936e50358aedc4e79042353590467210e901fb42d4e7d9123c248c4db5cd5407a350cb5bea6de9e9ef1a508c08ba593475285d90bc4b93db42f51
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.8":
   version: 0.11.8
   resolution: "@humanwhocodes/config-array@npm:0.11.8"
@@ -473,6 +482,13 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   checksum: 61c9c7dddb707deb58b85328cfe9d211887145f1311ae6a6e6c0fa9f781fb29916a8669a7d479e46e26a32a89d6ef4f293a22dee4925e009c84051e9dd10e8b7
+  languageName: node
+  linkType: hard
+
+"@types/google.maps@npm:^3.53.5":
+  version: 3.53.5
+  resolution: "@types/google.maps@npm:3.53.5"
+  checksum: 57862d61435a523ae769d19ebcca99dc1d4a2ea976bbdf92da25bda3f2bed71871f8d78ef50b567bcbc54c8a78a55cfa16e8bd785e3d503fe2c3b5ef8fd76972
   languageName: node
   linkType: hard
 
@@ -2326,6 +2342,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "miraden-next-ts@workspace:."
   dependencies:
+    "@googlemaps/js-api-loader": ^1.16.2
+    "@types/google.maps": ^3.53.5
     "@types/node": 18.16.0
     "@types/react": 18.0.38
     "@types/react-datepicker": ^4.11.2

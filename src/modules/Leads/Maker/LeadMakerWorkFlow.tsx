@@ -1,4 +1,4 @@
-import StepLocation from '@/modules/Leads/Maker/StepLocation'
+import StepLocation, {LocationResult} from '@/modules/Leads/Maker/StepLocation'
 import StepFormat from '@/modules/Leads/Maker/StepFormat'
 import StepEstateType from '@/modules/Leads/Maker/StepEstateType'
 import LeadMakerIntro from '@/modules/Leads/Maker/LeadMakerIntro'
@@ -20,8 +20,8 @@ export enum StatesType {
 
 export interface SubmitDataStruct {
   location: {
-    city: string
-    country: string
+    city: number
+    country: number
   }
   format: string
   estateType: {
@@ -61,8 +61,8 @@ export interface SubmitDataStruct {
 
 let submitData: SubmitDataStruct = {
   location: {
-    city: '',
-    country: '',
+    city: 0,
+    country: 0,
   },
   format: 'apartment',
   estateType: {
@@ -869,9 +869,10 @@ class StatesManager {
       nextState: LeadMakerStates.Format,
       body: (
         <StepLocation
-          onFinished={(e: any) => {
-            submitData.location.city = e.city
-            submitData.location.country = e.country
+          onChanged={(location: LocationResult) => {
+            submitData.location.city = location.cityId
+            submitData.location.country = location.countryId
+            this.contentChanged(location)
           }}
         />
       ),

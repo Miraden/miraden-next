@@ -214,6 +214,12 @@ const StyledPage = styled.div`
     &__body {
       flex-grow: 1;
       overflow-y: auto;
+
+      & > section {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
     }
 
     &__footerBody {
