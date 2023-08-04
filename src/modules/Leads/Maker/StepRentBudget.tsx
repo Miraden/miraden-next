@@ -12,6 +12,7 @@ import {
   LeadPeriods,
   LeadPeriodsStruct,
 } from '@/modules/Leads/LeadTypesDefintion'
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
 
 export interface Props {
   className?: string
@@ -114,52 +115,53 @@ const StepRentBudget = (props: Props): JSX.Element => {
 
   return (
     <StyledStep>
-      <div className="RentPeriod">
-        {LeadPeriods.map(period => {
-          return (
-            <>
-              <Radio
-                value={period.name.ru}
-                key={period.label}
-                checked={selectedPeriod === period.label}
-                onChange={e => onPeriods(period)}
-              />
-            </>
-          )
-        })}
-      </div>
+      <StepCommonLayout>
+        <div className="RentPeriod">
+          {LeadPeriods.map(period => {
+            return (
+              <>
+                <Radio
+                  value={period.name.ru}
+                  key={period.label}
+                  checked={selectedPeriod === period.label}
+                  onChange={e => onPeriods(period)}
+                />
+              </>
+            )
+          })}
+        </div>
 
-      <div className="Reg__options">
-        {currencies.map(currency => (
-          <Button
-            request
-            compact
-            key={currency.id}
-            onClick={() => onCurrency(currency)}
-            active={selectedCurrency === currency}
-          >
-            {currency.symbol}
-          </Button>
-        ))}
-      </div>
-      <div className="Reg__inputs">
-        <TextInput
-          label="От"
-          values={fromValue}
-          onChange={handleFromValueChange}
-        />
-        <TextInput label="До" values={toValue} onChange={handleToValueChange} />
-      </div>
+        <div className="Reg__options">
+          {currencies.map(currency => (
+            <Button
+              request
+              compact
+              key={currency.id}
+              onClick={() => onCurrency(currency)}
+              active={selectedCurrency === currency}
+            >
+              {currency.symbol}
+            </Button>
+          ))}
+        </div>
+        <div className="Reg__inputs">
+          <TextInput
+            label="От"
+            values={fromValue}
+            onChange={handleFromValueChange}
+          />
+          <TextInput
+            label="До"
+            values={toValue}
+            onChange={handleToValueChange}
+          />
+        </div>
+      </StepCommonLayout>
     </StyledStep>
   )
 }
 
 const StyledStep = styled.div`
-  padding: 30px 40px;
-  display: flex;
-  gap: 30px;
-  flex-direction: column;
-
   .Reg__options {
     display: flex;
     align-items: center;
@@ -179,13 +181,9 @@ const StyledStep = styled.div`
   }
 
   @media (max-width: ${tablet}) {
-    gap: 12px;
-    padding: 30px 36px;
   }
 
   @media (max-width: ${mobile}) {
-    padding: 20px 24px;
-
     .Reg__options {
       flex-wrap: wrap;
     }

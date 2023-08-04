@@ -1,8 +1,9 @@
 import { Button } from "@/components/ui"
 import { LeadReadyDealEnum, LeadReadyDeals } from "../LeadTypesDefintion"
 import styled from "styled-components"
-import { theme } from "../../../../styles/tokens/theme"
+import { theme } from "../../../../styles/tokens"
 import { useCallback, useState } from "react"
+import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
@@ -24,45 +25,43 @@ const StepReadyDeal = (props: Props): JSX.Element => {
   )
 
   return (
-    <StyledStep className="ButtonsList">
-      {LeadReadyDeals.map(i => {
-        return (
-          <Button
-            request
-            compact
-            active={selected === i.label}
-            onClick={e => onClick(e, i.label)}
-            key={i.label}
-          >
-            {i.name.ru}
-          </Button>
-        )
-      })}
+    <StyledStep>
+      <StepCommonLayout className={"ButtonsList"}>
+        {LeadReadyDeals.map(i => {
+          return (
+            <Button
+              request
+              compact
+              active={selected === i.label}
+              onClick={e => onClick(e, i.label)}
+              key={i.label}
+            >
+              {i.name.ru}
+            </Button>
+          )
+        })}
+      </StepCommonLayout>
     </StyledStep>
   )
 }
 
 const StyledStep = styled.div`
-  padding: 30px 40px;
-
-  &.ButtonsList {
+  .ButtonsList {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
 
   @media (max-width: ${tablet}) {
-    &.ButtonsList {
+    .ButtonsList {
       gap: 12px;
-      padding: 30px 36px;
     }
   }
 
   @media (max-width: ${mobile}) {
-    &.ButtonsList {
+    .ButtonsList {
       display: flex;
       flex-direction: column;
-      padding: 20px 24px;
 
       button {
         width: 100%;

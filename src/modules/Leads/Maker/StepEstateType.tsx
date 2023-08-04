@@ -5,6 +5,7 @@ import {
   LeadEstateTypes,
 } from '@/modules/Leads/LeadTypesDefintion'
 import { useCallback, useEffect, useState } from 'react'
+import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
 
 interface Props {
   onChanged?: (options: EstateTypeResult) => void
@@ -48,21 +49,23 @@ const StepEstateType = (props: Props): JSX.Element => {
 
   return (
     <StyledRegStep1>
-      <RenderRootLevelTypes
-        selectedKey={selectedRootLevel}
-        className={'EstateTypes__topLevel EstateTypes__list'}
-        locale={'ru'}
-        onChanged={onRootLevelChanged}
-      />
-      {showSubtypes && (
-        <RenderSubLevelsByRoot
+      <StepCommonLayout>
+        <RenderRootLevelTypes
+          selectedKey={selectedRootLevel}
+          className={'EstateTypes__topLevel EstateTypes__list'}
           locale={'ru'}
-          selectedKey={selectedSubType}
-          className={'EstateTypes__subLevel'}
-          selectedRoot={selectedRootLevel}
-          onChanged={onSubLevelsChanged}
+          onChanged={onRootLevelChanged}
         />
-      )}
+        {showSubtypes && (
+          <RenderSubLevelsByRoot
+            locale={'ru'}
+            selectedKey={selectedSubType}
+            className={'EstateTypes__subLevel'}
+            selectedRoot={selectedRootLevel}
+            onChanged={onSubLevelsChanged}
+          />
+        )}
+      </StepCommonLayout>
     </StyledRegStep1>
   )
 }
@@ -136,11 +139,6 @@ const RenderSubLevelsByRoot = (props: SubLevelsOptions): JSX.Element => {
 }
 
 const StyledRegStep1 = styled.section`
-  padding: 40px 30px;
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-
   .Button_request {
     padding: 10px 20px;
   }

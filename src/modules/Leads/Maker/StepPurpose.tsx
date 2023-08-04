@@ -6,6 +6,7 @@ import { Button } from '@/components/ui'
 import styled from 'styled-components'
 import { theme } from '../../../../styles/tokens'
 import { useCallback, useState } from 'react'
+import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
 
 interface Props {
   className?: string
@@ -28,42 +29,44 @@ const StepPurpose = (props: Props) => {
 
   return (
     <StyledPurpose>
-      {LeadPurposes.map(i => (
-        <Button
-          request
-          compact
-          key={i.label}
-          onClick={e => onClick(e, i.label)}
-          active={(selected as LeadPurposesEnum) === i.label}
-        >
-          {i.name.ru}
-        </Button>
-      ))}
+      <StepCommonLayout className={"PurposesList"}>
+        {LeadPurposes.map(i => (
+          <Button
+            request
+            compact
+            key={i.label}
+            onClick={e => onClick(e, i.label)}
+            active={(selected as LeadPurposesEnum) === i.label}
+          >
+            {i.name.ru}
+          </Button>
+        ))}
+      </StepCommonLayout>
     </StyledPurpose>
   )
 }
 
 const StyledPurpose = styled.div`
-  padding: 30px 40px;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  align-items: center;
+  .PurposesList {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    align-items: center;
 
-  @media (max-width: ${tablet}) {
-    gap: 12px;
-    padding: 30px 36px;
-  }
+    @media (max-width: ${tablet}) {
+      gap: 12px;
+    }
 
-  @media (max-width: ${mobile}) {
-    display: flex;
-    flex-direction: column;
-    padding: 20px 24px;
+    @media (max-width: ${mobile}) {
+      display: flex;
+      flex-direction: column;
 
-    button {
-      width: 100%;
+      button {
+        width: 100%;
+      }
     }
   }
+
 `
 
 export default StepPurpose

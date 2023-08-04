@@ -3,6 +3,7 @@ import { InfoIconGrey } from '@/icons/InfoIconGrey'
 import { TooltipComponent } from '@/components/ui/Tooltip/MyComponent'
 import styled from 'styled-components'
 import { useCallback, useState } from 'react'
+import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
 
 interface Props {
   className?: string
@@ -45,20 +46,22 @@ const StepArea = (props: Props): JSX.Element => {
 
   return (
     <RenderStep>
-      {(props.context === 'apartment' || props.context === 'house') && (
-        <>
+      <StepCommonLayout>
+        {(props.context === 'apartment' || props.context === 'house') && (
+          <>
+            <RenderTotal selected={selectedTotal} onChanged={onTotal} />
+            <RenderLiving selected={selectedLiving} onChanged={onLiving} />
+          </>
+        )}
+
+        {(props.context === 'land' || props.context === 'commercial') && (
           <RenderTotal selected={selectedTotal} onChanged={onTotal} />
-          <RenderLiving selected={selectedLiving} onChanged={onLiving} />
-        </>
-      )}
+        )}
 
-      {(props.context === 'land' || props.context === 'commercial') && (
-        <RenderTotal selected={selectedTotal} onChanged={onTotal} />
-      )}
-
-      {props.context === 'rent' && (
-        <RenderTotal selected={selectedTotal} onChanged={onTotal} />
-      )}
+        {props.context === 'rent' && (
+          <RenderTotal selected={selectedTotal} onChanged={onTotal} />
+        )}
+      </StepCommonLayout>
     </RenderStep>
   )
 }
@@ -156,11 +159,6 @@ function generateAreas(min: number, max: number, step: number): number[] {
 }
 
 const RenderStep = styled.div`
-  padding: 30px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-
   .EstateAreas {
     &__Title {
       display: flex;

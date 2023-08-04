@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { theme } from '../../../../styles/tokens'
 import { useWindowSize } from '@/hooks/useWindowSize'
+import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
 
 interface Props {
   className?: string
@@ -43,24 +44,24 @@ const StepPeriod = (props: Props): JSX.Element => {
   })
 
   return (
-    <StyledStep className={'StepPeriod'}>
-      <DatePicker
-        onChange={onChange}
-        startDate={startDate}
-        endDate={endDate}
-        selectsRange
-        inline
-        locale={ru}
-        monthsShown={showMonths}
-        className={'PeriodDatePicker'}
-      />
-    </StyledStep>
+    <StepCommonLayout>
+      <StyledStep className={'StepPeriod'}>
+        <DatePicker
+          onChange={onChange}
+          startDate={startDate}
+          endDate={endDate}
+          selectsRange
+          inline
+          locale={ru}
+          monthsShown={showMonths}
+          className={'PeriodDatePicker'}
+        />
+      </StyledStep>
+    </StepCommonLayout>
   )
 }
 
 const StyledStep = styled.div`
-  padding: 30px 40px;
-
   .react-datepicker {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;

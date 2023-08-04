@@ -7,6 +7,7 @@ import {
 } from '@/modules/Leads/LeadTypesDefintion'
 import { Button } from '@/components/ui'
 import { useCallback, useState } from 'react'
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
 
 interface Props {
   className?: string
@@ -62,12 +63,14 @@ const StepPurchase = (props: Props): JSX.Element => {
 
   return (
     <StyledStep>
-      <Purchases selected={selectedPurchase} onChanged={onPurchase} />
-      <Installment
-        selected={selectedInstallment}
-        onChanged={onFirstInstallment}
-      />
-      <Format selected={selectedFormat} onChanged={onFormat} />
+      <StepCommonLayout>
+        <Purchases selected={selectedPurchase} onChanged={onPurchase} />
+        <Installment
+          selected={selectedInstallment}
+          onChanged={onFirstInstallment}
+        />
+        <Format selected={selectedFormat} onChanged={onFormat} />
+      </StepCommonLayout>
     </StyledStep>
   )
 }
@@ -194,11 +197,6 @@ function generateInstallments(
 }
 
 const StyledStep = styled.div`
-  padding: 30px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-
   .Purchases {
     &Row {
       display: flex;

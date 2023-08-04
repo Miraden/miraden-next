@@ -17,6 +17,12 @@ import GoogleMapAutoComplete from '@/modules/Google/GoogleMapAutoComplete'
 import { GoogleAutoComplete } from '@/infrastructure/Google/places/GoogleAutoComplete'
 import { GeocoderManager } from '@/infrastructure/Google/geocoder/GeocoderManager'
 import GoogleMapGeocoder from '@/modules/Google/GoogleMapGeocoder'
+import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
+import StepBlankLayout from "@/modules/Leads/Maker/StepBlankLayout";
+
+const desktop: string = theme.breakpoints.desktop.max + 'px'
+const tablet: string = theme.breakpoints.tablet.max + 'px'
+const mobile: string = theme.breakpoints.mobile.max + 'px'
 
 interface Props {
   className?: string
@@ -113,16 +119,22 @@ const StepLocation = (props: Props): JSX.Element => {
         <div className="StepHeader__right">
           <div className="CountriesMap" onClick={OnStateToggle}>
             <MapIcon />
-            <span>{getViewLabel(view)}</span>
+            <span className={"CountriesMap__label"}>{getViewLabel(view)}</span>
           </div>
         </div>
       </div>
 
       <div className="StepBody">
         {view === Views.List && (
-          <RenderLocations locations={locations} onChanged={onLocations} />
+          <StepCommonLayout>
+            <RenderLocations className={"Locations"} locations={locations} onChanged={onLocations} />
+          </StepCommonLayout>
         )}
-        {view === Views.Map && <RenderMap place={selectedPlace} />}
+        {view === Views.Map &&
+          <StepBlankLayout>
+            <RenderMap place={selectedPlace} />
+          </StepBlankLayout>
+        }
       </div>
     </StyledStep>
   )
@@ -131,6 +143,7 @@ const StepLocation = (props: Props): JSX.Element => {
 interface LocationsProps {
   locations: CountriesStruct[]
   onChanged: (selected: LocationResult) => void
+  className?: string
 }
 
 const RenderLocations = (props: LocationsProps): JSX.Element => {
@@ -163,7 +176,7 @@ const RenderLocations = (props: LocationsProps): JSX.Element => {
   )
 
   return (
-    <ListStyled>
+    <ListStyled className={props.className}>
       <div className="ListRow">
         {props.locations.map(country => {
           return (
@@ -513,6 +526,19 @@ const StyledStep = styled.section`
       fill: ${theme.colors.button.tertiary.text.default};
     }
   }
+
+  @media (max-width: ${mobile}) {
+    .StepHeader {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .CountriesMap {
+      &__label {
+        display: none;
+      }
+    }
+  }
 `
 
 const SearchStyled = styled.div`
@@ -581,10 +607,7 @@ const SearchStyled = styled.div`
   }
 
   @media (max-width: 576px) {
-    padding: 10px 6px 10px 11px;
     .Search__searchIcon {
-      position: absolute;
-
       top: 20px;
       left: 20px;
       z-index: 21;
@@ -599,7 +622,6 @@ const SearchStyled = styled.div`
 `
 
 const ListStyled = styled.div`
-  padding: 30px 40px;
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -607,7 +629,7 @@ const ListStyled = styled.div`
   .ListRow {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
   }
 
   .ListRowCities {
@@ -619,6 +641,15 @@ const ListStyled = styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: ${tablet}) {
+    gap: 35px;
+  }
+
+  @media (max-width: ${mobile}) {
+    gap: 35px;
   }
 `
 

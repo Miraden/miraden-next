@@ -2,6 +2,7 @@ import { TextInput } from '@/components/ui/TextInput'
 import { TextAreaInput } from '@/components/ui'
 import { useCallback, useState } from 'react'
 import styled from 'styled-components'
+import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
 
 interface Props {
   className?: string
@@ -35,25 +36,28 @@ const StepWishes = (props: Props): JSX.Element => {
 
   return (
     <StyledStep>
-      <TextInput
-        maxLength={45}
-        isRequired={true}
-        label="Заголовок заявки"
-        onChange={onTitle}
-      />
-      <TextAreaInput
-        label="Опишите дополнительные пожелания"
-        onChange={onWishes}
-      />
+      <StepCommonLayout className={"StepWishes"}>
+        <TextInput
+          maxLength={45}
+          isRequired={true}
+          label="Заголовок заявки"
+          onChange={onTitle}
+        />
+        <TextAreaInput
+          label="Опишите дополнительные пожелания"
+          onChange={onWishes}
+        />
+      </StepCommonLayout>
     </StyledStep>
   )
 }
 
 const StyledStep = styled.div`
-  padding: 30px 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  .StepWishes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 `
 
 export default StepWishes

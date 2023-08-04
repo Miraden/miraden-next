@@ -6,6 +6,7 @@ import { TextInput } from '@/components/ui/TextInput'
 import CurrencyProvider, {
   CurrencyStruct,
 } from '@/infrastructure/Currencies/CurrencyProvider'
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
@@ -85,37 +86,38 @@ const StepBuyBudget = (props: Props): JSX.Element => {
 
   return (
     <StyledStep>
-      <div className="Reg__options">
-        {currencies.map(currency => (
-          <Button
-            request
-            compact
-            key={currency.id}
-            onClick={() => onCurrency(currency)}
-            active={selectedCurrency === currency}
-          >
-            {currency.symbol}
-          </Button>
-        ))}
-      </div>
-      <div className="Reg__inputs">
-        <TextInput
-          label="От"
-          values={fromValue}
-          onChange={handleFromValueChange}
-        />
-        <TextInput label="До" values={toValue} onChange={handleToValueChange} />
-      </div>
+      <StepCommonLayout>
+        <div className="Reg__options">
+          {currencies.map(currency => (
+            <Button
+              request
+              compact
+              key={currency.id}
+              onClick={() => onCurrency(currency)}
+              active={selectedCurrency === currency}
+            >
+              {currency.symbol}
+            </Button>
+          ))}
+        </div>
+        <div className="Reg__inputs">
+          <TextInput
+            label="От"
+            values={fromValue}
+            onChange={handleFromValueChange}
+          />
+          <TextInput
+            label="До"
+            values={toValue}
+            onChange={handleToValueChange}
+          />
+        </div>
+      </StepCommonLayout>
     </StyledStep>
   )
 }
 
 const StyledStep = styled.div`
-  padding: 30px 40px;
-  display: flex;
-  gap: 30px;
-  flex-direction: column;
-
   .Reg__options {
     display: flex;
     align-items: center;
@@ -128,14 +130,7 @@ const StyledStep = styled.div`
     gap: 20px;
   }
 
-  @media (max-width: ${tablet}) {
-    gap: 12px;
-    padding: 30px 36px;
-  }
-
   @media (max-width: ${mobile}) {
-    padding: 20px 24px;
-
     .Reg__options {
       flex-wrap: wrap;
     }

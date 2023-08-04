@@ -6,6 +6,7 @@ import {
 } from '@/modules/Leads/LeadTypesDefintion'
 import { Button } from '@/components/ui'
 import { theme } from '../../../../styles/tokens'
+import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
@@ -71,24 +72,26 @@ const StepStatus = (props: Props) => {
 
   return (
     <StyledStep>
-      <RenderStatuses
-        selectedStatus={selectedStatus}
-        className={'EstateStatus__List'}
-        onChanged={onStatus}
-      />
+      <StepCommonLayout>
+        <RenderStatuses
+          selectedStatus={selectedStatus}
+          className={'EstateStatus__List'}
+          onChanged={onStatus}
+        />
 
-      {selectedStatus === StatusesEnum.New && (
-        <RenderNewDeadline
-          selected={selectedMonth}
-          onChanged={onDeadlineMonth}
-        />
-      )}
-      {selectedStatus === StatusesEnum.Secondary && (
-        <RenderSecondaryBuildingYear
-          selected={selectedYear}
-          onChanged={onBuildingYear}
-        />
-      )}
+        {selectedStatus === StatusesEnum.New && (
+          <RenderNewDeadline
+            selected={selectedMonth}
+            onChanged={onDeadlineMonth}
+          />
+        )}
+        {selectedStatus === StatusesEnum.Secondary && (
+          <RenderSecondaryBuildingYear
+            selected={selectedYear}
+            onChanged={onBuildingYear}
+          />
+        )}
+      </StepCommonLayout>
     </StyledStep>
   )
 }
@@ -225,8 +228,6 @@ function castToStatesEnum(state: string): StatusesEnum {
 }
 
 const StyledStep = styled.div`
-  padding: 30px 40px;
-
   .EstateStatus__List {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -242,8 +243,6 @@ const StyledStep = styled.div`
 
   .EstateStatus__Deadline,
   .EstateStatus__BuildDate {
-    margin-top: 50px;
-
     &Months,
     &Years {
       display: flex;
@@ -254,14 +253,12 @@ const StyledStep = styled.div`
   }
 
   @media (max-width: ${tablet}) {
-    padding: 30px 36px;
     .EstateStatus__List {
       gap: 12px;
     }
   }
 
   @media (max-width: ${mobile}) {
-    padding: 20px 24px;
     .EstateStatus__List {
       display: flex;
       flex-direction: column;

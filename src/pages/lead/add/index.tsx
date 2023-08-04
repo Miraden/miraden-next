@@ -314,8 +314,14 @@ const StyledPage = styled.div`
       padding-right: 0;
     }
 
-    .Steps__sellers {
-      display: none;
+    .Steps {
+      &__header {
+        padding: 20px 20px 16px 20px;
+      }
+
+      &__sellers {
+        display: none;
+      }
     }
 
     .Step__goBackButton {

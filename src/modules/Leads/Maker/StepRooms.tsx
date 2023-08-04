@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Button } from '@/components/ui'
 import { useCallback, useState } from 'react'
+import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
 
 interface Props {
   className?: string
@@ -60,55 +61,57 @@ const StepRooms = (props: Props): JSX.Element => {
 
   return (
     <StyledRooms>
-      <div className="RoomsTotal">
-        <div className="RoomsList">
-          {rooms.map(i => (
-            <Button
-              compact
-              request
-              key={i}
-              active={selectedRooms === i}
-              onClick={e => onRooms(i)}
-            >
-              {i}
-            </Button>
-          ))}
+      <StepCommonLayout>
+        <div className="RoomsTotal">
+          <div className="RoomsList">
+            {rooms.map(i => (
+              <Button
+                compact
+                request
+                key={i}
+                active={selectedRooms === i}
+                onClick={e => onRooms(i)}
+              >
+                {i}
+              </Button>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="RoomsBeds">
-        <h5 className="Font_headline_5 RoomsTitle">Спальня</h5>
-        <div className="RoomsList">
-          {beds.map(i => (
-            <Button
-              compact
-              request
-              key={i}
-              active={selectedBeds === i}
-              onClick={e => onBeds(i)}
-            >
-              {i}
-            </Button>
-          ))}
+        <div className="RoomsBeds">
+          <h5 className="Font_headline_5 RoomsTitle">Спальня</h5>
+          <div className="RoomsList">
+            {beds.map(i => (
+              <Button
+                compact
+                request
+                key={i}
+                active={selectedBeds === i}
+                onClick={e => onBeds(i)}
+              >
+                {i}
+              </Button>
+            ))}
+          </div>
         </div>
-      </div>
 
-      <div className="RoomsBaths">
-        <h5 className="Font_headline_5 RoomsTitle">Санузел</h5>
-        <div className="RoomsList">
-          {baths.map(i => (
-            <Button
-              compact
-              request
-              key={i}
-              active={selectedBaths === i}
-              onClick={e => onBath(i)}
-            >
-              {i}
-            </Button>
-          ))}
+        <div className="RoomsBaths">
+          <h5 className="Font_headline_5 RoomsTitle">Санузел</h5>
+          <div className="RoomsList">
+            {baths.map(i => (
+              <Button
+                compact
+                request
+                key={i}
+                active={selectedBaths === i}
+                onClick={e => onBath(i)}
+              >
+                {i}
+              </Button>
+            ))}
+          </div>
         </div>
-      </div>
+      </StepCommonLayout>
     </StyledRooms>
   )
 }
@@ -126,12 +129,6 @@ function generateRooms(min: number, max: number, step: number): number[] {
 }
 
 const StyledRooms = styled.div`
-  padding: 30px 40px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-
   .RoomsTitle {
     margin-bottom: 15px;
   }
