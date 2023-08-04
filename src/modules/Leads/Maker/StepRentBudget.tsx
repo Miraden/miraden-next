@@ -119,14 +119,12 @@ const StepRentBudget = (props: Props): JSX.Element => {
         <div className="RentPeriod">
           {LeadPeriods.map(period => {
             return (
-              <>
-                <Radio
-                  value={period.name.ru}
-                  key={period.label}
-                  checked={selectedPeriod === period.label}
-                  onChange={e => onPeriods(period)}
-                />
-              </>
+              <Radio
+                value={period.name.ru}
+                key={period.label}
+                checked={selectedPeriod === period.label}
+                onChange={e => onPeriods(period)}
+              />
             )
           })}
         </div>

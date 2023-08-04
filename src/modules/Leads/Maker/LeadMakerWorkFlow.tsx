@@ -12,52 +12,12 @@ import StepPurchase from '@/modules/Leads/Maker/StepPurchase'
 import StepWishes from "@/modules/Leads/Maker/StepWishes";
 import StepPeriod from "@/modules/Leads/Maker/StepPeriod";
 import StepRentBudget from "@/modules/Leads/Maker/StepRentBudget";
-
-export enum StatesType {
-  Steps = 'Steps',
-  Support = 'Support',
-}
-
-export interface SubmitDataStruct {
-  location: {
-    city: number
-    country: number
-  }
-  format: string
-  estateType: {
-    root: string
-    sublevel: string
-  }
-  estateStatus: string
-  deadlineAt: string
-  buildYear: string
-  area: number
-  livingArea: number
-  rooms: number
-  beds: number
-  bathrooms: number
-  purpose: string
-  readyDeal: string
-  rentPeriod: {
-    start: string
-    end: string
-  }
-  budget: {
-    from: number
-    to: number
-    period: string
-    currency: number
-  }
-  purchase: {
-    type: string
-    firstPayment: number
-    format: string
-  }
-  wished: {
-    title: string
-    text: string
-  }
-}
+import {
+  FormatRentStates,
+  LeadMakerStates,
+  StateDirection,
+  StatesType, SupportStates,
+} from '@/modules/Leads/Maker/StatesTypes'
 
 let submitData: SubmitDataStruct = {
   location: {
@@ -100,55 +60,12 @@ let submitData: SubmitDataStruct = {
   },
 }
 
-export enum StateDirection {
-  Forward = 'Forward',
-  Backward = 'Backward',
-}
-
-export enum LeadMakerStates {
-  Location = 1,
-  Format = 2,
-  EstateType = 3,
-  Status = 4,
-  Area = 5,
-  Rooms = 6,
-  Purpose = 7,
-  ReadyDeal = 8,
-  Budget = 9,
-  Purchase = 10,
-  Wishes = 11,
-}
-
-enum FormatRentStates {
-  Area = 5,
-  Period = 7,
-  ReadyDeal = 8,
-  Budget = 9,
-  Wishes = 11,
-}
-
-export enum SupportStates {
-  Intro = 'intro',
-  Payment = 'payment',
-}
-
 enum FormatTypes {
   buy = 'buy',
   rent = 'rent',
 }
 
 export const LeadMakerDefaultUrl: string = '/lead/add/'
-
-export interface LeadMakerStruct {
-  state: string | number
-  title: string
-  body: JSX.Element
-  url?: string
-  nextUrlLabel: string
-  prevUrlLabel: string
-  nextState?: string | number
-  prevState?: string | number
-}
 
 const LeadMakerStructDefault: LeadMakerStruct = {
   state: SupportStates.Intro,
@@ -340,13 +257,19 @@ class LeadMakerWorkFlow {
     const isSupport: boolean = this.isStateTypeOf(step) === StatesType.Support
     const isSteps: boolean = this.isStateTypeOf(step) === StatesType.Steps
 
+    if(isSupport) {
+      this.prevState = this.getPrevState()
+      this.currentState = step
+      return
+    }
+
     const array = this.statesManager.getStates()
     const found = array.find((i, id) => {
       return i.state == step
     })
 
     if (found === undefined) {
-      this.currentState = SupportStates.Intro
+      this.currentState = LeadMakerStates.Location
       return
     }
 
@@ -380,6 +303,7 @@ class LeadMakerWorkFlow {
         nextUrlLabel: 'Оплатить',
         prevUrlLabel: 'Назад',
         state: SupportStates.Payment,
+        prevState: this.getPrevState()
       },
     ]
   }
@@ -412,17 +336,8 @@ class LeadMakerWorkFlow {
       }}/>,
       prevUrlLabel: 'Назад',
       nextUrlLabel: 'Вперед',
-      nextState: FormatRentStates.ReadyDeal,
-      prevState: FormatRentStates.Area,
-    })
-    this.statesManager.append({
-      state: FormatRentStates.ReadyDeal,
-      title: 'Когда начать арендовать',
-      body: <>ready deal</>,
-      prevUrlLabel: 'Назад',
-      nextUrlLabel: 'Вперед',
-      prevState: FormatRentStates.Period,
       nextState: FormatRentStates.Budget,
+      prevState: FormatRentStates.Area,
     })
     this.statesManager.append({
       state: FormatRentStates.Budget,
@@ -440,7 +355,7 @@ class LeadMakerWorkFlow {
       ),
       prevUrlLabel: 'Назад',
       nextUrlLabel: 'Вперед',
-      prevState: FormatRentStates.ReadyDeal,
+      prevState: FormatRentStates.Period,
       nextState: FormatRentStates.Wishes,
     })
     this.statesManager.append({

@@ -4,12 +4,10 @@ import { BlankLayout } from '@/modules/Base/BlankLayout'
 import cn from 'classnames'
 import styled from 'styled-components'
 import { theme } from '../../../../styles/tokens'
-import LeadMakerWorkFlow, {
-  StateDirection,
-  SupportStates,
-} from '@/modules/Leads/Maker/LeadMakerWorkFlow'
+import LeadMakerWorkFlow from '@/modules/Leads/Maker/LeadMakerWorkFlow'
 import { Button, PayForm } from '@/components/ui'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
+import {StateDirection, SupportStates} from "@/modules/Leads/Maker/StatesTypes";
 
 const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
