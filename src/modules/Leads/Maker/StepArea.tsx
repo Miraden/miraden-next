@@ -3,7 +3,10 @@ import { InfoIconGrey } from '@/icons/InfoIconGrey'
 import { TooltipComponent } from '@/components/ui/Tooltip/MyComponent'
 import styled from 'styled-components'
 import { useCallback, useState } from 'react'
-import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
+import ButtonFoldGroup, {
+  ButtonFoldsFormatOptions,
+} from '@/components/ui/Buttons/ButtonFoldGroup'
 
 interface Props {
   className?: string
@@ -82,7 +85,11 @@ const RenderTotal = (props: AreasProps): JSX.Element => {
   )
 
   return (
-    <div className={'EstateAreas EstateAreas__Total EstateAreas__Values'}>
+    <ButtonFoldGroup
+      alwaysVisible={5}
+      className={'EstateAreas EstateAreas__Total EstateAreas__Values'}
+      intl={{ more: `Еще ${ButtonFoldsFormatOptions.Count}`, less: 'Свернуть' }}
+    >
       {areas.map(area => {
         const label = area + ' м²'
 
@@ -98,7 +105,7 @@ const RenderTotal = (props: AreasProps): JSX.Element => {
           </Button>
         )
       })}
-    </div>
+    </ButtonFoldGroup>
   )
 }
 
@@ -121,7 +128,14 @@ const RenderLiving = (props: AreasProps): JSX.Element => {
         />
       </div>
 
-      <div className="EstateAreas__Values">
+      <ButtonFoldGroup
+        className={'EstateAreas__Values'}
+        alwaysVisible={5}
+        intl={{
+          more: `Еще ${ButtonFoldsFormatOptions.Count}`,
+          less: 'Свернуть',
+        }}
+      >
         <Button request compact>
           Неважно
         </Button>
@@ -141,7 +155,7 @@ const RenderLiving = (props: AreasProps): JSX.Element => {
             </Button>
           )
         })}
-      </div>
+      </ButtonFoldGroup>
     </div>
   )
 }

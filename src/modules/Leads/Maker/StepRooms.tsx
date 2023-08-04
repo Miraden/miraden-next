@@ -1,7 +1,10 @@
 import styled from 'styled-components'
 import { Button } from '@/components/ui'
 import { useCallback, useState } from 'react'
-import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
+import ButtonFoldGroup, {
+  ButtonFoldsFormatOptions,
+} from '@/components/ui/Buttons/ButtonFoldGroup'
 
 interface Props {
   className?: string
@@ -19,9 +22,9 @@ const StepRooms = (props: Props): JSX.Element => {
   const [selectedBeds, setSelectedBeds] = useState<number>(0)
   const [selectedBaths, setSelectedBaths] = useState<number>(0)
 
-  const rooms: number[] = generateRooms(1, 8, 1)
-  const beds: number[] = generateRooms(1, 5, 1)
-  const baths: number[] = generateRooms(1, 5, 1)
+  const rooms: number[] = generateRooms(1, 10, 1)
+  const beds: number[] = generateRooms(1, 10, 1)
+  const baths: number[] = generateRooms(1, 10, 1)
 
   const onRooms = useCallback(
     (option: number) => {
@@ -63,7 +66,14 @@ const StepRooms = (props: Props): JSX.Element => {
     <StyledRooms>
       <StepCommonLayout>
         <div className="RoomsTotal">
-          <div className="RoomsList">
+          <ButtonFoldGroup
+            className="RoomsList"
+            alwaysVisible={5}
+            intl={{
+              more: `Еще ${ButtonFoldsFormatOptions.Count}`,
+              less: 'Свернуть',
+            }}
+          >
             {rooms.map(i => (
               <Button
                 compact
@@ -75,12 +85,19 @@ const StepRooms = (props: Props): JSX.Element => {
                 {i}
               </Button>
             ))}
-          </div>
+          </ButtonFoldGroup>
         </div>
 
         <div className="RoomsBeds">
           <h5 className="Font_headline_5 RoomsTitle">Спальня</h5>
-          <div className="RoomsList">
+          <ButtonFoldGroup
+            className="RoomsList"
+            alwaysVisible={5}
+            intl={{
+              more: `Еще ${ButtonFoldsFormatOptions.Count}`,
+              less: 'Свернуть',
+            }}
+          >
             {beds.map(i => (
               <Button
                 compact
@@ -92,12 +109,19 @@ const StepRooms = (props: Props): JSX.Element => {
                 {i}
               </Button>
             ))}
-          </div>
+          </ButtonFoldGroup>
         </div>
 
         <div className="RoomsBaths">
           <h5 className="Font_headline_5 RoomsTitle">Санузел</h5>
-          <div className="RoomsList">
+          <ButtonFoldGroup
+            className="RoomsList"
+            alwaysVisible={5}
+            intl={{
+              more: `Еще ${ButtonFoldsFormatOptions.Count}`,
+              less: 'Свернуть',
+            }}
+          >
             {baths.map(i => (
               <Button
                 compact
@@ -109,7 +133,7 @@ const StepRooms = (props: Props): JSX.Element => {
                 {i}
               </Button>
             ))}
-          </div>
+          </ButtonFoldGroup>
         </div>
       </StepCommonLayout>
     </StyledRooms>
