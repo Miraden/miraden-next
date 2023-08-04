@@ -16,6 +16,8 @@ interface SearchProps {
   onFilterClick?: any
   onSortChange?: Function
   onSearchChange?: Function
+  onInputFocus?: (event: React.FocusEvent<HTMLInputElement>) => void
+  onInputBlur?: (event: React.FocusEvent<HTMLInputElement>) => void
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
@@ -29,7 +31,9 @@ const Search = ({
   withSort,
   onFilterClick,
   onSortChange,
-  onSearchChange
+  onSearchChange,
+  onInputFocus,
+  onInputBlur
 }: SearchProps) => {
   const [searchValue, setSearchValue] = useState('')
   const [isFocused, setFocused] = useState(false)
@@ -40,11 +44,13 @@ const Search = ({
     if(onSearchChange) onSearchChange(searchValue)
   }
 
-  const handleBlur = () => {
+  const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    if(onInputBlur) onInputBlur(event)
     setFocused(false)
   }
 
   const onFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    if(onInputFocus) onInputFocus(event)
     setFocused(true)
   }
 

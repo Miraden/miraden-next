@@ -376,12 +376,18 @@ const RenderSearch = (props: SearchProps): JSX.Element => {
     [autoCompleteMgr, geocoderMgr, onResult]
   )
 
+  const onFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
+    const cachedResults = window.Miraden.geocoder.searchResult
+    onResult(cachedResults)
+  }, [onResult])
+
   return (
     <SearchStyled>
       <Search
         sort={[]}
         placeholder={'Укажите город'}
         onSearchChange={onChange}
+        onInputFocus={onFocus}
       />
       <GoogleMapAutoComplete map={map} onReady={e => setAutoCompleteMgr(e)} />
       <GoogleMapGeocoder map={map} onReady={e => {

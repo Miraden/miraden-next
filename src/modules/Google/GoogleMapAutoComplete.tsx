@@ -18,6 +18,7 @@ const GoogleMapAutoComplete = (props: Props): JSX.Element => {
     if (!props.map) return
     const service = manager
       .setMap(props.map)
+      .setOptions({ types: ['country'] })
       .makeService()
     if (service === null) return
     if (props.onReady) props.onReady(manager)
