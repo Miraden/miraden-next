@@ -7,6 +7,9 @@ import {
 import { Button } from '@/components/ui'
 import { theme } from '../../../../styles/tokens'
 import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
+import ButtonFoldGroup, {
+  ButtonFoldsFormatOptions
+} from "@/components/ui/Buttons/ButtonFoldGroup";
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
@@ -145,7 +148,14 @@ const RenderSecondaryBuildingYear = (props: BuildYearProps): JSX.Element => {
   return (
     <div className={'EstateStatus__BuildDate'}>
       <h2 className="Font_headline_5">Год постройки</h2>
-      <div className="EstateStatus__BuildDateYears">
+      <ButtonFoldGroup
+        className="EstateStatus__BuildDateYears"
+        alwaysVisible={5}
+        intl={{
+          more: `Еще ${ButtonFoldsFormatOptions.Count}`,
+          less: 'Свернуть',
+        }}
+      >
         {years.map((year: number) => (
           <Button
             active={props.selected === year && props.selected !== 0}
@@ -157,7 +167,7 @@ const RenderSecondaryBuildingYear = (props: BuildYearProps): JSX.Element => {
             {year}
           </Button>
         ))}
-      </div>
+      </ButtonFoldGroup>
     </div>
   )
 }
@@ -180,7 +190,14 @@ const RenderNewDeadline = (props: DeadlineProps): JSX.Element => {
     <div className={'EstateStatus__Deadline'}>
       <h2 className="Font_headline_5">Ввод в эксплуатацию через</h2>
 
-      <div className="EstateStatus__DeadlineMonths">
+      <ButtonFoldGroup
+        className="EstateStatus__DeadlineMonths"
+        alwaysVisible={5}
+        intl={{
+          more: `Еще ${ButtonFoldsFormatOptions.Count}`,
+          less: 'Свернуть',
+        }}
+      >
         {[...Array(64)].map((_, index) => {
           const month = index % 12
 
@@ -206,7 +223,7 @@ const RenderNewDeadline = (props: DeadlineProps): JSX.Element => {
             </Button>
           )
         })}
-      </div>
+      </ButtonFoldGroup>
     </div>
   )
 }
