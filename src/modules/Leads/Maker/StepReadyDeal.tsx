@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui"
-import { LeadReadyDealEnum, LeadReadyDeals } from "../LeadTypesDefintion"
-import styled from "styled-components"
-import { theme } from "../../../../styles/tokens"
-import { useCallback, useState } from "react"
-import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
+import { Button } from '@/components/ui'
+import { LeadReadyDealEnum, LeadReadyDeals } from '../LeadTypesDefintion'
+import styled from 'styled-components'
+import { theme } from '../../../../styles/tokens'
+import { useCallback, useState } from 'react'
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
@@ -26,7 +26,7 @@ const StepReadyDeal = (props: Props): JSX.Element => {
 
   return (
     <StyledStep>
-      <StepCommonLayout className={"ButtonsList"}>
+      <StepCommonLayout className={'ButtonsList'}>
         {LeadReadyDeals.map(i => {
           return (
             <Button
@@ -35,6 +35,7 @@ const StepReadyDeal = (props: Props): JSX.Element => {
               active={selected === i.label}
               onClick={e => onClick(e, i.label)}
               key={i.label}
+              className={'WideButton'}
             >
               {i.name.ru}
             </Button>

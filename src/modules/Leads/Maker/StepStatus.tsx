@@ -75,7 +75,7 @@ const StepStatus = (props: Props) => {
       <StepCommonLayout>
         <RenderStatuses
           selectedStatus={selectedStatus}
-          className={'EstateStatus__List'}
+          className={'EstateStatus__List WideButtons'}
           onChanged={onStatus}
         />
 

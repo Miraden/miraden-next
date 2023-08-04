@@ -37,6 +37,7 @@ const StepPurpose = (props: Props) => {
             key={i.label}
             onClick={e => onClick(e, i.label)}
             active={(selected as LeadPurposesEnum) === i.label}
+            className={"WideButton"}
           >
             {i.name.ru}
           </Button>

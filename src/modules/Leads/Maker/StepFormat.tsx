@@ -30,15 +30,19 @@ const StepFormat = (props: Props): JSX.Element => {
       <StepCommonLayout className={'FormatList'}>
         <Button
           request
+          compact
           onClick={() => handleSelect('buy')}
           active={selected === 'buy'}
+          className={"WideButton"}
         >
           Хочу купить
         </Button>
         <Button
           request
+          compact
           onClick={() => handleSelect('rent')}
           active={selected === 'rent'}
+          className={"WideButton"}
         >
           Хочу арендовать
         </Button>

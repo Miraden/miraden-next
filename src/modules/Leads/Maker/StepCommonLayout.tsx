@@ -27,6 +27,19 @@ const StyledLayout = styled.div`
   flex-direction: column;
   gap: 50px;
 
+  .WideButtons {
+    button.Button_request,
+    button.Button_compact {
+      padding: 15px 20px;
+    }
+  }
+
+  .WideButton,
+  button.Button_request.WideButton,
+  button.Button_compact.WideButton {
+    padding: 15px 20px;
+  }
+
   @media (max-width: ${tablet}) {
     gap: 35px;
   }
