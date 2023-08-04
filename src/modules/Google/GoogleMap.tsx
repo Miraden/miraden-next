@@ -10,7 +10,7 @@ interface Props {
   initialSettings: google.maps.MapOptions
 }
 
-const manager = new GoogleApiManager('AIzaSyD8hARNkg1cu_S69Wrir6-QcFwFqJrw17s')
+const manager = new GoogleApiManager(process.env.NEXT_PUBLIC_GOOGLE_MAP_API)
 
 const GoogleMap = (props: React.PropsWithChildren<Props>): JSX.Element => {
   const [isReady, setIsReady] = useState<boolean>(false)
@@ -27,7 +27,9 @@ const GoogleMap = (props: React.PropsWithChildren<Props>): JSX.Element => {
         manager.import(GoogleApi.Libraries.Places).then(lib => {
           setIsReady(true)
           if (props.onLoad) props.onLoad(map)
-          const event = new CustomEvent("GoogleMapInit", {detail: {map: map}})
+          const event = new CustomEvent('GoogleMapInit', {
+            detail: { map: map },
+          })
           document.dispatchEvent(event)
         })
       })
