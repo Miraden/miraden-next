@@ -7,22 +7,24 @@ import { theme } from '../../../../styles/tokens'
 import LeadMakerWorkFlow from '@/modules/Leads/Maker/LeadMakerWorkFlow'
 import { Button, PayForm } from '@/components/ui'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
-import {StateDirectionsEnum, SupportStatesEnum} from "@/modules/Leads/Maker/StatesTypes";
+import {
+  StateDirectionsEnum,
+  SupportStatesEnum,
+} from '@/modules/Leads/Maker/StatesTypes'
 
 const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
 const mobile: string = theme.breakpoints.mobile.max + 'px'
 
 let isNeedUpdate = true
+const _workflow = new LeadMakerWorkFlow()
 
 export default function AddLead(): JSX.Element {
   const [showPayForm, setShowPayForm] = useState<boolean>(false)
   const [currentState, setCurrentState] = useState<number | string>(
     SupportStatesEnum.Intro
   )
-  const [workflow, setWorkflow] = useState<LeadMakerWorkFlow>(
-    new LeadMakerWorkFlow()
-  )
+  const [workflow, setWorkflow] = useState<LeadMakerWorkFlow>(_workflow)
 
   const [render, forceRender] = useState<boolean>(false)
 
@@ -44,17 +46,24 @@ export default function AddLead(): JSX.Element {
       isNeedUpdate = !isNeedUpdate
       forceUpdate()
     })
-
     forceUpdate()
   }, [currentState, render, workflow])
 
-  const onClosePayForm = useCallback((e: any) => {
-    setShowPayForm(false)
-  }, [])
+  const onClosePayForm = useCallback(
+    (e: any) => {
+      workflow.goToState(SupportStatesEnum.Payment)
+      setShowPayForm(false)
+    },
+    [workflow]
+  )
 
   const onPrevClick = useCallback(
     (e: any) => {
       workflow.onPrev(e)
+      if (workflow.getPrevState() === SupportStatesEnum.Home) {
+        window.location.href = '/'
+        return
+      }
     },
     [workflow]
   )
@@ -62,6 +71,10 @@ export default function AddLead(): JSX.Element {
   const onNextClick = useCallback(
     (e: any) => {
       workflow.onNext(e)
+
+      if (workflow.getCurrentState() === SupportStatesEnum.PayForm) {
+        setShowPayForm(true)
+      }
     },
     [workflow]
   )
@@ -131,7 +144,7 @@ export default function AddLead(): JSX.Element {
                         </div>
                       )}
                       <Button
-                        className={"ButtonForward"}
+                        className={'ButtonForward'}
                         onClick={onNextClick}
                         disabled={workflow.isNextTransitionLocked()}
                       >

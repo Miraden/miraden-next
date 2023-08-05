@@ -11,19 +11,19 @@ const paymentOptions = [
   {
     buttonTitle: "Открыть отклик для всех",
     buttonText: 'На заявку смогут откликнуться <br/> все пользователи, а не только PRO',
-    tax: 10,
+    price: 10,
   },
   {
     buttonTitle: "Закрепить вверху на 24 часа",
     buttonText:
       "Заявка будет закреплена вверху ленты. После чего сместится вниз по мере поступления новых",
-    tax: 15,
+    price: 15,
   },
   {
     buttonTitle: "Поднимать каждые 3 дня",
     buttonText:
       "Заявка будет автоматически подниматься в самый верх ленты каждые 3 дня",
-    tax: 20,
+    price: 20,
   },
 ];
 
@@ -48,11 +48,11 @@ const SingleApplicationSideBar = ({ className }: Props) => {
     (option, index) => index !== 0 && activeButtons[index]
   );
 
-  const totalTax = selectedOptions.reduce((acc, option) => acc + option.tax, 0);
+  const totalTax = selectedOptions.reduce((acc, option) => acc + option.price, 0);
 
   const selectedTaxValues = paymentOptions
     .filter((option, index) => activeButtons[index])
-    .map((option) => option.tax);
+    .map((option) => option.price);
 
   const handleClick = () => {
     if (selectedOptions.length === 0) {
@@ -83,7 +83,7 @@ const SingleApplicationSideBar = ({ className }: Props) => {
                 onClick={() => handleActive(index)}
                 buttonText={option.buttonText}
                 buttonTitle={option.buttonTitle}
-                tax={option.tax}
+                tax={option.price}
                 active={activeButtons[index]}
               />
             </li>
@@ -156,7 +156,7 @@ const StyledSingleApplicationSideBar = styled.div`
       }
     }
   }
-  
+
   .SideBar__section {
     background: #fff;
     margin-top: 10px;
@@ -191,7 +191,7 @@ const StyledSingleApplicationSideBar = styled.div`
       width: 100%;
     }
   }
-  
+
   .SideBar__totalTaxButton--edit {
     border-radius: 10px;
     button {

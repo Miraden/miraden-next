@@ -26,11 +26,18 @@ export enum FormatRentStatesEnum {
 }
 
 export enum SupportStatesEnum {
+  Home = 'home',
   Intro = 'intro',
   Payment = 'payment',
+  PayForm = 'payForm'
 }
 
 export enum StatesTypeEnum {
   Steps = 'Steps',
   Support = 'Support',
+}
+
+export enum FormatTypes {
+  buy = 'buy',
+  rent = 'rent',
 }

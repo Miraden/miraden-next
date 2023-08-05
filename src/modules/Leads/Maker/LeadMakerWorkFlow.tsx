@@ -16,18 +16,20 @@ import StepPeriod from '@/modules/Leads/Maker/StepPeriod'
 import StepRentBudget from '@/modules/Leads/Maker/StepRentBudget'
 import {
   FormatRentStatesEnum,
+  FormatTypes,
   LeadMakerStatesEnum,
   StateDirectionsEnum,
   StatesTypeEnum,
   SupportStatesEnum,
 } from '@/modules/Leads/Maker/StatesTypes'
 import PaymentOptions from '@/modules/Leads/Maker/PaymentOptions'
+import StatesManager from '@/modules/Leads/Maker/StatesManager'
 
 let submitData: SubmitDataStruct = {
   location: {
     city: 0,
     country: 0,
-    radius: 0
+    radius: 0,
   },
   format: 'apartment',
   estateType: {
@@ -59,16 +61,16 @@ let submitData: SubmitDataStruct = {
     firstPayment: 0,
     format: '',
   },
-  wished: {
+  wishes: {
     title: '',
     text: '',
   },
-  totalTax: 0,
-}
-
-enum FormatTypes {
-  buy = 'buy',
-  rent = 'rent',
+  paymentOptions: {
+    anyCanResponse: true,
+    autoPinUpEveryThreeDays: false,
+    pinUpOneDay: false,
+    totalPrice: 0,
+  },
 }
 
 export const LeadMakerDefaultUrl: string = '/lead/add/'
@@ -77,31 +79,33 @@ const LeadMakerStructDefault: LeadMakerStruct = {
   state: SupportStatesEnum.Intro,
   title: '',
   body: <></>,
+  nextState: '',
+  prevState: '',
   prevUrlLabel: 'Назад',
   nextUrlLabel: 'Вперед',
 }
 
 class LeadMakerWorkFlow {
-  private currentState: number | string
+  private contentChanged: Function
+  private onStateCallback: Function
   private nextState: number | string
   private prevState: number | string
-  private nextTransitionAllow: boolean
   private prevTransitionAllow: boolean
-  private onStateCallback: Function
-  private contentChanged: Function
-  private stateDirection: StateDirectionsEnum
+  private nextTransitionAllow: boolean
+  private currentState: number | string
   private statesManager: StatesManager
+  private stateDirection: StateDirectionsEnum
 
   constructor() {
-    this.currentState = SupportStatesEnum.Intro
-    this.nextState = LeadMakerStatesEnum.Location
-    this.prevState = SupportStatesEnum.Intro
     this.nextTransitionAllow = true
     this.prevTransitionAllow = true
-    this.onStateCallback = (dir: StateDirectionsEnum) => {}
-    this.stateDirection = StateDirectionsEnum.Forward
     this.contentChanged = () => {}
-    this.statesManager = new StatesManager(this)
+    this.prevState = SupportStatesEnum.Intro
+    this.currentState = SupportStatesEnum.Intro
+    this.nextState = LeadMakerStatesEnum.Location
+    this.stateDirection = StateDirectionsEnum.Forward
+    this.statesManager = new StatesManager()
+    this.onStateCallback = (dir: StateDirectionsEnum) => {}
   }
 
   public rules(state: number | string): void {
@@ -109,21 +113,20 @@ class LeadMakerWorkFlow {
 
     if (state === SupportStatesEnum.Intro) {
       this.nextState = LeadMakerStatesEnum.Location
-      this.prevState = SupportStatesEnum.Intro
-      this.statesManager.storeDefault()
-      console.log(this.stateDirection)
+      this.prevState = SupportStatesEnum.Home
+      this.CommonSteps()
     }
 
     if (state === LeadMakerStatesEnum.Location) {
       this.nextState = LeadMakerStatesEnum.Format
       this.prevState = SupportStatesEnum.Intro
-      this.statesManager.storeDefault()
+      this.CommonSteps()
     }
 
     if (state === LeadMakerStatesEnum.Format) {
       this.nextState = LeadMakerStatesEnum.EstateType
       this.prevState = LeadMakerStatesEnum.Location
-      this.statesManager.storeDefault()
+      this.CommonSteps()
     }
 
     if (state === LeadMakerStatesEnum.EstateType) {
@@ -133,6 +136,16 @@ class LeadMakerWorkFlow {
       if (submitData.format === FormatTypes.rent) {
         this.FormatRentBranch()
       }
+    }
+
+    if (state === SupportStatesEnum.Payment) {
+      this.nextState = SupportStatesEnum.PayForm
+      this.prevState = LeadMakerStatesEnum.Wishes
+    }
+
+    if (state === SupportStatesEnum.PayForm) {
+      this.nextState = SupportStatesEnum.PayForm
+      this.prevState = SupportStatesEnum.Payment
     }
 
     const prev = this.statesManager.findByState(this.currentState)?.prevState
@@ -195,6 +208,8 @@ class LeadMakerWorkFlow {
           nextUrlLabel: i.nextUrlLabel,
           prevUrlLabel: i.prevUrlLabel,
           url: i.url,
+          nextState: i.nextState,
+          prevState: i.prevState,
         }
       }
     })
@@ -204,18 +219,11 @@ class LeadMakerWorkFlow {
   public onNext(e: any): void {
     this.goToState(this.nextState)
     this.stateDirection = StateDirectionsEnum.Forward
-    // if (this.onStateCallback) this.onStateCallback(this.stateDirection)
   }
 
   public onPrev(e: any): void {
-    if (this.currentState === SupportStatesEnum.Intro) {
-      window.location.href = '/'
-      return
-    }
-
     this.goToState(this.prevState)
     this.stateDirection = StateDirectionsEnum.Backward
-    // if (this.onStateCallback) this.onStateCallback(this.stateDirection)
   }
 
   public onState(callback: Function): void {
@@ -238,7 +246,6 @@ class LeadMakerWorkFlow {
 
   public onContentChange(callback: Function): void {
     this.contentChanged = callback
-    this.statesManager.setContentChangedCallback(callback)
   }
 
   public calcProgress(state: number | string): number {
@@ -281,8 +288,16 @@ class LeadMakerWorkFlow {
     const isSteps: boolean = this.isStateTypeOf(step) === StatesTypeEnum.Steps
 
     if (isSupport) {
-      this.prevState = this.getPrevState()
-      this.currentState = step
+      const supports = this.getSupportData(this)
+      const found = supports.find((i, id) => {
+        return (i.state = step)
+      })
+      if (found === undefined) {
+        this.currentState = SupportStatesEnum.Intro
+        return
+      }
+
+      this.currentState = found.state
       return
     }
 
@@ -299,7 +314,7 @@ class LeadMakerWorkFlow {
     this.currentState = found.state
   }
 
-  private isStateTypeOf(val: any): StatesTypeEnum {
+  public isStateTypeOf(val: any): StatesTypeEnum {
     if (Object.values(SupportStatesEnum).includes(val)) {
       return StatesTypeEnum.Support
     }
@@ -321,17 +336,28 @@ class LeadMakerWorkFlow {
         title: 'Получите больше просмотров и откликов',
         body: (
           <PaymentOptions
-            onTax={e => {
-              this.contentChanged(e)
+            onPrice={price => {
+              submitData.paymentOptions.totalPrice = price
+              this.contentChanged(price)
             }}
           />
         ),
         url: LeadMakerDefaultUrl,
-        nextUrlLabel: 'Оплатить',
+        nextUrlLabel: 'Оплатить ' + submitData.paymentOptions.totalPrice + ' €',
         prevUrlLabel: 'Назад',
         state: SupportStatesEnum.Payment,
         prevState: this.getPrevState(),
-        nextState: SupportStatesEnum.Payment
+        nextState: SupportStatesEnum.PayForm,
+      },
+      {
+        title: '',
+        body: <></>,
+        url: '',
+        nextUrlLabel: '',
+        prevUrlLabel: '',
+        state: SupportStatesEnum.PayForm,
+        prevState: SupportStatesEnum.Payment,
+        nextState: SupportStatesEnum.PayForm,
       },
     ]
   }
@@ -348,7 +374,7 @@ class LeadMakerWorkFlow {
             submitData.area = e.total
             submitData.livingArea = e.living
             this.contentChanged(e)
-            if(submitData.area > 0) {
+            if (submitData.area > 0) {
               this.unlockNextTransition()
             }
           }}
@@ -368,7 +394,10 @@ class LeadMakerWorkFlow {
             submitData.rentPeriod.start = e.dateFrom
             submitData.rentPeriod.end = e.dateTo
             this.contentChanged(e)
-            if(submitData.rentPeriod.start.length >0 && submitData.rentPeriod.end.length > 0) {
+            if (
+              submitData.rentPeriod.start.length > 0 &&
+              submitData.rentPeriod.end.length > 0
+            ) {
               this.unlockNextTransition()
             }
           }}
@@ -390,7 +419,7 @@ class LeadMakerWorkFlow {
             submitData.budget.to = e.to
             submitData.budget.period = e.period
             this.contentChanged(e)
-            if(submitData.budget.from > 0 || submitData.budget.to > 0) {
+            if (submitData.budget.from > 0 || submitData.budget.to > 0) {
               this.unlockNextTransition()
             }
           }}
@@ -407,10 +436,10 @@ class LeadMakerWorkFlow {
       body: (
         <StepWishes
           onChange={e => {
-            submitData.wished.text = e.wishes
-            submitData.wished.title = e.title
+            submitData.wishes.text = e.wishes
+            submitData.wishes.title = e.title
             this.contentChanged(e)
-            if (submitData.wished.title.length > 0) {
+            if (submitData.wishes.title.length > 0) {
               this.unlockNextTransition()
             }
           }}
@@ -567,10 +596,10 @@ class LeadMakerWorkFlow {
         body: (
           <StepWishes
             onChange={e => {
-              submitData.wished.text = e.wishes
-              submitData.wished.title = e.title
+              submitData.wishes.text = e.wishes
+              submitData.wishes.title = e.title
               this.contentChanged(e)
-              if (submitData.wished.title.length > 0) {
+              if (submitData.wishes.title.length > 0) {
                 this.unlockNextTransition()
               }
             }}
@@ -683,10 +712,10 @@ class LeadMakerWorkFlow {
         body: (
           <StepWishes
             onChange={e => {
-              submitData.wished.text = e.wishes
-              submitData.wished.title = e.title
+              submitData.wishes.text = e.wishes
+              submitData.wishes.title = e.title
               this.contentChanged(e)
-              if (submitData.wished.title.length > 0) {
+              if (submitData.wishes.title.length > 0) {
                 this.unlockNextTransition()
               }
             }}
@@ -822,10 +851,10 @@ class LeadMakerWorkFlow {
         body: (
           <StepWishes
             onChange={e => {
-              submitData.wished.text = e.wishes
-              submitData.wished.title = e.title
+              submitData.wishes.text = e.wishes
+              submitData.wishes.title = e.title
               this.contentChanged(e)
-              if (submitData.wished.title.length > 0) {
+              if (submitData.wishes.title.length > 0) {
                 this.unlockNextTransition()
               }
             }}
@@ -838,50 +867,10 @@ class LeadMakerWorkFlow {
       })
     }
   }
-}
 
-class StatesManager {
-  private states: LeadMakerStruct[]
-  private contentChanged: Function
-  private workflow: LeadMakerWorkFlow
-
-  constructor(workflow: LeadMakerWorkFlow) {
-    this.workflow = workflow
-    this.states = []
-    this.storeDefault()
-    this.contentChanged = () => {}
-  }
-
-  public setContentChangedCallback(callback: Function): void {
-    this.contentChanged = callback
-  }
-
-  public append(data: LeadMakerStruct): void {
-    const isExist = this.findByState(data.state)
-    if (!isExist) this.states.push(data)
-  }
-
-  public findByState(val: string | number): LeadMakerStruct | null {
-    const found = this.states.find(i => {
-      return i.state === val
-    })
-
-    if (!found) return null
-
-    return found
-  }
-
-  public getTotal(): number {
-    return this.states.length
-  }
-
-  public getStates(): LeadMakerStruct[] {
-    return this.states
-  }
-
-  public storeDefault(): void {
-    this.states = []
-    this.states.push({
+  private CommonSteps(): void {
+    this.statesManager.clearStates()
+    this.statesManager.append({
       title: 'Укажите город или расположение недвижимости',
       state: LeadMakerStatesEnum.Location,
       nextUrlLabel: 'Далее',
@@ -895,12 +884,12 @@ class StatesManager {
             submitData.location.country = location.countryId
             submitData.location.radius = location.radius
             this.contentChanged(location)
-            this.workflow.unlockNextTransition()
+            this.unlockNextTransition()
           }}
         />
       ),
     })
-    this.states.push({
+    this.statesManager.append({
       title: 'Укажите формат сделки с недвижимостью',
       state: LeadMakerStatesEnum.Format,
       nextUrlLabel: 'Далее',
@@ -912,12 +901,12 @@ class StatesManager {
           onChanged={(e: any) => {
             submitData.format = e
             this.contentChanged(e)
-            this.workflow.goToState(this.workflow.getNextState())
+            this.goToState(this.getNextState())
           }}
         />
       ),
     })
-    this.states.push({
+    this.statesManager.append({
       title: 'Укажите тип недвижимости',
       state: LeadMakerStatesEnum.EstateType,
       prevState: LeadMakerStatesEnum.Format,
@@ -928,9 +917,8 @@ class StatesManager {
           onChanged={e => {
             submitData.estateType.sublevel = e.subLevel
             submitData.estateType.root = e.root
-            this.storeDefault()
             this.contentChanged(e)
-            this.workflow.unlockNextTransition()
+            this.unlockNextTransition()
           }}
         />
       ),

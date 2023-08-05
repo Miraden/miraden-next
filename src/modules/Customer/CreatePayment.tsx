@@ -12,19 +12,19 @@ const paymentOptions = [
     buttonTitle: "Открыть отклик для всех",
     buttonText:
       "На заявку смогут откликнуться все пользователи, а не только PRO",
-    tax: 10,
+    price: 10,
   },
   {
     buttonTitle: "Закрепить вверху на 24 часа",
     buttonText:
       "Заявка будет закреплена вверху ленты. После чего сместится вниз по мере поступления новых",
-    tax: 15,
+    price: 15,
   },
   {
     buttonTitle: "Поднимать каждые 3 дня",
     buttonText:
       "Заявка будет автоматически подниматься в самый верх ленты каждые 3 дня",
-    tax: 20,
+    price: 20,
   },
 ];
 
@@ -46,10 +46,10 @@ const CreatePayment = ({ className }: Props) => {
     (option, index) => activeButtons[index]
   );
 
-  const totalTax = selectedOptions.reduce((acc, option) => acc + option.tax, 0);
+  const totalTax = selectedOptions.reduce((acc, option) => acc + option.price, 0);
   const selectedTaxValues = paymentOptions
     .filter((option, index) => activeButtons[index])
-    .map((option) => option.tax);
+    .map((option) => option.price);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -85,7 +85,7 @@ const CreatePayment = ({ className }: Props) => {
                 onClick={() => handleActive(index)}
                 buttonTitle={option.buttonTitle}
                 buttonText={option.buttonText}
-                tax={option.tax}
+                price={option.price}
                 active={activeButtons[index]}
               />
             </li>
@@ -93,7 +93,7 @@ const CreatePayment = ({ className }: Props) => {
           {isOpen && (
             <PayForm
               onClose={handleCloseMenu}
-              totalTax={totalTax}
+              totalPrice={totalTax}
               openToEveryone={selectedTaxValues[0]}
               additionalRequests={selectedTaxValues[1]}
               getUp={selectedTaxValues[2]}

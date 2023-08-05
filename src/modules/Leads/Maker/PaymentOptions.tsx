@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { CreatePaymentButton, PayButton, PayForm } from '@/components/ui'
+import { CreatePaymentButton, PayForm } from '@/components/ui'
 import StepBlankLayout from '@/modules/Leads/Maker/StepBlankLayout'
 import styled from 'styled-components'
 import { theme } from '../../../../styles/tokens'
@@ -12,32 +12,44 @@ const paymentOptions = [
     buttonTitle: 'Открыть отклик для всех',
     buttonText:
       'На заявку смогут откликнуться все пользователи, а не только PRO',
-    tax: 10,
+    price: 10,
   },
   {
     buttonTitle: 'Закрепить вверху на 24 часа',
     buttonText:
       'Заявка будет закреплена вверху ленты. После чего сместится вниз по мере поступления новых',
-    tax: 15,
+    price: 15,
   },
   {
     buttonTitle: 'Поднимать каждые 3 дня',
     buttonText:
       'Заявка будет автоматически подниматься в самый верх ленты каждые 3 дня',
-    tax: 20,
+    price: 20,
   },
 ]
 
 interface Props {
   className?: string
-  onTax: (tax: number) => void
+  onLoad?: (tax: number) => void
+  onPrice: (tax: number) => void
 }
 
 export const PaymentOptions = (props: Props): JSX.Element => {
   const [activeButtons, setActiveButtons] = useState(
     paymentOptions.map((option, index) => index === 0)
   )
-  const [totalTax, setTotalTax] = useState<number>(0)
+  const [totalTax, setTotalPrice] = useState<number>(0)
+
+  useEffect(() => {
+    const selectedPriceValues = paymentOptions
+      .filter((option, index) => activeButtons[index])
+      .map(option => option.price)
+
+    const totalPrice = selectedPriceValues.reduce((acc, id) => acc + id, 0)
+    props.onPrice(totalPrice)
+    setTotalPrice(totalPrice)
+    if (props.onLoad) props.onLoad(totalTax)
+  }, [props, totalTax])
 
   const handleActive = useCallback(
     (index: number) => {
@@ -45,16 +57,13 @@ export const PaymentOptions = (props: Props): JSX.Element => {
       newActiveButtons[index] = !newActiveButtons[index]
       setActiveButtons(newActiveButtons)
 
-      const selectedOptions = paymentOptions.filter(
-          (option, index) => newActiveButtons[index]
-      )
-      const selectedTaxValues = paymentOptions
+      const selectedPriceValues = paymentOptions
         .filter((option, index) => newActiveButtons[index])
-        .map(option => option.tax)
+        .map(option => option.price)
 
-      const totalTax = selectedTaxValues.reduce((acc, id) => acc + id, 0)
-      props.onTax(totalTax)
-      setTotalTax(totalTax)
+      const totalPrice = selectedPriceValues.reduce((acc, id) => acc + id, 0)
+      props.onPrice(totalPrice)
+      setTotalPrice(totalPrice)
     },
     [activeButtons, props]
   )
@@ -84,7 +93,7 @@ export const PaymentOptions = (props: Props): JSX.Element => {
                   onClick={() => handleActive(index)}
                   buttonTitle={option.buttonTitle}
                   buttonText={option.buttonText}
-                  tax={option.tax}
+                  price={option.price}
                   active={activeButtons[index]}
                 />
               </li>
@@ -92,7 +101,7 @@ export const PaymentOptions = (props: Props): JSX.Element => {
             {isOpen && (
               <PayForm
                 onClose={handleCloseMenu}
-                totalTax={totalTax}
+                totalPrice={totalTax}
                 openToEveryone={0}
                 additionalRequests={0}
                 getUp={0}

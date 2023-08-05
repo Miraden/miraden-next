@@ -9,17 +9,51 @@ declare interface LeadMakerStruct {
   prevState?: string | number
 }
 
-interface SubmitDataStruct {
-  location: {
-    city: number
-    country: number
-    radius: number
-  }
+interface SubmitLocation {
+  city: number
+  country: number
+  radius: number
+}
+
+interface SubmitEstateType {
+  root: string
+  sublevel: string
+}
+
+interface SubmitRentPeriod {
+  start: string
+  end: string
+}
+
+interface SubmitBudget {
+  from: number
+  to: number
+  period: string
+  currency: number
+}
+
+interface SubmitPurchase {
+  type: string
+  firstPayment: number
   format: string
-  estateType: {
-    root: string
-    sublevel: string
-  }
+}
+
+interface SubmitWishes {
+  title: string
+  text: string
+}
+
+interface PaymentOptions {
+  anyCanResponse: boolean
+  pinUpOneDay: boolean
+  autoPinUpEveryThreeDays: boolean
+  totalPrice: number
+}
+
+interface SubmitDataStruct {
+  location: SubmitLocation
+  format: string
+  estateType: SubmitEstateType
   estateStatus: string
   deadlineAt: string
   buildYear: string
@@ -30,24 +64,9 @@ interface SubmitDataStruct {
   bathrooms: number
   purpose: string
   readyDeal: string
-  rentPeriod: {
-    start: string
-    end: string
-  }
-  budget: {
-    from: number
-    to: number
-    period: string
-    currency: number
-  }
-  purchase: {
-    type: string
-    firstPayment: number
-    format: string
-  }
-  wished: {
-    title: string
-    text: string
-  },
-  totalTax: number
+  rentPeriod: SubmitRentPeriod
+  budget: SubmitBudget
+  purchase: SubmitPurchase
+  wishes: SubmitWishes
+  paymentOptions: PaymentOptions
 }

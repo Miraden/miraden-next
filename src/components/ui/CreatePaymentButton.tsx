@@ -12,7 +12,7 @@ interface CreatePaymentButtonProps {
   buttonTitle?: ReactNode;
   buttonText?: ReactNode;
   disabled?: boolean;
-  tax?: number;
+  price?: number;
   active?: boolean;
   onChange?: () => void;
 }
@@ -22,7 +22,7 @@ const CreatePaymentButton = ({
   onClick,
   buttonTitle,
   disabled,
-  tax,
+  price,
   buttonText,
   active,
   onChange,
@@ -39,9 +39,9 @@ const CreatePaymentButton = ({
         <Checkbox onChange={onChange} onClick={onClick} checked={active} />
         {buttonTitle && (
           <div className="[ Button__label ]">
-            {tax && (
+            {price && (
               <div className="Font_20_120 CreatePaymentButton__percentMobile">
-                {tax} €
+                {price} €
               </div>
             )}
             <h3 className="Font_16_140">{buttonTitle}</h3>
@@ -49,8 +49,8 @@ const CreatePaymentButton = ({
           </div>
         )}
       </div>
-      {tax && (
-        <div className="Font_20_120 CreatePaymentButton__percent">{tax} €</div>
+      {price && (
+        <div className="Font_20_120 CreatePaymentButton__percent">{price} €</div>
       )}
     </StyledButton>
   );
@@ -76,6 +76,7 @@ const StyledButton = styled.a`
 
   .CreatePaymentButton__percent {
     color: #4e6af3;
+    white-space: nowrap;
   }
 
   .CreatePaymentButton__percentMobile {

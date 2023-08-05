@@ -8,7 +8,7 @@ interface PayFormProps {
   className?: string
   onClose?: Function
   testCost?: any
-  totalTax?: any
+  totalPrice?: any
   openToEveryone?: any
   additionalRequests?: any
   getUp?: any
@@ -18,25 +18,19 @@ const PayForm = ({
   className,
   onClose,
   testCost,
-  totalTax,
+  totalPrice,
   openToEveryone,
   additionalRequests,
   getUp,
 }: PayFormProps) => {
-  const [totalPay, setTotalPay] = useState<number>(totalTax)
+  const [totalPay, setTotalPay] = useState<number>(totalPrice)
   const [selectedOption, setSelectedOption] = useState<any>(null)
-
-  let btnClose: HTMLButtonElement | null = null
-  const setRef = (el: HTMLButtonElement | null) => {
-    btnClose = el
-  }
 
   const onCloseHandler = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>): void => {
-      if (!btnClose) return
       if (onClose) onClose(event)
     },
-    [onClose, btnClose]
+    [onClose]
   )
 
   function renderForm(): JSX.Element {
@@ -47,7 +41,6 @@ const PayForm = ({
             <div className="PayForm__head">
               <h2 className="Font_32_120">Форма оплаты</h2>
               <button
-                ref={el => setRef(el)}
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
                   onCloseHandler(e)
                 }
@@ -59,7 +52,7 @@ const PayForm = ({
             </div>
             <PayFormContent
               className="PayFormContent"
-              totalTax={totalTax}
+              totalTax={totalPrice}
               setTotalPay={setTotalPay}
               openToEveryone={openToEveryone}
               additionalRequests={additionalRequests}
