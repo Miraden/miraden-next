@@ -30,7 +30,7 @@ const paymentOptions = [
 
 interface Props {
   className?: string
-  totalTax: (tax: number) => void
+  onTax: (tax: number) => void
 }
 
 export const PaymentOptions = (props: Props): JSX.Element => {
@@ -53,7 +53,7 @@ export const PaymentOptions = (props: Props): JSX.Element => {
         .map(option => option.tax)
 
       const totalTax = selectedTaxValues.reduce((acc, id) => acc + id, 0)
-      props.totalTax(totalTax)
+      props.onTax(totalTax)
       setTotalTax(totalTax)
     },
     [activeButtons, props]

@@ -1,9 +1,9 @@
-export enum StateDirection {
+export enum StateDirectionsEnum {
   Forward = 'Forward',
   Backward = 'Backward',
 }
 
-export enum LeadMakerStates {
+export enum LeadMakerStatesEnum {
   Location = 1,
   Format = 2,
   EstateType = 3,
@@ -17,7 +17,7 @@ export enum LeadMakerStates {
   Wishes = 11,
 }
 
-export enum FormatRentStates {
+export enum FormatRentStatesEnum {
   Area = 5,
   Period = 7,
   ReadyDeal = 8,
@@ -25,12 +25,12 @@ export enum FormatRentStates {
   Wishes = 11,
 }
 
-export enum SupportStates {
+export enum SupportStatesEnum {
   Intro = 'intro',
   Payment = 'payment',
 }
 
-export enum StatesType {
+export enum StatesTypeEnum {
   Steps = 'Steps',
   Support = 'Support',
 }

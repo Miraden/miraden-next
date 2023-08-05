@@ -7,7 +7,7 @@ import { theme } from '../../../../styles/tokens'
 import LeadMakerWorkFlow from '@/modules/Leads/Maker/LeadMakerWorkFlow'
 import { Button, PayForm } from '@/components/ui'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
-import {StateDirection, SupportStates} from "@/modules/Leads/Maker/StatesTypes";
+import {StateDirectionsEnum, SupportStatesEnum} from "@/modules/Leads/Maker/StatesTypes";
 
 const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
@@ -18,7 +18,7 @@ let isNeedUpdate = true
 export default function AddLead(): JSX.Element {
   const [showPayForm, setShowPayForm] = useState<boolean>(false)
   const [currentState, setCurrentState] = useState<number | string>(
-    SupportStates.Intro
+    SupportStatesEnum.Intro
   )
   const [workflow, setWorkflow] = useState<LeadMakerWorkFlow>(
     new LeadMakerWorkFlow()
@@ -35,21 +35,8 @@ export default function AddLead(): JSX.Element {
     }
 
     workflow.rules(currentState)
-    workflow.onState((direction: StateDirection): void => {
+    workflow.onState((direction: StateDirectionsEnum): void => {
       isNeedUpdate = !isNeedUpdate
-      if (
-        direction === StateDirection.Backward &&
-        currentState === SupportStates.Intro
-      ) {
-        window.location.href = '/'
-        return
-      }
-      if (
-        direction === StateDirection.Forward &&
-        currentState === SupportStates.Payment
-      ) {
-        setShowPayForm(true)
-      }
       setCurrentState(workflow.getCurrentState())
     })
 

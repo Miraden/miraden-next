@@ -15,11 +15,11 @@ import StepWishes from '@/modules/Leads/Maker/StepWishes'
 import StepPeriod from '@/modules/Leads/Maker/StepPeriod'
 import StepRentBudget from '@/modules/Leads/Maker/StepRentBudget'
 import {
-  FormatRentStates,
-  LeadMakerStates,
-  StateDirection,
-  StatesType,
-  SupportStates,
+  FormatRentStatesEnum,
+  LeadMakerStatesEnum,
+  StateDirectionsEnum,
+  StatesTypeEnum,
+  SupportStatesEnum,
 } from '@/modules/Leads/Maker/StatesTypes'
 import PaymentOptions from '@/modules/Leads/Maker/PaymentOptions'
 
@@ -62,7 +62,7 @@ let submitData: SubmitDataStruct = {
     title: '',
     text: '',
   },
-  totalTax: 0
+  totalTax: 0,
 }
 
 enum FormatTypes {
@@ -73,7 +73,7 @@ enum FormatTypes {
 export const LeadMakerDefaultUrl: string = '/lead/add/'
 
 const LeadMakerStructDefault: LeadMakerStruct = {
-  state: SupportStates.Intro,
+  state: SupportStatesEnum.Intro,
   title: '',
   body: <></>,
   prevUrlLabel: 'Назад',
@@ -88,43 +88,44 @@ class LeadMakerWorkFlow {
   private prevTransitionAllow: boolean
   private onStateCallback: Function
   private contentChanged: Function
-  private stateDirection: StateDirection
+  private stateDirection: StateDirectionsEnum
   private statesManager: StatesManager
 
   constructor() {
-    this.currentState = SupportStates.Intro
-    this.nextState = LeadMakerStates.Location
-    this.prevState = SupportStates.Intro
+    this.currentState = SupportStatesEnum.Intro
+    this.nextState = LeadMakerStatesEnum.Location
+    this.prevState = SupportStatesEnum.Intro
     this.nextTransitionAllow = true
     this.prevTransitionAllow = true
-    this.onStateCallback = (dir: StateDirection) => {}
-    this.stateDirection = StateDirection.Forward
+    this.onStateCallback = (dir: StateDirectionsEnum) => {}
+    this.stateDirection = StateDirectionsEnum.Forward
     this.contentChanged = () => {}
-    this.statesManager = new StatesManager()
+    this.statesManager = new StatesManager(this)
   }
 
   public rules(state: number | string): void {
     this.setState(state)
 
-    if (state === SupportStates.Intro) {
-      this.nextState = LeadMakerStates.Location
-      this.prevState = SupportStates.Intro
+    if (state === SupportStatesEnum.Intro) {
+      this.nextState = LeadMakerStatesEnum.Location
+      this.prevState = SupportStatesEnum.Intro
+      this.statesManager.storeDefault()
+      console.log(this.stateDirection)
+    }
+
+    if (state === LeadMakerStatesEnum.Location) {
+      this.nextState = LeadMakerStatesEnum.Format
+      this.prevState = SupportStatesEnum.Intro
       this.statesManager.storeDefault()
     }
 
-    if (state === LeadMakerStates.Location) {
-      this.nextState = LeadMakerStates.Format
-      this.prevState = SupportStates.Intro
+    if (state === LeadMakerStatesEnum.Format) {
+      this.nextState = LeadMakerStatesEnum.EstateType
+      this.prevState = LeadMakerStatesEnum.Location
       this.statesManager.storeDefault()
     }
 
-    if (state === LeadMakerStates.Format) {
-      this.nextState = LeadMakerStates.EstateType
-      this.prevState = LeadMakerStates.Location
-      this.statesManager.storeDefault()
-    }
-
-    if (state === LeadMakerStates.EstateType) {
+    if (state === LeadMakerStatesEnum.EstateType) {
       if (submitData.format === FormatTypes.buy) {
         this.FormatBuyBranch()
       }
@@ -168,12 +169,12 @@ class LeadMakerWorkFlow {
   }
 
   public getTotalSteps(): number {
-    return Object.keys(LeadMakerStates).length / 2
+    return Object.keys(LeadMakerStatesEnum).length / 2
   }
 
   public findData(state: number | string): LeadMakerStruct {
-    const isFormType = StatesType.Steps === this.isStateTypeOf(state)
-    const isSupportType = StatesType.Support === this.isStateTypeOf(state)
+    const isFormType = StatesTypeEnum.Steps === this.isStateTypeOf(state)
+    const isSupportType = StatesTypeEnum.Support === this.isStateTypeOf(state)
 
     if (isFormType) {
       const found = this.statesManager.findByState(state)
@@ -201,22 +202,36 @@ class LeadMakerWorkFlow {
 
   public onNext(e: any): void {
     this.goToState(this.nextState)
-    this.stateDirection = StateDirection.Forward
-    if (this.onStateCallback) this.onStateCallback(this.stateDirection)
+    this.stateDirection = StateDirectionsEnum.Forward
+    // if (this.onStateCallback) this.onStateCallback(this.stateDirection)
   }
 
   public onPrev(e: any): void {
+    if (this.currentState === SupportStatesEnum.Intro) {
+      window.location.href = '/'
+      return
+    }
+
     this.goToState(this.prevState)
-    this.stateDirection = StateDirection.Backward
-    if (this.onStateCallback) this.onStateCallback(this.stateDirection)
+    this.stateDirection = StateDirectionsEnum.Backward
+    // if (this.onStateCallback) this.onStateCallback(this.stateDirection)
   }
 
   public onState(callback: Function): void {
-    // if (this.getCurrentState() === SupportStates.Intro) {
-    //   this.unlockNextTransition()
-    // } else {
-    //   this.lockNextTransition()
-    // }
+    this.lockNextTransition()
+
+    if (this.getCurrentState() === SupportStatesEnum.Intro) {
+      this.unlockNextTransition()
+    }
+
+    if (this.getCurrentState() === LeadMakerStatesEnum.Purchase) {
+      this.unlockNextTransition()
+    }
+
+    if (this.getCurrentState() === SupportStatesEnum.Payment) {
+      this.unlockNextTransition()
+    }
+
     this.onStateCallback = callback
   }
 
@@ -229,40 +244,42 @@ class LeadMakerWorkFlow {
     const total: number = this.getTotalSteps()
     const current: number | string = this.currentState
 
-    if (this.isStateTypeOf(current) === StatesType.Support) {
+    if (this.isStateTypeOf(current) === StatesTypeEnum.Support) {
       return 0.0
     }
 
-    const cur: LeadMakerStates = this.currentState as LeadMakerStates
+    const cur: LeadMakerStatesEnum = this.currentState as LeadMakerStatesEnum
 
     return (cur * 100) / total
   }
 
   public isSellersStatsVisible(): boolean {
-    return StatesType.Steps === this.isStateTypeOf(this.currentState)
+    return StatesTypeEnum.Steps === this.isStateTypeOf(this.currentState)
   }
 
   public isStepsStatsVisible(): boolean {
-    return StatesType.Steps === this.isStateTypeOf(this.currentState)
+    return StatesTypeEnum.Steps === this.isStateTypeOf(this.currentState)
   }
 
   public isCurrentProgressBarVisible(): boolean {
-    return SupportStates.Payment !== this.currentState
+    return SupportStatesEnum.Payment !== this.currentState
   }
 
   public getDataToSubmit(): SubmitDataStruct {
     return submitData
   }
 
-  private goToState(state: number | string): void {
+  public goToState(state: number | string): void {
     this.currentState = state
+    if (this.onStateCallback) this.onStateCallback(this.stateDirection)
   }
 
   private setState(step: number | string): void {
-    const isSupport: boolean = this.isStateTypeOf(step) === StatesType.Support
-    const isSteps: boolean = this.isStateTypeOf(step) === StatesType.Steps
+    const isSupport: boolean =
+      this.isStateTypeOf(step) === StatesTypeEnum.Support
+    const isSteps: boolean = this.isStateTypeOf(step) === StatesTypeEnum.Steps
 
-    if(isSupport) {
+    if (isSupport) {
       this.prevState = this.getPrevState()
       this.currentState = step
       return
@@ -274,19 +291,19 @@ class LeadMakerWorkFlow {
     })
 
     if (found === undefined) {
-      this.currentState = LeadMakerStates.Location
+      this.currentState = LeadMakerStatesEnum.Location
       return
     }
 
     this.currentState = found.state
   }
 
-  private isStateTypeOf(val: any): StatesType {
-    if (Object.values(SupportStates).includes(val)) {
-      return StatesType.Support
+  private isStateTypeOf(val: any): StatesTypeEnum {
+    if (Object.values(SupportStatesEnum).includes(val)) {
+      return StatesTypeEnum.Support
     }
 
-    return StatesType.Steps
+    return StatesTypeEnum.Steps
   }
 
   public getSupportData(context: LeadMakerWorkFlow): LeadMakerStruct[] {
@@ -297,53 +314,72 @@ class LeadMakerWorkFlow {
         url: LeadMakerDefaultUrl,
         nextUrlLabel: 'Начать',
         prevUrlLabel: 'На главную',
-        state: SupportStates.Intro,
+        state: SupportStatesEnum.Intro,
       },
       {
         title: 'Получите больше просмотров и откликов',
-        body: <PaymentOptions totalTax={e => e} />,
+        body: (
+          <PaymentOptions
+            onTax={e => {
+              this.contentChanged(e)
+            }}
+          />
+        ),
         url: LeadMakerDefaultUrl,
         nextUrlLabel: 'Оплатить',
         prevUrlLabel: 'Назад',
-        state: SupportStates.Payment,
-        prevState: this.getPrevState()
+        state: SupportStatesEnum.Payment,
+        prevState: this.getPrevState(),
+        nextState: SupportStatesEnum.Payment
       },
     ]
   }
 
   private FormatRentBranch(): void {
-    this.nextState = LeadMakerStates.Area
+    this.nextState = LeadMakerStatesEnum.Area
     this.statesManager.append({
-      state: FormatRentStates.Area,
+      state: FormatRentStatesEnum.Area,
       title: 'Какая площадь',
-      body: <StepArea
-        context={'rent'}
-        onChanged={e => {
-          submitData.area = e.total
-          submitData.livingArea = e.living
-          this.contentChanged(e)
-        }}
-      />,
+      body: (
+        <StepArea
+          context={'rent'}
+          onChanged={e => {
+            submitData.area = e.total
+            submitData.livingArea = e.living
+            this.contentChanged(e)
+            if(submitData.area > 0) {
+              this.unlockNextTransition()
+            }
+          }}
+        />
+      ),
       prevUrlLabel: 'Назад',
       nextUrlLabel: 'Вперед',
-      nextState: FormatRentStates.Period,
-      prevState: LeadMakerStates.EstateType,
+      nextState: FormatRentStatesEnum.Period,
+      prevState: LeadMakerStatesEnum.EstateType,
     })
     this.statesManager.append({
-      state: FormatRentStates.Period,
+      state: FormatRentStatesEnum.Period,
       title: 'Укажите период аренды',
-      body: <StepPeriod onChange={e => {
-        submitData.rentPeriod.start = e.dateFrom
-        submitData.rentPeriod.end = e.dateTo
-        this.contentChanged(e)
-      }}/>,
+      body: (
+        <StepPeriod
+          onChange={e => {
+            submitData.rentPeriod.start = e.dateFrom
+            submitData.rentPeriod.end = e.dateTo
+            this.contentChanged(e)
+            if(submitData.rentPeriod.start.length >0 && submitData.rentPeriod.end.length > 0) {
+              this.unlockNextTransition()
+            }
+          }}
+        />
+      ),
       prevUrlLabel: 'Назад',
       nextUrlLabel: 'Вперед',
-      nextState: FormatRentStates.Budget,
-      prevState: FormatRentStates.Area,
+      nextState: FormatRentStatesEnum.Budget,
+      prevState: FormatRentStatesEnum.Area,
     })
     this.statesManager.append({
-      state: FormatRentStates.Budget,
+      state: FormatRentStatesEnum.Budget,
       title: 'Укажите примерный бюджет аренды',
       body: (
         <StepRentBudget
@@ -353,35 +389,45 @@ class LeadMakerWorkFlow {
             submitData.budget.to = e.to
             submitData.budget.period = e.period
             this.contentChanged(e)
+            if(submitData.budget.from > 0 || submitData.budget.to > 0) {
+              this.unlockNextTransition()
+            }
           }}
         />
       ),
       prevUrlLabel: 'Назад',
       nextUrlLabel: 'Вперед',
-      prevState: FormatRentStates.Period,
-      nextState: FormatRentStates.Wishes,
+      prevState: FormatRentStatesEnum.Period,
+      nextState: FormatRentStatesEnum.Wishes,
     })
     this.statesManager.append({
-      state: FormatRentStates.Wishes,
+      state: FormatRentStatesEnum.Wishes,
       title: 'Опишите ваши дополнительные пожелания',
-      body: <StepWishes onChange={e => {
-        submitData.wished.text = e.wishes
-        submitData.wished.title = e.title
-        this.contentChanged(e)
-      }}/>,
+      body: (
+        <StepWishes
+          onChange={e => {
+            submitData.wished.text = e.wishes
+            submitData.wished.title = e.title
+            this.contentChanged(e)
+            if (submitData.wished.title.length > 0) {
+              this.unlockNextTransition()
+            }
+          }}
+        />
+      ),
       prevUrlLabel: 'Назад',
       nextUrlLabel: 'Вперед',
-      prevState: FormatRentStates.ReadyDeal,
-      nextState: SupportStates.Payment,
+      prevState: FormatRentStatesEnum.Budget,
+      nextState: SupportStatesEnum.Payment,
     })
   }
 
   private FormatBuyBranch(): void {
     const rootLabel = submitData.estateType.root
     if (rootLabel === 'apartment' || rootLabel === 'house') {
-      this.nextState = LeadMakerStates.Status
+      this.nextState = LeadMakerStatesEnum.Status
       this.statesManager.append({
-        state: LeadMakerStates.Status,
+        state: LeadMakerStatesEnum.Status,
         title: 'Состояние',
         body: (
           <StepStatus
@@ -390,16 +436,17 @@ class LeadMakerWorkFlow {
               submitData.deadlineAt = e.deadlineAfter
               submitData.buildYear = e.buildYear
               this.contentChanged(e)
+              this.unlockNextTransition()
             }}
           />
         ),
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Вперед',
-        prevState: LeadMakerStates.EstateType,
-        nextState: LeadMakerStates.Area,
+        prevState: LeadMakerStatesEnum.EstateType,
+        nextState: LeadMakerStatesEnum.Area,
       })
       this.statesManager.append({
-        state: LeadMakerStates.Area,
+        state: LeadMakerStatesEnum.Area,
         title: 'Укажите общую площадь недвижимости',
         body: (
           <StepArea
@@ -408,63 +455,75 @@ class LeadMakerWorkFlow {
               submitData.area = e.total
               submitData.livingArea = e.living
               this.contentChanged(e)
+              if (submitData.area > 0) {
+                this.unlockNextTransition()
+              }
             }}
           />
         ),
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Вперед',
-        prevState: LeadMakerStates.Status,
-        nextState: LeadMakerStates.Rooms,
+        prevState: LeadMakerStatesEnum.Status,
+        nextState: LeadMakerStatesEnum.Rooms,
       })
       this.statesManager.append({
-        state: LeadMakerStates.Rooms,
-        title: 'Количество комнат?',
-        body: <StepRooms onChanged={e => {
-          submitData.rooms = e.rooms
-          submitData.beds = e.beds
-          submitData.bathrooms = e.baths
-          this.contentChanged(e)
-        }} />,
+        state: LeadMakerStatesEnum.Rooms,
+        title: 'Укажите общее количество комнат',
+        body: (
+          <StepRooms
+            onChanged={e => {
+              submitData.rooms = e.rooms
+              submitData.beds = e.beds
+              submitData.bathrooms = e.baths
+              this.contentChanged(e)
+              if (submitData.rooms > 0) {
+                this.unlockNextTransition()
+              }
+            }}
+          />
+        ),
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Вперед',
-        prevState: LeadMakerStates.Area,
-        nextState: LeadMakerStates.Purpose,
+        prevState: LeadMakerStatesEnum.Area,
+        nextState: LeadMakerStatesEnum.Purpose,
       })
       this.statesManager.append({
-        state: LeadMakerStates.Purpose,
+        state: LeadMakerStatesEnum.Purpose,
         title: 'Укажите цель покупки',
         body: (
           <StepPurpose
             onChanged={e => {
               submitData.purpose = String(e)
               this.contentChanged(e)
+              this.unlockNextTransition()
             }}
           />
         ),
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Вперед',
-        prevState: LeadMakerStates.Rooms,
-        nextState: LeadMakerStates.ReadyDeal,
+        prevState: LeadMakerStatesEnum.Rooms,
+        nextState: LeadMakerStatesEnum.ReadyDeal,
       })
       this.statesManager.append({
-        state: LeadMakerStates.ReadyDeal,
-        title: 'Как срочно?',
+        state: LeadMakerStatesEnum.ReadyDeal,
+        title: 'Когда готовы выходить на сделку?',
         body: (
           <StepReadyDeal
             onChanged={e => {
               submitData.readyDeal = e
               this.contentChanged(e)
+              this.goToState(this.nextState)
             }}
           />
         ),
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Вперед',
-        prevState: LeadMakerStates.Purpose,
-        nextState: LeadMakerStates.Budget,
+        prevState: LeadMakerStatesEnum.Purpose,
+        nextState: LeadMakerStatesEnum.Budget,
       })
       this.statesManager.append({
-        state: LeadMakerStates.Budget,
-        title: 'Бюджет',
+        state: LeadMakerStatesEnum.Budget,
+        title: 'Укажите примерный бюджет',
         body: (
           <StepBuyBudget
             onChanged={e => {
@@ -472,16 +531,19 @@ class LeadMakerWorkFlow {
               submitData.budget.from = e.from
               submitData.budget.to = e.to
               this.contentChanged(e)
+              if (submitData.budget.to > 0 || submitData.budget.from > 0) {
+                this.unlockNextTransition()
+              }
             }}
           />
         ),
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Вперед',
-        prevState: LeadMakerStates.ReadyDeal,
-        nextState: LeadMakerStates.Purchase,
+        prevState: LeadMakerStatesEnum.ReadyDeal,
+        nextState: LeadMakerStatesEnum.Purchase,
       })
       this.statesManager.append({
-        state: LeadMakerStates.Purchase,
+        state: LeadMakerStatesEnum.Purchase,
         title: 'Укажите удобный способ покупки',
         body: (
           <StepPurchase
@@ -495,29 +557,36 @@ class LeadMakerWorkFlow {
         ),
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Вперед',
-        prevState: LeadMakerStates.Budget,
-        nextState: LeadMakerStates.Wishes,
+        prevState: LeadMakerStatesEnum.Budget,
+        nextState: LeadMakerStatesEnum.Wishes,
       })
       this.statesManager.append({
-        state: LeadMakerStates.Wishes,
+        state: LeadMakerStatesEnum.Wishes,
         title: 'Опишите ваши дополнительные пожелания',
-        body: <StepWishes onChange={e => {
-          submitData.wished.text = e.wishes
-          submitData.wished.title = e.title
-          this.contentChanged(e)
-        }}/>,
+        body: (
+          <StepWishes
+            onChange={e => {
+              submitData.wished.text = e.wishes
+              submitData.wished.title = e.title
+              this.contentChanged(e)
+              if (submitData.wished.title.length > 0) {
+                this.unlockNextTransition()
+              }
+            }}
+          />
+        ),
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Вперед',
-        prevState: LeadMakerStates.Purchase,
-        nextState: SupportStates.Payment,
+        prevState: LeadMakerStatesEnum.Purchase,
+        nextState: SupportStatesEnum.Payment,
       })
     }
 
     if (rootLabel === 'land') {
-      this.nextState = LeadMakerStates.Area
+      this.nextState = LeadMakerStatesEnum.Area
       this.statesManager.append({
         title: 'Укажите площадь участка земли',
-        state: LeadMakerStates.Area,
+        state: LeadMakerStatesEnum.Area,
         body: (
           <StepArea
             context={rootLabel}
@@ -525,49 +594,52 @@ class LeadMakerWorkFlow {
               submitData.area = e.total
               submitData.livingArea = e.living
               this.contentChanged(e)
+              this.unlockNextTransition()
             }}
           />
         ),
-        prevState: LeadMakerStates.EstateType,
-        nextState: LeadMakerStates.Purpose,
+        prevState: LeadMakerStatesEnum.EstateType,
+        nextState: LeadMakerStatesEnum.Purpose,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
       this.statesManager.append({
-        title: 'Цель покупки?',
-        state: LeadMakerStates.Purpose,
+        title: 'Укажите цель покупки',
+        state: LeadMakerStatesEnum.Purpose,
         body: (
           <StepPurpose
             onChanged={e => {
               submitData.purpose = String(e)
               this.contentChanged(e)
+              this.unlockNextTransition()
             }}
           />
         ),
-        prevState: LeadMakerStates.Area,
-        nextState: LeadMakerStates.ReadyDeal,
+        prevState: LeadMakerStatesEnum.Area,
+        nextState: LeadMakerStatesEnum.ReadyDeal,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
       this.statesManager.append({
-        title: 'Как срочно?',
-        state: LeadMakerStates.ReadyDeal,
+        title: 'Когда готовы выходить на сделку?',
+        state: LeadMakerStatesEnum.ReadyDeal,
         body: (
           <StepReadyDeal
             onChanged={e => {
               submitData.readyDeal = e
               this.contentChanged(e)
+              this.goToState(this.getNextState())
             }}
           />
         ),
-        prevState: LeadMakerStates.Purpose,
-        nextState: LeadMakerStates.Budget,
+        prevState: LeadMakerStatesEnum.Purpose,
+        nextState: LeadMakerStatesEnum.Budget,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
       this.statesManager.append({
-        title: 'Бюджет',
-        state: LeadMakerStates.Budget,
+        title: 'Укажите примерный бюджет',
+        state: LeadMakerStatesEnum.Budget,
         body: (
           <StepBuyBudget
             onChanged={e => {
@@ -575,17 +647,20 @@ class LeadMakerWorkFlow {
               submitData.budget.from = e.from
               submitData.budget.to = e.to
               this.contentChanged(e)
+              if (submitData.budget.from > 0 || submitData.budget.to > 0) {
+                this.unlockNextTransition()
+              }
             }}
           />
         ),
-        prevState: LeadMakerStates.ReadyDeal,
-        nextState: LeadMakerStates.Purchase,
+        prevState: LeadMakerStatesEnum.ReadyDeal,
+        nextState: LeadMakerStatesEnum.Purchase,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
       this.statesManager.append({
         title: 'Укажите удобный способ покупки',
-        state: LeadMakerStates.Purchase,
+        state: LeadMakerStatesEnum.Purchase,
         body: (
           <StepPurchase
             onChange={option => {
@@ -596,31 +671,38 @@ class LeadMakerWorkFlow {
             }}
           />
         ),
-        prevState: LeadMakerStates.Budget,
-        nextState: LeadMakerStates.Wishes,
+        prevState: LeadMakerStatesEnum.Budget,
+        nextState: LeadMakerStatesEnum.Wishes,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
       this.statesManager.append({
         title: 'Опишите ваши дополнительные пожелания',
-        state: LeadMakerStates.Wishes,
-        body: <StepWishes onChange={e => {
-          submitData.wished.text = e.wishes
-          submitData.wished.title = e.title
-          this.contentChanged(e)
-        }}/>,
-        prevState: LeadMakerStates.Budget,
-        nextState: SupportStates.Payment,
+        state: LeadMakerStatesEnum.Wishes,
+        body: (
+          <StepWishes
+            onChange={e => {
+              submitData.wished.text = e.wishes
+              submitData.wished.title = e.title
+              this.contentChanged(e)
+              if (submitData.wished.title.length > 0) {
+                this.unlockNextTransition()
+              }
+            }}
+          />
+        ),
+        prevState: LeadMakerStatesEnum.Budget,
+        nextState: SupportStatesEnum.Payment,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
     }
 
     if (rootLabel === 'commercial') {
-      this.nextState = LeadMakerStates.Status
+      this.nextState = LeadMakerStatesEnum.Status
       this.statesManager.append({
-        title: 'Состояние?',
-        state: LeadMakerStates.Status,
+        title: 'Укажите состояние недвижимости',
+        state: LeadMakerStatesEnum.Status,
         body: (
           <StepStatus
             onChanged={e => {
@@ -628,17 +710,20 @@ class LeadMakerWorkFlow {
               submitData.deadlineAt = e.deadlineAfter
               submitData.buildYear = e.buildYear
               this.contentChanged(e)
+              if (submitData.estateStatus.length > 0) {
+                this.unlockNextTransition()
+              }
             }}
           />
         ),
-        prevState: LeadMakerStates.EstateType,
-        nextState: LeadMakerStates.Area,
+        prevState: LeadMakerStatesEnum.EstateType,
+        nextState: LeadMakerStatesEnum.Area,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
       this.statesManager.append({
         title: 'Укажите площадь недвижимости',
-        state: LeadMakerStates.Area,
+        state: LeadMakerStatesEnum.Area,
         body: (
           <StepArea
             context={rootLabel}
@@ -646,49 +731,54 @@ class LeadMakerWorkFlow {
               submitData.area = e.total
               submitData.livingArea = e.living
               this.contentChanged(e)
+              if (submitData.area > 0) {
+                this.unlockNextTransition()
+              }
             }}
           />
         ),
-        prevState: LeadMakerStates.Status,
-        nextState: LeadMakerStates.Purpose,
+        prevState: LeadMakerStatesEnum.Status,
+        nextState: LeadMakerStatesEnum.Purpose,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
       this.statesManager.append({
-        title: 'Цель покупки?',
-        state: LeadMakerStates.Purpose,
+        title: 'Укажите цель покупки',
+        state: LeadMakerStatesEnum.Purpose,
         body: (
           <StepPurpose
             onChanged={e => {
               submitData.purpose = String(e)
               this.contentChanged(e)
+              this.unlockNextTransition()
             }}
           />
         ),
-        prevState: LeadMakerStates.Area,
-        nextState: LeadMakerStates.ReadyDeal,
+        prevState: LeadMakerStatesEnum.Area,
+        nextState: LeadMakerStatesEnum.ReadyDeal,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
       this.statesManager.append({
-        title: 'Как срочно?',
-        state: LeadMakerStates.ReadyDeal,
+        title: 'Когда готовы выходить на сделку?',
+        state: LeadMakerStatesEnum.ReadyDeal,
         body: (
           <StepReadyDeal
             onChanged={e => {
               submitData.readyDeal = e
               this.contentChanged(e)
+              this.goToState(this.getNextState())
             }}
           />
         ),
-        prevState: LeadMakerStates.Purpose,
-        nextState: LeadMakerStates.Budget,
+        prevState: LeadMakerStatesEnum.Purpose,
+        nextState: LeadMakerStatesEnum.Budget,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
       this.statesManager.append({
         title: 'Бюджет',
-        state: LeadMakerStates.Budget,
+        state: LeadMakerStatesEnum.Budget,
         body: (
           <StepBuyBudget
             onChanged={e => {
@@ -696,17 +786,20 @@ class LeadMakerWorkFlow {
               submitData.budget.from = e.from
               submitData.budget.to = e.to
               this.contentChanged(e)
+              if (submitData.budget.from > 0 || submitData.budget.to > 0) {
+                this.unlockNextTransition()
+              }
             }}
           />
         ),
-        prevState: LeadMakerStates.ReadyDeal,
-        nextState: LeadMakerStates.Purchase,
+        prevState: LeadMakerStatesEnum.ReadyDeal,
+        nextState: LeadMakerStatesEnum.Purchase,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
       this.statesManager.append({
         title: 'Укажите удобный способ покупки',
-        state: LeadMakerStates.Purchase,
+        state: LeadMakerStatesEnum.Purchase,
         body: (
           <StepPurchase
             onChange={option => {
@@ -717,21 +810,28 @@ class LeadMakerWorkFlow {
             }}
           />
         ),
-        prevState: LeadMakerStates.Budget,
-        nextState: LeadMakerStates.Wishes,
+        prevState: LeadMakerStatesEnum.Budget,
+        nextState: LeadMakerStatesEnum.Wishes,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
       this.statesManager.append({
         title: 'Опишите ваши дополнительные пожелания',
-        state: LeadMakerStates.Wishes,
-        body: <StepWishes onChange={e => {
-          submitData.wished.text = e.wishes
-          submitData.wished.title = e.title
-          this.contentChanged(e)
-        }}/>,
-        prevState: LeadMakerStates.Purchase,
-        nextState: SupportStates.Payment,
+        state: LeadMakerStatesEnum.Wishes,
+        body: (
+          <StepWishes
+            onChange={e => {
+              submitData.wished.text = e.wishes
+              submitData.wished.title = e.title
+              this.contentChanged(e)
+              if (submitData.wished.title.length > 0) {
+                this.unlockNextTransition()
+              }
+            }}
+          />
+        ),
+        prevState: LeadMakerStatesEnum.Purchase,
+        nextState: SupportStatesEnum.Payment,
         prevUrlLabel: 'Назад',
         nextUrlLabel: 'Далее',
       })
@@ -742,8 +842,10 @@ class LeadMakerWorkFlow {
 class StatesManager {
   private states: LeadMakerStruct[]
   private contentChanged: Function
+  private workflow: LeadMakerWorkFlow
 
-  constructor() {
+  constructor(workflow: LeadMakerWorkFlow) {
+    this.workflow = workflow
     this.states = []
     this.storeDefault()
     this.contentChanged = () => {}
@@ -780,41 +882,43 @@ class StatesManager {
     this.states = []
     this.states.push({
       title: 'Укажите город или расположение недвижимости',
-      state: LeadMakerStates.Location,
+      state: LeadMakerStatesEnum.Location,
       nextUrlLabel: 'Далее',
       prevUrlLabel: 'Назад',
-      prevState: SupportStates.Intro,
-      nextState: LeadMakerStates.Format,
+      prevState: SupportStatesEnum.Intro,
+      nextState: LeadMakerStatesEnum.Format,
       body: (
         <StepLocation
           onChanged={(location: LocationResult) => {
             submitData.location.city = location.cityId
             submitData.location.country = location.countryId
             this.contentChanged(location)
+            this.workflow.unlockNextTransition()
           }}
         />
       ),
     })
     this.states.push({
       title: 'Укажите формат сделки с недвижимостью',
-      state: LeadMakerStates.Format,
+      state: LeadMakerStatesEnum.Format,
       nextUrlLabel: 'Далее',
       prevUrlLabel: 'Назад',
-      prevState: LeadMakerStates.Location,
-      nextState: LeadMakerStates.EstateType,
+      prevState: LeadMakerStatesEnum.Location,
+      nextState: LeadMakerStatesEnum.EstateType,
       body: (
         <StepFormat
           onChanged={(e: any) => {
             submitData.format = e
             this.contentChanged(e)
+            this.workflow.goToState(this.workflow.getNextState())
           }}
         />
       ),
     })
     this.states.push({
       title: 'Укажите тип недвижимости',
-      state: LeadMakerStates.EstateType,
-      prevState: LeadMakerStates.Format,
+      state: LeadMakerStatesEnum.EstateType,
+      prevState: LeadMakerStatesEnum.Format,
       nextUrlLabel: 'Далее',
       prevUrlLabel: 'Назад',
       body: (
@@ -824,6 +928,7 @@ class StatesManager {
             submitData.estateType.root = e.root
             this.storeDefault()
             this.contentChanged(e)
+            this.workflow.unlockNextTransition()
           }}
         />
       ),
