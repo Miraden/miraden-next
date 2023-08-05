@@ -50,18 +50,26 @@ interface PaymentOptions {
   totalPrice: number
 }
 
+interface Area {
+  total: number
+  living: number
+}
+
+interface Rooms {
+  total: number
+  beds: number
+  bathrooms: number
+}
+
 interface SubmitDataStruct {
   location: SubmitLocation
   format: string
   estateType: SubmitEstateType
-  estateStatus: string
+  status: string
   deadlineAt: string
   buildYear: string
-  area: number
-  livingArea: number
-  rooms: number
-  beds: number
-  bathrooms: number
+  area: Area
+  rooms: Rooms
   purpose: string
   readyDeal: string
   rentPeriod: SubmitRentPeriod

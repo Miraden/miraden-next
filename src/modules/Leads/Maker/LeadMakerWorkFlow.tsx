@@ -36,14 +36,18 @@ let submitData: SubmitDataStruct = {
     root: '',
     sublevel: '',
   },
-  estateStatus: '',
+  status: '',
   deadlineAt: '',
   buildYear: '',
-  area: 0,
-  livingArea: 0,
-  rooms: 0,
-  beds: 0,
-  bathrooms: 0,
+  area: {
+    living: 0,
+    total: 0,
+  },
+  rooms: {
+    total: 0,
+    beds: 0,
+    bathrooms: 0,
+  },
   purpose: '',
   readyDeal: '',
   rentPeriod: {
@@ -371,10 +375,10 @@ class LeadMakerWorkFlow {
         <StepArea
           context={'rent'}
           onChanged={e => {
-            submitData.area = e.total
-            submitData.livingArea = e.living
+            submitData.area.total = e.total
+            submitData.area.living = e.living
             this.contentChanged(e)
-            if (submitData.area > 0) {
+            if (submitData.area.total > 0) {
               this.unlockNextTransition()
             }
           }}
@@ -419,7 +423,10 @@ class LeadMakerWorkFlow {
             submitData.budget.to = e.to
             submitData.budget.period = e.period
             this.contentChanged(e)
-            if (submitData.budget.from > 0 || submitData.budget.to > 0) {
+            if (
+              (submitData.budget.from > 0 || submitData.budget.to > 0) &&
+              submitData.budget.currency > 0
+            ) {
               this.unlockNextTransition()
             }
           }}
@@ -462,7 +469,7 @@ class LeadMakerWorkFlow {
         body: (
           <StepStatus
             onChanged={e => {
-              submitData.estateStatus = e.status
+              submitData.status = e.status
               submitData.deadlineAt = e.deadlineAfter
               submitData.buildYear = e.buildYear
               this.contentChanged(e)
@@ -482,10 +489,10 @@ class LeadMakerWorkFlow {
           <StepArea
             context={rootLabel}
             onChanged={e => {
-              submitData.area = e.total
-              submitData.livingArea = e.living
+              submitData.area.total = e.total
+              submitData.area.living = e.living
               this.contentChanged(e)
-              if (submitData.area > 0) {
+              if (submitData.area.total > 0) {
                 this.unlockNextTransition()
               }
             }}
@@ -502,11 +509,11 @@ class LeadMakerWorkFlow {
         body: (
           <StepRooms
             onChanged={e => {
-              submitData.rooms = e.rooms
-              submitData.beds = e.beds
-              submitData.bathrooms = e.baths
+              submitData.rooms.total = e.rooms
+              submitData.rooms.beds = e.beds
+              submitData.rooms.bathrooms = e.baths
               this.contentChanged(e)
-              if (submitData.rooms > 0) {
+              if (submitData.rooms.total > 0) {
                 this.unlockNextTransition()
               }
             }}
@@ -561,7 +568,10 @@ class LeadMakerWorkFlow {
               submitData.budget.from = e.from
               submitData.budget.to = e.to
               this.contentChanged(e)
-              if (submitData.budget.to > 0 || submitData.budget.from > 0) {
+              if (
+                (submitData.budget.to > 0 || submitData.budget.from > 0) &&
+                submitData.budget.currency > 0
+              ) {
                 this.unlockNextTransition()
               }
             }}
@@ -621,8 +631,8 @@ class LeadMakerWorkFlow {
           <StepArea
             context={rootLabel}
             onChanged={e => {
-              submitData.area = e.total
-              submitData.livingArea = e.living
+              submitData.area.total = e.total
+              submitData.area.living = e.living
               this.contentChanged(e)
               this.unlockNextTransition()
             }}
@@ -677,7 +687,10 @@ class LeadMakerWorkFlow {
               submitData.budget.from = e.from
               submitData.budget.to = e.to
               this.contentChanged(e)
-              if (submitData.budget.from > 0 || submitData.budget.to > 0) {
+              if (
+                (submitData.budget.from > 0 || submitData.budget.to > 0) &&
+                submitData.budget.currency > 0
+              ) {
                 this.unlockNextTransition()
               }
             }}
@@ -736,11 +749,11 @@ class LeadMakerWorkFlow {
         body: (
           <StepStatus
             onChanged={e => {
-              submitData.estateStatus = e.status
+              submitData.status = e.status
               submitData.deadlineAt = e.deadlineAfter
               submitData.buildYear = e.buildYear
               this.contentChanged(e)
-              if (submitData.estateStatus.length > 0) {
+              if (submitData.status.length > 0) {
                 this.unlockNextTransition()
               }
             }}
@@ -758,10 +771,10 @@ class LeadMakerWorkFlow {
           <StepArea
             context={rootLabel}
             onChanged={e => {
-              submitData.area = e.total
-              submitData.livingArea = e.living
+              submitData.area.total = e.total
+              submitData.area.living = e.living
               this.contentChanged(e)
-              if (submitData.area > 0) {
+              if (submitData.area.total > 0) {
                 this.unlockNextTransition()
               }
             }}
@@ -816,7 +829,10 @@ class LeadMakerWorkFlow {
               submitData.budget.from = e.from
               submitData.budget.to = e.to
               this.contentChanged(e)
-              if (submitData.budget.from > 0 || submitData.budget.to > 0) {
+              if (
+                (submitData.budget.from > 0 || submitData.budget.to > 0) &&
+                submitData.budget.currency > 0
+              ) {
                 this.unlockNextTransition()
               }
             }}

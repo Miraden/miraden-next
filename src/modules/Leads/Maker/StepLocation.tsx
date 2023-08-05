@@ -84,8 +84,8 @@ const StepLocation = (props: Props): JSX.Element => {
   )
 
   const onRadius = useCallback((value: number) => {
-    props.onChanged({radius: value, cityId: 0, countryId: 0})
-  }, [props])
+
+  }, [])
 
   const onSearchResult = useCallback(
     (result: google.maps.GeocoderResult[] | null) => {
@@ -100,6 +100,10 @@ const StepLocation = (props: Props): JSX.Element => {
     },
     []
   )
+
+  const onMapLoad = useCallback(() => {
+    if(props.onChanged) props.onChanged({radius: 0, countryId: 0, cityId: 0})
+  }, [props])
 
   return (
     <StyledStep>
@@ -141,7 +145,7 @@ const StepLocation = (props: Props): JSX.Element => {
         )}
         {view === Views.Map && (
           <StepBlankLayout>
-            <RenderMap place={selectedPlace} onRadius={onRadius} />
+            <RenderMap onLoad={onMapLoad} place={selectedPlace} onRadius={onRadius} />
           </StepBlankLayout>
         )}
       </div>
@@ -239,6 +243,7 @@ const RenderLocations = (props: LocationsProps): JSX.Element => {
 interface MapProps {
   place?: google.maps.GeocoderResult | null
   onRadius?: Function
+  onLoad?: () => void
 }
 
 const RenderMap = (props: MapProps): JSX.Element => {
@@ -277,8 +282,9 @@ const RenderMap = (props: MapProps): JSX.Element => {
       const location = result.geometry?.location
       setPointCenter({ lat: location.lat(), lng: location.lng() })
       map.setCenter({ lat: location.lat(), lng: location.lng() })
+      if(props.onLoad) props.onLoad()
     })
-  }, [])
+  }, [props])
 
   const onRadius = useCallback(
     (e: Forms.DropDownOption) => {
