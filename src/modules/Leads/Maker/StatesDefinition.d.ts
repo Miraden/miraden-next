@@ -13,6 +13,7 @@ interface SubmitDataStruct {
   location: {
     city: number
     country: number
+    radius: number
   }
   format: string
   estateType: {

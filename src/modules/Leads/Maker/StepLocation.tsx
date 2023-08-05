@@ -17,8 +17,8 @@ import GoogleMapAutoComplete from '@/modules/Google/GoogleMapAutoComplete'
 import { GoogleAutoComplete } from '@/infrastructure/Google/places/GoogleAutoComplete'
 import { GeocoderManager } from '@/infrastructure/Google/geocoder/GeocoderManager'
 import GoogleMapGeocoder from '@/modules/Google/GoogleMapGeocoder'
-import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
-import StepBlankLayout from "@/modules/Leads/Maker/StepBlankLayout";
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
+import StepBlankLayout from '@/modules/Leads/Maker/StepBlankLayout'
 
 const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
@@ -38,6 +38,7 @@ enum Views {
 export interface LocationResult {
   countryId: number
   cityId: number
+  radius: number
 }
 
 const StepLocation = (props: Props): JSX.Element => {
@@ -82,6 +83,10 @@ const StepLocation = (props: Props): JSX.Element => {
     [props]
   )
 
+  const onRadius = useCallback((value: number) => {
+    props.onChanged({radius: value, cityId: 0, countryId: 0})
+  }, [props])
+
   const onSearchResult = useCallback(
     (result: google.maps.GeocoderResult[] | null) => {
       const geocoder = window.Miraden.geocoder
@@ -119,7 +124,7 @@ const StepLocation = (props: Props): JSX.Element => {
         <div className="StepHeader__right">
           <div className="CountriesMap" onClick={OnStateToggle}>
             <MapIcon />
-            <span className={"CountriesMap__label"}>{getViewLabel(view)}</span>
+            <span className={'CountriesMap__label'}>{getViewLabel(view)}</span>
           </div>
         </div>
       </div>
@@ -127,14 +132,18 @@ const StepLocation = (props: Props): JSX.Element => {
       <div className="StepBody">
         {view === Views.List && (
           <StepCommonLayout>
-            <RenderLocations className={"Locations"} locations={locations} onChanged={onLocations} />
+            <RenderLocations
+              className={'Locations'}
+              locations={locations}
+              onChanged={onLocations}
+            />
           </StepCommonLayout>
         )}
-        {view === Views.Map &&
+        {view === Views.Map && (
           <StepBlankLayout>
-            <RenderMap place={selectedPlace} />
+            <RenderMap place={selectedPlace} onRadius={onRadius} />
           </StepBlankLayout>
-        }
+        )}
       </div>
     </StyledStep>
   )
@@ -162,7 +171,7 @@ const RenderLocations = (props: LocationsProps): JSX.Element => {
       setSelectedCountryId(country.id)
       setCities(findCitiesByCountry(country.id, props.locations))
       setSelectedCityId(anyCity)
-      props.onChanged({ cityId: anyCity, countryId: country.id })
+      props.onChanged({ cityId: anyCity, countryId: country.id, radius: 0 })
     },
     [props]
   )
@@ -170,7 +179,7 @@ const RenderLocations = (props: LocationsProps): JSX.Element => {
   const onCityClick = useCallback(
     (cityId: number) => {
       setSelectedCityId(cityId)
-      props.onChanged({ cityId: cityId, countryId: selectedCountryId })
+      props.onChanged({ cityId: cityId, countryId: selectedCountryId, radius: 0 })
     },
     [props, selectedCountryId]
   )
@@ -229,6 +238,7 @@ const RenderLocations = (props: LocationsProps): JSX.Element => {
 
 interface MapProps {
   place?: google.maps.GeocoderResult | null
+  onRadius?: Function
 }
 
 const RenderMap = (props: MapProps): JSX.Element => {
@@ -242,7 +252,10 @@ const RenderMap = (props: MapProps): JSX.Element => {
 
   const [Map, setMap] = useState<google.maps.Map>(window.Miraden.map)
   const [CircleRadius, setCircleRadius] = useState<number>(DEFAULT_RADIUS.value)
-  const [pointCenter, setPointCenter] = useState<google.maps.LatLngLiteral>({lat: 0, lng: 0})
+  const [pointCenter, setPointCenter] = useState<google.maps.LatLngLiteral>({
+    lat: 0,
+    lng: 0,
+  })
 
   useEffect(() => {
     if (!props.place) return
@@ -252,27 +265,28 @@ const RenderMap = (props: MapProps): JSX.Element => {
     if (Map) Map.setCenter(location)
   }, [Map, props.place])
 
-  const onLoad = useCallback(
-    (map: google.maps.Map) => {
-      setMap(map)
+  const onLoad = useCallback((map: google.maps.Map) => {
+    setMap(map)
 
-      const mgr: GeocoderManager = new GeocoderManager()
-      mgr.setMap(map).makeService()
-      const geo = mgr.findByQuery(DEFAULT_REGION)
-      geo?.then(res => {
-        if(res.results.length === 0) return
-        const result = res.results[0]
-        const location = result.geometry?.location
-        setPointCenter({ lat: location.lat(), lng: location.lng() })
-        map.setCenter({ lat: location.lat(), lng: location.lng() })
-      })
-    },
-    []
-  )
-
-  const onRadius = useCallback((e: Forms.DropDownOption) => {
-    setCircleRadius(Number(e.value))
+    const mgr: GeocoderManager = new GeocoderManager()
+    mgr.setMap(map).makeService()
+    const geo = mgr.findByQuery(DEFAULT_REGION)
+    geo?.then(res => {
+      if (res.results.length === 0) return
+      const result = res.results[0]
+      const location = result.geometry?.location
+      setPointCenter({ lat: location.lat(), lng: location.lng() })
+      map.setCenter({ lat: location.lat(), lng: location.lng() })
+    })
   }, [])
+
+  const onRadius = useCallback(
+    (e: Forms.DropDownOption) => {
+      setCircleRadius(Number(e.value))
+      if (props.onRadius) props.onRadius(Number(e.value))
+    },
+    [props]
+  )
 
   const onMarkerDrag = useCallback((e: any) => {
     const point = new google.maps.LatLng(e)
@@ -376,10 +390,13 @@ const RenderSearch = (props: SearchProps): JSX.Element => {
     [autoCompleteMgr, geocoderMgr, onResult]
   )
 
-  const onFocus = useCallback((e: React.FocusEvent<HTMLInputElement>) => {
-    const cachedResults = window.Miraden.geocoder.searchResult
-    onResult(cachedResults)
-  }, [onResult])
+  const onFocus = useCallback(
+    (e: React.FocusEvent<HTMLInputElement>) => {
+      const cachedResults = window.Miraden.geocoder.searchResult
+      onResult(cachedResults)
+    },
+    [onResult]
+  )
 
   return (
     <SearchStyled>
@@ -390,9 +407,12 @@ const RenderSearch = (props: SearchProps): JSX.Element => {
         onInputFocus={onFocus}
       />
       <GoogleMapAutoComplete map={map} onReady={e => setAutoCompleteMgr(e)} />
-      <GoogleMapGeocoder map={map} onReady={e => {
-        setGeocoderMgr(e)
-      }} />
+      <GoogleMapGeocoder
+        map={map}
+        onReady={e => {
+          setGeocoderMgr(e)
+        }}
+      />
     </SearchStyled>
   )
 }

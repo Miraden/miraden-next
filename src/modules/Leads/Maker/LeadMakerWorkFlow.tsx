@@ -27,6 +27,7 @@ let submitData: SubmitDataStruct = {
   location: {
     city: 0,
     country: 0,
+    radius: 0
   },
   format: 'apartment',
   estateType: {
@@ -892,6 +893,7 @@ class StatesManager {
           onChanged={(location: LocationResult) => {
             submitData.location.city = location.cityId
             submitData.location.country = location.countryId
+            submitData.location.radius = location.radius
             this.contentChanged(location)
             this.workflow.unlockNextTransition()
           }}
