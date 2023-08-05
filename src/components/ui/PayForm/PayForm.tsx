@@ -1,40 +1,43 @@
-import {CrossIcon} from "@/icons";
-import React, {useCallback, useState} from "react";
-import styled from "styled-components";
-import {Button} from "../Button";
-import {PayFormContent} from "./PayFormContent";
+import { CrossIcon } from '@/icons'
+import React, { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { Button } from '../Button'
+import { PayFormContent } from './PayFormContent'
 
 interface PayFormProps {
-  className?: string;
-  onClose?: Function;
-  testCost?: any;
-  totalTax?: any;
-  openToEveryone?: any;
-  additionalRequests?: any;
-  getUp?: any;
+  className?: string
+  onClose?: Function
+  testCost?: any
+  totalTax?: any
+  openToEveryone?: any
+  additionalRequests?: any
+  getUp?: any
 }
 
 const PayForm = ({
-                   className,
-                   onClose,
-                   testCost,
-                   totalTax,
-                   openToEveryone,
-                   additionalRequests,
-                   getUp,
-                 }: PayFormProps) => {
-  const [totalPay, setTotalPay] = useState<number>(totalTax);
-  const [selectedOption, setSelectedOption] = useState<any>(null);
+  className,
+  onClose,
+  testCost,
+  totalTax,
+  openToEveryone,
+  additionalRequests,
+  getUp,
+}: PayFormProps) => {
+  const [totalPay, setTotalPay] = useState<number>(totalTax)
+  const [selectedOption, setSelectedOption] = useState<any>(null)
 
   let btnClose: HTMLButtonElement | null = null
   const setRef = (el: HTMLButtonElement | null) => {
     btnClose = el
   }
 
-  const onCloseHandler = useCallback((event: React.MouseEvent<HTMLButtonElement>): void => {
-    if (!btnClose) return
-    if (onClose) onClose(event)
-  }, [onClose, btnClose])
+  const onCloseHandler = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>): void => {
+      if (!btnClose) return
+      if (onClose) onClose(event)
+    },
+    [onClose, btnClose]
+  )
 
   function renderForm(): JSX.Element {
     return (
@@ -45,9 +48,13 @@ const PayForm = ({
               <h2 className="Font_32_120">Форма оплаты</h2>
               <button
                 ref={el => setRef(el)}
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) => onCloseHandler(e)
-                }>
-                <CrossIcon attr={{width: 24, height: 24, className: "CrossIcon"}}/>
+                onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+                  onCloseHandler(e)
+                }
+              >
+                <CrossIcon
+                  attr={{ width: 24, height: 24, className: 'CrossIcon' }}
+                />
               </button>
             </div>
             <PayFormContent
@@ -68,12 +75,8 @@ const PayForm = ({
     )
   }
 
-  return (
-    <>
-      {renderForm()}
-    </>
-  );
-};
+  return <>{renderForm()}</>
+}
 
 const StyledPayForm = styled.div`
   position: absolute;
@@ -124,7 +127,7 @@ const StyledPayForm = styled.div`
     }
 
     button:focus {
-      outline: 2px solid ${({theme}) => theme.colors.stroke.purple};
+      outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
     }
   }
 
@@ -162,6 +165,6 @@ const StyledPayForm = styled.div`
       max-width: unset;
     }
   }
-`;
+`
 
-export {PayForm};
+export { PayForm }

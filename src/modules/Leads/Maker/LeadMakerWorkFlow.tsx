@@ -1,4 +1,6 @@
-import StepLocation, {LocationResult} from '@/modules/Leads/Maker/StepLocation'
+import StepLocation, {
+  LocationResult,
+} from '@/modules/Leads/Maker/StepLocation'
 import StepFormat from '@/modules/Leads/Maker/StepFormat'
 import StepEstateType from '@/modules/Leads/Maker/StepEstateType'
 import LeadMakerIntro from '@/modules/Leads/Maker/LeadMakerIntro'
@@ -9,15 +11,17 @@ import StepRooms from '@/modules/Leads/Maker/StepRooms'
 import StepReadyDeal from './StepReadyDeal'
 import StepBuyBudget from './StepBuyBudget'
 import StepPurchase from '@/modules/Leads/Maker/StepPurchase'
-import StepWishes from "@/modules/Leads/Maker/StepWishes";
-import StepPeriod from "@/modules/Leads/Maker/StepPeriod";
-import StepRentBudget from "@/modules/Leads/Maker/StepRentBudget";
+import StepWishes from '@/modules/Leads/Maker/StepWishes'
+import StepPeriod from '@/modules/Leads/Maker/StepPeriod'
+import StepRentBudget from '@/modules/Leads/Maker/StepRentBudget'
 import {
   FormatRentStates,
   LeadMakerStates,
   StateDirection,
-  StatesType, SupportStates,
+  StatesType,
+  SupportStates,
 } from '@/modules/Leads/Maker/StatesTypes'
+import PaymentOptions from '@/modules/Leads/Maker/PaymentOptions'
 
 let submitData: SubmitDataStruct = {
   location: {
@@ -58,6 +62,7 @@ let submitData: SubmitDataStruct = {
     title: '',
     text: '',
   },
+  totalTax: 0
 }
 
 enum FormatTypes {
@@ -285,8 +290,6 @@ class LeadMakerWorkFlow {
   }
 
   public getSupportData(context: LeadMakerWorkFlow): LeadMakerStruct[] {
-    const handler = (e: any) => {}
-
     return [
       {
         title: 'Как это работает?',
@@ -298,7 +301,7 @@ class LeadMakerWorkFlow {
       },
       {
         title: 'Получите больше просмотров и откликов',
-        body: <>Payment</>,
+        body: <PaymentOptions totalTax={e => e} />,
         url: LeadMakerDefaultUrl,
         nextUrlLabel: 'Оплатить',
         prevUrlLabel: 'Назад',

@@ -41,7 +41,7 @@ const CreatePaymentButton = ({
           <div className="[ Button__label ]">
             {tax && (
               <div className="Font_20_120 CreatePaymentButton__percentMobile">
-                {tax} €
+                {tax} €
               </div>
             )}
             <h3 className="Font_16_140">{buttonTitle}</h3>
@@ -50,7 +50,7 @@ const CreatePaymentButton = ({
         )}
       </div>
       {tax && (
-        <div className="Font_20_120 CreatePaymentButton__percent">{tax} €</div>
+        <div className="Font_20_120 CreatePaymentButton__percent">{tax} €</div>
       )}
     </StyledButton>
   );

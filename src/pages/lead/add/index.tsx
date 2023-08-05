@@ -56,7 +56,6 @@ export default function AddLead(): JSX.Element {
     workflow.onContentChange((e: any) => {
       isNeedUpdate = !isNeedUpdate
       forceUpdate()
-      console.log(e)
     })
 
     forceUpdate()
@@ -145,6 +144,7 @@ export default function AddLead(): JSX.Element {
                         </div>
                       )}
                       <Button
+                        className={"ButtonForward"}
                         onClick={onNextClick}
                         disabled={workflow.isNextTransitionLocked()}
                       >

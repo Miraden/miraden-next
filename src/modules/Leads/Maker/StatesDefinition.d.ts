@@ -47,5 +47,6 @@ interface SubmitDataStruct {
   wished: {
     title: string
     text: string
-  }
+  },
+  totalTax: number
 }
