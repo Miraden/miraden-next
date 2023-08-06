@@ -29,7 +29,7 @@ export enum SupportStatesEnum {
   Home = 'home',
   Intro = 'intro',
   Payment = 'payment',
-  PayForm = 'payForm'
+  PayForm = 'payForm',
 }
 
 export enum StatesTypeEnum {
@@ -40,4 +40,11 @@ export enum StatesTypeEnum {
 export enum FormatTypes {
   buy = 'buy',
   rent = 'rent',
+}
+
+export enum PaymentOptionsEnum {
+  AnyCanResponse = 'anyCanResponse',
+  PinUpOneDay = 'pinUpOneDay',
+  AutoPinUpEveryThreeDays = 'autoPinUpEveryThreeDays',
+  TotalPrice = 'totalPrice',
 }
