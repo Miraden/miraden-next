@@ -13,11 +13,14 @@ import Form from "@/components/ui/Form";
 
 interface Props {
   className?: string;
+  onSuccess?: Function
+  onFailure?: Function
+  onResponse?: Function
 }
 
 const authManager = new AuthManager()
 
-const Login = ({className}: Props) => {
+const Login = ({className, onFailure, onResponse, onSuccess}: Props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [valid, setValid] = useState(false);
@@ -65,19 +68,22 @@ const Login = ({className}: Props) => {
       const responseModule = (await import('@/infrastructure/Network/Http/ApiResponse')).ApiResponse
       const ApiResponse = new responseModule()
       const a = ApiResponse.makeFromObject(res)
+      if(onResponse) onResponse()
       if (a.code === HttpCodes.OK) {
         setLoginHasErrors(false)
         // @ts-ignore
         authManager.authUser(a.payload.token)
-        window.location.href = '/'
+        if(onSuccess) onSuccess()
         return
       }
-
+      if(onFailure) onFailure()
       setLoginHasErrors(true)
     }).catch((reason) => {
+      if(onFailure) onFailure()
       setLoginHasErrors(true)
       setFormSubmitted(false)
     }).finally(() => {
+      if(onSuccess) onSuccess()
       setFormSubmitted(false)
     })
   }

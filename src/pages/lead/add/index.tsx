@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState, useTransition } from 'react'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import cn from 'classnames'
 import styled from 'styled-components'
@@ -11,21 +11,80 @@ import {
   StateDirectionsEnum,
   SupportStatesEnum,
 } from '@/modules/Leads/Maker/StatesTypes'
+import useAuth from '@/hooks/useAuth'
+import { Login } from '@/modules/Customer'
+import { Preloader } from '@/components/ui/Preloader'
 
 const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
 const mobile: string = theme.breakpoints.mobile.max + 'px'
 
 let isNeedUpdate = true
-const _workflow = new LeadMakerWorkFlow()
 
 export default function AddLead(): JSX.Element {
+  const [isUserAuth, setUserAuth] = useState<boolean>(false)
+  const [isAuthServerResponse, setAuthServerResponse] = useState<boolean>(false)
+
+  useAuth({
+    onFailure: () => {},
+    onResponse: () => {
+      setAuthServerResponse(true)
+    },
+    onSuccess: () => {
+      setUserAuth(true)
+    },
+  })
+
+
+  const onLoginSuccess = useCallback(() => {
+    setAuthServerResponse(true)
+    setUserAuth(true)
+  }, [])
+
+  return (
+    <>
+      <Head>
+        <title>Miraden - Создать заявку</title>
+      </Head>
+      <BlankLayout>
+        <StyledPage className={'ContainerFull'}>
+          <div className={cn('PageWrapper')}>
+            <div className={cn('PageContent')}>
+              {(!isAuthServerResponse && !isUserAuth) && (
+                <div className={'StepsWrapper'}>
+                  <Preloader />
+                </div>
+              )}
+              {(isAuthServerResponse && !isUserAuth) && <RenderLogin onSuccess={onLoginSuccess} />}
+              {(isUserAuth && isAuthServerResponse) && <RenderStep />}
+            </div>
+          </div>
+        </StyledPage>
+      </BlankLayout>
+    </>
+  )
+}
+
+interface LoginProps {
+  onSuccess?: Function
+  onFailure?: Function
+  onResponse?: Function
+}
+const RenderLogin = (props: LoginProps): JSX.Element => {
+  return (
+    <StyledLogin>
+      <Login className={'Login'} onSuccess={props.onSuccess} />
+    </StyledLogin>
+  )
+}
+
+const RenderStep = (): JSX.Element => {
+  const _workflow = new LeadMakerWorkFlow()
   const [showPayForm, setShowPayForm] = useState<boolean>(false)
   const [currentState, setCurrentState] = useState<number | string>(
     SupportStatesEnum.Intro
   )
   const [workflow, setWorkflow] = useState<LeadMakerWorkFlow>(_workflow)
-
   const [render, forceRender] = useState<boolean>(false)
 
   useEffect(() => {
@@ -81,88 +140,82 @@ export default function AddLead(): JSX.Element {
 
   return (
     <>
-      <Head>
-        <title>Miraden - Создать заявку</title>
-      </Head>
-      <BlankLayout>
-        <StyledPage className={'ContainerFull'}>
-          <div className={cn('PageWrapper')}>
-            <div className={cn('PageContent')}>
-              <div className="StepsWrapper">
-                <div className="Steps__header">
-                  <h1 className={'Font_headline_3'}>
-                    {workflow.findData(currentState).title}
-                  </h1>
-                </div>
-                <div className="Steps__body">
-                  {workflow.findData(currentState).body}
-                </div>
-                <div className="Steps__footer">
-                  <div className="Steps__progressBar">
-                    {workflow.isCurrentProgressBarVisible() && (
-                      <div
-                        className="Steps__progressCurrent"
-                        style={{
-                          width: workflow.calcProgress(currentState) + '%',
-                        }}
-                      ></div>
-                    )}
-                  </div>
-                  <div className="Steps__footerBody">
-                    <div className="Steps__footerLeft">
-                      <Button
-                        secondary
-                        onClick={onPrevClick}
-                        disabled={workflow.isPrevTransitionLocked()}
-                        className="Step__goBackButton"
-                        leftIcon={<ArrowsIcon left={true} />}
-                      >
-                        {workflow.findData(currentState).prevUrlLabel}
-                      </Button>
-                      {workflow.isStepsStatsVisible() && (
-                        <div className="Reg__footerSteps">
-                          <span className="Font_16_24">Шаг</span>
-                          <div className="Reg__stepCounts">
-                            <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                              {currentState}
-                            </span>
-                            <span>&nbsp;/&nbsp;</span>
-                            <span className="Font_16_140 Color_text_grey">
-                              {workflow.getTotalSteps()}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                    <div className="Steps__footerRight">
-                      {workflow.isSellersStatsVisible() && (
-                        <div className="Steps__sellers">
-                          <span className="Color_text_grey Font_16_24">
-                            Найдено продавцов
-                          </span>
-                          <p className="Color_blue_primary Font_16_140">317</p>
-                        </div>
-                      )}
-                      <Button
-                        className={'ButtonForward'}
-                        onClick={onNextClick}
-                        disabled={workflow.isNextTransitionLocked()}
-                      >
-                        {workflow.findData(currentState).nextUrlLabel}
-                      </Button>
-                    </div>
+      <div className="StepsWrapper">
+        <div className="Steps__header">
+          <h1 className={'Font_headline_3'}>
+            {workflow.findData(currentState).title}
+          </h1>
+        </div>
+        <div className="Steps__body">
+          {workflow.findData(currentState).body}
+        </div>
+        <div className="Steps__footer">
+          <div className="Steps__progressBar">
+            {workflow.isCurrentProgressBarVisible() && (
+              <div
+                className="Steps__progressCurrent"
+                style={{
+                  width: workflow.calcProgress(currentState) + '%',
+                }}
+              ></div>
+            )}
+          </div>
+          <div className="Steps__footerBody">
+            <div className="Steps__footerLeft">
+              <Button
+                secondary
+                onClick={onPrevClick}
+                disabled={workflow.isPrevTransitionLocked()}
+                className="Step__goBackButton"
+                leftIcon={<ArrowsIcon left={true} />}
+              >
+                {workflow.findData(currentState).prevUrlLabel}
+              </Button>
+              {workflow.isStepsStatsVisible() && (
+                <div className="Reg__footerSteps">
+                  <span className="Font_16_24">Шаг</span>
+                  <div className="Reg__stepCounts">
+                    <span className="Reg__footerCount Font_16_140 Color_blue_primary">
+                      {currentState}
+                    </span>
+                    <span>&nbsp;/&nbsp;</span>
+                    <span className="Font_16_140 Color_text_grey">
+                      {workflow.getTotalSteps()}
+                    </span>
                   </div>
                 </div>
-              </div>
+              )}
+            </div>
+            <div className="Steps__footerRight">
+              {workflow.isSellersStatsVisible() && (
+                <div className="Steps__sellers">
+                  <span className="Color_text_grey Font_16_24">
+                    Найдено продавцов
+                  </span>
+                  <p className="Color_blue_primary Font_16_140">317</p>
+                </div>
+              )}
+              <Button
+                className={'ButtonForward'}
+                onClick={onNextClick}
+                disabled={workflow.isNextTransitionLocked()}
+              >
+                {workflow.findData(currentState).nextUrlLabel}
+              </Button>
             </div>
           </div>
-        </StyledPage>
-
-        {showPayForm && <PayForm onClose={onClosePayForm} />}
-      </BlankLayout>
+        </div>
+      </div>
+      {showPayForm && <PayForm onClose={onClosePayForm} />}
     </>
   )
 }
+
+const StyledLogin = styled.div`
+  .Login {
+    margin-top: 0;
+  }
+`
 
 const StyledPage = styled.div`
   max-width: calc(1920px);
@@ -197,6 +250,7 @@ const StyledPage = styled.div`
     height: 600px;
     display: flex;
     flex-direction: column;
+    position: relative;
   }
 
   .Step__goBackButton .Button__iconContainer {

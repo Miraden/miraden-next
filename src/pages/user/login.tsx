@@ -1,8 +1,13 @@
-import {Login} from "@/modules/Customer";
-import Head from "next/head";
-import styled from "styled-components";
+import { Login } from '@/modules/Customer'
+import Head from 'next/head'
+import styled from 'styled-components'
+import { useCallback } from 'react'
 
 export default function LoginPage() {
+  const onSuccess = useCallback(() => {
+      window.location.href = '/'
+  }, [])
+
   return (
     <>
       <Head>
@@ -11,18 +16,18 @@ export default function LoginPage() {
       <StyledMain>
         <StyledLogin className="Container">
           <div className="Reg">
-            <Login/>
+            <Login onSuccess={onSuccess} />
           </div>
         </StyledLogin>
       </StyledMain>
     </>
-  );
+  )
 }
 
 const StyledMain = styled.main`
   background: #eef1f5;
   min-height: 100vh;
-`;
+`
 
 const StyledLogin = styled.div`
   display: grid;
@@ -53,4 +58,4 @@ const StyledLogin = styled.div`
       padding-right: 0;
     }
   }
-`;
+`

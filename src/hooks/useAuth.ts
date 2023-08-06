@@ -17,7 +17,7 @@ const useAuth = ({ onSuccess, onFailure, onResponse }: AuthStruct): void => {
       if (!res) onFailure()
       onResponse()
     })
-  }, [])
+  }, [onFailure, onResponse, onSuccess])
 }
 
 export default useAuth

@@ -1,8 +1,8 @@
-import {FC} from "react";
-import styled from "styled-components";
-import {theme} from "../../../styles/tokens";
+import { FC } from 'react'
+import styled from 'styled-components'
+import { theme } from '../../../styles/tokens'
 
-const baseClassName = "Preloader"
+const baseClassName = 'Preloader'
 
 interface Props {
   className?: string
@@ -13,7 +13,7 @@ interface Props {
 const DefaultProps: Props = {
   className: baseClassName,
   isVisible: false,
-  color: theme.colors.blue.default
+  color: theme.colors.blue.default,
 }
 
 const Preloader: FC<Props> = (args: Props) => {
@@ -23,6 +23,8 @@ const Preloader: FC<Props> = (args: Props) => {
     <StyledPreloader className={props.className} color={props.color}>
       <div></div>
       <div></div>
+      <div></div>
+      <div></div>
     </StyledPreloader>
   )
 }
@@ -30,8 +32,8 @@ const Preloader: FC<Props> = (args: Props) => {
 const StyledPreloader = styled.div<Props>`
   display: inline-block;
   position: absolute;
-  width: 80px;
-  height: 80px;
+  width: 40px;
+  height: 40px;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -39,48 +41,38 @@ const StyledPreloader = styled.div<Props>`
   filter: blur(0);
 
   div {
+    box-sizing: border-box;
+    display: block;
     position: absolute;
-    border: 4px solid ${(props) => props.color};
-    opacity: 1;
+    width: 40px;
+    height: 40px;
+    margin: 8px;
     border-radius: 50%;
-    animation: Preloader 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    border: 3px solid ${({ theme }) => theme.colors.main};
+    animation: Preloader 1200ms cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: ${({ theme }) => theme.colors.main} transparent transparent transparent;
+  }
+
+  div:nth-child(1) {
+    animation-delay: -0.45s;
   }
 
   div:nth-child(2) {
-    animation-delay: -0.5s;
+    animation-delay: -0.3s;
+  }
+
+  div:nth-child(3) {
+    animation-delay: -0.15s;
   }
 
   @keyframes Preloader {
     0% {
-      top: 36px;
-      left: 36px;
-      width: 0;
-      height: 0;
-      opacity: 0;
-    }
-    4.9% {
-      top: 36px;
-      left: 36px;
-      width: 0;
-      height: 0;
-      opacity: 0;
-    }
-    5% {
-      top: 36px;
-      left: 36px;
-      width: 0;
-      height: 0;
-      opacity: 1;
+      transform: rotate(0deg);
     }
     100% {
-      top: 0;
-      left: 0;
-      width: 72px;
-      height: 72px;
-      opacity: 0;
+      transform: rotate(360deg);
     }
   }
-
 `
 
-export {Preloader}
+export { Preloader }
