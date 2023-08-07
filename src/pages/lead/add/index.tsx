@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useCallback, useEffect, useState, useTransition } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import cn from 'classnames'
 import styled from 'styled-components'
@@ -14,6 +14,7 @@ import {
 import useAuth from '@/hooks/useAuth'
 import { Login } from '@/modules/Customer'
 import { Preloader } from '@/components/ui/Preloader'
+import {LeadMakerProvider} from "@/modules/Leads/Maker/LeadMakerProvider";
 
 const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
@@ -35,7 +36,6 @@ export default function AddLead(): JSX.Element {
     },
   })
 
-
   const onLoginSuccess = useCallback(() => {
     setAuthServerResponse(true)
     setUserAuth(true)
@@ -50,13 +50,15 @@ export default function AddLead(): JSX.Element {
         <StyledPage className={'ContainerFull'}>
           <div className={cn('PageWrapper')}>
             <div className={cn('PageContent')}>
-              {(!isAuthServerResponse && !isUserAuth) && (
+              {!isAuthServerResponse && !isUserAuth && (
                 <div className={'StepsWrapper'}>
                   <Preloader />
                 </div>
               )}
-              {(isAuthServerResponse && !isUserAuth) && <RenderLogin onSuccess={onLoginSuccess} />}
-              {(isUserAuth && isAuthServerResponse) && <RenderStep />}
+              {isAuthServerResponse && !isUserAuth && (
+                <RenderLogin onSuccess={onLoginSuccess} />
+              )}
+              {isUserAuth && isAuthServerResponse && <RenderStep />}
             </div>
           </div>
         </StyledPage>
@@ -70,6 +72,7 @@ interface LoginProps {
   onFailure?: Function
   onResponse?: Function
 }
+
 const RenderLogin = (props: LoginProps): JSX.Element => {
   return (
     <StyledLogin>
@@ -108,6 +111,11 @@ const RenderStep = (): JSX.Element => {
     forceUpdate()
   }, [currentState, render, workflow])
 
+  const onPayClick = useCallback(() => {
+    const provider = new LeadMakerProvider()
+    provider.createWith(workflow.getDataToSubmit())
+  }, [workflow])
+
   const onClosePayForm = useCallback(
     (e: any) => {
       workflow.goToState(SupportStatesEnum.Payment)
@@ -140,7 +148,7 @@ const RenderStep = (): JSX.Element => {
 
   return (
     <>
-      <div className="StepsWrapper">
+      <div id={'StepsWrapper'} className="StepsWrapper">
         <div className="Steps__header">
           <h1 className={'Font_headline_3'}>
             {workflow.findData(currentState).title}
@@ -206,7 +214,7 @@ const RenderStep = (): JSX.Element => {
           </div>
         </div>
       </div>
-      {showPayForm && <PayForm onClose={onClosePayForm} />}
+      {showPayForm && <PayForm onClose={onClosePayForm} onPayClick={onPayClick} />}
     </>
   )
 }
@@ -228,7 +236,6 @@ const StyledPage = styled.div`
   flex-grow: 1;
 
   .PageWrapper {
-    position: relative;
     width: 100%;
     display: flex;
     grid-gap: 30px;

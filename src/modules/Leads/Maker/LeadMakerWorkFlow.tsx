@@ -99,6 +99,7 @@ class LeadMakerWorkFlow {
   private currentState: number | string
   private statesManager: StatesManager
   private stateDirection: StateDirectionsEnum
+  private onReadyToSubmit: Function
 
   constructor() {
     this.nextTransitionAllow = true
@@ -110,6 +111,7 @@ class LeadMakerWorkFlow {
     this.stateDirection = StateDirectionsEnum.Forward
     this.statesManager = new StatesManager()
     this.onStateCallback = (dir: StateDirectionsEnum) => {}
+    this.onReadyToSubmit = (data: SubmitDataStruct) => {}
   }
 
   public rules(state: number | string): void {
@@ -245,11 +247,19 @@ class LeadMakerWorkFlow {
       this.unlockNextTransition()
     }
 
+    if(this.getCurrentState() === SupportStatesEnum.PayForm) {
+      this.onReadyToSubmit(submitData)
+    }
+
     this.onStateCallback = callback
   }
 
   public onContentChange(callback: Function): void {
     this.contentChanged = callback
+  }
+
+  public OnReadyToSubmit(callback: (data: SubmitDataStruct) => void): void {
+    this.onReadyToSubmit = callback
   }
 
   public calcProgress(state: number | string): number {

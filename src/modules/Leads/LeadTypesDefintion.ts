@@ -376,11 +376,11 @@ export const LeadPurposes: LeadPurposesStruct[] = [
 
 export enum LeadReadyDealEnum {
   Immediately = 'immediately',
-  OneMonth = 'oneMonth',
-  TwoMonth = 'twoMonth',
-  ThreeMonth = 'threeMonth',
+  OneMonth = 'monthOne',
+  TwoMonth = 'monthTwo',
+  ThreeMonth = 'monthThree',
   WhenFound = 'whenFound',
-  Monitoring = 'Monitoring',
+  Monitoring = 'monitoring',
 }
 
 export interface LeadReadyDealStruct {

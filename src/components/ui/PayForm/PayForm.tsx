@@ -1,5 +1,5 @@
 import { CrossIcon } from '@/icons'
-import React, { useCallback, useState } from 'react'
+import React, {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { Button } from '../Button'
 import { PayFormContent } from './PayFormContent'
@@ -7,24 +7,32 @@ import { PayFormContent } from './PayFormContent'
 interface PayFormProps {
   className?: string
   onClose?: Function
+  onOpen?: Function
   testCost?: any
   totalPrice?: any
   openToEveryone?: any
   additionalRequests?: any
   getUp?: any
+  onPayClick: Function
 }
 
 const PayForm = ({
   className,
   onClose,
+  onOpen,
   testCost,
   totalPrice,
   openToEveryone,
   additionalRequests,
   getUp,
+  onPayClick
 }: PayFormProps) => {
   const [totalPay, setTotalPay] = useState<number>(totalPrice)
-  const [selectedOption, setSelectedOption] = useState<any>(null)
+  const [selectedOption, setSelectedOption] = useState<any>(true)
+
+  useEffect(() => {
+    if(onOpen) onOpen()
+  }, [onOpen])
 
   const onCloseHandler = useCallback(
     (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -32,6 +40,10 @@ const PayForm = ({
     },
     [onClose]
   )
+
+  const OnPayClick = useCallback(() => {
+    if(onPayClick) onPayClick()
+  }, [onPayClick])
 
   function renderForm(): JSX.Element {
     return (
@@ -60,7 +72,7 @@ const PayForm = ({
               onOptionSelect={setSelectedOption}
             />
             <div className="PayFormContent__totalPay">
-              <Button disabled={!selectedOption}>Оплатить {totalPay}€</Button>
+              <Button onClick={OnPayClick} disabled={!selectedOption}>Оплатить {totalPay}€</Button>
             </div>
           </div>
         </StyledPayForm>
