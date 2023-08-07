@@ -265,9 +265,9 @@ class LeadEntryProvider {
         isTrue={this.payload.isTrue}
         createdAt={formatCreatedDate(this.payload.createdAt)}
         location={{
-          id: this.payload.city.id,
-          city: this.payload.city.name,
-          country: this.payload.city.country,
+          id: 0,
+          city: (this.payload.location.city ? "/" + this.payload.location.city : "Все города"),
+          country: this.payload.location.country
         }}
         format={this.payload.format}
         type={this.payload.type}

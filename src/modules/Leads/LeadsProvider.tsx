@@ -376,7 +376,7 @@ function renderLead(data: Array<any>, lang: string, windowSize: WindowSize): JSX
               }}
               isTrue={item.isTrue}
               createdAt={formatCreatedDate(item.createdAt)}
-              location={item.city.country + ' / ' + item.city.name}
+              location={item.location.country + (item.location.city ? "/" + item.location.city : "/Все города")}
               isPublished={true}
               type={item.type}
               status={item.status}

@@ -42,7 +42,7 @@ const Applications = () => {
         }}
         isTrue={item.isTrue}
         createdAt={formatCreatedDate(item.createdAt)}
-        location={item.city.country + ' / ' + item.city.name}
+        location={item.location.country + (item.location.city ? "/" + item.location.city : "/Все города")}
         isPublished={item.isPublished}
         rooms={item.rooms}
         rentPeriod={item.rentPeriod}

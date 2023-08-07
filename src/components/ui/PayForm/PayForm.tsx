@@ -13,7 +13,7 @@ interface PayFormProps {
   openToEveryone?: any
   additionalRequests?: any
   getUp?: any
-  onPayClick: Function
+  onPayClick?: Function
 }
 
 const PayForm = ({
