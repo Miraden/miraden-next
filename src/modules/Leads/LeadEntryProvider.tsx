@@ -283,6 +283,7 @@ class LeadEntryProvider {
         purchaseType={this.payload.purchaseType}
         description={this.payload.wishes.text}
         deadlineAt={this.payload.deadlineAt}
+        buildYear={this.payload.buildYear}
         author={this.payload.author}
         budget={{
           currency: this.payload.budget.currency.symbol,

@@ -381,6 +381,7 @@ function renderLead(data: Array<any>, lang: string, windowSize: WindowSize): JSX
               type={item.type}
               status={item.status}
               deadlineAt={formatDeadlineDate(item.deadlineAt)}
+              buildYear={item.buildYear}
               rooms={item.rooms}
               purpose={item.purpose}
               rentPeriod={item.rentPeriod}

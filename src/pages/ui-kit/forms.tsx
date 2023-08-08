@@ -38,7 +38,7 @@ export default function FormsPage() {
           <Button onClick={showPayFormHandler}>
             Open pay form
           </Button>
-          {payFormVisible && <PayForm onClose={showPayFormHandler}/>}
+          {payFormVisible && <PayForm isBusy={false} onClose={showPayFormHandler}/>}
           <Form
             name={formId}
             method={ApiRequestMethods.POST}

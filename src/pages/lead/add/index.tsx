@@ -15,6 +15,8 @@ import useAuth from '@/hooks/useAuth'
 import { Login } from '@/modules/Customer'
 import { Preloader } from '@/components/ui/Preloader'
 import {LeadMakerProvider} from "@/modules/Leads/Maker/LeadMakerProvider";
+import Modal from "@/components/ui/Modal";
+import PaySuccessModal from "@/modules/Leads/components/PaySuccessModal";
 
 const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
@@ -89,6 +91,8 @@ const RenderStep = (): JSX.Element => {
   )
   const [workflow, setWorkflow] = useState<LeadMakerWorkFlow>(_workflow)
   const [render, forceRender] = useState<boolean>(false)
+  const [isPayFormBusy, setPayFormBusy] = useState<boolean>(false)
+  const [showPaySuccess, setShowPaySuccess] = useState<boolean>(false)
 
   useEffect(() => {
     const forceUpdate = (): void => {
@@ -113,7 +117,14 @@ const RenderStep = (): JSX.Element => {
 
   const onPayClick = useCallback(() => {
     const provider = new LeadMakerProvider()
-    provider.createWith(workflow.getDataToSubmit())
+    setPayFormBusy(true)
+    provider.createWith(workflow.getDataToSubmit()).then(res => {
+      setTimeout(() => {
+        setShowPaySuccess(true)
+        setPayFormBusy(false)
+        setShowPayForm(false)
+      }, 200)
+    })
   }, [workflow])
 
   const onClosePayForm = useCallback(
@@ -146,8 +157,13 @@ const RenderStep = (): JSX.Element => {
     [workflow]
   )
 
+  const onModalExit = useCallback((e: any) => {
+    window.location.href = '/'
+  }, [])
+
   return (
     <>
+      {showPaySuccess && <PaySuccessModal OnExit={onModalExit}/>}
       <div id={'StepsWrapper'} className="StepsWrapper">
         <div className="Steps__header">
           <h1 className={'Font_headline_3'}>
@@ -214,7 +230,7 @@ const RenderStep = (): JSX.Element => {
           </div>
         </div>
       </div>
-      {showPayForm && <PayForm onClose={onClosePayForm} onPayClick={onPayClick} />}
+      {showPayForm && <PayForm isBusy={isPayFormBusy} onClose={onClosePayForm} onPayClick={onPayClick} />}
     </>
   )
 }
@@ -226,7 +242,7 @@ const StyledLogin = styled.div`
 `
 
 const StyledPage = styled.div`
-  max-width: calc(1920px);
+  max-width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 20px;

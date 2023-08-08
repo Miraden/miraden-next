@@ -17,7 +17,7 @@ export class LeadMakerProvider {
     this.request = new ApiRequest()
   }
 
-  public createWith(data: SubmitDataStruct): boolean {
+  public async createWith(data: SubmitDataStruct): Promise<boolean> {
     let result = false
 
     const response: Promise<Object> = this.request
@@ -35,10 +35,17 @@ export class LeadMakerProvider {
         return res
       })
 
-    response.then(async res => {
-      const r: ApiResponseType = this.response.makeFromObject(res)
-      result = r.code === HttpCodes.OK
-    })
+    response
+      .then(async res => {
+        const r: ApiResponseType = this.response.makeFromObject(res)
+        result = r.code === HttpCodes.OK
+      })
+      .catch(() => {
+        result = false
+      })
+      .finally(() => {
+        result = false
+      })
 
     return result
   }

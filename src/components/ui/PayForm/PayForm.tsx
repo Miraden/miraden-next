@@ -1,37 +1,39 @@
 import { CrossIcon } from '@/icons'
-import React, {useCallback, useEffect, useState} from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../Button'
 import { PayFormContent } from './PayFormContent'
+import {Preloader} from "@/components/ui/Preloader";
+import cn from "classnames";
 
 interface PayFormProps {
   className?: string
   onClose?: Function
   onOpen?: Function
-  testCost?: any
   totalPrice?: any
   openToEveryone?: any
   additionalRequests?: any
   getUp?: any
   onPayClick?: Function
+  isBusy: boolean
 }
 
 const PayForm = ({
   className,
   onClose,
   onOpen,
-  testCost,
   totalPrice,
   openToEveryone,
   additionalRequests,
   getUp,
-  onPayClick
+  onPayClick,
+  isBusy
 }: PayFormProps) => {
   const [totalPay, setTotalPay] = useState<number>(totalPrice)
   const [selectedOption, setSelectedOption] = useState<any>(true)
 
   useEffect(() => {
-    if(onOpen) onOpen()
+    if (onOpen) onOpen()
   }, [onOpen])
 
   const onCloseHandler = useCallback(
@@ -42,14 +44,14 @@ const PayForm = ({
   )
 
   const OnPayClick = useCallback(() => {
-    if(onPayClick) onPayClick()
+    if (onPayClick) onPayClick()
   }, [onPayClick])
 
   function renderForm(): JSX.Element {
     return (
       <>
         <StyledPayForm className={className}>
-          <div className="PayForm">
+          <div className={cn("PayForm", {isPayFormBusy: isBusy})}>
             <div className="PayForm__head">
               <h2 className="Font_32_120">Форма оплаты</h2>
               <button
@@ -72,7 +74,9 @@ const PayForm = ({
               onOptionSelect={setSelectedOption}
             />
             <div className="PayFormContent__totalPay">
-              <Button onClick={OnPayClick} disabled={!selectedOption}>Оплатить {totalPay}€</Button>
+              <Button onClick={OnPayClick} disabled={!selectedOption}>
+                Оплатить {totalPay}€
+              </Button>
             </div>
           </div>
         </StyledPayForm>
@@ -101,6 +105,16 @@ const StyledPayForm = styled.div`
     position: absolute;
     z-index: 21;
     width: 390px;
+    
+    &.isPayFormBusy:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, .8);
+    }
   }
 
   .PayForm__head {
@@ -108,7 +122,7 @@ const StyledPayForm = styled.div`
     padding: 15px 15px 18px 30px;
     display: flex;
     justify-content: space-between;
-    page-break-after: 18px;
+    page-break-after: auto;
     background: #fff;
     width: 100%;
     border-bottom: 2px solid #f1f7ff;

@@ -100,6 +100,7 @@ export const PaymentOptions = (props: Props): JSX.Element => {
             ))}
             {isOpen && (
               <PayForm
+                isBusy={false}
                 onClose={handleCloseMenu}
                 totalPrice={totalTax}
                 openToEveryone={0}

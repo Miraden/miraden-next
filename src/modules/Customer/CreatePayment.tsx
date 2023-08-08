@@ -92,6 +92,7 @@ const CreatePayment = ({ className }: Props) => {
           ))}
           {isOpen && (
             <PayForm
+              isBusy={false}
               onClose={handleCloseMenu}
               totalPrice={totalTax}
               openToEveryone={selectedTaxValues[0]}

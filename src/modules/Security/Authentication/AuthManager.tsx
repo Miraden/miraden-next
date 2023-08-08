@@ -23,7 +23,7 @@ class AuthManager {
     return true
   }
 
-  isTokenValid(): Promise<boolean> {
+  async isTokenValid(): Promise<boolean> {
     const token = this.findToken()
     if (token === null) {
       return Promise.resolve(false)
@@ -41,25 +41,21 @@ class AuthManager {
     // @ts-ignore
     const body = new URLSearchParams(data).toString()
 
-    return apiRequest
-      .fetch({
-        method: ApiRequestMethods.PUT,
-        headers: headers,
-        endpoint: '/user/token/validate',
-        body: body,
-      })
-      .then(res => {
-        const p: ApiResponseType = apiResponse.makeFromObject(res)
-        if (p.code === HttpCodes.OK) {
-          return true
-        } else {
-          this.logout()
-          return false
-        }
-      })
-      .then(res => {
-        return res
-      })
+    let res2: boolean
+    let res1 = await apiRequest.fetch({
+      method: ApiRequestMethods.PUT,
+      headers: headers,
+      endpoint: '/user/token/validate',
+      body: body,
+    })
+    const p: ApiResponseType = apiResponse.makeFromObject(res1)
+    if (p.code === HttpCodes.OK) {
+      res2 = true
+    } else {
+      this.logout()
+      res2 = false
+    }
+    return res2
   }
 
   authUser(token: string): void {

@@ -37,6 +37,7 @@ interface LeadProps {
   type?: string
   status?: string
   deadlineAt?: string
+  buildYear?: string
   areas: {
     total?: number
     living?: number
@@ -146,11 +147,11 @@ const LeadCard = (props: LeadProps) => {
         </div>
         <div className="Leads__tags-right">{isMobile && <LeadStats />}</div>
       </div>
-      {props.deadlineAt && !isMobile && (
+      {(props.deadlineAt || props.buildYear) && !isMobile && (
         <div className="Leads__props Font_Accent_16_S">
           <p>
             <BuildingIcon />
-            <span>{props.deadlineAt}</span>
+            <span>{(props.deadlineAt) ? props.deadlineAt : props.buildYear}</span>
           </p>
           <p>
             <AreaIcon />

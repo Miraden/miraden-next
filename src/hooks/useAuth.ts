@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import AuthManager from '@/modules/Security/Authentication/AuthManager'
 
 export interface AuthStruct {
@@ -7,12 +7,15 @@ export interface AuthStruct {
   onResponse: Function
 }
 
+let tokenValidator: Promise<boolean> | null = null
+
 const useAuth = ({ onSuccess, onFailure, onResponse }: AuthStruct): void => {
   useEffect(() => {
+    if(tokenValidator !== null) return
     const authManager = new AuthManager()
-    const tokenValidate: Promise<boolean> = authManager.isTokenValid()
+    tokenValidator = authManager.isTokenValid()
 
-    tokenValidate.then(async res => {
+    tokenValidator.then(async res => {
       if (res) onSuccess()
       if (!res) onFailure()
       onResponse()

@@ -46,6 +46,7 @@ interface LeadEntryStruct {
   type: EstateType
   status: string
   deadlineAt: string
+  buildYear: string
   areas: {
     total: Areas
     living: Areas
@@ -152,7 +153,7 @@ const SingleApplication = (props: LeadEntryStruct) => {
           <div className="SingleApplication__structureInfoContent">
             <div className="SingleApplication__structureInfoContent__head">
               <BuildYearIcon width={18} height={18} />
-              <div className={"Font_headline_4"}>{formatDeadlineDate(props.deadlineAt)}</div>
+              <div className={"Font_headline_4"}>{(props.deadlineAt)? formatDeadlineDate(props.deadlineAt) : formatDeadlineDate(props.buildYear)}</div>
             </div>
             <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
               Год постройки
