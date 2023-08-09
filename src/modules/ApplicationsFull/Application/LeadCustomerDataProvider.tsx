@@ -116,11 +116,12 @@ function renderLead(data: Array<any>, windowSize: WindowSize): JSX.Element {
             }}
             isTrue={true}
             createdAt={formatCreatedDate(item.createdAt)}
-            location={item.city.country + ' / ' + item.city.name}
+            location={item.location.country + (item.location.city ? "/" + item.location.city : "/Все города")}
             isPublished={true}
             type={item.type}
             status={item.status}
             deadlineAt={formatDeadlineDate(item.deadlineAt)}
+            buildYear={item.buildYear}
             rooms={item.rooms}
             purpose={item.purpose}
             readyDeal={item.readyDeal}

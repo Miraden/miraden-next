@@ -147,32 +147,30 @@ const LeadCard = (props: LeadProps) => {
         </div>
         <div className="Leads__tags-right">{isMobile && <LeadStats />}</div>
       </div>
-      {(props.deadlineAt || props.buildYear) && !isMobile && (
-        <div className="Leads__props Font_Accent_16_S">
-          <p>
-            <BuildingIcon />
-            <span>{(props.deadlineAt) ? props.deadlineAt : props.buildYear}</span>
-          </p>
-          <p>
-            <AreaIcon />
-            <span>
+      <div className="Leads__props Font_Accent_16_S">
+        <p>
+          <BuildingIcon />
+          <span>{(props.deadlineAt) ? props.deadlineAt : props.buildYear}</span>
+        </p>
+        <p>
+          <AreaIcon />
+          <span>
               {props.areas.total} м <sup>2</sup>
             </span>
-          </p>
-          <p>
-            <PlanningIcon />
-            <span>{props.areas.living}</span>
-          </p>
-          <p>
-            <BedIcon />
-            <span>{props.rooms.beds}</span>
-          </p>
-          <p>
-            <BathsIcon />
-            <span>{props.rooms.bathroom}</span>
-          </p>
-        </div>
-      )}
+        </p>
+        <p>
+          <PlanningIcon />
+          <span>{props.areas.living}</span>
+        </p>
+        <p>
+          <BedIcon />
+          <span>{props.rooms.beds}</span>
+        </p>
+        <p>
+          <BathsIcon />
+          <span>{props.rooms.bathroom}</span>
+        </p>
+      </div>
 
       <div className="Leads__footer">
         <div className="Leads__footer-left">
