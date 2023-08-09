@@ -17,12 +17,18 @@ class MyLeadsCustomerDataProvider {
   private data?: typeof ApiResponseStructure | null
   private payload: Array<any>
   private windowSize: WindowSize
+  private lang: string
 
   constructor() {
     this.isFetchCompleted = false
     this.data = null
     this.payload = []
     this.windowSize = {height: 0, width: 0}
+    this.lang = ''
+  }
+
+  public setLang(val: string): void {
+    this.lang = val
   }
 
   public fetchData(url: string): Promise<any> {
@@ -82,7 +88,7 @@ class MyLeadsCustomerDataProvider {
     if (this.payload.length == 0) {
       return renderEmptyLeads()
     }
-    return renderLead(this.payload, this.windowSize)
+    return renderLead(this.payload, this.lang, this.windowSize)
   }
 }
 
@@ -102,7 +108,7 @@ function isAccessDenied(
   return false
 }
 
-function renderLead(data: Array<any>, windowSize: WindowSize): JSX.Element {
+function renderLead(data: Array<any>, lang: string, windowSize: WindowSize): JSX.Element {
   return (
     <ul className="LeadsList">
       {data.map((item, index) => (
@@ -129,8 +135,10 @@ function renderLead(data: Array<any>, windowSize: WindowSize): JSX.Element {
             format={item.format}
             budget={{
               currency: item.budget.currency.symbol,
-              startFrom: item.budget.startFrom,
-              endTo: item.budget.endAt,
+              startFrom: new Intl.NumberFormat(lang).format(
+                  item.budget.startFrom
+              ),
+              endTo: new Intl.NumberFormat(lang).format(item.budget.endAt),
             }}
             purchaseType={'purchase'}
             author={item.author}

@@ -142,7 +142,7 @@ class LeadsDataProvider {
     const apiRequest: ApiRequest = new ApiRequest()
     let headers: HeadersInit = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
     }
 
     const apiResponse: ApiResponse = new ApiResponse()
@@ -183,7 +183,7 @@ class LeadsDataProvider {
     const apiRequest: ApiRequest = new ApiRequest()
     let headers: HeadersInit = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
     }
 
     const apiResponse: ApiResponse = new ApiResponse()
@@ -224,7 +224,7 @@ class LeadsDataProvider {
     const apiRequest: ApiRequest = new ApiRequest()
     let headers: HeadersInit = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      Authorization: 'Bearer ' + localStorage.getItem('token'),
     }
 
     const apiResponse: ApiResponse = new ApiResponse()
@@ -361,7 +361,11 @@ function formatCreatedDate(val: string): string {
   return date.getDate() + ' ' + months[date.getMonth()]
 }
 
-function renderLead(data: Array<any>, lang: string, windowSize: WindowSize): JSX.Element {
+function renderLead(
+  data: Array<any>,
+  lang: string,
+  windowSize: WindowSize
+): JSX.Element {
   return (
     <>
       <ul className="LeadsList">
@@ -376,7 +380,10 @@ function renderLead(data: Array<any>, lang: string, windowSize: WindowSize): JSX
               }}
               isTrue={item.isTrue}
               createdAt={formatCreatedDate(item.createdAt)}
-              location={item.location.country + (item.location.city ? "/" + item.location.city : "/Все города")}
+              location={
+                item.location.country +
+                (item.location.city ? '/' + item.location.city : '/Все города')
+              }
               isPublished={true}
               type={item.type}
               status={item.status}

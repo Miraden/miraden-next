@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import { MyLeadsCustomerDataProvider as DataProvider } from '@/modules/ApplicationsFull/Application/LeadCustomerDataProvider'
 import {useWindowSize} from "@/hooks/useWindowSize";
+import LangManager from "@/infrastructure/Intl/LangManager";
 
 interface ApplicationProps {
   className?: string
@@ -15,6 +16,8 @@ enum TabsMenuState {
   Published = 1,
   Archived = 2,
 }
+
+const langManager = new LangManager()
 
 const ApplicationFull = ({ className }: ApplicationProps) => {
   const [selectedTab, setSelectedTab] = useState<number>(0)
@@ -37,6 +40,7 @@ const ApplicationFull = ({ className }: ApplicationProps) => {
   const s = useWindowSize()
   useEffect(() => {
     allProvider.setWindowSize(s)
+    allProvider.setLang(langManager.getClientLang())
   }, [allProvider, s])
   allProvider.setWindowSize(s)
 
