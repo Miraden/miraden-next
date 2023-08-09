@@ -6,10 +6,10 @@ import {
 } from '@/modules/Leads/LeadTypesDefintion'
 import { Button } from '@/components/ui'
 import { theme } from '../../../../styles/tokens'
-import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
 import ButtonFoldGroup, {
-  ButtonFoldsFormatOptions
-} from "@/components/ui/Buttons/ButtonFoldGroup";
+  ButtonFoldsFormatOptions,
+} from '@/components/ui/Buttons/ButtonFoldGroup'
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
@@ -63,11 +63,14 @@ const StepStatus = (props: Props) => {
     (e: any, month: number) => {
       setSelectedMonth(month)
       setSelectedYear(0)
+      const now = new Date()
       if (props.onChanged)
         props.onChanged({
           status: castToStatesEnum(selectedStatus),
           buildYear: '',
-          deadlineAfter: String(month),
+          deadlineAfter: new Date(
+            now.setMonth(now.getMonth() + month)
+          ).toISOString(),
         })
     },
     [props, selectedStatus]
