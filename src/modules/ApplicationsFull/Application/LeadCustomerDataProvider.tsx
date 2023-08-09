@@ -126,7 +126,7 @@ function renderLead(data: Array<any>, lang: string, windowSize: WindowSize): JSX
             isPublished={true}
             type={item.type}
             status={item.status}
-            deadlineAt={formatDeadlineDate(item.deadlineAt)}
+            deadlineAt={item.deadlineAt}
             buildYear={item.buildYear}
             rooms={item.rooms}
             purpose={item.purpose}
