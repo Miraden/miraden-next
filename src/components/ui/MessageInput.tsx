@@ -1,7 +1,7 @@
 import { PenIcon, PlusIcon } from '@/icons'
 import {PaperClip24Icon, PaperclipIcon} from '@/icons/PaperclipIcon'
 import { SendMessageIcon } from '@/icons/SendMessageIcon'
-import { ObjectsList } from '@/modules/ApplicationsChatsAll/components/ObjectsList'
+import { ObjectsList } from '@/modules/Chats/components/ObjectsList'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from './Button'

@@ -1,33 +1,38 @@
-import { ArrowIcon } from "@/icons";
-import { FC, useState } from "react";
-import styled from "styled-components";
-import { SortChatsDropdown } from "./SortChatsDropdown";
+import { ArrowIcon } from '@/icons'
+import React, { FC, useState } from 'react'
+import styled from 'styled-components'
+import { SortChatsDropdown } from './SortChatsDropdown'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const SortChats: FC<Props> = ({ className }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectOption, setSelectOption] = useState<string>("");
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [selectOption, setSelectOption] = useState<string>('')
+  const [selectedOption, setSelectedOption] = useState<string>('')
   const options = () => {
-    return ["1", "2", "3"];
-  };
+    return [
+      'Все заявки',
+      'Заявка #15 - Хочу купить',
+      'Заявка #16 - Хочу купить',
+      'Заявка #17 - Хочу купить',
+    ]
+  }
 
   const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
-  };
+    setShowDropDown(!showDropDown)
+  }
 
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {
-      setShowDropDown(false);
+      setShowDropDown(false)
     }
-  };
+  }
   const optionSelection = (option: string, index: number): void => {
-    setSelectedOption(option);
-    setSelectOption(option);
-  };
+    setSelectedOption(option)
+    setSelectOption(option)
+  }
 
   return (
     <StyledSortChats className={className}>
@@ -44,7 +49,7 @@ const SortChats: FC<Props> = ({ className }) => {
       >
         <div className="SortChats_selectLabel Font_16_20 ">
           <p className="Font_16_20 Color_blue_primary">
-            {selectedOption ? selectedOption : "Все заявки"}
+            {selectedOption ? selectedOption : 'Все заявки'}
           </p>
           <ArrowIcon className="SortChats_selectLabelIcon" />
         </div>
@@ -61,14 +66,15 @@ const SortChats: FC<Props> = ({ className }) => {
         />
       )}
     </StyledSortChats>
-  );
-};
+  )
+}
 const StyledSortChats = styled.div<Props>`
   position: sticky;
   top: 0;
   z-index: 200;
   background: #ffffff;
   width: 100%;
+
   .SortChats_selectContainer {
     right: 10px;
     top: 4px;
@@ -88,6 +94,7 @@ const StyledSortChats = styled.div<Props>`
     .SortChats_selectLabel {
       color: #2a344a;
     }
+
     div {
       svg {
         margin-left: 12px;
@@ -105,24 +112,30 @@ const StyledSortChats = styled.div<Props>`
 
     &:focus {
       /* box-shadow: 0 0 0 2px #f845fc inset; */
+
       div {
         color: #2a344a;
       }
     }
+
     &:hover {
       background: #f1f7ff;
     }
+
     &:active {
       outline: none;
     }
+
     outline: none;
     width: 100%;
     padding: 20px 30px 12px 30px;
     border: none;
     overflow: hidden;
     border-bottom: 4px solid #e1edfd;
+
     div {
       width: 100%;
+
       svg {
         margin-left: 12px;
         transition: 0.2s ease-in;
@@ -140,9 +153,11 @@ const StyledSortChats = styled.div<Props>`
     font-size: 14px;
     line-height: 16px;
     color: #7786a5;
+
     svg {
       width: 16px;
       height: 16px;
+
       path {
         stroke: #7786a5;
       }
@@ -181,6 +196,7 @@ const StyledSortChats = styled.div<Props>`
 
   .SortChats_select_active {
     box-shadow: none;
+
     div {
       svg {
         margin-left: 0;
@@ -209,6 +225,6 @@ const StyledSortChats = styled.div<Props>`
       justify-content: flex-start;
     }
   }
-`;
+`
 
-export { SortChats };
+export { SortChats }

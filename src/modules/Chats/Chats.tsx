@@ -1,33 +1,76 @@
-import { Button } from "@/components/ui";
-import cn from "classnames";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { ApplicationsFooter } from "../Base/ApplicationsFooter";
-import { AllChatsContainer } from "./components/AllChatsContainer";
-import { ChatContainer } from "./components/ChatContainer";
-import { ChatContainerMobile } from "./components/ChatContainerMobile";
-import { ChatInformation } from "./components/ChatInformation";
-import { ChatPerformers } from "./components/ChatPerformers";
-import { ChatRequests } from "./components/ChatRequests";
+import { Button } from '@/components/ui'
+import cn from 'classnames'
+import { useCallback, useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { ApplicationsFooter } from '../Base/ApplicationsFooter'
+import { AllChatsContainer } from './components/AllChatsContainer'
+import { ChatContainer } from './components/ChatContainer'
+import { ChatContainerMobile } from './components/ChatContainerMobile'
+import { ChatSupport } from './components/ChatSupport'
+import { ChatPerformers } from './components/ChatPerformers'
+import { ChatRequests } from './components/ChatRequests'
+import RoomsProvider from '@/infrastructure/Chats/RoomsProvider'
+import ChatRoomsListLayout from '@/modules/Chats/ChatRoomsListLayout'
 
 interface Props {
-  className?: string;
+  className?: string
+  isAppAuth: boolean
 }
 
-const ApplicationsChatsAll = () => {
-  type Option = "all" | "performers" | "requests" | "support";
+const roomsProvider: RoomsProvider = new RoomsProvider()
 
-  const [selected, setSelected] = useState<Option | null>("all");
+enum Tabs {
+  All = 'all',
+  Requests = 'requests',
+  Executants = 'executants',
+  Support = 'support',
+}
 
-  const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+const Chats = (props: Props) => {
+  const [selectedTab, setSelectedTab] = useState<Tabs>(Tabs.All)
 
-  const [openChat, setIsOpenChat] = useState(false);
+  const handleSelect = useCallback((tab: Tabs) => {
+    setSelectedTab(tab)
+  }, [])
+
+  const [openChat, setIsOpenChat] = useState(false)
 
   const handleToggleChat = useCallback(() => {
-    setIsOpenChat(!openChat);
-  }, [openChat]);
+    setIsOpenChat(!openChat)
+  }, [openChat])
+
+  const [leadsList, setLeadsList] = useState<Forms.DropDownOption[]>([])
+  useEffect(() => {
+    if (selectedTab === Tabs.All) {
+      roomsProvider.fetchAll().then(res => {
+        let options: Forms.DropDownOption[] = []
+        res.map((i, id) => {
+          options.push({ label: '#' + i.id + ' - ' + i.title, value: i.id })
+        })
+        setLeadsList(options)
+      })
+    }
+
+    if (selectedTab === Tabs.Requests) {
+      roomsProvider.fetchRequests().then(res => {
+        let options: Forms.DropDownOption[] = []
+        res.map((i, id) => {
+          options.push({ label: '#' + i.id + ' - ' + i.title, value: i.id })
+        })
+        setLeadsList(options)
+      })
+    }
+
+    if (selectedTab === Tabs.Executants) {
+      roomsProvider.fetchExecutants().then(res => {
+        let options: Forms.DropDownOption[] = []
+        res.map((i, id) => {
+          options.push({ label: '#' + i.id + ' - ' + i.title, value: i.id })
+        })
+        setLeadsList(options)
+      })
+    }
+  }, [selectedTab])
 
   return (
     <StyledApplicationsChatsAll className="ContainerFull">
@@ -35,48 +78,46 @@ const ApplicationsChatsAll = () => {
         <ChatContainerMobile onClick={handleToggleChat} />
       ) : (
         <div className="ApplicationsChatsAll">
-          <div className="AppInfo">
-            <div className="ApplicationInfo__headLayout"></div>
-
+          <div className="AppInfo ChatList">
             <div className="ApplicationInfo__fullContainer">
               <h2 className="Font_24_120">Чаты</h2>
               <div className="ChatInfo__headTabs">
                 <Button
-                  className={cn("", {
-                    ChatInfo__headTabButton: selected === "all",
+                  className={cn('', {
+                    ChatInfo__headTabButton: selectedTab === Tabs.All,
                   })}
-                  onClick={() => handleSelect("all")}
-                  active={selected === "all"}
+                  onClick={() => handleSelect(Tabs.All)}
+                  active={selectedTab === Tabs.All}
                   tertiary
                 >
                   Все
                 </Button>
                 <Button
-                  className={cn("", {
-                    ChatInfo__headTabButton: selected === "requests",
+                  className={cn('', {
+                    ChatInfo__headTabButton: selectedTab === Tabs.Requests,
                   })}
-                  onClick={() => handleSelect("requests")}
-                  active={selected === "requests"}
+                  onClick={() => handleSelect(Tabs.Requests)}
+                  active={selectedTab === Tabs.Requests}
                   tertiary
                 >
                   Отклики
                 </Button>
                 <Button
-                  className={cn("", {
-                    ChatInfo__headTabButton: selected === "performers",
+                  className={cn('', {
+                    ChatInfo__headTabButton: selectedTab === Tabs.Executants,
                   })}
-                  onClick={() => handleSelect("performers")}
-                  active={selected === "performers"}
+                  onClick={() => handleSelect(Tabs.Executants)}
+                  active={selectedTab === Tabs.Executants}
                   tertiary
                 >
                   Исполнители
                 </Button>
                 <Button
-                  className={cn("", {
-                    ChatInfo__headTabButton: selected === "support",
+                  className={cn('', {
+                    ChatInfo__headTabButton: selectedTab === Tabs.Support,
                   })}
-                  onClick={() => handleSelect("support")}
-                  active={selected === "support"}
+                  onClick={() => handleSelect(Tabs.Support)}
+                  active={selectedTab === Tabs.Support}
                   tertiary
                 >
                   Поддержка Miraden
@@ -84,40 +125,49 @@ const ApplicationsChatsAll = () => {
               </div>
               <div className="ChatInfo__headTabsBar" />
             </div>
-            {selected === "all" && (
-              <AllChatsContainer className="ContactInfo" />
-            )}
-            {selected === "all" && (
-              <AllChatsContainer
-                className="ContactInfoMobile"
-                onClick={handleToggleChat}
-              />
+
+            {selectedTab === Tabs.All && (
+              <ChatRoomsListLayout>
+                <AllChatsContainer
+                  leadsList={leadsList}
+                  className="ContactInfo"
+                />
+              </ChatRoomsListLayout>
             )}
 
-            {selected === "performers" && (
-              <ChatPerformers className="ContactInfo" />
+            {selectedTab === Tabs.Executants && (
+              <ChatRoomsListLayout>
+                <ChatPerformers leadsList={leadsList} className="ContactInfo" />
+              </ChatRoomsListLayout>
             )}
-            {selected === "requests" && (
-              <ChatRequests className="ContactInfo" />
+            {selectedTab === Tabs.Requests && (
+              <ChatRoomsListLayout>
+                <ChatRequests leadsList={leadsList} className="ContactInfo" />
+              </ChatRoomsListLayout>
             )}
-            {selected === "support" && (
-              <ChatInformation className="ContactInfo" />
+            {selectedTab === Tabs.Support && (
+              <ChatRoomsListLayout>
+                <ChatSupport
+                  leadsList={leadsList}
+                  className="ContactInfo"
+                />
+              </ChatRoomsListLayout>
             )}
           </div>
           <ChatContainer className="Chat" />
         </div>
       )}
 
-      {selected === "performers" && <ApplicationsFooter />}
-      {selected === "requests" && <ApplicationsFooter />}
-      {selected === "support" && <ApplicationsFooter />}
+      {selectedTab === Tabs.Executants && <ApplicationsFooter />}
+      {selectedTab === Tabs.Requests && <ApplicationsFooter />}
+      {selectedTab === Tabs.Support && <ApplicationsFooter />}
     </StyledApplicationsChatsAll>
-  );
-};
+  )
+}
 
 const StyledApplicationsChatsAll = styled.section`
   margin-top: 35px;
-  height: calc(100vh - 94px);
+  height: calc(100vh - 100px);
   padding-bottom: 20px;
 
   .ChatInfo__headTabs {
@@ -151,6 +201,7 @@ const StyledApplicationsChatsAll = styled.section`
   .ChatInfo__head {
     display: flex;
     align-items: baseline;
+
     h1 {
       margin-left: 10px;
     }
@@ -158,9 +209,11 @@ const StyledApplicationsChatsAll = styled.section`
 
   .ChatInfo__headTabs {
     display: flex;
+
     button {
       margin-right: 30px;
       color: #7786a5;
+      background: transparent;
 
       padding: 0;
 
@@ -172,16 +225,18 @@ const StyledApplicationsChatsAll = styled.section`
 
     button.active {
       color: #fff !important;
+      background: transparent;
     }
   }
 
   .ChatInfo__headTabButton {
     position: relative;
+
     ::before {
       position: absolute;
       top: 32px;
       left: 0;
-      content: "";
+      content: '';
       background: #ffffff;
       width: 100%;
       height: 4px;
@@ -208,6 +263,7 @@ const StyledApplicationsChatsAll = styled.section`
 
   .ContactInfo {
     flex-grow: 1;
+    overflow: hidden;
   }
 
   .ContactInfoMobile {
@@ -219,7 +275,6 @@ const StyledApplicationsChatsAll = styled.section`
     flex-direction: column;
     max-width: 625px;
     width: 100%;
-    height: -webkit-fill-available;
   }
 
   .ApplicationInfo {
@@ -228,10 +283,12 @@ const StyledApplicationsChatsAll = styled.section`
     padding: 20px 20px 0 20px;
     border-radius: 10px 10px 0 0;
   }
+
   .ApplicationsChatsAll__headTabs {
     padding: 20px 0 0 0;
 
     overflow: auto;
+
     button {
       white-space: nowrap;
     }
@@ -258,6 +315,7 @@ const StyledApplicationsChatsAll = styled.section`
   .Application__head {
     display: flex;
     align-items: center;
+
     h1 {
       margin-left: 10px;
     }
@@ -265,6 +323,7 @@ const StyledApplicationsChatsAll = styled.section`
 
   .ApplicationsChatsAll__headTabs {
     display: flex;
+
     button {
       margin-right: 30px;
       color: #7786a5;
@@ -284,11 +343,12 @@ const StyledApplicationsChatsAll = styled.section`
 
   .ApplicationsChatsAll__headTabButton {
     position: relative;
+
     ::before {
       position: absolute;
       top: 35px;
       left: 0;
-      content: "";
+      content: '';
       background: #ffffff;
       width: 100%;
       height: 4px;
@@ -308,6 +368,7 @@ const StyledApplicationsChatsAll = styled.section`
     display: flex;
     align-items: center;
     margin-top: 8px;
+
     div {
       display: flex;
       align-items: center;
@@ -324,6 +385,7 @@ const StyledApplicationsChatsAll = styled.section`
 
   .ContactInfo__rating {
     align-items: center;
+
     p {
       margin-left: 5px;
     }
@@ -370,9 +432,11 @@ const StyledApplicationsChatsAll = styled.section`
     &.ContainerFull {
       padding: 0;
     }
+
     .Chat {
       display: none;
     }
+
     .ChatMobile {
       display: flex;
     }
@@ -461,6 +525,7 @@ const StyledApplicationsChatsAll = styled.section`
     width: 20px;
     height: 20px;
     transform: rotate(90deg);
+
     path {
       fill: #fff;
     }
@@ -528,6 +593,7 @@ const StyledApplicationsChatsAll = styled.section`
     .ChatButton {
       display: none;
     }
+
     .ChatButtonMobile {
       display: flex;
       align-self: flex-start;
@@ -567,6 +633,6 @@ const StyledApplicationsChatsAll = styled.section`
       }
     }
   }
-`;
+`
 
-export { ApplicationsChatsAll };
+export { Chats }

@@ -2,8 +2,8 @@ import {Header} from "@/modules/Base/Header";
 import Head from "next/head";
 import styled from "styled-components";
 import {
-  ApplicationsChatsAll
-} from "@/modules/ApplicationsChatsAll/ApplicationsChatsAll";
+  Chats
+} from "@/modules/Chats/Chats";
 import {useState} from "react";
 import useAuth from "@/hooks/useAuth";
 
@@ -28,21 +28,18 @@ export default function ApplicationsChatsAllPage() {
   return (
     <>
       <Head>
-        <title>Miraden</title>
+        <title>Miraden - Чаты</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <StyledMainApplications>
         <Header isAuthorized={isUserAuth} isReady={userReady} />
-        <ApplicationsChatsAll />
+        {isUserAuth && <Chats isAppAuth={isUserAuth} />}
       </StyledMainApplications>
     </>
   );
 }
 
 const StyledMainApplications = styled.main`
-  background: #eef1f5;
-  min-height: 100vh;
-
   @media (max-width: 576px) {
     .ApplicationsChatsAllPage__header {
       display: none;

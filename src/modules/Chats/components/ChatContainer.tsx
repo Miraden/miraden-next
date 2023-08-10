@@ -21,7 +21,7 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
         <div className="Chat__allContainer">
           <Image
             alt=""
-            src="/images/avatar.jpg"
+            src="/images/avatar1.png"
             width={52}
             height={52}
             className="ApplicationInfo__avatar"
@@ -53,13 +53,13 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
 
       <div className="ChatContainer">
         <p className="ChatContainer__date Font_14_140 Color_text_grey">
-          22 марта
+          22 марта
         </p>
         <div className="ChatContainer__messageContainer">
           <div className="ChatContainer__message">
             <Image
               alt=""
-              src="/images/avatar.jpg"
+              src="/images/avatar1.png"
               width={40}
               height={40}
               className="ChatContainer__avatar"
@@ -67,8 +67,8 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
             <div>
               <div className="ChatContainer__incomingMessage Font_16_150">
                 <p>
-                  Добрый день. Меня зовут Светлана, я агент по недвижимости
-                  из компании Real Home. Предлагаю на выбор несколько вариантов{" "}
+                  Добрый день. Меня зовут Светлана, я агент по недвижимости
+                  из компании Real Home. Предлагаю на выбор несколько вариантов{" "}
                 </p>
               </div>
             </div>
@@ -77,7 +77,7 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
             <div className="ChatContainer__outgoing">
               <Image
                 alt=""
-                src="/images/avatar.jpg"
+                src="/images/avatar1.png"
                 width={40}
                 height={40}
                 className="ChatContainer__avatar"
@@ -88,7 +88,7 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
                 </div>
                 <div className="ChatContainer__outgoingMessage Font_16_150">
                   <p>
-                    В течение двух дней постараюсь ответить и задать вопросы
+                    В течение двух дней постараюсь ответить и задать вопросы
                   </p>
                 </div>
               </div>
