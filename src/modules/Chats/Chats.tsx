@@ -2,15 +2,15 @@ import { Button } from '@/components/ui'
 import cn from 'classnames'
 import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { ApplicationsFooter } from '../Base/ApplicationsFooter'
 import { AllChatsContainer } from './components/AllChatsContainer'
 import { ChatContainer } from './components/ChatContainer'
-import { ChatContainerMobile } from './components/ChatContainerMobile'
 import { ChatSupport } from './components/ChatSupport'
 import { ChatPerformers } from './components/ChatPerformers'
 import { ChatRequests } from './components/ChatRequests'
 import RoomsProvider from '@/infrastructure/Chats/RoomsProvider'
 import ChatRoomsListLayout from '@/modules/Chats/ChatRoomsListLayout'
+import {useWindowSize, WindowSize} from "@/hooks/useWindowSize";
+import {theme} from "../../../styles/tokens";
 
 interface Props {
   className?: string
@@ -26,18 +26,23 @@ enum Tabs {
   Support = 'support',
 }
 
+enum MobileStates {
+  List = 'list',
+  Messages = 'messages'
+}
+
+const mobile = theme.breakpoints.mobile.max
+const tablet = theme.breakpoints.tablet.max
+
+let inTablet: boolean = false
+
 const Chats = (props: Props) => {
   const [selectedTab, setSelectedTab] = useState<Tabs>(Tabs.All)
+  const [mobileState, setMobileState] = useState<MobileStates>(MobileStates.List)
 
   const handleSelect = useCallback((tab: Tabs) => {
     setSelectedTab(tab)
   }, [])
-
-  const [openChat, setIsOpenChat] = useState(false)
-
-  const handleToggleChat = useCallback(() => {
-    setIsOpenChat(!openChat)
-  }, [openChat])
 
   const [leadsList, setLeadsList] = useState<Forms.DropDownOption[]>([])
   useEffect(() => {
@@ -72,95 +77,99 @@ const Chats = (props: Props) => {
     }
   }, [selectedTab])
 
+  useWindowSize((size: WindowSize) => {
+    inTablet = size.width < tablet;
+  })
+
+  useEffect(() => {
+    if(inTablet) {
+      setMobileState(MobileStates.List)
+    }
+  }, [])
+
+  const onRoomClick = useCallback((e: any) => {
+    setMobileState(MobileStates.Messages)
+  }, [])
+
   return (
     <StyledApplicationsChatsAll className="ContainerFull">
-      {openChat ? (
-        <ChatContainerMobile onClick={handleToggleChat} />
-      ) : (
-        <div className="ApplicationsChatsAll">
-          <div className="AppInfo ChatList">
-            <div className="ApplicationInfo__fullContainer">
-              <h2 className="Font_24_120">Чаты</h2>
-              <div className="ChatInfo__headTabs">
-                <Button
-                  className={cn('', {
-                    ChatInfo__headTabButton: selectedTab === Tabs.All,
-                  })}
-                  onClick={() => handleSelect(Tabs.All)}
-                  active={selectedTab === Tabs.All}
-                  tertiary
-                >
-                  Все
-                </Button>
-                <Button
-                  className={cn('', {
-                    ChatInfo__headTabButton: selectedTab === Tabs.Requests,
-                  })}
-                  onClick={() => handleSelect(Tabs.Requests)}
-                  active={selectedTab === Tabs.Requests}
-                  tertiary
-                >
-                  Отклики
-                </Button>
-                <Button
-                  className={cn('', {
-                    ChatInfo__headTabButton: selectedTab === Tabs.Executants,
-                  })}
-                  onClick={() => handleSelect(Tabs.Executants)}
-                  active={selectedTab === Tabs.Executants}
-                  tertiary
-                >
-                  Исполнители
-                </Button>
-                <Button
-                  className={cn('', {
-                    ChatInfo__headTabButton: selectedTab === Tabs.Support,
-                  })}
-                  onClick={() => handleSelect(Tabs.Support)}
-                  active={selectedTab === Tabs.Support}
-                  tertiary
-                >
-                  Поддержка Miraden
-                </Button>
-              </div>
-              <div className="ChatInfo__headTabsBar" />
+      <div className="ApplicationsChatsAll">
+        <div className={cn("AppInfo ChatList ChatSection", {isVisible: mobileState === MobileStates.List})}>
+          <div className="ApplicationInfo__fullContainer">
+            <h2 className="Font_24_120">Чаты</h2>
+            <div className="ChatInfo__headTabs">
+              <Button
+                className={cn('', {
+                  ChatInfo__headTabButton: selectedTab === Tabs.All,
+                })}
+                onClick={() => handleSelect(Tabs.All)}
+                active={selectedTab === Tabs.All}
+                tertiary
+              >
+                Все
+              </Button>
+              <Button
+                className={cn('', {
+                  ChatInfo__headTabButton: selectedTab === Tabs.Requests,
+                })}
+                onClick={() => handleSelect(Tabs.Requests)}
+                active={selectedTab === Tabs.Requests}
+                tertiary
+              >
+                Отклики
+              </Button>
+              <Button
+                className={cn('', {
+                  ChatInfo__headTabButton: selectedTab === Tabs.Executants,
+                })}
+                onClick={() => handleSelect(Tabs.Executants)}
+                active={selectedTab === Tabs.Executants}
+                tertiary
+              >
+                Исполнители
+              </Button>
+              <Button
+                className={cn('', {
+                  ChatInfo__headTabButton: selectedTab === Tabs.Support,
+                })}
+                onClick={() => handleSelect(Tabs.Support)}
+                active={selectedTab === Tabs.Support}
+                tertiary
+              >
+                Поддержка Miraden
+              </Button>
             </div>
-
-            {selectedTab === Tabs.All && (
-              <ChatRoomsListLayout>
-                <AllChatsContainer
-                  leadsList={leadsList}
-                  className="ContactInfo"
-                />
-              </ChatRoomsListLayout>
-            )}
-
-            {selectedTab === Tabs.Executants && (
-              <ChatRoomsListLayout>
-                <ChatPerformers leadsList={leadsList} className="ContactInfo" />
-              </ChatRoomsListLayout>
-            )}
-            {selectedTab === Tabs.Requests && (
-              <ChatRoomsListLayout>
-                <ChatRequests leadsList={leadsList} className="ContactInfo" />
-              </ChatRoomsListLayout>
-            )}
-            {selectedTab === Tabs.Support && (
-              <ChatRoomsListLayout>
-                <ChatSupport
-                  leadsList={leadsList}
-                  className="ContactInfo"
-                />
-              </ChatRoomsListLayout>
-            )}
+            <div className="ChatInfo__headTabsBar" />
           </div>
-          <ChatContainer className="Chat" />
-        </div>
-      )}
 
-      {selectedTab === Tabs.Executants && <ApplicationsFooter />}
-      {selectedTab === Tabs.Requests && <ApplicationsFooter />}
-      {selectedTab === Tabs.Support && <ApplicationsFooter />}
+          {selectedTab === Tabs.All && (
+            <ChatRoomsListLayout>
+              <AllChatsContainer
+                onClick={onRoomClick}
+                leadsList={leadsList}
+                className="ContactInfo"
+              />
+            </ChatRoomsListLayout>
+          )}
+
+          {selectedTab === Tabs.Executants && (
+            <ChatRoomsListLayout>
+              <ChatPerformers leadsList={leadsList} className="ContactInfo" />
+            </ChatRoomsListLayout>
+          )}
+          {selectedTab === Tabs.Requests && (
+            <ChatRoomsListLayout>
+              <ChatRequests leadsList={leadsList} className="ContactInfo" />
+            </ChatRoomsListLayout>
+          )}
+          {selectedTab === Tabs.Support && (
+            <ChatRoomsListLayout>
+              <ChatSupport leadsList={leadsList} className="ContactInfo" />
+            </ChatRoomsListLayout>
+          )}
+        </div>
+        <ChatContainer className={cn("Chat ChatSection", {isVisible: mobileState === MobileStates.Messages})} />
+      </div>
     </StyledApplicationsChatsAll>
   )
 }
@@ -259,15 +268,12 @@ const StyledApplicationsChatsAll = styled.section`
   .ApplicationsChatsAll {
     display: flex;
     height: 100%;
+    gap: 40px;
   }
 
   .ContactInfo {
     flex-grow: 1;
     overflow: hidden;
-  }
-
-  .ContactInfoMobile {
-    display: none;
   }
 
   .AppInfo {
@@ -405,20 +411,22 @@ const StyledApplicationsChatsAll = styled.section`
     display: none;
   }
 
-  .Chat {
-    /* padding-bottom: 20px; */
-  }
+  @media (max-width: ${tablet}px) {
+    margin-top: 0;
+    height: 100%;
 
-  @media (max-width: 1024px) {
-    margin-top: -18px;
-    height: 100vh;
-
-    .ContactInfo {
+    .ChatSection {
       display: none;
-    }
+      &.isVisible {
+        display: flex;
+      }
 
-    .ContactInfoMobile {
-      display: block;
+      .Chat__all {
+        background: ${({ theme }) => theme.colors.background.black};
+        display: flex;
+        flex-direction: row;
+        padding: 10px 20px 20px 20px;
+      }
     }
 
     .ChatTabButton {
@@ -431,10 +439,6 @@ const StyledApplicationsChatsAll = styled.section`
 
     &.ContainerFull {
       padding: 0;
-    }
-
-    .Chat {
-      display: none;
     }
 
     .ChatMobile {
@@ -481,6 +485,9 @@ const StyledApplicationsChatsAll = styled.section`
 
   .Status {
     margin-left: 12px;
+    text-overflow: ellipsis;
+    width: 100%;
+    overflow: hidden;
   }
 
   .FullStatus {

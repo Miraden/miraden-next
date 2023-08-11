@@ -7,7 +7,7 @@ enum ApiRequestMethods {
   PUT = 'PUT',
 }
 
-interface Props {
+interface Props extends ApiRequestType{
   method: ApiRequestMethods
   headers: HeadersInit
   body?: string|FormData

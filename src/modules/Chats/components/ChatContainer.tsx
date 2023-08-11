@@ -1,16 +1,54 @@
-import { Button, MessageInput, Sticker } from "@/components/ui";
-import { VerifiedIcon } from "@/icons";
-import { StarIconFilled } from "@/icons/StarIconFilled";
-import Image from "next/image";
-import styled from "styled-components";
+import { Button, MessageInput, Sticker } from '@/components/ui'
+import { VerifiedIcon } from '@/icons'
+import { StarIconFilled } from '@/icons/StarIconFilled'
+import Image from 'next/image'
+import styled from 'styled-components'
+import cn from 'classnames'
+import { useCallback, useEffect, useState } from 'react'
+import useUpdater from '@/hooks/useUpdater'
 
 interface Props {
-  className?: string;
-  onTouchStart?: any;
-  onTouchEnd?: any;
+  className?: string
+  onTouchStart?: any
+  onTouchEnd?: any
 }
 
+enum MessageDirection {
+  In = 'in',
+  Out = 'out',
+}
+
+let messages: Chat.Message[] = [
+  {
+    owner: {
+      avatar: '/images/avatar1.png',
+    },
+    createdAt: new Date().toISOString(),
+    isRead: false,
+    direction: MessageDirection.Out,
+    message:
+      'Добрый день. Меня зовут Светлана, я агент по недвижимости из компании Real Home. Предлагаю на выбор несколько вариантов',
+  },
+]
+
 const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
+  const updater = useUpdater()
+
+  const onNewMessage = useCallback(
+    (msg: string) => {
+      if (msg.length === 0) return
+      messages.push({
+        owner: { avatar: '/images/avatar1.png' },
+        direction: MessageDirection.In,
+        message: msg,
+        createdAt: new Date().toISOString(),
+        isRead: false,
+      })
+      updater()
+    },
+    [messages, updater]
+  )
+
   return (
     <StyledChatContainer
       className={className}
@@ -56,51 +94,37 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
           22 марта
         </p>
         <div className="ChatContainer__messageContainer">
-          <div className="ChatContainer__message">
-            <Image
-              alt=""
-              src="/images/avatar1.png"
-              width={40}
-              height={40}
-              className="ChatContainer__avatar"
-            />
-            <div>
-              <div className="ChatContainer__incomingMessage Font_16_150">
-                <p>
-                  Добрый день. Меня зовут Светлана, я агент по недвижимости
-                  из компании Real Home. Предлагаю на выбор несколько вариантов{" "}
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="ChatContainer__message">
-            <div className="ChatContainer__outgoing">
+          {messages.map((msg, id) => (
+            <div className="ChatContainer__message" key={id}>
               <Image
                 alt=""
-                src="/images/avatar1.png"
+                src={msg.owner.avatar}
                 width={40}
                 height={40}
                 className="ChatContainer__avatar"
               />
-              <div>
-                <div className="ChatContainer__outgoingMessage Font_16_150">
-                  <p>Добрый день, спасибо, отличные варианты</p>
-                </div>
-                <div className="ChatContainer__outgoingMessage Font_16_150">
-                  <p>
-                    В течение двух дней постараюсь ответить и задать вопросы
-                  </p>
-                </div>
+              <div
+                className={cn('Font_16_150', {
+                  ChatContainer__incomingMessage:
+                    msg.direction === MessageDirection.In,
+                  ChatContainer__outgoingMessage:
+                    msg.direction === MessageDirection.Out,
+                })}
+              >
+                {msg.message}
               </div>
             </div>
-          </div>
+          ))}
         </div>
 
-        <MessageInput className="ChatContainer__messageInput" />
+        <MessageInput
+          onSubmit={onNewMessage}
+          className="ChatContainer__messageInput"
+        />
       </div>
     </StyledChatContainer>
-  );
-};
+  )
+}
 
 const StyledChatContainer = styled.div`
   display: flex;
@@ -108,8 +132,6 @@ const StyledChatContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 100%;
-  max-width: 1225px;
-  margin-left: 30px;
   background: #eef1f5;
 
   .Chat__all {
@@ -147,6 +169,7 @@ const StyledChatContainer = styled.div`
     margin-top: 15px;
     display: flex;
     flex-direction: column;
+    gap: 10px;
   }
 
   .ChatContainer__message {
@@ -167,6 +190,7 @@ const StyledChatContainer = styled.div`
     margin-top: 10px;
     display: flex;
     align-items: end;
+
     .ChatContainer__outgoingMessage:not(:last-child) {
       margin-bottom: 4px;
       border-radius: 10px;
@@ -218,16 +242,6 @@ const StyledChatContainer = styled.div`
         margin-top: 24px;
       }
     }
-
-    .ChatContainer {
-      height: calc(100% - 70px);
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-left: 0;
-    padding-right: 20px;
-    padding-left: 20px;
   }
 
   @media (max-width: 576px) {
@@ -248,6 +262,6 @@ const StyledChatContainer = styled.div`
       padding-left: 15px;
     }
   }
-`;
+`
 
-export { ChatContainer };
+export { ChatContainer }

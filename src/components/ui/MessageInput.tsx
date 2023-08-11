@@ -1,22 +1,32 @@
-import { PenIcon, PlusIcon } from '@/icons'
-import {PaperClip24Icon, PaperclipIcon} from '@/icons/PaperclipIcon'
+import { PenIcon } from '@/icons'
+import { PaperClip24Icon } from '@/icons/PaperclipIcon'
 import { SendMessageIcon } from '@/icons/SendMessageIcon'
-import { ObjectsList } from '@/modules/Chats/components/ObjectsList'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from './Button'
 
 interface Props {
   className?: string
+  onSubmit?: (msg: string) => void
 }
 
-const MessageInput = ({ className }: Props) => {
-  const [value, setValue] = useState<string>('')
+const MessageInput = ({ className, onSubmit }: Props) => {
+  const [message, setMessage] = useState<string>('')
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value)
+    setMessage(e.target.value)
   }
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+  const onSubmitHandler = useCallback(
+    (e: any) => {
+      if (!textareaRef.current) return
+
+      if (onSubmit) onSubmit(textareaRef.current.value)
+    },
+    [onSubmit]
+  )
+
   useEffect(() => {
     const textarea = textareaRef.current
 
@@ -40,52 +50,35 @@ const MessageInput = ({ className }: Props) => {
     }
   }, [textareaRef])
 
-  const [objectsListOpen, setObjectsListOpen] = useState(false)
-
-  const handleObjectsListOpen = useCallback(() => {
-    setObjectsListOpen(!objectsListOpen)
-  }, [objectsListOpen])
-
   return (
     <StyledMessageInput className={className}>
-      {value.length === 0 ? (
+      {message.length === 0 ? (
         <button>
-          <PaperClip24Icon attr={{className:"MessageInput__button_paperclipMobile MessageInput__button_paperclip"}} />
+          <PaperClip24Icon
+            attr={{
+              className:
+                'MessageInput__button_paperclipMobile MessageInput__button_paperclip',
+            }}
+          />
         </button>
       ) : null}
       <InputWrapper>
-        {value.length === 0 ? <PenIcon className="PenIcon" /> : null}
+        {message.length === 0 ? <PenIcon className="PenIcon" /> : null}
         <Input
           placeholder="Написать сообщение..."
-          value={value}
+          value={message}
           onChange={handleChange}
           ref={textareaRef}
         />
-        {value.length === 0 && <Placeholder></Placeholder>}
+        {message.length === 0 && <Placeholder></Placeholder>}
       </InputWrapper>
       <ButtonWrapper>
-        {value.length === 0 ? (
-          <Button
-            className="MessageInput__button_default"
-            leftIcon={<PlusIcon />}
-            onClick={handleObjectsListOpen}
-          >
-            Добавить объект
-          </Button>
-        ) : (
-          <Button
-            onClick={handleObjectsListOpen}
-            className="MessageInput__button_typing"
-            leftIcon={<SendMessageIcon />}
-          />
-        )}
-        {value.length === 0 ? (
-          <button>
-            <PaperClip24Icon attr={{className: "MessageInput__button_paperclip"}} />
-          </button>
-        ) : null}
+        <Button
+          onClick={onSubmitHandler}
+          className="MessageInput__button_typing"
+          leftIcon={<SendMessageIcon />}
+        />
       </ButtonWrapper>
-      {objectsListOpen && <ObjectsList onClose={handleObjectsListOpen} />}
     </StyledMessageInput>
   )
 }
@@ -95,11 +88,11 @@ const StyledMessageInput = styled.div`
   align-items: center;
   background-color: #ffffff;
   padding: 10px;
-  border-radius: ${({theme}) => theme.border.radius};
+  border-radius: ${({ theme }) => theme.border.radius};
   box-sizing: border-box;
 
   :hover {
-    outline: 2px solid ${({theme}) => theme.colors.fields.stroke};
+    outline: 2px solid ${({ theme }) => theme.colors.fields.stroke};
   }
 
   .MessageInput__button_paperclipMobile {
@@ -110,13 +103,14 @@ const StyledMessageInput = styled.div`
 
   .MessageInput__button_paperclip {
     path {
-      stroke: ${({theme}) => theme.colors.text.grey};
+      stroke: ${({ theme }) => theme.colors.text.grey};
     }
   }
 
   @media (max-width: 576px) {
     padding: 16px 20px;
-    border-radius: ${({theme}) => theme.border.radius} ${({theme}) => theme.border.radius} 0 0;
+    border-radius: ${({ theme }) => theme.border.radius}
+      ${({ theme }) => theme.border.radius} 0 0;
 
     .MessageInput__button_paperclipMobile {
       display: flex;

@@ -185,10 +185,11 @@ const AllChatsContainer = ({ className, onClick, leadsList }: Props) => {
     const target = e.target.closest('li')
     const keyId: number = Number(target.getAttribute('data-key'))
     setSelectedRoom(keyId)
-  }, [])
+    if(onClick) onClick()
+  }, [onClick])
 
   return (
-    <StyledAllChatsContainer className={className} onClick={onClick}>
+    <StyledAllChatsContainer className={className}>
       <DropdownInput
         className={'ChatSelector'}
         placeholder={'Все заявки'}

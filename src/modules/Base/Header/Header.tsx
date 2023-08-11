@@ -10,7 +10,7 @@ interface HeaderProps {
 
 const Header = ({ isAuthorized, className, isReady }: HeaderProps) => {
   return (
-    <StyledHeader className={cn(className, {isReady: isReady})}>
+    <StyledHeader className={cn("Header__main", className, {isReady: isReady})}>
       <div className="Header__topBlock" />
       <div className="Header">
         <HeaderDesktop className="Header__desktop" isAuthorized={isAuthorized} />
