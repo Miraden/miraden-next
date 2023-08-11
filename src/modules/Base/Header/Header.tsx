@@ -22,15 +22,20 @@ const Header = ({ isAuthorized, className, isReady }: HeaderProps) => {
 
 const StyledHeader = styled.header`
   position: sticky;
-  top: 10px;
+  top: 0;
   z-index: 200;
   display: flex;
   justify-content: center;
   padding-left: 20px;
   padding-right: 20px;
+  flex-direction: column;
+  max-width: calc(1880px + 2 * 20px);
+  margin: 0 auto;
+  width: 100%;
+
   .Header__topBlock {
     z-index: 200;
-    position: fixed;
+    position: relative;
     background: #eef1f5;
     width: 100%;
     height: 10px;
@@ -38,14 +43,13 @@ const StyledHeader = styled.header`
   }
 
   .Header {
-    position: sticky;
+    position: relative;
     display: flex;
-    top: 10px;
+    top: 0;
     z-index: 200;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    max-width: 1880px;
     padding: 12px 20px;
     border-radius: 10px;
     color: white;

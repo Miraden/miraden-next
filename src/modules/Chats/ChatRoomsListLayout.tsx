@@ -1,21 +1,32 @@
 import { PropsWithChildren } from 'react'
 import styled from "styled-components";
+import cn from "classnames";
 
 interface Props {
   className?: string
 }
 
 const ChatRoomsListLayout = (props: PropsWithChildren<Props>): JSX.Element => {
-  return <Styled className={"ChatRoomsLayout"}>{props.children}</Styled>
+  return <Styled className={cn("ChatRoomsLayout", props.className)}>{props.children}</Styled>
 }
 
 const Styled = styled.div`
-  margin-top: 20px;
   background: #fff;
-  height: 100%;
   display: flex;
   overflow: hidden;
   border-radius: ${({theme}) => theme.border.radius};
+  height: 100%;
+  position: relative;
+
+  &.isBusy:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #fff;
+    width: 100%;
+    height: 100%;
+  }
 
   .List {
     margin-top: 20px;

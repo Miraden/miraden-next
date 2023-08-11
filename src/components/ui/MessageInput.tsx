@@ -23,6 +23,8 @@ const MessageInput = ({ className, onSubmit }: Props) => {
       if (!textareaRef.current) return
 
       if (onSubmit) onSubmit(textareaRef.current.value)
+      setMessage('')
+      textareaRef.current.style.height = '24px'
     },
     [onSubmit]
   )
@@ -87,7 +89,7 @@ const StyledMessageInput = styled.div`
   display: flex;
   align-items: center;
   background-color: #ffffff;
-  padding: 10px;
+  padding: 5px 20px;
   border-radius: ${({ theme }) => theme.border.radius};
   box-sizing: border-box;
 
@@ -108,7 +110,7 @@ const StyledMessageInput = styled.div`
   }
 
   @media (max-width: 576px) {
-    padding: 16px 20px;
+    padding: 5px 20px;
     border-radius: ${({ theme }) => theme.border.radius}
       ${({ theme }) => theme.border.radius} 0 0;
 
@@ -124,11 +126,6 @@ const InputWrapper = styled.div`
   align-items: baseline;
   position: relative;
   flex: 1;
-
-  svg {
-    margin-left: 10px;
-    flex-shrink: 0;
-  }
 
   @media (max-width: 576px) {
     svg {
@@ -166,7 +163,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-left: 12px;
-  align-self: flex-end;
+  align-self: flex-start;
   transition: all 0.2s ease 0s;
 
   .MessageInput__button_paperclip {

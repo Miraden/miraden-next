@@ -1,642 +1,119 @@
-import { Button } from '@/components/ui'
-import cn from 'classnames'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import { AllChatsContainer } from './components/AllChatsContainer'
-import { ChatContainer } from './components/ChatContainer'
-import { ChatSupport } from './components/ChatSupport'
-import { ChatPerformers } from './components/ChatPerformers'
-import { ChatRequests } from './components/ChatRequests'
-import RoomsProvider from '@/infrastructure/Chats/RoomsProvider'
-import ChatRoomsListLayout from '@/modules/Chats/ChatRoomsListLayout'
-import {useWindowSize, WindowSize} from "@/hooks/useWindowSize";
-import {theme} from "../../../styles/tokens";
+import { ChatMessages } from './components/ChatMessages'
+import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
+import { theme } from '../../../styles/tokens'
+import ChatsList from '@/modules/Chats/components/ChatsList'
 
 interface Props {
   className?: string
   isAppAuth: boolean
 }
 
-const roomsProvider: RoomsProvider = new RoomsProvider()
-
-enum Tabs {
-  All = 'all',
-  Requests = 'requests',
-  Executants = 'executants',
-  Support = 'support',
-}
-
 enum MobileStates {
   List = 'list',
-  Messages = 'messages'
+  Messages = 'messages',
 }
 
 const mobile = theme.breakpoints.mobile.max
 const tablet = theme.breakpoints.tablet.max
 
-let inTablet: boolean = false
+let inMobileMode: boolean = false
 
 const Chats = (props: Props) => {
-  const [selectedTab, setSelectedTab] = useState<Tabs>(Tabs.All)
-  const [mobileState, setMobileState] = useState<MobileStates>(MobileStates.List)
-
-  const handleSelect = useCallback((tab: Tabs) => {
-    setSelectedTab(tab)
-  }, [])
-
-  const [leadsList, setLeadsList] = useState<Forms.DropDownOption[]>([])
-  useEffect(() => {
-    if (selectedTab === Tabs.All) {
-      roomsProvider.fetchAll().then(res => {
-        let options: Forms.DropDownOption[] = []
-        res.map((i, id) => {
-          options.push({ label: '#' + i.id + ' - ' + i.title, value: i.id })
-        })
-        setLeadsList(options)
-      })
-    }
-
-    if (selectedTab === Tabs.Requests) {
-      roomsProvider.fetchRequests().then(res => {
-        let options: Forms.DropDownOption[] = []
-        res.map((i, id) => {
-          options.push({ label: '#' + i.id + ' - ' + i.title, value: i.id })
-        })
-        setLeadsList(options)
-      })
-    }
-
-    if (selectedTab === Tabs.Executants) {
-      roomsProvider.fetchExecutants().then(res => {
-        let options: Forms.DropDownOption[] = []
-        res.map((i, id) => {
-          options.push({ label: '#' + i.id + ' - ' + i.title, value: i.id })
-        })
-        setLeadsList(options)
-      })
-    }
-  }, [selectedTab])
+  const [mobileState, setMobileState] = useState<MobileStates>(
+    MobileStates.List
+  )
 
   useWindowSize((size: WindowSize) => {
-    inTablet = size.width < tablet;
+    inMobileMode = size.width < tablet
   })
 
-  useEffect(() => {
-    if(inTablet) {
-      setMobileState(MobileStates.List)
-    }
-  }, [])
-
-  const onRoomClick = useCallback((e: any) => {
+  const onRoomSelected = useCallback((e: any) => {
     setMobileState(MobileStates.Messages)
   }, [])
 
+  const onStateChanged = useCallback((e: any) => {
+    setMobileState(MobileStates.List)
+  }, [])
+
   return (
-    <StyledApplicationsChatsAll className="ContainerFull">
-      <div className="ApplicationsChatsAll">
-        <div className={cn("AppInfo ChatList ChatSection", {isVisible: mobileState === MobileStates.List})}>
-          <div className="ApplicationInfo__fullContainer">
-            <h2 className="Font_24_120">Чаты</h2>
-            <div className="ChatInfo__headTabs">
-              <Button
-                className={cn('', {
-                  ChatInfo__headTabButton: selectedTab === Tabs.All,
-                })}
-                onClick={() => handleSelect(Tabs.All)}
-                active={selectedTab === Tabs.All}
-                tertiary
-              >
-                Все
-              </Button>
-              <Button
-                className={cn('', {
-                  ChatInfo__headTabButton: selectedTab === Tabs.Requests,
-                })}
-                onClick={() => handleSelect(Tabs.Requests)}
-                active={selectedTab === Tabs.Requests}
-                tertiary
-              >
-                Отклики
-              </Button>
-              <Button
-                className={cn('', {
-                  ChatInfo__headTabButton: selectedTab === Tabs.Executants,
-                })}
-                onClick={() => handleSelect(Tabs.Executants)}
-                active={selectedTab === Tabs.Executants}
-                tertiary
-              >
-                Исполнители
-              </Button>
-              <Button
-                className={cn('', {
-                  ChatInfo__headTabButton: selectedTab === Tabs.Support,
-                })}
-                onClick={() => handleSelect(Tabs.Support)}
-                active={selectedTab === Tabs.Support}
-                tertiary
-              >
-                Поддержка Miraden
-              </Button>
-            </div>
-            <div className="ChatInfo__headTabsBar" />
+    <StyledChats className="ContainerFull">
+      <div className="Chats">
+        {inMobileMode && mobileState === MobileStates.List && (
+          <div className="ChatsList ChatSection">
+            <ChatsList onRoomSelected={onRoomSelected} />
           </div>
-
-          {selectedTab === Tabs.All && (
-            <ChatRoomsListLayout>
-              <AllChatsContainer
-                onClick={onRoomClick}
-                leadsList={leadsList}
-                className="ContactInfo"
-              />
-            </ChatRoomsListLayout>
-          )}
-
-          {selectedTab === Tabs.Executants && (
-            <ChatRoomsListLayout>
-              <ChatPerformers leadsList={leadsList} className="ContactInfo" />
-            </ChatRoomsListLayout>
-          )}
-          {selectedTab === Tabs.Requests && (
-            <ChatRoomsListLayout>
-              <ChatRequests leadsList={leadsList} className="ContactInfo" />
-            </ChatRoomsListLayout>
-          )}
-          {selectedTab === Tabs.Support && (
-            <ChatRoomsListLayout>
-              <ChatSupport leadsList={leadsList} className="ContactInfo" />
-            </ChatRoomsListLayout>
-          )}
-        </div>
-        <ChatContainer className={cn("Chat ChatSection", {isVisible: mobileState === MobileStates.Messages})} />
+        )}
+        {inMobileMode && mobileState === MobileStates.Messages && (
+          <div className="ChatsMessages ChatSection">
+            <ChatMessages inMobileMode={inMobileMode} onStateChange={onStateChanged} />
+          </div>
+        )}
+        {!inMobileMode && (
+          <>
+            <div className="ChatsList ChatSection">
+              <ChatsList />
+            </div>
+            <div className="ChatsMessages ChatSection">
+              <ChatMessages inMobileMode={false} />
+            </div>
+          </>
+        )}
       </div>
-    </StyledApplicationsChatsAll>
+    </StyledChats>
   )
 }
 
-const StyledApplicationsChatsAll = styled.section`
-  margin-top: 35px;
-  height: calc(100vh - 100px);
+const StyledChats = styled.section`
+  height: 100%;
   padding-bottom: 20px;
+  display: flex;
 
-  .ChatInfo__headTabs {
-    padding: 20px 0 0 0;
-  }
-
-  .ChatTabButton {
-    display: none;
-  }
-
-  .ChatInfo__headTabsBar_whiteSpace {
-    width: 100%;
-    height: 10px;
-    border-radius: 0 0 10px 10px;
-    background: #fff;
-  }
-
-  .SingleChatInfoideBar {
-    position: absolute;
-    right: -420px;
-    top: 94px;
-  }
-
-  .ChatInfo__headContainer {
-    margin-top: 20px;
-    padding: 20px 20px 0 20px;
-    background: #fff;
-    border-radius: 10px 10px 0 0;
-  }
-
-  .ChatInfo__head {
-    display: flex;
-    align-items: baseline;
-
-    h1 {
-      margin-left: 10px;
-    }
-  }
-
-  .ChatInfo__headTabs {
-    display: flex;
-
-    button {
-      margin-right: 30px;
-      color: #7786a5;
-      background: transparent;
-
-      padding: 0;
-
-      :hover {
-        color: #fff !important;
-        background: transparent !important;
-      }
-    }
-
-    button.active {
-      color: #fff !important;
-      background: transparent;
-    }
-  }
-
-  .ChatInfo__headTabButton {
-    position: relative;
-
-    ::before {
-      position: absolute;
-      top: 32px;
-      left: 0;
-      content: '';
-      background: #ffffff;
-      width: 100%;
-      height: 4px;
-      border-radius: 10px;
-    }
-  }
-
-  .ChatInfo__headTabsBar {
-    margin-top: 12px;
-    width: 100%;
-    background: #3b4a69;
-    height: 4px;
-    border-radius: 10px;
-  }
-
-  .ChatMobile {
-    display: none;
-  }
-
-  .ApplicationsChatsAll {
-    display: flex;
+  .Chats {
+    padding-top: 20px;
     height: 100%;
+    display: flex;
+    flex-direction: row;
     gap: 40px;
-  }
-
-  .ContactInfo {
-    flex-grow: 1;
-    overflow: hidden;
-  }
-
-  .AppInfo {
-    display: flex;
-    flex-direction: column;
-    max-width: 625px;
     width: 100%;
-  }
+    justify-content: space-between;
 
-  .ApplicationInfo {
-    background: #2a344a;
-    color: #fff;
-    padding: 20px 20px 0 20px;
-    border-radius: 10px 10px 0 0;
-  }
-
-  .ApplicationsChatsAll__headTabs {
-    padding: 20px 0 0 0;
-
-    overflow: auto;
-
-    button {
-      white-space: nowrap;
-    }
-  }
-
-  .ChatTabButton {
-    display: none;
-  }
-
-  .ApplicationsChatsAll__headTabsBar_whiteSpace {
-    width: 100%;
-    height: 10px;
-    border-radius: 10px;
-    background: #fff;
-  }
-
-  .Application__headContainer {
-    margin-top: 20px;
-    padding: 20px 20px 0 20px;
-    background: #fff;
-    border-radius: 10px;
-  }
-
-  .Application__head {
-    display: flex;
-    align-items: center;
-
-    h1 {
-      margin-left: 10px;
-    }
-  }
-
-  .ApplicationsChatsAll__headTabs {
-    display: flex;
-
-    button {
-      margin-right: 30px;
-      color: #7786a5;
-
-      padding: 0;
-
-      :hover {
-        color: #fff !important;
-        background: transparent !important;
-      }
-    }
-
-    button.active {
-      color: #fff !important;
-    }
-  }
-
-  .ApplicationsChatsAll__headTabButton {
-    position: relative;
-
-    ::before {
-      position: absolute;
-      top: 35px;
-      left: 0;
-      content: '';
-      background: #ffffff;
-      width: 100%;
-      height: 4px;
-      border-radius: 10px;
-    }
-  }
-
-  .ApplicationsChatsAll__headTabsBar {
-    margin-top: 15px;
-    width: 100%;
-    background: #3b4a69;
-    height: 4px;
-    border-radius: 10px;
-  }
-
-  .ContactInfo__statusInfo {
-    display: flex;
-    align-items: center;
-    margin-top: 8px;
-
-    div {
+    &List {
+      width: 35.1%;
+      height: calc(100vh - 114px);
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      gap: 20px;
     }
-  }
 
-  .ContactInfo__sticker {
-    margin-right: 5px;
-  }
-
-  .ContactInfo__verifiedIcon {
-    margin-right: 5px;
-  }
-
-  .ContactInfo__rating {
-    align-items: center;
-
-    p {
-      margin-left: 5px;
+    &Messages {
+      flex-grow: 1;
     }
-  }
-
-  .ChatButton {
-    padding: 10px 24px;
-  }
-
-  .ContactInfo__ratingIcon {
-    path {
-      fill: #7786a5;
-    }
-  }
-
-  .ChatButtonMobile {
-    display: none;
   }
 
   @media (max-width: ${tablet}px) {
-    margin-top: 0;
-    height: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
 
-    .ChatSection {
-      display: none;
-      &.isVisible {
-        display: flex;
-      }
-
-      .Chat__all {
-        background: ${({ theme }) => theme.colors.background.black};
-        display: flex;
-        flex-direction: row;
-        padding: 10px 20px 20px 20px;
-      }
-    }
-
-    .ChatTabButton {
-      display: block;
-    }
-
-    .ApplicationsChatsAll {
+    .Chats {
       flex-direction: column;
-    }
+      padding-top: 0;
+      gap: 0;
 
-    &.ContainerFull {
-      padding: 0;
-    }
-
-    .ChatMobile {
-      display: flex;
-    }
-
-    .AppInfo {
-      width: 100%;
-      max-width: unset;
-      min-width: unset;
-    }
-  }
-
-  .ApplicationInfo__headLayout {
-    display: none;
-    background: #2a344a;
-  }
-
-  .ApplicationInfo__fullContainer {
-    background: #2a344a;
-    color: #fff;
-    padding: 20px 20px 10px 20px;
-    border-radius: 10px;
-    width: 100%;
-  }
-
-  .Application__infoChat {
-    display: none;
-    align-items: center;
-    justify-content: space-between;
-    background: #2a344a;
-    color: #fff;
-    padding: 10px 20px 20px 20px;
-    border-bottom: 1px solid #3a465d;
-  }
-
-  .Application__infoChatContainer {
-    display: flex;
-  }
-
-  .ApplicationInfo__avatar {
-    border-radius: 50%;
-  }
-
-  .Status {
-    margin-left: 12px;
-    text-overflow: ellipsis;
-    width: 100%;
-    overflow: hidden;
-  }
-
-  .FullStatus {
-    display: flex;
-    align-items: center;
-  }
-
-  .Application__infoStatus {
-    display: flex;
-    margin-left: 8px;
-  }
-
-  .ContactInfo__rating {
-    display: flex;
-  }
-
-  .ApplicationInfo {
-    display: flex;
-  }
-
-  .ApplicationInfo__backButton {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    background: #3a465d;
-  }
-
-  .ApplicationInfo__backButtonChat {
-    border-radius: 50%;
-    margin-right: 4px;
-    padding: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .ArrowIcon {
-    width: 20px;
-    height: 20px;
-    transform: rotate(90deg);
-
-    path {
-      fill: #fff;
-    }
-  }
-
-  .ApplicationInfo__container {
-    width: 100%;
-    margin-left: 15px;
-  }
-
-  .ApplicationInfo__headContent {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .ApplicationInfo__headDescription {
-    margin-top: 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  @media (max-width: 1024px) {
-    .ApplicationInfo__fullContainer {
-      border-radius: 0 0 10px 10px;
-    }
-
-    .Application__infoChat {
-      display: flex;
-      padding-left: 12px;
-    }
-
-    .ApplicationsChatsAll__headTabs {
-      padding-top: 20px;
-    }
-
-    .ApplicationInfo {
-      border-radius: 0;
-      padding-bottom: 10px;
-      border-bottom: 2px solid #3a465d;
-    }
-
-    .ApplicationInfo__headLayout {
-      display: block;
-      height: 20px;
-      border-bottom: 1px solid #3a465d;
-    }
-  }
-
-  @media (max-width: 576px) {
-    height: calc(100vh - 22px);
-
-    .ChatInfo__headTabs {
-      padding-top: 16px;
-    }
-
-    .Application__infoChat {
-      padding-right: 8px;
-    }
-
-    .ApplicationInfo__fullContainer {
-      padding: 20px 0 10px 20px;
-    }
-
-    .ChatButton {
-      display: none;
-    }
-
-    .ChatButtonMobile {
-      display: flex;
-      align-self: flex-start;
-      padding: 2px;
-      border-radius: 50%;
-      background: transparent;
-
-      :hover {
-        background: #3a465d;
-      }
-
-      svg {
-        path {
-          fill: #fff;
-        }
-      }
-    }
-
-    .ChatInfo__headTabsBar {
-      margin-top: 8px;
-    }
-
-    .ChatInfo__headTabButton {
-      ::before {
-        top: 28px;
+      &List {
+        width: 100%;
+        height: 100vh;
+        gap: 10px;
       }
     }
   }
 
-  @media (max-width: 440px) {
-    .FullStatus {
-      p {
-        max-width: 110px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+  @media (max-width: ${mobile}px) {
+    .Chats {
+      &List {
+        gap: 0;
       }
     }
   }

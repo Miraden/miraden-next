@@ -174,7 +174,6 @@ const Login = ({className, onFailure, onResponse, onSuccess}: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
-  margin-top: 150px;
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
@@ -196,7 +195,6 @@ const StyledRegStep1 = styled.section`
   }
 
   .Reg__options {
-    height: 388px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -284,7 +282,6 @@ const StyledRegStep1 = styled.section`
   @media (max-width: 960px) {
     margin-top: 10px;
     .Reg__options {
-      height: 797px;
 
       button {
         max-width: unset;
@@ -311,7 +308,6 @@ const StyledRegStep1 = styled.section`
       padding: 24px 20px;
       display: flex;
       flex-direction: column;
-      height: 566px;
 
       span {
         text-align: start;

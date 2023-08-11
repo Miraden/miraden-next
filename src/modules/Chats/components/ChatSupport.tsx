@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { SingleChat } from '@/modules/Chats/components/SingleChat'
+import { ChatRoom } from '@/modules/Chats/components/ChatRoom'
 
 interface Props {
   className?: string
@@ -28,7 +28,7 @@ const ChatSupport = ({ className }: Props) => {
       <ul className="List">
         {chatsArray.map((chat, index) => (
           <li key={index}>
-            <SingleChat
+            <ChatRoom
               name={chat.name}
               image={chat.image}
               isPro={chat.isPro}
