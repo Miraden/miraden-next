@@ -18,7 +18,6 @@ import {
 import {
   ApiResponse,
   ApiResponseStructure,
-  ApiResponseType,
 } from '@/infrastructure/Network/Http/ApiResponse'
 import FavoritesProvider from "@/modules/Favorites/FavoritesProvider";
 

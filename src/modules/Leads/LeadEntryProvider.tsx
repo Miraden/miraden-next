@@ -1,7 +1,6 @@
 import {
   ApiResponse,
   ApiResponseStructure,
-  ApiResponseType,
   HttpCodes,
 } from '@/infrastructure/Network/Http/ApiResponse'
 import {

@@ -4,7 +4,6 @@ import {
 } from '@/infrastructure/Network/Http/ApiRequest'
 import {
   ApiResponse,
-  ApiResponseType,
 } from '@/infrastructure/Network/Http/ApiResponse'
 
 class FavoritesProvider {
