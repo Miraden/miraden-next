@@ -1,9 +1,13 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ChatMessages } from './components/ChatMessages'
 import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
 import { theme } from '../../../styles/tokens'
 import ChatsList from '@/modules/Chats/components/ChatsList'
+import ChatConnManager from '@/modules/Chats/ChatConnManager'
+import useUpdater from '@/hooks/useUpdater'
+import {Security} from "@/infrastructure/Security/JWT/JWTManager";
+import MyProfile = Chat.MyProfile;
 
 interface Props {
   className?: string
@@ -19,18 +23,98 @@ const mobile = theme.breakpoints.mobile.max
 const tablet = theme.breakpoints.tablet.max
 
 let inMobileMode: boolean = false
+const socketManager = new ChatConnManager()
+let isSocketActive = false
 
 const Chats = (props: Props) => {
   const [mobileState, setMobileState] = useState<MobileStates>(
     MobileStates.List
   )
+  const [messages, setMessages] = useState<Chat.Message[]>([])
+  const [myProfile, setMyProfile] = useState<Chat.MyProfile>()
+  const update = useUpdater()
+
+  useEffect(() => {
+    if (isSocketActive) return
+    const url: string|undefined = process.env.NEXT_PUBLIC_CHAT_URL
+    socketManager.create(url)
+    isSocketActive = true
+  }, [messages])
+
+  socketManager.OnMessage((event?: MessageEvent) => {
+    const iam = Security.parseJWT(String(localStorage.getItem('token')))
+    if (!event) return
+    const r = JSON.parse(event.data) as ApiResponseType
+    if (r.metadata?.event === 'onRoomJoin') {
+      socketManager.queryHistory()
+    }
+
+    if (r.metadata?.event === 'onHistoryPageUpdate') {
+      const payload = r.payload as Chat.MessageSocketResponse[]
+      if(!payload) return
+      let msgs: Chat.Message[] = []
+      payload.map((msg: any, id) => {
+        msgs.push({
+          owner: {
+            avatar: '/u/users/' + msg.owner_photo,
+          },
+          message: msg.message_text,
+          direction: (msg.owner_id === iam.id) ? 'out' : 'in',
+          createdAt: msg.message_created_date,
+          isRead: true,
+        })
+      })
+      setMessages(msgs)
+    }
+
+    if (r.metadata?.event === 'onNewMessage') {
+      const payload: Chat.MessageSocketResponse = r.payload as Chat.MessageSocketResponse
+      if(!payload) return
+      let msgs: Chat.Message[] = messages
+      msgs.push({
+        owner: {
+          avatar: '/u/users/' + payload.owner_photo,
+        },
+        message: payload.message_text,
+        direction: (payload.owner_id === iam.id) ? 'out' : 'int',
+        createdAt: payload.message_created_date,
+        isRead: true,
+      })
+      setMessages(msgs)
+      update()
+    }
+
+    if(r.metadata?.event === 'onGetMyProfile') {
+      const payload = r.payload as any
+      if(!payload) return
+      setMyProfile(payload)
+    }
+
+    if(r.metadata?.event === 'onMessageDelivered') {
+
+    }
+  })
+
+  socketManager.OnOpen(() => {
+    socketManager.queryRoomsList(0 ,String(localStorage.getItem('token')))
+    socketManager.queryMyProfile(String(localStorage.getItem('token')))
+  })
 
   useWindowSize((size: WindowSize) => {
     inMobileMode = size.width < tablet
   })
 
-  const onRoomSelected = useCallback((e: any) => {
+  const onRoomSelected = useCallback((room: number, lead: number) => {
     setMobileState(MobileStates.Messages)
+    const token = localStorage.getItem('token')
+    if (!token) return
+    if (!socketManager) return
+    socketManager.joinToRoom(room, token, lead)
+    setMessages([])
+  }, [])
+
+  const onSendMessage = useCallback((msg: string) => {
+    socketManager.sendMessage(msg)
   }, [])
 
   const onStateChanged = useCallback((e: any) => {
@@ -47,16 +131,22 @@ const Chats = (props: Props) => {
         )}
         {inMobileMode && mobileState === MobileStates.Messages && (
           <div className="ChatsMessages ChatSection">
-            <ChatMessages inMobileMode={inMobileMode} onStateChange={onStateChanged} />
+            <ChatMessages
+              myProfile={myProfile}
+              messages={messages}
+              inMobileMode={inMobileMode}
+              onStateChange={onStateChanged}
+              onSend={onSendMessage}
+            />
           </div>
         )}
         {!inMobileMode && (
           <>
             <div className="ChatsList ChatSection">
-              <ChatsList />
+              <ChatsList onRoomSelected={onRoomSelected} />
             </div>
             <div className="ChatsMessages ChatSection">
-              <ChatMessages inMobileMode={false} />
+              <ChatMessages myProfile={myProfile} messages={messages} inMobileMode={false} onSend={onSendMessage} />
             </div>
           </>
         )}

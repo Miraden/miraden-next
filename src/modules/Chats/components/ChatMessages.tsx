@@ -15,6 +15,9 @@ interface Props {
   onTouchEnd?: any
   onStateChange?: Function
   inMobileMode: boolean
+  messages: Chat.Message[]
+  onSend?: (msg: string) => void
+  myProfile?: Chat.MyProfile
 }
 
 const mobile = theme.breakpoints.mobile.max
@@ -25,25 +28,15 @@ enum MessageDirection {
   Out = 'out',
 }
 
-let messages: Chat.Message[] = [
-  {
-    owner: {
-      avatar: '/images/avatar1.png',
-    },
-    createdAt: new Date().toISOString(),
-    isRead: false,
-    direction: MessageDirection.Out,
-    message:
-      'Добрый день. Меня зовут Светлана, я агент по недвижимости из компании Real Home. Предлагаю на выбор несколько вариантов',
-  },
-]
-
 const ChatMessages = ({
   className,
   onTouchEnd,
   onTouchStart,
   onStateChange,
   inMobileMode,
+  messages,
+  onSend,
+  myProfile,
 }: Props) => {
   const updater = useUpdater()
 
@@ -51,15 +44,16 @@ const ChatMessages = ({
     (msg: string) => {
       if (msg.length === 0) return
       messages.push({
-        owner: { avatar: '/images/avatar1.png' },
-        direction: MessageDirection.In,
+        owner: { avatar: '/u/users/' + myProfile?.photo },
+        direction: MessageDirection.Out,
         message: msg,
         createdAt: new Date().toISOString(),
         isRead: false,
       })
+      if (onSend) onSend(msg)
       updater()
     },
-    [updater]
+    [messages, myProfile?.photo, onSend, updater]
   )
 
   return (
@@ -83,31 +77,37 @@ const ChatMessages = ({
           <div className="ChatMessages__user">
             <Image
               alt=""
-              src="/images/avatar1.png"
+              src={'/u/users/' + myProfile?.photo}
               width={52}
               height={52}
               className="ApplicationInfo__avatar"
             />
             <div className="Status">
               <div className="FullStatus">
-                <p className="Font_20_120">Светлана Гридасова</p>
+                <p className="Font_20_120">
+                  {myProfile?.name} {myProfile?.surname}
+                </p>
                 <div className="Application__infoStatus">
                   <VerifiedIcon className="ContactInfo__verifiedIcon" />
-                  <Sticker theme="black" className="ContactInfo__sticker">
-                    pro
-                  </Sticker>
+                  {myProfile?.user_is_role_pro && (
+                    <Sticker theme="black" className="ContactInfo__sticker">
+                      pro
+                    </Sticker>
+                  )}
                   <div className="ContactInfo__rating">
-                    <StarIconFilled
-                      width={14}
-                      height={14}
-                      className="ContactInfo__ratingIcon"
-                    />
-                    <p className="Font_14_140">4.8</p>
+                    {myProfile?.isPassportVerified && (
+                      <StarIconFilled
+                        width={14}
+                        height={14}
+                        className="ContactInfo__ratingIcon"
+                      />
+                    )}
+                    <p className="Font_14_140">{myProfile?.rating}</p>
                   </div>
                 </div>
               </div>
               <p className="Font_14_140 Font_fields_description">
-                Агент — RealEstate
+                {myProfile?.sellerStatus}
               </p>
             </div>
           </div>
@@ -120,9 +120,6 @@ const ChatMessages = ({
       <div className="ChatContainer">
         <div className="ChatMessages__inner">
           <div className="ChatContainer__messageContainer">
-            <p className="ChatContainer__date Font_14_140 Color_text_grey">
-              22 марта
-            </p>
             {messages.map((msg, id) => (
               <div className="ChatContainer__message" key={id}>
                 <Image
@@ -133,14 +130,15 @@ const ChatMessages = ({
                   className="ChatContainer__avatar"
                 />
                 <div
-                  className={cn('Font_16_150', {
+                  className={cn('ChatContainerMessage Font_16_150', {
                     ChatContainer__incomingMessage:
                       msg.direction === MessageDirection.In,
                     ChatContainer__outgoingMessage:
                       msg.direction === MessageDirection.Out,
                   })}
                 >
-                  {msg.message}
+                  <div className="ChatContainer__message">{msg.message}</div>
+                  <div className="ChatContainer__message_date_created Font_fields_description">{formatDate(msg.createdAt)}</div>
                 </div>
               </div>
             ))}
@@ -154,6 +152,15 @@ const ChatMessages = ({
       </div>
     </StyledChatContainer>
   )
+}
+function formatDate(date: string): string {
+  const _date = new Date(date)
+  const d = new Intl.DateTimeFormat('ru', {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+
+  return d.format(_date)
 }
 
 const StyledChatContainer = styled.div`
@@ -213,8 +220,14 @@ const StyledChatContainer = styled.div`
     background: #eef1f5;
   }
 
-  .ChatContainer__date {
-    text-align: center;
+  .ChatContainerMessage {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+  }
+
+  .ChatContainer__message_date_created {
+    color: ${({ theme }) => theme.colors.text.grey};
   }
 
   .ChatContainer__avatar {

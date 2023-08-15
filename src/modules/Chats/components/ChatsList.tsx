@@ -1,279 +1,56 @@
 import ChatRoomsListLayout from '@/modules/Chats/ChatRoomsListLayout'
 import ChatRoomsTabs from '@/modules/Chats/ChatRoomsTabs'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { DropdownInput } from '@/components/ui/DropDowns/DropdownInput'
 import cn from 'classnames'
 import { ChatRoom } from '@/modules/Chats/components/ChatRoom'
 import styled from 'styled-components'
 import { ChatTabs } from '@/infrastructure/Chats/ChatTabs'
-import RoomsProvider from '@/infrastructure/Chats/RoomsProvider'
+import ChatLeadsProvider from '@/infrastructure/Chats/ChatLeadsProvider'
 import { Preloader } from '@/components/ui/Preloader'
 import { theme } from '../../../../styles/tokens'
+import ChatRoomsProvider from '@/infrastructure/Chats/ChatRoomsProvider'
+import LangManager from '@/infrastructure/Intl/LangManager'
+import useUpdater from '@/hooks/useUpdater'
 
 interface Props {
   className?: string
-  onRoomSelected?: (selected: number) => void
+  onRoomSelected?: (room: number, lead: number) => void
+  newMessage?: Chat.Message
 }
 
 const mobile = theme.breakpoints.mobile.max
 const tablet = theme.breakpoints.tablet.max
 
-const chatsArray = [
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: true,
-    isVerified: true,
-    isPerformer: true,
-    unreadMessages: 5,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: true,
-    isVerified: true,
-    isPerformer: true,
-    unreadMessages: 5,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: true,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-  {
-    image: '/images/avatar1.png',
-    name: 'Светлана Гридасова',
-    isPro: false,
-    isVerified: true,
-    isPerformer: false,
-    unreadMessages: 0,
-    time: '12:05',
-    message:
-      'Добрый день, Александр. Да, я провожу онлайн-показы. Через какую программу вам будет удобно связаться и на какое время?',
-  },
-]
-
-const roomsProvider: RoomsProvider = new RoomsProvider()
+const chatsLeadsProvider: ChatLeadsProvider = new ChatLeadsProvider()
+const chatRoomsProvider: ChatRoomsProvider = new ChatRoomsProvider()
+const langManager: LangManager = new LangManager()
+let roomsList: Chat.Preview[] = []
 
 const ChatsList = (props: Props): JSX.Element => {
   const [selectedRoom, setSelectedRoom] = useState<number>(-1)
   const [leadsList, setLeadsList] = useState<Forms.DropDownOption[]>([])
   const [roomsListBusy, setRoomsListBusy] = useState<boolean>(false)
+  const [activeTab, setActiveTab] = useState<ChatTabs>(ChatTabs.All)
+
+  const update = useUpdater()
 
   const onRoom = useCallback(
     (e: any) => {
       const target = e.target.closest('li')
-      const keyId: number = Number(target.getAttribute('data-key'))
+      if(!target) return
+      const keyId: number = Number(target.getAttribute('data-room'))
+      const leadId: number  = Number(target.getAttribute('data-lead'))
       setSelectedRoom(keyId)
-      if (props.onRoomSelected) props.onRoomSelected(keyId)
+      if (props.onRoomSelected) props.onRoomSelected(keyId, leadId)
     },
     [props]
   )
 
   const onTab = useCallback((tab: ChatTabs) => {
     setRoomsListBusy(true)
-    setLeadsList([])
     if (tab === ChatTabs.All) {
-      roomsProvider.fetchAll().then(res => {
+      chatsLeadsProvider.fetchAll().then(res => {
         let options: Forms.DropDownOption[] = []
         res.map((i, id) => {
           options.push({ label: '#' + i.id + ' - ' + i.title, value: i.id })
@@ -281,10 +58,15 @@ const ChatsList = (props: Props): JSX.Element => {
         setLeadsList(options)
         setRoomsListBusy(false)
       })
+
+      chatRoomsProvider.fetchAll().then(res => {
+        roomsList = res
+        update()
+      })
     }
 
     if (tab === ChatTabs.Requests) {
-      roomsProvider.fetchRequests().then(res => {
+      chatsLeadsProvider.fetchRequests().then(res => {
         let options: Forms.DropDownOption[] = []
         res.map((i, id) => {
           options.push({ label: '#' + i.id + ' - ' + i.title, value: i.id })
@@ -295,7 +77,7 @@ const ChatsList = (props: Props): JSX.Element => {
     }
 
     if (tab === ChatTabs.Executants) {
-      roomsProvider.fetchExecutants().then(res => {
+      chatsLeadsProvider.fetchExecutants().then(res => {
         let options: Forms.DropDownOption[] = []
         res.map((i, id) => {
           options.push({ label: '#' + i.id + ' - ' + i.title, value: i.id })
@@ -308,7 +90,7 @@ const ChatsList = (props: Props): JSX.Element => {
     if (tab === ChatTabs.Support) {
       setRoomsListBusy(false)
     }
-  }, [])
+  }, [update])
 
   return (
     <>
@@ -329,22 +111,18 @@ const ChatsList = (props: Props): JSX.Element => {
             )}
 
             <ul className="List" onClick={onRoom}>
-              {chatsArray.map((chat, index) => (
+              {roomsList.map((room, index) => (
                 <li
-                  data-key={index}
+                  data-room={room.roomId}
+                  data-lead={room.leadId}
                   key={index}
                   className={cn('ListItem', {
-                    ListItem__IsActive: selectedRoom === index,
+                    ListItem__IsActive: selectedRoom === room.roomId,
                   })}
                 >
                   <ChatRoom
-                    name={chat.name}
-                    image={chat.image}
-                    isPro={chat.isPro}
-                    isVerified={chat.isVerified}
-                    message={chat.message}
-                    unreadMessages={chat.unreadMessages}
-                    time={chat.time}
+                    preview={room}
+                    locale={langManager.getClientLang()}
                   />
                 </li>
               ))}

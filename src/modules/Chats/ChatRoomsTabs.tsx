@@ -1,10 +1,15 @@
-import React, { PropsWithChildren, useCallback, useState } from 'react'
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 import { Button } from '@/components/ui'
 import cn from 'classnames'
-import RoomsProvider from '@/infrastructure/Chats/RoomsProvider'
+import ChatLeadsProvider from '@/infrastructure/Chats/ChatLeadsProvider'
 import styled from 'styled-components'
 import { theme } from '../../../styles/tokens'
-import {ChatTabs} from "@/infrastructure/Chats/ChatTabs";
+import { ChatTabs } from '@/infrastructure/Chats/ChatTabs'
 
 interface Props {
   className?: string
@@ -14,10 +19,16 @@ interface Props {
 const mobile = theme.breakpoints.mobile.max
 const tablet = theme.breakpoints.tablet.max
 
-const roomsProvider: RoomsProvider = new RoomsProvider()
+let isInit: boolean = false
 
 const ChatRoomsTabs = (props: PropsWithChildren<Props>): JSX.Element => {
   const [selectedTab, setSelectedTab] = useState<ChatTabs>(ChatTabs.All)
+
+  useEffect(() => {
+    if (isInit) return
+    if (props.onTab) props.onTab(selectedTab)
+    isInit = true
+  }, [props, selectedTab])
 
   const handleSelect = useCallback(
     (tab: ChatTabs) => {

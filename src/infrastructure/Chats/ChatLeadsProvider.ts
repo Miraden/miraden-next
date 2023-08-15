@@ -4,7 +4,7 @@ import {
 } from '@/infrastructure/Network/Http/ApiRequest'
 import { ApiResponse } from '@/infrastructure/Network/Http/ApiResponse'
 
-class RoomsProvider {
+class ChatLeadsProvider {
   constructor() {}
 
   public async fetchAll(): Promise<Chat.Leads[]> {
@@ -77,4 +77,4 @@ class RoomsProvider {
     }
 }
 
-export default RoomsProvider
+export default ChatLeadsProvider

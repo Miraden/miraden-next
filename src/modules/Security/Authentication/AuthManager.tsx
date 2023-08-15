@@ -4,7 +4,6 @@ import {
 } from '@/infrastructure/Network/Http/ApiRequest'
 import {
   ApiResponse,
-  ApiResponseType,
   HttpCodes,
 } from '@/infrastructure/Network/Http/ApiResponse'
 

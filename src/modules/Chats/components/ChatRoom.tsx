@@ -5,19 +5,12 @@ import { ApplicationsFooter } from '@/modules/Base/ApplicationsFooter'
 import Image from 'next/image'
 import styled from 'styled-components'
 import cn from 'classnames'
-import {theme} from "../../../../styles/tokens";
+import { theme } from '../../../../styles/tokens'
 
 interface Props {
   className?: string
-  image?: any
-  name?: string
-  isPro?: boolean
-  message?: string
-  isVerified?: boolean
-  isPerformer?: boolean
-  unreadMessages?: number
-
-  time?: string
+  preview: Chat.Preview
+  locale: string
 }
 
 const mobile = theme.breakpoints.mobile.max
@@ -27,24 +20,53 @@ const ChatRoom = (props: Props) => {
   return (
     <StyledRoom className={cn('chatRoom', props.className)}>
       <div className="ChatRoom__left">
-        <div className="ChatRoom__image"><Image width={60} height={60} src={props.image} alt={"avatar"}/></div>
+        <div className="ChatRoom__image">
+          <Image
+            width={60}
+            height={60}
+            src={"/u/users/" + props.preview.photo}
+            alt={'avatar'}
+          />
+        </div>
       </div>
       <div className="ChatRoom__center">
         <div className="ChatRoom__user">
           <div className="User__info">
-            <div className="User__name Font_Accent_16_S">Анастасия Петрова</div>
-            <div className="User__verified"><VerifiedIcon/></div>
-            <div className="User__pro"><Sticker theme="black">PRO</Sticker></div>
+            <div className="User__name Font_Accent_16_S">
+              {props.preview.name} {props.preview.surname}
+            </div>
+            <div className="User__verified">
+              {props.preview.isPassportVerified && <VerifiedIcon />}
+            </div>
+            <div className="User__pro">
+              {props.preview.isRolePro && <Sticker theme="black">PRO</Sticker>}
+            </div>
           </div>
-          <div className="User__message">Добрый день, Александр, по вашей заявке — Недвижимость на Северном</div>
+          <div className="User__message">{props.preview.message}</div>
         </div>
       </div>
       <div className="ChatRoom__right Font_captions_1">
-        <div className="ChatRoom__date">12:06</div>
-        <div className="ChatRoom__unread Font_Accent_14_m">11</div>
+        <div className="ChatRoom__date">
+          {formatCreatedAt(props.preview.createdAt, props.locale)}
+        </div>
+        {props.preview.unreadMessages > 0 && (
+          <div className="ChatRoom__unread Font_Accent_14_m">
+            {props.preview.unreadMessages}
+          </div>
+        )}
       </div>
     </StyledRoom>
   )
+}
+
+function formatCreatedAt(date: string, locale: string): string {
+  const _date = new Date(date)
+  const d = new Intl.DateTimeFormat(locale, {
+    hour: '2-digit',
+    minute: '2-digit',
+  })
+
+  return d.format(_date)
 }
 
 const StyledRoom = styled.div`
@@ -54,7 +76,7 @@ const StyledRoom = styled.div`
   justify-content: space-between;
   padding: 10px 30px;
   gap: 15px;
-  color: ${({theme}) => theme.colors.text.grey};
+  color: ${({ theme }) => theme.colors.text.grey};
 
   .User__info {
     display: flex;
@@ -63,7 +85,7 @@ const StyledRoom = styled.div`
   }
 
   .User__name {
-    color: ${({theme}) => theme.colors.text.black};
+    color: ${({ theme }) => theme.colors.text.black};
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -73,9 +95,9 @@ const StyledRoom = styled.div`
   }
 
   .ChatRoom__unread {
-    color: #FFF;
+    color: #fff;
     border-radius: 20px;
-    background: ${({theme}) => theme.colors.main};
+    background: ${({ theme }) => theme.colors.main};
     padding: 4px 8px;
   }
 
@@ -110,6 +132,10 @@ const StyledRoom = styled.div`
 
   .ChatRoom__image {
     min-width: 60px;
+
+    img {
+      border-radius: 100%;
+    }
   }
 
   @media (max-width: ${tablet}px) {
