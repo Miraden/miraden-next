@@ -103,7 +103,7 @@ const Chats = (props: Props) => {
       setLeadsList(payload)
       setLeadsListReset(false)
       const token = String(localStorage.getItem('token'))
-      const leads = payload.map(el => el.id)
+      const leads: number[] = payload.map(el => el.id)
       socketManager.getRoomsList(leads, token, activeChat.toString())
     }
 
@@ -190,7 +190,9 @@ const Chats = (props: Props) => {
   const onLeadSelect = useCallback((lead: number) => {
     setActiveLead(lead)
     const token = String(localStorage.getItem('token'))
-    socketManager.getRoomsList([lead], token, activeChat.toString())
+    if(lead > 0) {
+      socketManager.getRoomsList([lead], token, activeChat.toString())
+    }
   }, [activeChat])
 
   return (
