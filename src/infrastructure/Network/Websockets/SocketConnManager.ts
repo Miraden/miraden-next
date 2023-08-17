@@ -23,7 +23,7 @@ class SocketConnManager {
   public makeEvents(): void {
     this.socket?.addEventListener('open', () => {
       this.onOpen()
-      this.pingPong(3000)
+      this.pingPong(5000)
     })
     this.socket?.addEventListener('close', () => {
       this.reconnectEvery(2000)

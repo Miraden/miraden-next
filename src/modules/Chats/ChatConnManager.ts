@@ -53,21 +53,36 @@ class ChatConnManager extends SocketConnManager {
     this.send(JSON.stringify(request))
   }
 
-  public queryRoomsList(leadId: number = 0, token: string = ''): void {
+  public getRoomsList(leads: number[] = [], token: string = '', view: string = ''): void {
     const request: Chat.SocketRequestType = {
       command: "getRoomsList",
       token: token,
       payload: {
-        leadId: leadId
+        leads: leads,
+        view: view
       }
     }
     this.send(JSON.stringify(request))
   }
 
-  public queryMyProfile(token: string = ''): void {
+  public getLeadsList(token: string = '', view: string = ''): void {
     const request: Chat.SocketRequestType = {
-      command: "getMyProfile",
+      command: "getLeadsList",
       token: token,
+      payload: {
+        view: view
+      }
+    }
+    this.send(JSON.stringify(request))
+  }
+
+  public getCompanionsForRoom(token: string, roomId: number): void {
+    const request: Chat.SocketRequestType = {
+      command: "getCompanions",
+      token: token,
+      payload: {
+        roomId: roomId
+      }
     }
     this.send(JSON.stringify(request))
   }

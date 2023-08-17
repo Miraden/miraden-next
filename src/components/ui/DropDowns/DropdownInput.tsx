@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, { FC, useState } from 'react'
+import React, {FC, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import { Dropdown } from './Dropdown'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
@@ -15,6 +15,7 @@ interface Props {
   message?: string
   icon?: JSX.Element
   selected: (option: Forms.DropDownOption) => void
+  reset: boolean
 }
 
 const DropdownInput: FC<Props> = ({
@@ -27,12 +28,10 @@ const DropdownInput: FC<Props> = ({
   message,
   icon,
   selected,
+  reset,
 }) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false)
-  const [activeOption, setActiveOption] = useState<Forms.DropDownOption>({
-    label: '',
-    value: 0,
-  })
+  const [activeOption, setActiveOption] = useState<Forms.DropDownOption>(getDefaultOption())
 
   const toggleDropDown = () => {
     setShowDropDown(!showDropDown)
@@ -43,6 +42,13 @@ const DropdownInput: FC<Props> = ({
       setShowDropDown(false)
     }
   }
+
+  useEffect(() => {
+    if(reset) {
+      setActiveOption(getDefaultOption())
+      selected(getDefaultOption())
+    }
+  }, [reset, selected])
 
   const optionSelection = (option: Forms.DropDownOption): void => {
     setActiveOption(option)
@@ -100,6 +106,10 @@ const DropdownInput: FC<Props> = ({
       )}
     </StyledDropdownInput>
   )
+}
+
+function getDefaultOption(): Forms.DropDownOption {
+  return {label: 0, value: 0}
 }
 
 const StyledDropdownInput = styled.div<{disabled: boolean|undefined, error: boolean|undefined}>`

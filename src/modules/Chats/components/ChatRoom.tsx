@@ -9,7 +9,7 @@ import { theme } from '../../../../styles/tokens'
 
 interface Props {
   className?: string
-  preview: Chat.Preview
+  preview: Chat.RoomsList
   locale: string
 }
 
@@ -42,18 +42,13 @@ const ChatRoom = (props: Props) => {
               {props.preview.isRolePro && <Sticker theme="black">PRO</Sticker>}
             </div>
           </div>
-          <div className="User__message">{props.preview.message}</div>
         </div>
       </div>
       <div className="ChatRoom__right Font_captions_1">
         <div className="ChatRoom__date">
-          {formatCreatedAt(props.preview.createdAt, props.locale)}
+
         </div>
-        {props.preview.unreadMessages > 0 && (
-          <div className="ChatRoom__unread Font_Accent_14_m">
-            {props.preview.unreadMessages}
-          </div>
-        )}
+
       </div>
     </StyledRoom>
   )

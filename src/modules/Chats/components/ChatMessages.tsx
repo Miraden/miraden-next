@@ -4,7 +4,7 @@ import { StarIconFilled } from '@/icons/StarIconFilled'
 import Image from 'next/image'
 import styled from 'styled-components'
 import cn from 'classnames'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import useUpdater from '@/hooks/useUpdater'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
 import { theme } from '../../../../styles/tokens'
@@ -17,13 +17,14 @@ interface Props {
   inMobileMode: boolean
   messages: Chat.Message[]
   onSend?: (msg: string) => void
-  myProfile?: Chat.MyProfile
+  myProfile?: Chat.UserProfile
+  activeRoom: number
 }
 
 const mobile = theme.breakpoints.mobile.max
 const tablet = theme.breakpoints.tablet.max
 
-enum MessageDirection {
+export enum MessageDirection {
   In = 'in',
   Out = 'out',
 }
@@ -37,23 +38,17 @@ const ChatMessages = ({
   messages,
   onSend,
   myProfile,
+  activeRoom,
 }: Props) => {
+  const [showOpenContacts, setShowContactsButton] = useState<boolean>(false)
   const updater = useUpdater()
 
-  const onNewMessage = useCallback(
+  const onSendMessage = useCallback(
     (msg: string) => {
-      if (msg.length === 0) return
-      messages.push({
-        owner: { avatar: '/u/users/' + myProfile?.photo },
-        direction: MessageDirection.Out,
-        message: msg,
-        createdAt: new Date().toISOString(),
-        isRead: false,
-      })
       if (onSend) onSend(msg)
       updater()
     },
-    [messages, myProfile?.photo, onSend, updater]
+    [onSend, updater]
   )
 
   return (
@@ -74,47 +69,13 @@ const ChatMessages = ({
               <ArrowsIcon left />
             </div>
           )}
-          <div className="ChatMessages__user">
-            <Image
-              alt=""
-              src={'/u/users/' + myProfile?.photo}
-              width={52}
-              height={52}
-              className="ApplicationInfo__avatar"
-            />
-            <div className="Status">
-              <div className="FullStatus">
-                <p className="Font_20_120">
-                  {myProfile?.name} {myProfile?.surname}
-                </p>
-                <div className="Application__infoStatus">
-                  <VerifiedIcon className="ContactInfo__verifiedIcon" />
-                  {myProfile?.user_is_role_pro && (
-                    <Sticker theme="black" className="ContactInfo__sticker">
-                      pro
-                    </Sticker>
-                  )}
-                  <div className="ContactInfo__rating">
-                    {myProfile?.isPassportVerified && (
-                      <StarIconFilled
-                        width={14}
-                        height={14}
-                        className="ContactInfo__ratingIcon"
-                      />
-                    )}
-                    <p className="Font_14_140">{myProfile?.rating}</p>
-                  </div>
-                </div>
-              </div>
-              <p className="Font_14_140 Font_fields_description">
-                {myProfile?.sellerStatus}
-              </p>
-            </div>
+          {myProfile && RenderCompanionSection(myProfile)}
+        </div>
+        {showOpenContacts && (
+          <div className="ChatMessages__headerRight">
+            <Button compact>Открыть контакты</Button>
           </div>
-        </div>
-        <div className="ChatMessages__headerRight">
-          <Button compact>Открыть контакты</Button>
-        </div>
+        )}
       </div>
 
       <div className="ChatContainer">
@@ -138,7 +99,9 @@ const ChatMessages = ({
                   })}
                 >
                   <div className="ChatContainer__message">{msg.message}</div>
-                  <div className="ChatContainer__message_date_created Font_fields_description">{formatDate(msg.createdAt)}</div>
+                  <div className="ChatContainer__message_date_created Font_fields_description">
+                    {formatDate(msg.createdAt)}
+                  </div>
                 </div>
               </div>
             ))}
@@ -146,13 +109,56 @@ const ChatMessages = ({
         </div>
 
         <MessageInput
-          onSubmit={onNewMessage}
+          onSubmit={onSendMessage}
           className="ChatContainer__messageInput"
         />
       </div>
     </StyledChatContainer>
   )
 }
+
+const RenderCompanionSection = (profile: Chat.UserProfile): JSX.Element => {
+  return (
+    <>
+      <div className="ChatMessages__user">
+        <Image
+          alt=""
+          src={'/u/users/' + profile.photo}
+          width={52}
+          height={52}
+          className="ApplicationInfo__avatar"
+        />
+        <div className="Status">
+          <div className="FullStatus">
+            <p className="Font_20_120">
+              {profile.name} {profile.surname}
+            </p>
+            <div className="Application__infoStatus">
+              <VerifiedIcon className="ContactInfo__verifiedIcon" />
+              {profile.isRolePro && (
+                <Sticker theme="black" className="ContactInfo__sticker">
+                  pro
+                </Sticker>
+              )}
+              <div className="ContactInfo__rating">
+                {profile.isPassportVerified && (
+                  <StarIconFilled
+                    width={14}
+                    height={14}
+                    className="ContactInfo__ratingIcon"
+                  />
+                )}
+                <p className="Font_14_140">{profile.rating}</p>
+              </div>
+            </div>
+          </div>
+          <p className="Font_14_140 Font_fields_description"></p>
+        </div>
+      </div>
+    </>
+  )
+}
+
 function formatDate(date: string): string {
   const _date = new Date(date)
   const d = new Intl.DateTimeFormat('ru', {

@@ -19,7 +19,7 @@ class ChatLeadsProvider {
           'Content-Type': 'application/x-www-form-urlencoded',
           Authorization: 'Bearer ' + localStorage.getItem('token'),
         },
-        endpoint: '/chat/leads',
+        endpoint: '/chat/rooms',
       })
       .then(async res => {
         return res

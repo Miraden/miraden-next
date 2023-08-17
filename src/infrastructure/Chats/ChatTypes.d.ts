@@ -4,20 +4,19 @@ declare namespace Chat {
     title: string
   }
 
-  interface Preview {
+  interface RoomsList {
     roomId: number
-    id: number
+    leadId: number
     name: string
     surname: string
     photo: string
     rating: number
-    isRolePro: boolean
     isPassportVerified: boolean
-    status: string
-    unreadMessages: number
-    createdAt: string
-    message: string
-    leadId: number
+    isRolePro: boolean
+    last_message: {
+      message: string|null
+      created_at: string|null
+    }
   }
 
   interface MessageOwner {
@@ -30,6 +29,7 @@ declare namespace Chat {
     message: string
     createdAt: string
     isRead: boolean
+    roomId: number
   }
 
   declare interface SocketRequestType {
@@ -38,15 +38,15 @@ declare namespace Chat {
     command: string
   }
 
-  interface MyProfile {
+  interface UserProfile {
     id: number
     name: string
     surname: string
     isPassportVerified: boolean
     rating: number
-    sellerStatus: string
     photo: string
-    user_is_role_pro: boolean
+    isRolePro: boolean
+    sellerStatus?: string
   }
 
   interface MessageSocketResponse {
@@ -57,5 +57,21 @@ declare namespace Chat {
     message_objects_ids: number[]
     owner_id: number
     owner_photo: string
+    roomId: number
+  }
+
+  interface Companions {
+    roomid: number
+    lead: Leads
+    companions: {
+      seller: UserProfile
+      buyer: UserProfile
+      last_message: {
+        message: string|null
+        created_at: string|null
+      }
+    }
+    seller_state: string
+    myCompanion: UserProfile
   }
 }
