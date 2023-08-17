@@ -15,7 +15,7 @@ interface Props {
   message?: string
   icon?: JSX.Element
   selected: (option: Forms.DropDownOption) => void
-  reset: boolean
+  reset?: boolean
 }
 
 const DropdownInput: FC<Props> = ({
