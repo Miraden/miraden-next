@@ -1,55 +1,58 @@
-import { Button } from "@/components/ui";
-import { PaymentButton } from "@/components/ui/PaymentButton";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button } from '@/components/ui'
+import { PaymentButton } from '@/components/ui/PaymentButton'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const paymentOptions = [
   {
-    buttonTitle: "Открыть отклик для всех",
+    buttonTitle: 'Открыть отклик для всех',
     buttonText:
-      "На заявку смогут откликнуться все пользователи, а не только PRO",
+      'На заявку смогут откликнуться все пользователи, а не только PRO',
     price: 10,
   },
   {
-    buttonTitle: "Закрепить вверху на 24 часа",
+    buttonTitle: 'Закрепить вверху на 24 часа',
     buttonText:
-      "Заявка будет закреплена вверху ленты. После чего сместится вниз по мере поступления новых",
+      'Заявка будет закреплена вверху ленты. После чего сместится вниз по мере поступления новых',
     price: 15,
   },
   {
-    buttonTitle: "Поднимать каждые 3 дня",
+    buttonTitle: 'Поднимать каждые 3 дня',
     buttonText:
-      "Заявка будет автоматически подниматься в самый верх ленты каждые 3 дня",
+      'Заявка будет автоматически подниматься в самый верх ленты каждые 3 дня',
     price: 20,
   },
-];
+]
 
 const SingleApplicationSideBar = ({ className }: Props) => {
   const [activeButtons, setActiveButtons] = useState(
     paymentOptions.map((option, index) => index === 0)
-  );
+  )
 
   const handleActive = useCallback(
     (index: number) => {
-      const newActiveButtons = [...activeButtons];
-      newActiveButtons[index] = !newActiveButtons[index];
-      setActiveButtons(newActiveButtons);
+      const newActiveButtons = [...activeButtons]
+      newActiveButtons[index] = !newActiveButtons[index]
+      setActiveButtons(newActiveButtons)
     },
     [activeButtons]
-  );
+  )
 
   const selectedOptions = paymentOptions.filter(
     (option, index) => activeButtons[index]
-  );
+  )
 
-  const totalTax = selectedOptions.reduce((acc, option) => acc + option.price, 0);
+  const totalTax = selectedOptions.reduce(
+    (acc, option) => acc + option.price,
+    0
+  )
   const selectedTaxValues = paymentOptions
     .filter((option, index) => activeButtons[index])
-    .map((option) => option.price);
+    .map(option => option.price)
 
   return (
     <StyledSingleApplicationSideBar className={className}>
@@ -80,8 +83,8 @@ const SingleApplicationSideBar = ({ className }: Props) => {
         <Button>Увеличить отклики {totalTax} €</Button>
       </div>
     </StyledSingleApplicationSideBar>
-  );
-};
+  )
+}
 
 const StyledSingleApplicationSideBar = styled.div`
   background: #fff;
@@ -140,6 +143,6 @@ const StyledSingleApplicationSideBar = styled.div`
       width: 100%;
     }
   }
-`;
+`
 
-export { SingleApplicationSideBar };
+export { SingleApplicationSideBar }

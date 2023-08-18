@@ -1,13 +1,13 @@
-import { Button, MessageInput, Sticker } from "@/components/ui";
-import { VerifiedIcon } from "@/icons";
-import { StarIconFilled } from "@/icons/StarIconFilled";
-import Image from "next/image";
-import styled from "styled-components";
+import { Button, MessageInput, Sticker } from '@/components/ui'
+import { VerifiedIcon } from '@/icons'
+import { StarIconFilled } from '@/icons/StarIconFilled'
+import Image from 'next/image'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
-  onTouchStart?: any;
-  onTouchEnd?: any;
+  className?: string
+  onTouchStart?: any
+  onTouchEnd?: any
 }
 
 const ChatContainerMobile = ({
@@ -73,7 +73,7 @@ const ChatContainerMobile = ({
               <div className="ChatContainerMobile__incomingMessage Font_16_150">
                 <p>
                   Добрый день. Меня зовут Светлана, я агент по недвижимости
-                  из компании Real Home. Предлагаю на выбор несколько вариантов{" "}
+                  из компании Real Home. Предлагаю на выбор несколько вариантов{' '}
                 </p>
               </div>
             </div>
@@ -104,8 +104,8 @@ const ChatContainerMobile = ({
         <MessageInput className="ChatContainerMobile__messageInput" />
       </div>
     </StyledChatContainerMobile>
-  );
-};
+  )
+}
 
 const StyledChatContainerMobile = styled.div`
   width: 100%;
@@ -272,6 +272,6 @@ const StyledChatContainerMobile = styled.div`
     margin-top: 20px;
     max-width: 400px;
   }
-`;
+`
 
-export { ChatContainerMobile };
+export { ChatContainerMobile }

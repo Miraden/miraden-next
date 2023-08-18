@@ -1,84 +1,84 @@
-import { Button, RequestButton } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import { SetStateAction, useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button, RequestButton } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import { SetStateAction, useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const CreateStep6Land = ({ className }: Props) => {
-  const [selected, setSelected] = useState(false);
-  const [showMore, setShowMore] = useState(false);
-  const [startSquare, setStartSquare] = useState<number | null>(null);
-  const [selectedRange, setSelectedRange] = useState<number[]>([]);
-  const [maxVisibleSquare, setMaxVisibleSquare] = useState(21);
+  const [selected, setSelected] = useState(false)
+  const [showMore, setShowMore] = useState(false)
+  const [startSquare, setStartSquare] = useState<number | null>(null)
+  const [selectedRange, setSelectedRange] = useState<number[]>([])
+  const [maxVisibleSquare, setMaxVisibleSquare] = useState(21)
 
   const handleSelect = useCallback(() => {
-    setSelected(!selected);
-    setSelectedRange([]);
-  }, [selected]);
+    setSelected(!selected)
+    setSelectedRange([])
+  }, [selected])
 
   const handleSquareClick = (squareIndex: number) => {
-    setSelected(false);
+    setSelected(false)
 
     if (startSquare === null) {
       // start new range
-      setStartSquare(squareIndex);
-      setSelectedRange([squareIndex]);
+      setStartSquare(squareIndex)
+      setSelectedRange([squareIndex])
     } else {
       // continue existing range
-      const endSquare = squareIndex;
-      const rangeStart = Math.min(startSquare, endSquare);
-      const rangeEnd = Math.max(startSquare, endSquare);
-      const selectedRange: SetStateAction<number[]> = [];
+      const endSquare = squareIndex
+      const rangeStart = Math.min(startSquare, endSquare)
+      const rangeEnd = Math.max(startSquare, endSquare)
+      const selectedRange: SetStateAction<number[]> = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        selectedRange.push(i);
+        selectedRange.push(i)
       }
 
-      if (selectedRange.every((m) => selectedRange.includes(m))) {
+      if (selectedRange.every(m => selectedRange.includes(m))) {
         // update existing range
-        setSelectedRange(selectedRange);
+        setSelectedRange(selectedRange)
       } else {
         // create new range
-        setSelectedRange(selectedRange);
-        setStartSquare(null);
+        setSelectedRange(selectedRange)
+        setStartSquare(null)
       }
     }
 
     if (startSquare !== null && squareIndex !== startSquare) {
-      const rangeStart = Math.min(startSquare, squareIndex);
-      const rangeEnd = Math.max(startSquare, squareIndex);
-      const newRange = [];
+      const rangeStart = Math.min(startSquare, squareIndex)
+      const rangeEnd = Math.max(startSquare, squareIndex)
+      const newRange = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        newRange.push(i);
+        newRange.push(i)
       }
 
       if (
         selectedRange.length > 0 &&
-        newRange.every((m) => selectedRange.includes(m))
+        newRange.every(m => selectedRange.includes(m))
       ) {
         // update existing range
-        setSelectedRange(newRange);
+        setSelectedRange(newRange)
       } else {
         // add new range to existing range
-        setSelectedRange([...selectedRange, ...newRange]);
+        setSelectedRange([...selectedRange, ...newRange])
       }
     }
-  };
-
-  const handleShowMore = useCallback(() => {
-    setShowMore(true);
-    setMaxVisibleSquare(64);
-  }, []);
-
-  const squares = [];
-  for (let square = 10; square <= 800; square += 10) {
-    squares.push(square);
   }
 
-  const minIndex = Math.min(...selectedRange);
-  const maxIndex = Math.max(...selectedRange);
+  const handleShowMore = useCallback(() => {
+    setShowMore(true)
+    setMaxVisibleSquare(64)
+  }, [])
+
+  const squares = []
+  for (let square = 10; square <= 800; square += 10) {
+    squares.push(square)
+  }
+
+  const minIndex = Math.min(...selectedRange)
+  const maxIndex = Math.max(...selectedRange)
 
   return (
     <StyledRegStep1 className={className}>
@@ -97,14 +97,14 @@ const CreateStep6Land = ({ className }: Props) => {
                 Неважно
               </RequestButton>
               {[...Array(64)].map((_, index) => {
-                const label = index + "0 м²";
+                const label = index + '0 м²'
                 if (index === 0) {
-                  return label === "уже построена";
+                  return label === 'уже построена'
                 }
                 if (index >= maxVisibleSquare) {
-                  return null;
+                  return null
                 }
-                const isRanged = index > minIndex && index < maxIndex;
+                const isRanged = index > minIndex && index < maxIndex
                 return (
                   <RequestButton
                     key={`${index}`}
@@ -114,7 +114,7 @@ const CreateStep6Land = ({ className }: Props) => {
                   >
                     {label}
                   </RequestButton>
-                );
+                )
               })}
               {maxVisibleSquare < 64 && (
                 <RequestButton
@@ -171,8 +171,8 @@ const CreateStep6Land = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -224,7 +224,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 45.45%;
       height: 6px;
       background-color: #4e6af3;
@@ -346,6 +346,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { CreateStep6Land };
+export { CreateStep6Land }

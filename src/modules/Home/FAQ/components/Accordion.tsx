@@ -1,17 +1,17 @@
-import { ArrowAccordionIcon } from "@/icons";
-import cn from "classnames";
-import { FC, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import { useControlled } from "../../../../hooks/useControlled";
+import { ArrowAccordionIcon } from '@/icons'
+import cn from 'classnames'
+import { FC, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { useControlled } from '../../../../hooks/useControlled'
 
 type Props = {
-  title?: string;
-  defaultExpanded?: boolean;
-  expanded?: boolean;
-  className?: string;
-  onChange?: (expanded: boolean) => void;
-  children: any;
-};
+  title?: string
+  defaultExpanded?: boolean
+  expanded?: boolean
+  className?: string
+  onChange?: (expanded: boolean) => void
+  children: any
+}
 
 const Accordion: FC<Props> = ({
   title,
@@ -21,36 +21,36 @@ const Accordion: FC<Props> = ({
   onChange,
   children,
 }) => {
-  const [contentHeight, setContentHeight] = useState(0);
+  const [contentHeight, setContentHeight] = useState(0)
 
   const [expanded, setExpandedState] = useControlled({
     controlled: expandedProp,
     defaultValue: defaultExpanded,
-  });
+  })
 
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null)
 
   const handleToggle = () => {
-    setExpandedState(!expanded);
+    setExpandedState(!expanded)
 
     if (onChange) {
-      onChange(!expanded);
+      onChange(!expanded)
     }
-  };
+  }
 
   useEffect(() => {
     if (expanded && contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
+      setContentHeight(contentRef.current.scrollHeight)
     } else {
-      setContentHeight(0);
+      setContentHeight(0)
     }
-  }, [expanded]);
+  }, [expanded])
 
   return (
     <StyledAccordion contentWrapperHeight={contentHeight} className={className}>
       <div className="Accordion__title" onClick={handleToggle}>
         <h4
-          className={cn("Font_22_120_600 sm:Font_18_120_600", {
+          className={cn('Font_22_120_600 sm:Font_18_120_600', {
             Title_expanded: expanded,
           })}
         >
@@ -60,7 +60,7 @@ const Accordion: FC<Props> = ({
           <ArrowAccordionIcon
             height={20}
             width={20}
-            className={cn("Accordion__icon", {
+            className={cn('Accordion__icon', {
               Accordion__icon_rotated: expanded,
             })}
           />
@@ -74,8 +74,8 @@ const Accordion: FC<Props> = ({
         </div>
       </div>
     </StyledAccordion>
-  );
-};
+  )
+}
 
 const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
   background-color: #ffffff;
@@ -108,7 +108,7 @@ const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
   }
 
   .Accordion__contentWrapper {
-    height: ${(props) => props.contentWrapperHeight}px;
+    height: ${props => props.contentWrapperHeight}px;
 
     transition: height 0.175s ease;
 
@@ -183,6 +183,6 @@ const StyledAccordion = styled.div<{ contentWrapperHeight: number }>`
       }
     }
   }
-`;
+`
 
-export { Accordion };
+export { Accordion }

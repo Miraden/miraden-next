@@ -1,5 +1,5 @@
-import { Button, Tag } from "@/components/ui";
-import { PricingSelect } from "@/components/ui/PricingDropdown/PricingSelect";
+import { Button, Tag } from '@/components/ui'
+import { PricingSelect } from '@/components/ui/PricingDropdown/PricingSelect'
 import {
   BathsIcon,
   BuildYearIcon,
@@ -8,42 +8,42 @@ import {
   SleepsIcon,
   SquareIcon,
   StarIcon,
-} from "@/icons";
-import { RoomsIcon } from "@/icons/RoomsIcon";
-import { UnpublishedIcon } from "@/icons/UnpublishedIcon";
-import Image from "next/image";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+} from '@/icons'
+import { RoomsIcon } from '@/icons/RoomsIcon'
+import { UnpublishedIcon } from '@/icons/UnpublishedIcon'
+import Image from 'next/image'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface ObjectCardProps {
-  className?: string;
-  title?: string;
-  location?: string;
-  id?: string;
-  cashBack?: number;
-  yieldCount?: number;
-  square?: string;
-  rooms?: number;
-  baths?: number;
-  sleeps?: number;
-  price?: string;
-  status?: string;
-  name?: string;
-  image?: any;
-  isBooked?: boolean;
-  isUnpublished?: boolean;
-  year?: string;
-  image1?: any;
-  image2?: any;
-  image3?: any;
-  agencyName?: string;
-  firstInstallment?: string;
-  firstInstallmentPercent?: string;
-  yieldCountPercent?: number;
-  singleCost?: string;
+  className?: string
+  title?: string
+  location?: string
+  id?: string
+  cashBack?: number
+  yieldCount?: number
+  square?: string
+  rooms?: number
+  baths?: number
+  sleeps?: number
+  price?: string
+  status?: string
+  name?: string
+  image?: any
+  isBooked?: boolean
+  isUnpublished?: boolean
+  year?: string
+  image1?: any
+  image2?: any
+  image3?: any
+  agencyName?: string
+  firstInstallment?: string
+  firstInstallmentPercent?: string
+  yieldCountPercent?: number
+  singleCost?: string
 }
 
-const currencyOptions = ["€", "$", "£", "₽"];
+const currencyOptions = ['€', '$', '£', '₽']
 const ObjectCard = ({
   className,
   title,
@@ -70,11 +70,11 @@ const ObjectCard = ({
   firstInstallmentPercent,
   singleCost,
 }: ObjectCardProps) => {
-  const [openDropdown, setOpenDropdown] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false)
 
   const handleOpenDropdown = useCallback(() => {
-    setOpenDropdown(!openDropdown);
-  }, [openDropdown]);
+    setOpenDropdown(!openDropdown)
+  }, [openDropdown])
 
   return (
     <StyledObjectCard className={className}>
@@ -211,8 +211,8 @@ const ObjectCard = ({
         </div>
       </div>
     </StyledObjectCard>
-  );
-};
+  )
+}
 
 const StyledObjectCard = styled.div`
   background: #fff;
@@ -464,19 +464,19 @@ const StyledObjectCard = styled.div`
       display: flex;
     }
   }
-`;
+`
 
 const ObjectDropdown = ({ agencyName }: ObjectCardProps) => {
   return (
     <StyledObjectDropdown>
       <div>
         <a href="" className="Font_12_16">
-          {agencyName ? agencyName : "Another link?"}
+          {agencyName ? agencyName : 'Another link?'}
         </a>
       </div>
     </StyledObjectDropdown>
-  );
-};
+  )
+}
 
 const StyledObjectDropdown = styled.div`
   position: absolute;
@@ -492,6 +492,6 @@ const StyledObjectDropdown = styled.div`
   a:hover {
     color: #4e6af3;
   }
-`;
+`
 
-export { ObjectCard };
+export { ObjectCard }

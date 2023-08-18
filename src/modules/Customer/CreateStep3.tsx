@@ -1,46 +1,46 @@
-import { Button, RequestButton } from "@/components/ui";
-import { Radio } from "@/components/ui/Radio";
-import { ArrowIcon } from "@/icons";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button, RequestButton } from '@/components/ui'
+import { Radio } from '@/components/ui/Radio'
+import { ArrowIcon } from '@/icons'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 type Option =
-  | "flat"
-  | "house"
-  | "penthouse"
-  | "townhouse"
-  | "duplex"
-  | "land"
-  | "hotel"
-  | "office"
-  | "selling"
-  | "warehouse"
-  | "catering"
-  | "production"
-  | "landing"
-  | "free";
+  | 'flat'
+  | 'house'
+  | 'penthouse'
+  | 'townhouse'
+  | 'duplex'
+  | 'land'
+  | 'hotel'
+  | 'office'
+  | 'selling'
+  | 'warehouse'
+  | 'catering'
+  | 'production'
+  | 'landing'
+  | 'free'
 
 const CreateStep3 = ({ className }: Props) => {
-  const [isResidentialChecked, setIsResidentialChecked] = useState(true);
-  const [isCommercialChecked, setIsCommercialChecked] = useState(false);
-  const [selected, setSelected] = useState<Option | null>(null);
+  const [isResidentialChecked, setIsResidentialChecked] = useState(true)
+  const [isCommercialChecked, setIsCommercialChecked] = useState(false)
+  const [selected, setSelected] = useState<Option | null>(null)
   const handleResidentialCheck = useCallback(() => {
-    setIsResidentialChecked(true);
-    setIsCommercialChecked(false);
-  }, []);
+    setIsResidentialChecked(true)
+    setIsCommercialChecked(false)
+  }, [])
 
   const handleCommercialCheck = useCallback(() => {
-    setIsResidentialChecked(false);
-    setIsCommercialChecked(true);
-  }, []);
+    setIsResidentialChecked(false)
+    setIsCommercialChecked(true)
+  }, [])
 
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+    setSelected(option)
+  }, [])
 
   return (
     <StyledRegStep1 className={className}>
@@ -68,38 +68,38 @@ const CreateStep3 = ({ className }: Props) => {
           {isResidentialChecked ? (
             <>
               <RequestButton
-                onClick={() => handleSelect("flat")}
-                active={selected === "flat"}
+                onClick={() => handleSelect('flat')}
+                active={selected === 'flat'}
               >
                 Квартира / апартаменты
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("house")}
-                active={selected === "house"}
+                onClick={() => handleSelect('house')}
+                active={selected === 'house'}
               >
                 Дом / вилла
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("penthouse")}
-                active={selected === "penthouse"}
+                onClick={() => handleSelect('penthouse')}
+                active={selected === 'penthouse'}
               >
                 Пентхаус
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("townhouse")}
-                active={selected === "townhouse"}
+                onClick={() => handleSelect('townhouse')}
+                active={selected === 'townhouse'}
               >
                 Таунхаус
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("duplex")}
-                active={selected === "duplex"}
+                onClick={() => handleSelect('duplex')}
+                active={selected === 'duplex'}
               >
                 Дуплекс
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("land")}
-                active={selected === "land"}
+                onClick={() => handleSelect('land')}
+                active={selected === 'land'}
               >
                 Участок земли
               </RequestButton>
@@ -107,50 +107,50 @@ const CreateStep3 = ({ className }: Props) => {
           ) : (
             <>
               <RequestButton
-                onClick={() => handleSelect("hotel")}
-                active={selected === "hotel"}
+                onClick={() => handleSelect('hotel')}
+                active={selected === 'hotel'}
               >
                 Отель
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("office")}
-                active={selected === "office"}
+                onClick={() => handleSelect('office')}
+                active={selected === 'office'}
               >
                 Офис
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("selling")}
-                active={selected === "selling"}
+                onClick={() => handleSelect('selling')}
+                active={selected === 'selling'}
               >
                 Торговля
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("warehouse")}
-                active={selected === "warehouse"}
+                onClick={() => handleSelect('warehouse')}
+                active={selected === 'warehouse'}
               >
                 Склад
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("catering")}
-                active={selected === "catering"}
+                onClick={() => handleSelect('catering')}
+                active={selected === 'catering'}
               >
                 Общепит
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("production")}
-                active={selected === "production"}
+                onClick={() => handleSelect('production')}
+                active={selected === 'production'}
               >
                 Производство
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("landing")}
-                active={selected === "landing"}
+                onClick={() => handleSelect('landing')}
+                active={selected === 'landing'}
               >
                 Участок земли
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelect("free")}
-                active={selected === "free"}
+                onClick={() => handleSelect('free')}
+                active={selected === 'free'}
               >
                 Свободное назначение
               </RequestButton>
@@ -190,37 +190,25 @@ const CreateStep3 = ({ className }: Props) => {
                 <p className="Color_blue_primary Font_16_140">317</p>
               </div>
               {isCommercialChecked ? (
-                <Button
-                  disabled={!selected}
-                  href="/lead/add/4?commercial"
-                >
+                <Button disabled={!selected} href="/lead/add/4?commercial">
                   Далее
                 </Button>
               ) : (
                 <>
-                  {selected === "land" ? (
-                    <Button
-                      disabled={!selected}
-                      href="/lead/add/6&land"
-                    >
+                  {selected === 'land' ? (
+                    <Button disabled={!selected} href="/lead/add/6&land">
                       Далее
                     </Button>
                   ) : (
                     <>
-                      {selected === "duplex" ||
-                      selected === "townhouse" ||
-                      selected === "house" ? (
-                        <Button
-                          disabled={!selected}
-                          href="/lead/add/4&full"
-                        >
+                      {selected === 'duplex' ||
+                      selected === 'townhouse' ||
+                      selected === 'house' ? (
+                        <Button disabled={!selected} href="/lead/add/4&full">
                           Далее
                         </Button>
                       ) : (
-                        <Button
-                          disabled={!selected}
-                          href="/lead/add/4"
-                        >
+                        <Button disabled={!selected} href="/lead/add/4">
                           Далее
                         </Button>
                       )}
@@ -233,8 +221,8 @@ const CreateStep3 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -288,7 +276,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 27%;
       height: 6px;
       background-color: #4e6af3;
@@ -434,6 +422,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { CreateStep3 };
+export { CreateStep3 }

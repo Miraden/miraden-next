@@ -1,5 +1,5 @@
-import { Button, Tag } from "@/components/ui";
-import { PricingSelect } from "@/components/ui/PricingDropdown/PricingSelect";
+import { Button, Tag } from '@/components/ui'
+import { PricingSelect } from '@/components/ui/PricingDropdown/PricingSelect'
 import {
   BathsIcon,
   BuildYearIcon,
@@ -9,45 +9,45 @@ import {
   PointIconFooter,
   SleepsIcon,
   SquareIcon,
-} from "@/icons";
-import { PhoneIcon } from "@/icons/PhoneIcon";
-import { RoomsIcon } from "@/icons/RoomsIcon";
-import { Star16Icon } from "@/icons/Star16Icon";
-import { UnpublishedIcon } from "@/icons/UnpublishedIcon";
-import Image from "next/image";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+} from '@/icons'
+import { PhoneIcon } from '@/icons/PhoneIcon'
+import { RoomsIcon } from '@/icons/RoomsIcon'
+import { Star16Icon } from '@/icons/Star16Icon'
+import { UnpublishedIcon } from '@/icons/UnpublishedIcon'
+import Image from 'next/image'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface ObjectCardProps {
-  className?: string;
-  title?: string;
-  location?: string;
-  id?: string;
-  cashBack?: number;
-  yieldCount?: number;
-  square?: string;
-  rooms?: number;
-  baths?: number;
-  sleeps?: number;
-  price?: string;
-  status?: string;
-  name?: string;
-  image?: any;
-  isBooked?: boolean;
-  isUnpublished?: boolean;
-  year?: string;
-  image1?: any;
-  image2?: any;
-  image3?: any;
-  agencyName?: string;
-  firstInstallment?: string;
-  firstInstallmentPercent?: string;
-  yieldCountPercent?: number;
-  singleCost?: string;
-  href?: string;
+  className?: string
+  title?: string
+  location?: string
+  id?: string
+  cashBack?: number
+  yieldCount?: number
+  square?: string
+  rooms?: number
+  baths?: number
+  sleeps?: number
+  price?: string
+  status?: string
+  name?: string
+  image?: any
+  isBooked?: boolean
+  isUnpublished?: boolean
+  year?: string
+  image1?: any
+  image2?: any
+  image3?: any
+  agencyName?: string
+  firstInstallment?: string
+  firstInstallmentPercent?: string
+  yieldCountPercent?: number
+  singleCost?: string
+  href?: string
 }
 
-const currencyOptions = ["€", "$", "£", "₽"];
+const currencyOptions = ['€', '$', '£', '₽']
 const ObjectCard = ({
   className,
   title,
@@ -75,28 +75,28 @@ const ObjectCard = ({
   singleCost,
   href,
 }: ObjectCardProps) => {
-  const [openDropdown, setOpenDropdown] = useState(false);
-  const [openLinks, setOpenLinks] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false)
+  const [openLinks, setOpenLinks] = useState(false)
 
   const handleOpenDropdown = useCallback(
     (event: any) => {
-      event.preventDefault();
-      setOpenDropdown(!openDropdown);
+      event.preventDefault()
+      setOpenDropdown(!openDropdown)
     },
     [openDropdown]
-  );
+  )
 
   const handleOpenLinks = useCallback(
     (event: any) => {
-      event.preventDefault();
-      setOpenLinks(!openLinks);
+      event.preventDefault()
+      setOpenLinks(!openLinks)
     },
     [openLinks]
-  );
+  )
 
   const handleClickPrice = useCallback((event: any) => {
-    event.preventDefault();
-  }, []);
+    event.preventDefault()
+  }, [])
 
   return (
     <StyledObjectCard className={className}>
@@ -231,7 +231,7 @@ const ObjectCard = ({
                       <MessagesIcon className="PhoneIcon" />
                     </Button>
                     <Button>
-                      <PhoneIcon attr={{className: "PhoneIcon"}} />
+                      <PhoneIcon attr={{ className: 'PhoneIcon' }} />
                     </Button>
                   </div>
                 ) : (
@@ -255,8 +255,8 @@ const ObjectCard = ({
         </div>
       </a>
     </StyledObjectCard>
-  );
-};
+  )
+}
 
 const StyledObjectCard = styled.div`
   .ObjectCard {
@@ -556,19 +556,19 @@ const StyledObjectCard = styled.div`
       display: flex;
     }
   }
-`;
+`
 
 const ObjectDropdown = ({ agencyName }: ObjectCardProps) => {
   return (
     <StyledObjectDropdown>
       <div>
         <a href="" className="Font_12_16">
-          {agencyName ? agencyName : "Another link?"}
+          {agencyName ? agencyName : 'Another link?'}
         </a>
       </div>
     </StyledObjectDropdown>
-  );
-};
+  )
+}
 
 const StyledObjectDropdown = styled.div`
   position: absolute;
@@ -584,6 +584,6 @@ const StyledObjectDropdown = styled.div`
   a:hover {
     color: #4e6af3;
   }
-`;
+`
 
-export { ObjectCard };
+export { ObjectCard }

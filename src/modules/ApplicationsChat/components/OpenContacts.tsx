@@ -1,12 +1,12 @@
-import { Sticker } from "@/components/ui";
-import { TelegramIcon, VerifiedIcon, WhatsappIcon } from "@/icons";
-import { FacebookFullIcon } from "@/icons/FacebookFullIcon";
-import { InstagramFullIcon } from "@/icons/InstagramFullIcon";
-import { StarIconFilled } from "@/icons/StarIconFilled";
-import { ViberIcon } from "@/icons/ViberIcon";
-import Image from "next/image";
-import styled from "styled-components";
-import { OpenContactsAccordion } from "./OpenContactsAccordion";
+import { Sticker } from '@/components/ui'
+import { TelegramIcon, VerifiedIcon, WhatsappIcon } from '@/icons'
+import { FacebookFullIcon } from '@/icons/FacebookFullIcon'
+import { InstagramFullIcon } from '@/icons/InstagramFullIcon'
+import { StarIconFilled } from '@/icons/StarIconFilled'
+import { ViberIcon } from '@/icons/ViberIcon'
+import Image from 'next/image'
+import styled from 'styled-components'
+import { OpenContactsAccordion } from './OpenContactsAccordion'
 
 const OpenContacts = () => {
   return (
@@ -76,7 +76,7 @@ const OpenContacts = () => {
             <p>Telegram</p>
           </div>
           <div className="Contacts__locationInfo">
-            <TelegramIcon attr={{width: 20, height: 20}} />
+            <TelegramIcon attr={{ width: 20, height: 20 }} />
 
             <p>@anastasia_real_estate</p>
           </div>
@@ -147,8 +147,8 @@ const OpenContacts = () => {
         </div>
       </div>
     </StyledOpenContacts>
-  );
-};
+  )
+}
 
 const StyledOpenContacts = styled.div`
   & {
@@ -278,6 +278,6 @@ const StyledOpenContacts = styled.div`
       margin-top: 4px;
     }
   }
-`;
+`
 
-export { OpenContacts };
+export { OpenContacts }

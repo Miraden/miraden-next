@@ -1,25 +1,25 @@
-import { Button, RequestButton } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button, RequestButton } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
-type Option = "buy" | "sell";
+type Option = 'buy' | 'sell'
 
 const CreateStep2 = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>(null);
+  const [selected, setSelected] = useState<Option | null>(null)
 
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-    if (option === "buy") {
-      window.location.href = "/lead/add/3"; // Переход на страницу при выборе "Хочу купить"
-    } else if (option === "sell") {
-      window.location.href = "/lead/add/5?sell"; // Переход на страницу при выборе "Хочу арендовать"
+    setSelected(option)
+    if (option === 'buy') {
+      window.location.href = '/lead/add/3' // Переход на страницу при выборе "Хочу купить"
+    } else if (option === 'sell') {
+      window.location.href = '/lead/add/5?sell' // Переход на страницу при выборе "Хочу арендовать"
     }
-  }, []);
+  }, [])
 
   return (
     <StyledRegStep1 className={className}>
@@ -34,14 +34,14 @@ const CreateStep2 = ({ className }: Props) => {
 
         <div className="Reg__options">
           <RequestButton
-            onClick={() => handleSelect("buy")}
-            active={selected === "buy"}
+            onClick={() => handleSelect('buy')}
+            active={selected === 'buy'}
           >
             Хочу купить
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("sell")}
-            active={selected === "sell"}
+            onClick={() => handleSelect('sell')}
+            active={selected === 'sell'}
           >
             Хочу арендавать
           </RequestButton>
@@ -79,7 +79,7 @@ const CreateStep2 = ({ className }: Props) => {
                 </span>
                 <p className="Color_blue_primary Font_16_140">317</p>
               </div>
-              {selected === "sell" ? (
+              {selected === 'sell' ? (
                 <Button disabled={!selected} href="/lead/add/5?sell">
                   Далее
                 </Button>
@@ -93,8 +93,8 @@ const CreateStep2 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -139,7 +139,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 18.2%;
       height: 6px;
       background-color: #4e6af3;
@@ -279,6 +279,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { CreateStep2 };
+export { CreateStep2 }

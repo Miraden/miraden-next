@@ -1,22 +1,22 @@
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { Contacts } from "./Contacts";
-import { OpenContacts } from "./OpenContacts";
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { Contacts } from './Contacts'
+import { OpenContacts } from './OpenContacts'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
-type Option = "contacts" | "requests" | "information";
+type Option = 'contacts' | 'requests' | 'information'
 
 const ContactInfo = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>("contacts");
+  const [selected, setSelected] = useState<Option | null>('contacts')
 
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+    setSelected(option)
+  }, [])
 
-  const [contactOpen, setContactOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false)
 
   return (
     <StyledContactInfo className={className}>
@@ -24,8 +24,8 @@ const ContactInfo = ({ className }: Props) => {
         {contactOpen ? <OpenContacts /> : <Contacts />}
       </div>
     </StyledContactInfo>
-  );
-};
+  )
+}
 
 const StyledContactInfo = styled.div`
   background: #fff;
@@ -80,7 +80,7 @@ const StyledContactInfo = styled.div`
     ::before {
       position: absolute;
       top: 35px;
-      content: "";
+      content: '';
       background: #4e6af3;
       width: 100%;
       height: 4px;
@@ -105,6 +105,6 @@ const StyledContactInfo = styled.div`
       margin-top: 8px;
     }
   }
-`;
+`
 
-export { ContactInfo };
+export { ContactInfo }

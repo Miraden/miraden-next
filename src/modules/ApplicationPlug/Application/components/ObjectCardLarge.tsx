@@ -1,4 +1,4 @@
-import { Button, Sticker, Tag } from "@/components/ui";
+import { Button, Sticker, Tag } from '@/components/ui'
 import {
   BathsIcon,
   BuildYearIcon,
@@ -8,54 +8,54 @@ import {
   PointIconFooter,
   SleepsIcon,
   SquareIcon,
-} from "@/icons";
-import { EyeIcon } from "@/icons/EyeIcon";
-import { MessageIcon } from "@/icons/MessageIcon";
-import { RoomsIcon } from "@/icons/RoomsIcon";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+} from '@/icons'
+import { EyeIcon } from '@/icons/EyeIcon'
+import { MessageIcon } from '@/icons/MessageIcon'
+import { RoomsIcon } from '@/icons/RoomsIcon'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface ObjectCardLargeProps {
-  className?: string;
-  title?: string;
-  location?: string;
-  id?: string;
-  cashBack?: number;
-  yieldCount?: number;
-  square?: string;
-  rooms?: number;
-  baths?: number;
-  sleeps?: number;
-  price?: string;
-  status?: string;
-  name?: string;
-  image?: any;
-  isBooked?: boolean;
-  isUnpublished?: boolean;
-  year?: string;
-  image1?: any;
-  image2?: any;
-  image3?: any;
-  agencyName?: string;
-  firstInstallment?: string;
-  firstInstallmentPercent?: string;
-  yieldCountPercent?: number;
-  singleCost?: string;
-  purpose?: string;
-  type?: string;
-  condition?: string;
-  deal?: string;
-  isPublished?: boolean;
-  isTrue?: boolean;
-  publishedAt?: string;
-  requestsCount?: any;
-  watched?: number;
-  list?: number;
-  messagesCount?: any;
-  href?: string;
+  className?: string
+  title?: string
+  location?: string
+  id?: string
+  cashBack?: number
+  yieldCount?: number
+  square?: string
+  rooms?: number
+  baths?: number
+  sleeps?: number
+  price?: string
+  status?: string
+  name?: string
+  image?: any
+  isBooked?: boolean
+  isUnpublished?: boolean
+  year?: string
+  image1?: any
+  image2?: any
+  image3?: any
+  agencyName?: string
+  firstInstallment?: string
+  firstInstallmentPercent?: string
+  yieldCountPercent?: number
+  singleCost?: string
+  purpose?: string
+  type?: string
+  condition?: string
+  deal?: string
+  isPublished?: boolean
+  isTrue?: boolean
+  publishedAt?: string
+  requestsCount?: any
+  watched?: number
+  list?: number
+  messagesCount?: any
+  href?: string
 }
 
-const currencyOptions = ["€", "$", "£", "₽"];
+const currencyOptions = ['€', '$', '£', '₽']
 const ObjectCardLarge = ({
   className,
   title,
@@ -87,17 +87,17 @@ const ObjectCardLarge = ({
   messagesCount,
   href,
 }: ObjectCardLargeProps) => {
-  const [openDropdown, setOpenDropdown] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false)
 
   const handleOpenDropdown = useCallback(
     (event: any) => {
-      event.preventDefault();
-      setOpenDropdown(!openDropdown);
+      event.preventDefault()
+      setOpenDropdown(!openDropdown)
     },
     [openDropdown]
-  );
+  )
 
-  const mobilePublished = publishedAt?.split("Создана");
+  const mobilePublished = publishedAt?.split('Создана')
 
   return (
     <StyledObjectCardLarge className={className} href={href}>
@@ -173,7 +173,7 @@ const ObjectCardLarge = ({
               </div>
               <div className="ObjectCardLarge__footerInfo ">
                 <div>
-                  <ListIcon attr={{className: "ListItemIcon"}} />{" "}
+                  <ListIcon attr={{ className: 'ListItemIcon' }} />{' '}
                   <p className="Font_16_140 Color_blue_primary">{list}</p>
                 </div>
                 <div>
@@ -182,7 +182,7 @@ const ObjectCardLarge = ({
                 </div>
                 {messagesCount > 1 ? (
                   <div>
-                    <MessageIcon className="MessageIcon" />{" "}
+                    <MessageIcon className="MessageIcon" />{' '}
                     <p className="Font_16_140 Color_blue_primary">
                       {messagesCount}
                     </p>
@@ -214,8 +214,8 @@ const ObjectCardLarge = ({
         </div>
       </div>
     </StyledObjectCardLarge>
-  );
-};
+  )
+}
 
 const StyledObjectCardLarge = styled.a`
   .ObjectCardLarge__container {
@@ -568,19 +568,19 @@ const StyledObjectCardLarge = styled.a`
       }
     }
   }
-`;
+`
 
 const ObjectDropdown = ({ agencyName }: ObjectCardLargeProps) => {
   return (
     <StyledObjectDropdown>
       <div>
         <a href="" className="Font_12_16">
-          {agencyName ? agencyName : "Another link?"}
+          {agencyName ? agencyName : 'Another link?'}
         </a>
       </div>
     </StyledObjectDropdown>
-  );
-};
+  )
+}
 
 const StyledObjectDropdown = styled.div`
   position: absolute;
@@ -598,6 +598,6 @@ const StyledObjectDropdown = styled.div`
   @media (max-width: 768px) {
     top: 130px;
   }
-`;
+`
 
-export { ObjectCardLarge };
+export { ObjectCardLarge }

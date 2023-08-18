@@ -9,7 +9,7 @@ import { Preloader } from '@/components/ui/Preloader'
 import { theme } from '../../../../styles/tokens'
 import LangManager from '@/infrastructure/Intl/LangManager'
 import useUpdater from '@/hooks/useUpdater'
-import {ChatRoom} from "@/modules/Chats/components/ChatRoom";
+import { ChatRoom } from '@/modules/Chats/components/ChatRoom'
 
 interface Props {
   className?: string
@@ -52,7 +52,7 @@ const ChatsList = (props: Props): JSX.Element => {
   )
 
   return (
-    <div className={"ChatSidebar"}>
+    <div className={'ChatSidebar'}>
       <ChatRoomsTabs onTab={onTab} />
       <ChatRoomsListLayout className={cn({ isBusy: roomsListBusy })}>
         {roomsListBusy && <Preloader />}
@@ -64,7 +64,8 @@ const ChatsList = (props: Props): JSX.Element => {
                 className={'ChatSelector'}
                 placeholder={'Все заявки'}
                 selected={(e: Forms.DropDownOption) => {
-                    if(props.onLeadSelected) props.onLeadSelected(Number(e.value))
+                  if (props.onLeadSelected)
+                    props.onLeadSelected(Number(e.value))
                 }}
                 options={leadsTransformToDropDownOptions(props.leadsList)}
               />
@@ -94,7 +95,9 @@ const ChatsList = (props: Props): JSX.Element => {
   )
 }
 
-function leadsTransformToDropDownOptions(list: Chat.Leads[]): Forms.DropDownOption[] {
+function leadsTransformToDropDownOptions(
+  list: Chat.Leads[]
+): Forms.DropDownOption[] {
   let result: Forms.DropDownOption[] = []
   list.map(item => {
     result.push({ label: item.title, value: item.id })

@@ -1,32 +1,32 @@
-import { Button, Link } from "@/components/ui";
+import { Button, Link } from '@/components/ui'
 import {
   MiradenLogoFooter,
   MiradenLogoFooterHover,
   PointIconFooter,
   TelegramPureIcon,
-} from "@/icons";
-import { FacebookIconFooter } from "@/icons/FacebookIconFooter";
-import { InstagramIconFooter } from "@/icons/InstagramIconFooter";
-import styled from "styled-components";
-import {theme} from "../../../../styles/tokens";
+} from '@/icons'
+import { FacebookIconFooter } from '@/icons/FacebookIconFooter'
+import { InstagramIconFooter } from '@/icons/InstagramIconFooter'
+import styled from 'styled-components'
+import { theme } from '../../../../styles/tokens'
 
 interface FooterProps {
-  className?: string;
+  className?: string
 }
 
 const linksLeft = [
-  { label: "Лента заявок", href: "/leads" },
-  { label: "О нас", href: '#about' },
-  { label: "Тарифы", href: '/tariffs' },
-  { label: "FAQ", href: 'https://faq.miraden.com/' },
-];
+  { label: 'Лента заявок', href: '/leads' },
+  { label: 'О нас', href: '#about' },
+  { label: 'Тарифы', href: '/tariffs' },
+  { label: 'FAQ', href: 'https://faq.miraden.com/' },
+]
 
 const linksRight = [
-  { label: "Создать заявку", href: '/lead/add' },
-  { label: "Поддержка", href: 'https://t.me/miraden_support' },
-  { label: "Регистрация", href: '/user/register' },
-  { label: "Вход", href: '/user/login' },
-];
+  { label: 'Создать заявку', href: '/lead/add' },
+  { label: 'Поддержка', href: 'https://t.me/miraden_support' },
+  { label: 'Регистрация', href: '/user/register' },
+  { label: 'Вход', href: '/user/login' },
+]
 
 const Year: number = new Date().getFullYear()
 
@@ -45,10 +45,16 @@ const Footer = ({ className }: FooterProps) => {
                 Miraden — биржа заявок в сфере зарубежной недвижимости
               </p>
               <div className="Footer__socialLinks">
-                <a href={"https://www.facebook.com/miradencom"} target={"_blank"}>
+                <a
+                  href={'https://www.facebook.com/miradencom'}
+                  target={'_blank'}
+                >
                   <FacebookIconFooter />
                 </a>
-                <a href={"https://www.instagram.com/miradencom/"} target={"_blank"}>
+                <a
+                  href={'https://www.instagram.com/miradencom/'}
+                  target={'_blank'}
+                >
                   <InstagramIconFooter />
                 </a>
               </div>
@@ -64,10 +70,16 @@ const Footer = ({ className }: FooterProps) => {
                 Miraden — биржа заявок в сфере зарубежной недвижимости
               </p>
               <div className="Footer__socialLinks">
-                <a href={"https://www.facebook.com/miradencom"} target={"_blank"}>
+                <a
+                  href={'https://www.facebook.com/miradencom'}
+                  target={'_blank'}
+                >
                   <FacebookIconFooter />
                 </a>
-                <a href={"https://www.instagram.com/miradencom/"} target={"_blank"}>
+                <a
+                  href={'https://www.instagram.com/miradencom/'}
+                  target={'_blank'}
+                >
                   <InstagramIconFooter />
                 </a>
               </div>
@@ -96,11 +108,14 @@ const Footer = ({ className }: FooterProps) => {
               <Button
                 leftIcon={<TelegramPureIcon />}
                 className="Footer__telegramLink"
-                href={"https://t.me/miradencom"}
+                href={'https://t.me/miradencom'}
               >
                 Telegram
               </Button>
-              <Link href="mailto: info@miraden.com" className="Font_16_20 lg:Font_14_140">
+              <Link
+                href="mailto: info@miraden.com"
+                className="Font_16_20 lg:Font_14_140"
+              >
                 info@miraden.com
               </Link>
             </div>
@@ -120,10 +135,10 @@ const Footer = ({ className }: FooterProps) => {
             Telegram
           </Button>
           <div className="Footer__socialLinksMobile">
-            <a href={"https://www.facebook.com/miradencom"} target={"_blank"}>
+            <a href={'https://www.facebook.com/miradencom'} target={'_blank'}>
               <FacebookIconFooter />
             </a>
-            <a href={"https://www.instagram.com/miradencom/"} target={"_blank"}>
+            <a href={'https://www.instagram.com/miradencom/'} target={'_blank'}>
               <InstagramIconFooter />
             </a>
           </div>
@@ -140,19 +155,22 @@ const Footer = ({ className }: FooterProps) => {
               <PointIconFooter width={16} hanging={16} />
               <span>10314 Estonia. Tallinn 10314 Lelle Street 22</span>
             </p>
-            <Link href="https://faq.miraden.com/legal/privacy-policy/" className="Footer__privacyPolicy">
-              Политика конфиденциальности и обработки данных{" "}
+            <Link
+              href="https://faq.miraden.com/legal/privacy-policy/"
+              className="Footer__privacyPolicy"
+            >
+              Политика конфиденциальности и обработки данных{' '}
             </Link>
           </div>
         </div>
       </StyledFooterBottom>
     </StyledFooter>
-  );
-};
+  )
+}
 
 const StyledFooter = styled.footer`
   position: relative;
-`;
+`
 
 const StyledFooterSocialMobile = styled.div`
   display: none;
@@ -197,7 +215,7 @@ const StyledFooterSocialMobile = styled.div`
   a:hover {
     color: #4e6af3 !important;
   }
-`;
+`
 
 const StyledFooterTopMobile = styled.div`
   display: none;
@@ -240,7 +258,7 @@ const StyledFooterTopMobile = styled.div`
       display: none;
     }
   }
-`;
+`
 
 const StyledFooterTop = styled.div`
   color: #7786a5;
@@ -309,7 +327,8 @@ const StyledFooterTop = styled.div`
         text-decoration: none;
         color: ${theme.colors.main};
       }
-      &:focus-visible, &:focus {
+      &:focus-visible,
+      &:focus {
         outline: none;
       }
     }
@@ -329,7 +348,8 @@ const StyledFooterTop = styled.div`
         text-decoration: none;
         color: ${theme.colors.main};
       }
-      &:focus-visible &:focus, &:active {
+      &:focus-visible &:focus,
+      &:active {
         outline: none;
       }
     }
@@ -491,7 +511,7 @@ const StyledFooterTop = styled.div`
       display: none;
     }
   }
-`;
+`
 
 const StyledFooterBottom = styled.div`
   border-top: 1px solid #e1edfd;
@@ -577,6 +597,6 @@ const StyledFooterBottom = styled.div`
       grid-gap: 10px;
     }
   }
-`;
+`
 
-export { Footer };
+export { Footer }

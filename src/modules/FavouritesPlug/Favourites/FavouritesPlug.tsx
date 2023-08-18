@@ -1,34 +1,28 @@
-import { Button } from "@/components/ui";
-import {
-  Applications,
-  HomeIcon,
-  KebabIcon,
-  ListIcon,
-  PlusIcon,
-} from "@/icons";
-import cn from "classnames";
-import Image from "next/image";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button } from '@/components/ui'
+import { Applications, HomeIcon, KebabIcon, ListIcon, PlusIcon } from '@/icons'
+import cn from 'classnames'
+import Image from 'next/image'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 interface ApplicationProps {
-  className?: string;
+  className?: string
 }
 
-type Option = "objects" | "applications" | "users";
+type Option = 'objects' | 'applications' | 'users'
 
 const FavouritesPlug = ({ className }: ApplicationProps) => {
-  const [selected, setSelected] = useState<Option | null>("objects");
+  const [selected, setSelected] = useState<Option | null>('objects')
 
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
-  const [showFilter, setShowFilter] = useState(false);
+    setSelected(option)
+  }, [])
+  const [showFilter, setShowFilter] = useState(false)
 
   return (
     <StyledApplication
-      className={cn("Application__wrapper", { IsOpenFilter: showFilter })}
+      className={cn('Application__wrapper', { IsOpenFilter: showFilter })}
     >
-      <div className={cn("Application__wrapper", { IsOpenFilter: showFilter })}>
+      <div className={cn('Application__wrapper', { IsOpenFilter: showFilter })}>
         <div className="Application__headContainer">
           <div className="Application__head">
             <h1 className="Font_32_120 lg:Font_26_120_500">Избранное</h1>
@@ -36,31 +30,31 @@ const FavouritesPlug = ({ className }: ApplicationProps) => {
           <div className="Application__headTabsContainer">
             <div className="Application__headTabs">
               <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "objects",
+                className={cn('Application__TabButton', {
+                  Application__headTabButton: selected === 'objects',
                 })}
-                onClick={() => handleSelect("objects")}
-                active={selected === "objects"}
+                onClick={() => handleSelect('objects')}
+                active={selected === 'objects'}
                 tertiary
               >
                 Объекты
               </Button>
               <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "applications",
+                className={cn('Application__TabButton', {
+                  Application__headTabButton: selected === 'applications',
                 })}
-                onClick={() => handleSelect("applications")}
-                active={selected === "applications"}
+                onClick={() => handleSelect('applications')}
+                active={selected === 'applications'}
                 tertiary
               >
                 Заявки
               </Button>
               <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "users",
+                className={cn('Application__TabButton', {
+                  Application__headTabButton: selected === 'users',
                 })}
-                onClick={() => handleSelect("users")}
-                active={selected === "users"}
+                onClick={() => handleSelect('users')}
+                active={selected === 'users'}
                 tertiary
               >
                 Пользователи
@@ -71,7 +65,7 @@ const FavouritesPlug = ({ className }: ApplicationProps) => {
         </div>
         <div className="Applications__headTabsBar_whiteSpace" />
 
-        {selected === "objects" && (
+        {selected === 'objects' && (
           <>
             <div className="Application__body">
               <Image src="/images/apps/2.svg" alt="" width={200} height={200} />
@@ -86,7 +80,7 @@ const FavouritesPlug = ({ className }: ApplicationProps) => {
             </div>
           </>
         )}
-        {selected === "applications" && (
+        {selected === 'applications' && (
           <>
             <div className="Application__body">
               <Image src="/images/apps/6.svg" alt="" width={200} height={200} />
@@ -99,7 +93,7 @@ const FavouritesPlug = ({ className }: ApplicationProps) => {
           </>
         )}
 
-        {selected === "users" && (
+        {selected === 'users' && (
           <>
             <div className="Application__body">
               <Image src="/images/apps/7.svg" alt="" width={200} height={200} />
@@ -124,12 +118,12 @@ const FavouritesPlug = ({ className }: ApplicationProps) => {
           </Button>
           <div className="PlusIconContainer">
             <Button>
-              <PlusIcon attr={{width: 24, height: 24}} />
+              <PlusIcon attr={{ width: 24, height: 24 }} />
             </Button>
           </div>
 
           <Button tertiary className="FooterButton Font_12_16">
-            <HomeIcon attr={{width: 18, height: 18}} />
+            <HomeIcon attr={{ width: 18, height: 18 }} />
             Объекты
           </Button>
           <Button tertiary className="FooterButton Font_12_16">
@@ -139,8 +133,8 @@ const FavouritesPlug = ({ className }: ApplicationProps) => {
         </div>
       </div>
     </StyledApplication>
-  );
-};
+  )
+}
 
 const StyledApplication = styled.section`
   position: relative;
@@ -259,7 +253,7 @@ const StyledApplication = styled.section`
     ::before {
       position: absolute;
       top: 35px;
-      content: "";
+      content: '';
       background: #4e6af3;
       width: 100%;
       height: 4px;
@@ -496,6 +490,6 @@ const StyledApplication = styled.section`
       margin-top: 8px;
     }
   }
-`;
+`
 
-export { FavouritesPlug };
+export { FavouritesPlug }

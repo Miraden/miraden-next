@@ -53,7 +53,7 @@ const ChatMessages = ({
 
   return (
     <StyledChatContainer
-      className={cn(className, "ChatMessages")}
+      className={cn(className, 'ChatMessages')}
       onTouchEnd={onTouchEnd}
       onTouchStart={onTouchStart}
     >

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui";
+import { Button } from '@/components/ui'
 import {
   AboutUsIcon,
   FaqIcon,
@@ -7,25 +7,25 @@ import {
   MiradenLogo,
   MiradenLogoMobile,
   PricingHeaderIcon,
-} from "@/icons";
-import { ApplicationsListIcon } from "@/icons/ApplicationsListIcon";
-import cn from "classnames";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import styled from "styled-components";
-import { HeaderLocalization } from "./HeaderLocalization";
-import { HeaderUserMenu } from "./HeaderUserMenu";
-import { More } from "./MoreDropdown/More";
-import {useState} from "react";
+} from '@/icons'
+import { ApplicationsListIcon } from '@/icons/ApplicationsListIcon'
+import cn from 'classnames'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import styled from 'styled-components'
+import { HeaderLocalization } from './HeaderLocalization'
+import { HeaderUserMenu } from './HeaderUserMenu'
+import { More } from './MoreDropdown/More'
+import { useState } from 'react'
 
 interface Props {
-  className?: string;
-  isAuthorized?: boolean;
+  className?: string
+  isAuthorized?: boolean
 }
 
 const HeaderDesktop = ({ className, isAuthorized }: Props) => {
-  const router = useRouter();
-  const currentUrl = router.pathname;
+  const router = useRouter()
+  const currentUrl = router.pathname
   return (
     <StyledHeaderDesktop className={className}>
       <div>
@@ -49,7 +49,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
                 href="/leads/my"
                 header
                 leftIcon={<ApplicationsListIcon />}
-                className={cn("Header__navButton Header_nav-ready")}
+                className={cn('Header__navButton Header_nav-ready')}
                 active={currentUrl === '/leads/my'}
               >
                 мои заявки
@@ -70,7 +70,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
                 header
                 leftIcon={<AboutUsIcon />}
                 className="Header__navButton Header_nav-ready"
-                href={"#about"}
+                href={'#about'}
               >
                 о нас
               </Button>
@@ -85,7 +85,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
                 header
                 leftIcon={<FaqIcon />}
                 className="Header__navButton Header_nav-ready"
-                href={"https://faq.miraden.com"}
+                href={'https://faq.miraden.com'}
               >
                 FAQ
               </Button>
@@ -100,18 +100,25 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
         ) : (
           <>
             <HeaderLocalization />
-            <Button header className="Header__enterButton Header_nav-ready" href="/user/login">
+            <Button
+              header
+              className="Header__enterButton Header_nav-ready"
+              href="/user/login"
+            >
               вход
             </Button>
-            <Button className="Header__registrationButton Font_12_16_600 Header_nav-ready" href="/user/register">
+            <Button
+              className="Header__registrationButton Font_12_16_600 Header_nav-ready"
+              href="/user/register"
+            >
               регистрация
             </Button>
           </>
         )}
       </div>
     </StyledHeaderDesktop>
-  );
-};
+  )
+}
 
 const StyledHeaderDesktop = styled.div`
   display: flex;
@@ -191,6 +198,6 @@ const StyledHeaderDesktop = styled.div`
   @media (max-width: 1023px) {
     display: none;
   }
-`;
+`
 
-export { HeaderDesktop };
+export { HeaderDesktop }

@@ -1,20 +1,20 @@
-import cn from "classnames";
-import styled from "styled-components";
+import cn from 'classnames'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const stats = [
-  { text: "Заявок на покупку и аренду недвижимости", value: "3 521" },
-  { text: "Продавцов и экспертов в сфере недвижимости", value: "908" },
-  { text: "Совершённых сделок через платформу", value: "300 +" },
-  { text: "Среднее количество предложений по заявке", value: "26" },
-];
+  { text: 'Заявок на покупку и аренду недвижимости', value: '3 521' },
+  { text: 'Продавцов и экспертов в сфере недвижимости', value: '908' },
+  { text: 'Совершённых сделок через платформу', value: '300 +' },
+  { text: 'Среднее количество предложений по заявке', value: '26' },
+]
 
 const HeroStats = ({ className }: Props) => {
   return (
-    <StyledHeroStats className={cn("Container", className)}>
+    <StyledHeroStats className={cn('Container', className)}>
       <div className="HeroStats">
         <ul className="HeroStats__list">
           {stats.map((stat, index) => (
@@ -32,8 +32,8 @@ const HeroStats = ({ className }: Props) => {
         </ul>
       </div>
     </StyledHeroStats>
-  );
-};
+  )
+}
 
 const StyledHeroStats = styled.div`
   .HeroStats {
@@ -149,6 +149,6 @@ const StyledHeroStats = styled.div`
       margin-left: 28px;
     }
   }
-`;
+`
 
-export { HeroStats };
+export { HeroStats }

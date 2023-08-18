@@ -1,9 +1,9 @@
-import { Sort } from "@/components/ui/Sort/Sort";
-import { LocationIcon } from "@/icons/LocationIcon";
-import styled from "styled-components";
+import { Sort } from '@/components/ui/Sort/Sort'
+import { LocationIcon } from '@/icons/LocationIcon'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const MapContainer = ({ className }: Props) => {
@@ -16,8 +16,8 @@ const MapContainer = ({ className }: Props) => {
         <LocationIcon />
       </div>
     </StyledMapContainer>
-  );
-};
+  )
+}
 
 const StyledMapContainer = styled.div`
   height: 352px;
@@ -53,6 +53,6 @@ const StyledMapContainer = styled.div`
       position: absolute;
     }
   }
-`;
+`
 
-export { MapContainer };
+export { MapContainer }

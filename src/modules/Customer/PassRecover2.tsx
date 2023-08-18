@@ -1,89 +1,89 @@
-import { Button, Link } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import { useCallback, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import { TechSupport } from "./TechSupport";
+import { Button, Link } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { TechSupport } from './TechSupport'
 
 interface Props {
-  className?: string;
-  onChange: (value: string) => void;
+  className?: string
+  onChange: (value: string) => void
 }
-const COUNTDOWN_SECONDS = 180;
+const COUNTDOWN_SECONDS = 180
 
 const PassRecover2 = ({ className, onChange }: Props) => {
-  const [valid, setValid] = useState(false);
-  const [inputValues, setInputValues] = useState<string[]>(["", "", "", ""]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [valid, setValid] = useState(false)
+  const [inputValues, setInputValues] = useState<string[]>(['', '', '', ''])
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleOpenMenu = useCallback(() => {
-    setIsOpen(!isOpen);
-  }, [isOpen]);
+    setIsOpen(!isOpen)
+  }, [isOpen])
 
   const handleCloseMenu = useCallback(() => {
-    setIsOpen(!isOpen);
-  }, [isOpen]);
+    setIsOpen(!isOpen)
+  }, [isOpen])
 
-  const secondInputRef = useRef<HTMLInputElement>(null);
-  const thirdInputRef = useRef<HTMLInputElement>(null);
-  const fourthInputRef = useRef<HTMLInputElement>(null);
-  const rootRef = useRef<HTMLDivElement>(null);
-  const startY = useRef<number>(0);
+  const secondInputRef = useRef<HTMLInputElement>(null)
+  const thirdInputRef = useRef<HTMLInputElement>(null)
+  const fourthInputRef = useRef<HTMLInputElement>(null)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const startY = useRef<number>(0)
 
   const handleDigitChange =
     (index: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const { value } = event.target;
+      const { value } = event.target
 
-      setInputValues((prevInputValues) => {
-        const newInputValues = [...prevInputValues];
-        newInputValues[index] = value;
-        return newInputValues;
-      });
+      setInputValues(prevInputValues => {
+        const newInputValues = [...prevInputValues]
+        newInputValues[index] = value
+        return newInputValues
+      })
 
-      onChange(value);
+      onChange(value)
 
       if (index === 0 && value && secondInputRef.current) {
-        secondInputRef.current.focus();
+        secondInputRef.current.focus()
       } else if (index === 1 && value && thirdInputRef.current) {
-        thirdInputRef.current.focus();
+        thirdInputRef.current.focus()
       } else if (index === 2 && value && fourthInputRef.current) {
-        fourthInputRef.current.focus();
+        fourthInputRef.current.focus()
       }
-    };
+    }
 
   useEffect(() => {
-    const allInputsFilled = inputValues.every((value) => value !== "");
-    setValid(allInputsFilled);
-  }, [inputValues]);
+    const allInputsFilled = inputValues.every(value => value !== '')
+    setValid(allInputsFilled)
+  }, [inputValues])
 
   const [secondsRemaining, setSecondsRemaining] =
-    useState<number>(COUNTDOWN_SECONDS);
+    useState<number>(COUNTDOWN_SECONDS)
 
   useEffect(() => {
     if (secondsRemaining > 0) {
       const intervalId = setInterval(() => {
-        setSecondsRemaining((prevSecondsRemaining) => prevSecondsRemaining - 1);
-      }, 1000);
+        setSecondsRemaining(prevSecondsRemaining => prevSecondsRemaining - 1)
+      }, 1000)
 
-      return () => clearInterval(intervalId);
+      return () => clearInterval(intervalId)
     }
-  }, [secondsRemaining]);
+  }, [secondsRemaining])
 
-  const minutes = Math.floor(secondsRemaining / 60);
-  const seconds = secondsRemaining % 60;
+  const minutes = Math.floor(secondsRemaining / 60)
+  const seconds = secondsRemaining % 60
 
   const handleTouchStart = (event: TouchEvent) => {
-    const touch = event.touches[0];
-    startY.current = touch.pageY;
-  };
+    const touch = event.touches[0]
+    startY.current = touch.pageY
+  }
 
   const handleTouchEnd = (event: TouchEvent) => {
-    const touch = event.changedTouches[0];
-    const deltaY = touch.pageY - startY.current;
+    const touch = event.changedTouches[0]
+    const deltaY = touch.pageY - startY.current
 
     if (deltaY > 50) {
-      setIsOpen(false);
+      setIsOpen(false)
     }
-  };
+  }
 
   return (
     <StyledRegStep1 className={className}>
@@ -148,9 +148,9 @@ const PassRecover2 = ({ className, onChange }: Props) => {
                 </p>
                 <div className="Color_blue_primary">
                   (
-                  {`${minutes.toString().padStart(2, "0")}:${seconds
+                  {`${minutes.toString().padStart(2, '0')}:${seconds
                     .toString()
-                    .padStart(2, "0")}`}
+                    .padStart(2, '0')}`}
                   )
                 </div>
               </>
@@ -190,8 +190,8 @@ const PassRecover2 = ({ className, onChange }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const DigitInput = styled.input`
   width: 60px;
@@ -217,7 +217,7 @@ const DigitInput = styled.input`
   @media (max-width: 576px) {
     margin-top: 10px;
   }
-`;
+`
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -290,7 +290,7 @@ const StyledRegStep1 = styled.section`
     background-color: #d4ddee;
     ::after {
       position: absolute;
-      content: "";
+      content: '';
       width: 100%;
       height: 6px;
       background-color: #4e6af3;
@@ -402,6 +402,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { PassRecover2 };
+export { PassRecover2 }

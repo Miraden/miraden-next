@@ -1,33 +1,33 @@
-import { Button, RequestButton } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button, RequestButton } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 type Option =
-  | "business"
-  | "another"
-  | "rent"
-  | "sell"
-  | "register"
-  | "citizenship";
+  | 'business'
+  | 'another'
+  | 'rent'
+  | 'sell'
+  | 'register'
+  | 'citizenship'
 
 const CreateCommercialStep6 = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option[]>([]);
+  const [selected, setSelected] = useState<Option[]>([])
 
   const handleSelect = useCallback(
     (option: Option) => {
       if (selected.includes(option)) {
-        setSelected(selected.filter((item) => item !== option));
+        setSelected(selected.filter(item => item !== option))
       } else {
-        setSelected([...selected, option]);
+        setSelected([...selected, option])
       }
     },
     [selected]
-  );
+  )
 
   return (
     <StyledRegStep1 className={className}>
@@ -42,38 +42,38 @@ const CreateCommercialStep6 = ({ className }: Props) => {
 
         <div className="Reg__options">
           <RequestButton
-            onClick={() => handleSelect("rent")}
-            active={selected.includes("rent")}
+            onClick={() => handleSelect('rent')}
+            active={selected.includes('rent')}
           >
             Для инвестиций (сдавать)
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("sell")}
-            active={selected.includes("sell")}
+            onClick={() => handleSelect('sell')}
+            active={selected.includes('sell')}
           >
             Для инвестиций (перепродать)
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("register")}
-            active={selected.includes("register")}
+            onClick={() => handleSelect('register')}
+            active={selected.includes('register')}
           >
             Для ВНЖ / ПМЖ
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("citizenship")}
-            active={selected.includes("citizenship")}
+            onClick={() => handleSelect('citizenship')}
+            active={selected.includes('citizenship')}
           >
             Для гражданства
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("business")}
-            active={selected.includes("business")}
+            onClick={() => handleSelect('business')}
+            active={selected.includes('business')}
           >
             Для своего бизнеса
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("another")}
-            active={selected.includes("another")}
+            onClick={() => handleSelect('another')}
+            active={selected.includes('another')}
           >
             Другое
           </RequestButton>
@@ -111,10 +111,7 @@ const CreateCommercialStep6 = ({ className }: Props) => {
                 </span>
                 <p className="Color_blue_primary Font_16_140">317</p>
               </div>
-              <Button
-                disabled={selected.length === 0}
-                href="lead/add/8"
-              >
+              <Button disabled={selected.length === 0} href="lead/add/8">
                 Далее
               </Button>
             </div>
@@ -122,8 +119,8 @@ const CreateCommercialStep6 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -169,7 +166,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 60%;
       height: 6px;
       background-color: #4e6af3;
@@ -305,6 +302,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { CreateCommercialStep6 };
+export { CreateCommercialStep6 }

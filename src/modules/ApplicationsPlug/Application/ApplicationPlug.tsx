@@ -9,7 +9,7 @@ import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import * as DataProvider from '@/modules/Applications/Application/DataProfiver'
-import {theme} from "../../../../styles/tokens";
+import { theme } from '../../../../styles/tokens'
 
 interface ApplicationProps {
   className?: string
@@ -62,7 +62,11 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
       <></>,
       (
         <Search
-          sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
+          sort={[
+            { label: 'Сначала агентства', value: 1 },
+            { label: 'Сначала PRO', value: 2 },
+            { label: 'Сначала самые надежные', value: 3 },
+          ]}
           placeholder="Поиск"
           className={cn('Applications__searchBar')}
           filterIcon={<FilterIcon />}
@@ -84,7 +88,11 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
       <></>,
       (
         <Search
-          sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
+          sort={[
+            { label: 'Сначала агентства', value: 1 },
+            { label: 'Сначала PRO', value: 2 },
+            { label: 'Сначала самые надежные', value: 3 },
+          ]}
           placeholder="Поиск"
           className={cn('Applications__searchBar')}
           filterIcon={<FilterIcon />}
@@ -102,7 +110,11 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
       <></>,
       (
         <Search
-          sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
+          sort={[
+            { label: 'Сначала агентства', value: 1 },
+            { label: 'Сначала PRO', value: 2 },
+            { label: 'Сначала самые надежные', value: 3 },
+          ]}
           placeholder="Поиск"
           className={cn('Applications__searchBar')}
           filterIcon={<FilterIcon />}
@@ -121,25 +133,25 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
     >
       <div className={cn('Application__wrapper', { IsOpenFilter: showFilter })}>
         <StyledMenu className={cn(tabsManager.getClasses())}>
-            <div className={'Menu__header Font_headline_3'}>
-              <Button
-                secondary
-                href="/applications-full"
-                className="Menu__header_backButton"
-              >
-                <BackIcon20
-                  width={20}
-                  height={20}
-                  className="Menu__header_backArrow"
-                />
-              </Button>
-              <h1 className="Font_headline_3">
-                Хочу купить 3-х комнатную квартиру на Кипре. Хочу купить 3-х
-                комнатную квартиру на Кипре
-              </h1>
-            </div>
-            {tabsManager.renderMenus(selected)}
-            {tabsManager.renderMenuFooter(selected)}
+          <div className={'Menu__header Font_headline_3'}>
+            <Button
+              secondary
+              href="/applications-full"
+              className="Menu__header_backButton"
+            >
+              <BackIcon20
+                width={20}
+                height={20}
+                className="Menu__header_backArrow"
+              />
+            </Button>
+            <h1 className="Font_headline_3">
+              Хочу купить 3-х комнатную квартиру на Кипре. Хочу купить 3-х
+              комнатную квартиру на Кипре
+            </h1>
+          </div>
+          {tabsManager.renderMenus(selected)}
+          {tabsManager.renderMenuFooter(selected)}
         </StyledMenu>
 
         {tabsManager.renderContent(selected)}

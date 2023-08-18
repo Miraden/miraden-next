@@ -1,226 +1,226 @@
-import { Button, RequestButton } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import { SetStateAction, useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button, RequestButton } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import { SetStateAction, useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const CreateStep6 = ({ className }: Props) => {
-  const [selected, setSelected] = useState(false);
-  const [showMore, setShowMore] = useState(false);
-  const [startRoom, setStartRoom] = useState<number | null>(null);
-  const [selectedRange, setSelectedRange] = useState<number[]>([]);
-  const [maxVisibleRooms, setMaxVisibleRooms] = useState(8);
+  const [selected, setSelected] = useState(false)
+  const [showMore, setShowMore] = useState(false)
+  const [startRoom, setStartRoom] = useState<number | null>(null)
+  const [selectedRange, setSelectedRange] = useState<number[]>([])
+  const [maxVisibleRooms, setMaxVisibleRooms] = useState(8)
 
   const handleSelect = useCallback(() => {
-    setSelected(!selected);
-    setSelectedRange([]);
-  }, [selected]);
+    setSelected(!selected)
+    setSelectedRange([])
+  }, [selected])
   const handleRoomClick = (roomIndex: number) => {
-    setSelected(false);
+    setSelected(false)
 
     if (startRoom === null) {
       // start new range
-      setStartRoom(roomIndex);
-      setSelectedRange([roomIndex]);
+      setStartRoom(roomIndex)
+      setSelectedRange([roomIndex])
     } else {
       // continue existing range
-      const endRoom = roomIndex;
-      const rangeStart = Math.min(startRoom, endRoom);
-      const rangeEnd = Math.max(startRoom, endRoom);
-      const selectedRange: SetStateAction<number[]> = [];
+      const endRoom = roomIndex
+      const rangeStart = Math.min(startRoom, endRoom)
+      const rangeEnd = Math.max(startRoom, endRoom)
+      const selectedRange: SetStateAction<number[]> = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        selectedRange.push(i);
+        selectedRange.push(i)
       }
 
-      if (selectedRange.every((m) => selectedRange.includes(m))) {
+      if (selectedRange.every(m => selectedRange.includes(m))) {
         // update existing range
-        setSelectedRange(selectedRange);
+        setSelectedRange(selectedRange)
       } else {
         // create new range
-        setSelectedRange(selectedRange);
-        setStartRoom(null);
+        setSelectedRange(selectedRange)
+        setStartRoom(null)
       }
     }
 
     if (startRoom !== null && roomIndex !== startRoom) {
-      const rangeStart = Math.min(startRoom, roomIndex);
-      const rangeEnd = Math.max(startRoom, roomIndex);
-      const newRange = [];
+      const rangeStart = Math.min(startRoom, roomIndex)
+      const rangeEnd = Math.max(startRoom, roomIndex)
+      const newRange = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        newRange.push(i);
+        newRange.push(i)
       }
 
       if (
         selectedRange.length > 0 &&
-        newRange.every((m) => selectedRange.includes(m))
+        newRange.every(m => selectedRange.includes(m))
       ) {
         // update existing range
-        setSelectedRange(newRange);
+        setSelectedRange(newRange)
       } else {
         // add new range to existing range
-        setSelectedRange([...selectedRange, ...newRange]);
+        setSelectedRange([...selectedRange, ...newRange])
       }
     }
-  };
+  }
 
   const handleShowMore = useCallback(() => {
-    setShowMore(true);
-    setMaxVisibleRooms(18);
-  }, []);
+    setShowMore(true)
+    setMaxVisibleRooms(18)
+  }, [])
 
   const handleShowLess = useCallback(() => {
-    setShowMore(false);
-    setMaxVisibleRooms(8);
-  }, []);
+    setShowMore(false)
+    setMaxVisibleRooms(8)
+  }, [])
 
-  const rooms = [];
+  const rooms = []
   for (let room = 1; room <= 18; room++) {
-    rooms.push(room);
+    rooms.push(room)
   }
-  const [startSleep, setStartSleep] = useState<number | null>(null);
-  const [selectedSleepRange, setSelectedSleepRange] = useState<number[]>([]);
-  const [showMoreSleep, setShowMoreSleep] = useState(false);
+  const [startSleep, setStartSleep] = useState<number | null>(null)
+  const [selectedSleepRange, setSelectedSleepRange] = useState<number[]>([])
+  const [showMoreSleep, setShowMoreSleep] = useState(false)
 
-  const [maxVisibleSleep, setMaxVisibleSleep] = useState(6);
+  const [maxVisibleSleep, setMaxVisibleSleep] = useState(6)
 
   const handleSleepClick = (sleepIndex: number) => {
     if (startSleep === null) {
       // start new range
-      setStartSleep(sleepIndex);
-      setSelectedSleepRange([sleepIndex]);
+      setStartSleep(sleepIndex)
+      setSelectedSleepRange([sleepIndex])
     } else {
       // continue existing range
-      const endSleep = sleepIndex;
-      const rangeStart = Math.min(startSleep, endSleep);
-      const rangeEnd = Math.max(startSleep, endSleep);
-      const selectedSleepRange: SetStateAction<number[]> = [];
+      const endSleep = sleepIndex
+      const rangeStart = Math.min(startSleep, endSleep)
+      const rangeEnd = Math.max(startSleep, endSleep)
+      const selectedSleepRange: SetStateAction<number[]> = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        selectedSleepRange.push(i);
+        selectedSleepRange.push(i)
       }
 
-      if (selectedSleepRange.every((m) => selectedSleepRange.includes(m))) {
+      if (selectedSleepRange.every(m => selectedSleepRange.includes(m))) {
         // update existing range
-        setSelectedSleepRange(selectedSleepRange);
+        setSelectedSleepRange(selectedSleepRange)
       } else {
         // create new range
-        setSelectedSleepRange(selectedSleepRange);
-        setStartSleep(null);
+        setSelectedSleepRange(selectedSleepRange)
+        setStartSleep(null)
       }
     }
 
     if (startSleep !== null && sleepIndex !== startSleep) {
-      const rangeStart = Math.min(startSleep, sleepIndex);
-      const rangeEnd = Math.max(startSleep, sleepIndex);
-      const newRange = [];
+      const rangeStart = Math.min(startSleep, sleepIndex)
+      const rangeEnd = Math.max(startSleep, sleepIndex)
+      const newRange = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        newRange.push(i);
+        newRange.push(i)
       }
 
       if (
         selectedSleepRange.length > 0 &&
-        newRange.every((m) => selectedSleepRange.includes(m))
+        newRange.every(m => selectedSleepRange.includes(m))
       ) {
         // update existing range
-        setSelectedSleepRange(newRange);
+        setSelectedSleepRange(newRange)
       } else {
         // add new range to existing range
-        setSelectedSleepRange([...selectedSleepRange, ...newRange]);
+        setSelectedSleepRange([...selectedSleepRange, ...newRange])
       }
     }
-  };
-
-  const handleShowMoreSleep = useCallback(() => {
-    setShowMoreSleep(true);
-    setMaxVisibleSleep(16);
-  }, []);
-
-  const handleShowLessSleep = useCallback(() => {
-    setShowMoreSleep(false);
-    setMaxVisibleSleep(6);
-  }, []);
-
-  const sleeps = [];
-  for (let sleep = 1; sleep <= 16; sleep++) {
-    sleeps.push(sleep);
   }
 
-  const [showMoreBaths, setShowMoreBaths] = useState(false);
-  const [startBath, setStartBath] = useState<number | null>(null);
-  const [selectedBathsRange, setSelectedBathsRange] = useState<number[]>([]);
-  const [maxVisibleBaths, setMaxVisibleBaths] = useState(6);
+  const handleShowMoreSleep = useCallback(() => {
+    setShowMoreSleep(true)
+    setMaxVisibleSleep(16)
+  }, [])
+
+  const handleShowLessSleep = useCallback(() => {
+    setShowMoreSleep(false)
+    setMaxVisibleSleep(6)
+  }, [])
+
+  const sleeps = []
+  for (let sleep = 1; sleep <= 16; sleep++) {
+    sleeps.push(sleep)
+  }
+
+  const [showMoreBaths, setShowMoreBaths] = useState(false)
+  const [startBath, setStartBath] = useState<number | null>(null)
+  const [selectedBathsRange, setSelectedBathsRange] = useState<number[]>([])
+  const [maxVisibleBaths, setMaxVisibleBaths] = useState(6)
 
   const handleBathClick = (bathIndex: number) => {
-    setSelected(false);
+    setSelected(false)
 
     if (startBath === null) {
       // start new range
-      setStartBath(bathIndex);
-      setSelectedBathsRange([bathIndex]);
+      setStartBath(bathIndex)
+      setSelectedBathsRange([bathIndex])
     } else {
       // continue existing range
-      const endBath = bathIndex;
-      const rangeStart = Math.min(startBath, endBath);
-      const rangeEnd = Math.max(startBath, endBath);
-      const selectedBathsRange: SetStateAction<number[]> = [];
+      const endBath = bathIndex
+      const rangeStart = Math.min(startBath, endBath)
+      const rangeEnd = Math.max(startBath, endBath)
+      const selectedBathsRange: SetStateAction<number[]> = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        selectedBathsRange.push(i);
+        selectedBathsRange.push(i)
       }
 
-      if (selectedBathsRange.every((m) => selectedBathsRange.includes(m))) {
+      if (selectedBathsRange.every(m => selectedBathsRange.includes(m))) {
         // update existing range
-        setSelectedBathsRange(selectedBathsRange);
+        setSelectedBathsRange(selectedBathsRange)
       } else {
         // create new range
-        setSelectedBathsRange(selectedBathsRange);
-        setStartBath(null);
+        setSelectedBathsRange(selectedBathsRange)
+        setStartBath(null)
       }
     }
 
     if (startBath !== null && bathIndex !== startBath) {
-      const rangeStart = Math.min(startBath, bathIndex);
-      const rangeEnd = Math.max(startBath, bathIndex);
-      const newRange = [];
+      const rangeStart = Math.min(startBath, bathIndex)
+      const rangeEnd = Math.max(startBath, bathIndex)
+      const newRange = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        newRange.push(i);
+        newRange.push(i)
       }
 
       if (
         selectedBathsRange.length > 0 &&
-        newRange.every((m) => selectedBathsRange.includes(m))
+        newRange.every(m => selectedBathsRange.includes(m))
       ) {
         // update existing range
-        setSelectedBathsRange(newRange);
+        setSelectedBathsRange(newRange)
       } else {
         // add new range to existing range
-        setSelectedBathsRange([...selectedBathsRange, ...newRange]);
+        setSelectedBathsRange([...selectedBathsRange, ...newRange])
       }
     }
-  };
-
-  const handleShowMoreBaths = useCallback(() => {
-    setShowMoreBaths(true);
-    setMaxVisibleBaths(16);
-  }, []);
-
-  const handleShowLessBaths = useCallback(() => {
-    setShowMoreBaths(false);
-    setMaxVisibleBaths(6);
-  }, []);
-
-  const baths = [];
-  for (let bath = 1; bath <= 16; bath++) {
-    baths.push(bath);
   }
 
-  const minIndex = Math.min(...selectedRange);
-  const maxIndex = Math.max(...selectedRange);
-  const minIndexSleeps = Math.min(...selectedSleepRange);
-  const maxIndexSleeps = Math.max(...selectedSleepRange);
-  const minIndexBaths = Math.min(...selectedBathsRange);
-  const maxIndexBaths = Math.max(...selectedBathsRange);
+  const handleShowMoreBaths = useCallback(() => {
+    setShowMoreBaths(true)
+    setMaxVisibleBaths(16)
+  }, [])
+
+  const handleShowLessBaths = useCallback(() => {
+    setShowMoreBaths(false)
+    setMaxVisibleBaths(6)
+  }, [])
+
+  const baths = []
+  for (let bath = 1; bath <= 16; bath++) {
+    baths.push(bath)
+  }
+
+  const minIndex = Math.min(...selectedRange)
+  const maxIndex = Math.max(...selectedRange)
+  const minIndexSleeps = Math.min(...selectedSleepRange)
+  const maxIndexSleeps = Math.max(...selectedSleepRange)
+  const minIndexBaths = Math.min(...selectedBathsRange)
+  const maxIndexBaths = Math.max(...selectedBathsRange)
   return (
     <StyledRegStep1 className={className}>
       <div className="Reg">
@@ -238,13 +238,13 @@ const CreateStep6 = ({ className }: Props) => {
                 Неважно
               </RequestButton>
               {[...Array(18)].map((_, index) => {
-                const label = index + 1;
+                const label = index + 1
 
                 if (index >= maxVisibleRooms) {
-                  return null;
+                  return null
                 }
 
-                const isRanged = index > minIndex && index < maxIndex;
+                const isRanged = index > minIndex && index < maxIndex
                 return (
                   <RequestButton
                     key={`${index}`}
@@ -254,7 +254,7 @@ const CreateStep6 = ({ className }: Props) => {
                   >
                     {label}
                   </RequestButton>
-                );
+                )
               })}
               {maxVisibleRooms < 18 && (
                 <RequestButton
@@ -279,14 +279,14 @@ const CreateStep6 = ({ className }: Props) => {
             <h2 className="Font_20_120 sm:Font_18_120_500">Спальня</h2>
             <div className="Reg__sleeps">
               {[...Array(16)].map((_, index) => {
-                const label = index + 1;
+                const label = index + 1
 
                 if (index >= maxVisibleSleep) {
-                  return null;
+                  return null
                 }
 
                 const isRanged =
-                  index > minIndexSleeps && index < maxIndexSleeps;
+                  index > minIndexSleeps && index < maxIndexSleeps
                 return (
                   <RequestButton
                     key={`${index}`}
@@ -298,7 +298,7 @@ const CreateStep6 = ({ className }: Props) => {
                   >
                     {label}
                   </RequestButton>
-                );
+                )
               })}
               {maxVisibleSleep < 16 && (
                 <RequestButton
@@ -323,11 +323,11 @@ const CreateStep6 = ({ className }: Props) => {
             <h2 className="Font_20_120 sm:Font_18_120_500">Санузел</h2>
             <div className="Reg__baths">
               {[...Array(16)].map((_, index) => {
-                const label = index + 1;
+                const label = index + 1
                 if (index >= maxVisibleBaths) {
-                  return null;
+                  return null
                 }
-                const isRanged = index > minIndexBaths && index < maxIndexBaths;
+                const isRanged = index > minIndexBaths && index < maxIndexBaths
 
                 return (
                   <RequestButton
@@ -340,7 +340,7 @@ const CreateStep6 = ({ className }: Props) => {
                   >
                     {label}
                   </RequestButton>
-                );
+                )
               })}
               {maxVisibleBaths < 16 && (
                 <RequestButton
@@ -405,8 +405,8 @@ const CreateStep6 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -500,7 +500,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 54.54%;
       height: 6px;
       background-color: #4e6af3;
@@ -643,6 +643,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { CreateStep6 };
+export { CreateStep6 }

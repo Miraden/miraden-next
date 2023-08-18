@@ -1,22 +1,22 @@
-import { Button } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import ru from "date-fns/locale/ru";
-import { useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import styled from "styled-components";
+import { Button } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import ru from 'date-fns/locale/ru'
+import { useState } from 'react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import styled from 'styled-components'
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const RentRangeStep = ({ className }: Props) => {
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(null);
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(null)
   const onChange = (dates: any) => {
-    const [start, end] = dates;
-    setStartDate(start);
-    setEndDate(end);
-  };
+    const [start, end] = dates
+    setStartDate(start)
+    setEndDate(end)
+  }
 
   return (
     <StyledRegStep1 className={className}>
@@ -79,8 +79,8 @@ const RentRangeStep = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -131,13 +131,13 @@ const StyledRegStep1 = styled.section`
     .react-datepicker__navigation--next {
       .react-datepicker__navigation-icon--next {
         ::before {
-          content: "";
+          content: '';
           display: inline-block;
           border: none;
           width: 18px;
           height: 18px;
           transform: rotate(180deg);
-          background-image: url("/icons/arrow.svg");
+          background-image: url('/icons/arrow.svg');
           background-repeat: no-repeat;
         }
       }
@@ -145,13 +145,13 @@ const StyledRegStep1 = styled.section`
 
     .react-datepicker__navigation-icon--previous {
       ::before {
-        content: "";
+        content: '';
         display: inline-block;
         border: none;
         width: 18px;
         height: 18px;
         transform: rotate(0);
-        background-image: url("/icons/arrow.svg");
+        background-image: url('/icons/arrow.svg');
         background-repeat: no-repeat;
       }
     }
@@ -299,7 +299,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 73%;
       height: 6px;
       background-color: #4e6af3;
@@ -456,6 +456,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { RentRangeStep };
+export { RentRangeStep }

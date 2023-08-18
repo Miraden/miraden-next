@@ -1,25 +1,25 @@
-import { Button } from "@/components/ui";
-import { ApplicationsFooter } from "@/modules/Base/ApplicationsFooter";
-import cn from "classnames";
-import Image from "next/image";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button } from '@/components/ui'
+import { ApplicationsFooter } from '@/modules/Base/ApplicationsFooter'
+import cn from 'classnames'
+import Image from 'next/image'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 interface ApplicationProps {
-  className?: string;
+  className?: string
 }
 
-type Option = "all" | "published" | "archived";
+type Option = 'all' | 'published' | 'archived'
 
 const ApplicationPlug = ({ className }: ApplicationProps) => {
-  const [selected, setSelected] = useState<Option | null>("all");
+  const [selected, setSelected] = useState<Option | null>('all')
 
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+    setSelected(option)
+  }, [])
 
   return (
     <StyledApplication className={className}>
-      <div className={cn("Application__wrapper")}>
+      <div className={cn('Application__wrapper')}>
         <div className="Application__headContainer">
           <div className="Application__head">
             <h1 className="Font_32_120 lg:Font_26_120_500">Мои заявки </h1>
@@ -27,31 +27,31 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
           <div className="Application__headTabsContainer">
             <div className="Application__headTabs">
               <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "all",
+                className={cn('Application__TabButton', {
+                  Application__headTabButton: selected === 'all',
                 })}
-                onClick={() => handleSelect("all")}
-                active={selected === "all"}
+                onClick={() => handleSelect('all')}
+                active={selected === 'all'}
                 tertiary
               >
                 Все
               </Button>
               <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "published",
+                className={cn('Application__TabButton', {
+                  Application__headTabButton: selected === 'published',
                 })}
-                onClick={() => handleSelect("published")}
-                active={selected === "published"}
+                onClick={() => handleSelect('published')}
+                active={selected === 'published'}
                 tertiary
               >
                 Опубликованные
               </Button>
               <Button
-                className={cn("Application__TabButton", {
-                  Application__headTabButton: selected === "archived",
+                className={cn('Application__TabButton', {
+                  Application__headTabButton: selected === 'archived',
                 })}
-                onClick={() => handleSelect("archived")}
-                active={selected === "archived"}
+                onClick={() => handleSelect('archived')}
+                active={selected === 'archived'}
                 tertiary
               >
                 В архиве
@@ -62,13 +62,13 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
         </div>
         <div className="Applications__headTabsBar_whiteSpace" />
 
-        {selected === "all" && (
+        {selected === 'all' && (
           <>
             <div className="Application__body">
               <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
               <h2>Нет созданных заявок</h2>
               <p className="Color_text_grey">
-                Но вы можете сделать это прямо сейчас!{" "}
+                Но вы можете сделать это прямо сейчас!{' '}
               </p>
               <Button className="CreateApp__button" href="/customer/create-1">
                 Создать заявку
@@ -76,7 +76,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
             </div>
           </>
         )}
-        {selected === "published" && (
+        {selected === 'published' && (
           <>
             <div className="Application__body">
               <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
@@ -90,7 +90,7 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
           </>
         )}
 
-        {selected === "archived" && (
+        {selected === 'archived' && (
           <>
             <div className="Application__body">
               <Image src="/images/apps/5.svg" alt="" width={200} height={200} />
@@ -106,8 +106,8 @@ const ApplicationPlug = ({ className }: ApplicationProps) => {
         <ApplicationsFooter />
       </div>
     </StyledApplication>
-  );
-};
+  )
+}
 
 const StyledApplication = styled.section`
   position: relative;
@@ -167,7 +167,7 @@ const StyledApplication = styled.section`
     ::before {
       position: absolute;
       top: 32px;
-      content: "";
+      content: '';
       background: #4e6af3;
       width: 100%;
       height: 4px;
@@ -433,6 +433,6 @@ const StyledApplication = styled.section`
       }
     }
   }
-`;
+`
 
-export { ApplicationPlug };
+export { ApplicationPlug }

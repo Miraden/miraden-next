@@ -1,16 +1,16 @@
-import cn from "classnames";
-import { FC } from "react";
-import styled from "styled-components";
+import cn from 'classnames'
+import { FC } from 'react'
+import styled from 'styled-components'
 
 type Props = {
-  selectedOption: string;
-  setSelectedOption: (option: string) => void;
-  options: string[];
-  showDropDown: boolean;
-  toggleDropDown: Function;
-  optionSelection: Function;
-  className?: string;
-};
+  selectedOption: string
+  setSelectedOption: (option: string) => void
+  options: string[]
+  showDropDown: boolean
+  toggleDropDown: Function
+  optionSelection: Function
+  className?: string
+}
 
 const MoreDropdown: FC<Props> = ({
   selectedOption,
@@ -24,7 +24,7 @@ const MoreDropdown: FC<Props> = ({
     <StyledMoreDropdown className={className}>
       <div
         className={
-          showDropDown ? "MoreDropdown__menu_active" : "MoreDropdown__menu"
+          showDropDown ? 'MoreDropdown__menu_active' : 'MoreDropdown__menu'
         }
       >
         {options.map((option: string, index: number): JSX.Element => {
@@ -32,20 +32,20 @@ const MoreDropdown: FC<Props> = ({
             <div
               key={index}
               onClick={(): void => {
-                setSelectedOption(option);
+                setSelectedOption(option)
               }}
-              className={cn(`${selectedOption === option ? "selected" : ""}`)}
+              className={cn(`${selectedOption === option ? 'selected' : ''}`)}
             >
               <span className="MoreDropdown__menuItem">
                 <p className="Font_14_140">Что-то ещё</p>
               </span>
             </div>
-          );
+          )
         })}
       </div>
     </StyledMoreDropdown>
-  );
-};
+  )
+}
 
 const StyledMoreDropdown = styled.div`
   .MoreDropdownMenu {
@@ -111,6 +111,6 @@ const StyledMoreDropdown = styled.div`
       display: none;
     }
   }
-`;
+`
 
-export { MoreDropdown };
+export { MoreDropdown }

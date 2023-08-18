@@ -1,5 +1,5 @@
 import SocketConnManager from '@/infrastructure/Network/Websockets/SocketConnManager'
-import commander from "commander";
+import commander from 'commander'
 
 class ChatConnManager extends SocketConnManager {
   private leadId: number
@@ -15,12 +15,12 @@ class ChatConnManager extends SocketConnManager {
 
   public joinToRoom(id: number, token: string, leadId: number): void {
     const request: Chat.SocketRequestType = {
-      command: "joinRoom",
+      command: 'joinRoom',
       token: token,
       payload: {
         roomId: id,
-        leadId: leadId
-      }
+        leadId: leadId,
+      },
     }
     this.leadId = leadId
     this.roomId = id
@@ -30,13 +30,13 @@ class ChatConnManager extends SocketConnManager {
 
   public sendMessage(msg: string): void {
     const request: Chat.SocketRequestType = {
-      command: "sendMessage",
+      command: 'sendMessage',
       token: this.token,
       payload: {
         msg: msg,
         roomId: this.roomId,
-        leadId: this.leadId
-      }
+        leadId: this.leadId,
+      },
     }
 
     this.send(JSON.stringify(request))
@@ -44,45 +44,49 @@ class ChatConnManager extends SocketConnManager {
 
   public queryHistory(): void {
     const request: Chat.SocketRequestType = {
-      command: "getHistory",
+      command: 'getHistory',
       token: this.token,
       payload: {
-        roomId: this.roomId
-      }
+        roomId: this.roomId,
+      },
     }
     this.send(JSON.stringify(request))
   }
 
-  public getRoomsList(leads: number[] = [], token: string = '', view: string = ''): void {
+  public getRoomsList(
+    leads: number[] = [],
+    token: string = '',
+    view: string = ''
+  ): void {
     const request: Chat.SocketRequestType = {
-      command: "getRoomsList",
+      command: 'getRoomsList',
       token: token,
       payload: {
         leads: leads,
-        view: view
-      }
+        view: view,
+      },
     }
     this.send(JSON.stringify(request))
   }
 
   public getLeadsList(token: string = '', view: string = ''): void {
     const request: Chat.SocketRequestType = {
-      command: "getLeadsList",
+      command: 'getLeadsList',
       token: token,
       payload: {
-        view: view
-      }
+        view: view,
+      },
     }
     this.send(JSON.stringify(request))
   }
 
   public getCompanionsForRoom(token: string, roomId: number): void {
     const request: Chat.SocketRequestType = {
-      command: "getCompanions",
+      command: 'getCompanions',
       token: token,
       payload: {
-        roomId: roomId
-      }
+        roomId: roomId,
+      },
     }
     this.send(JSON.stringify(request))
   }

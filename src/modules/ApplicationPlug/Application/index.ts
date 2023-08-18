@@ -1,1 +1,1 @@
-export { ApplicationPlug } from "./ApplicationPlug";
+export { ApplicationPlug } from './ApplicationPlug'

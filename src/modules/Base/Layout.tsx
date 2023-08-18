@@ -24,7 +24,7 @@ export const Layout = ({ children }: LayoutProps) => {
 
     onResponse: (): void => {
       setUserReady(true)
-    }
+    },
   })
 
   return (

@@ -1,1 +1,1 @@
-export { ObjectPlug } from "./ObjectPlug";
+export { ObjectPlug } from './ObjectPlug'

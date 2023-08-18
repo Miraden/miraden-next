@@ -1,10 +1,10 @@
-import { PlayIcon } from "@/icons";
-import Image from "next/image";
-import { FC } from "react";
-import styled from "styled-components";
+import { PlayIcon } from '@/icons'
+import Image from 'next/image'
+import { FC } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  image: string;
+  image: string
 }
 
 const VideoPlaceholder: FC<Props> = ({ image }) => {
@@ -22,8 +22,8 @@ const VideoPlaceholder: FC<Props> = ({ image }) => {
         />
       </div>
     </StyledPlaceHolder>
-  );
-};
+  )
+}
 
 const StyledPlaceHolder = styled.div`
   position: relative;
@@ -74,6 +74,6 @@ const StyledPlaceHolder = styled.div`
       height: 380px;
     }
   }
-`;
+`
 
-export { VideoPlaceholder };
+export { VideoPlaceholder }

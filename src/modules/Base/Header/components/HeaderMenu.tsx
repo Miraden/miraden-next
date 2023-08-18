@@ -1,30 +1,30 @@
-import { Button } from "@/components/ui";
-import { TelegramPureIcon } from "@/icons";
-import { FacebookIcon } from "@/icons/FacebookIcon";
-import { InstagramIcon } from "@/icons/InstagramIcon";
-import cn from "classnames";
-import Link from "next/link";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { HeaderAccordion } from "./HeaderAccordion";
-import { HeaderLanguageAccordion } from "./HeaderLanguageAccordion";
-import AuthManager from "@/modules/Security/Authentication/AuthManager";
+import { Button } from '@/components/ui'
+import { TelegramPureIcon } from '@/icons'
+import { FacebookIcon } from '@/icons/FacebookIcon'
+import { InstagramIcon } from '@/icons/InstagramIcon'
+import cn from 'classnames'
+import Link from 'next/link'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { HeaderAccordion } from './HeaderAccordion'
+import { HeaderLanguageAccordion } from './HeaderLanguageAccordion'
+import AuthManager from '@/modules/Security/Authentication/AuthManager'
 
 interface Props {
-  className?: string;
-  isOpen?: boolean;
+  className?: string
+  isOpen?: boolean
   isAuth: boolean
 }
 
 const HeaderMenu = ({ className, isOpen, isAuth }: Props) => {
-  const [expanded, setExpanded] = useState();
+  const [expanded, setExpanded] = useState()
   const [isUserAuth, setUserAuth] = useState<boolean>(isAuth)
 
   const handleChange = useCallback(
     (panelId: any) => (isExpanded: boolean) =>
       isExpanded ? setExpanded(panelId) : setExpanded(undefined),
     []
-  );
+  )
 
   const onLogout = useCallback((e: any) => {
     const authManager = new AuthManager()
@@ -33,7 +33,7 @@ const HeaderMenu = ({ className, isOpen, isAuth }: Props) => {
   }, [])
 
   return (
-    <StyledHeaderMenu className={cn("", className)}>
+    <StyledHeaderMenu className={cn('', className)}>
       <div className="HeaderMenu__links Font_12_16_600">
         <Link href="/leads">лента заявок</Link>
         <HeaderAccordion
@@ -51,38 +51,44 @@ const HeaderMenu = ({ className, isOpen, isAuth }: Props) => {
         <Link href="/lead/add">Создать заявку</Link>
         <Link href="/">ПОДПИСАТЬСЯ НА РАССЫЛКУ</Link>
         <Link href="/user/register">РЕГИСТРАЦИЯ</Link>
-        {isUserAuth && <Link onClick={onLogout} href="#">Выход</Link> }
-        {!isUserAuth && <Link href="/user/login">Вход</Link> }
+        {isUserAuth && (
+          <Link onClick={onLogout} href="#">
+            Выход
+          </Link>
+        )}
+        {!isUserAuth && <Link href="/user/login">Вход</Link>}
         <HeaderLanguageAccordion />
       </div>
       <div className="HeaderMenu__contacts">
         <p className="HeaderMenu__telegramLink Font_14_140">
           Заходите в наш Telegram канал
-          <br />
-          и будьте в курсе новых заявок
+          <br />и будьте в курсе новых заявок
         </p>
         <Button
           leftIcon={<TelegramPureIcon />}
           className="HeaderMenu__button"
-          href={"https://t.me/miradencom"}
+          href={'https://t.me/miradencom'}
         >
           Telegram
         </Button>
         <div className="HeaderMenu__socialLinks">
-          <Link href="https://www.facebook.com" target={"_blank"}>
+          <Link href="https://www.facebook.com" target={'_blank'}>
             <FacebookIcon />
           </Link>
-          <Link href="https://www.instagram.com" target={"_blank"}>
+          <Link href="https://www.instagram.com" target={'_blank'}>
             <InstagramIcon />
           </Link>
         </div>
-        <Link href="mailto: info@miraden.com" className="HeaderMenu__emailLink Font_16_140_400">
+        <Link
+          href="mailto: info@miraden.com"
+          className="HeaderMenu__emailLink Font_16_140_400"
+        >
           info@miraden.com
         </Link>
       </div>
     </StyledHeaderMenu>
-  );
-};
+  )
+}
 
 const StyledHeaderMenu = styled.div`
   position: absolute;
@@ -172,6 +178,6 @@ const StyledHeaderMenu = styled.div`
       width: 100%;
     }
   }
-`;
+`
 
-export { HeaderMenu };
+export { HeaderMenu }

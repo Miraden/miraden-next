@@ -1,18 +1,18 @@
-import { useControlled } from "@/hooks/useControlled";
-import { ArrowAccordionIcon } from "@/icons";
-import { CheckIcon } from "@/icons/CheckIcon";
-import cn from "classnames";
-import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { useControlled } from '@/hooks/useControlled'
+import { ArrowAccordionIcon } from '@/icons'
+import { CheckIcon } from '@/icons/CheckIcon'
+import cn from 'classnames'
+import { useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
 
 type Props = {
-  expanded?: boolean;
-  className?: string;
-  onChange?: (expanded: boolean) => void;
-  defaultExpanded?: boolean;
-};
+  expanded?: boolean
+  className?: string
+  onChange?: (expanded: boolean) => void
+  defaultExpanded?: boolean
+}
 
-const languages = ["RU", "EN"];
+const languages = ['RU', 'EN']
 
 const HeaderLanguageAccordion = ({
   expanded: expandedProp,
@@ -20,41 +20,41 @@ const HeaderLanguageAccordion = ({
   onChange,
   defaultExpanded,
 }: Props) => {
-  const [contentHeight, setContentHeight] = useState(0);
+  const [contentHeight, setContentHeight] = useState(0)
 
   const [expanded, setExpandedState] = useControlled({
     controlled: expandedProp,
     defaultValue: defaultExpanded,
-  });
+  })
 
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null)
 
-  const [selectedLanguage, setSelectedLanguage] = useState("RU");
+  const [selectedLanguage, setSelectedLanguage] = useState('RU')
 
   const handleToggle = () => {
-    setExpandedState(!expanded);
+    setExpandedState(!expanded)
 
     if (onChange) {
-      onChange(!expanded);
+      onChange(!expanded)
     }
-  };
+  }
 
   const handleLanguageClick = (language: string) => {
-    setSelectedLanguage(language);
-    setExpandedState(false);
+    setSelectedLanguage(language)
+    setExpandedState(false)
 
     if (onChange) {
-      onChange(false);
+      onChange(false)
     }
-  };
+  }
 
   useEffect(() => {
     if (expanded && contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
+      setContentHeight(contentRef.current.scrollHeight)
     } else {
-      setContentHeight(0);
+      setContentHeight(0)
     }
-  }, [expanded]);
+  }, [expanded])
 
   return (
     <StyledHeaderAccordion
@@ -63,14 +63,14 @@ const HeaderLanguageAccordion = ({
     >
       <div className="Accordion__head" onClick={handleToggle}>
         <div className="Accordion__title">
-          <h3 className={cn("Font_12_16_600", { Color_white: expanded })}>
+          <h3 className={cn('Font_12_16_600', { Color_white: expanded })}>
             {selectedLanguage}
           </h3>
         </div>
         <ArrowAccordionIcon
           height={20}
           width={20}
-          className={cn("Accordion__icon", {
+          className={cn('Accordion__icon', {
             Accordion__icon_rotated: expanded,
           })}
         />
@@ -80,10 +80,10 @@ const HeaderLanguageAccordion = ({
         <div className="Accordion__content">
           <div className="Accordion__contentWrapper" ref={contentRef}>
             <div className="Accordion__languages">
-              {languages.map((language) => (
+              {languages.map(language => (
                 <button
                   key={language}
-                  className={cn("Font_12_16_600", {
+                  className={cn('Font_12_16_600', {
                     Accordion__selectedLanguage: selectedLanguage === language,
                   })}
                   onClick={() => handleLanguageClick(language)}
@@ -102,8 +102,8 @@ const HeaderLanguageAccordion = ({
         </div>
       )}
     </StyledHeaderAccordion>
-  );
-};
+  )
+}
 
 const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
   width: 100%;
@@ -135,7 +135,7 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
   }
 
   .Accordion__contentWrapper {
-    height: ${(props) => props.contentWrapperHeight}px;
+    height: ${props => props.contentWrapperHeight}px;
     padding-left: 40px;
     padding-right: 40px;
 
@@ -209,6 +209,6 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
       }
     }
   }
-`;
+`
 
-export { HeaderLanguageAccordion };
+export { HeaderLanguageAccordion }

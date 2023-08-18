@@ -8,11 +8,11 @@ interface HowItWorksProps {
 }
 
 const HowItWorks = ({ className }: HowItWorksProps) => {
-  const [isCustomerTab, setIsCustomerTab] = useState(true);
+  const [isCustomerTab, setIsCustomerTab] = useState(true)
 
   const toggleTab = () => {
-    setIsCustomerTab((prevTab) => !prevTab);
-  };
+    setIsCustomerTab(prevTab => !prevTab)
+  }
 
   return (
     <StyledHowItWorks className={className}>
@@ -167,8 +167,8 @@ const HowItWorks = ({ className }: HowItWorksProps) => {
         </div>
       </div>
     </StyledHowItWorks>
-  );
-};
+  )
+}
 
 const StyledHowItWorks = styled.section`
   display: flex;
@@ -371,6 +371,6 @@ const StyledHowItWorks = styled.section`
       margin-top: 10px;
     }
   }
-`;
+`
 
-export { HowItWorks };
+export { HowItWorks }

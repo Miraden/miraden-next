@@ -1,20 +1,20 @@
-import { Button, RequestButton } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button, RequestButton } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
-type Option = "fast" | "asap" | "one" | "two" | "tree" | "looking";
+type Option = 'fast' | 'asap' | 'one' | 'two' | 'tree' | 'looking'
 
 const RentStep8 = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>(null);
+  const [selected, setSelected] = useState<Option | null>(null)
 
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+    setSelected(option)
+  }, [])
 
   return (
     <StyledRegStep1 className={className}>
@@ -28,38 +28,38 @@ const RentStep8 = ({ className }: Props) => {
         </div>
         <div className="Reg__options">
           <RequestButton
-            onClick={() => handleSelect("fast")}
-            active={selected === "fast"}
+            onClick={() => handleSelect('fast')}
+            active={selected === 'fast'}
           >
             Вопрос срочный
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("asap")}
-            active={selected === "asap"}
+            onClick={() => handleSelect('asap')}
+            active={selected === 'asap'}
           >
             Сразу, как найду
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("one")}
-            active={selected === "one"}
+            onClick={() => handleSelect('one')}
+            active={selected === 'one'}
           >
             Через 1 месяц
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("two")}
-            active={selected === "two"}
+            onClick={() => handleSelect('two')}
+            active={selected === 'two'}
           >
             Через 2 месяца
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("tree")}
-            active={selected === "tree"}
+            onClick={() => handleSelect('tree')}
+            active={selected === 'tree'}
           >
             Через 3 месяца
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("looking")}
-            active={selected === "looking"}
+            onClick={() => handleSelect('looking')}
+            active={selected === 'looking'}
           >
             Пока просто изучаю
           </RequestButton>
@@ -105,8 +105,8 @@ const RentStep8 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -152,7 +152,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 72.72%;
       height: 6px;
       background-color: #4e6af3;
@@ -286,6 +286,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { RentStep8 };
+export { RentStep8 }

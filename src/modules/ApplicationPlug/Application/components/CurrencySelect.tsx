@@ -1,17 +1,17 @@
-import { CheckIcon } from "@/icons/CheckIcon";
-import cn from "classnames";
-import { FC } from "react";
-import styled from "styled-components";
+import { CheckIcon } from '@/icons/CheckIcon'
+import cn from 'classnames'
+import { FC } from 'react'
+import styled from 'styled-components'
 
 type Props = {
-  selectedOption: string;
-  setSelectedOption: (option: string) => void;
-  options: string[];
-  showDropDown?: boolean;
-  toggleDropDown?: Function;
-  optionSelection?: Function;
-  className?: string;
-};
+  selectedOption: string
+  setSelectedOption: (option: string) => void
+  options: string[]
+  showDropDown?: boolean
+  toggleDropDown?: Function
+  optionSelection?: Function
+  className?: string
+}
 
 const CurrencySelect: FC<Props> = ({
   selectedOption,
@@ -25,7 +25,7 @@ const CurrencySelect: FC<Props> = ({
     <StyledCurrencySelect className={className}>
       <div
         className={
-          showDropDown ? "CurrencySelect__menu_active" : "CurrencySelect__menu"
+          showDropDown ? 'CurrencySelect__menu_active' : 'CurrencySelect__menu'
         }
       >
         {options.map((option: string, index: number): JSX.Element => {
@@ -33,23 +33,23 @@ const CurrencySelect: FC<Props> = ({
             <div
               key={index}
               onClick={(): void => {
-                setSelectedOption(option);
+                setSelectedOption(option)
               }}
-              className={cn(`${selectedOption === option ? "selected" : ""}`)}
+              className={cn(`${selectedOption === option ? 'selected' : ''}`)}
             >
               <span className="CurrencySelect__menuItem">
                 <p className="Font_14_140">{option}</p>
                 {selectedOption === option && (
-                  <CheckIcon attr={{className: "CheckIcon_selected"}} />
+                  <CheckIcon attr={{ className: 'CheckIcon_selected' }} />
                 )}
               </span>
             </div>
-          );
+          )
         })}
       </div>
     </StyledCurrencySelect>
-  );
-};
+  )
+}
 
 const StyledCurrencySelect = styled.div`
   .CurrencySelectMenu {
@@ -115,6 +115,6 @@ const StyledCurrencySelect = styled.div`
       display: none;
     }
   }
-`;
+`
 
-export { CurrencySelect };
+export { CurrencySelect }

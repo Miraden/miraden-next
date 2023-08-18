@@ -4,8 +4,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { StyledMenu, TabMenuItem, TabsManager } from '@/components/ui/TabsMenu'
 import { MyLeadsCustomerDataProvider as DataProvider } from '@/modules/ApplicationsFull/Application/LeadCustomerDataProvider'
-import {useWindowSize} from "@/hooks/useWindowSize";
-import LangManager from "@/infrastructure/Intl/LangManager";
+import { useWindowSize } from '@/hooks/useWindowSize'
+import LangManager from '@/infrastructure/Intl/LangManager'
 
 interface ApplicationProps {
   className?: string

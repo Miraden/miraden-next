@@ -1,21 +1,21 @@
-import { Button, TextAreaInput } from "@/components/ui";
-import { TextInput } from "@/components/ui/TextInput";
-import { ArrowIcon } from "@/icons";
-import { useState } from "react";
-import styled from "styled-components";
+import { Button, TextAreaInput } from '@/components/ui'
+import { TextInput } from '@/components/ui/TextInput'
+import { ArrowIcon } from '@/icons'
+import { useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const CreateStep11 = ({ className }: Props) => {
-  const [textInputValue, setTextInputValue] = useState("");
+  const [textInputValue, setTextInputValue] = useState('')
 
   const handleTextInputChange = (event: any) => {
-    setTextInputValue(event.target.value);
-  };
+    setTextInputValue(event.target.value)
+  }
 
-  const isNextButtonDisabled = textInputValue.length === 0;
+  const isNextButtonDisabled = textInputValue.length === 0
 
   return (
     <StyledRegStep1 className={className}>
@@ -83,8 +83,8 @@ const CreateStep11 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -122,7 +122,7 @@ const StyledRegStep1 = styled.section`
     background-color: #d4ddee;
     ::after {
       position: absolute;
-      content: "";
+      content: '';
       width: 100%;
       height: 6px;
       background-color: #4e6af3;
@@ -245,6 +245,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { CreateStep11 };
+export { CreateStep11 }

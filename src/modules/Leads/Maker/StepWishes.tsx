@@ -2,7 +2,7 @@ import { TextInput } from '@/components/ui/TextInput'
 import { TextAreaInput } from '@/components/ui'
 import { useCallback, useState } from 'react'
 import styled from 'styled-components'
-import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
 
 interface Props {
   className?: string
@@ -36,7 +36,7 @@ const StepWishes = (props: Props): JSX.Element => {
 
   return (
     <StyledStep>
-      <StepCommonLayout className={"StepWishes"}>
+      <StepCommonLayout className={'StepWishes'}>
         <TextInput
           maxLength={45}
           isRequired={true}

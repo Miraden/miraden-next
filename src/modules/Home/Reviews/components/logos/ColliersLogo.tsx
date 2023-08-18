@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const ColliersLogo: FC<SVGAttributes<SVGElement>> = (props) => {
+const ColliersLogo: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="50"
@@ -81,7 +81,7 @@ const ColliersLogo: FC<SVGAttributes<SVGElement>> = (props) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export { ColliersLogo };
+export { ColliersLogo }

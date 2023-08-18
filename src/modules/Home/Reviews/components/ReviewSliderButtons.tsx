@@ -1,13 +1,13 @@
-import { SliderButton } from "@/icons";
-import { SliderButtonDisabled } from "@/icons/SliderButtonDisabled";
-import styled from "styled-components";
+import { SliderButton } from '@/icons'
+import { SliderButtonDisabled } from '@/icons/SliderButtonDisabled'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
-  currentSlide: number;
-  maxSlide: number;
-  handleClickPrevButton: () => void | undefined;
-  handleClickNextButton: () => void | undefined;
+  className?: string
+  currentSlide: number
+  maxSlide: number
+  handleClickPrevButton: () => void | undefined
+  handleClickNextButton: () => void | undefined
 }
 
 const ReviewButtons = ({
@@ -34,8 +34,8 @@ const ReviewButtons = ({
         )}
       </button>
     </StyledReviewButtons>
-  );
-};
+  )
+}
 
 const StyledReviewButtons = styled.div`
   .DisabledButton {
@@ -45,6 +45,6 @@ const StyledReviewButtons = styled.div`
   .ActiveButton__prev {
     transform: rotate(180deg);
   }
-`;
+`
 
-export { ReviewButtons };
+export { ReviewButtons }

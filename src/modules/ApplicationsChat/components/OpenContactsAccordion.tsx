@@ -1,17 +1,17 @@
-import { Link } from "@/components/ui";
-import { useControlled } from "@/hooks/useControlled";
-import { ArrowAccordionIcon } from "@/icons";
-import cn from "classnames";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { Link } from '@/components/ui'
+import { useControlled } from '@/hooks/useControlled'
+import { ArrowAccordionIcon } from '@/icons'
+import cn from 'classnames'
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
 
 type Props = {
-  expanded?: boolean;
-  className?: string;
-  onChange?: (expanded: boolean) => void;
-  defaultExpanded?: boolean;
-};
+  expanded?: boolean
+  className?: string
+  onChange?: (expanded: boolean) => void
+  defaultExpanded?: boolean
+}
 
 const OpenContactsAccordion = ({
   expanded: expandedProp,
@@ -19,30 +19,30 @@ const OpenContactsAccordion = ({
   onChange,
   defaultExpanded,
 }: Props) => {
-  const [contentHeight, setContentHeight] = useState(0);
+  const [contentHeight, setContentHeight] = useState(0)
 
   const [expanded, setExpandedState] = useControlled({
     controlled: expandedProp,
     defaultValue: defaultExpanded,
-  });
+  })
 
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null)
 
   const handleToggle = () => {
-    setExpandedState(!expanded);
+    setExpandedState(!expanded)
 
     if (onChange) {
-      onChange(!expanded);
+      onChange(!expanded)
     }
-  };
+  }
 
   useEffect(() => {
     if (expanded && contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
+      setContentHeight(contentRef.current.scrollHeight)
     } else {
-      setContentHeight(0);
+      setContentHeight(0)
     }
-  }, [expanded]);
+  }, [expanded])
 
   return (
     <StyledHeaderAccordion
@@ -59,7 +59,7 @@ const OpenContactsAccordion = ({
         <ArrowAccordionIcon
           height={20}
           width={20}
-          className={cn("Accordion__icon", {
+          className={cn('Accordion__icon', {
             Accordion__icon_rotated: expanded,
           })}
         />
@@ -89,8 +89,8 @@ const OpenContactsAccordion = ({
         </div>
       )}
     </StyledHeaderAccordion>
-  );
-};
+  )
+}
 
 const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
   cursor: pointer;
@@ -144,7 +144,7 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
   }
 
   .Accordion__contentWrapper {
-    height: ${(props) => props.contentWrapperHeight}px;
+    height: ${props => props.contentWrapperHeight}px;
     transition: height 0.175s ease;
     a {
       text-decoration: none;
@@ -223,6 +223,6 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
       flex-direction: column;
     }
   }
-`;
+`
 
-export { OpenContactsAccordion };
+export { OpenContactsAccordion }

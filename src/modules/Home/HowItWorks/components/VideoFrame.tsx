@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 interface Props {
-  videoLink: string;
-  className?: string;
+  videoLink: string
+  className?: string
 }
 
 const VideoFrame = ({ videoLink, className }: Props) => {
@@ -16,8 +16,8 @@ const VideoFrame = ({ videoLink, className }: Props) => {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       ></iframe>
     </StyledVideoFrame>
-  );
-};
+  )
+}
 
 const StyledVideoFrame = styled.div`
   position: relative;
@@ -34,6 +34,6 @@ const StyledVideoFrame = styled.div`
     border: none;
     aspect-ratio: 16 / 9;
   }
-`;
+`
 
-export { VideoFrame };
+export { VideoFrame }

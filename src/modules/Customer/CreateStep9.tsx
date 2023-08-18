@@ -1,62 +1,53 @@
-import { Button, NumberInput, RequestButton } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button, NumberInput, RequestButton } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
-type Option = "€" | "$" | "£" | "₽" | "¥" | "CHF" | "₺" | "AED";
+type Option = '€' | '$' | '£' | '₽' | '¥' | 'CHF' | '₺' | 'AED'
 
 const CreateStep9 = ({ className }: Props) => {
-  const currencyOptions: Option[] = [
-    "€",
-    "$",
-    "£",
-    "₽",
-    "¥",
-    "CHF",
-    "₺",
-    "AED",
-  ];
+  const currencyOptions: Option[] = ['€', '$', '£', '₽', '¥', 'CHF', '₺', 'AED']
 
-  const [selected, setSelected] = useState<Option | null>(currencyOptions[0]);
+  const [selected, setSelected] = useState<Option | null>(currencyOptions[0])
 
-  const [showAllOptions, setShowAllOptions] = useState(false);
-  const [maxVisible, setMaxVisible] = useState(4);
+  const [showAllOptions, setShowAllOptions] = useState(false)
+  const [maxVisible, setMaxVisible] = useState(4)
 
-  const [fromValue, setFromValue] = useState("");
-  const [toValue, setToValue] = useState("");
+  const [fromValue, setFromValue] = useState('')
+  const [toValue, setToValue] = useState('')
 
   const handleShowMore = useCallback(() => {
-    setShowAllOptions(true);
-  }, []);
+    setShowAllOptions(true)
+  }, [])
 
   const handleShowLess = useCallback(() => {
-    setShowAllOptions(false);
-  }, []);
+    setShowAllOptions(false)
+  }, [])
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+    setSelected(option)
+  }, [])
 
   const handleFromValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputFromValue = event.target.value;
+    const inputFromValue = event.target.value
     if (/^\d*$/.test(inputFromValue)) {
       // проверка вводимых символов
-      setFromValue(inputFromValue);
+      setFromValue(inputFromValue)
     }
-  };
+  }
 
   const handleToValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputToValue = event.target.value;
+    const inputToValue = event.target.value
     if (/^\d*$/.test(inputToValue)) {
       // проверка вводимых символов
-      setToValue(inputToValue);
+      setToValue(inputToValue)
     }
-  };
+  }
 
   return (
     <StyledRegStep1 className={className}>
@@ -70,7 +61,7 @@ const CreateStep9 = ({ className }: Props) => {
         </div>
         <div className="Reg__selectContainer">
           <div className="Reg__options">
-            {currencyOptions.slice(0, 4).map((option) => (
+            {currencyOptions.slice(0, 4).map(option => (
               <RequestButton
                 key={option}
                 onClick={handleShowMore}
@@ -80,7 +71,7 @@ const CreateStep9 = ({ className }: Props) => {
               </RequestButton>
             ))}
             {showAllOptions &&
-              currencyOptions.slice(4).map((option) => (
+              currencyOptions.slice(4).map(option => (
                 <RequestButton
                   key={option}
                   onClick={() => handleSelect(option)}
@@ -162,8 +153,8 @@ const CreateStep9 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -230,7 +221,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 81.81%;
       height: 6px;
       background-color: #4e6af3;
@@ -377,6 +368,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { CreateStep9 };
+export { CreateStep9 }

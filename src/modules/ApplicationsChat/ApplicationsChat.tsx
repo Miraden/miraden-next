@@ -1,28 +1,28 @@
-import { Button, Sticker } from "@/components/ui";
-import { ArrowAccordionIcon, Kebab24Icon, VerifiedIcon } from "@/icons";
-import { StarIconFilled } from "@/icons/StarIconFilled";
-import cn from "classnames";
-import Image from "next/image";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { ApplicationsFooter } from "../Base/ApplicationsFooter";
-import { ChatContainer } from "./components/ChatContainer";
-import { ChatInformation } from "./components/ChatInformation";
-import { ChatRequests } from "./components/ChatRequests";
-import { ContactInfo } from "./components/ContactInfo";
+import { Button, Sticker } from '@/components/ui'
+import { ArrowAccordionIcon, Kebab24Icon, VerifiedIcon } from '@/icons'
+import { StarIconFilled } from '@/icons/StarIconFilled'
+import cn from 'classnames'
+import Image from 'next/image'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { ApplicationsFooter } from '../Base/ApplicationsFooter'
+import { ChatContainer } from './components/ChatContainer'
+import { ChatInformation } from './components/ChatInformation'
+import { ChatRequests } from './components/ChatRequests'
+import { ContactInfo } from './components/ContactInfo'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const ApplicationsChat = () => {
-  type Option = "chat" | "contacts" | "requests" | "information";
+  type Option = 'chat' | 'contacts' | 'requests' | 'information'
 
-  const [selected, setSelected] = useState<Option | null>("contacts");
+  const [selected, setSelected] = useState<Option | null>('contacts')
 
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+    setSelected(option)
+  }, [])
 
   return (
     <StyledApplicationsChat className="ContainerFull">
@@ -32,7 +32,7 @@ const ApplicationsChat = () => {
             <div>
               <div className="ApplicationInfo__headLayout"></div>
 
-              {selected === "chat" ? (
+              {selected === 'chat' ? (
                 <div className="Application__infoChat">
                   <div className="Application__infoChatContainer">
                     <button className="ApplicationInfo__backButtonChat">
@@ -98,41 +98,41 @@ const ApplicationsChat = () => {
               <div className="ApplicationInfo__fullContainer">
                 <div className="ChatInfo__headTabs">
                   <Button
-                    className={cn("ChatTabButton", {
-                      ChatInfo__headTabButton: selected === "chat",
+                    className={cn('ChatTabButton', {
+                      ChatInfo__headTabButton: selected === 'chat',
                     })}
-                    onClick={() => handleSelect("chat")}
-                    active={selected === "chat"}
+                    onClick={() => handleSelect('chat')}
+                    active={selected === 'chat'}
                     tertiary
                   >
                     Чат
                   </Button>
                   <Button
-                    className={cn("", {
-                      ChatInfo__headTabButton: selected === "contacts",
+                    className={cn('', {
+                      ChatInfo__headTabButton: selected === 'contacts',
                     })}
-                    onClick={() => handleSelect("contacts")}
-                    active={selected === "contacts"}
+                    onClick={() => handleSelect('contacts')}
+                    active={selected === 'contacts'}
                     tertiary
                   >
                     Контакты
                   </Button>
                   <Button
-                    className={cn("", {
-                      ChatInfo__headTabButton: selected === "requests",
+                    className={cn('', {
+                      ChatInfo__headTabButton: selected === 'requests',
                     })}
-                    onClick={() => handleSelect("requests")}
-                    active={selected === "requests"}
+                    onClick={() => handleSelect('requests')}
+                    active={selected === 'requests'}
                     tertiary
                   >
                     Отзывы
                   </Button>
                   <Button
-                    className={cn("", {
-                      ChatInfo__headTabButton: selected === "information",
+                    className={cn('', {
+                      ChatInfo__headTabButton: selected === 'information',
                     })}
-                    onClick={() => handleSelect("information")}
-                    active={selected === "information"}
+                    onClick={() => handleSelect('information')}
+                    active={selected === 'information'}
                     tertiary
                   >
                     Информация
@@ -142,12 +142,12 @@ const ApplicationsChat = () => {
               </div>
             </div>
 
-            {selected === "chat" && <ChatContainer className="ChatMobile" />}
-            {selected === "contacts" && <ContactInfo className="ContactInfo" />}
-            {selected === "requests" && (
+            {selected === 'chat' && <ChatContainer className="ChatMobile" />}
+            {selected === 'contacts' && <ContactInfo className="ContactInfo" />}
+            {selected === 'requests' && (
               <ChatRequests className="ContactInfo" />
             )}
-            {selected === "information" && (
+            {selected === 'information' && (
               <ChatInformation className="ContactInfo" />
             )}
           </div>
@@ -155,12 +155,12 @@ const ApplicationsChat = () => {
 
         <ChatContainer className="Chat" />
       </div>
-      {selected === "contacts" && <ApplicationsFooter />}
-      {selected === "requests" && <ApplicationsFooter />}
-      {selected === "information" && <ApplicationsFooter />}
+      {selected === 'contacts' && <ApplicationsFooter />}
+      {selected === 'requests' && <ApplicationsFooter />}
+      {selected === 'information' && <ApplicationsFooter />}
     </StyledApplicationsChat>
-  );
-};
+  )
+}
 
 const StyledApplicationsChat = styled.section`
   margin-top: 30px;
@@ -261,7 +261,7 @@ const StyledApplicationsChat = styled.section`
       position: absolute;
       top: 32px;
       left: 0;
-      content: "";
+      content: '';
       background: #ffffff;
       width: 100%;
       height: 4px;
@@ -561,6 +561,6 @@ const StyledApplicationsChat = styled.section`
       }
     }
   }
-`;
+`
 
-export { ApplicationsChat };
+export { ApplicationsChat }

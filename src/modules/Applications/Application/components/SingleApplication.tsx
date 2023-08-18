@@ -15,8 +15,8 @@ import { theme } from '../../../../../styles/tokens'
 import { ApartmentIcon } from '@/icons/ApartmentIcon'
 import TimerIcon from '@/icons/TimerIcon'
 
-const mobile = theme.breakpoints.mobile.max + "px"
-const tablet = theme.breakpoints.tablet.max + "px"
+const mobile = theme.breakpoints.mobile.max + 'px'
+const tablet = theme.breakpoints.tablet.max + 'px'
 
 interface Location {
   id: number
@@ -85,21 +85,26 @@ let singleCost = '30'
 const SingleApplication = (props: LeadEntryStruct) => {
   const price: string = props.budget.startFrom + ' – ' + props.budget.endTo
 
-  const onHiddenButtonClick = useCallback((e: any) => {
-    const input = e.target.closest('input')
-    if(props.onHideButtonClick) props.onHideButtonClick(input.checked)
-  }, [props])
+  const onHiddenButtonClick = useCallback(
+    (e: any) => {
+      const input = e.target.closest('input')
+      if (props.onHideButtonClick) props.onHideButtonClick(input.checked)
+    },
+    [props]
+  )
 
   return (
     <StyledSingleApplication className={props.className}>
       <div className="SingleApplication__head">
         <div className="SingleApplication__headToggle">
-          {props.isHidden !== undefined && <ToggleButton
-            state={!props.isHidden}
-            disabled={false}
-            className="SingleApplication__headToggleButton"
-            onChange={onHiddenButtonClick}
-          />}
+          {props.isHidden !== undefined && (
+            <ToggleButton
+              state={!props.isHidden}
+              disabled={false}
+              className="SingleApplication__headToggleButton"
+              onChange={onHiddenButtonClick}
+            />
+          )}
           {props.isTrue && <Sticker theme="black">TRUE</Sticker>}
           <p className="Font_14_140">Заявка № {props.id}</p>
         </div>
@@ -149,11 +154,14 @@ const SingleApplication = (props: LeadEntryStruct) => {
 
       <div className="SingleApplication__structureInfo_scrollable">
         <div className="SingleApplication__structureInfo">
-
           <div className="SingleApplication__structureInfoContent">
             <div className="SingleApplication__structureInfoContent__head">
               <BuildYearIcon width={18} height={18} />
-              <div className={"Font_headline_4"}>{(props.deadlineAt)? formatDeadlineDate(props.deadlineAt) : formatDeadlineDate(props.buildYear)}</div>
+              <div className={'Font_headline_4'}>
+                {props.deadlineAt
+                  ? formatDeadlineDate(props.deadlineAt)
+                  : formatDeadlineDate(props.buildYear)}
+              </div>
             </div>
             <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
               Год постройки
@@ -163,17 +171,25 @@ const SingleApplication = (props: LeadEntryStruct) => {
           <div className="SingleApplication__structureInfoContent">
             <div className="SingleApplication__structureInfoContent__head">
               <SquareIcon width={18} height={18} />
-              <div className="Font_headline_4">{props.areas.total.value} {props.areas.total.unit}</div>
+              <div className="Font_headline_4">
+                {props.areas.total.value} {props.areas.total.unit}
+              </div>
             </div>
-            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Общая площадь</div>
+            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+              Общая площадь
+            </div>
           </div>
 
           <div className="SingleApplication__structureInfoContent">
             <div className="SingleApplication__structureInfoContent__head">
               <LivingSquareIcon width={18} height={18} />
-              <div className="Font_headline_4">{props.areas.living.value} {props.areas.living.unit}</div>
+              <div className="Font_headline_4">
+                {props.areas.living.value} {props.areas.living.unit}
+              </div>
             </div>
-            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Жилая площадь</div>
+            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+              Жилая площадь
+            </div>
           </div>
 
           <div className="SingleApplication__structureInfoContent">
@@ -181,21 +197,27 @@ const SingleApplication = (props: LeadEntryStruct) => {
               <RoomsIcon width={18} height={18} />
               <div className="Font_headline_4">{props.rooms.total}</div>
             </div>
-            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Комнат</div>
+            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+              Комнат
+            </div>
           </div>
           <div className="SingleApplication__structureInfoContent">
             <div className="SingleApplication__structureInfoContent__head">
               <RoomsIcon width={18} height={18} />
               <p className="Font_headline_4">{props.rooms.beds}</p>
             </div>
-            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Спален</div>
+            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+              Спален
+            </div>
           </div>
           <div className="SingleApplication__structureInfoContent">
             <div className="SingleApplication__structureInfoContent__head">
               <RoomsIcon width={18} height={18} />
               <div className="Font_headline_4">{props.rooms.bathroom}</div>
             </div>
-            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">Санузлов</div>
+            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+              Санузлов
+            </div>
           </div>
         </div>
       </div>
@@ -297,7 +319,10 @@ const SingleApplication = (props: LeadEntryStruct) => {
             <p>Пожелания</p>
           </div>
           <div className="SingleApplication__locationInfoText">
-            <div className="SingleApplication__locationInfo" dangerouslySetInnerHTML={{__html: props.description}}></div>
+            <div
+              className="SingleApplication__locationInfo"
+              dangerouslySetInnerHTML={{ __html: props.description }}
+            ></div>
           </div>
         </div>
       </div>

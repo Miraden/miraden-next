@@ -1,26 +1,26 @@
-import { Button } from "@/components/ui";
-import { TextInput } from "@/components/ui/TextInput";
-import { ArrowIcon } from "@/icons";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { Button } from '@/components/ui'
+import { TextInput } from '@/components/ui/TextInput'
+import { ArrowIcon } from '@/icons'
+import { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const PassRecover1 = ({ className }: Props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [valid, setValid] = useState(true);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [valid, setValid] = useState(true)
 
   useEffect(() => {
     if (email && password && newPassword) {
-      setValid(false);
+      setValid(false)
     } else {
-      setValid(true);
+      setValid(true)
     }
-  }, [email, password, newPassword]);
+  }, [email, password, newPassword])
 
   return (
     <StyledRegStep1 className={className}>
@@ -98,8 +98,8 @@ const PassRecover1 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -163,7 +163,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 50%;
       height: 6px;
       background-color: #4e6af3;
@@ -284,6 +284,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { PassRecover1 };
+export { PassRecover1 }

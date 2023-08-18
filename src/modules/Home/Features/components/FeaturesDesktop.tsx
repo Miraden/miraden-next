@@ -1,63 +1,63 @@
-import { CatalogIcon, CommunityIcon, DealsIcon, HomeIcon } from "@/icons";
-import cn from "classnames";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import {HomeIcon24} from "@/icons/HomeIcon";
-import Image from "next/image";
+import { CatalogIcon, CommunityIcon, DealsIcon, HomeIcon } from '@/icons'
+import cn from 'classnames'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { HomeIcon24 } from '@/icons/HomeIcon'
+import Image from 'next/image'
 
 interface FeatureProps {
-  className?: string;
+  className?: string
 }
 
 const options = [
   {
-    optionName: "Поиск недвижимости",
-    image1: "/images/miraden/1.png",
-    image2: "/images/miraden/2.png",
+    optionName: 'Поиск недвижимости',
+    image1: '/images/miraden/1.png',
+    image2: '/images/miraden/2.png',
     icon: <HomeIcon24 />,
-    text: "Персональный каталог объектов, собранный из предложений продавцов в реальном времени",
+    text: 'Персональный каталог объектов, собранный из предложений продавцов в реальном времени',
     id: 1,
   },
   {
-    optionName: "Биржа заявок",
-    image1: "/images/miraden/3.png",
-    image2: "/images/miraden/4.png",
+    optionName: 'Биржа заявок',
+    image1: '/images/miraden/3.png',
+    image2: '/images/miraden/4.png',
     icon: <CatalogIcon width={28} height={28} />,
-    text: "Реальные заявки на покупку или аренду недвижимости из разных стран мира",
+    text: 'Реальные заявки на покупку или аренду недвижимости из разных стран мира',
     id: 2,
   },
   {
-    optionName: "Независимые продавцы",
-    image1: "/images/miraden/5.png",
-    image2: "/images/miraden/6.png",
+    optionName: 'Независимые продавцы',
+    image1: '/images/miraden/5.png',
+    image2: '/images/miraden/6.png',
     icon: <CommunityIcon width={28} height={28} />,
-    text: "Собственники, риелторы и застройщики, готовые сделать персональное предложение",
+    text: 'Собственники, риелторы и застройщики, готовые сделать персональное предложение',
     id: 3,
   },
   {
-    optionName: "Партнерские сделки",
-    image1: "/images/miraden/7.png",
-    image2: "/images/miraden/8.png",
+    optionName: 'Партнерские сделки',
+    image1: '/images/miraden/7.png',
+    image2: '/images/miraden/8.png',
     icon: <DealsIcon width={28} height={28} />,
-    text: "Удобный сервис для прозрачной работы между застройщиками и риелторами",
+    text: 'Удобный сервис для прозрачной работы между застройщиками и риелторами',
     id: 4,
   },
-];
+]
 
 const FeaturesDesktop = ({ className }: FeatureProps) => {
-  const [activeOptionIndex, setActiveOptionIndex] = useState(0);
+  const [activeOptionIndex, setActiveOptionIndex] = useState(0)
 
   const createHandleToggleActiveOptionIndex = useCallback(
     (name: string) => () => {
       const activeOptionIndex = options.findIndex(
-        (option) => option.optionName === name
-      );
-      setActiveOptionIndex(activeOptionIndex);
+        option => option.optionName === name
+      )
+      setActiveOptionIndex(activeOptionIndex)
     },
     []
-  );
+  )
 
-  const activeOption = options[activeOptionIndex];
+  const activeOption = options[activeOptionIndex]
 
   return (
     <StyledFeaturesDesktop className={className}>
@@ -70,7 +70,7 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
                 <button
                   onClick={createHandleToggleActiveOptionIndex(optionName)}
                   key={id}
-                  className={cn("Features__tabButton", {
+                  className={cn('Features__tabButton', {
                     Features__tabButtonActive:
                       optionName === activeOption.optionName,
                     Color_tertiary: optionName !== activeOption.optionName,
@@ -78,14 +78,14 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
                 >
                   <div className="Features__tabHead">
                     <div
-                      className={cn("Features__iconContainer", {
+                      className={cn('Features__iconContainer', {
                         IconContainer: optionName == activeOption.optionName,
                       })}
                     >
                       {icon}
                     </div>
                     <h3
-                      className={cn("Font_28_120 Color_primary", {
+                      className={cn('Font_28_120 Color_primary', {
                         Color_blue_primary:
                           optionName == activeOption.optionName,
                       })}
@@ -96,7 +96,7 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
 
                   <p
                     className={cn(
-                      "Features__headDescription Font_18_150 Color_grey_dark",
+                      'Features__headDescription Font_18_150 Color_grey_dark',
                       {
                         Features__headDescriptionActive:
                           optionName == activeOption.optionName,
@@ -113,7 +113,7 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
             {options.map(({ id, image1, image2 }, index) => (
               <li
                 key={id}
-                className={cn("Features__tabContent", {
+                className={cn('Features__tabContent', {
                   Features__tabContentActive: index === activeOptionIndex,
                 })}
               >
@@ -139,8 +139,8 @@ const FeaturesDesktop = ({ className }: FeatureProps) => {
         </div>
       </div>
     </StyledFeaturesDesktop>
-  );
-};
+  )
+}
 
 const StyledFeaturesDesktop = styled.section`
   .Features {
@@ -307,6 +307,6 @@ const StyledFeaturesDesktop = styled.section`
     top: 69px;
     right: 0;
   }
-`;
+`
 
-export { FeaturesDesktop };
+export { FeaturesDesktop }

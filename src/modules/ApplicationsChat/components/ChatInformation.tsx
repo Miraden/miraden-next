@@ -1,20 +1,20 @@
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
-type Option = "contacts" | "requests" | "information";
+type Option = 'contacts' | 'requests' | 'information'
 
 const ChatInformation = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>("contacts");
+  const [selected, setSelected] = useState<Option | null>('contacts')
 
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+    setSelected(option)
+  }, [])
 
-  const [contactOpen, setContactOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false)
 
   return (
     <StyledChatInformation className={className}>
@@ -22,8 +22,8 @@ const ChatInformation = ({ className }: Props) => {
         <h2>Information</h2>
       </div>
     </StyledChatInformation>
-  );
-};
+  )
+}
 
 const StyledChatInformation = styled.div`
   background: #fff;
@@ -77,7 +77,7 @@ const StyledChatInformation = styled.div`
     ::before {
       position: absolute;
       top: 35px;
-      content: "";
+      content: '';
       background: #4e6af3;
       width: 100%;
       height: 4px;
@@ -100,6 +100,6 @@ const StyledChatInformation = styled.div`
   @media (max-width: 576px) {
     /* padding: 20px; */
   }
-`;
+`
 
-export { ChatInformation };
+export { ChatInformation }

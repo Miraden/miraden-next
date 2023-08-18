@@ -1,1 +1,1 @@
-export { FavouritesPlug } from "./FavouritesPlug";
+export { FavouritesPlug } from './FavouritesPlug'

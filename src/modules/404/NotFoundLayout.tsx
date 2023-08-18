@@ -1,6 +1,6 @@
-import { Button } from "@/components/ui";
-import Image from "next/image";
-import styled from "styled-components";
+import { Button } from '@/components/ui'
+import Image from 'next/image'
+import styled from 'styled-components'
 
 const NotFoundLayout = () => {
   return (
@@ -15,12 +15,7 @@ const NotFoundLayout = () => {
           <Button href="/" secondary compact className="NotFound__button">
             Главная страница
           </Button>
-          <Button
-            href="/leads"
-            secondary
-            compact
-            className="NotFound__button"
-          >
+          <Button href="/leads" secondary compact className="NotFound__button">
             Лента заявок
           </Button>
           <Button
@@ -34,8 +29,8 @@ const NotFoundLayout = () => {
         </div>
       </div>
     </StyledNotFoundLayout>
-  );
-};
+  )
+}
 
 const StyledNotFoundLayout = styled.div`
   margin-top: 180px;
@@ -76,6 +71,6 @@ const StyledNotFoundLayout = styled.div`
   .NotFound__button:not(:first-child) {
     margin-top: 10px;
   }
-`;
+`
 
-export { NotFoundLayout };
+export { NotFoundLayout }

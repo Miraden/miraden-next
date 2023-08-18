@@ -1,52 +1,52 @@
-import { CatalogIcon, CommunityIcon, DealsIcon, HomeIcon } from "@/icons";
-import cn from "classnames";
-import styled from "styled-components";
-import {HomeIcon24} from "@/icons/HomeIcon";
-import Image from "next/image";
-import {theme} from "../../../../../styles/tokens";
+import { CatalogIcon, CommunityIcon, DealsIcon, HomeIcon } from '@/icons'
+import cn from 'classnames'
+import styled from 'styled-components'
+import { HomeIcon24 } from '@/icons/HomeIcon'
+import Image from 'next/image'
+import { theme } from '../../../../../styles/tokens'
 
 interface FeatureProps {
-  className?: string;
+  className?: string
 }
 
 const options = [
   {
-    label: "search",
-    optionName: "Поиск недвижимости",
-    image1: "/images/miraden/1.png",
-    image2: "/images/miraden/2.png",
+    label: 'search',
+    optionName: 'Поиск недвижимости',
+    image1: '/images/miraden/1.png',
+    image2: '/images/miraden/2.png',
     icon: <HomeIcon24 />,
-    text: "Персональный каталог объектов, собранный из предложений продавцов в реальном времени",
+    text: 'Персональный каталог объектов, собранный из предложений продавцов в реальном времени',
     id: 1,
   },
   {
-    label: "leads",
-    optionName: "Биржа заявок",
-    image1: "/images/miraden/3.png",
-    image2: "/images/miraden/4.png",
+    label: 'leads',
+    optionName: 'Биржа заявок',
+    image1: '/images/miraden/3.png',
+    image2: '/images/miraden/4.png',
     icon: <CatalogIcon width={28} height={28} />,
-    text: "Реальные заявки на покупку или аренду недвижимости из разных стран мира",
+    text: 'Реальные заявки на покупку или аренду недвижимости из разных стран мира',
     id: 2,
   },
   {
-    label: "sellers",
-    optionName: "Независимые продавцы",
-    image1: "/images/miraden/5.png",
-    image2: "/images/miraden/6.png",
+    label: 'sellers',
+    optionName: 'Независимые продавцы',
+    image1: '/images/miraden/5.png',
+    image2: '/images/miraden/6.png',
     icon: <CommunityIcon width={28} height={28} />,
-    text: "Собственники, риелторы и застройщики, готовые сделать персональное предложение",
+    text: 'Собственники, риелторы и застройщики, готовые сделать персональное предложение',
     id: 3,
   },
   {
-    label: "service",
-    optionName: "Партнерские сделки",
-    image1: "/images/miraden/7.png",
-    image2: "/images/miraden/8.png",
+    label: 'service',
+    optionName: 'Партнерские сделки',
+    image1: '/images/miraden/7.png',
+    image2: '/images/miraden/8.png',
     icon: <DealsIcon width={28} height={28} />,
-    text: "Удобный сервис для прозрачной работы между застройщиками и риелторами",
+    text: 'Удобный сервис для прозрачной работы между застройщиками и риелторами',
     id: 4,
   },
-];
+]
 const FeaturesMobile = ({ className }: FeatureProps) => {
   return (
     <StyledFeaturesMobile className={className}>
@@ -55,56 +55,64 @@ const FeaturesMobile = ({ className }: FeatureProps) => {
           <div className="Features__options">
             <h2 className="Font_44_120 sm:Font_26_120 ">Miraden — это</h2>
             <div className="Features__tabs">
-              {options.map(({ id, optionName, icon, text, image1, image2, label }) => (
-                <button key={id} className={cn("Features__tabButtonActive", label)}>
-                  <div className="Features__tabHead">
-                    <div
-                      className={cn("Features__iconContainer", "IconContainer")}
-                    >
-                      {icon}
+              {options.map(
+                ({ id, optionName, icon, text, image1, image2, label }) => (
+                  <button
+                    key={id}
+                    className={cn('Features__tabButtonActive', label)}
+                  >
+                    <div className="Features__tabHead">
+                      <div
+                        className={cn(
+                          'Features__iconContainer',
+                          'IconContainer'
+                        )}
+                      >
+                        {icon}
+                      </div>
+                      <h3
+                        className={cn(
+                          'Font_28_120 Color_blue_primary sm:Font_18_120_700 Color_primary'
+                        )}
+                      >
+                        {optionName}
+                      </h3>
                     </div>
-                    <h3
+
+                    <p
                       className={cn(
-                        "Font_28_120 Color_blue_primary sm:Font_18_120_700 Color_primary"
+                        'Features__headDescriptionActive Font_18_150 sm:Font_16_24 Color_grey_dark'
                       )}
                     >
-                      {optionName}
-                    </h3>
-                  </div>
+                      {text}
+                    </p>
 
-                  <p
-                    className={cn(
-                      "Features__headDescriptionActive Font_18_150 sm:Font_16_24 Color_grey_dark"
-                    )}
-                  >
-                    {text}
-                  </p>
-
-                  <div className="Features__imagesContainer">
-                    <Image
-                      src={image1}
-                      alt=""
-                      width={312}
-                      height={657}
-                      className="Features__image1"
-                    />
-                    <Image
-                      src={image2}
-                      alt=""
-                      width={312}
-                      height={657}
-                      className="Features__image2"
-                    />
-                  </div>
-                </button>
-              ))}
+                    <div className="Features__imagesContainer">
+                      <Image
+                        src={image1}
+                        alt=""
+                        width={312}
+                        height={657}
+                        className="Features__image1"
+                      />
+                      <Image
+                        src={image2}
+                        alt=""
+                        width={312}
+                        height={657}
+                        className="Features__image2"
+                      />
+                    </div>
+                  </button>
+                )
+              )}
             </div>
           </div>
         </div>
       </div>
     </StyledFeaturesMobile>
-  );
-};
+  )
+}
 
 const StyledFeaturesMobile = styled.section`
   .Features__tabButton:nth-of-type(2n) {
@@ -266,7 +274,8 @@ const StyledFeaturesMobile = styled.section`
     padding: 15px;
   }
 
-  @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
+  @media (min-width: ${theme.breakpoints.mobile.min +
+    'px'}) and (max-width: ${theme.breakpoints.mobile.max + 'px'}) {
     .Features__iconContainer {
       padding: 10px;
       svg {
@@ -302,7 +311,6 @@ const StyledFeaturesMobile = styled.section`
       }
     }
   }
+`
 
-`;
-
-export { FeaturesMobile };
+export { FeaturesMobile }

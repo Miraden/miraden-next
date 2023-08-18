@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui";
-import { MessagesIcon, PlusIcon, StarIcon } from "@/icons";
-import { WalletIcon } from "@/icons/WalletIcon";
-import { useRouter } from "next/router";
-import styled from "styled-components";
+import { Button } from '@/components/ui'
+import { MessagesIcon, PlusIcon, StarIcon } from '@/icons'
+import { WalletIcon } from '@/icons/WalletIcon'
+import { useRouter } from 'next/router'
+import styled from 'styled-components'
 
 const HeaderUserMenu = () => {
-  const router = useRouter();
-  const currentUrl = router.pathname;
+  const router = useRouter()
+  const currentUrl = router.pathname
   return (
     <StyledHeaderUserMenu>
       <div className="HeaderUserMenu">
@@ -23,7 +23,9 @@ const HeaderUserMenu = () => {
             header
             className="HeaderUserMenu__linkButton"
             active={currentUrl === '/favorites'}
-            leftIcon={<StarIcon attr={{className: "HeaderUserMenu__favorites"}} />}
+            leftIcon={
+              <StarIcon attr={{ className: 'HeaderUserMenu__favorites' }} />
+            }
           ></Button>
           <Button
             header
@@ -42,7 +44,7 @@ const HeaderUserMenu = () => {
           >
             создать
           </Button>
-          <Button href={"/profile"} className={"UserName"}>
+          <Button href={'/profile'} className={'UserName'}>
             <div className="User Font_16_140 Color_white">
               <span>A</span>
             </div>
@@ -50,8 +52,8 @@ const HeaderUserMenu = () => {
         </div>
       </div>
     </StyledHeaderUserMenu>
-  );
-};
+  )
+}
 
 const StyledHeaderUserMenu = styled.div`
   .HeaderUserMenu,
@@ -113,6 +115,6 @@ const StyledHeaderUserMenu = styled.div`
     border-radius: 10px;
     background: #8ec2b9;
   }
-`;
+`
 
-export { HeaderUserMenu };
+export { HeaderUserMenu }

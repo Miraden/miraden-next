@@ -1,34 +1,34 @@
-import { Button, Link } from "@/components/ui";
-import { TextInput } from "@/components/ui/TextInput";
-import { ArrowIcon } from "@/icons";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { Button, Link } from '@/components/ui'
+import { TextInput } from '@/components/ui/TextInput'
+import { ArrowIcon } from '@/icons'
+import { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const RegStep2 = ({ className }: Props) => {
-  const [valid, setValid] = useState(true);
+  const [valid, setValid] = useState(true)
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
 
   function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setName(event.target.value);
+    setName(event.target.value)
   }
 
   function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setEmail(event.target.value);
+    setEmail(event.target.value)
   }
 
   useEffect(() => {
     if (name && email) {
-      setValid(true);
+      setValid(true)
     } else {
-      setValid(false);
+      setValid(false)
     }
-  }, [name, email]);
+  }, [name, email])
 
   return (
     <StyledRegStep1 className={className}>
@@ -92,8 +92,8 @@ const RegStep2 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -162,7 +162,7 @@ const StyledRegStep1 = styled.section`
     background-color: #d4ddee;
     ::after {
       position: absolute;
-      content: "";
+      content: '';
       width: 100%;
       height: 6px;
       background-color: #4e6af3;
@@ -280,6 +280,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { RegStep2 };
+export { RegStep2 }

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { useCallback, useState } from 'react'
 import { Button } from '@/components/ui'
 import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
-import {theme} from "../../../../styles/tokens";
+import { theme } from '../../../../styles/tokens'
 
 interface Props {
   className?: string
@@ -33,7 +33,7 @@ const StepFormat = (props: Props): JSX.Element => {
           compact
           onClick={() => handleSelect('buy')}
           active={selected === 'buy'}
-          className={"WideButton"}
+          className={'WideButton'}
         >
           Хочу купить
         </Button>
@@ -42,7 +42,7 @@ const StepFormat = (props: Props): JSX.Element => {
           compact
           onClick={() => handleSelect('rent')}
           active={selected === 'rent'}
-          className={"WideButton"}
+          className={'WideButton'}
         >
           Хочу арендовать
         </Button>

@@ -1,31 +1,31 @@
-import { Button, Sticker } from "@/components/ui";
-import { Kebab24Icon, VerifiedIcon } from "@/icons";
-import { InviteIcon } from "@/icons/InviteIcon";
-import { PerformerIcon } from "@/icons/PerformerIcon";
-import { RefusalIcon } from "@/icons/RefusalIcon";
-import { StarIconFilled } from "@/icons/StarIconFilled";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { InviteModal } from "./InviteModal";
-import Image from "next/image";
+import { Button, Sticker } from '@/components/ui'
+import { Kebab24Icon, VerifiedIcon } from '@/icons'
+import { InviteIcon } from '@/icons/InviteIcon'
+import { PerformerIcon } from '@/icons/PerformerIcon'
+import { RefusalIcon } from '@/icons/RefusalIcon'
+import { StarIconFilled } from '@/icons/StarIconFilled'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { InviteModal } from './InviteModal'
+import Image from 'next/image'
 
 interface SellerCardProps {
-  className?: string;
-  name?: string;
-  isPro?: boolean;
-  rating?: number;
-  isVerified?: boolean;
-  image?: any;
-  status?: string;
-  agencyName?: string;
-  isOnline?: boolean;
-  unreadMessages?: number;
-  isPerformer?: boolean;
-  isRefusal?: boolean;
-  isRecommend?: boolean;
-  onClick?: any;
-  submit?: boolean;
-  href?: string;
+  className?: string
+  name?: string
+  isPro?: boolean
+  rating?: number
+  isVerified?: boolean
+  image?: any
+  status?: string
+  agencyName?: string
+  isOnline?: boolean
+  unreadMessages?: number
+  isPerformer?: boolean
+  isRefusal?: boolean
+  isRecommend?: boolean
+  onClick?: any
+  submit?: boolean
+  href?: string
 }
 
 const SellerCard = ({
@@ -46,28 +46,28 @@ const SellerCard = ({
   submit,
   href,
 }: SellerCardProps) => {
-  const [openDropdown, setOpenDropdown] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false)
 
   const handleOpenDropdown = useCallback(() => {
-    setOpenDropdown(!openDropdown);
-  }, [openDropdown]);
+    setOpenDropdown(!openDropdown)
+  }, [openDropdown])
 
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false)
 
   const handleOpenModal = useCallback(() => {
-    setIsOpenModal(true);
-  }, []);
+    setIsOpenModal(true)
+  }, [])
 
   const handleCloseModal = useCallback(() => {
-    setIsOpenModal(false);
-  }, []);
+    setIsOpenModal(false)
+  }, [])
 
-  const [isSubmit, setIsSubmit] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false)
 
   const handleSubmit = useCallback(() => {
-    setIsSubmit(true);
-    setIsOpenModal(false);
-  }, []);
+    setIsSubmit(true)
+    setIsOpenModal(false)
+  }, [])
 
   return (
     <StyledSellerCard className={className} href={href}>
@@ -91,7 +91,7 @@ const SellerCard = ({
             <div className="SellerCard__info">
               <p className="Font_16_140">{name}</p>
               <p className="SellerCard__status Font_14_140 Color_blue_primary">
-                {status?.includes("Агентство") ? (
+                {status?.includes('Агентство') ? (
                   <>
                     {status} - {agencyName}
                   </>
@@ -179,8 +179,8 @@ const SellerCard = ({
         </div>
       </div>
     </StyledSellerCard>
-  );
-};
+  )
+}
 
 const StyledSellerCard = styled.a`
   .SellerCard__container {
@@ -331,19 +331,19 @@ const StyledSellerCard = styled.a`
       }
     }
   }
-`;
+`
 
 const SellerDropdown = ({ agencyName }: SellerCardProps) => {
   return (
     <StyledSellerDropdown>
       <div>
         <a href="" className="Font_14_140">
-          {agencyName ? agencyName : "Another link?"}
+          {agencyName ? agencyName : 'Another link?'}
         </a>
       </div>
     </StyledSellerDropdown>
-  );
-};
+  )
+}
 
 const StyledSellerDropdown = styled.div`
   position: absolute;
@@ -360,6 +360,6 @@ const StyledSellerDropdown = styled.div`
   a:hover {
     color: #4e6af3;
   }
-`;
+`
 
-export { SellerCard };
+export { SellerCard }

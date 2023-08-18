@@ -1,66 +1,70 @@
-import { Button } from "@/components/ui";
-import { PaymentButton } from "@/components/ui/PaymentButton";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button } from '@/components/ui'
+import { PaymentButton } from '@/components/ui/PaymentButton'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const paymentOptions = [
   {
-    buttonTitle: "Открыть отклик для всех",
-    buttonText: 'На заявку смогут откликнуться <br/> все пользователи, а не только PRO',
+    buttonTitle: 'Открыть отклик для всех',
+    buttonText:
+      'На заявку смогут откликнуться <br/> все пользователи, а не только PRO',
     price: 10,
   },
   {
-    buttonTitle: "Закрепить вверху на 24 часа",
+    buttonTitle: 'Закрепить вверху на 24 часа',
     buttonText:
-      "Заявка будет закреплена вверху ленты. После чего сместится вниз по мере поступления новых",
+      'Заявка будет закреплена вверху ленты. После чего сместится вниз по мере поступления новых',
     price: 15,
   },
   {
-    buttonTitle: "Поднимать каждые 3 дня",
+    buttonTitle: 'Поднимать каждые 3 дня',
     buttonText:
-      "Заявка будет автоматически подниматься в самый верх ленты каждые 3 дня",
+      'Заявка будет автоматически подниматься в самый верх ленты каждые 3 дня',
     price: 20,
   },
-];
+]
 
 const SingleApplicationSideBar = ({ className }: Props) => {
   const [activeButtons, setActiveButtons] = useState(
     paymentOptions.map((option, index) => index === 0)
-  );
-  const [error, setError] = useState(false);
+  )
+  const [error, setError] = useState(false)
 
   const handleActive = useCallback(
     (index: number) => {
-      if (index === 0) return;
-      const newActiveButtons = [...activeButtons];
-      newActiveButtons[index] = !newActiveButtons[index];
-      setActiveButtons(newActiveButtons);
-      setError(false);
+      if (index === 0) return
+      const newActiveButtons = [...activeButtons]
+      newActiveButtons[index] = !newActiveButtons[index]
+      setActiveButtons(newActiveButtons)
+      setError(false)
     },
     [activeButtons]
-  );
+  )
 
   const selectedOptions = paymentOptions.filter(
     (option, index) => index !== 0 && activeButtons[index]
-  );
+  )
 
-  const totalTax = selectedOptions.reduce((acc, option) => acc + option.price, 0);
+  const totalTax = selectedOptions.reduce(
+    (acc, option) => acc + option.price,
+    0
+  )
 
   const selectedTaxValues = paymentOptions
     .filter((option, index) => activeButtons[index])
-    .map((option) => option.price);
+    .map(option => option.price)
 
   const handleClick = () => {
     if (selectedOptions.length === 0) {
-      setError(true);
+      setError(true)
     } else {
-      setError(false);
+      setError(false)
     }
-  };
+  }
 
   return (
     <StyledSingleApplicationSideBar className={className}>
@@ -90,21 +94,25 @@ const SingleApplicationSideBar = ({ className }: Props) => {
           ))}
         </ul>
         {selectedOptions.length > 0 ? (
-            <div className="SideBar__totalTaxButton">
-              <Button onClick={handleClick}>Увеличить отклики {totalTax} €</Button>
-            </div>
+          <div className="SideBar__totalTaxButton">
+            <Button onClick={handleClick}>
+              Увеличить отклики {totalTax} €
+            </Button>
+          </div>
         ) : (
-            <div className="SideBar__totalTaxButton">
-              <Button onClick={handleClick}>Увеличить отклики </Button>
-            </div>
+          <div className="SideBar__totalTaxButton">
+            <Button onClick={handleClick}>Увеличить отклики </Button>
+          </div>
         )}
       </div>
       <div className="SideBar__section SideBar__totalTaxButton--edit">
-        <Button className="" tertiary={true}>Редактировать заявку</Button>
+        <Button className="" tertiary={true}>
+          Редактировать заявку
+        </Button>
       </div>
     </StyledSingleApplicationSideBar>
-  );
-};
+  )
+}
 const StyledSingleApplicationSideBar = styled.div`
   border-radius: 10px;
   position: relative;
@@ -199,6 +207,6 @@ const StyledSingleApplicationSideBar = styled.div`
       width: 100%;
     }
   }
-`;
+`
 
-export { SingleApplicationSideBar };
+export { SingleApplicationSideBar }

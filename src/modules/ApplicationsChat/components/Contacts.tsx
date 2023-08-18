@@ -1,17 +1,17 @@
-import { Button, Sticker } from "@/components/ui";
-import { PointIconFooter, VerifiedIcon } from "@/icons";
-import { StarIconFilled } from "@/icons/StarIconFilled";
-import Image from "next/image";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { OpenContacts } from "./OpenContacts";
+import { Button, Sticker } from '@/components/ui'
+import { PointIconFooter, VerifiedIcon } from '@/icons'
+import { StarIconFilled } from '@/icons/StarIconFilled'
+import Image from 'next/image'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { OpenContacts } from './OpenContacts'
 
 const Contacts = () => {
-  const [contactOpen, setContactOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false)
 
   const handleContactOpen = useCallback(() => {
-    setContactOpen(true);
-  }, []);
+    setContactOpen(true)
+  }, [])
 
   return (
     <StyledContacts>
@@ -66,8 +66,8 @@ const Contacts = () => {
         </div>
       )}
     </StyledContacts>
-  );
-};
+  )
+}
 
 const StyledContacts = styled.div`
   .ContactInfo {
@@ -165,6 +165,6 @@ const StyledContacts = styled.div`
       height: 64px;
     }
   }
-`;
+`
 
-export { Contacts };
+export { Contacts }

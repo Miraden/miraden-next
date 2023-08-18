@@ -1,30 +1,30 @@
-import { Button } from "@/components/ui";
-import { PhoneInput } from "@/components/ui/PhoneInput";
-import { ArrowIcon } from "@/icons";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
+import { Button } from '@/components/ui'
+import { PhoneInput } from '@/components/ui/PhoneInput'
+import { ArrowIcon } from '@/icons'
+import { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const PhoneNum1 = ({ className }: Props) => {
-  const [valid, setValid] = useState(true);
-  const [phone, setPhone] = useState("");
+  const [valid, setValid] = useState(true)
+  const [phone, setPhone] = useState('')
 
   function handlePhoneChange(event: React.ChangeEvent<HTMLInputElement>) {
-    const inputValue = event.target.value;
-    const numericValue = inputValue.replace(/\D/g, ""); // Удалить все символы, кроме цифр
-    setPhone(numericValue);
+    const inputValue = event.target.value
+    const numericValue = inputValue.replace(/\D/g, '') // Удалить все символы, кроме цифр
+    setPhone(numericValue)
   }
 
   useEffect(() => {
     if (phone) {
-      setValid(true);
+      setValid(true)
     } else {
-      setValid(false);
+      setValid(false)
     }
-  }, [phone]);
+  }, [phone])
 
   return (
     <StyledRegStep1 className={className}>
@@ -81,8 +81,8 @@ const PhoneNum1 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -139,7 +139,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 50%;
       height: 6px;
       background-color: #4e6af3;
@@ -255,6 +255,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { PhoneNum1 };
+export { PhoneNum1 }

@@ -1,34 +1,34 @@
-import { ArrowIcon } from "@/icons";
-import cn from "classnames";
-import { FC, useState } from "react";
-import styled from "styled-components";
-import { HeaderLocalizationDropdown } from "./HeaderLocalizationDropdown";
+import { ArrowIcon } from '@/icons'
+import cn from 'classnames'
+import { FC, useState } from 'react'
+import styled from 'styled-components'
+import { HeaderLocalizationDropdown } from './HeaderLocalizationDropdown'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const HeaderLocalization: FC<Props> = ({ className }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectOption, setSelectOption] = useState<string>("RU");
-  const [selectedOption, setSelectedOption] = useState<string>(selectOption);
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [selectOption, setSelectOption] = useState<string>('RU')
+  const [selectedOption, setSelectedOption] = useState<string>(selectOption)
   const options = () => {
-    return ["EN", "RU"];
-  };
+    return ['EN', 'RU']
+  }
 
   const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
-  };
+    setShowDropDown(!showDropDown)
+  }
 
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {
-      setShowDropDown(false);
+      setShowDropDown(false)
     }
-  };
+  }
   const optionSelection = (option: string, index: number): void => {
-    setSelectedOption(option);
-    setSelectOption(option);
-  };
+    setSelectedOption(option)
+    setSelectOption(option)
+  }
 
   return (
     <StyledDropdownInput
@@ -62,8 +62,8 @@ const HeaderLocalization: FC<Props> = ({ className }) => {
         )}
       </button>
     </StyledDropdownInput>
-  );
-};
+  )
+}
 
 const StyledDropdownInput = styled.div<Props>`
   max-width: fit-content;
@@ -165,6 +165,6 @@ const StyledDropdownInput = styled.div<Props>`
     background: rgba(255, 255, 255, 0.85);
     border-radius: 3px;
   }
-`;
+`
 
-export { HeaderLocalization };
+export { HeaderLocalization }

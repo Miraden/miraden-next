@@ -247,7 +247,7 @@ class LeadMakerWorkFlow {
       this.unlockNextTransition()
     }
 
-    if(this.getCurrentState() === SupportStatesEnum.PayForm) {
+    if (this.getCurrentState() === SupportStatesEnum.PayForm) {
       this.onReadyToSubmit(submitData)
     }
 

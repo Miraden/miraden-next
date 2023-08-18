@@ -10,7 +10,7 @@ import {
 } from '@/infrastructure/Network/Http/ApiRequest'
 import { LeadCard } from '@/modules/Leads/components/LeadCard'
 import Image from 'next/image'
-import {WindowSize} from "@/hooks/useWindowSize";
+import { WindowSize } from '@/hooks/useWindowSize'
 
 class MyLeadsCustomerDataProvider {
   private isFetchCompleted: boolean
@@ -23,7 +23,7 @@ class MyLeadsCustomerDataProvider {
     this.isFetchCompleted = false
     this.data = null
     this.payload = []
-    this.windowSize = {height: 0, width: 0}
+    this.windowSize = { height: 0, width: 0 }
     this.lang = ''
   }
 
@@ -108,7 +108,11 @@ function isAccessDenied(
   return false
 }
 
-function renderLead(data: Array<any>, lang: string, windowSize: WindowSize): JSX.Element {
+function renderLead(
+  data: Array<any>,
+  lang: string,
+  windowSize: WindowSize
+): JSX.Element {
   return (
     <ul className="LeadsList">
       {data.map((item, index) => (
@@ -122,7 +126,10 @@ function renderLead(data: Array<any>, lang: string, windowSize: WindowSize): JSX
             }}
             isTrue={true}
             createdAt={formatCreatedDate(item.createdAt)}
-            location={item.location.country + (item.location.city ? "/" + item.location.city : "/Все города")}
+            location={
+              item.location.country +
+              (item.location.city ? '/' + item.location.city : '/Все города')
+            }
             isPublished={true}
             type={item.type}
             status={item.status}
@@ -136,7 +143,7 @@ function renderLead(data: Array<any>, lang: string, windowSize: WindowSize): JSX
             budget={{
               currency: item.budget.currency.symbol,
               startFrom: new Intl.NumberFormat(lang).format(
-                  item.budget.startFrom
+                item.budget.startFrom
               ),
               endTo: new Intl.NumberFormat(lang).format(item.budget.endAt),
             }}
@@ -178,7 +185,7 @@ function formatCreatedDate(val: string): string {
 
 function renderEmptyLeads(): JSX.Element {
   return (
-    <div className={"LeadsList"}>
+    <div className={'LeadsList'}>
       <div className={'Leads_empty'}>
         <Image src="/images/apps/4.svg" alt="" width={200} height={200} />
         <h2>Нет заявок</h2>

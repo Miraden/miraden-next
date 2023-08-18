@@ -1,13 +1,13 @@
-import styled from "styled-components";
-import { FavouritesPlug } from "./Favourites/FavouritesPlug";
+import styled from 'styled-components'
+import { FavouritesPlug } from './Favourites/FavouritesPlug'
 
 const FavouritesPlugLayout = () => {
   return (
     <StyledFavouritesLayout className="ContainerFull">
       <FavouritesPlug className="Application" />
     </StyledFavouritesLayout>
-  );
-};
+  )
+}
 
 const StyledFavouritesLayout = styled.div`
   display: flex;
@@ -19,6 +19,6 @@ const StyledFavouritesLayout = styled.div`
       padding: 0;
     }
   }
-`;
+`
 
-export { FavouritesPlugLayout };
+export { FavouritesPlugLayout }

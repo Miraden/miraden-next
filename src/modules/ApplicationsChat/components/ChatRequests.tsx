@@ -1,7 +1,7 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const ChatRequests = ({ className }: Props) => {
@@ -11,8 +11,8 @@ const ChatRequests = ({ className }: Props) => {
         <h2>Requests</h2>
       </div>
     </StyledChatRequests>
-  );
-};
+  )
+}
 
 const StyledChatRequests = styled.div`
   background: #fff;
@@ -66,7 +66,7 @@ const StyledChatRequests = styled.div`
     ::before {
       position: absolute;
       top: 35px;
-      content: "";
+      content: '';
       background: #4e6af3;
       width: 100%;
       height: 4px;
@@ -91,6 +91,6 @@ const StyledChatRequests = styled.div`
       margin-top: 8px;
     }
   }
-`;
+`
 
-export { ChatRequests };
+export { ChatRequests }

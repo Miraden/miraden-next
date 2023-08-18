@@ -1,13 +1,13 @@
-import styled from "styled-components";
-import { ApplicationFull } from "./Application/ApplicationFull";
+import styled from 'styled-components'
+import { ApplicationFull } from './Application/ApplicationFull'
 
 const ApplicationsFullLayout = () => {
   return (
     <StyledApplicationsLayout className="ContainerFull">
       <ApplicationFull className="Application" />
     </StyledApplicationsLayout>
-  );
-};
+  )
+}
 
 const StyledApplicationsLayout = styled.div`
   display: flex;
@@ -19,6 +19,6 @@ const StyledApplicationsLayout = styled.div`
       padding: 0;
     }
   }
-`;
+`
 
-export { ApplicationsFullLayout };
+export { ApplicationsFullLayout }

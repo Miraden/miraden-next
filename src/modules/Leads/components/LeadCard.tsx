@@ -150,13 +150,17 @@ const LeadCard = (props: LeadProps) => {
       <div className="Leads__props Font_Accent_16_S">
         <p>
           <BuildingIcon />
-          <span>{(props.deadlineAt) ? formatDeadlineDate(props.deadlineAt) : props.buildYear}</span>
+          <span>
+            {props.deadlineAt
+              ? formatDeadlineDate(props.deadlineAt)
+              : props.buildYear}
+          </span>
         </p>
         <p>
           <AreaIcon />
           <span>
-              {props.areas.total} м <sup>2</sup>
-            </span>
+            {props.areas.total} м <sup>2</sup>
+          </span>
         </p>
         <p>
           <PlanningIcon />

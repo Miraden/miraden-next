@@ -1,116 +1,116 @@
-import { Button, RequestButton } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import { SetStateAction, useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button, RequestButton } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import { SetStateAction, useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
-type Option = "new" | "secondary" | "any";
+type Option = 'new' | 'secondary' | 'any'
 
 const CreateStep4Commercial = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>(null);
-  const [showAllYears, setShowAllYears] = useState(false);
-  const [showMore, setShowMore] = useState(false);
-  const [startMonth, setStartMonth] = useState<number | null>(null);
-  const [selectedRange, setSelectedRange] = useState<number[]>([]);
-  const [selectedYear, setSelectedYear] = useState();
-  const [selectedAlready, setSelectedAlready] = useState(false);
+  const [selected, setSelected] = useState<Option | null>(null)
+  const [showAllYears, setShowAllYears] = useState(false)
+  const [showMore, setShowMore] = useState(false)
+  const [startMonth, setStartMonth] = useState<number | null>(null)
+  const [selectedRange, setSelectedRange] = useState<number[]>([])
+  const [selectedYear, setSelectedYear] = useState()
+  const [selectedAlready, setSelectedAlready] = useState(false)
 
   const handleSelectAlready = useCallback(() => {
-    setSelectedAlready(!selectedAlready);
-    setSelectedRange([]);
-  }, [selectedAlready]);
+    setSelectedAlready(!selectedAlready)
+    setSelectedRange([])
+  }, [selectedAlready])
 
   const handleYearSelection = (year: any) => {
-    setSelectedYear(year);
-  };
-  const [maxVisibleMonths, setMaxVisibleMonths] = useState(18);
+    setSelectedYear(year)
+  }
+  const [maxVisibleMonths, setMaxVisibleMonths] = useState(18)
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-    setShowMore(false); // reset show more button state when new option is selected
-    setMaxVisibleMonths(18);
-  }, []);
+    setSelected(option)
+    setShowMore(false) // reset show more button state when new option is selected
+    setMaxVisibleMonths(18)
+  }, [])
 
   const handleMonthClick = (monthIndex: number) => {
     if (startMonth === null) {
       // start new range
-      setStartMonth(monthIndex);
-      setSelectedRange([monthIndex]);
-      setSelectedAlready(false);
+      setStartMonth(monthIndex)
+      setSelectedRange([monthIndex])
+      setSelectedAlready(false)
     } else {
       // continue existing range
-      const endMonth = monthIndex;
-      const rangeStart = Math.min(startMonth, endMonth);
-      const rangeEnd = Math.max(startMonth, endMonth);
-      const selectedRange: SetStateAction<number[]> = [];
+      const endMonth = monthIndex
+      const rangeStart = Math.min(startMonth, endMonth)
+      const rangeEnd = Math.max(startMonth, endMonth)
+      const selectedRange: SetStateAction<number[]> = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        selectedRange.push(i);
+        selectedRange.push(i)
       }
 
-      if (selectedRange.every((m) => selectedRange.includes(m))) {
+      if (selectedRange.every(m => selectedRange.includes(m))) {
         // update existing range
-        setSelectedRange(selectedRange);
+        setSelectedRange(selectedRange)
       } else {
         // create new range
-        setSelectedRange(selectedRange);
-        setStartMonth(null);
+        setSelectedRange(selectedRange)
+        setStartMonth(null)
       }
     }
 
     // add all months between start and end of selected range
     if (startMonth !== null && monthIndex !== startMonth) {
-      const rangeStart = Math.min(startMonth, monthIndex);
-      const rangeEnd = Math.max(startMonth, monthIndex);
-      const newRange = [];
+      const rangeStart = Math.min(startMonth, monthIndex)
+      const rangeEnd = Math.max(startMonth, monthIndex)
+      const newRange = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        newRange.push(i);
+        newRange.push(i)
       }
 
       if (
         selectedRange.length > 0 &&
-        newRange.every((m) => selectedRange.includes(m))
+        newRange.every(m => selectedRange.includes(m))
       ) {
         // update existing range
-        setSelectedRange(newRange);
+        setSelectedRange(newRange)
       } else {
         // add new range to existing range
-        setSelectedRange([...selectedRange, ...newRange]);
+        setSelectedRange([...selectedRange, ...newRange])
       }
     }
-  };
-
-  const handleShowAllYears = useCallback(() => {
-    setShowAllYears(true);
-  }, []);
-
-  const handleShowLessYears = useCallback(() => {
-    setShowAllYears(false);
-  }, []);
-
-  const handleShowMore = useCallback(() => {
-    setShowMore(true);
-    setMaxVisibleMonths(64);
-  }, []);
-
-  const handleShowLess = useCallback(() => {
-    setShowMore(false);
-    setMaxVisibleMonths(18);
-    setShowAllYears(false);
-  }, []);
-
-  const years = [];
-  const currentYear = new Date().getFullYear();
-  const minYear = currentYear - 50;
-
-  for (let year = currentYear; year >= minYear; year--) {
-    years.push(year);
   }
 
-  const visibleYears = showAllYears ? years : years.slice(0, 10);
-  const minIndex = Math.min(...selectedRange);
-  const maxIndex = Math.max(...selectedRange);
+  const handleShowAllYears = useCallback(() => {
+    setShowAllYears(true)
+  }, [])
+
+  const handleShowLessYears = useCallback(() => {
+    setShowAllYears(false)
+  }, [])
+
+  const handleShowMore = useCallback(() => {
+    setShowMore(true)
+    setMaxVisibleMonths(64)
+  }, [])
+
+  const handleShowLess = useCallback(() => {
+    setShowMore(false)
+    setMaxVisibleMonths(18)
+    setShowAllYears(false)
+  }, [])
+
+  const years = []
+  const currentYear = new Date().getFullYear()
+  const minYear = currentYear - 50
+
+  for (let year = currentYear; year >= minYear; year--) {
+    years.push(year)
+  }
+
+  const visibleYears = showAllYears ? years : years.slice(0, 10)
+  const minIndex = Math.min(...selectedRange)
+  const maxIndex = Math.max(...selectedRange)
   return (
     <StyledRegStep1 className={className}>
       <div className="Reg">
@@ -124,24 +124,24 @@ const CreateStep4Commercial = ({ className }: Props) => {
 
         <div className="Reg__options ">
           <RequestButton
-            onClick={() => handleSelect("new")}
-            active={selected === "new"}
+            onClick={() => handleSelect('new')}
+            active={selected === 'new'}
           >
             Новая
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("secondary")}
-            active={selected === "secondary"}
+            onClick={() => handleSelect('secondary')}
+            active={selected === 'secondary'}
           >
             Вторичная
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("any")}
-            active={selected === "any"}
+            onClick={() => handleSelect('any')}
+            active={selected === 'any'}
           >
             Неважно
           </RequestButton>
-          {selected === "new" && (
+          {selected === 'new' && (
             <div className="Reg__monthsContainer">
               <h2 className="Font_20_120 sm:Font_18_120_500">
                 Ввод в эксплуатацию через
@@ -154,17 +154,17 @@ const CreateStep4Commercial = ({ className }: Props) => {
                   Уже построена
                 </RequestButton>
                 {[...Array(64)].map((_, index) => {
-                  const month = index % 12;
+                  const month = index % 12
 
-                  const label = index + " мес";
+                  const label = index + ' мес'
                   if (index === 0) {
-                    return label === "уже построена";
+                    return label === 'уже построена'
                   }
                   if (index >= maxVisibleMonths) {
-                    return null;
+                    return null
                   }
 
-                  const isRanged = index > minIndex && index < maxIndex;
+                  const isRanged = index > minIndex && index < maxIndex
                   return (
                     <RequestButton
                       key={`${index}`}
@@ -174,7 +174,7 @@ const CreateStep4Commercial = ({ className }: Props) => {
                     >
                       {label}
                     </RequestButton>
-                  );
+                  )
                 })}
                 {maxVisibleMonths < 64 && (
                   <RequestButton
@@ -195,11 +195,11 @@ const CreateStep4Commercial = ({ className }: Props) => {
               </div>
             </div>
           )}
-          {selected === "secondary" && (
+          {selected === 'secondary' && (
             <div className="Reg__monthsContainer">
               <h2 className="Font_20_120 sm:Font_18_120_500">Год постройки</h2>
               <div className="Reg__months">
-                {visibleYears.map((year) => (
+                {visibleYears.map(year => (
                   <RequestButton
                     key={year}
                     active={year === selectedYear}
@@ -207,7 +207,7 @@ const CreateStep4Commercial = ({ className }: Props) => {
                   >
                     {year}
                   </RequestButton>
-                ))}{" "}
+                ))}{' '}
                 {!showAllYears && years.length > 10 && (
                   <RequestButton
                     onClick={handleShowAllYears}
@@ -261,18 +261,12 @@ const CreateStep4Commercial = ({ className }: Props) => {
                 <p className="Color_blue_primary Font_16_140">317</p>
               </div>
 
-              {selected === "secondary" ? (
-                <Button
-                  disabled={!selected}
-                  href="/lead/add/5&commercial"
-                >
+              {selected === 'secondary' ? (
+                <Button disabled={!selected} href="/lead/add/5&commercial">
                   Далее
                 </Button>
               ) : (
-                <Button
-                  disabled={!selected}
-                  href="/lead/add/5&commercial"
-                >
+                <Button disabled={!selected} href="/lead/add/5&commercial">
                   Далее
                 </Button>
               )}
@@ -281,8 +275,8 @@ const CreateStep4Commercial = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -348,7 +342,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 40%;
       height: 6px;
       background-color: #4e6af3;
@@ -489,6 +483,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { CreateStep4Commercial };
+export { CreateStep4Commercial }

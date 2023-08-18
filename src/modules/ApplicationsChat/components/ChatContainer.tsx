@@ -1,20 +1,20 @@
-import { MessageInput } from "@/components/ui";
-import Image from "next/image";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { MessageInput } from '@/components/ui'
+import Image from 'next/image'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
-  onTouchStart?: any;
-  onTouchEnd?: any;
+  className?: string
+  onTouchStart?: any
+  onTouchEnd?: any
 }
 
 const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
-  const [objectsListOpen, setObjectsListOpen] = useState(false);
+  const [objectsListOpen, setObjectsListOpen] = useState(false)
 
   const handleObjectsListOpen = useCallback(() => {
-    setObjectsListOpen(!objectsListOpen);
-  }, [objectsListOpen]);
+    setObjectsListOpen(!objectsListOpen)
+  }, [objectsListOpen])
 
   return (
     <StyledChatContainer
@@ -39,7 +39,7 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
               <div className="ChatContainer__incomingMessage Font_16_150">
                 <p>
                   Добрый день. Меня зовут Светлана, я агент по недвижимости
-                  из компании Real Home. Предлагаю на выбор несколько вариантов{" "}
+                  из компании Real Home. Предлагаю на выбор несколько вариантов{' '}
                 </p>
               </div>
             </div>
@@ -71,8 +71,8 @@ const ChatContainer = ({ className, onTouchEnd, onTouchStart }: Props) => {
         <MessageInput className="ChatContainer__messageInput" />
       </div>
     </StyledChatContainer>
-  );
-};
+  )
+}
 
 const StyledChatContainer = styled.div`
   width: 100%;
@@ -169,6 +169,6 @@ const StyledChatContainer = styled.div`
       padding-left: 15px;
     }
   }
-`;
+`
 
-export { ChatContainer };
+export { ChatContainer }

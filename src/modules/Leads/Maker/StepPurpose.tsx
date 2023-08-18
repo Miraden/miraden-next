@@ -6,7 +6,7 @@ import { Button } from '@/components/ui'
 import styled from 'styled-components'
 import { theme } from '../../../../styles/tokens'
 import { useCallback, useState } from 'react'
-import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
 
 interface Props {
   className?: string
@@ -29,7 +29,7 @@ const StepPurpose = (props: Props) => {
 
   return (
     <StyledPurpose>
-      <StepCommonLayout className={"PurposesList"}>
+      <StepCommonLayout className={'PurposesList'}>
         {LeadPurposes.map(i => (
           <Button
             request
@@ -37,7 +37,7 @@ const StepPurpose = (props: Props) => {
             key={i.label}
             onClick={e => onClick(e, i.label)}
             active={(selected as LeadPurposesEnum) === i.label}
-            className={"WideButton"}
+            className={'WideButton'}
           >
             {i.name.ru}
           </Button>
@@ -67,7 +67,6 @@ const StyledPurpose = styled.div`
       }
     }
   }
-
 `
 
 export default StepPurpose

@@ -60,7 +60,11 @@ const Favourites = ({ className }: ApplicationProps) => {
       <>{renderObjects()}</>,
       (
         <Search
-          sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
+          sort={[
+            { label: 'Сначала агентства', value: 1 },
+            { label: 'Сначала PRO', value: 2 },
+            { label: 'Сначала самые надежные', value: 3 },
+          ]}
           placeholder="Поиск"
           filterIcon={<FilterIcon />}
           withSort={true}
@@ -69,8 +73,8 @@ const Favourites = ({ className }: ApplicationProps) => {
       )
     )
   )
-  tabsManager.addItem(new TabMenuItem('Заявки', 0, <>{renderLeads()}</>,))
-  tabsManager.addItem(new TabMenuItem('Пользователи', 0, <>{renderUsers()}</>,))
+  tabsManager.addItem(new TabMenuItem('Заявки', 0, <>{renderLeads()}</>))
+  tabsManager.addItem(new TabMenuItem('Пользователи', 0, <>{renderUsers()}</>))
 
   return (
     <StyledApplication

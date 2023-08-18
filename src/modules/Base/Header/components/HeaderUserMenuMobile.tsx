@@ -1,25 +1,25 @@
-import { Button } from "@/components/ui";
-import { MessagesIcon, MiradenLogoMobile, StarIcon } from "@/icons";
-import { WalletIcon } from "@/icons/WalletIcon";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { HeaderMenu } from "./HeaderMenu";
+import { Button } from '@/components/ui'
+import { MessagesIcon, MiradenLogoMobile, StarIcon } from '@/icons'
+import { WalletIcon } from '@/icons/WalletIcon'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { HeaderMenu } from './HeaderMenu'
 
 interface Props {
   isAuth: boolean
 }
 
 const HeaderUserMenuMobile = (props: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
 
   const handleOpenMenu = useCallback(() => {
-    setIsOpen(!isOpen);
-  }, [isOpen]);
+    setIsOpen(!isOpen)
+  }, [isOpen])
 
-  const router = useRouter();
-  const currentUrl = router.pathname;
+  const router = useRouter()
+  const currentUrl = router.pathname
   return (
     <StyledHeaderUserMenuMobile>
       <Link href="/" className="HeaderMobile__logoLink">
@@ -32,14 +32,16 @@ const HeaderUserMenuMobile = (props: Props) => {
             header
             className="HeaderUserMenu__linkButton"
             leftIcon={<MessagesIcon />}
-            active={currentUrl.includes("all")}
+            active={currentUrl.includes('all')}
           ></Button>
           <Button
             header
             href="/favorites"
             className="HeaderUserMenu__linkButton"
-            leftIcon={<StarIcon attr={{className: "HeaderUserMenu__favorites"}} />}
-            active={currentUrl.includes("favourites")}
+            leftIcon={
+              <StarIcon attr={{ className: 'HeaderUserMenu__favorites' }} />
+            }
+            active={currentUrl.includes('favourites')}
           ></Button>
           <Button
             header
@@ -57,8 +59,8 @@ const HeaderUserMenuMobile = (props: Props) => {
         {isOpen && <HeaderMenu isOpen={isOpen} isAuth={props.isAuth} />}
       </div>
     </StyledHeaderUserMenuMobile>
-  );
-};
+  )
+}
 
 const StyledHeaderUserMenuMobile = styled.div`
   display: flex;
@@ -105,6 +107,6 @@ const StyledHeaderUserMenuMobile = styled.div`
     border-radius: 10px;
     background: #8ec2b9;
   }
-`;
+`
 
-export { HeaderUserMenuMobile };
+export { HeaderUserMenuMobile }

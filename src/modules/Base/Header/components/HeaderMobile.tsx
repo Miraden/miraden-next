@@ -15,13 +15,13 @@ interface Props {
 }
 
 const HeaderMobile = ({ className, isAuthorized }: Props) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const handleOpenMenu = useCallback(() => {
-    setIsOpen(!isOpen);
-  }, [isOpen]);
+    setIsOpen(!isOpen)
+  }, [isOpen])
 
-  useLockBodyScroll(isOpen);
+  useLockBodyScroll(isOpen)
 
   return (
     <StyledHeaderMobile className={className}>
@@ -35,7 +35,7 @@ const HeaderMobile = ({ className, isAuthorized }: Props) => {
               onClick={handleOpenMenu}
             >
               {isOpen ? (
-                <Cross24Icon attr={{className: "HeaderMobile__closeIcon"}} />
+                <Cross24Icon attr={{ className: 'HeaderMobile__closeIcon' }} />
               ) : (
                 <Burger24Icon />
               )}
@@ -50,7 +50,10 @@ const HeaderMobile = ({ className, isAuthorized }: Props) => {
                 <Link href="/" className="HeaderMobile__logoLink">
                   <MiradenLogoMobile />
                 </Link>
-                <Button href={"/user/login"} className="HeaderMobile__enterButton Header_nav-ready Font_12_16_600">
+                <Button
+                  href={'/user/login'}
+                  className="HeaderMobile__enterButton Header_nav-ready Font_12_16_600"
+                >
                   вход
                 </Button>
               </>
@@ -59,8 +62,8 @@ const HeaderMobile = ({ className, isAuthorized }: Props) => {
         )}
       </div>
     </StyledHeaderMobile>
-  );
-};
+  )
+}
 
 const StyledHeaderMobile = styled.header`
   overflow: hidden;
@@ -106,6 +109,6 @@ const StyledHeaderMobile = styled.header`
     text-transform: uppercase;
     position: relative;
   }
-`;
+`
 
-export { HeaderMobile };
+export { HeaderMobile }

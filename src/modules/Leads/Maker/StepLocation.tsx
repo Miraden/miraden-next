@@ -83,9 +83,7 @@ const StepLocation = (props: Props): JSX.Element => {
     [props]
   )
 
-  const onRadius = useCallback((value: number) => {
-
-  }, [])
+  const onRadius = useCallback((value: number) => {}, [])
 
   const onSearchResult = useCallback(
     (result: google.maps.GeocoderResult[] | null) => {
@@ -102,7 +100,7 @@ const StepLocation = (props: Props): JSX.Element => {
   )
 
   const onMapLoad = useCallback(() => {
-    if(props.onChanged) props.onChanged({radius: 0, countryId: 0, cityId: 0})
+    if (props.onChanged) props.onChanged({ radius: 0, countryId: 0, cityId: 0 })
   }, [props])
 
   return (
@@ -145,7 +143,11 @@ const StepLocation = (props: Props): JSX.Element => {
         )}
         {view === Views.Map && (
           <StepBlankLayout>
-            <RenderMap onLoad={onMapLoad} place={selectedPlace} onRadius={onRadius} />
+            <RenderMap
+              onLoad={onMapLoad}
+              place={selectedPlace}
+              onRadius={onRadius}
+            />
           </StepBlankLayout>
         )}
       </div>
@@ -183,7 +185,11 @@ const RenderLocations = (props: LocationsProps): JSX.Element => {
   const onCityClick = useCallback(
     (cityId: number) => {
       setSelectedCityId(cityId)
-      props.onChanged({ cityId: cityId, countryId: selectedCountryId, radius: 0 })
+      props.onChanged({
+        cityId: cityId,
+        countryId: selectedCountryId,
+        radius: 0,
+      })
     },
     [props, selectedCountryId]
   )
@@ -270,21 +276,24 @@ const RenderMap = (props: MapProps): JSX.Element => {
     if (Map) Map.setCenter(location)
   }, [Map, props.place])
 
-  const onLoad = useCallback((map: google.maps.Map) => {
-    setMap(map)
+  const onLoad = useCallback(
+    (map: google.maps.Map) => {
+      setMap(map)
 
-    const mgr: GeocoderManager = new GeocoderManager()
-    mgr.setMap(map).makeService()
-    const geo = mgr.findByQuery(DEFAULT_REGION)
-    geo?.then(res => {
-      if (res.results.length === 0) return
-      const result = res.results[0]
-      const location = result.geometry?.location
-      setPointCenter({ lat: location.lat(), lng: location.lng() })
-      map.setCenter({ lat: location.lat(), lng: location.lng() })
-      if(props.onLoad) props.onLoad()
-    })
-  }, [props])
+      const mgr: GeocoderManager = new GeocoderManager()
+      mgr.setMap(map).makeService()
+      const geo = mgr.findByQuery(DEFAULT_REGION)
+      geo?.then(res => {
+        if (res.results.length === 0) return
+        const result = res.results[0]
+        const location = result.geometry?.location
+        setPointCenter({ lat: location.lat(), lng: location.lng() })
+        map.setCenter({ lat: location.lat(), lng: location.lng() })
+        if (props.onLoad) props.onLoad()
+      })
+    },
+    [props]
+  )
 
   const onRadius = useCallback(
     (e: Forms.DropDownOption) => {

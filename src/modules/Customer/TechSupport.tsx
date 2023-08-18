@@ -1,12 +1,12 @@
-import { Button } from "@/components/ui";
-import { CrossIcon, TelegramIcon, WhatsappIcon } from "@/icons";
-import styled from "styled-components";
+import { Button } from '@/components/ui'
+import { CrossIcon, TelegramIcon, WhatsappIcon } from '@/icons'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
-  onClose?: any;
-  onTouchStart?: any;
-  onTouchEnd?: any;
+  className?: string
+  onClose?: any
+  onTouchStart?: any
+  onTouchEnd?: any
 }
 
 const TechSupport = ({
@@ -16,8 +16,8 @@ const TechSupport = ({
   onTouchEnd,
 }: Props) => {
   function handleButtonClick(event: any) {
-    event.preventDefault();
-    event.target.blur();
+    event.preventDefault()
+    event.target.blur()
   }
 
   return (
@@ -33,7 +33,9 @@ const TechSupport = ({
             onClick={onClose}
             className="TechSupport__closeButton"
           >
-            <CrossIcon attr={{width: 24, height: 24, className: "CrossIcon"}} />
+            <CrossIcon
+              attr={{ width: 24, height: 24, className: 'CrossIcon' }}
+            />
           </Button>
         </div>
         <div className="TechSupport__body">
@@ -47,15 +49,15 @@ const TechSupport = ({
             </button>
 
             <button className="TechSupport__button" onClick={handleButtonClick}>
-              <TelegramIcon attr={{ width: 42, height: 42}} />
+              <TelegramIcon attr={{ width: 42, height: 42 }} />
               <span className="Font_16_140">WhatsApp</span>
             </button>
           </div>
         </div>
       </div>
     </StyledTechSupport>
-  );
-};
+  )
+}
 
 const StyledTechSupport = styled.div`
   position: absolute;
@@ -174,6 +176,6 @@ const StyledTechSupport = styled.div`
       display: flex;
     }
   }
-`;
+`
 
-export { TechSupport };
+export { TechSupport }

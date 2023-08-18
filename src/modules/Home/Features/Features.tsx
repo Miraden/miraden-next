@@ -1,73 +1,73 @@
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { FeaturesDesktop, FeaturesMobile } from "./components";
-import {theme} from "../../../../styles/tokens";
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { FeaturesDesktop, FeaturesMobile } from './components'
+import { theme } from '../../../../styles/tokens'
 
 interface FeatureProps {
-  className?: string;
+  className?: string
 }
 
 const options = [
   {
-    optionName: "Биржа заявок",
-    image1: "./images/miraden/1.png",
-    image2: "./images/miraden/2.png",
-    icon: "./images/miraden/1.svg",
-    iconActive: "./images/miraden/1active.svg",
-    text: "Реальные заявки на покупку или аренду недвижимости из разных стран мира",
+    optionName: 'Биржа заявок',
+    image1: './images/miraden/1.png',
+    image2: './images/miraden/2.png',
+    icon: './images/miraden/1.svg',
+    iconActive: './images/miraden/1active.svg',
+    text: 'Реальные заявки на покупку или аренду недвижимости из разных стран мира',
     id: 1,
   },
   {
-    optionName: "Независимые продавцы",
-    image1: "./images/miraden/3.png",
-    image2: "./images/miraden/4.png",
-    icon: "./images/miraden/2.svg",
-    iconActive: "./images/miraden/2active.svg",
-    text: "Собственники, риелторы и застройщики, готовые сделать персональное предложение",
+    optionName: 'Независимые продавцы',
+    image1: './images/miraden/3.png',
+    image2: './images/miraden/4.png',
+    icon: './images/miraden/2.svg',
+    iconActive: './images/miraden/2active.svg',
+    text: 'Собственники, риелторы и застройщики, готовые сделать персональное предложение',
     id: 2,
   },
   {
-    optionName: "Каталог недвижимости",
-    image1: "./images/miraden/5.png",
-    image2: "./images/miraden/6.png",
-    icon: "./images/miraden/3.svg",
-    iconActive: "./images/miraden/3active.svg",
-    text: "Персональный каталог объектов, собранный из предложений продавцов в реальном времени",
+    optionName: 'Каталог недвижимости',
+    image1: './images/miraden/5.png',
+    image2: './images/miraden/6.png',
+    icon: './images/miraden/3.svg',
+    iconActive: './images/miraden/3active.svg',
+    text: 'Персональный каталог объектов, собранный из предложений продавцов в реальном времени',
     id: 3,
   },
   {
-    optionName: "Партнерские сделки",
-    image1: "./images/miraden/7.png",
-    image2: "./images/miraden/8.png",
-    icon: "./images/miraden/4.svg",
-    iconActive: "./images/miraden/4active.svg",
-    text: "Удобный сервис для прозрачной работы между застройщиками и риелторами",
+    optionName: 'Партнерские сделки',
+    image1: './images/miraden/7.png',
+    image2: './images/miraden/8.png',
+    icon: './images/miraden/4.svg',
+    iconActive: './images/miraden/4active.svg',
+    text: 'Удобный сервис для прозрачной работы между застройщиками и риелторами',
     id: 4,
   },
-];
+]
 
 const Features = ({ className }: FeatureProps) => {
-  const [activeOptionIndex, setActiveOptionIndex] = useState(0);
+  const [activeOptionIndex, setActiveOptionIndex] = useState(0)
 
   const createHandleToggleActiveOptionIndex = useCallback(
     (name: string) => () => {
       const activeOptionIndex = options.findIndex(
-        (option) => option.optionName === name
-      );
-      setActiveOptionIndex(activeOptionIndex);
+        option => option.optionName === name
+      )
+      setActiveOptionIndex(activeOptionIndex)
     },
     []
-  );
+  )
 
-  const activeOption = options[activeOptionIndex];
+  const activeOption = options[activeOptionIndex]
 
   return (
-    <StyledFeatures id={"about"}>
+    <StyledFeatures id={'about'}>
       <FeaturesDesktop className="Features__desktop" />
       <FeaturesMobile className="Features__mobile" />
     </StyledFeatures>
-  );
-};
+  )
+}
 
 const StyledFeatures = styled.section`
   padding-top: 150px;
@@ -77,7 +77,8 @@ const StyledFeatures = styled.section`
     display: none;
   }
 
-  @media (min-width: ${theme.breakpoints.tablet.min + "px"}) and (max-width: ${theme.breakpoints.tablet.max + "px"}) {
+  @media (min-width: ${theme.breakpoints.tablet.min +
+    'px'}) and (max-width: ${theme.breakpoints.tablet.max + 'px'}) {
     padding-top: 100px;
     padding-bottom: 100px;
 
@@ -90,7 +91,8 @@ const StyledFeatures = styled.section`
     }
   }
 
-  @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
+  @media (min-width: ${theme.breakpoints.mobile.min +
+    'px'}) and (max-width: ${theme.breakpoints.mobile.max + 'px'}) {
     padding-top: 100px;
     padding-bottom: 35px;
 
@@ -102,6 +104,6 @@ const StyledFeatures = styled.section`
       display: flex;
     }
   }
-`;
+`
 
-export { Features };
+export { Features }

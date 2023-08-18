@@ -1,56 +1,59 @@
-import { Button, Sticker, ToggleButton } from "@/components/ui";
-import { PricingSelect } from "@/components/ui/PricingDropdown/PricingSelect";
+import { Button, Sticker, ToggleButton } from '@/components/ui'
+import { PricingSelect } from '@/components/ui/PricingDropdown/PricingSelect'
 import {
   BuildYearIcon,
   KebabIcon,
   ListIcon,
   PointIconFooter,
   SquareIcon,
-} from "@/icons";
-import { BuildingIcon } from "@/icons/BuildingIcon";
-import { CashIcon } from "@/icons/CashIcon";
-import { CreditCardIcon } from "@/icons/CreditCardIcon";
-import { DealIcon } from "@/icons/DealIcon";
-import { EyeIcon } from "@/icons/EyeIcon";
-import { LikeIcon } from "@/icons/LikeIcon";
-import { LivingSquareIcon } from "@/icons/LivingSquareIcon";
-import { PurposeCheckIcon } from "@/icons/PurposeCheckIcon";
-import { RoomsIcon } from "@/icons/RoomsIcon";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+} from '@/icons'
+import { BuildingIcon } from '@/icons/BuildingIcon'
+import { CashIcon } from '@/icons/CashIcon'
+import { CreditCardIcon } from '@/icons/CreditCardIcon'
+import { DealIcon } from '@/icons/DealIcon'
+import { EyeIcon } from '@/icons/EyeIcon'
+import { LikeIcon } from '@/icons/LikeIcon'
+import { LivingSquareIcon } from '@/icons/LivingSquareIcon'
+import { PurposeCheckIcon } from '@/icons/PurposeCheckIcon'
+import { RoomsIcon } from '@/icons/RoomsIcon'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
-  someContent?: string;
+  className?: string
+  someContent?: string
 }
 
-const currencyOptions = ["€", "$", "£", "₽"];
+const currencyOptions = ['€', '$', '£', '₽']
 
-let price = "158 000 – 230 000 ";
-let yieldCount = 8;
-let firstInstallment = "30";
+let price = '158 000 – 230 000 '
+let yieldCount = 8
+let firstInstallment = '30'
 
-let firstInstallmentPercent = "30";
+let firstInstallmentPercent = '30'
 
-let singleCost = "30";
+let singleCost = '30'
 const SingleApplication = ({ className, someContent }: Props) => {
-  const [openDropdown, setOpenDropdown] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(false)
 
   const handleOpenDropdown = useCallback(() => {
-    setOpenDropdown(!openDropdown);
-  }, [openDropdown]);
+    setOpenDropdown(!openDropdown)
+  }, [openDropdown])
 
-  const [openText, setOpenText] = useState(false);
+  const [openText, setOpenText] = useState(false)
 
   const handleOpenText = useCallback(() => {
-    setOpenText(!openText);
-  }, [openText]);
+    setOpenText(!openText)
+  }, [openText])
 
   return (
     <StyledSingleApplication className={className}>
       <div className="SingleApplication__head">
         <div className="SingleApplication__headToggle">
-          <ToggleButton state={true} className="SingleApplication__headToggleButton" />
+          <ToggleButton
+            state={true}
+            className="SingleApplication__headToggleButton"
+          />
           <Sticker theme="black" className="SingleApplication__headSticker">
             TRUE
           </Sticker>
@@ -84,7 +87,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__pricingInfo">
           <div>
-            <ListIcon attr={{className: "ListIcon"}} />
+            <ListIcon attr={{ className: 'ListIcon' }} />
             <p className="Color_blue_primary Font_16_140">1 268</p>
           </div>
           <div>
@@ -110,14 +113,14 @@ const SingleApplication = ({ className, someContent }: Props) => {
             <p className="Font_24_120">2022</p>
             <p className="Font_16_150 Color_text_grey">Общая площадь</p>
           </div>
-        </div>{" "}
+        </div>{' '}
         <div className="SingleApplication__structureInfoContent">
           <LivingSquareIcon width={18} height={18} />
           <div>
             <p className="Font_24_120">194 м²</p>
             <p className="Font_16_150 Color_text_grey">Жилая площадь</p>
           </div>
-        </div>{" "}
+        </div>{' '}
         <div className="SingleApplication__structureInfoContent">
           <RoomsIcon width={18} height={18} />
           <div>
@@ -209,7 +212,7 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
         <div className="SingleApplication__location">
           <div>
-            <CreditCardIcon attr={{width: 18, height: 18}} />
+            <CreditCardIcon attr={{ width: 18, height: 18 }} />
             <p>Способ покупки</p>
           </div>
           <div className="SingleApplication__locationInfo">
@@ -278,8 +281,8 @@ const SingleApplication = ({ className, someContent }: Props) => {
         </div>
       </div>
     </StyledSingleApplication>
-  );
-};
+  )
+}
 
 const StyledSingleApplication = styled.div`
   background: #ffffff;
@@ -453,19 +456,19 @@ const StyledSingleApplication = styled.div`
       padding-left: 10px;
     }
   }
-`;
+`
 
 const SingleApplicationDropdown = ({ someContent }: Props) => {
   return (
     <StyledSingleApplicationDropdown>
       <div>
         <a href="" className="Font_12_16">
-          {someContent ? someContent : "Какой-то контент"}
+          {someContent ? someContent : 'Какой-то контент'}
         </a>
       </div>
     </StyledSingleApplicationDropdown>
-  );
-};
+  )
+}
 
 const StyledSingleApplicationDropdown = styled.div`
   position: absolute;
@@ -479,6 +482,6 @@ const StyledSingleApplicationDropdown = styled.div`
   a:hover {
     color: #4e6af3;
   }
-`;
+`
 
-export { SingleApplication };
+export { SingleApplication }

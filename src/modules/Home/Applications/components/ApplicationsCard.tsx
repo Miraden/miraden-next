@@ -1,25 +1,25 @@
-import { Button, Sticker } from "@/components/ui";
+import { Button, Sticker } from '@/components/ui'
 import {
   BathsIcon,
   BuildYearIcon,
   PointIconFooter,
   SleepsIcon,
   SquareIcon,
-} from "@/icons";
-import styled from "styled-components";
+} from '@/icons'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
-  title: string;
-  location: string;
-  year: number;
-  square: number;
-  sleeps: number;
-  baths: number;
-  price: string;
-  application: any;
-  createdAt: string;
-  href: string;
+  className?: string
+  title: string
+  location: string
+  year: number
+  square: number
+  sleeps: number
+  baths: number
+  price: string
+  application: any
+  createdAt: string
+  href: string
 }
 
 const ApplicationsCard = ({
@@ -76,8 +76,8 @@ const ApplicationsCard = ({
         </div>
       </div>
     </StyledApplicationsCard>
-  );
-};
+  )
+}
 
 const StyledApplicationsCard = styled.a`
   background: #fff;
@@ -157,6 +157,6 @@ const StyledApplicationsCard = styled.a`
       padding: 10px 20px;
     }
   }
-`;
+`
 
-export { ApplicationsCard };
+export { ApplicationsCard }

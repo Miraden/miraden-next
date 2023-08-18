@@ -1,81 +1,81 @@
-import {Button, RequestButton} from "@/components/ui";
-import { useKeenSlider } from "keen-slider/react";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { ReviewCard } from "./components/ReviewCard";
-import { ReviewButtons } from "./components/ReviewSliderButtons";
-import { BerkshireLogo } from "./components/logos/BerkshireLogo";
-import { BetterHomesLogo } from "./components/logos/BetterHomesLogo";
-import { CenturyLogo } from "./components/logos/CenturyLogo";
-import { ColdwellLogo } from "./components/logos/ColdwellLogo";
-import { CrbeLogo } from "./components/logos/CrbeLogo";
-import { CushmanLogo } from "./components/logos/CushmanLogo";
-import { JllLogo } from "./components/logos/JllLogo";
-import { KnightLogo } from "./components/logos/KnightLogo";
-import { LevelsLogo } from "./components/logos/LevelsLogo";
-import { RealtyLogo } from "./components/logos/RealtyLogo";
-import { RemaxLogo } from "./components/logos/RemaxLogo";
-import { SothebysLogo } from "./components/logos/SothebysLogo";
-import {theme} from "../../../../styles/tokens";
+import { Button, RequestButton } from '@/components/ui'
+import { useKeenSlider } from 'keen-slider/react'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { ReviewCard } from './components/ReviewCard'
+import { ReviewButtons } from './components/ReviewSliderButtons'
+import { BerkshireLogo } from './components/logos/BerkshireLogo'
+import { BetterHomesLogo } from './components/logos/BetterHomesLogo'
+import { CenturyLogo } from './components/logos/CenturyLogo'
+import { ColdwellLogo } from './components/logos/ColdwellLogo'
+import { CrbeLogo } from './components/logos/CrbeLogo'
+import { CushmanLogo } from './components/logos/CushmanLogo'
+import { JllLogo } from './components/logos/JllLogo'
+import { KnightLogo } from './components/logos/KnightLogo'
+import { LevelsLogo } from './components/logos/LevelsLogo'
+import { RealtyLogo } from './components/logos/RealtyLogo'
+import { RemaxLogo } from './components/logos/RemaxLogo'
+import { SothebysLogo } from './components/logos/SothebysLogo'
+import { theme } from '../../../../styles/tokens'
 
 const reviews = [
   {
-    name: "Анна Петрова",
-    role: "Клиент",
-    title: "Меня приятно удивил персональный каталог",
-    text: "Изначально думала что это портал зарубежной недвижимости, но оказалось что это что-то новое ). Оставила заявки на подбор объектов неделю назад, но до сих пор мне каждый день поступают новые интересные предложения от продавцов. ",
-    image: "/images/user_01.jpg",
+    name: 'Анна Петрова',
+    role: 'Клиент',
+    title: 'Меня приятно удивил персональный каталог',
+    text: 'Изначально думала что это портал зарубежной недвижимости, но оказалось что это что-то новое ). Оставила заявки на подбор объектов неделю назад, но до сих пор мне каждый день поступают новые интересные предложения от продавцов. ',
+    image: '/images/user_01.jpg',
     isVerified: true,
-    isPro: false
+    isPro: false,
   },
   {
-    name: "Андрей Макеев",
-    role: "Клиент",
-    title: "Доволен работой сервиса",
-    text: "Я очень доволен, что на этом сайте познакомился с риэлтором Daniil Velnekov. Он оказал полное сопровождение в поиске и аренде 3-х комнатной виллы на Бали. Если ищите недвижимость за границей, значит вы по адресу!",
-    image: "/images/user_02.jpg",
+    name: 'Андрей Макеев',
+    role: 'Клиент',
+    title: 'Доволен работой сервиса',
+    text: 'Я очень доволен, что на этом сайте познакомился с риэлтором Daniil Velnekov. Он оказал полное сопровождение в поиске и аренде 3-х комнатной виллы на Бали. Если ищите недвижимость за границей, значит вы по адресу!',
+    image: '/images/user_02.jpg',
     isVerified: false,
-    isPro: true
+    isPro: true,
   },
   {
-    name: "Екатерина Цюпка",
-    role: "Клиент",
-    title: "Предоставили широкий выбор недвижимости в Черногории.",
-    text: "Узнала о сайте от знакомых. У меня остались хорошие впечатления после использования этого сервиса. Получила больше 30 вариантов недвижимости от разных агентов и собственников. На каждой странице недвижимости есть подробная информация, фото, видео и удобный чат с продавцами.",
-    image: "/images/user_03.jpg",
-    rating: "5.0",
+    name: 'Екатерина Цюпка',
+    role: 'Клиент',
+    title: 'Предоставили широкий выбор недвижимости в Черногории.',
+    text: 'Узнала о сайте от знакомых. У меня остались хорошие впечатления после использования этого сервиса. Получила больше 30 вариантов недвижимости от разных агентов и собственников. На каждой странице недвижимости есть подробная информация, фото, видео и удобный чат с продавцами.',
+    image: '/images/user_03.jpg',
+    rating: '5.0',
     isVerified: true,
-    isPro: true
+    isPro: true,
   },
   {
-    name: "Светлана Гридасова",
-    role: "Клиент",
-    title: "Нашла студию в Дубае!",
-    text: "Хороший портал по поиску агентов, застройщиков и самой недвижимости. Хочу отметить то, что объекты продавцов можно удобно отфильтровать, чтобы найти подходящий вариант... Также я была довольна работой агентства, которое нашла на сайте. Спасибо Lihoms!!!",
-    image: "/images/user_04.jpg",
-    rating: "4.9",
+    name: 'Светлана Гридасова',
+    role: 'Клиент',
+    title: 'Нашла студию в Дубае!',
+    text: 'Хороший портал по поиску агентов, застройщиков и самой недвижимости. Хочу отметить то, что объекты продавцов можно удобно отфильтровать, чтобы найти подходящий вариант... Также я была довольна работой агентства, которое нашла на сайте. Спасибо Lihoms!!!',
+    image: '/images/user_04.jpg',
+    rating: '4.9',
     isVerified: false,
-    isPro: true
+    isPro: true,
   },
   {
-    name: "Евгений Поляков",
-    role: "Клиент",
-    title: "Спасибо за удобный сервис поиска недвижимости",
-    text: "Искал апартаменты на С. Кипре для инвестиций. Miraden оказался тем сайтом, где я получил больше всего предложений и быстро нашел то, что надо! Еще хочу отметить работу поддержки. Возникли вопросы по оплате брони, но мне быстро ответили и помогли.",
-    image: "/images/user_05.jpg",
+    name: 'Евгений Поляков',
+    role: 'Клиент',
+    title: 'Спасибо за удобный сервис поиска недвижимости',
+    text: 'Искал апартаменты на С. Кипре для инвестиций. Miraden оказался тем сайтом, где я получил больше всего предложений и быстро нашел то, что надо! Еще хочу отметить работу поддержки. Возникли вопросы по оплате брони, но мне быстро ответили и помогли.',
+    image: '/images/user_05.jpg',
     isVerified: false,
-    isPro: false
+    isPro: false,
   },
   {
-    name: "Александр Антонов",
-    role: "Клиент",
-    title: "Нашел участок на Пхукете с шикарным видом!",
-    text: "Понравилось то, что можно оставить заявку с подробным описанием один раз и больше не тратить время на одинаковые разговоры. Причем размещение заявки бесплатно, но я заказал дополнительную рекламу и это дало свой результат!",
-    image: "/images/user_06.jpg",
+    name: 'Александр Антонов',
+    role: 'Клиент',
+    title: 'Нашел участок на Пхукете с шикарным видом!',
+    text: 'Понравилось то, что можно оставить заявку с подробным описанием один раз и больше не тратить время на одинаковые разговоры. Причем размещение заявки бесплатно, но я заказал дополнительную рекламу и это дало свой результат!',
+    image: '/images/user_06.jpg',
     isVerified: true,
-    isPro: true
-  }
-];
+    isPro: true,
+  },
+]
 
 const agecnyReviews = [
   { logo: <RemaxLogo /> },
@@ -90,11 +90,11 @@ const agecnyReviews = [
   { logo: <BerkshireLogo /> },
   { logo: <CushmanLogo /> },
   { logo: <RealtyLogo /> },
-];
+]
 
 const Reviews = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [maxSlide, setMaxSlide] = useState(reviews.length);
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [maxSlide, setMaxSlide] = useState(reviews.length)
   const [sliderRef, instanceRef] = useKeenSlider({
     loop: false,
     slides: {
@@ -102,49 +102,49 @@ const Reviews = () => {
       spacing: 30,
     },
     slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
-      setMaxSlide(slider.track.details.maxIdx);
+      setCurrentSlide(slider.track.details.rel)
+      setMaxSlide(slider.track.details.maxIdx)
     },
     breakpoints: {
-      "(max-width: 1280px)": {
+      '(max-width: 1280px)': {
         slides: {
           perView: 2,
           spacing: 24,
         },
       },
-      "(max-width: 1024px)": {
+      '(max-width: 1024px)': {
         slides: {
           perView: 1.83,
           spacing: 12,
         },
       },
-      "(max-width: 767px)": {
+      '(max-width: 767px)': {
         slides: {
           perView: 1.04,
           spacing: 12,
         },
       },
     },
-  });
+  })
 
   const handleClickPrevButton = useCallback(
     () => instanceRef.current?.prev(),
     [instanceRef]
-  );
+  )
   const handleClickNextButton = useCallback(
     () => instanceRef.current?.next(),
     [instanceRef]
-  );
+  )
 
-  const [isAgency, setIsAgency] = useState(false);
+  const [isAgency, setIsAgency] = useState(false)
 
   const handleClickAgency = useCallback(() => {
-    setIsAgency(true);
-  }, []);
+    setIsAgency(true)
+  }, [])
 
   const handleClickClient = useCallback(() => {
-    setIsAgency(false);
-  }, []);
+    setIsAgency(false)
+  }, [])
 
   return (
     <StyledReviews>
@@ -214,8 +214,8 @@ const Reviews = () => {
         </div>
       </div>
     </StyledReviews>
-  );
-};
+  )
+}
 
 const StyledReviews = styled.section`
   padding-left: 20px;
@@ -312,7 +312,8 @@ const StyledReviews = styled.section`
     transform: rotate(180deg);
   }
 
-  @media (min-width: ${theme.breakpoints.tablet.min + "px"}) and (max-width: ${theme.breakpoints.tablet.max + "px"}) {
+  @media (min-width: ${theme.breakpoints.tablet.min +
+    'px'}) and (max-width: ${theme.breakpoints.tablet.max + 'px'}) {
     margin-top: 0;
 
     .Reviews__head {
@@ -344,7 +345,6 @@ const StyledReviews = styled.section`
     .Reviews__agencys {
       grid-gap: 10px;
     }
-
   }
 
   @media (max-width: 960px) {
@@ -377,7 +377,8 @@ const StyledReviews = styled.section`
     }
   }
 
-  @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
+  @media (min-width: ${theme.breakpoints.mobile.min +
+    'px'}) and (max-width: ${theme.breakpoints.mobile.max + 'px'}) {
     padding-top: 65px;
     margin-top: 0;
 
@@ -409,6 +410,6 @@ const StyledReviews = styled.section`
       padding-bottom: 20px;
     }
   }
-`;
+`
 
-export { Reviews };
+export { Reviews }

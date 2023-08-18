@@ -13,6 +13,6 @@ export namespace GoogleApi {
   }
 
   export function isMapLoaded(): boolean {
-    return window.google !== undefined;
+    return window.google !== undefined
   }
 }

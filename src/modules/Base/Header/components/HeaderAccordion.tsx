@@ -1,17 +1,17 @@
-import { useControlled } from "@/hooks/useControlled";
-import { ArrowAccordionIcon } from "@/icons";
-import cn from "classnames";
-import { useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { useControlled } from '@/hooks/useControlled'
+import { ArrowAccordionIcon } from '@/icons'
+import cn from 'classnames'
+import { useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
 
 type Props = {
-  expanded?: boolean;
-  className?: string;
-  onChange?: (expanded: boolean) => void;
-  children: any;
-  title?: string;
-  defaultExpanded?: boolean;
-};
+  expanded?: boolean
+  className?: string
+  onChange?: (expanded: boolean) => void
+  children: any
+  title?: string
+  defaultExpanded?: boolean
+}
 
 const HeaderAccordion = ({
   expanded: expandedProp,
@@ -21,30 +21,30 @@ const HeaderAccordion = ({
   defaultExpanded,
   title,
 }: Props) => {
-  const [contentHeight, setContentHeight] = useState(0);
+  const [contentHeight, setContentHeight] = useState(0)
 
   const [expanded, setExpandedState] = useControlled({
     controlled: expandedProp,
     defaultValue: defaultExpanded,
-  });
+  })
 
-  const contentRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null)
 
   const handleToggle = () => {
-    setExpandedState(!expanded);
+    setExpandedState(!expanded)
 
     if (onChange) {
-      onChange(!expanded);
+      onChange(!expanded)
     }
-  };
+  }
 
   useEffect(() => {
     if (expanded && contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
+      setContentHeight(contentRef.current.scrollHeight)
     } else {
-      setContentHeight(0);
+      setContentHeight(0)
     }
-  }, [expanded]);
+  }, [expanded])
 
   return (
     <StyledHeaderAccordion
@@ -53,14 +53,14 @@ const HeaderAccordion = ({
     >
       <div className="Accordion__head" onClick={handleToggle}>
         <div className="Accordion__title">
-          <h3 className={cn("Font_12_16_600", { Color_white: expanded })}>
+          <h3 className={cn('Font_12_16_600', { Color_white: expanded })}>
             {title}
           </h3>
         </div>
         <ArrowAccordionIcon
           height={20}
           width={20}
-          className={cn("Accordion__icon", {
+          className={cn('Accordion__icon', {
             Accordion__icon_rotated: expanded,
           })}
         />
@@ -74,8 +74,8 @@ const HeaderAccordion = ({
         </div>
       </div>
     </StyledHeaderAccordion>
-  );
-};
+  )
+}
 
 const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
   cursor: pointer;
@@ -99,7 +99,7 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
   }
 
   .Accordion__contentWrapper {
-    height: ${(props) => props.contentWrapperHeight}px;
+    height: ${props => props.contentWrapperHeight}px;
 
     transition: height 0.175s ease;
 
@@ -141,6 +141,6 @@ const StyledHeaderAccordion = styled.div<{ contentWrapperHeight: number }>`
       }
     }
   }
-`;
+`
 
-export { HeaderAccordion };
+export { HeaderAccordion }

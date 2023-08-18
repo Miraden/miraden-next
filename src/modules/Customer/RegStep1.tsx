@@ -1,20 +1,20 @@
-import { Button, Link, RequestButton } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button, Link, RequestButton } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
-type Option = "client" | "owner" | "realtor" | "agency" | "developer";
+type Option = 'client' | 'owner' | 'realtor' | 'agency' | 'developer'
 
 const RegStep1 = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>(null);
+  const [selected, setSelected] = useState<Option | null>(null)
 
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+    setSelected(option)
+  }, [])
 
   return (
     <StyledRegStep1 className={className}>
@@ -35,32 +35,32 @@ const RegStep1 = ({ className }: Props) => {
 
         <div className="Reg__options">
           <RequestButton
-            onClick={() => handleSelect("client")}
-            active={selected === "client"}
+            onClick={() => handleSelect('client')}
+            active={selected === 'client'}
           >
             Клиент (ищу для себя)
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("owner")}
-            active={selected === "owner"}
+            onClick={() => handleSelect('owner')}
+            active={selected === 'owner'}
           >
             Собственник
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("realtor")}
-            active={selected === "realtor"}
+            onClick={() => handleSelect('realtor')}
+            active={selected === 'realtor'}
           >
             Риелтор
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("agency")}
-            active={selected === "agency"}
+            onClick={() => handleSelect('agency')}
+            active={selected === 'agency'}
           >
             Агентство недвижимости
           </RequestButton>
           <RequestButton
-            onClick={() => handleSelect("developer")}
-            active={selected === "developer"}
+            onClick={() => handleSelect('developer')}
+            active={selected === 'developer'}
           >
             Застройщик
           </RequestButton>
@@ -93,8 +93,8 @@ const RegStep1 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -144,7 +144,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 50%;
       height: 6px;
       background-color: #4e6af3;
@@ -264,6 +264,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { RegStep1, type Option };
+export { RegStep1, type Option }

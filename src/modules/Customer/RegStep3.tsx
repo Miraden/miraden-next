@@ -1,9 +1,9 @@
-import { Button, Link } from "@/components/ui";
-import Image from "next/image";
-import styled from "styled-components";
+import { Button, Link } from '@/components/ui'
+import Image from 'next/image'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const RegStep3 = ({ className }: Props) => {
@@ -21,8 +21,8 @@ const RegStep3 = ({ className }: Props) => {
           <Image src="/images/SuccesReg.svg" alt="" width={150} height={120} />
           <h2 className="Font_20_120">Вы отлично справились с регистрацией!</h2>
           <span className="Font_16_24 Color_text_grey">
-            На вашу почту{" "}
-            <span className="Color_blue_primary">info@miraden.com</span>{" "}
+            На вашу почту{' '}
+            <span className="Color_blue_primary">info@miraden.com</span>{' '}
             отправлен пароль
           </span>
           <Link
@@ -48,8 +48,8 @@ const RegStep3 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -214,6 +214,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { RegStep3 };
+export { RegStep3 }

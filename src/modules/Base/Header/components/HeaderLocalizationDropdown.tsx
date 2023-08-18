@@ -1,17 +1,17 @@
-import { CheckIcon } from "@/icons/CheckIcon";
-import cn from "classnames";
-import { FC } from "react";
-import styled from "styled-components";
+import { CheckIcon } from '@/icons/CheckIcon'
+import cn from 'classnames'
+import { FC } from 'react'
+import styled from 'styled-components'
 
 type Props = {
-  selectedOption: string;
-  setSelectedOption: (option: string) => void;
-  options: string[];
-  showDropDown: boolean;
-  toggleDropDown: Function;
-  optionSelection: Function;
-  className?: string;
-};
+  selectedOption: string
+  setSelectedOption: (option: string) => void
+  options: string[]
+  showDropDown: boolean
+  toggleDropDown: Function
+  optionSelection: Function
+  className?: string
+}
 
 const HeaderLocalizationDropdown: FC<Props> = ({
   selectedOption,
@@ -26,8 +26,8 @@ const HeaderLocalizationDropdown: FC<Props> = ({
       <div
         className={
           showDropDown
-            ? "HeaderLocalizationDropdown__menu_active"
-            : "HeaderLocalizationDropdown__menu"
+            ? 'HeaderLocalizationDropdown__menu_active'
+            : 'HeaderLocalizationDropdown__menu'
         }
       >
         {options.map((option: string, index: number): JSX.Element => {
@@ -35,23 +35,23 @@ const HeaderLocalizationDropdown: FC<Props> = ({
             <div
               key={index}
               onClick={(): void => {
-                setSelectedOption(option);
+                setSelectedOption(option)
               }}
-              className={cn(`${selectedOption === option ? "selected" : ""}`)}
+              className={cn(`${selectedOption === option ? 'selected' : ''}`)}
             >
               <span className="HeaderLocalizationDropdown__menuItem">
                 <p className="Font_14_140">{option}</p>
                 {selectedOption === option && (
-                  <CheckIcon attr={{className: "CheckIcon_selected"}} />
+                  <CheckIcon attr={{ className: 'CheckIcon_selected' }} />
                 )}
               </span>
             </div>
-          );
+          )
         })}
       </div>
     </StyledHeaderLocalizationDropdown>
-  );
-};
+  )
+}
 
 const StyledHeaderLocalizationDropdown = styled.div`
   .HeaderLocalizationDropdownMenu {
@@ -117,6 +117,6 @@ const StyledHeaderLocalizationDropdown = styled.div`
       display: none;
     }
   }
-`;
+`
 
-export { HeaderLocalizationDropdown };
+export { HeaderLocalizationDropdown }

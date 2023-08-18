@@ -43,7 +43,7 @@ class LeadEntryProvider {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    if(localStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
       headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
     }
 
@@ -259,14 +259,16 @@ class LeadEntryProvider {
 
     return (
       <SingleApplication
-        className={"PageLead"}
+        className={'PageLead'}
         id={this.payload.id}
         isTrue={this.payload.isTrue}
         createdAt={formatCreatedDate(this.payload.createdAt)}
         location={{
           id: 0,
-          city: (this.payload.location.city ? "/" + this.payload.location.city : "Все города"),
-          country: this.payload.location.country
+          city: this.payload.location.city
+            ? '/' + this.payload.location.city
+            : 'Все города',
+          country: this.payload.location.country,
         }}
         format={this.payload.format}
         type={this.payload.type}

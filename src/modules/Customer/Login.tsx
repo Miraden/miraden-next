@@ -1,18 +1,18 @@
-import {Button, Link, PasswordInput} from "@/components/ui";
-import {TextInput} from "@/components/ui/TextInput";
-import {ArrowIcon, ShowPassIcon} from "@/icons";
-import React, {useEffect, useState} from "react";
-import styled from "styled-components";
+import { Button, Link, PasswordInput } from '@/components/ui'
+import { TextInput } from '@/components/ui/TextInput'
+import { ArrowIcon, ShowPassIcon } from '@/icons'
+import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 import {
   ApiRequest,
   ApiRequestMethods,
-} from "@/infrastructure/Network/Http/ApiRequest";
-import AuthManager from "@/modules/Security/Authentication/AuthManager";
-import {HttpCodes} from "@/infrastructure/Network/Http/ApiResponse";
-import Form from "@/components/ui/Form";
+} from '@/infrastructure/Network/Http/ApiRequest'
+import AuthManager from '@/modules/Security/Authentication/AuthManager'
+import { HttpCodes } from '@/infrastructure/Network/Http/ApiResponse'
+import Form from '@/components/ui/Form'
 
 interface Props {
-  className?: string;
+  className?: string
   onSuccess?: Function
   onFailure?: Function
   onResponse?: Function
@@ -20,22 +20,21 @@ interface Props {
 
 const authManager = new AuthManager()
 
-const Login = ({className, onFailure, onResponse, onSuccess}: Props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [valid, setValid] = useState(false);
+const Login = ({ className, onFailure, onResponse, onSuccess }: Props) => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [valid, setValid] = useState(false)
   const [isLoginHasError, setLoginHasErrors] = useState(false)
 
   useEffect(() => {
     if (email && password) {
-      setValid(false);
+      setValid(false)
     } else {
-      setValid(true);
+      setValid(true)
     }
-  }, [email, password]);
+  }, [email, password])
 
   function onPasswordChange(event: React.ChangeEvent<HTMLInputElement>): void {
-
     setPassword(event.target.value)
     setLoginHasErrors(false)
   }
@@ -54,38 +53,43 @@ const Login = ({className, onFailure, onResponse, onSuccess}: Props) => {
     }
     const data: string = new URLSearchParams({
       email: email,
-      password: password
+      password: password,
     }).toString()
 
     const result = apiRequest.fetch({
       method: ApiRequestMethods.POST,
       headers: headers,
       body: data,
-      endpoint: "/user/login"
+      endpoint: '/user/login',
     })
 
-    result.then(async (res) => {
-      const responseModule = (await import('@/infrastructure/Network/Http/ApiResponse')).ApiResponse
-      const ApiResponse = new responseModule()
-      const a = ApiResponse.makeFromObject(res)
-      if(onResponse) onResponse()
-      if (a.code === HttpCodes.OK) {
-        setLoginHasErrors(false)
-        // @ts-ignore
-        authManager.authUser(a.payload.token)
-        if(onSuccess) onSuccess()
-        return
-      }
-      if(onFailure) onFailure()
-      setLoginHasErrors(true)
-    }).catch((reason) => {
-      if(onFailure) onFailure()
-      setLoginHasErrors(true)
-      setFormSubmitted(false)
-    }).finally(() => {
-      if(onSuccess) onSuccess()
-      setFormSubmitted(false)
-    })
+    result
+      .then(async res => {
+        const responseModule = (
+          await import('@/infrastructure/Network/Http/ApiResponse')
+        ).ApiResponse
+        const ApiResponse = new responseModule()
+        const a = ApiResponse.makeFromObject(res)
+        if (onResponse) onResponse()
+        if (a.code === HttpCodes.OK) {
+          setLoginHasErrors(false)
+          // @ts-ignore
+          authManager.authUser(a.payload.token)
+          if (onSuccess) onSuccess()
+          return
+        }
+        if (onFailure) onFailure()
+        setLoginHasErrors(true)
+      })
+      .catch(reason => {
+        if (onFailure) onFailure()
+        setLoginHasErrors(true)
+        setFormSubmitted(false)
+      })
+      .finally(() => {
+        if (onSuccess) onSuccess()
+        setFormSubmitted(false)
+      })
   }
 
   return (
@@ -106,27 +110,31 @@ const Login = ({className, onFailure, onResponse, onSuccess}: Props) => {
         </div>
         <div className="Reg__options">
           <Form
-            name={"Login_form"}
+            name={'Login_form'}
             method={ApiRequestMethods.POST}
-            action='/'
+            action="/"
             className="form__login"
             isSubmitted={isFormSubmitted}
           >
             <TextInput
-              className={"Reg__email"}
-              name={"Login_form[email]"}
+              className={'Reg__email'}
+              name={'Login_form[email]'}
               isRequired={true}
-              label={"Электронная почта"}
+              label={'Электронная почта'}
               values={email}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => onEmailChange(event)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                onEmailChange(event)
+              }
             />
 
             <PasswordInput
-              icon={<ShowPassIcon/>}
+              icon={<ShowPassIcon />}
               label="Пароль"
-              name={"Login_form[password]"}
-              className={"Reg__password"}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) => onPasswordChange(event)}
+              name={'Login_form[password]'}
+              className={'Reg__password'}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                onPasswordChange(event)
+              }
             />
             <Link
               href="/customer/pass-recover-1"
@@ -135,7 +143,8 @@ const Login = ({className, onFailure, onResponse, onSuccess}: Props) => {
               Напомнить пароль
             </Link>
             {isLoginHasError && (
-              <div className="Error__message Text_12_16">Bad credentials</div>)}
+              <div className="Error__message Text_12_16">Bad credentials</div>
+            )}
           </Form>
         </div>
       </div>
@@ -144,32 +153,28 @@ const Login = ({className, onFailure, onResponse, onSuccess}: Props) => {
 
         <div className="Reg__footer">
           <div className="Reg__footerBack">
-            <Button
-              secondary
-              href="/"
-              className="Reg__goBackButton"
-            >
+            <Button secondary href="/" className="Reg__goBackButton">
               На главную
             </Button>
             <Button
               secondary
               href="/"
-              leftIcon={<ArrowIcon/>}
+              leftIcon={<ArrowIcon />}
               className="Reg__goBackButtonMobile"
             ></Button>
           </div>
           <Button
             type="submit"
             disabled={valid}
-            onClick={async (e) => await loginAction(email, password)}
+            onClick={async e => await loginAction(email, password)}
           >
             Далее
           </Button>
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -275,7 +280,7 @@ const StyledRegStep1 = styled.section`
   .Error__message {
     width: 100%;
     text-align: left;
-    color: ${({theme}) => theme.colors.error}
+    color: ${({ theme }) => theme.colors.error};
   }
 
   .Reg__footerContainer {
@@ -291,7 +296,6 @@ const StyledRegStep1 = styled.section`
     height: 100%;
 
     .Reg__options {
-
       button {
         max-width: unset;
         width: 100%;
@@ -302,7 +306,6 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
-
     .Reg {
       height: 100%;
     }
@@ -352,6 +355,6 @@ const StyledRegStep1 = styled.section`
       }
     }
   }
-`;
+`
 
-export {Login};
+export { Login }

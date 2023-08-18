@@ -9,7 +9,7 @@ import useUpdater from '@/hooks/useUpdater'
 import { Security } from '@/infrastructure/Security/JWT/JWTManager'
 import { ChatEvents } from '@/modules/Chats/ChatEvents'
 import { ChatTabs } from '@/infrastructure/Chats/ChatTabs'
-import ChatLayout, {ViewStates} from '@/modules/Chats/ChatLayout'
+import ChatLayout, { ViewStates } from '@/modules/Chats/ChatLayout'
 import cn from 'classnames'
 
 interface Props {

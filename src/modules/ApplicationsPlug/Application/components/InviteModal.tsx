@@ -1,13 +1,13 @@
-import { Button, Checkbox } from "@/components/ui";
-import { CrossIcon } from "@/icons";
-import { InviteModalIcon } from "@/icons/InviteModalIcon";
-import styled from "styled-components";
+import { Button, Checkbox } from '@/components/ui'
+import { CrossIcon } from '@/icons'
+import { InviteModalIcon } from '@/icons/InviteModalIcon'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
-  onClick?: any;
-  closeModal?: any;
-  onSubmit?: any;
+  className?: string
+  onClick?: any
+  closeModal?: any
+  onSubmit?: any
 }
 
 const InviteModal = ({ className, onClick, closeModal, onSubmit }: Props) => {
@@ -15,7 +15,7 @@ const InviteModal = ({ className, onClick, closeModal, onSubmit }: Props) => {
     <StyledInviteModal className={className}>
       <StyledModalContent>
         <button onClick={closeModal} className="CloseButton">
-          <CrossIcon attr={{className: "CrossIcon", width: 24, height: 24}} />
+          <CrossIcon attr={{ className: 'CrossIcon', width: 24, height: 24 }} />
         </button>
         <InviteModalIcon />
 
@@ -34,8 +34,8 @@ const InviteModal = ({ className, onClick, closeModal, onSubmit }: Props) => {
         />
       </StyledModalContent>
     </StyledInviteModal>
-  );
-};
+  )
+}
 
 const StyledInviteModal = styled.div`
   position: fixed;
@@ -71,7 +71,7 @@ const StyledInviteModal = styled.div`
   .ModalCheckbox {
     margin-top: 40px;
   }
-`;
+`
 
 const StyledModalContent = styled.div`
   position: absolute;
@@ -91,6 +91,6 @@ const StyledModalContent = styled.div`
   h3 {
     margin-top: 10px;
   }
-`;
+`
 
-export { InviteModal };
+export { InviteModal }

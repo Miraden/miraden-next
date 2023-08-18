@@ -20,7 +20,9 @@ const PaySuccessModal = (props: Props): JSX.Element => {
         </div>
         <div className="Modal__body"></div>
         <div className="Modal__footer">
-          <Button onClick={onExit} secondary>Перейти в заявку</Button>
+          <Button onClick={onExit} secondary>
+            Перейти в заявку
+          </Button>
         </div>
       </Modal>
     </Styled>

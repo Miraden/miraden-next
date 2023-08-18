@@ -1,9 +1,9 @@
-import { Sticker } from "@/components/ui";
-import { ArrowAccordionIcon } from "@/icons";
-import styled from "styled-components";
+import { Sticker } from '@/components/ui'
+import { ArrowAccordionIcon } from '@/icons'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const ApplicationInfo = ({ className }: Props) => {
@@ -27,8 +27,8 @@ const ApplicationInfo = ({ className }: Props) => {
         </div>
       </div>
     </StyledApplicationInfo>
-  );
-};
+  )
+}
 
 const StyledApplicationInfo = styled.div`
   .ApplicationInfo__headLayout {
@@ -92,6 +92,6 @@ const StyledApplicationInfo = styled.div`
       border-bottom: 1px solid #3a465d;
     }
   }
-`;
+`
 
-export { ApplicationInfo };
+export { ApplicationInfo }

@@ -1,11 +1,11 @@
-import { Button } from "@/components/ui";
-import styled from "styled-components";
-import { HeroStats } from "./HeroStats";
-import {theme} from "../../../../styles/tokens";
-import Image from "next/image";
+import { Button } from '@/components/ui'
+import styled from 'styled-components'
+import { HeroStats } from './HeroStats'
+import { theme } from '../../../../styles/tokens'
+import Image from 'next/image'
 
 interface HeroProps {
-  className?: string;
+  className?: string
 }
 
 const Hero = ({ className }: HeroProps) => {
@@ -14,14 +14,17 @@ const Hero = ({ className }: HeroProps) => {
       <div className="Container Hero">
         <div className="Hero__content">
           <h1 className="Font_headline_1 HeroTitle">
-            Персональный подбор от{" "}
-            <mark className="Color_blue_primary">риелторов и застройщиков</mark>{" "} <span className="nobr">из 7 стран</span> мира
+            Персональный подбор от{' '}
+            <mark className="Color_blue_primary">риелторов и застройщиков</mark>{' '}
+            <span className="nobr">из 7 стран</span> мира
           </h1>
           <p className="Hero__description Font_body_base">
             Создайте анонимную заявку и получите предложения от независимых
             продавцов
           </p>
-          <Button href={"/lead/add"} className="Hero__mainButton">Оставить заявку</Button>
+          <Button href={'/lead/add'} className="Hero__mainButton">
+            Оставить заявку
+          </Button>
         </div>
         <Image
           alt="Hero"
@@ -33,8 +36,8 @@ const Hero = ({ className }: HeroProps) => {
       </div>
       <HeroStats className="Hero__stats" />
     </StyledHero>
-  );
-};
+  )
+}
 
 const StyledHero = styled.section`
   background: #eef1f5;
@@ -60,7 +63,7 @@ const StyledHero = styled.section`
     margin-top: 25px;
     max-width: 470px;
     font-size: 22px;
-    color: #3B4A69;
+    color: #3b4a69;
   }
 
   .Hero__mainButton {
@@ -86,7 +89,8 @@ const StyledHero = styled.section`
     margin-top: 80px;
   }
 
-  @media (min-width: ${theme.breakpoints.desktop.min + "px"}) and (max-width: ${theme.breakpoints.desktop.max + "px"}) {
+  @media (min-width: ${theme.breakpoints.desktop.min +
+    'px'}) and (max-width: ${theme.breakpoints.desktop.max + 'px'}) {
     .Hero {
       grid-gap: 20px;
     }
@@ -100,7 +104,8 @@ const StyledHero = styled.section`
     }
   }
 
-  @media (min-width: ${theme.breakpoints.tablet.min + "px"}) and (max-width: ${theme.breakpoints.tablet.max + "px"}) {
+  @media (min-width: ${theme.breakpoints.tablet.min +
+    'px'}) and (max-width: ${theme.breakpoints.tablet.max + 'px'}) {
     padding-top: 80px;
     padding-bottom: 34px;
 
@@ -141,7 +146,8 @@ const StyledHero = styled.section`
     }
   }
 
-  @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
+  @media (min-width: ${theme.breakpoints.mobile.min +
+    'px'}) and (max-width: ${theme.breakpoints.mobile.max + 'px'}) {
     padding-top: 60px;
     padding-bottom: 50px;
 
@@ -180,6 +186,6 @@ const StyledHero = styled.section`
       margin: 0 auto;
     }
   }
-`;
+`
 
-export { Hero };
+export { Hero }

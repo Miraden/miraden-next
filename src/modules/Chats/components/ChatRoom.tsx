@@ -24,7 +24,7 @@ const ChatRoom = (props: Props) => {
           <Image
             width={60}
             height={60}
-            src={"/u/users/" + props.preview.photo}
+            src={'/u/users/' + props.preview.photo}
             alt={'avatar'}
           />
         </div>
@@ -45,10 +45,7 @@ const ChatRoom = (props: Props) => {
         </div>
       </div>
       <div className="ChatRoom__right Font_captions_1">
-        <div className="ChatRoom__date">
-
-        </div>
-
+        <div className="ChatRoom__date"></div>
       </div>
     </StyledRoom>
   )

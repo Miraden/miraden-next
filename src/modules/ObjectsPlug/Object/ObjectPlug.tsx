@@ -72,14 +72,20 @@ const ObjectPlug = ({ className }: ApplicationProps) => {
       'Рекомендуемые',
       16,
       <div></div>,
-      <Search
-        sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
-        placeholder="Поиск"
-        className={cn('Applications__searchBar')}
-        filterIcon={<FilterIcon />}
-        withSort={true}
-        onFilterClick={handleShowFilter}
-      />
+      (
+        <Search
+          sort={[
+            { label: 'Сначала агентства', value: 1 },
+            { label: 'Сначала PRO', value: 2 },
+            { label: 'Сначала самые надежные', value: 3 },
+          ]}
+          placeholder="Поиск"
+          className={cn('Applications__searchBar')}
+          filterIcon={<FilterIcon />}
+          withSort={true}
+          onFilterClick={handleShowFilter}
+        />
+      )
     )
   )
 

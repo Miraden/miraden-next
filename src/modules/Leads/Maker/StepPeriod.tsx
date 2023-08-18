@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { theme } from '../../../../styles/tokens'
 import { useWindowSize } from '@/hooks/useWindowSize'
-import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
 
 interface Props {
   className?: string
@@ -28,7 +28,10 @@ const StepPeriod = (props: Props): JSX.Element => {
     const [start, end] = dates
     setStartDate(start)
     setEndDate(end)
-    props.onChange({ dateFrom: start.toISOString().split('T')[0], dateTo: end.toISOString().split('T')[0] })
+    props.onChange({
+      dateFrom: start.toISOString().split('T')[0],
+      dateTo: end.toISOString().split('T')[0],
+    })
   }
 
   const [showMonths, setShowMonths] = useState<number>(2)

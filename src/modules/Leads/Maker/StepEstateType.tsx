@@ -5,7 +5,7 @@ import {
   LeadEstateTypes,
 } from '@/modules/Leads/LeadTypesDefintion'
 import { useCallback, useEffect, useState } from 'react'
-import StepCommonLayout from "@/modules/Leads/Maker/StepCommonLayout";
+import StepCommonLayout from '@/modules/Leads/Maker/StepCommonLayout'
 
 interface Props {
   onChanged?: (options: EstateTypeResult) => void

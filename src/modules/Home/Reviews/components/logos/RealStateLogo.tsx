@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const RealStateLogo: FC<SVGAttributes<SVGElement>> = (props) => {
+const RealStateLogo: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="51"
@@ -87,7 +87,7 @@ const RealStateLogo: FC<SVGAttributes<SVGElement>> = (props) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export { RealStateLogo };
+export { RealStateLogo }

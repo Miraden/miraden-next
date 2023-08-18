@@ -1,13 +1,13 @@
-import styled from "styled-components";
-import { ObjectPlug } from "./Object/ObjectPlug";
+import styled from 'styled-components'
+import { ObjectPlug } from './Object/ObjectPlug'
 
 const ObjectsLayoutPlug = () => {
   return (
     <StyledObjectsLayoutPlug className="ContainerFull">
       <ObjectPlug className="Application" />
     </StyledObjectsLayoutPlug>
-  );
-};
+  )
+}
 
 const StyledObjectsLayoutPlug = styled.div`
   display: flex;
@@ -19,6 +19,6 @@ const StyledObjectsLayoutPlug = styled.div`
       padding: 0;
     }
   }
-`;
+`
 
-export { ObjectsLayoutPlug };
+export { ObjectsLayoutPlug }

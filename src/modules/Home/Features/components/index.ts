@@ -1,2 +1,2 @@
-export { FeaturesDesktop } from "./FeaturesDesktop";
-export { FeaturesMobile } from "./FeaturesMobile";
+export { FeaturesDesktop } from './FeaturesDesktop'
+export { FeaturesMobile } from './FeaturesMobile'

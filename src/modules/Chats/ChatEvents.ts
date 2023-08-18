@@ -6,5 +6,5 @@ export enum ChatEvents {
   onMessageDelivered = 'onMessageDelivered',
   onGetRoomsList = 'onGetRoomsList',
   onGetLeadsList = 'onGetLeadsList',
-  onGetCompanions = 'onGetCompanions'
+  onGetCompanions = 'onGetCompanions',
 }

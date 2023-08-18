@@ -5,7 +5,7 @@ import { LeadsLastProvider } from '@/modules/Home/Applications/LeadsProvider'
 import { theme } from '../../../../styles/tokens'
 import cn from 'classnames'
 import { LeadCard } from '@/modules/Leads/components/LeadCard'
-import {useWindowSize, WindowSize} from "@/hooks/useWindowSize";
+import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
 
 const Applications = () => {
   const [location, setLocation] = useState<string>('')
@@ -42,7 +42,10 @@ const Applications = () => {
         }}
         isTrue={item.isTrue}
         createdAt={formatCreatedDate(item.createdAt)}
-        location={item.location.country + (item.location.city ? "/" + item.location.city : "/Все города")}
+        location={
+          item.location.country +
+          (item.location.city ? '/' + item.location.city : '/Все города')
+        }
         isPublished={item.isPublished}
         rooms={item.rooms}
         rentPeriod={item.rentPeriod}
@@ -240,7 +243,7 @@ const StyledApplications = styled.section`
     color: ${theme.colors.background.lightGrey};
   }
 
-  @media (min-width: ${theme.breakpoints.desktop.min + "px"}) {
+  @media (min-width: ${theme.breakpoints.desktop.min + 'px'}) {
     .LeadProgressItem:nth-child(4n) {
       display: none;
     }
@@ -253,7 +256,8 @@ const StyledApplications = styled.section`
     }
   }
 
-  @media (min-width: ${theme.breakpoints.tablet.min + "px"}) and (max-width: ${theme.breakpoints.tablet.max + "px"}) {
+  @media (min-width: ${theme.breakpoints.tablet.min +
+    'px'}) and (max-width: ${theme.breakpoints.tablet.max + 'px'}) {
     padding-bottom: 100px;
 
     .Applications__list {
@@ -297,11 +301,12 @@ const StyledApplications = styled.section`
     .LeadInProgress {
       display: grid;
       grid-gap: 12px;
-      grid-template-columns: repeat(2,1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media (min-width: ${theme.breakpoints.mobile.min + "px"}) and (max-width: ${theme.breakpoints.mobile.max + "px"}) {
+  @media (min-width: ${theme.breakpoints.mobile.min +
+    'px'}) and (max-width: ${theme.breakpoints.mobile.max + 'px'}) {
     padding-top: 50px;
     .Container {
       padding-left: 0;
@@ -309,7 +314,7 @@ const StyledApplications = styled.section`
     }
 
     .Applications__list {
-      grid-template-columns: repeat(1,1fr);
+      grid-template-columns: repeat(1, 1fr);
       margin-top: 40px;
     }
     .Applications__tabsMobile {
@@ -318,7 +323,7 @@ const StyledApplications = styled.section`
 
     .LeadInProgress {
       display: grid;
-      grid-template-columns: repeat(1,1fr);
+      grid-template-columns: repeat(1, 1fr);
       gap: 12px;
     }
 

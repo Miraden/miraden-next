@@ -1,121 +1,121 @@
-import { Button, RequestButton } from "@/components/ui";
-import { ArrowIcon, CrossIcon, MapIcon, SearchIcon } from "@/icons";
-import { useCallback, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
-import { MapContainer } from "./MapContainer";
+import { Button, RequestButton } from '@/components/ui'
+import { ArrowIcon, CrossIcon, MapIcon, SearchIcon } from '@/icons'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import styled from 'styled-components'
+import { MapContainer } from './MapContainer'
 interface Props {
-  className?: string;
-  mapButtonLabel?: string;
+  className?: string
+  mapButtonLabel?: string
 }
 
 const cityMap: Record<Option, { label: string; cities: string[] }> = {
   turkey: {
-    label: "Турция",
+    label: 'Турция',
     cities: [
-      "Аланья",
-      "Анталья",
-      "Стамбул",
-      "Кемер",
-      "Бодрум",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "0",
-      "11",
+      'Аланья',
+      'Анталья',
+      'Стамбул',
+      'Кемер',
+      'Бодрум',
+      '2',
+      '3',
+      '4',
+      '5',
+      '6',
+      '7',
+      '8',
+      '9',
+      '0',
+      '11',
     ],
   },
   cyprus: {
-    label: "Кипр",
+    label: 'Кипр',
     cities: [
-      "Лимассол",
-      "Пафос",
-      "Ларнака",
-      "Никосия",
-      "Айя-Напа",
-      "12",
-      "13",
-      "14",
-      "15",
-      "16",
-      "17",
-      "18",
-      "19",
-      "20",
-      "21",
+      'Лимассол',
+      'Пафос',
+      'Ларнака',
+      'Никосия',
+      'Айя-Напа',
+      '12',
+      '13',
+      '14',
+      '15',
+      '16',
+      '17',
+      '18',
+      '19',
+      '20',
+      '21',
     ],
   },
   northCyprus: {
-    label: "Северный Кипр",
+    label: 'Северный Кипр',
     cities: [
-      "Гирне",
-      "Фамагуста",
-      "Лефкоша",
-      "Искеле",
-      "Карпасия",
-      "22",
-      "23",
-      "24",
-      "25",
-      "26",
-      "27",
-      "28",
-      "29",
-      "30",
-      "31",
+      'Гирне',
+      'Фамагуста',
+      'Лефкоша',
+      'Искеле',
+      'Карпасия',
+      '22',
+      '23',
+      '24',
+      '25',
+      '26',
+      '27',
+      '28',
+      '29',
+      '30',
+      '31',
     ],
   },
   montenegro: {
-    label: "Черногория",
+    label: 'Черногория',
     cities: [
-      "Будва",
-      "Котор",
-      "Тиват",
-      "Подгорица",
-      "Бар",
-      "32",
-      "33",
-      "34",
-      "35",
-      "36",
-      "37",
-      "38",
-      "39",
-      "40",
-      "41",
+      'Будва',
+      'Котор',
+      'Тиват',
+      'Подгорица',
+      'Бар',
+      '32',
+      '33',
+      '34',
+      '35',
+      '36',
+      '37',
+      '38',
+      '39',
+      '40',
+      '41',
     ],
   },
-};
-type Option = "turkey" | "cyprus" | "northCyprus" | "montenegro";
+}
+type Option = 'turkey' | 'cyprus' | 'northCyprus' | 'montenegro'
 
 interface SearchProps {
-  options: { [key: string]: { label: string; cities: string[] } };
-  onClick?: any;
-  mapButtonLabel?: string;
+  options: { [key: string]: { label: string; cities: string[] } }
+  onClick?: any
+  mapButtonLabel?: string
 }
 
 interface SearchOptionProps {
-  selected: boolean;
-  onClick: () => void;
-  children?: any;
-  mapButtonLabel?: string;
+  selected: boolean
+  onClick: () => void
+  children?: any
+  mapButtonLabel?: string
 }
 
 interface SearchOptionItemProps {
-  selected: boolean;
-  onClick: () => void;
-  mapButtonLabel?: string;
+  selected: boolean
+  onClick: () => void
+  mapButtonLabel?: string
 }
 
 const SearchOptionItem = styled.li<SearchOptionItemProps>`
-  background-color: ${(props) => (props.selected ? "#ccc" : "transparent")};
+  background-color: ${props => (props.selected ? '#ccc' : 'transparent')};
   cursor: pointer;
   padding: 8px;
-`;
+`
 const SearchOptionLocal = ({
   selected,
   onClick,
@@ -128,85 +128,85 @@ const SearchOptionLocal = ({
     ? children
         .toString()
         .replace(
-          new RegExp(searchText, "gi"),
+          new RegExp(searchText, 'gi'),
           (match: any) => `<mark>${match}</mark>`
         )
-    : children;
+    : children
   return (
     <SearchOptionItem onClick={onClick} selected={selected}>
       <div dangerouslySetInnerHTML={{ __html: highlightedText }} />
     </SearchOptionItem>
-  );
-};
+  )
+}
 
 const SearchReg = ({ options, mapButtonLabel, onClick }: SearchProps) => {
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState('')
   const [selectedOption, setSelectedOption] = useState<{
-    city: string;
-    region: string;
-  } | null>(null);
-  const [showDropdown, setShowDropdown] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+    city: string
+    region: string
+  } | null>(null)
+  const [showDropdown, setShowDropdown] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
 
   const handleSearchInputChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const value = event.target.value;
-    setSearchText(value);
-    setSelectedOption(null);
-    setShowDropdown(value !== "");
-  };
+    const value = event.target.value
+    setSearchText(value)
+    setSelectedOption(null)
+    setShowDropdown(value !== '')
+  }
 
   const handleOptionClick = (option: { city: string; region: string }) => {
-    setSelectedOption(option);
-    setSearchText(option.city);
-    setShowDropdown(false);
-  };
+    setSelectedOption(option)
+    setSearchText(option.city)
+    setShowDropdown(false)
+  }
 
   const filteredOptions = Object.keys(options).reduce(
     (
       acc: { [key: string]: { label: string; cities: string[] } },
       optionKey: string
     ) => {
-      const option = options[optionKey];
-      const cities = option.cities.filter((city) =>
+      const option = options[optionKey]
+      const cities = option.cities.filter(city =>
         city.toLowerCase().includes(searchText.toLowerCase())
-      );
+      )
       if (cities.length) {
         acc[optionKey] = {
           ...option,
           cities,
-        };
+        }
       }
-      return acc;
+      return acc
     },
     {}
-  );
+  )
 
   const handleRemoveResults = () => {
-    setSearchText("");
-  };
+    setSearchText('')
+  }
 
   const handleClickOutside = (event: MouseEvent) => {
     if (ref.current && !ref.current.contains(event.target as Node)) {
-      setShowDropdown(false);
+      setShowDropdown(false)
     }
-  };
+  }
 
   useEffect(() => {
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener('click', handleClickOutside)
 
     return () => {
-      document.removeEventListener("click", handleClickOutside);
-    };
-  }, []);
+      document.removeEventListener('click', handleClickOutside)
+    }
+  }, [])
 
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState(false)
 
   return (
     <SearchRegContainer ref={ref}>
-      <div className={`Search__container ${isFocused ? "focused" : ""}`}>
-        <SearchIcon attr={{className: "Search__searchIcon"}} />
+      <div className={`Search__container ${isFocused ? 'focused' : ''}`}>
+        <SearchIcon attr={{ className: 'Search__searchIcon' }} />
         <SearchInput
           type="text"
           placeholder="Укажите город"
@@ -217,7 +217,7 @@ const SearchReg = ({ options, mapButtonLabel, onClick }: SearchProps) => {
         />
         {searchText && (
           <CrossIcon
-            attr={{className: "Search__crossIcon", width: 18, height: 18}}
+            attr={{ className: 'Search__crossIcon', width: 18, height: 18 }}
           />
         )}
         <button className="Search__mapButton" onClick={onClick}>
@@ -227,10 +227,10 @@ const SearchReg = ({ options, mapButtonLabel, onClick }: SearchProps) => {
       </div>
       {showDropdown && (
         <SearchDropdown>
-          {Object.keys(filteredOptions).map((optionKey) => (
+          {Object.keys(filteredOptions).map(optionKey => (
             <SearchOptionGroup key={optionKey} className="Font_14_16">
               <SearchOptionList>
-                {filteredOptions[optionKey].cities.map((city) => (
+                {filteredOptions[optionKey].cities.map(city => (
                   <SearchOptionLocal
                     key={city}
                     selected={selectedOption?.city === city}
@@ -248,51 +248,51 @@ const SearchReg = ({ options, mapButtonLabel, onClick }: SearchProps) => {
         </SearchDropdown>
       )}
     </SearchRegContainer>
-  );
-};
+  )
+}
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const CreateStep1 = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>(null);
-  const [showAllCities, setShowAllCities] = useState(false);
-  const [selectedCity, setSelectedCity] = useState<string | null>(null);
-  const [numCitiesToShow, setNumCitiesToShow] = useState<number>(5);
-  const [allCitiesActive, setAllCitiesActive] = useState(false);
+  const [selected, setSelected] = useState<Option | null>(null)
+  const [showAllCities, setShowAllCities] = useState(false)
+  const [selectedCity, setSelectedCity] = useState<string | null>(null)
+  const [numCitiesToShow, setNumCitiesToShow] = useState<number>(5)
+  const [allCitiesActive, setAllCitiesActive] = useState(false)
 
-  const [openMap, setOpenMap] = useState(false);
-  const [mapButtonLabel, setMapButtonLabel] = useState("На карте");
+  const [openMap, setOpenMap] = useState(false)
+  const [mapButtonLabel, setMapButtonLabel] = useState('На карте')
 
   const handleOpenMap = useCallback(() => {
-    setOpenMap(!openMap);
-    setMapButtonLabel(openMap ? "На карте" : "Свернуть");
-  }, [openMap]);
+    setOpenMap(!openMap)
+    setMapButtonLabel(openMap ? 'На карте' : 'Свернуть')
+  }, [openMap])
 
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-    setSelectedCity(null);
-    setShowAllCities(false);
-    setNumCitiesToShow(5);
-  }, []);
+    setSelected(option)
+    setSelectedCity(null)
+    setShowAllCities(false)
+    setNumCitiesToShow(5)
+  }, [])
 
   const handleSelectCity = useCallback((city: string) => {
-    setSelectedCity(city);
-  }, []);
+    setSelectedCity(city)
+  }, [])
 
   const handleShowMoreCities = useCallback(() => {
-    setShowAllCities(true);
-    setNumCitiesToShow((prev) => {
-      const option = cityMap[selected as Option];
-      return option ? option.cities.length : prev;
-    });
-  }, [selected]);
+    setShowAllCities(true)
+    setNumCitiesToShow(prev => {
+      const option = cityMap[selected as Option]
+      return option ? option.cities.length : prev
+    })
+  }, [selected])
 
   const handleHideExtraCities = useCallback(() => {
-    setShowAllCities(false);
-    setNumCitiesToShow(5);
-  }, []);
+    setShowAllCities(false)
+    setNumCitiesToShow(5)
+  }, [])
 
   return (
     <StyledCreateStep1 className={className}>
@@ -314,7 +314,7 @@ const CreateStep1 = ({ className }: Props) => {
         ) : (
           <div className="Reg__options">
             <div className="Reg__optionsList">
-              {Object.keys(cityMap).map((option) => (
+              {Object.keys(cityMap).map(option => (
                 <RequestButton
                   key={option}
                   onClick={() => handleSelect(option as Option)}
@@ -331,8 +331,8 @@ const CreateStep1 = ({ className }: Props) => {
                   <div className="Reg__cities">
                     <RequestButton
                       onClick={() => {
-                        setSelectedCity(null);
-                        setAllCitiesActive(true);
+                        setSelectedCity(null)
+                        setAllCitiesActive(true)
                       }}
                       active={allCitiesActive}
                     >
@@ -340,12 +340,12 @@ const CreateStep1 = ({ className }: Props) => {
                     </RequestButton>
                     {cityMap[selected].cities
                       .slice(0, numCitiesToShow)
-                      .map((city) => (
+                      .map(city => (
                         <RequestButton
                           key={city}
                           onClick={() => {
-                            handleSelectCity(city);
-                            setAllCitiesActive(false);
+                            handleSelectCity(city)
+                            setAllCitiesActive(false)
                           }}
                           active={selectedCity === city && !allCitiesActive}
                         >
@@ -380,11 +380,7 @@ const CreateStep1 = ({ className }: Props) => {
 
           <div className="Reg__footer">
             <div className="Reg__footerBack">
-              <Button
-                secondary
-                href="/lead/add"
-                className="Reg__goBackButton"
-              >
+              <Button secondary href="/lead/add" className="Reg__goBackButton">
                 Назад
               </Button>
               <Button
@@ -420,8 +416,8 @@ const CreateStep1 = ({ className }: Props) => {
         </div>
       </div>
     </StyledCreateStep1>
-  );
-};
+  )
+}
 
 const StyledCreateStep1 = styled.section`
   background: #fff;
@@ -495,7 +491,7 @@ const StyledCreateStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 9%;
       height: 6px;
       background-color: #4e6af3;
@@ -644,7 +640,7 @@ const StyledCreateStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
 const Option = styled.div`
   padding: 8px 12px;
@@ -653,7 +649,7 @@ const Option = styled.div`
   &:hover {
     background-color: #f2f2f2;
   }
-`;
+`
 
 const SearchRegContainer = styled.div`
   position: relative;
@@ -731,7 +727,7 @@ const SearchRegContainer = styled.div`
       }
     }
   }
-`;
+`
 
 const SearchInput = styled.input`
   width: 100%;
@@ -748,7 +744,7 @@ const SearchInput = styled.input`
     .Search__searchIcon {
     }
   }
-`;
+`
 
 const SearchDropdown = styled.div`
   position: absolute;
@@ -765,11 +761,11 @@ const SearchDropdown = styled.div`
   border-left: 2px solid #f1f7ff;
   background-color: #fff;
   z-index: 1;
-`;
+`
 
 const SearchOptionGroup = styled.div`
   padding-left: 22px;
-`;
+`
 
 const SearchOptionList = styled.ul`
   list-style: none;
@@ -780,6 +776,6 @@ const SearchOptionList = styled.ul`
     color: #2a344a;
     background: transparent;
   }
-`;
+`
 
-export { CreateStep1 };
+export { CreateStep1 }

@@ -18,8 +18,8 @@ const steps = [
       </div>
     ),
     description:
-      "Ответьте на несколько простых вопросов о недвижимости, которую хотите найти",
-    image: "/images/create/1.svg",
+      'Ответьте на несколько простых вопросов о недвижимости, которую хотите найти',
+    image: '/images/create/1.svg',
   },
   {
     title: (
@@ -30,8 +30,8 @@ const steps = [
       </div>
     ),
     description:
-      "Риелторы и собственники сделают для вас персональные предложения и подборки объектов",
-    image: "/images/create/2.svg",
+      'Риелторы и собственники сделают для вас персональные предложения и подборки объектов',
+    image: '/images/create/2.svg',
   },
   {
     title: (
@@ -41,16 +41,16 @@ const steps = [
       </div>
     ),
     description:
-      "Обменяйтесь контактами с подходящими исполнителями для обсуждения деталей",
-    image: "/images/create/3.svg",
+      'Обменяйтесь контактами с подходящими исполнителями для обсуждения деталей',
+    image: '/images/create/3.svg',
   },
-];
+]
 
 type SliderDotsProps = {
-  count: number;
-  currentSlide: number;
-  onDotClick: any;
-};
+  count: number
+  currentSlide: number
+  onDotClick: any
+}
 
 const SliderDots = ({ count, currentSlide, onDotClick }: SliderDotsProps) => {
   return (
@@ -58,29 +58,31 @@ const SliderDots = ({ count, currentSlide, onDotClick }: SliderDotsProps) => {
       {Array.from({ length: count }).map((_, index) => (
         <button
           key={index}
-          className={currentSlide === index ? "active" : ""}
+          className={currentSlide === index ? 'active' : ''}
           onClick={() => onDotClick(index)}
-        ><span></span></button>
+        >
+          <span></span>
+        </button>
       ))}
     </div>
-  );
-};
+  )
+}
 
 const CreateStart = ({ className }: Props) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [loaded, setLoaded] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [loaded, setLoaded] = useState(false)
   const [sliderRef, instanceRef] = useKeenSlider({
     slides: {
       perView: 1,
     },
     initial: 0,
     slideChanged(slider) {
-      setCurrentSlide(slider.track.details.rel);
+      setCurrentSlide(slider.track.details.rel)
     },
     created() {
-      setLoaded(true);
+      setLoaded(true)
     },
-  });
+  })
 
   return (
     <StyledCreateStep1 className={className}>
@@ -131,7 +133,7 @@ const CreateStart = ({ className }: Props) => {
             count={steps.length}
             currentSlide={currentSlide}
             onDotClick={(e: number) => {
-              instanceRef.current?.moveToIdx(e);
+              instanceRef.current?.moveToIdx(e)
             }}
           />
         </div>
@@ -155,8 +157,8 @@ const CreateStart = ({ className }: Props) => {
         </div>
       </div>
     </StyledCreateStep1>
-  );
-};
+  )
+}
 
 const StyledCreateStep1 = styled.section`
   background: #fff;
@@ -407,6 +409,6 @@ const StyledCreateStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { CreateStart };
+export { CreateStart }

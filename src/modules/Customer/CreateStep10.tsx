@@ -1,89 +1,89 @@
-import { Button, RequestButton } from "@/components/ui";
-import { ArrowIcon } from "@/icons";
-import { SetStateAction, useCallback, useState } from "react";
-import styled from "styled-components";
+import { Button, RequestButton } from '@/components/ui'
+import { ArrowIcon } from '@/icons'
+import { SetStateAction, useCallback, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
-type Option = "any" | "installments" | "mortgage" | "personal";
-type PayOption = "cash" | "cashless" | "crypt";
+type Option = 'any' | 'installments' | 'mortgage' | 'personal'
+type PayOption = 'cash' | 'cashless' | 'crypt'
 
 const CreateStep10 = ({ className }: Props) => {
-  const [selected, setSelected] = useState<Option | null>(null);
-  const [startPercent, setStartPercent] = useState<number | null>(null);
-  const [selectedRange, setSelectedRange] = useState<number[]>([]);
+  const [selected, setSelected] = useState<Option | null>(null)
+  const [startPercent, setStartPercent] = useState<number | null>(null)
+  const [selectedRange, setSelectedRange] = useState<number[]>([])
 
-  const [selectedPay, setSelectedPay] = useState<PayOption[]>([]);
+  const [selectedPay, setSelectedPay] = useState<PayOption[]>([])
 
   const handleSelectPay = useCallback(
     (payOption: PayOption) => {
       if (selectedPay.includes(payOption)) {
-        setSelectedPay(selectedPay.filter((item) => item !== payOption));
+        setSelectedPay(selectedPay.filter(item => item !== payOption))
       } else {
-        setSelectedPay([...selectedPay, payOption]);
+        setSelectedPay([...selectedPay, payOption])
       }
     },
     [selectedPay]
-  );
+  )
 
   const handleSelect = useCallback((option: Option) => {
-    setSelected(option);
-  }, []);
+    setSelected(option)
+  }, [])
 
   const handleSquareClick = (percentIndex: number) => {
     if (startPercent === null) {
       // start new range
-      setStartPercent(percentIndex);
-      setSelectedRange([percentIndex]);
+      setStartPercent(percentIndex)
+      setSelectedRange([percentIndex])
     } else {
       // continue existing range
-      const endSquare = percentIndex;
-      const rangeStart = Math.min(startPercent, endSquare);
-      const rangeEnd = Math.max(startPercent, endSquare);
-      const selectedRange: SetStateAction<number[]> = [];
+      const endSquare = percentIndex
+      const rangeStart = Math.min(startPercent, endSquare)
+      const rangeEnd = Math.max(startPercent, endSquare)
+      const selectedRange: SetStateAction<number[]> = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        selectedRange.push(i);
+        selectedRange.push(i)
       }
 
-      if (selectedRange.every((m) => selectedRange.includes(m))) {
+      if (selectedRange.every(m => selectedRange.includes(m))) {
         // update existing range
-        setSelectedRange(selectedRange);
+        setSelectedRange(selectedRange)
       } else {
         // create new range
-        setSelectedRange(selectedRange);
-        setStartPercent(null);
+        setSelectedRange(selectedRange)
+        setStartPercent(null)
       }
     }
 
     if (startPercent !== null && percentIndex !== startPercent) {
-      const rangeStart = Math.min(startPercent, percentIndex);
-      const rangeEnd = Math.max(startPercent, percentIndex);
-      const newRange = [];
+      const rangeStart = Math.min(startPercent, percentIndex)
+      const rangeEnd = Math.max(startPercent, percentIndex)
+      const newRange = []
       for (let i = rangeStart; i <= rangeEnd; i++) {
-        newRange.push(i);
+        newRange.push(i)
       }
 
       if (
         selectedRange.length > 0 &&
-        newRange.every((m) => selectedRange.includes(m))
+        newRange.every(m => selectedRange.includes(m))
       ) {
         // update existing range
-        setSelectedRange(newRange);
+        setSelectedRange(newRange)
       } else {
         // add new range to existing range
-        setSelectedRange([...selectedRange, ...newRange]);
+        setSelectedRange([...selectedRange, ...newRange])
       }
     }
-  };
-
-  const percents = [];
-  for (let percent = 10; percent <= 100; percent += 10) {
-    percents.push(percent);
   }
-  const minIndex = Math.min(...selectedRange);
-  const maxIndex = Math.max(...selectedRange);
+
+  const percents = []
+  for (let percent = 10; percent <= 100; percent += 10) {
+    percents.push(percent)
+  }
+  const minIndex = Math.min(...selectedRange)
+  const maxIndex = Math.max(...selectedRange)
   return (
     <StyledRegStep1 className={className}>
       <div className="Reg">
@@ -97,26 +97,26 @@ const CreateStep10 = ({ className }: Props) => {
         <div className="Reg__selectContainer">
           <div className="Reg__options">
             <RequestButton
-              onClick={() => handleSelect("any")}
-              active={selected === "any"}
+              onClick={() => handleSelect('any')}
+              active={selected === 'any'}
             >
               Неважно
             </RequestButton>
             <RequestButton
-              onClick={() => handleSelect("installments")}
-              active={selected === "installments"}
+              onClick={() => handleSelect('installments')}
+              active={selected === 'installments'}
             >
               В рассрочку
             </RequestButton>
             <RequestButton
-              onClick={() => handleSelect("mortgage")}
-              active={selected === "mortgage"}
+              onClick={() => handleSelect('mortgage')}
+              active={selected === 'mortgage'}
             >
               В ипотеку
             </RequestButton>
             <RequestButton
-              onClick={() => handleSelect("personal")}
-              active={selected === "personal"}
+              onClick={() => handleSelect('personal')}
+              active={selected === 'personal'}
             >
               Личными средствами
             </RequestButton>
@@ -125,9 +125,9 @@ const CreateStep10 = ({ className }: Props) => {
             <h2 className="Font_20_120 sm:Font_18_120_500">Первый взнос</h2>
             <div className="Reg__percents">
               {[...Array(10)].map((_, index) => {
-                const percent = (index + 1) * 10;
-                const label = `${percent}%`;
-                const isRanged = index > minIndex && index < maxIndex;
+                const percent = (index + 1) * 10
+                const label = `${percent}%`
+                const isRanged = index > minIndex && index < maxIndex
                 return (
                   <RequestButton
                     key={`${index}`}
@@ -137,7 +137,7 @@ const CreateStep10 = ({ className }: Props) => {
                   >
                     {label}
                   </RequestButton>
-                );
+                )
               })}
             </div>
           </div>
@@ -145,20 +145,20 @@ const CreateStep10 = ({ className }: Props) => {
             <h2 className="Font_20_120 sm:Font_18_120_500">Формат расчёта</h2>
             <div className="Reg__payOptions">
               <RequestButton
-                onClick={() => handleSelectPay("cash")}
-                active={selectedPay.includes("cash")}
+                onClick={() => handleSelectPay('cash')}
+                active={selectedPay.includes('cash')}
               >
                 Наличный
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelectPay("cashless")}
-                active={selectedPay.includes("cashless")}
+                onClick={() => handleSelectPay('cashless')}
+                active={selectedPay.includes('cashless')}
               >
                 Безналичный
               </RequestButton>
               <RequestButton
-                onClick={() => handleSelectPay("crypt")}
-                active={selectedPay.includes("crypt")}
+                onClick={() => handleSelectPay('crypt')}
+                active={selectedPay.includes('crypt')}
               >
                 Криптовалютой
               </RequestButton>
@@ -203,8 +203,8 @@ const CreateStep10 = ({ className }: Props) => {
         </div>
       </div>
     </StyledRegStep1>
-  );
-};
+  )
+}
 
 const StyledRegStep1 = styled.section`
   background: #fff;
@@ -279,7 +279,7 @@ const StyledRegStep1 = styled.section`
     ::after {
       position: absolute;
       border-radius: 0 10px 10px 0;
-      content: "";
+      content: '';
       width: 91%;
       height: 6px;
       background-color: #4e6af3;
@@ -421,6 +421,6 @@ const StyledRegStep1 = styled.section`
       background: #fff;
     }
   }
-`;
+`
 
-export { CreateStep10 };
+export { CreateStep10 }
