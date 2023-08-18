@@ -11,7 +11,7 @@ let tokenValidator: Promise<boolean> | null = null
 
 const useAuth = ({ onSuccess, onFailure, onResponse }: AuthStruct): void => {
   useEffect(() => {
-    if(tokenValidator !== null) return
+    if (tokenValidator !== null) return
     const authManager = new AuthManager()
     tokenValidator = authManager.isTokenValid()
 
