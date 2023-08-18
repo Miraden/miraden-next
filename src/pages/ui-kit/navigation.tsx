@@ -72,7 +72,9 @@ function renderClassic(
     Types.Classic
   )
   tabsManagerDark.addItem(new TabMenuItem('Tab classic 1', 1, <div>first</div>))
-  tabsManagerDark.addItem(new TabMenuItem('Tab classic 2', 1, <div>second</div>))
+  tabsManagerDark.addItem(
+    new TabMenuItem('Tab classic 2', 1, <div>second</div>)
+  )
   tabsManagerDark.addItem(
     new TabMenuItem('Tab classic', 1, <div>disabled</div>, <></>, true)
   )

@@ -22,7 +22,7 @@ export default function TariffsPage(): JSX.Element {
 
     onResponse: (): void => {
       setUserReady(true)
-    }
+    },
   })
 
   return (

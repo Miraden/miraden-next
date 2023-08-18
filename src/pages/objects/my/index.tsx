@@ -10,7 +10,7 @@ import { FilterIcon } from '@/icons/FilterIcon'
 import { Search } from '@/components/ui'
 import { ObjectsDataProvider } from '@/modules/Objects/ObjectsDataProvider'
 import { ObjectCard } from '@/modules/Applications/Application/components/ObjectCard'
-import useAuth from "@/hooks/useAuth";
+import useAuth from '@/hooks/useAuth'
 
 enum TabsMenuState {
   All = 0,
@@ -37,7 +37,7 @@ export default function MyObjectsPage(): JSX.Element {
 
     onResponse: (): void => {
       setUserReady(true)
-    }
+    },
   })
 
   const [showFilter, setShowFilter] = useState(false)
@@ -59,7 +59,11 @@ export default function MyObjectsPage(): JSX.Element {
     const current = tabsManager.getItem(selected)
     current?.updateMenuFooter(
       <Search
-        sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
+        sort={[
+          { label: 'Сначала агентства', value: 1 },
+          { label: 'Сначала PRO', value: 2 },
+          { label: 'Сначала самые надежные', value: 3 },
+        ]}
         placeholder="Поиск"
         className={cn('Applications__searchBar')}
         filterIcon={<FilterIcon />}

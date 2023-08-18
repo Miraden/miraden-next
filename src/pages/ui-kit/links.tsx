@@ -1,7 +1,7 @@
-import {Link as CustomLink} from "@/components/ui";
-import Head from "next/head";
-import Link from "next/link";
-import styled from "styled-components";
+import { Link as CustomLink } from '@/components/ui'
+import Head from 'next/head'
+import Link from 'next/link'
+import styled from 'styled-components'
 
 export default function LinksPage() {
   return (
@@ -26,11 +26,11 @@ export default function LinksPage() {
         </StyledCheckboxes>
       </main>
     </>
-  );
+  )
 }
 
 const StyledCheckboxes = styled.div`
   label {
     margin-top: 20px;
   }
-`;
+`

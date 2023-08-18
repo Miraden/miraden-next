@@ -52,7 +52,7 @@ export default function LeadsPage(): JSX.Element {
 
     onResponse: (): void => {
       setUserReady(true)
-    }
+    },
   })
 
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.All)
@@ -166,7 +166,10 @@ export default function LeadsPage(): JSX.Element {
     const current = tabsManager.getItem(selected)
     current?.updateMenuFooter(
       <Search
-        sort={[{label: 'Сначала дешевле', value: 1}, {label: 'Сначала дороже', value: 2}]}
+        sort={[
+          { label: 'Сначала дешевле', value: 1 },
+          { label: 'Сначала дороже', value: 2 },
+        ]}
         placeholder="Поиск"
         filterIcon={<FilterIcon />}
         withSort={true}

@@ -1,7 +1,7 @@
-import {TooltipComponent} from "@/components/ui/Tooltip/MyComponent";
-import Head from "next/head";
-import Link from "next/link";
-import styled from "styled-components";
+import { TooltipComponent } from '@/components/ui/Tooltip/MyComponent'
+import Head from 'next/head'
+import Link from 'next/link'
+import styled from 'styled-components'
 
 export default function TooltipPage() {
   return (
@@ -22,7 +22,7 @@ export default function TooltipPage() {
         </StyledIcons>
       </main>
     </>
-  );
+  )
 }
 
-const StyledIcons = styled.div``;
+const StyledIcons = styled.div``

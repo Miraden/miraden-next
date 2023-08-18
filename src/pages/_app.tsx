@@ -1,9 +1,7 @@
 import type { AppProps } from 'next/app'
 import { StylesProvider } from '../../styles'
 import { useEffect } from 'react'
-import {
-  GeocoderManager
-} from "@/infrastructure/Google/geocoder/GeocoderManager";
+import { GeocoderManager } from '@/infrastructure/Google/geocoder/GeocoderManager'
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
@@ -18,6 +16,6 @@ export default function App({ Component, pageProps }: AppProps) {
 
 declare global {
   interface Window {
-    Miraden: any,
+    Miraden: any
   }
 }

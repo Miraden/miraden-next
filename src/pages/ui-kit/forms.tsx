@@ -1,33 +1,35 @@
-import {Button, PasswordInput, PayForm} from "@/components/ui";
-import Link from "next/link";
-import styled from "styled-components";
-import Form from "@/components/ui/Form";
-import {ApiRequestMethods} from "@/infrastructure/Network/Http/ApiRequest";
-import {BlankLayout} from "@/modules/Base/BlankLayout";
-import React, {MouseEvent, useCallback, useState} from "react";
-import {TextInput} from "@/components/ui/TextInput";
-import {ShowPassIcon} from "@/icons";
+import { Button, PasswordInput, PayForm } from '@/components/ui'
+import Link from 'next/link'
+import styled from 'styled-components'
+import Form from '@/components/ui/Form'
+import { ApiRequestMethods } from '@/infrastructure/Network/Http/ApiRequest'
+import { BlankLayout } from '@/modules/Base/BlankLayout'
+import React, { MouseEvent, useCallback, useState } from 'react'
+import { TextInput } from '@/components/ui/TextInput'
+import { ShowPassIcon } from '@/icons'
 
 export default function FormsPage() {
-
   const [payFormVisible, setPayFormVisible] = useState(false)
 
   const showPayFormHandler = useCallback(() => {
     setPayFormVisible(!payFormVisible)
   }, [payFormVisible])
 
-  const formId: string = "Testing_form"
+  const formId: string = 'Testing_form'
   const [isFormSubmitted, setFormSubmitted] = useState(false)
-  const onFormSubmit = useCallback((e: MouseEvent<HTMLElement>) => {
-    e.preventDefault()
-    const formNode = document.getElementById(formId)
-    if (!formNode) return
+  const onFormSubmit = useCallback(
+    (e: MouseEvent<HTMLElement>) => {
+      e.preventDefault()
+      const formNode = document.getElementById(formId)
+      if (!formNode) return
 
-    setFormSubmitted(true)
-    setTimeout(() => {
-      setFormSubmitted(false)
-    }, 1000)
-  }, [setFormSubmitted])
+      setFormSubmitted(true)
+      setTimeout(() => {
+        setFormSubmitted(false)
+      }, 1000)
+    },
+    [setFormSubmitted]
+  )
 
   return (
     <>
@@ -35,33 +37,32 @@ export default function FormsPage() {
         <Link href="/ui-kit">Go back</Link>
         <h1 className="Font_52_120">Формы</h1>
         <StyledDiv>
-          <Button onClick={showPayFormHandler}>
-            Open pay form
-          </Button>
-          {payFormVisible && <PayForm isBusy={false} onClose={showPayFormHandler}/>}
+          <Button onClick={showPayFormHandler}>Open pay form</Button>
+          {payFormVisible && (
+            <PayForm isBusy={false} onClose={showPayFormHandler} />
+          )}
           <Form
             name={formId}
             method={ApiRequestMethods.POST}
-            action='/'
+            action="/"
             className="form__testing"
             isSubmitted={isFormSubmitted}
           >
             <h2>Generic Form</h2>
-            <TextInput name={"Testing_form[name]"} isRequired={true}/>
+            <TextInput name={'Testing_form[name]'} isRequired={true} />
             <PasswordInput
-              icon={<ShowPassIcon/>}
+              icon={<ShowPassIcon />}
               label="Пароль"
-              name={"Testing_form[pass]"}
+              name={'Testing_form[pass]'}
             />
-            <Button
-              secondary
-              type={"submit"}
-              onClick={onFormSubmit}>Submit</Button>
+            <Button secondary type={'submit'} onClick={onFormSubmit}>
+              Submit
+            </Button>
           </Form>
         </StyledDiv>
       </BlankLayout>
     </>
-  );
+  )
 }
 
 const StyledDiv = styled.div`
@@ -74,4 +75,4 @@ const StyledDiv = styled.div`
     flex-direction: column;
     gap: 20px;
   }
-`;
+`

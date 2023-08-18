@@ -18,8 +18,12 @@ function ComponentsPage() {
 
   return (
     <BlankLayout>
-      <UIKitHead title={'Components'} className={'Container'} backUrl={'/ui-kit'} />
-      <div className={"Container"}>
+      <UIKitHead
+        title={'Components'}
+        className={'Container'}
+        backUrl={'/ui-kit'}
+      />
+      <div className={'Container'}>
         <h3>Tabs menu</h3>
         {tabsManager.renderMenus(selected)}
         {tabsManager.renderContent(selected)}

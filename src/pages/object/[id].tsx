@@ -20,7 +20,7 @@ export default function ObjectEntry(): JSX.Element {
 
     onResponse: (): void => {
       setUserReady(true)
-    }
+    },
   })
 
   return (

@@ -1,7 +1,7 @@
-import {ImageUploader} from "@/components/ui/Dropzone";
-import Head from "next/head";
-import Link from "next/link";
-import styled from "styled-components";
+import { ImageUploader } from '@/components/ui/Dropzone'
+import Head from 'next/head'
+import Link from 'next/link'
+import styled from 'styled-components'
 
 export default function DropzonePage() {
   return (
@@ -20,11 +20,11 @@ export default function DropzonePage() {
         </StyledCheckboxes>
       </main>
     </>
-  );
+  )
 }
 
 const StyledCheckboxes = styled.div`
   label {
     margin-top: 20px;
   }
-`;
+`

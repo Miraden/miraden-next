@@ -28,7 +28,11 @@ const MenuPage = () => {
       <div>content</div>,
       (
         <Search
-          sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
+          sort={[
+            { label: 'Сначала агентства', value: 1 },
+            { label: 'Сначала PRO', value: 2 },
+            { label: 'Сначала самые надежные', value: 3 },
+          ]}
           placeholder="Поиск"
           className={''}
           filterIcon={<FilterIcon />}

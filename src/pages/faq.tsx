@@ -21,7 +21,7 @@ export default function FaqPage(): JSX.Element {
 
     onResponse: (): void => {
       setUserReady(true)
-    }
+    },
   })
 
   return (

@@ -1,7 +1,7 @@
-import {Notification} from "@/components/ui";
-import Head from "next/head";
-import Link from "next/link";
-import styled from "styled-components";
+import { Notification } from '@/components/ui'
+import Head from 'next/head'
+import Link from 'next/link'
+import styled from 'styled-components'
 
 export default function NotificationsPage() {
   return (
@@ -16,20 +16,20 @@ export default function NotificationsPage() {
         <Link href="/ui-kit">Go back</Link>
         <h1 className="Font_52_120">Notifications</h1>
         <StyledNotifications>
-          <Notification message={"Message"} title={"Title"} />
-          <Notification error message={"Notify error"} title={"Title"} />
-          <Notification success message={"Notify success"} title={"Title"} />
-          <Notification compact title={"Title"} />
-          <Notification compact error title={"Title"} />
-          <Notification compact success title={"Title"} />
+          <Notification message={'Message'} title={'Title'} />
+          <Notification error message={'Notify error'} title={'Title'} />
+          <Notification success message={'Notify success'} title={'Title'} />
+          <Notification compact title={'Title'} />
+          <Notification compact error title={'Title'} />
+          <Notification compact success title={'Title'} />
         </StyledNotifications>
       </main>
     </>
-  );
+  )
 }
 
 const StyledNotifications = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-`;
+`

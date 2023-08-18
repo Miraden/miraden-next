@@ -1,5 +1,5 @@
-import {RegStep1} from "@/modules/Customer";
-import styled from "styled-components";
+import { RegStep1 } from '@/modules/Customer'
+import styled from 'styled-components'
 
 export default function RegisterPage() {
   return (
@@ -7,7 +7,7 @@ export default function RegisterPage() {
       <StyledMain>
         <StyledReg1 className="Container">
           <div className="Reg">
-            <RegStep1/>
+            <RegStep1 />
           </div>
         </StyledReg1>
       </StyledMain>
@@ -18,7 +18,7 @@ export default function RegisterPage() {
 const StyledMain = styled.main`
   background: #eef1f5;
   min-height: 100vh;
-`;
+`
 
 const StyledReg1 = styled.div`
   display: grid;
@@ -48,4 +48,4 @@ const StyledReg1 = styled.div`
       padding-right: 0;
     }
   }
-`;
+`

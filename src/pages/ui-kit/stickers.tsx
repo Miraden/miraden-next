@@ -1,13 +1,17 @@
-import {Sticker} from "@/components/ui";
-import styled from "styled-components";
-import {BlankLayout} from "@/modules/Base/BlankLayout";
-import UIKitHead from "@/modules/UIKitTest/UIKitHead";
+import { Sticker } from '@/components/ui'
+import styled from 'styled-components'
+import { BlankLayout } from '@/modules/Base/BlankLayout'
+import UIKitHead from '@/modules/UIKitTest/UIKitHead'
 
 export default function StickersPage() {
   return (
     <BlankLayout>
-      <UIKitHead title={"Стикеры"} className={"Container"} backUrl={"/ui-kit"}/>
-      <StyledIcons className={"Container"}>
+      <UIKitHead
+        title={'Стикеры'}
+        className={'Container'}
+        backUrl={'/ui-kit'}
+      />
+      <StyledIcons className={'Container'}>
         <Sticker theme="red">Stiker</Sticker>
         <Sticker theme="green">Stiker</Sticker>
         <Sticker theme="blue">Stiker</Sticker>
@@ -24,11 +28,11 @@ export default function StickersPage() {
         </Sticker>
       </StyledIcons>
     </BlankLayout>
-  );
+  )
 }
 
 const StyledIcons = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 70px);
   grid-gap: 20px;
-`;
+`

@@ -3,7 +3,7 @@ import { Header } from '@/modules/Base/Header'
 import Head from 'next/head'
 import styled from 'styled-components'
 import { useState } from 'react'
-import useAuth from "@/hooks/useAuth";
+import useAuth from '@/hooks/useAuth'
 
 export default function NotFoundPage() {
   const [isUserAuth, setUserAuth] = useState<boolean>(false)
@@ -40,4 +40,4 @@ export default function NotFoundPage() {
 const StyledNotFoundPage = styled.main`
   background: #eef1f5;
   min-height: 100vh;
-`;
+`

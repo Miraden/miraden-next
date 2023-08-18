@@ -2,8 +2,8 @@ import { Header } from '@/modules/Base/Header'
 import { FavouritesFullLayout } from '@/modules/FavouritesFull/FavouritesFullLayout'
 import Head from 'next/head'
 import styled from 'styled-components'
-import {useState} from "react";
-import useAuth from "@/hooks/useAuth";
+import { useState } from 'react'
+import useAuth from '@/hooks/useAuth'
 
 export default function FavoritesPage() {
   const [isUserAuth, setUserAuth] = useState<boolean>(false)
@@ -20,7 +20,7 @@ export default function FavoritesPage() {
 
     onResponse: (): void => {
       setUserReady(true)
-    }
+    },
   })
 
   return (

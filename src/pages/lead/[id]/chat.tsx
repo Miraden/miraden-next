@@ -4,12 +4,12 @@ import useAuth from '@/hooks/useAuth'
 import { Header } from '@/modules/Base/Header'
 import { Preloader } from '@/components/ui/Preloader'
 import styled from 'styled-components'
-import ChatLayout, {ViewStates} from '@/modules/Chats/ChatLayout'
+import ChatLayout, { ViewStates } from '@/modules/Chats/ChatLayout'
 import { theme } from '../../../../styles/tokens'
 import Modal from '@/components/ui/Modal'
 import AuthFormLayout from '@/modules/Security/AuthFormLayout'
 import { Login } from '@/modules/Customer'
-import {useWindowSize, WindowSize} from "@/hooks/useWindowSize";
+import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max

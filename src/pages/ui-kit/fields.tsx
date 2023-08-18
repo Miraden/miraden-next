@@ -10,83 +10,136 @@ import styled from 'styled-components'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import UIKitHead from '@/modules/UIKitTest/UIKitHead'
 import { EditIcon } from '@/icons/EditIcon'
-import {DropdownInput} from "@/components/ui/DropDowns/DropdownInput";
+import { DropdownInput } from '@/components/ui/DropDowns/DropdownInput'
 
 const options = ['Select 1', 'Select 2', 'Select 3', 'Select 4']
 
 const options2 = [
-  { label: "Option 1", value: "option1" },
-  { label: "Option 2", value: "option2" },
-  { label: "Option 3", value: "option3" },
-];
+  { label: 'Option 1', value: 'option1' },
+  { label: 'Option 2', value: 'option2' },
+  { label: 'Option 3', value: 'option3' },
+]
 
 export default function FieldsPage() {
   return (
     <BlankLayout>
-      <UIKitHead title={"Fields"} className={"Container"} backUrl={"/ui-kit"}/>
+      <UIKitHead title={'Fields'} className={'Container'} backUrl={'/ui-kit'} />
       <StyledFields className="Fields Container">
-        <div className={"Fields_row"}>
-          <TextInput label={"Text"} className={"Input"} />
-          <TextInput disabled label={"Text"} className={"Input"} />
-          <TextInput warning label={"Text"} className={"Input"} message={"Warning"} />
-          <TextInput error label={"Text"} className={"Input"} message={"Error"} />
+        <div className={'Fields_row'}>
+          <TextInput label={'Text'} className={'Input'} />
+          <TextInput disabled label={'Text'} className={'Input'} />
+          <TextInput
+            warning
+            label={'Text'}
+            className={'Input'}
+            message={'Warning'}
+          />
+          <TextInput
+            error
+            label={'Text'}
+            className={'Input'}
+            message={'Error'}
+          />
         </div>
 
-        <div className={"Fields_row"}>
-          <TextInput maxLength={40} className={"Input"} />
-          <TextInput maxLength={40} warning className={"Input"} message={"Warning"} />
-          <TextInput maxLength={40} disabled className={"Input"} />
-          <TextInput maxLength={40} error className={"Input"} />
+        <div className={'Fields_row'}>
+          <TextInput maxLength={40} className={'Input'} />
+          <TextInput
+            maxLength={40}
+            warning
+            className={'Input'}
+            message={'Warning'}
+          />
+          <TextInput maxLength={40} disabled className={'Input'} />
+          <TextInput maxLength={40} error className={'Input'} />
         </div>
 
-        <div className={"Fields_row"}>
-          <TextInput label={"Text"} icon={<EditIcon />} className={"Input"} />
-          <TextInput label={"Text"} warning message={"Warning"} icon={<EditIcon />} className={"Input"} />
-          <TextInput icon={<EditIcon />} error message={"Error"} className={"Input"} />
-          <TextInput icon={<EditIcon />} disabled className={"Input"} />
+        <div className={'Fields_row'}>
+          <TextInput label={'Text'} icon={<EditIcon />} className={'Input'} />
+          <TextInput
+            label={'Text'}
+            warning
+            message={'Warning'}
+            icon={<EditIcon />}
+            className={'Input'}
+          />
+          <TextInput
+            icon={<EditIcon />}
+            error
+            message={'Error'}
+            className={'Input'}
+          />
+          <TextInput icon={<EditIcon />} disabled className={'Input'} />
         </div>
 
-        <div className={"Fields_row"}>
-          <TextAreaInput maxLength={500} label={"Text"} />
-          <TextAreaInput maxLength={500} warning message={"Warning"} />
+        <div className={'Fields_row'}>
+          <TextAreaInput maxLength={500} label={'Text'} />
+          <TextAreaInput maxLength={500} warning message={'Warning'} />
           <TextAreaInput maxLength={500} error />
           <TextAreaInput maxLength={500} disabled />
         </div>
 
-        <div className={"Fields_row"}>
-          <PasswordInput label="password" className={"Input"} />
-          <PasswordInput warning className={"Input"} message={"Warning"} />
-          <PasswordInput error className={"Input"} />
-          <PasswordInput label="password" disabled className={"Input"} />
+        <div className={'Fields_row'}>
+          <PasswordInput label="password" className={'Input'} />
+          <PasswordInput warning className={'Input'} message={'Warning'} />
+          <PasswordInput error className={'Input'} />
+          <PasswordInput label="password" disabled className={'Input'} />
         </div>
 
-        <div className={"Fields_row"}>
-          <Search sort={options2} placeholder={"Text"} className={"Input"} />
-          <Search sort={options2} placeholder={"Text"} disabled className={"Input"} />
+        <div className={'Fields_row'}>
+          <Search sort={options2} placeholder={'Text'} className={'Input'} />
+          <Search
+            sort={options2}
+            placeholder={'Text'}
+            disabled
+            className={'Input'}
+          />
         </div>
 
-        <div className={"Fields_row Dropdowns"}>
-          <DropdownInput options={options2} placeholder={"Select"} selected={(e: Forms.DropDownOption) => {}} />
-          <DropdownInput options={options2} message={"Message"} placeholder={"Select"} selected={(e: Forms.DropDownOption) => {}} />
-          <DropdownInput error className={"Input"} message={"Error message"} selected={(e: Forms.DropDownOption) => {}} />
-          <DropdownInput disabled placeholder={"Select"} selected={(e: Forms.DropDownOption) => {}} />
+        <div className={'Fields_row Dropdowns'}>
+          <DropdownInput
+            options={options2}
+            placeholder={'Select'}
+            selected={(e: Forms.DropDownOption) => {}}
+          />
+          <DropdownInput
+            options={options2}
+            message={'Message'}
+            placeholder={'Select'}
+            selected={(e: Forms.DropDownOption) => {}}
+          />
+          <DropdownInput
+            error
+            className={'Input'}
+            message={'Error message'}
+            selected={(e: Forms.DropDownOption) => {}}
+          />
+          <DropdownInput
+            disabled
+            placeholder={'Select'}
+            selected={(e: Forms.DropDownOption) => {}}
+          />
         </div>
 
-        <div className={"Fields_row"}>
+        <div className={'Fields_row'}>
           <DropdownInputCheckbox options={options2} />
         </div>
 
-        <div className={"Fields_row"}>
+        <div className={'Fields_row'}>
           <MessageInput />
         </div>
 
-        <div className={"Fields_row"}>
-          <DropdownInput options={options2} className={"Sort"} placeholder={"Без диапазона"} selected={() => {}} />
+        <div className={'Fields_row'}>
+          <DropdownInput
+            options={options2}
+            className={'Sort'}
+            placeholder={'Без диапазона'}
+            selected={() => {}}
+          />
         </div>
-
       </StyledFields>
     </BlankLayout>
-  );
+  )
 }
 
 const StyledFields = styled.div`
@@ -110,4 +163,4 @@ const StyledFields = styled.div`
   .Sort {
     width: 150px;
   }
-`;
+`

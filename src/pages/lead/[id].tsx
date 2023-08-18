@@ -52,7 +52,7 @@ const LeadEntry = () => {
 
     onResponse: (): void => {
       setUserReady(true)
-    }
+    },
   })
 
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.Lead)
@@ -103,8 +103,9 @@ const LeadEntry = () => {
 
   const [leadsData, setLeadsAllData] = useState<Object>({})
   const [notifyVisible, setNotifyVisible] = useState<boolean>(false)
-  const [leadVisibilityStatus, setLeadVisibilityStatus] = useState<boolean>(false)
-  const [leadTitle, setLeadTitle] = useState<string>("")
+  const [leadVisibilityStatus, setLeadVisibilityStatus] =
+    useState<boolean>(false)
+  const [leadTitle, setLeadTitle] = useState<string>('')
   const [IamLeadOwner, setIamLeadOwner] = useState<boolean>(false)
   const [sellersRequests, setSellersRequests] = useState<Object[]>([])
   const [executants, setExecutants] = useState<Object[]>([])
@@ -150,7 +151,11 @@ const LeadEntry = () => {
       setGuestSidebar(false)
       current?.updateMenuFooter(
         <Search
-          sort={[{label: 'Сначала агентства', value: 1}, {label: 'Сначала PRO', value: 2}, {label: 'Сначала самые надежные', value: 3}]}
+          sort={[
+            { label: 'Сначала агентства', value: 1 },
+            { label: 'Сначала PRO', value: 2 },
+            { label: 'Сначала самые надежные', value: 3 },
+          ]}
           placeholder="Поиск"
           filterIcon={<FilterIcon />}
           withSort={true}
@@ -158,7 +163,7 @@ const LeadEntry = () => {
         />
       )
       leadDataProvider.setIsFinished(false)
-      leadDataProvider.fetchSellersRequests(leadId).then((res) => {
+      leadDataProvider.fetchSellersRequests(leadId).then(res => {
         leadDataProvider.setLang(langManager.getClientLang())
         leadDataProvider.setIsFinished(true)
         const payload = res.payload as Object[]
@@ -172,7 +177,7 @@ const LeadEntry = () => {
       setShowOwnerSidebar(false)
       setGuestSidebar(false)
       leadDataProvider.setIsFinished(false)
-      leadDataProvider.fetchRejected(leadId).then((res) => {
+      leadDataProvider.fetchRejected(leadId).then(res => {
         leadDataProvider.setLang(langManager.getClientLang())
         leadDataProvider.setIsFinished(true)
         const payload = res.payload as Object[]
@@ -186,7 +191,7 @@ const LeadEntry = () => {
       setShowOwnerSidebar(false)
       setGuestSidebar(false)
       leadDataProvider.setIsFinished(false)
-      leadDataProvider.fetchExecutants(leadId).then((res) => {
+      leadDataProvider.fetchExecutants(leadId).then(res => {
         leadDataProvider.setLang(langManager.getClientLang())
         const payload = res.payload as Object[]
         setExecutants(payload)
@@ -200,7 +205,7 @@ const LeadEntry = () => {
       setShowOwnerSidebar(false)
       setGuestSidebar(false)
       leadDataProvider.setIsFinished(false)
-      leadDataProvider.fetchRecommended(leadId).then((res) => {
+      leadDataProvider.fetchRecommended(leadId).then(res => {
         leadDataProvider.setLang(langManager.getClientLang())
         leadDataProvider.setIsFinished(true)
         const payload = res.payload as Object[]
@@ -222,7 +227,7 @@ const LeadEntry = () => {
               className={cn('LeadContent', {
                 IsOpenFilter: showFilter,
                 IsOpenSidebar: showOwnerSidebar || showGuestSidebar,
-                IamLeadOwner: IamLeadOwner
+                IamLeadOwner: IamLeadOwner,
               })}
             >
               <StyledMenu
@@ -244,8 +249,8 @@ const LeadEntry = () => {
                 </div>
                 {IamLeadOwner && (
                   <>
-                  {tabsManager.renderMenus(selected)}
-                  {tabsManager.renderMenuFooter(selected)}
+                    {tabsManager.renderMenus(selected)}
+                    {tabsManager.renderMenuFooter(selected)}
                   </>
                 )}
               </StyledMenu>
@@ -253,7 +258,9 @@ const LeadEntry = () => {
               <div className="Leads__content">
                 {selected == TabsMenuState.Lead && leadDataProvider.render()}
                 {selected == TabsMenuState.Requests && (
-                  <div className={'PageLead'}>{renderUsers(sellersRequests)}</div>
+                  <div className={'PageLead'}>
+                    {renderUsers(sellersRequests)}
+                  </div>
                 )}
                 {selected == TabsMenuState.Executants && (
                   <div className={'PageLead'}>{renderUsers(executants)}</div>
@@ -262,12 +269,20 @@ const LeadEntry = () => {
                   <div className={'PageLead'}>{renderUsers(rejectedUsers)}</div>
                 )}
                 {selected == TabsMenuState.Recommended && (
-                  <div className={'PageLead'}>{renderUsers(recommendedUsers)}</div>
+                  <div className={'PageLead'}>
+                    {renderUsers(recommendedUsers)}
+                  </div>
                 )}
               </div>
             </div>
             {showOwnerSidebar && renderLeadPaymentOptions()}
-            {showGuestSidebar && <LeadOwnerCard leadId={leadId} isUserAuth={isUserAuth} isUserReady={isUserReady} />}
+            {showGuestSidebar && (
+              <LeadOwnerCard
+                leadId={leadId}
+                isUserAuth={isUserAuth}
+                isUserReady={isUserReady}
+              />
+            )}
 
             {showFilter && renderFilter(handleShowFilter, () => {})}
             {!showFilter && <ApplicationsFooter />}

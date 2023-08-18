@@ -14,10 +14,10 @@ import {
 import useAuth from '@/hooks/useAuth'
 import { Login } from '@/modules/Customer'
 import { Preloader } from '@/components/ui/Preloader'
-import {LeadMakerProvider} from "@/modules/Leads/Maker/LeadMakerProvider";
-import Modal from "@/components/ui/Modal";
-import PaySuccessModal from "@/modules/Leads/components/PaySuccessModal";
-import AuthFormLayout from "@/modules/Security/AuthFormLayout";
+import { LeadMakerProvider } from '@/modules/Leads/Maker/LeadMakerProvider'
+import Modal from '@/components/ui/Modal'
+import PaySuccessModal from '@/modules/Leads/components/PaySuccessModal'
+import AuthFormLayout from '@/modules/Security/AuthFormLayout'
 
 const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
@@ -164,7 +164,7 @@ const RenderStep = (): JSX.Element => {
 
   return (
     <>
-      {showPaySuccess && <PaySuccessModal OnExit={onModalExit}/>}
+      {showPaySuccess && <PaySuccessModal OnExit={onModalExit} />}
       <div id={'StepsWrapper'} className="StepsWrapper">
         <div className="Steps__header">
           <h1 className={'Font_headline_3'}>
@@ -231,7 +231,13 @@ const RenderStep = (): JSX.Element => {
           </div>
         </div>
       </div>
-      {showPayForm && <PayForm isBusy={isPayFormBusy} onClose={onClosePayForm} onPayClick={onPayClick} />}
+      {showPayForm && (
+        <PayForm
+          isBusy={isPayFormBusy}
+          onClose={onClosePayForm}
+          onPayClick={onPayClick}
+        />
+      )}
     </>
   )
 }

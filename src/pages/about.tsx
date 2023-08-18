@@ -21,7 +21,7 @@ export default function AboutPage() {
 
     onResponse: (): void => {
       setUserReady(true)
-    }
+    },
   })
 
   return (

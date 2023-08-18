@@ -1,10 +1,10 @@
-import Head from "next/head";
-import React, {useState} from "react";
+import Head from 'next/head'
+import React, { useState } from 'react'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
-import cn from "classnames";
-import styled from "styled-components";
-import {Header} from "@/modules/Base/Header";
-import useAuth from "@/hooks/useAuth";
+import cn from 'classnames'
+import styled from 'styled-components'
+import { Header } from '@/modules/Base/Header'
+import useAuth from '@/hooks/useAuth'
 
 export default function ProfilePage(): JSX.Element {
   const [isUserAuth, setUserAuth] = useState(false)
@@ -20,7 +20,7 @@ export default function ProfilePage(): JSX.Element {
 
     onResponse: (): void => {
       setUserReady(true)
-    }
+    },
   })
 
   return (

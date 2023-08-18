@@ -2,11 +2,11 @@ import { Login } from '@/modules/Customer'
 import Head from 'next/head'
 import styled from 'styled-components'
 import { useCallback } from 'react'
-import AuthFormLayout from "@/modules/Security/AuthFormLayout";
+import AuthFormLayout from '@/modules/Security/AuthFormLayout'
 
 export default function LoginPage() {
   const onSuccess = useCallback(() => {
-      window.location.href = '/'
+    window.location.href = '/'
   }, [])
 
   return (

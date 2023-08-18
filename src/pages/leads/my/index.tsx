@@ -2,9 +2,9 @@ import Head from 'next/head'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import { Header } from '@/modules/Base/Header'
 import styled from 'styled-components'
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { ApplicationFull } from '@/modules/ApplicationsFull/Application'
-import useAuth from "@/hooks/useAuth";
+import useAuth from '@/hooks/useAuth'
 
 export default function MyLeadsPage(): JSX.Element {
   const [isUserAuth, setUserAuth] = useState<boolean>(false)
@@ -21,7 +21,7 @@ export default function MyLeadsPage(): JSX.Element {
 
     onResponse: (): void => {
       setUserReady(true)
-    }
+    },
   })
 
   return (
