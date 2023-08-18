@@ -25,15 +25,14 @@ const StyledModal = styled.div`
   backdrop-filter: blur(11px);
 
   .ModalContent {
-    width: 500px;
-    height: 500px;
     background: #fff;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     border-radius: 10px;
-    padding: 15px;
+    max-width: 970px;
+    width: 100%;
 
     .CloseButton {
       position: absolute;

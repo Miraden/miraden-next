@@ -90,14 +90,14 @@ const Login = ({className, onFailure, onResponse, onSuccess}: Props) => {
 
   return (
     <StyledRegStep1 className={className}>
-      <div className="Reg">
-        <div className="Reg__headContainer">
-          <div className="Reg__head">
-            <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
-              Вход в аккаунт
-            </h1>
-          </div>
+      <div className="Reg__headContainer">
+        <div className="Reg__head">
+          <h1 className="Font_32_120 lg:Font_26_120_600 sm:Font_22_120_500">
+            Вход в аккаунт
+          </h1>
         </div>
+      </div>
+      <div className="Reg__body">
         <div className="Reg__link Color_blue_primary">
           <span>Если у вас ещё нет своего аккаунта, тогда&nbsp;</span>
           <Link underlined href="/user/register">
@@ -138,33 +138,33 @@ const Login = ({className, onFailure, onResponse, onSuccess}: Props) => {
               <div className="Error__message Text_12_16">Bad credentials</div>)}
           </Form>
         </div>
-        <div className="Reg__footerContainer">
-          <div className="Reg__progressBar"></div>
+      </div>
+      <div className="Reg__footerContainer">
+        <div className="Reg__progressBar"></div>
 
-          <div className="Reg__footer">
-            <div className="Reg__footerBack">
-              <Button
-                secondary
-                href="/"
-                className="Reg__goBackButton"
-              >
-                На главную
-              </Button>
-              <Button
-                secondary
-                href="/"
-                leftIcon={<ArrowIcon/>}
-                className="Reg__goBackButtonMobile"
-              ></Button>
-            </div>
+        <div className="Reg__footer">
+          <div className="Reg__footerBack">
             <Button
-              type="submit"
-              disabled={valid}
-              onClick={async (e) => await loginAction(email, password)}
+              secondary
+              href="/"
+              className="Reg__goBackButton"
             >
-              Далее
+              На главную
             </Button>
+            <Button
+              secondary
+              href="/"
+              leftIcon={<ArrowIcon/>}
+              className="Reg__goBackButtonMobile"
+            ></Button>
           </div>
+          <Button
+            type="submit"
+            disabled={valid}
+            onClick={async (e) => await loginAction(email, password)}
+          >
+            Далее
+          </Button>
         </div>
       </div>
     </StyledRegStep1>
@@ -174,6 +174,8 @@ const Login = ({className, onFailure, onResponse, onSuccess}: Props) => {
 const StyledRegStep1 = styled.section`
   background: #fff;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
 
   .Reg__head {
     padding: 30px 30px 20px 30px;
@@ -276,11 +278,18 @@ const StyledRegStep1 = styled.section`
     color: ${({theme}) => theme.colors.error}
   }
 
-  @media (max-width: 1200px) {
-    margin-top: 100px;
+  .Reg__footerContainer {
+    margin-top: 180px;
   }
+
+  .Reg__body {
+    flex-grow: 1;
+  }
+
   @media (max-width: 960px) {
-    margin-top: 10px;
+    margin-top: 0;
+    height: 100%;
+
     .Reg__options {
 
       button {
@@ -293,8 +302,6 @@ const StyledRegStep1 = styled.section`
   }
 
   @media (max-width: 576px) {
-    margin-top: 0;
-    height: 100vh;
 
     .Reg {
       height: 100%;
@@ -308,6 +315,7 @@ const StyledRegStep1 = styled.section`
       padding: 24px 20px;
       display: flex;
       flex-direction: column;
+      max-width: 100%;
 
       span {
         text-align: start;
@@ -327,10 +335,6 @@ const StyledRegStep1 = styled.section`
       display: none;
     }
 
-    .Reg__footer {
-      padding: 20px;
-    }
-
     .Reg__footerSteps {
       margin-left: 20px;
     }
@@ -346,20 +350,6 @@ const StyledRegStep1 = styled.section`
           fill: none !important;
         }
       }
-    }
-
-    .Reg__headContainer {
-      position: sticky;
-      top: 0;
-      background: #fff;
-      width: 100%;
-    }
-
-    .Reg__footerContainer {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      background: #fff;
     }
   }
 `;

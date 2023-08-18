@@ -10,6 +10,7 @@ import Modal from '@/components/ui/Modal'
 import { Button } from '@/components/ui'
 import { Login } from '@/modules/Customer'
 import { Preloader } from '@/components/ui/Preloader'
+import AuthFormLayout from "@/modules/Security/AuthFormLayout";
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
@@ -43,11 +44,13 @@ export default function ApplicationsChatsAllPage() {
         {!userReady && !isUserAuth && <Preloader />}
         {!isUserAuth && userReady && (
           <Modal>
-            <Login
-              onSuccess={(e: any) => {
-                setUserAuth(true)
-              }}
-            />
+            <AuthFormLayout inModal={true}>
+              <Login
+                onSuccess={(e: any) => {
+                  setUserAuth(true)
+                }}
+              />
+            </AuthFormLayout>
           </Modal>
         )}
         {isUserAuth && userReady && <Chats isAppAuth={isUserAuth} />}
@@ -60,6 +63,11 @@ const StyledMainApplications = styled.main`
   @media (max-width: ${tablet}) {
     .Header__main {
       display: none;
+    }
+
+    .ModalContent {
+      width: 100%;
+      height: 100%;
     }
   }
 

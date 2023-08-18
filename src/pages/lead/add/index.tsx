@@ -17,6 +17,7 @@ import { Preloader } from '@/components/ui/Preloader'
 import {LeadMakerProvider} from "@/modules/Leads/Maker/LeadMakerProvider";
 import Modal from "@/components/ui/Modal";
 import PaySuccessModal from "@/modules/Leads/components/PaySuccessModal";
+import AuthFormLayout from "@/modules/Security/AuthFormLayout";
 
 const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
@@ -77,9 +78,9 @@ interface LoginProps {
 
 const RenderLogin = (props: LoginProps): JSX.Element => {
   return (
-    <StyledLogin>
-      <Login className={'Login'} onSuccess={props.onSuccess} />
-    </StyledLogin>
+    <AuthFormLayout inModal={true}>
+      <Login onSuccess={props.onSuccess} />
+    </AuthFormLayout>
   )
 }
 
@@ -234,12 +235,6 @@ const RenderStep = (): JSX.Element => {
     </>
   )
 }
-
-const StyledLogin = styled.div`
-  .Login {
-    margin-top: 0;
-  }
-`
 
 const StyledPage = styled.div`
   max-width: 100%;

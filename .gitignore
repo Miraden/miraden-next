@@ -37,3 +37,4 @@ next-env.d.ts
 /cypress/videos/
 /cypress/fixtures/
 /public/u/
+/cypress/screenshots/
