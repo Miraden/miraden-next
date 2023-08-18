@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const MiradenLogoMobile: FC<SVGAttributes<SVGElement>> = (props) => {
+const MiradenLogoMobile: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="44"
@@ -24,7 +24,7 @@ const MiradenLogoMobile: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#fff"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { MiradenLogoMobile };
+export { MiradenLogoMobile }

@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const MontenegroIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const MontenegroIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="27"
@@ -330,7 +330,7 @@ const MontenegroIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export { MontenegroIcon };
+export { MontenegroIcon }

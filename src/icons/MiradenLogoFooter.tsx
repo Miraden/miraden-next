@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const MiradenLogoFooter: FC<SVGAttributes<SVGElement>> = (props) => {
+const MiradenLogoFooter: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg width="140" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#a)">
@@ -25,7 +25,7 @@ const MiradenLogoFooter: FC<SVGAttributes<SVGElement>> = (props) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export { MiradenLogoFooter };
+export { MiradenLogoFooter }

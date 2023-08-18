@@ -1,7 +1,7 @@
-import { FC, SVGAttributes } from "react";
-import {theme} from "../../styles/tokens";
+import { FC, SVGAttributes } from 'react'
+import { theme } from '../../styles/tokens'
 
-const TrashIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const TrashIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="18px"
@@ -14,7 +14,7 @@ const TrashIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill={theme.colors.text.black}
       />
     </svg>
-  );
-};
+  )
+}
 
-export { TrashIcon };
+export { TrashIcon }

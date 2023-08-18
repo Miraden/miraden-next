@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const SliderButton: FC<SVGAttributes<SVGElement>> = (props) => {
+const SliderButton: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="40"
@@ -23,7 +23,7 @@ const SliderButton: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#2A344A"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { SliderButton };
+export { SliderButton }

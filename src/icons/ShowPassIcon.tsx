@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const ShowPassIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const ShowPassIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="18"
@@ -14,7 +14,7 @@ const ShowPassIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#7786A5"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { ShowPassIcon };
+export { ShowPassIcon }

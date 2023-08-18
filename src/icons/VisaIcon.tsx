@@ -1,7 +1,7 @@
-import {FC, SVGAttributes} from "react";
-import styled from "styled-components";
+import { FC, SVGAttributes } from 'react'
+import styled from 'styled-components'
 
-const VisaIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const VisaIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <StyledSvg
       width="42"
@@ -28,15 +28,15 @@ const VisaIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#F79E1B"
       />
     </StyledSvg>
-  );
-};
+  )
+}
 
 const StyledSvg = styled.svg`
   &:hover {
     path {
-      fill: ${({theme}) => theme.colors.text.disabled};
+      fill: ${({ theme }) => theme.colors.text.disabled};
     }
   }
 `
 
-export {VisaIcon};
+export { VisaIcon }

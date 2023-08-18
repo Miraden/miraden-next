@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const WarningIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const WarningIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="16"
@@ -16,7 +16,7 @@ const WarningIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#FFD64C"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { WarningIcon };
+export { WarningIcon }

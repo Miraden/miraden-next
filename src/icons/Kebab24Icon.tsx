@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const Kebab24Icon: FC<SVGAttributes<SVGElement>> = (props) => {
+const Kebab24Icon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -8,7 +8,7 @@ const Kebab24Icon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#2A344A"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { Kebab24Icon };
+export { Kebab24Icon }

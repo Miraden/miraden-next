@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const Applications: FC<SVGAttributes<SVGElement>> = (props) => {
+const Applications: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="18"
@@ -16,7 +16,7 @@ const Applications: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#fff"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { Applications };
+export { Applications }

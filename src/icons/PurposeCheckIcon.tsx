@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const PurposeCheckIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const PurposeCheckIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="18"
@@ -16,7 +16,7 @@ const PurposeCheckIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#7786A5"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { PurposeCheckIcon };
+export { PurposeCheckIcon }

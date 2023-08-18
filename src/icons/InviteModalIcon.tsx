@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const InviteModalIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const InviteModalIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg width="60" height="60" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -12,7 +12,7 @@ const InviteModalIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#4E6AF3"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { InviteModalIcon };
+export { InviteModalIcon }

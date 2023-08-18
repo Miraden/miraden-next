@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const BuildYearIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const BuildYearIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width=""
@@ -17,7 +17,7 @@ const BuildYearIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#7786A5"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { BuildYearIcon };
+export { BuildYearIcon }

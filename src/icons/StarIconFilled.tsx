@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const StarIconFilled: FC<SVGAttributes<SVGElement>> = (props) => {
+const StarIconFilled: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       viewBox="0 0 18 18"
@@ -15,7 +15,7 @@ const StarIconFilled: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#4E6AF3"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { StarIconFilled };
+export { StarIconFilled }

@@ -1,7 +1,7 @@
-import { FC, SVGAttributes } from "react";
-import styled from "styled-components";
+import { FC, SVGAttributes } from 'react'
+import styled from 'styled-components'
 
-const ApplePayIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const ApplePayIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <StyledSvg
       width="42"
@@ -17,15 +17,15 @@ const ApplePayIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#000"
       />
     </StyledSvg>
-  );
-};
+  )
+}
 
 const StyledSvg = styled.svg`
   &:hover {
     path {
-      fill: ${({theme}) => theme.colors.text.disabled};
+      fill: ${({ theme }) => theme.colors.text.disabled};
     }
   }
 `
 
-export { ApplePayIcon };
+export { ApplePayIcon }

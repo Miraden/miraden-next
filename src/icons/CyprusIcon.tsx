@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const CyprusIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const CyprusIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="27"
@@ -31,7 +31,7 @@ const CyprusIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export { CyprusIcon };
+export { CyprusIcon }

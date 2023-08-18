@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const InstagramFullIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const InstagramFullIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="20"
@@ -46,7 +46,7 @@ const InstagramFullIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         </radialGradient>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export { InstagramFullIcon };
+export { InstagramFullIcon }

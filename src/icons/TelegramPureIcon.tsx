@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const TelegramPureIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const TelegramPureIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="19"
@@ -14,7 +14,7 @@ const TelegramPureIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#fff"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { TelegramPureIcon };
+export { TelegramPureIcon }

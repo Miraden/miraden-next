@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const PerformerIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const PerformerIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -10,7 +10,7 @@ const PerformerIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#FFD64C"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { PerformerIcon };
+export { PerformerIcon }

@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const PlayIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const PlayIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       viewBox="0 0 90 90"
@@ -14,7 +14,7 @@ const PlayIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#fff"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { PlayIcon };
+export { PlayIcon }

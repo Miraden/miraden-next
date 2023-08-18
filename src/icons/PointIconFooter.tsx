@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const PointIconFooter: FC<SVGAttributes<SVGElement>> = (props) => {
+const PointIconFooter: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       viewBox="0 0 16 16"
@@ -15,7 +15,7 @@ const PointIconFooter: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#7786A5"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { PointIconFooter };
+export { PointIconFooter }

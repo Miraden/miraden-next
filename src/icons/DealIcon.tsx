@@ -1,7 +1,7 @@
-import { FC, SVGAttributes } from "react";
-import {theme} from "../../styles/tokens";
+import { FC, SVGAttributes } from 'react'
+import { theme } from '../../styles/tokens'
 
-const DealIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const DealIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -9,7 +9,7 @@ const DealIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill={theme.colors.text.black}
       />
     </svg>
-  );
-};
+  )
+}
 
-export { DealIcon };
+export { DealIcon }

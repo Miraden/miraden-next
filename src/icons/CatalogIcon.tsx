@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const CatalogIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const CatalogIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       viewBox="0 0 28 28"
@@ -15,7 +15,7 @@ const CatalogIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#3B4A69"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { CatalogIcon };
+export { CatalogIcon }

@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const RefusalIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const RefusalIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -10,7 +10,7 @@ const RefusalIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#B8C6E3"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { RefusalIcon };
+export { RefusalIcon }

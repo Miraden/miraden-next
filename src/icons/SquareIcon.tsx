@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const SquareIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const SquareIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="0"
@@ -17,7 +17,7 @@ const SquareIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#7786A5"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { SquareIcon };
+export { SquareIcon }

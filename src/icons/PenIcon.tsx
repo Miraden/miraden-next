@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const PenIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const PenIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -10,7 +10,7 @@ const PenIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#7786A5"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { PenIcon };
+export { PenIcon }

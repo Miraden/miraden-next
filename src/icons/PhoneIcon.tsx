@@ -1,4 +1,4 @@
-import {FC, SVGAttributes} from "react";
+import { FC, SVGAttributes } from 'react'
 
 interface Props {
   filled?: boolean
@@ -21,8 +21,8 @@ const PhoneIcon = (props: Props) => {
         fill="#2A344A"
       />
     </svg>
-  );
-};
+  )
+}
 
 const PhoneRoundIcon = (props: Props) => {
   return (
@@ -39,7 +39,7 @@ const PhoneRoundIcon = (props: Props) => {
         fill="#0AB258"
       />
     </svg>
-  );
+  )
 }
 
-export { PhoneIcon, PhoneRoundIcon };
+export { PhoneIcon, PhoneRoundIcon }

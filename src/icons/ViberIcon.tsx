@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const ViberIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const ViberIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="20"
@@ -15,7 +15,7 @@ const ViberIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#fff"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { ViberIcon };
+export { ViberIcon }

@@ -1,5 +1,5 @@
-import {SVGAttributes} from "react";
-import {theme} from "../../styles/tokens";
+import { SVGAttributes } from 'react'
+import { theme } from '../../styles/tokens'
 
 interface Props {
   left?: boolean
@@ -22,8 +22,8 @@ const ArrowsIcon = (props: Props) => {
       {props.left && getLeft()}
       {props.right && getRight()}
     </svg>
-  );
-};
+  )
+}
 
 function getLeft(): JSX.Element {
   return (
@@ -69,4 +69,4 @@ function getBottom(): JSX.Element {
   )
 }
 
-export {ArrowsIcon};
+export { ArrowsIcon }

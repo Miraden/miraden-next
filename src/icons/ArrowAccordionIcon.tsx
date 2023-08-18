@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const ArrowAccordionIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const ArrowAccordionIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="20"
@@ -16,7 +16,7 @@ const ArrowAccordionIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#3B4A69"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { ArrowAccordionIcon };
+export { ArrowAccordionIcon }

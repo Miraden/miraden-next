@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const SliderButtonDisabled: FC<SVGAttributes<SVGElement>> = (props) => {
+const SliderButtonDisabled: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="40"
@@ -17,7 +17,7 @@ const SliderButtonDisabled: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#B8C6E3"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { SliderButtonDisabled };
+export { SliderButtonDisabled }

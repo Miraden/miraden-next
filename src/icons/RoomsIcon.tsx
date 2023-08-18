@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const RoomsIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const RoomsIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width=""
@@ -17,7 +17,7 @@ const RoomsIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#7786A5"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { RoomsIcon };
+export { RoomsIcon }

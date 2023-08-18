@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const CheckboxIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const CheckboxIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="12"
@@ -16,7 +16,7 @@ const CheckboxIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#fff"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { CheckboxIcon };
+export { CheckboxIcon }

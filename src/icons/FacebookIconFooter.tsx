@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const FacebookIconFooter: FC<SVGAttributes<SVGElement>> = (props) => {
+const FacebookIconFooter: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="40"
@@ -16,7 +16,7 @@ const FacebookIconFooter: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#7786A5"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { FacebookIconFooter };
+export { FacebookIconFooter }

@@ -1,7 +1,7 @@
-import { FC, SVGAttributes } from "react";
-import styled from "styled-components";
+import { FC, SVGAttributes } from 'react'
+import styled from 'styled-components'
 
-const CreditCardPlusIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const CreditCardPlusIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <StyledSvg
       width="42"
@@ -18,15 +18,15 @@ const CreditCardPlusIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         strokeLinejoin="round"
       />
     </StyledSvg>
-  );
-};
+  )
+}
 
 const StyledSvg = styled.svg`
   &:hover {
     path {
-      stroke: ${({theme}) => theme.colors.text.disabled};
+      stroke: ${({ theme }) => theme.colors.text.disabled};
     }
   }
 `
 
-export { CreditCardPlusIcon };
+export { CreditCardPlusIcon }

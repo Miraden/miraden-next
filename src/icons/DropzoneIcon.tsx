@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const DropzoneIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const DropzoneIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="40"
@@ -52,7 +52,7 @@ const DropzoneIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         strokeWidth="2"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { DropzoneIcon };
+export { DropzoneIcon }

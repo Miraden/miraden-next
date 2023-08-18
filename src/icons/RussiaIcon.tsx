@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const RussiaIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const RussiaIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="27"
@@ -20,7 +20,7 @@ const RussiaIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
-export { RussiaIcon };
+export { RussiaIcon }

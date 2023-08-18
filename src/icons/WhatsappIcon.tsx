@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const WhatsappIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const WhatsappIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="42"
@@ -16,7 +16,7 @@ const WhatsappIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#fff"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { WhatsappIcon };
+export { WhatsappIcon }

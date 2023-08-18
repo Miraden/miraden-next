@@ -1,5 +1,5 @@
-import { FC, SVGAttributes } from "react";
-import {theme} from "../../styles/tokens";
+import { FC, SVGAttributes } from 'react'
+import { theme } from '../../styles/tokens'
 
 const InfoIcon: FC<SVGAttributes<SVGElement>> = (props, filled: boolean) => {
   return (
@@ -15,7 +15,7 @@ const InfoIcon: FC<SVGAttributes<SVGElement>> = (props, filled: boolean) => {
         fill="#4E6AF3"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { InfoIcon };
+export { InfoIcon }

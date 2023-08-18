@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const ArrowIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const ArrowIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="0"
@@ -17,7 +17,7 @@ const ArrowIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         strokeLinecap="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { ArrowIcon };
+export { ArrowIcon }

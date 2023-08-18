@@ -1,6 +1,6 @@
-import { FC, SVGAttributes } from "react";
+import { FC, SVGAttributes } from 'react'
 
-const VerifiedIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const VerifiedIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="18"
@@ -16,7 +16,7 @@ const VerifiedIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill="#0AB258"
       />
     </svg>
-  );
-};
+  )
+}
 
-export { VerifiedIcon };
+export { VerifiedIcon }

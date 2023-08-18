@@ -1,7 +1,7 @@
-import { FC, SVGAttributes } from "react";
-import {theme} from "../../styles/tokens";
+import { FC, SVGAttributes } from 'react'
+import { theme } from '../../styles/tokens'
 
-const AreaIcon: FC<SVGAttributes<SVGElement>> = (props) => {
+const AreaIcon: FC<SVGAttributes<SVGElement>> = props => {
   return (
     <svg
       width="18"
@@ -15,7 +15,7 @@ const AreaIcon: FC<SVGAttributes<SVGElement>> = (props) => {
         fill={theme.colors.text.black}
       />
     </svg>
-  );
-};
+  )
+}
 
-export { AreaIcon };
+export { AreaIcon }
