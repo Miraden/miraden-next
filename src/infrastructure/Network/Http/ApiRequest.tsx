@@ -7,10 +7,10 @@ enum ApiRequestMethods {
   PUT = 'PUT',
 }
 
-interface Props extends ApiRequestType{
+interface Props extends ApiRequestType {
   method: ApiRequestMethods
   headers: HeadersInit
-  body?: string|FormData
+  body?: string | FormData
   endpoint: string
 }
 
@@ -38,7 +38,7 @@ class ApiRequest {
     const payload: RequestInit = {
       method: method,
       headers: _headers,
-      body: undefined
+      body: undefined,
     }
 
     if (method != ApiRequestMethods.GET) {

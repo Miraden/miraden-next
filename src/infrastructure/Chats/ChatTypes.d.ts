@@ -14,8 +14,8 @@ declare namespace Chat {
     isPassportVerified: boolean
     isRolePro: boolean
     last_message: {
-      message: string|null
-      created_at: string|null
+      message: string | null
+      created_at: string | null
     }
   }
 
@@ -67,8 +67,8 @@ declare namespace Chat {
       seller: UserProfile
       buyer: UserProfile
       last_message: {
-        message: string|null
-        created_at: string|null
+        message: string | null
+        created_at: string | null
       }
     }
     seller_state: string

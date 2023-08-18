@@ -1,6 +1,4 @@
-import {
-  ApiResponse,
-} from '@/infrastructure/Network/Http/ApiResponse'
+import { ApiResponse } from '@/infrastructure/Network/Http/ApiResponse'
 import {
   ApiRequest,
   ApiRequestMethods,
@@ -101,7 +99,7 @@ class LocationsProvider {
 }
 
 export function instanceOfCountries(val: object): boolean {
-  return 'cities' in val;
+  return 'cities' in val
 }
 
 export default LocationsProvider

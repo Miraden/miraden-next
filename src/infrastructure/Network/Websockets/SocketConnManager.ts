@@ -14,8 +14,8 @@ class SocketConnManager {
   }
 
   public create(url?: string): void {
-    if(!url) return
-    if(this.socket) return
+    if (!url) return
+    if (this.socket) return
     this.socket = new WebSocket(url)
     this.makeEvents()
   }
@@ -49,7 +49,7 @@ class SocketConnManager {
 
   public pingPong(timeout: number): void {
     setInterval(() => {
-      if(!this.socket) return
+      if (!this.socket) return
       this.send('ping')
     }, timeout)
   }

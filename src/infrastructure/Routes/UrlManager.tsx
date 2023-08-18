@@ -1,6 +1,5 @@
 class UrlManager {
-  constructor() {
-  }
+  constructor() {}
 
   public updateQuery(key: string, value: any): void {
     const searchParams: URLSearchParams = new URLSearchParams(this.getQuery())

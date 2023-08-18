@@ -53,28 +53,28 @@ class ChatLeadsProvider {
     return p.payload as Chat.Leads[]
   }
 
-    public async fetchExecutants(): Promise<Chat.Leads[]> {
-        const apiRequest: ApiRequest = new ApiRequest()
+  public async fetchExecutants(): Promise<Chat.Leads[]> {
+    const apiRequest: ApiRequest = new ApiRequest()
 
-        const apiResponse: ApiResponse = new ApiResponse()
+    const apiResponse: ApiResponse = new ApiResponse()
 
-        const response = apiRequest
-            .fetch({
-                method: ApiRequestMethods.GET,
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                    Authorization: 'Bearer ' + localStorage.getItem('token'),
-                },
-                endpoint: '/chat/leads?view=executants',
-            })
-            .then(async res => {
-                return res
-            })
+    const response = apiRequest
+      .fetch({
+        method: ApiRequestMethods.GET,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          Authorization: 'Bearer ' + localStorage.getItem('token'),
+        },
+        endpoint: '/chat/leads?view=executants',
+      })
+      .then(async res => {
+        return res
+      })
 
-        const res_1 = await response
-        const p = apiResponse.makeFromObject(res_1)
-        return p.payload as Chat.Leads[]
-    }
+    const res_1 = await response
+    const p = apiResponse.makeFromObject(res_1)
+    return p.payload as Chat.Leads[]
+  }
 }
 
 export default ChatLeadsProvider
