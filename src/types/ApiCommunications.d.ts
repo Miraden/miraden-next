@@ -13,6 +13,6 @@ declare interface ApiResponseType {
 declare interface ApiRequestType {
   method: string
   headers: HeadersInit
-  body?: string|FormData
+  body?: string | FormData
   endpoint: string
 }
