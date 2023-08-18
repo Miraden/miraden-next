@@ -52,7 +52,7 @@ const ChatsList = (props: Props): JSX.Element => {
   )
 
   return (
-    <>
+    <div className={"ChatSidebar"}>
       <ChatRoomsTabs onTab={onTab} />
       <ChatRoomsListLayout className={cn({ isBusy: roomsListBusy })}>
         {roomsListBusy && <Preloader />}
@@ -90,7 +90,7 @@ const ChatsList = (props: Props): JSX.Element => {
           </StyledAllChatsContainer>
         )}
       </ChatRoomsListLayout>
-    </>
+    </div>
   )
 }
 

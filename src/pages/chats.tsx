@@ -2,15 +2,13 @@ import { Header } from '@/modules/Base/Header'
 import Head from 'next/head'
 import styled from 'styled-components'
 import { Chats } from '@/modules/Chats/Chats'
-import React, { useCallback, useState } from 'react'
+import React, { useState } from 'react'
 import useAuth from '@/hooks/useAuth'
-import cn from 'classnames'
 import { theme } from '../../styles/tokens'
 import Modal from '@/components/ui/Modal'
-import { Button } from '@/components/ui'
 import { Login } from '@/modules/Customer'
 import { Preloader } from '@/components/ui/Preloader'
-import AuthFormLayout from "@/modules/Security/AuthFormLayout";
+import AuthFormLayout from '@/modules/Security/AuthFormLayout'
 
 const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
@@ -63,11 +61,6 @@ const StyledMainApplications = styled.main`
   @media (max-width: ${tablet}) {
     .Header__main {
       display: none;
-    }
-
-    .ModalContent {
-      width: 100%;
-      height: 100%;
     }
   }
 

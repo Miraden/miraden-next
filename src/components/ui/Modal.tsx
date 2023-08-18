@@ -1,10 +1,14 @@
 import styled from 'styled-components'
 import React, { ReactNode } from 'react'
+import {theme} from "../../../styles/tokens";
 
 interface Props {
   className?: string
   children?: ReactNode
 }
+
+const mobile = theme.breakpoints.mobile.max + 'px'
+const tablet = theme.breakpoints.tablet.max + 'px'
 
 const Modal = (props: React.PropsWithChildren<Props>): JSX.Element => {
   return (
@@ -38,6 +42,13 @@ const StyledModal = styled.div`
       position: absolute;
       right: 15px;
       top: 15px;
+    }
+  }
+
+  @media (max-width: ${tablet}) {
+    .ModalContent {
+      width: 100%;
+      height: 100%;
     }
   }
 `

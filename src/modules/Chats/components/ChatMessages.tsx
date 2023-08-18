@@ -13,7 +13,7 @@ interface Props {
   className?: string
   onTouchStart?: any
   onTouchEnd?: any
-  onStateChange?: Function
+  onStateChange?: () => void
   inMobileMode: boolean
   messages: Chat.Message[]
   onSend?: (msg: string) => void
@@ -53,7 +53,7 @@ const ChatMessages = ({
 
   return (
     <StyledChatContainer
-      className={className}
+      className={cn(className, "ChatMessages")}
       onTouchEnd={onTouchEnd}
       onTouchStart={onTouchStart}
     >
@@ -204,6 +204,10 @@ const StyledChatContainer = styled.div`
   .ChatMessages__user {
     display: flex;
     align-items: center;
+
+    img {
+      border-radius: 100%;
+    }
   }
 
   .ChatMessages__inner {

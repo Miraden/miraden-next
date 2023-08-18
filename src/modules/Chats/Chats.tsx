@@ -9,15 +9,12 @@ import useUpdater from '@/hooks/useUpdater'
 import { Security } from '@/infrastructure/Security/JWT/JWTManager'
 import { ChatEvents } from '@/modules/Chats/ChatEvents'
 import { ChatTabs } from '@/infrastructure/Chats/ChatTabs'
+import ChatLayout, {ViewStates} from '@/modules/Chats/ChatLayout'
+import cn from 'classnames'
 
 interface Props {
   className?: string
   isAppAuth: boolean
-}
-
-enum MobileStates {
-  List = 'list',
-  Messages = 'messages',
 }
 
 const mobile = theme.breakpoints.mobile.max
@@ -28,9 +25,7 @@ const socketManager = new ChatConnManager()
 let isSocketActive = false
 
 const Chats = (props: Props) => {
-  const [mobileState, setMobileState] = useState<MobileStates>(
-    MobileStates.List
-  )
+  const [viewState, setViewState] = useState<ViewStates>(ViewStates.List)
   const [messages, setMessages] = useState<Chat.Message[]>([])
   const [myProfile, setMyProfile] = useState<Chat.UserProfile>()
   const [activeRoom, setActiveRoom] = useState<number>(0)
@@ -91,13 +86,13 @@ const Chats = (props: Props) => {
       setMessages(msgs)
     }
 
-    if(r.metadata?.event === ChatEvents.onGetRoomsList) {
+    if (r.metadata?.event === ChatEvents.onGetRoomsList) {
       const payload = r.payload as Chat.RoomsList[]
       if (!payload) return
       setRoomsList(payload)
     }
 
-    if(r.metadata?.event === ChatEvents.onGetLeadsList) {
+    if (r.metadata?.event === ChatEvents.onGetLeadsList) {
       const payload = r.payload as Chat.Leads[]
       if (!payload) return
       setLeadsList(payload)
@@ -110,7 +105,7 @@ const Chats = (props: Props) => {
     if (r.metadata?.event === ChatEvents.onNewMessage) {
       const payload = r.payload as Chat.MessageSocketResponse
       if (!payload) return
-      if(activeRoom !== payload.roomId) return
+      if (activeRoom !== payload.roomId) return
       let msgs: Chat.Message[] = messages
       msgs.push({
         owner: {
@@ -145,9 +140,9 @@ const Chats = (props: Props) => {
         },
         message: payload.message_text,
         direction:
-            payload.owner_id === iam.id
-                ? MessageDirection.Out
-                : MessageDirection.In,
+          payload.owner_id === iam.id
+            ? MessageDirection.Out
+            : MessageDirection.In,
         createdAt: payload.message_created_date,
         isRead: payload.message_is_guest_reading,
         roomId: payload.roomId,
@@ -162,7 +157,7 @@ const Chats = (props: Props) => {
   })
 
   const onRoomSelected = useCallback((room: number, lead: number) => {
-    setMobileState(MobileStates.Messages)
+    setViewState(ViewStates.Messages)
     const token = localStorage.getItem('token')
     if (!token) return
     if (!socketManager) return
@@ -176,8 +171,8 @@ const Chats = (props: Props) => {
     socketManager.sendMessage(msg)
   }, [])
 
-  const onStateChanged = useCallback((e: any) => {
-    setMobileState(MobileStates.List)
+  const onStateChanged = useCallback(() => {
+    setViewState(ViewStates.List)
   }, [])
 
   const onChatTab = useCallback((tab: ChatTabs) => {
@@ -187,93 +182,47 @@ const Chats = (props: Props) => {
     socketManager.getLeadsList(token, tab.toString())
   }, [])
 
-  const onLeadSelect = useCallback((lead: number) => {
-    setActiveLead(lead)
-    const token = String(localStorage.getItem('token'))
-    if(lead > 0) {
-      socketManager.getRoomsList([lead], token, activeChat.toString())
-    }
-  }, [activeChat])
+  const onLeadSelect = useCallback(
+    (lead: number) => {
+      setActiveLead(lead)
+      const token = String(localStorage.getItem('token'))
+      if (lead > 0) {
+        socketManager.getRoomsList([lead], token, activeChat.toString())
+      }
+    },
+    [activeChat]
+  )
 
   return (
-    <StyledChats className="ContainerFull">
-      <div className="Chats">
-        <div className="ChatsList ChatSection">
-          <ChatsList
-            leadsReset={leadsListReset}
-            onLeadSelected={onLeadSelect}
-            leadsList={leadsList}
-            onTabSelected={onChatTab}
-            roomsList={roomsList}
-            onRoomSelected={onRoomSelected}
-          />
-        </div>
-        <div className="ChatsMessages ChatSection">
-          <ChatMessages
-            myProfile={myProfile}
-            messages={messages}
-            inMobileMode={inMobileMode}
-            onStateChange={onStateChanged}
-            onSend={onSendMessage}
-            activeRoom={activeRoom}
-          />
-        </div>
-      </div>
-    </StyledChats>
+    <StyledPage className={cn('ContainerFull')}>
+      <ChatLayout viewState={viewState}>
+        <ChatsList
+          leadsReset={leadsListReset}
+          onLeadSelected={onLeadSelect}
+          leadsList={leadsList}
+          onTabSelected={onChatTab}
+          roomsList={roomsList}
+          onRoomSelected={onRoomSelected}
+        />
+        <ChatMessages
+          myProfile={myProfile}
+          messages={messages}
+          inMobileMode={inMobileMode}
+          onStateChange={onStateChanged}
+          onSend={onSendMessage}
+          activeRoom={activeRoom}
+        />
+      </ChatLayout>
+    </StyledPage>
   )
 }
 
-const StyledChats = styled.section`
+const StyledPage = styled.div`
+  padding: 20px;
   height: 100%;
-  padding-bottom: 20px;
-  display: flex;
-
-  .Chats {
-    padding-top: 20px;
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 40px;
-    width: 100%;
-    justify-content: space-between;
-
-    &List {
-      width: 35.1%;
-      height: calc(100vh - 114px);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    &Messages {
-      flex-grow: 1;
-    }
-  }
 
   @media (max-width: ${tablet}px) {
-    padding-left: 0;
-    padding-right: 0;
-    padding-bottom: 0;
-
-    .Chats {
-      flex-direction: column;
-      padding-top: 0;
-      gap: 0;
-
-      &List {
-        width: 100%;
-        height: 100vh;
-        gap: 10px;
-      }
-    }
-  }
-
-  @media (max-width: ${mobile}px) {
-    .Chats {
-      &List {
-        gap: 0;
-      }
-    }
+    padding: 0;
   }
 `
 
