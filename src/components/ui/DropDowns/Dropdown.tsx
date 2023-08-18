@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import cn from 'classnames'
-import {theme} from "../../../../styles/tokens";
-import {CheckSmallLineIcon} from "@/icons/CheckLineIcon";
+import { theme } from '../../../../styles/tokens'
+import { CheckSmallLineIcon } from '@/icons/CheckLineIcon'
 
 type Props = {
   options: Forms.DropDownOption[]
@@ -34,8 +34,8 @@ const Dropdown: FC<Props> = ({
   return (
     <StyledDropdown className={className} borderRadius={borderRadius}>
       <div
-        className={cn("Dropdown__menu", {
-          Dropdown__menu_active: showDropDown
+        className={cn('Dropdown__menu', {
+          Dropdown__menu_active: showDropDown,
         })}
       >
         {options.map((option): JSX.Element => {

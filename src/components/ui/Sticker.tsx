@@ -1,13 +1,13 @@
-import cn from "classnames";
-import { ReactNode } from "react";
-import styled from "styled-components";
+import cn from 'classnames'
+import { ReactNode } from 'react'
+import styled from 'styled-components'
 
 interface StickerProps {
-  className?: string;
-  theme?: "red" | "blue" | "green" | "black" | "grey";
-  tag?: boolean;
-  children?: ReactNode;
-  withNumber?: boolean;
+  className?: string
+  theme?: 'red' | 'blue' | 'green' | 'black' | 'grey'
+  tag?: boolean
+  children?: ReactNode
+  withNumber?: boolean
 }
 
 const Sticker = ({
@@ -20,12 +20,12 @@ const Sticker = ({
   return (
     <StyledSticker className={className}>
       <div
-        className={cn("Font_14_16", {
-          Sticker__red: theme == "red",
-          Sticker__green: theme == "green",
-          Sticker__blue: theme == "blue",
-          Sticker__black: theme == "black",
-          Sticker__grey: theme == "grey",
+        className={cn('Font_14_16', {
+          Sticker__red: theme == 'red',
+          Sticker__green: theme == 'green',
+          Sticker__blue: theme == 'blue',
+          Sticker__black: theme == 'black',
+          Sticker__grey: theme == 'grey',
           Sticker__tag: tag,
           Sticker__withNumber: withNumber,
         })}
@@ -33,8 +33,8 @@ const Sticker = ({
         {children}
       </div>
     </StyledSticker>
-  );
-};
+  )
+}
 
 const StyledSticker = styled.div`
   color: #fff;
@@ -87,6 +87,6 @@ const StyledSticker = styled.div`
     text-transform: uppercase;
     font-weight: 600;
   }
-`;
+`
 
-export { Sticker };
+export { Sticker }

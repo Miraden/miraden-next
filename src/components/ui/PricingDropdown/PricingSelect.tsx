@@ -1,19 +1,19 @@
-import { ArrowIcon } from "@/icons/ArrowIcon";
-import cn from "classnames";
-import { FC, useEffect, useState } from "react";
-import styled from "styled-components";
-import { PricingDropdown } from "./PricingDropdown";
+import { ArrowIcon } from '@/icons/ArrowIcon'
+import cn from 'classnames'
+import { FC, useEffect, useState } from 'react'
+import styled from 'styled-components'
+import { PricingDropdown } from './PricingDropdown'
 
 interface Props {
-  className?: string;
-  options: string[];
-  price?: string;
-  firstInstallment?: string;
-  firstInstallmentPercent?: string;
-  yieldCount?: number;
-  yieldCountPercent?: number;
-  singleCost?: string;
-  onClick?: any;
+  className?: string
+  options: string[]
+  price?: string
+  firstInstallment?: string
+  firstInstallmentPercent?: string
+  yieldCount?: number
+  yieldCountPercent?: number
+  singleCost?: string
+  onClick?: any
 }
 
 const PricingSelect: FC<Props> = ({
@@ -27,28 +27,28 @@ const PricingSelect: FC<Props> = ({
   onClick,
   yieldCountPercent,
 }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectOption, setSelectOption] = useState<string>("");
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [selectOption, setSelectOption] = useState<string>('')
+  const [selectedOption, setSelectedOption] = useState<string>('')
 
   useEffect(() => {
-    setSelectedOption(options[0]);
-  }, [options]);
+    setSelectedOption(options[0])
+  }, [options])
 
   const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
-  };
+    setShowDropDown(!showDropDown)
+  }
 
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {
-      setShowDropDown(false);
+      setShowDropDown(false)
     }
-  };
+  }
 
   const optionSelection = (option: string, index: number): void => {
-    setSelectedOption(option);
-    setSelectOption(option);
-  };
+    setSelectedOption(option)
+    setSelectOption(option)
+  }
 
   return (
     <StyledDropdownInput
@@ -66,7 +66,7 @@ const PricingSelect: FC<Props> = ({
         }
       >
         <div className="DropdownInput_selectLabel Color_blue_primary sm:Font_14_16_600">
-          {price + " " + selectedOption ? price +  " " + selectedOption : price}
+          {price + ' ' + selectedOption ? price + ' ' + selectedOption : price}
           <ArrowIcon />
         </div>
         {showDropDown && (
@@ -87,8 +87,8 @@ const PricingSelect: FC<Props> = ({
         )}
       </button>
     </StyledDropdownInput>
-  );
-};
+  )
+}
 
 const StyledDropdownInput = styled.div<Props>`
   max-width: fit-content;
@@ -172,6 +172,6 @@ const StyledDropdownInput = styled.div<Props>`
     background: rgba(255, 255, 255, 0.85);
     border-radius: 3px;
   }
-`;
+`
 
-export { PricingSelect };
+export { PricingSelect }

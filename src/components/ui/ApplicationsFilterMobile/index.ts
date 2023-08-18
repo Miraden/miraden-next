@@ -1,1 +1,1 @@
-export { ApplicationsFilterMobile } from "./ApplicationsFilterMobile";
+export { ApplicationsFilterMobile } from './ApplicationsFilterMobile'

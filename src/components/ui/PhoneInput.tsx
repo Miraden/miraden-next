@@ -1,19 +1,19 @@
-import { WarningIcon } from "@/icons";
-import cn from "classnames";
-import React, { ReactNode, useState } from "react";
-import styled from "styled-components";
+import { WarningIcon } from '@/icons'
+import cn from 'classnames'
+import React, { ReactNode, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  maxLength?: number;
-  warning?: boolean;
-  error?: boolean;
-  icon?: ReactNode;
-  disabled?: boolean;
-  label?: string;
-  className?: string;
-  values?: any;
-  onChange?: any;
-  onKeyPress?: any;
+  maxLength?: number
+  warning?: boolean
+  error?: boolean
+  icon?: ReactNode
+  disabled?: boolean
+  label?: string
+  className?: string
+  values?: any
+  onChange?: any
+  onKeyPress?: any
 }
 
 const PhoneInput = ({
@@ -29,20 +29,20 @@ const PhoneInput = ({
   onChange,
   onKeyPress,
 }: Props) => {
-  const [value, setValue] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
+  const [value, setValue] = useState('')
+  const [isFocused, setIsFocused] = useState(false)
 
   const handleFocus = () => {
     if (!disabled) {
-      setIsFocused(true);
+      setIsFocused(true)
     }
-  };
+  }
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (!disabled) {
-      setIsFocused(!!event.target.value);
+      setIsFocused(!!event.target.value)
     }
-  };
+  }
 
   return (
     <StyledPhoneInput className={className}>
@@ -80,8 +80,8 @@ const PhoneInput = ({
       )}
       {error && <div className="Error__message Text_12_16">Error</div>}
     </StyledPhoneInput>
-  );
-};
+  )
+}
 
 const StyledPhoneInput = styled.div`
   position: relative;
@@ -89,7 +89,7 @@ const StyledPhoneInput = styled.div`
   flex-direction: column;
   width: 100%;
   .PhoneInput::after {
-    content: "*";
+    content: '*';
     color: red;
     margin-right: 5px;
   }
@@ -156,13 +156,13 @@ const StyledPhoneInput = styled.div`
       background-color: #fff5f5;
     }
   }
-`;
+`
 
 const StyledPhoneInputField = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-`;
+`
 
 const StyledPhoneInputInput = styled.input`
   width: 100%;
@@ -185,24 +185,24 @@ const StyledPhoneInputInput = styled.input`
     box-shadow: 0 0 0 2px #4e6af3 inset;
   }
   .PhoneInput::before {
-    content: "*";
+    content: '*';
     color: red;
     margin-right: 5px;
   }
-`;
+`
 
 const StyledPhoneInputLabel = styled.label<{ isFocused: boolean }>`
   position: absolute;
-  top: ${({ isFocused }) => (isFocused ? "6px" : "50%")};
-  left: ${({ isFocused }) => (isFocused ? "20px" : "20px")};
+  top: ${({ isFocused }) => (isFocused ? '6px' : '50%')};
+  left: ${({ isFocused }) => (isFocused ? '20px' : '20px')};
   transform: ${({ isFocused }) =>
-    isFocused ? "translateY(0)" : "translateY(-50%)"};
-  font-size: ${({ isFocused }) => (isFocused ? "12px" : "16px")};
+    isFocused ? 'translateY(0)' : 'translateY(-50%)'};
+  font-size: ${({ isFocused }) => (isFocused ? '12px' : '16px')};
   line-height: 20px;
   color: #7786a5;
   pointer-events: none;
   transition: 0.1s;
-`;
+`
 
 const StyledPhoneInputCounter = styled.div`
   position: absolute;
@@ -213,6 +213,6 @@ const StyledPhoneInputCounter = styled.div`
   align-self: flex-end;
   font-size: 12px;
   color: #808080;
-`;
+`
 
-export { PhoneInput };
+export { PhoneInput }

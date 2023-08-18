@@ -1,8 +1,8 @@
-import React, {ReactNode} from "react";
-import styled from "styled-components";
-import cn from "classnames";
+import React, { ReactNode } from 'react'
+import styled from 'styled-components'
+import cn from 'classnames'
 
-const baseClass = "Tags"
+const baseClass = 'Tags'
 
 interface TagsProps {
   className?: string
@@ -25,7 +25,7 @@ const Tags = (props: TagsProps) => {
 }
 
 const TagItem = (props: TagProps) => {
-  const className = baseClass + "Item"
+  const className = baseClass + 'Item'
   return (
     <>
       <div className={cn(className, props.className)}>
@@ -47,9 +47,9 @@ const TagItem = (props: TagProps) => {
 
 const StyledTag = styled.div`
   width: fit-content;
-  background: ${({theme}) => theme.colors.background.lightBlue};
-  border-radius: ${({theme}) => theme.border.radius};
-  color: ${({theme}) => theme.colors.text.black};
+  background: ${({ theme }) => theme.colors.background.lightBlue};
+  border-radius: ${({ theme }) => theme.border.radius};
+  color: ${({ theme }) => theme.colors.text.black};
   padding: 7px 4px;
   position: relative;
   display: flex;
@@ -62,10 +62,9 @@ const StyledTag = styled.div`
     line-height: 1;
     padding: 0 5px;
     white-space: nowrap;
-    border-right: 1px solid ${({theme}) => theme.colors.stroke.lightGrey};
+    border-right: 1px solid ${({ theme }) => theme.colors.stroke.lightGrey};
 
     .Button__leftIconContainer {
-
       svg {
         width: 18px;
         height: 18px;
@@ -97,4 +96,4 @@ const StyledTag = styled.div`
   }
 `
 
-export {Tags, TagItem}
+export { Tags, TagItem }

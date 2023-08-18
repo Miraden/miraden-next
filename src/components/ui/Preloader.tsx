@@ -50,7 +50,8 @@ const StyledPreloader = styled.div<Props>`
     border-radius: 50%;
     border: 3px solid ${({ theme }) => theme.colors.main};
     animation: Preloader 1200ms cubic-bezier(0.5, 0, 0.5, 1) infinite;
-    border-color: ${({ theme }) => theme.colors.main} transparent transparent transparent;
+    border-color: ${({ theme }) => theme.colors.main} transparent transparent
+      transparent;
   }
 
   div:nth-child(1) {

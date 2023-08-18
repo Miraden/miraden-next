@@ -1,21 +1,21 @@
-import { FC } from "react";
-import styled from "styled-components";
-import { RequestButton } from "../RequestButton";
+import { FC } from 'react'
+import styled from 'styled-components'
+import { RequestButton } from '../RequestButton'
 
 type Props = {
-  selectedOption: string;
-  setSelectedOption: (option: string) => void;
-  options: string[];
-  showDropDown: boolean;
-  toggleDropDown: Function;
-  optionSelection: Function;
-  className?: string;
-  firstInstallment?: string;
-  firstInstallmentPercent?: string;
-  yieldCount?: number;
-  yieldCountPercent?: number;
-  singleCost?: string;
-};
+  selectedOption: string
+  setSelectedOption: (option: string) => void
+  options: string[]
+  showDropDown: boolean
+  toggleDropDown: Function
+  optionSelection: Function
+  className?: string
+  firstInstallment?: string
+  firstInstallmentPercent?: string
+  yieldCount?: number
+  yieldCountPercent?: number
+  singleCost?: string
+}
 const PricingDropdown: FC<Props> = ({
   selectedOption,
   setSelectedOption,
@@ -34,8 +34,8 @@ const PricingDropdown: FC<Props> = ({
       <div
         className={
           showDropDown
-            ? "PricingDropdown__menu_active"
-            : "PricingDropdown__menu"
+            ? 'PricingDropdown__menu_active'
+            : 'PricingDropdown__menu'
         }
       >
         <div className="PricingDropdown__head">
@@ -72,19 +72,19 @@ const PricingDropdown: FC<Props> = ({
               <RequestButton
                 key={index}
                 onClick={(): void => {
-                  setSelectedOption(option);
+                  setSelectedOption(option)
                 }}
                 active={selectedOption === option}
               >
                 {option}
               </RequestButton>
-            );
+            )
           })}
         </div>
       </div>
     </StyledPricingDropdown>
-  );
-};
+  )
+}
 
 const StyledPricingDropdown = styled.div`
   .PricingDropdown__head {
@@ -171,6 +171,6 @@ const StyledPricingDropdown = styled.div`
       margin-left: 10px;
     }
   }
-`;
+`
 
-export { PricingDropdown };
+export { PricingDropdown }

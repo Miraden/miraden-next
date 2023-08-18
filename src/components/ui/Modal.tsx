@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import React, { ReactNode } from 'react'
-import {theme} from "../../../styles/tokens";
+import { theme } from '../../../styles/tokens'
 
 interface Props {
   className?: string

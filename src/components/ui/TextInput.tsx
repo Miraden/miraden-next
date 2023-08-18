@@ -1,21 +1,21 @@
-import { WarningIcon } from "@/icons";
-import cn from "classnames";
-import React, { ReactNode, useState } from "react";
-import styled from "styled-components";
+import { WarningIcon } from '@/icons'
+import cn from 'classnames'
+import React, { ReactNode, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  maxLength?: number;
-  warning?: boolean;
-  error?: boolean;
-  icon?: ReactNode;
-  disabled?: boolean;
-  label?: string;
-  className?: string;
-  values?: any;
-  onChange?: any;
-  onKeyPress?: any;
-  isRequired?: boolean;
-  name?: string;
+  maxLength?: number
+  warning?: boolean
+  error?: boolean
+  icon?: ReactNode
+  disabled?: boolean
+  label?: string
+  className?: string
+  values?: any
+  onChange?: any
+  onKeyPress?: any
+  isRequired?: boolean
+  name?: string
   message?: string
   placeholder?: string
 }
@@ -34,35 +34,41 @@ const TextInput = ({
   isRequired = false,
   name,
   message,
-  placeholder
+  placeholder,
 }: Props) => {
-  const [value, setValue] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
+  const [value, setValue] = useState('')
+  const [isFocused, setIsFocused] = useState(false)
   const hasLabel: boolean = label !== undefined
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
+    const inputValue = event.target.value
     if (maxLength && inputValue.length > maxLength) {
-      return;
+      return
     }
-    if(onChange) onChange(event)
-    setValue(inputValue);
-  };
+    if (onChange) onChange(event)
+    setValue(inputValue)
+  }
 
   const handleFocus = () => {
     if (!disabled) {
-      setIsFocused(true);
+      setIsFocused(true)
     }
-  };
+  }
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (!disabled) {
-      setIsFocused(!!event.target.value);
+      setIsFocused(!!event.target.value)
     }
-  };
+  }
 
   return (
-    <StyledTextInput className={cn(className, (isRequired && "TextInput__IsRequired"), (hasLabel && "TextInput__hasLabel"))}>
+    <StyledTextInput
+      className={cn(
+        className,
+        isRequired && 'TextInput__IsRequired',
+        hasLabel && 'TextInput__hasLabel'
+      )}
+    >
       <StyledTextInputField
         className={cn({
           FieldInput__labelWarning: warning,
@@ -99,10 +105,12 @@ const TextInput = ({
           <span className="Font_fields_description">{message}</span>
         </div>
       )}
-      {error && <div className="Error__message Font_fields_description">{message}</div>}
+      {error && (
+        <div className="Error__message Font_fields_description">{message}</div>
+      )}
     </StyledTextInput>
-  );
-};
+  )
+}
 
 const StyledTextInput = styled.div`
   position: relative;
@@ -111,7 +119,7 @@ const StyledTextInput = styled.div`
   width: auto;
 
   &.TextInput__IsRequired .TextInput::after {
-    content: "*";
+    content: '*';
     color: ${({ theme }) => theme.colors.text.error};
     margin-right: 5px;
   }
@@ -186,67 +194,72 @@ const StyledTextInput = styled.div`
       background-color: ${({ theme }) => theme.colors.fields.bgError};
     }
   }
-`;
+`
 
 const StyledTextInputField = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   width: auto;
-`;
+`
 
-const StyledTextInputInput = styled.input<{ isRequired: boolean, hasLabel: boolean }>`
+const StyledTextInputInput = styled.input<{
+  isRequired: boolean
+  hasLabel: boolean
+}>`
   position: relative;
   border: none;
   width: 100%;
-  border-radius: ${({theme}) => theme.border.radius};
-  padding: ${({ isRequired }) => (isRequired ? "18px 18px 4px 20px;" : "18px 18px 4px 20px;")};
-  padding: ${({ hasLabel }) => (hasLabel ? "18px 18px 4px 20px;" : "18px 18px 18px 20px;")};
+  border-radius: ${({ theme }) => theme.border.radius};
+  padding: ${({ isRequired }) =>
+    isRequired ? '18px 18px 4px 20px;' : '18px 18px 4px 20px;'};
+  padding: ${({ hasLabel }) =>
+    hasLabel ? '18px 18px 4px 20px;' : '18px 18px 18px 20px;'};
   font-size: 16px;
   line-height: 24px;
-  outline: 2px solid ${({theme}) => theme.colors.fields.stroke};
+  outline: 2px solid ${({ theme }) => theme.colors.fields.stroke};
   transition: 0.1s;
-  color: ${({theme}) => theme.colors.fields.text};
+  color: ${({ theme }) => theme.colors.fields.text};
   height: 60px;
 
   &:hover {
-    outline: 2px solid ${({theme}) => theme.colors.fields.strokeHover};
+    outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
     cursor: text;
   }
   &:focus {
-    outline: 2px solid ${({theme}) => theme.colors.fields.strokeFocused};
+    outline: 2px solid ${({ theme }) => theme.colors.fields.strokeFocused};
   }
   .TextInput::before {
-    content: "*";
+    content: '*';
     color: red;
     margin-right: 5px;
   }
-`;
+`
 
 const StyledTextInputLabel = styled.label<{ isFocused: boolean }>`
   &.TextInput {
     position: absolute;
-    top: ${({ isFocused }) => (isFocused ? "6px" : "50%")};
-    left: ${({ isFocused }) => (isFocused ? "20px" : "20px")};
+    top: ${({ isFocused }) => (isFocused ? '6px' : '50%')};
+    left: ${({ isFocused }) => (isFocused ? '20px' : '20px')};
     transform: ${({ isFocused }) =>
-      isFocused ? "translateY(0)" : "translateY(-50%)"};
-    font-size: ${({ isFocused }) => (isFocused ? "12px" : "16px")};
+      isFocused ? 'translateY(0)' : 'translateY(-50%)'};
+    font-size: ${({ isFocused }) => (isFocused ? '12px' : '16px')};
     line-height: 20px;
-    color: ${({theme}) => theme.colors.fields.title};
+    color: ${({ theme }) => theme.colors.fields.title};
     pointer-events: none;
     transition: 0.1s;
   }
-`;
+`
 
 const StyledTextInputCounter = styled.div<{ hasLabel: boolean }>`
   position: absolute;
   height: 50%;
   z-index: 10;
   right: 20px;
-  top: ${({ hasLabel }) => (hasLabel ? "36%" : "32%")};
+  top: ${({ hasLabel }) => (hasLabel ? '36%' : '32%')};
   align-self: flex-end;
   font-size: 12px;
   color: #808080;
-`;
+`
 
-export { TextInput };
+export { TextInput }

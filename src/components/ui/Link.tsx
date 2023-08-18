@@ -1,14 +1,14 @@
-import cn from "classnames";
-import Link from "next/link";
-import { ReactNode } from "react";
-import styled from "styled-components";
+import cn from 'classnames'
+import Link from 'next/link'
+import { ReactNode } from 'react'
+import styled from 'styled-components'
 
 interface LinkProps {
-  href: string;
-  children: ReactNode;
-  disabled?: boolean;
-  underlined?: boolean;
-  className?: string;
+  href: string
+  children: ReactNode
+  disabled?: boolean
+  underlined?: boolean
+  className?: string
 }
 
 const RegularLink = ({
@@ -23,7 +23,7 @@ const RegularLink = ({
       <Link
         href={href}
         className={cn(
-          "Link",
+          'Link',
           { Disabled: disabled },
           { Underlined: underlined }
         )}
@@ -31,8 +31,8 @@ const RegularLink = ({
         <span className="">{children}</span>
       </Link>
     </StyledLink>
-  );
-};
+  )
+}
 
 const StyledLink = styled.div`
   .Underlined {
@@ -48,13 +48,13 @@ const StyledLink = styled.div`
   }
 
   .Link {
-    color: ${({ theme }) => theme.colors.blue["default"]};
+    color: ${({ theme }) => theme.colors.blue['default']};
     padding: 2px;
     border-radius: 5px;
     span {
     }
     :focus {
-      outline: 2px solid ${({ theme }) => theme.colors.stroke["purple"]};
+      outline: 2px solid ${({ theme }) => theme.colors.stroke['purple']};
     }
   }
 
@@ -62,6 +62,6 @@ const StyledLink = styled.div`
     text-decoration: underline;
     text-underline-offset: 2px;
   }
-`;
+`
 
-export { RegularLink as Link };
+export { RegularLink as Link }

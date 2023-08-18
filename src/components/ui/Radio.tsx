@@ -1,35 +1,42 @@
-import cn from "classnames";
-import { useMemo, useRef } from "react";
-import styled from "styled-components";
+import cn from 'classnames'
+import { useMemo, useRef } from 'react'
+import styled from 'styled-components'
 
 interface RadioProps {
-  className?: string;
-  value?: string;
-  disabled?: boolean;
-  error?: boolean;
-  checked?: any;
+  className?: string
+  value?: string
+  disabled?: boolean
+  error?: boolean
+  checked?: any
   onChange?: (
     e: React.ChangeEvent<
       HTMLInputElement & HTMLSelectElement & HTMLTextAreaElement
     >
-  ) => void;
+  ) => void
 }
-const Radio = ({ className, value, disabled, error, checked, onChange }: RadioProps) => {
-  const inputId = useMemo(() => Math.random().toString(36).substr(2, 9), []);
-  const inputRef = useRef<HTMLInputElement>(null);
+const Radio = ({
+  className,
+  value,
+  disabled,
+  error,
+  checked,
+  onChange,
+}: RadioProps) => {
+  const inputId = useMemo(() => Math.random().toString(36).substr(2, 9), [])
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleMouseDown = (event: React.MouseEvent<HTMLInputElement>) => {
-    event.preventDefault();
+    event.preventDefault()
     if (inputRef.current) {
-      inputRef.current.blur();
+      inputRef.current.blur()
     }
-  };
+  }
 
   const handleFocus = () => {
     if (inputRef.current) {
-      inputRef.current.blur();
+      inputRef.current.blur()
     }
-  };
+  }
 
   return (
     <StyledRadio>
@@ -37,7 +44,7 @@ const Radio = ({ className, value, disabled, error, checked, onChange }: RadioPr
         ref={inputRef}
         type="radio"
         id={inputId}
-        className={cn("Radio__input", { Radio__input_error: error }, className)}
+        className={cn('Radio__input', { Radio__input_error: error }, className)}
         onChange={onChange}
         checked={checked}
         tabIndex={0}
@@ -49,8 +56,8 @@ const Radio = ({ className, value, disabled, error, checked, onChange }: RadioPr
         {value}
       </Label>
     </StyledRadio>
-  );
-};
+  )
+}
 
 const StyledRadio = styled.div`
   display: flex;
@@ -67,7 +74,7 @@ const StyledRadio = styled.div`
     transition: 0.15s ease;
     outline: none; /* добавлено свойство outline: none */
     ::after {
-      content: "";
+      content: '';
       display: block;
       border-radius: 50%;
       width: 10px;
@@ -126,7 +133,7 @@ const StyledRadio = styled.div`
     transition: 0.15s ease;
     outline: none; /* добавлено свойство outline: none */
     ::after {
-      content: "";
+      content: '';
       display: block;
       border-radius: 50%;
       width: 10px;
@@ -157,12 +164,12 @@ const StyledRadio = styled.div`
       }
     }
   }
-`;
+`
 
-export const RadioButton = styled.input``;
+export const RadioButton = styled.input``
 
 export const Label = styled.label<{ disabled?: boolean }>`
   cursor: pointer;
   margin-left: 10px;
-`;
-export { Radio };
+`
+export { Radio }

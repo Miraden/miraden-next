@@ -25,7 +25,7 @@ const SortDropdown: FC<Props> = ({
     <StyledSortDropdown className={className}>
       <div
         className={
-          showDropDown ? "SortDropdown__menu_active" : "SortDropdown__menu"
+          showDropDown ? 'SortDropdown__menu_active' : 'SortDropdown__menu'
         }
       >
         {options.map((option: string, index: number): JSX.Element => {
@@ -33,23 +33,21 @@ const SortDropdown: FC<Props> = ({
             <div
               key={index}
               onClick={(): void => {
-                setSelectedOption(option);
+                setSelectedOption(option)
               }}
-              className={cn(`${selectedOption === option ? "selected" : ""}`)}
+              className={cn(`${selectedOption === option ? 'selected' : ''}`)}
             >
               <span className="SortDropdown__menuItem">
                 <p>{option}</p>
-                <CheckSmallLineIcon
-                  attr={{}}
-                />
+                <CheckSmallLineIcon attr={{}} />
               </span>
             </div>
-          );
+          )
         })}
       </div>
     </StyledSortDropdown>
-  );
-};
+  )
+}
 
 const StyledSortDropdown = styled.div`
   .SortDropdownMenu {
@@ -115,6 +113,6 @@ const StyledSortDropdown = styled.div`
       display: none;
     }
   }
-`;
+`
 
-export { SortDropdown };
+export { SortDropdown }

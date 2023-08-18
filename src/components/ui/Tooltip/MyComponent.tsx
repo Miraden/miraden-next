@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { Tooltip } from "./Tooltip";
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Tooltip } from './Tooltip'
 
 interface TooltipComponentProps {
-  trigger: any;
-  text?: string;
-  className?: string;
+  trigger: any
+  text?: string
+  className?: string
 }
 
 const TooltipComponent: React.FC<TooltipComponentProps> = ({
@@ -13,15 +13,15 @@ const TooltipComponent: React.FC<TooltipComponentProps> = ({
   text,
   className,
 }) => {
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [showTooltip, setShowTooltip] = useState(false)
 
   const handleMouseEnter = () => {
-    setShowTooltip(true);
-  };
+    setShowTooltip(true)
+  }
 
   const handleMouseLeave = () => {
-    setShowTooltip(false);
-  };
+    setShowTooltip(false)
+  }
 
   return (
     <StyledTest
@@ -32,12 +32,12 @@ const TooltipComponent: React.FC<TooltipComponentProps> = ({
       {trigger}
       <Tooltip visible={showTooltip}>{text}</Tooltip>
     </StyledTest>
-  );
-};
+  )
+}
 
 const StyledTest = styled.div`
   position: relative;
   width: fit-content;
-`;
+`
 
-export { TooltipComponent };
+export { TooltipComponent }

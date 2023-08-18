@@ -1,13 +1,13 @@
 import { SearchIcon } from '@/icons'
 import cn from 'classnames'
-import React, {ReactNode, useCallback, useState} from 'react'
+import React, { ReactNode, useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '@/components/ui/Button'
 import { theme } from '../../../styles/tokens'
 import { MenuSort } from '@/components/ui/Menu/MenuSort'
 
 interface SearchProps {
-  sort:  Forms.DropDownOption[]
+  sort: Forms.DropDownOption[]
   disabled?: boolean
   className?: string
   placeholder?: string
@@ -33,7 +33,7 @@ const Search = ({
   onSortChange,
   onSearchChange,
   onInputFocus,
-  onInputBlur
+  onInputBlur,
 }: SearchProps) => {
   const [searchValue, setSearchValue] = useState('')
   const [isFocused, setFocused] = useState(false)
@@ -41,22 +41,25 @@ const Search = ({
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = event.target.value
     setSearchValue(searchValue)
-    if(onSearchChange) onSearchChange(searchValue)
+    if (onSearchChange) onSearchChange(searchValue)
   }
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-    if(onInputBlur) onInputBlur(event)
+    if (onInputBlur) onInputBlur(event)
     setFocused(false)
   }
 
   const onFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    if(onInputFocus) onInputFocus(event)
+    if (onInputFocus) onInputFocus(event)
     setFocused(true)
   }
 
-  const onSortSelect = useCallback((e: any) => {
-    if(onSortChange) onSortChange(e)
-  }, [onSortChange])
+  const onSortSelect = useCallback(
+    (e: any) => {
+      if (onSortChange) onSortChange(e)
+    },
+    [onSortChange]
+  )
 
   return (
     <SearchContainer

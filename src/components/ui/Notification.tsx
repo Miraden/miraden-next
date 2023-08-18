@@ -16,7 +16,7 @@ const Notification = ({
   className,
   compact,
   message,
-  title
+  title,
 }: NotificationProps) => {
   return (
     <StyledNotification

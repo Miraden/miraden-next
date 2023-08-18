@@ -1,1 +1,1 @@
-export { ApplicationsFilter } from "./ApplicationsFilter";
+export { ApplicationsFilter } from './ApplicationsFilter'

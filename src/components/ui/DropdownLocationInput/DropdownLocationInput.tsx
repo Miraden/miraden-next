@@ -1,20 +1,20 @@
-import { ArrowIcon } from "@/icons";
-import cn from "classnames";
-import React, { FC, useState } from "react";
-import styled from "styled-components";
-import { DropdownLocation } from "./DropdownLocation";
+import { ArrowIcon } from '@/icons'
+import cn from 'classnames'
+import React, { FC, useState } from 'react'
+import styled from 'styled-components'
+import { DropdownLocation } from './DropdownLocation'
 import {
   CitiesStruct,
-  CountriesStruct
-} from "@/infrastructure/Locations/LocationsProvider";
+  CountriesStruct,
+} from '@/infrastructure/Locations/LocationsProvider'
 
 interface Props {
-  className?: string;
-  disabled?: boolean;
-  warning?: boolean;
-  error?: boolean;
-  placeholder?: string;
-  options?: CountriesStruct[];
+  className?: string
+  disabled?: boolean
+  warning?: boolean
+  error?: boolean
+  placeholder?: string
+  options?: CountriesStruct[]
   onChange?: Function
 }
 
@@ -25,37 +25,37 @@ const DropdownLocationInput: FC<Props> = ({
   error,
   placeholder,
   options = [],
-  onChange
+  onChange,
 }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectedValue, setSelectedValue] = useState<string>("");
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [selectedValue, setSelectedValue] = useState<string>('')
   const [countrySelected, setCountrySelected] = useState<CountriesStruct>()
   const [citySelected, setCitySelected] = useState<CitiesStruct>()
 
   const toggleDropDown = (): void => {
-    setShowDropDown(!showDropDown);
-  };
+    setShowDropDown(!showDropDown)
+  }
 
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {
-      setShowDropDown(false);
+      setShowDropDown(false)
     }
-  };
+  }
 
   const optionSelection = (option: string): void => {
-    setSelectedValue(option);
-  };
+    setSelectedValue(option)
+  }
 
   const onCountrySelected = (country: CountriesStruct): void => {
     setCountrySelected(country)
     setCitySelected(undefined)
-    if(onChange) onChange(country)
+    if (onChange) onChange(country)
   }
 
   const onCitySelected = (city: CitiesStruct): void => {
     setCitySelected(city)
     setCountrySelected(undefined)
-    if(onChange) onChange(city)
+    if (onChange) onChange(city)
   }
 
   return (
@@ -73,7 +73,7 @@ const DropdownLocationInput: FC<Props> = ({
             ? `DropdownLocationInput_select_active`
             : `DropdownLocationInput_select`
         }
-        type={"button"}
+        type={'button'}
         onClick={(): void => toggleDropDown()}
         onBlur={(e: React.FocusEvent<HTMLButtonElement>): void =>
           dismissHandler(e)
@@ -97,11 +97,11 @@ const DropdownLocationInput: FC<Props> = ({
         )}
       </button>
     </StyledDropdownLocationInput>
-  );
-};
+  )
+}
 
 const StyledDropdownLocationInput = styled.div<Props>`
-  pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
+  pointer-events: ${props => (props.disabled ? 'none' : 'auto')};
 
   .Warning__message {
     display: flex;
@@ -163,9 +163,9 @@ const StyledDropdownLocationInput = styled.div<Props>`
     border-radius: 10px;
     overflow: hidden;
     outline: 2px solid #e1edfd;
-    background: ${(props) => (props.error ? "#FFF5F5" : "auto")};
-    background: ${(props) => (props.warning ? "#FFFBF4" : "auto")};
-    background: ${(props) => (props.disabled ? "#EFF3FB" : "auto")};
+    background: ${props => (props.error ? '#FFF5F5' : 'auto')};
+    background: ${props => (props.warning ? '#FFFBF4' : 'auto')};
+    background: ${props => (props.disabled ? '#EFF3FB' : 'auto')};
 
     div {
       width: 100%;
@@ -173,7 +173,7 @@ const StyledDropdownLocationInput = styled.div<Props>`
         transition: 0.2s ease-in;
         transform: rotate(-180deg);
         path {
-          stroke: ${(props) => (props.disabled ? "#B8C6E3" : "#7786a5")};
+          stroke: ${props => (props.disabled ? '#B8C6E3' : '#7786a5')};
         }
       }
     }
@@ -183,7 +183,7 @@ const StyledDropdownLocationInput = styled.div<Props>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: ${(props) => (props.disabled ? "#B8C6E3" : "#7786a5")};
+    color: ${props => (props.disabled ? '#B8C6E3' : '#7786a5')};
     font-size: 16px;
   }
 
@@ -203,6 +203,6 @@ const StyledDropdownLocationInput = styled.div<Props>`
     background: rgba(255, 255, 255, 0.85);
     border-radius: 3px;
   }
-`;
+`
 
-export { DropdownLocationInput };
+export { DropdownLocationInput }

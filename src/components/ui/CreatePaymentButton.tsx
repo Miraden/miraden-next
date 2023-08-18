@@ -1,20 +1,20 @@
-import cn from "classnames";
-import { ButtonHTMLAttributes, MouseEvent, ReactNode } from "react";
-import styled from "styled-components";
-import { Checkbox } from "./CheckBox";
+import cn from 'classnames'
+import { ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react'
+import styled from 'styled-components'
+import { Checkbox } from './CheckBox'
 
 interface CreatePaymentButtonProps {
-  className?: string;
-  onClick?: (e: MouseEvent<HTMLElement>) => void;
-  href?: string;
-  type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
-  ariaLabel?: string;
-  buttonTitle?: ReactNode;
-  buttonText?: ReactNode;
-  disabled?: boolean;
-  price?: number;
-  active?: boolean;
-  onChange?: () => void;
+  className?: string
+  onClick?: (e: MouseEvent<HTMLElement>) => void
+  href?: string
+  type?: ButtonHTMLAttributes<HTMLButtonElement>['type']
+  ariaLabel?: string
+  buttonTitle?: ReactNode
+  buttonText?: ReactNode
+  disabled?: boolean
+  price?: number
+  active?: boolean
+  onChange?: () => void
 }
 
 const CreatePaymentButton = ({
@@ -50,11 +50,13 @@ const CreatePaymentButton = ({
         )}
       </div>
       {price && (
-        <div className="Font_20_120 CreatePaymentButton__percent">{price} €</div>
+        <div className="Font_20_120 CreatePaymentButton__percent">
+          {price} €
+        </div>
       )}
     </StyledButton>
-  );
-};
+  )
+}
 
 const StyledButton = styled.a`
   display: flex;
@@ -104,7 +106,7 @@ const StyledButton = styled.a`
     cursor: unset;
     background: ${({ theme }) =>
       theme.colors.button.disabled.background} !important;
-    color: ${({ theme }) => theme.colors.grey["disabled"]} !important;
+    color: ${({ theme }) => theme.colors.grey['disabled']} !important;
   }
 
   &.CreatePaymentButton {
@@ -113,15 +115,15 @@ const StyledButton = styled.a`
   }
 
   &.CreatePaymentButton:hover {
-    background: ${({ theme }) => theme.colors.button.pay["hover"]};
+    background: ${({ theme }) => theme.colors.button.pay['hover']};
   }
 
   &.CreatePaymentButton:active {
-    background: ${({ theme }) => theme.colors.button.pay["active"]};
+    background: ${({ theme }) => theme.colors.button.pay['active']};
   }
 
   &.CreatePaymentButton:focus-visible {
-    background: ${({ theme }) => theme.colors.button.pay["focused"]};
+    background: ${({ theme }) => theme.colors.button.pay['focused']};
     outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
   }
 
@@ -137,7 +139,7 @@ const StyledButton = styled.a`
       display: none;
     }
   }
-`;
+`
 
-export { CreatePaymentButton };
-export type { CreatePaymentButtonProps as ButtonProps };
+export { CreatePaymentButton }
+export type { CreatePaymentButtonProps as ButtonProps }

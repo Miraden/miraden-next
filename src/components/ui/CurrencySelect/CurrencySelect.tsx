@@ -12,7 +12,12 @@ interface Props {
   defaultCurrency?: CurrencyStruct
 }
 
-const CurrencySelect: FC<Props> = ({ className, currencies, onChange, defaultCurrency }) => {
+const CurrencySelect: FC<Props> = ({
+  className,
+  currencies,
+  onChange,
+  defaultCurrency,
+}) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false)
   const [selectOption, setSelectOption] = useState<any>(defaultCurrency)
   const [selectedOption, setSelectedOption] = useState<any>(defaultCurrency)
@@ -34,7 +39,11 @@ const CurrencySelect: FC<Props> = ({ className, currencies, onChange, defaultCur
   }
 
   return (
-    <StyledDropdownInput className={cn({ className })} currencies={currencies} defaultCurrency={defaultCurrency}>
+    <StyledDropdownInput
+      className={cn({ className })}
+      currencies={currencies}
+      defaultCurrency={defaultCurrency}
+    >
       <button
         type={'button'}
         className={

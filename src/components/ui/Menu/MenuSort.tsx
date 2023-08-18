@@ -1,7 +1,7 @@
 import { theme } from '../../../../styles/tokens'
 import { DropdownInput } from '@/components/ui/DropDowns/DropdownInput'
 import { SwapIcon } from '@/icons/SwapIcon'
-import React, {useCallback} from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components'
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 const DefaultProps: Props = {
   className: undefined,
   options: [],
-  onSelect: () => {}
+  onSelect: () => {},
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
@@ -21,9 +21,12 @@ const mobile = theme.breakpoints.mobile.max + 'px'
 const MenuSort = (args: Props) => {
   const props = Object.assign(DefaultProps, args)
 
-  const selectedCallback = useCallback((e: any) => {
-    if(props.onSelect) props.onSelect(e)
-  }, [props])
+  const selectedCallback = useCallback(
+    (e: any) => {
+      if (props.onSelect) props.onSelect(e)
+    },
+    [props]
+  )
 
   return (
     <Styled>

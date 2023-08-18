@@ -1,49 +1,49 @@
-import { ArrowIcon, CrossIcon } from "@/icons";
-import cn from "classnames";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { DropdownLocationInput } from "../../ui/DropdownLocationInput/DropdownLocationInput";
-import { Button } from "../Button";
-import { Checkbox } from "../CheckBox";
-import { CurrencySelect } from "../CurrencySelect/CurrencySelect";
-import { NumberInputNoLabel } from "../NumberInputNoLabel";
-import { RequestButton } from "@/components/ui";
-import { TabButtons } from "../TabButtons";
+import { ArrowIcon, CrossIcon } from '@/icons'
+import cn from 'classnames'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { DropdownLocationInput } from '../../ui/DropdownLocationInput/DropdownLocationInput'
+import { Button } from '../Button'
+import { Checkbox } from '../CheckBox'
+import { CurrencySelect } from '../CurrencySelect/CurrencySelect'
+import { NumberInputNoLabel } from '../NumberInputNoLabel'
+import { RequestButton } from '@/components/ui'
+import { TabButtons } from '../TabButtons'
 interface FilterProps {
-  className?: string;
-  onClick?: any;
-  onTabClick?: any;
-  onChange?: any;
-  onTouchStart?: any;
-  onTouchEnd?: any;
+  className?: string
+  onClick?: any
+  onTabClick?: any
+  onChange?: any
+  onTouchStart?: any
+  onTouchEnd?: any
 }
 
 const allRooms = [
-  { label: "1", value: 1 },
-  { label: "2", value: 2 },
-  { label: "3", value: 3 },
-  { label: "4", value: 4 },
-  { label: "5", value: 5 },
-  { label: "6+", value: 6 },
-];
+  { label: '1', value: 1 },
+  { label: '2', value: 2 },
+  { label: '3', value: 3 },
+  { label: '4', value: 4 },
+  { label: '5', value: 5 },
+  { label: '6+', value: 6 },
+]
 
 const sleeps = [
-  { label: "1", value: 1 },
-  { label: "2", value: 2 },
-  { label: "3", value: 3 },
-  { label: "4", value: 4 },
-  { label: "5", value: 5 },
-  { label: "6+", value: 6 },
-];
+  { label: '1', value: 1 },
+  { label: '2', value: 2 },
+  { label: '3', value: 3 },
+  { label: '4', value: 4 },
+  { label: '5', value: 5 },
+  { label: '6+', value: 6 },
+]
 
 const baths = [
-  { label: "1", value: 1 },
-  { label: "2", value: 2 },
-  { label: "3", value: 3 },
-  { label: "4", value: 4 },
-  { label: "5", value: 5 },
-  { label: "6+", value: 6 },
-];
+  { label: '1', value: 1 },
+  { label: '2', value: 2 },
+  { label: '3', value: 3 },
+  { label: '4', value: 4 },
+  { label: '5', value: 5 },
+  { label: '6+', value: 6 },
+]
 
 const ApplicationsFilter = ({
   className,
@@ -66,7 +66,7 @@ const ApplicationsFilter = ({
         <div className="ApplicationsFilter__head">
           <h2 className="Font_12_16_600">фильтр выключен</h2>
           <Button tertiary onClick={onClick} className="CloseFilter">
-            <CrossIcon attr={{width: 24, height: 24 }} />
+            <CrossIcon attr={{ width: 24, height: 24 }} />
           </Button>
         </div>
       </div>
@@ -78,8 +78,8 @@ const ApplicationsFilter = ({
         </RequestButton>
       </div>
     </StyledApplicationsFilter>
-  );
-};
+  )
+}
 
 const StyledApplicationsFilter = styled.div`
   background: #fff;
@@ -183,10 +183,10 @@ const StyledApplicationsFilter = styled.div`
       }
     }
   }
-`;
+`
 
 interface SellerProps {
-  onChange?: any;
+  onChange?: any
 }
 
 const SellerContent = ({ onChange }: SellerProps) => {
@@ -216,8 +216,8 @@ const SellerContent = ({ onChange }: SellerProps) => {
         </div>
       </div>
     </StyledSellerContent>
-  );
-};
+  )
+}
 
 const StyledSellerContent = styled.div`
   .SellerContent__status {
@@ -250,159 +250,159 @@ const StyledSellerContent = styled.div`
       margin-top: 10px;
     }
   }
-`;
+`
 
-const currency = ["Евро, €", "Доллар, $", "Фунт стерлингов, £", "Рубль, ₽"];
+const currency = ['Евро, €', 'Доллар, $', 'Фунт стерлингов, £', 'Рубль, ₽']
 
 const ObjectsContent = () => {
-  const [priceToValue, setPriceToValue] = useState("");
-  const [priceFromValue, setPriceFromValue] = useState("");
-  const [yearToValue, setYearToValue] = useState("");
-  const [yearFromValue, setYearFromValue] = useState("");
-  const [fullSquareToValue, setFullSquareToValue] = useState("");
-  const [fullSquareFromValue, setFullSquareFromValue] = useState("");
-  const [livingSquareToValue, setLivingSquareToValue] = useState("");
-  const [livingSquareFromValue, setLivingSquareFromValue] = useState("");
-  const [landSquareToValue, setLandSquareToValue] = useState("");
-  const [landSquareFromValue, setLandSquareFromValue] = useState("");
-  const [selectedRoomsId, setSelectedRoomsId] = useState(null);
-  const [selectedBathsId, setSelectedBathsId] = useState(null);
-  const [selectedSleepsId, setSelectedSleepsId] = useState(null);
-  const [objectTypeOpen, setObjectTypeOpen] = useState(false);
-  const [allRoomsOpen, setAllRoomsOpen] = useState(false);
-  const [squareOpen, setSquareOpen] = useState(false);
-  const [purposeOpen, setPurposeOpen] = useState(false);
-  const [statusOpen, setStatusOpen] = useState(false);
+  const [priceToValue, setPriceToValue] = useState('')
+  const [priceFromValue, setPriceFromValue] = useState('')
+  const [yearToValue, setYearToValue] = useState('')
+  const [yearFromValue, setYearFromValue] = useState('')
+  const [fullSquareToValue, setFullSquareToValue] = useState('')
+  const [fullSquareFromValue, setFullSquareFromValue] = useState('')
+  const [livingSquareToValue, setLivingSquareToValue] = useState('')
+  const [livingSquareFromValue, setLivingSquareFromValue] = useState('')
+  const [landSquareToValue, setLandSquareToValue] = useState('')
+  const [landSquareFromValue, setLandSquareFromValue] = useState('')
+  const [selectedRoomsId, setSelectedRoomsId] = useState(null)
+  const [selectedBathsId, setSelectedBathsId] = useState(null)
+  const [selectedSleepsId, setSelectedSleepsId] = useState(null)
+  const [objectTypeOpen, setObjectTypeOpen] = useState(false)
+  const [allRoomsOpen, setAllRoomsOpen] = useState(false)
+  const [squareOpen, setSquareOpen] = useState(false)
+  const [purposeOpen, setPurposeOpen] = useState(false)
+  const [statusOpen, setStatusOpen] = useState(false)
 
   const handleObjectTypeOpen = useCallback(() => {
-    setObjectTypeOpen(!objectTypeOpen);
-  }, [objectTypeOpen]);
+    setObjectTypeOpen(!objectTypeOpen)
+  }, [objectTypeOpen])
 
   const handleAllRoomsOpen = useCallback(() => {
-    setAllRoomsOpen(!allRoomsOpen);
-  }, [allRoomsOpen]);
+    setAllRoomsOpen(!allRoomsOpen)
+  }, [allRoomsOpen])
 
   const handleSquareOpen = useCallback(() => {
-    setSquareOpen(!squareOpen);
-  }, [squareOpen]);
+    setSquareOpen(!squareOpen)
+  }, [squareOpen])
 
   const handlePurposeOpen = useCallback(() => {
-    setPurposeOpen(!purposeOpen);
-  }, [purposeOpen]);
+    setPurposeOpen(!purposeOpen)
+  }, [purposeOpen])
 
   const handleStatusOpen = useCallback(() => {
-    setStatusOpen(!statusOpen);
-  }, [statusOpen]);
+    setStatusOpen(!statusOpen)
+  }, [statusOpen])
 
   const handleSelectRooms = useCallback(
     (id: any) => {
-      setSelectedRoomsId(id === selectedRoomsId ? null : id);
+      setSelectedRoomsId(id === selectedRoomsId ? null : id)
     },
     [selectedRoomsId]
-  );
+  )
   const handleSelectBaths = useCallback(
     (id: any) => {
-      setSelectedBathsId(id === selectedBathsId ? null : id);
+      setSelectedBathsId(id === selectedBathsId ? null : id)
     },
     [selectedBathsId]
-  );
+  )
 
   const handleSelectSleeps = useCallback(
     (id: any) => {
-      setSelectedSleepsId(id === selectedSleepsId ? null : id);
+      setSelectedSleepsId(id === selectedSleepsId ? null : id)
     },
     [selectedSleepsId]
-  );
+  )
 
   const handlePriceFromValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputPriceFromValue = event.target.value;
+    const inputPriceFromValue = event.target.value
     if (/^\d*$/.test(inputPriceFromValue)) {
-      setPriceFromValue(inputPriceFromValue);
+      setPriceFromValue(inputPriceFromValue)
     }
-  };
+  }
 
   const handlePriceToValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputPriceToValue = event.target.value;
+    const inputPriceToValue = event.target.value
     if (/^\d*$/.test(inputPriceToValue)) {
-      setPriceToValue(inputPriceToValue);
+      setPriceToValue(inputPriceToValue)
     }
-  };
+  }
 
   const handleYearFromValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputYearFromValue = event.target.value;
+    const inputYearFromValue = event.target.value
     if (/^\d*$/.test(inputYearFromValue)) {
-      setYearFromValue(inputYearFromValue);
+      setYearFromValue(inputYearFromValue)
     }
-  };
+  }
 
   const handleYearToValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputYearToValue = event.target.value;
+    const inputYearToValue = event.target.value
     if (/^\d*$/.test(inputYearToValue)) {
-      setYearToValue(inputYearToValue);
+      setYearToValue(inputYearToValue)
     }
-  };
+  }
 
   const handleFullSquareFromValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputFullSquareFromValue = event.target.value;
+    const inputFullSquareFromValue = event.target.value
     if (/^\d*$/.test(inputFullSquareFromValue)) {
-      setFullSquareFromValue(inputFullSquareFromValue);
+      setFullSquareFromValue(inputFullSquareFromValue)
     }
-  };
+  }
 
   const handleFullSquareToValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputFullSquareToValue = event.target.value;
+    const inputFullSquareToValue = event.target.value
     if (/^\d*$/.test(inputFullSquareToValue)) {
-      setFullSquareToValue(inputFullSquareToValue);
+      setFullSquareToValue(inputFullSquareToValue)
     }
-  };
+  }
 
   const handleLivingSquareFromValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputLivingSquareFromValue = event.target.value;
+    const inputLivingSquareFromValue = event.target.value
     if (/^\d*$/.test(inputLivingSquareFromValue)) {
-      setLivingSquareFromValue(inputLivingSquareFromValue);
+      setLivingSquareFromValue(inputLivingSquareFromValue)
     }
-  };
+  }
 
   const handleLivingSquareToValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputLivingSquareToValue = event.target.value;
+    const inputLivingSquareToValue = event.target.value
     if (/^\d*$/.test(inputLivingSquareToValue)) {
-      setLivingSquareToValue(inputLivingSquareToValue);
+      setLivingSquareToValue(inputLivingSquareToValue)
     }
-  };
+  }
 
   const handleLandSquareFromValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputLandSquareFromValue = event.target.value;
+    const inputLandSquareFromValue = event.target.value
     if (/^\d*$/.test(inputLandSquareFromValue)) {
-      setLandSquareFromValue(inputLandSquareFromValue);
+      setLandSquareFromValue(inputLandSquareFromValue)
     }
-  };
+  }
 
   const handleLandSquareToValueChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const inputLandSquareToValue = event.target.value;
+    const inputLandSquareToValue = event.target.value
     if (/^\d*$/.test(inputLandSquareToValue)) {
-      setLandSquareToValue(inputLandSquareToValue);
+      setLandSquareToValue(inputLandSquareToValue)
     }
-  };
+  }
 
   return (
     <StyledObjectsContent>
@@ -414,14 +414,25 @@ const ObjectsContent = () => {
           className="ObjectsContent__locationsSelect"
           placeholder="Все страны"
           options={[
-            { name: "Турция", id: 1, cities: [{name: "Test", id: 1}] },
+            { name: 'Турция', id: 1, cities: [{ name: 'Test', id: 1 }] },
           ]}
         />
       </div>
       <div className="ObjectsContent__wrapperContainerPricing">
         <h3 className="ObjectsContent__currency Font_16_140">
           <span>Цена в </span>
-          <CurrencySelect currencies={[{symbol: "e", code: "E", value: 1.00, id: 1, label: "Евро", isDefault: true}]} />
+          <CurrencySelect
+            currencies={[
+              {
+                symbol: 'e',
+                code: 'E',
+                value: 1.0,
+                id: 1,
+                label: 'Евро',
+                isDefault: true,
+              },
+            ]}
+          />
         </h3>
         <div className="ObjectsContent__price">
           <NumberInputNoLabel
@@ -442,9 +453,9 @@ const ObjectsContent = () => {
           <TabButtons
             className="ObjectsContent__tabs"
             tabs={[
-              { label: "Вся", id: "1", name: "any" },
-              { label: "Новая", id: "2", name: "new" },
-              { label: "Вторичная", id: "3", name: "secondary" },
+              { label: 'Вся', id: '1', name: 'any' },
+              { label: 'Новая', id: '2', name: 'new' },
+              { label: 'Вторичная', id: '3', name: 'secondary' },
             ]}
             onTabClick={() => {}}
             defaultTabId="1"
@@ -646,7 +657,7 @@ const ObjectsContent = () => {
               <ArrowIcon
                 width={20}
                 height={20}
-                className={cn("ArrowIcon", { PurposeOpen: purposeOpen })}
+                className={cn('ArrowIcon', { PurposeOpen: purposeOpen })}
               />
             </div>
             {purposeOpen && (
@@ -677,7 +688,7 @@ const ObjectsContent = () => {
               <ArrowIcon
                 width={20}
                 height={20}
-                className={cn("ArrowIcon", { PurposeOpen: statusOpen })}
+                className={cn('ArrowIcon', { PurposeOpen: statusOpen })}
               />
             </div>
             {statusOpen && (
@@ -698,8 +709,8 @@ const ObjectsContent = () => {
         </div>
       </div>
     </StyledObjectsContent>
-  );
-};
+  )
+}
 
 const StyledObjectsContent = styled.div`
   margin-top: 30px;
@@ -849,6 +860,6 @@ const StyledObjectsContent = styled.div`
       margin-left: 10px;
     }
   }
-`;
+`
 
-export { ApplicationsFilter };
+export { ApplicationsFilter }

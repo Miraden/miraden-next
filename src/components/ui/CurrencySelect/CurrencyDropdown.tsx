@@ -29,8 +29,8 @@ const CurrencyDropdown: FC<Props> = ({
       <div
         className={
           showDropDown
-            ? "CurrencyDropdown__menu_active"
-            : "CurrencyDropdown__menu"
+            ? 'CurrencyDropdown__menu_active'
+            : 'CurrencyDropdown__menu'
         }
       >
         {options.map((option: CurrencyStruct, index: number): JSX.Element => {
@@ -38,22 +38,33 @@ const CurrencyDropdown: FC<Props> = ({
             <div
               key={index}
               onClick={(): void => {
-                setSelectedOption(option);
+                setSelectedOption(option)
                 optionSelection(option)
               }}
-              className={cn(`${selectedOption === option.code ? "selected" : ""}`)}
+              className={cn(
+                `${selectedOption === option.code ? 'selected' : ''}`
+              )}
             >
               <span className="CurrencyDropdown__menuItem">
-                <p className="Font_14_140">{option.label}, {option.symbol}</p>
-                <CheckSmallLineIcon attr={{className: (selectedOption === option.code ? "CheckIcon_selected" : "CheckIcon")}}/>
+                <p className="Font_14_140">
+                  {option.label}, {option.symbol}
+                </p>
+                <CheckSmallLineIcon
+                  attr={{
+                    className:
+                      selectedOption === option.code
+                        ? 'CheckIcon_selected'
+                        : 'CheckIcon',
+                  }}
+                />
               </span>
             </div>
-          );
+          )
         })}
       </div>
     </StyledCurrencyDropdown>
-  );
-};
+  )
+}
 
 const StyledCurrencyDropdown = styled.div`
   .CurrencyDropdownMenu {
@@ -123,6 +134,6 @@ const StyledCurrencyDropdown = styled.div`
       display: none;
     }
   }
-`;
+`
 
-export { CurrencyDropdown };
+export { CurrencyDropdown }

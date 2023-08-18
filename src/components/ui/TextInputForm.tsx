@@ -1,18 +1,18 @@
-import { WarningIcon } from "@/icons";
-import cn from "classnames";
-import React, { ReactNode, useState } from "react";
-import styled from "styled-components";
+import { WarningIcon } from '@/icons'
+import cn from 'classnames'
+import React, { ReactNode, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  maxLength?: number;
-  warning?: boolean;
-  error?: boolean;
-  icon?: ReactNode;
-  disabled?: boolean;
-  label?: string;
-  className?: string;
-  values?: any;
-  onChange?: any;
+  maxLength?: number
+  warning?: boolean
+  error?: boolean
+  icon?: ReactNode
+  disabled?: boolean
+  label?: string
+  className?: string
+  values?: any
+  onChange?: any
 }
 
 const TextInputForm = ({
@@ -26,28 +26,28 @@ const TextInputForm = ({
   values,
   onChange,
 }: Props) => {
-  const [value, setValue] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
+  const [value, setValue] = useState('')
+  const [isFocused, setIsFocused] = useState(false)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
+    const inputValue = event.target.value
     if (maxLength && inputValue.length > maxLength) {
-      return;
+      return
     }
-    setValue(inputValue);
-  };
+    setValue(inputValue)
+  }
 
   const handleFocus = () => {
     if (!disabled) {
-      setIsFocused(true);
+      setIsFocused(true)
     }
-  };
+  }
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (!disabled) {
-      setIsFocused(!!event.target.value);
+      setIsFocused(!!event.target.value)
     }
-  };
+  }
 
   return (
     <StyledTextInput className={className}>
@@ -84,8 +84,8 @@ const TextInputForm = ({
       )}
       {error && <div className="Error__message Text_12_16">Error</div>}
     </StyledTextInput>
-  );
-};
+  )
+}
 
 const StyledTextInput = styled.div`
   position: relative;
@@ -156,13 +156,13 @@ const StyledTextInput = styled.div`
       background-color: #fff5f5;
     }
   }
-`;
+`
 
 const StyledTextInputField = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-`;
+`
 
 const StyledTextInputInput = styled.input`
   width: 100%;
@@ -182,20 +182,20 @@ const StyledTextInputInput = styled.input`
   &:hover {
     box-shadow: 0 0 0 2px #cddef4 inset;
   }
-`;
+`
 
 const StyledTextInputLabel = styled.label<{ isFocused: boolean }>`
   position: absolute;
-  top: ${({ isFocused }) => (isFocused ? "6px" : "50%")};
-  left: ${({ isFocused }) => (isFocused ? "20px" : "20px")};
+  top: ${({ isFocused }) => (isFocused ? '6px' : '50%')};
+  left: ${({ isFocused }) => (isFocused ? '20px' : '20px')};
   transform: ${({ isFocused }) =>
-    isFocused ? "translateY(0)" : "translateY(-50%)"};
-  font-size: ${({ isFocused }) => (isFocused ? "12px" : "16px")};
+    isFocused ? 'translateY(0)' : 'translateY(-50%)'};
+  font-size: ${({ isFocused }) => (isFocused ? '12px' : '16px')};
   line-height: 20px;
   color: #7786a5;
   pointer-events: none;
   transition: 0.1s;
-`;
+`
 
 const StyledTextInputCounter = styled.div`
   position: absolute;
@@ -206,6 +206,6 @@ const StyledTextInputCounter = styled.div`
   align-self: flex-end;
   font-size: 12px;
   color: #808080;
-`;
+`
 
-export { TextInputForm };
+export { TextInputForm }

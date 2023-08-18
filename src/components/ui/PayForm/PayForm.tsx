@@ -3,8 +3,8 @@ import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Button } from '../Button'
 import { PayFormContent } from './PayFormContent'
-import {Preloader} from "@/components/ui/Preloader";
-import cn from "classnames";
+import { Preloader } from '@/components/ui/Preloader'
+import cn from 'classnames'
 
 interface PayFormProps {
   className?: string
@@ -27,7 +27,7 @@ const PayForm = ({
   additionalRequests,
   getUp,
   onPayClick,
-  isBusy
+  isBusy,
 }: PayFormProps) => {
   const [totalPay, setTotalPay] = useState<number>(totalPrice)
   const [selectedOption, setSelectedOption] = useState<any>(true)
@@ -51,7 +51,7 @@ const PayForm = ({
     return (
       <>
         <StyledPayForm className={className}>
-          <div className={cn("PayForm", {isPayFormBusy: isBusy})}>
+          <div className={cn('PayForm', { isPayFormBusy: isBusy })}>
             <div className="PayForm__head">
               <h2 className="Font_32_120">Форма оплаты</h2>
               <button
@@ -105,15 +105,15 @@ const StyledPayForm = styled.div`
     position: absolute;
     z-index: 21;
     width: 390px;
-    
+
     &.isPayFormBusy:after {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       top: 0;
       width: 100%;
       height: 100%;
-      background: rgba(255, 255, 255, .8);
+      background: rgba(255, 255, 255, 0.8);
     }
   }
 

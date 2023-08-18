@@ -1,16 +1,16 @@
-import { ArrowIcon } from "@/icons";
-import cn from "classnames";
-import React, { FC, useState } from "react";
-import styled from "styled-components";
-import {Dropdown} from "@/components/ui/DropDowns/Dropdown";
+import { ArrowIcon } from '@/icons'
+import cn from 'classnames'
+import React, { FC, useState } from 'react'
+import styled from 'styled-components'
+import { Dropdown } from '@/components/ui/DropDowns/Dropdown'
 
 interface Props {
-  className?: string;
-  disabled?: boolean;
-  warning?: boolean;
-  error?: boolean;
-  placeholder?: string;
-  options?: Forms.DropDownOption[];
+  className?: string
+  disabled?: boolean
+  warning?: boolean
+  error?: boolean
+  placeholder?: string
+  options?: Forms.DropDownOption[]
 }
 
 const DropdownInputApplications: FC<Props> = ({
@@ -21,22 +21,25 @@ const DropdownInputApplications: FC<Props> = ({
   placeholder,
   options = [],
 }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectOption, setSelectOption] = useState<Forms.DropDownOption>({label: '', value: 0});
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [selectOption, setSelectOption] = useState<Forms.DropDownOption>({
+    label: '',
+    value: 0,
+  })
 
   const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
-  };
+    setShowDropDown(!showDropDown)
+  }
 
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {
-      setShowDropDown(false);
+      setShowDropDown(false)
     }
-  };
+  }
 
   const optionSelection = (option: Forms.DropDownOption): void => {
-    setSelectOption(option);
-  };
+    setSelectOption(option)
+  }
 
   return (
     <StyledDropdownInputApplications
@@ -70,14 +73,14 @@ const DropdownInputApplications: FC<Props> = ({
             toggleDropDown={(): void => toggleDropDown()}
             optionSelection={optionSelection}
           />
-        )}{" "}
+        )}{' '}
       </button>
     </StyledDropdownInputApplications>
-  );
-};
+  )
+}
 
 const StyledDropdownInputApplications = styled.div<Props>`
-  pointer-events: ${(props) => (props.disabled ? "none" : "auto")};
+  pointer-events: ${props => (props.disabled ? 'none' : 'auto')};
   position: relative;
   background: #fff;
 
@@ -128,16 +131,16 @@ const StyledDropdownInputApplications = styled.div<Props>`
     border: none;
     overflow: hidden;
     border-bottom: 4px solid #e1edfd;
-    background: ${(props) => (props.error ? "#FFF5F5" : "auto")};
-    background: ${(props) => (props.warning ? "#FFFBF4" : "auto")};
-    background: ${(props) => (props.disabled ? "#EFF3FB" : "auto")};
+    background: ${props => (props.error ? '#FFF5F5' : 'auto')};
+    background: ${props => (props.warning ? '#FFFBF4' : 'auto')};
+    background: ${props => (props.disabled ? '#EFF3FB' : 'auto')};
 
     div {
       svg {
         transition: 0.2s ease-in;
         transform: rotate(-180deg);
         path {
-          stroke: ${(props) => (props.disabled ? "#B8C6E3" : "#7786a5")};
+          stroke: ${props => (props.disabled ? '#B8C6E3' : '#7786a5')};
         }
       }
     }
@@ -147,7 +150,7 @@ const StyledDropdownInputApplications = styled.div<Props>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: ${(props) => (props.disabled ? "#B8C6E3" : "#7786a5")};
+    color: ${props => (props.disabled ? '#B8C6E3' : '#7786a5')};
     font-size: 16px;
   }
 
@@ -165,6 +168,6 @@ const StyledDropdownInputApplications = styled.div<Props>`
     padding: 11px 10px;
     background: rgba(255, 255, 255, 0.85);
   }
-`;
+`
 
-export { DropdownInputApplications };
+export { DropdownInputApplications }

@@ -1,18 +1,18 @@
-import cn from "classnames";
-import { ButtonHTMLAttributes, MouseEvent, ReactNode } from "react";
-import styled from "styled-components";
+import cn from 'classnames'
+import { ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react'
+import styled from 'styled-components'
 
 interface PayButtonProps {
-  className?: string;
-  onClick?: (e: MouseEvent<HTMLElement>) => void;
-  href?: string;
-  type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
-  leftIcon?: ReactNode;
-  ariaLabel?: string;
-  children?: ReactNode;
-  disabled?: boolean;
-  tax?: any;
-  active?: boolean;
+  className?: string
+  onClick?: (e: MouseEvent<HTMLElement>) => void
+  href?: string
+  type?: ButtonHTMLAttributes<HTMLButtonElement>['type']
+  leftIcon?: ReactNode
+  ariaLabel?: string
+  children?: ReactNode
+  disabled?: boolean
+  tax?: any
+  active?: boolean
 }
 
 const PayButton = ({
@@ -48,8 +48,8 @@ const PayButton = ({
       </div>
       {tax && <div className="Font_14_140 PayButton__percent">{tax}%</div>}
     </StyledButton>
-  );
-};
+  )
+}
 
 const StyledButton = styled.a`
   display: flex;
@@ -63,7 +63,7 @@ const StyledButton = styled.a`
   width: 100%;
   transition: 0.2s ease;
   box-shadow: inset 0 0 0 2px
-    ${({ theme }) => theme.colors.button.secondary["active"]};
+    ${({ theme }) => theme.colors.button.secondary['active']};
 
   .Button__container {
     display: flex;
@@ -72,7 +72,7 @@ const StyledButton = styled.a`
   }
 
   .PayButton__percent {
-    color: ${({ theme }) => theme.colors.grey["textGrey"]};
+    color: ${({ theme }) => theme.colors.grey['textGrey']};
   }
 
   &.isActive {
@@ -83,7 +83,7 @@ const StyledButton = styled.a`
     cursor: unset;
     background: ${({ theme }) =>
       theme.colors.button.disabled.background} !important;
-    color: ${({ theme }) => theme.colors.grey["disabled"]} !important;
+    color: ${({ theme }) => theme.colors.grey['disabled']} !important;
 
     svg path {
       fill: ${({ theme }) => theme.colors.button.disabled.text} !important;
@@ -92,19 +92,19 @@ const StyledButton = styled.a`
 
   &.PayButton {
     padding: 9px 15px;
-    background: ${({ theme }) => theme.colors.button.pay["default"]};
+    background: ${({ theme }) => theme.colors.button.pay['default']};
   }
 
   &.PayButton:hover {
-    background: ${({ theme }) => theme.colors.button.pay["hover"]};
+    background: ${({ theme }) => theme.colors.button.pay['hover']};
   }
 
   &.PayButton:active {
-    background: ${({ theme }) => theme.colors.button.pay["active"]};
+    background: ${({ theme }) => theme.colors.button.pay['active']};
   }
 
   &.PayButton:focus-visible {
-    background: ${({ theme }) => theme.colors.button.pay["focused"]};
+    background: ${({ theme }) => theme.colors.button.pay['focused']};
     outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
   }
 
@@ -136,7 +136,7 @@ const StyledButton = styled.a`
   @media (max-width: 1200px) {
     max-width: unset;
   }
-`;
+`
 
-export { PayButton };
-export type { PayButtonProps as ButtonProps };
+export { PayButton }
+export type { PayButtonProps as ButtonProps }

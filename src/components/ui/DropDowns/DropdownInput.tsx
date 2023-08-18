@@ -1,5 +1,5 @@
 import cn from 'classnames'
-import React, {FC, useEffect, useState} from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Dropdown } from './Dropdown'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
@@ -31,7 +31,9 @@ const DropdownInput: FC<Props> = ({
   reset,
 }) => {
   const [showDropDown, setShowDropDown] = useState<boolean>(false)
-  const [activeOption, setActiveOption] = useState<Forms.DropDownOption>(getDefaultOption())
+  const [activeOption, setActiveOption] = useState<Forms.DropDownOption>(
+    getDefaultOption()
+  )
 
   const toggleDropDown = () => {
     setShowDropDown(!showDropDown)
@@ -44,7 +46,7 @@ const DropdownInput: FC<Props> = ({
   }
 
   useEffect(() => {
-    if(reset) {
+    if (reset) {
       setActiveOption(getDefaultOption())
       selected(getDefaultOption())
     }
@@ -109,10 +111,13 @@ const DropdownInput: FC<Props> = ({
 }
 
 function getDefaultOption(): Forms.DropDownOption {
-  return {label: 0, value: 0}
+  return { label: 0, value: 0 }
 }
 
-const StyledDropdownInput = styled.div<{disabled: boolean|undefined, error: boolean|undefined}>`
+const StyledDropdownInput = styled.div<{
+  disabled: boolean | undefined
+  error: boolean | undefined
+}>`
   pointer-events: ${props => (props.disabled ? 'none' : 'auto')};
 
   &.Dropdown_warning {

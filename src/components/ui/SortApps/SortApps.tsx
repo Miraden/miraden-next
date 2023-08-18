@@ -1,34 +1,34 @@
-import { ArrowIcon } from "@/icons";
-import { SortIcon } from "@/icons/SortIcon";
-import { FC, useState } from "react";
-import styled from "styled-components";
-import { SortAppsDropdown } from "./SortAppsDropdown";
+import { ArrowIcon } from '@/icons'
+import { SortIcon } from '@/icons/SortIcon'
+import { FC, useState } from 'react'
+import styled from 'styled-components'
+import { SortAppsDropdown } from './SortAppsDropdown'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const SortApps: FC<Props> = ({ className }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(false);
-  const [selectOption, setSelectOption] = useState<string>("");
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [showDropDown, setShowDropDown] = useState<boolean>(false)
+  const [selectOption, setSelectOption] = useState<string>('')
+  const [selectedOption, setSelectedOption] = useState<string>('')
   const options = () => {
-    return ["Сначала агенства", "Сначала PRO", "Сначала самые надёжные"];
-  };
+    return ['Сначала агенства', 'Сначала PRO', 'Сначала самые надёжные']
+  }
 
   const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
-  };
+    setShowDropDown(!showDropDown)
+  }
 
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {
-      setShowDropDown(false);
+      setShowDropDown(false)
     }
-  };
+  }
   const optionSelection = (option: string, index: number): void => {
-    setSelectedOption(option);
-    setSelectOption(option);
-  };
+    setSelectedOption(option)
+    setSelectOption(option)
+  }
 
   return (
     <StyledDropdownInput
@@ -44,7 +44,7 @@ const SortApps: FC<Props> = ({ className }) => {
         }
       >
         <div className="DropdownInput_selectLabel Text_14_16">
-          <p>{selectedOption ? selectedOption : "Сначала более надёжные"}</p>
+          <p>{selectedOption ? selectedOption : 'Сначала более надёжные'}</p>
           <ArrowIcon className="DropdownInput_selectLabelIcon" />
           <SortIcon className="DropdownInput_selectLabelIconMobile" />
         </div>
@@ -61,8 +61,8 @@ const SortApps: FC<Props> = ({ className }) => {
         )}
       </button>
     </StyledDropdownInput>
-  );
-};
+  )
+}
 const StyledDropdownInput = styled.div<Props>`
   max-width: fit-content;
   position: relative;
@@ -231,6 +231,6 @@ const StyledDropdownInput = styled.div<Props>`
       }
     }
   }
-`;
+`
 
-export { SortApps };
+export { SortApps }

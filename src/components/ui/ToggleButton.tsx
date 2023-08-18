@@ -1,32 +1,46 @@
-import cn from "classnames";
-import styled from "styled-components";
-import {useCallback, useState} from "react";
+import cn from 'classnames'
+import styled from 'styled-components'
+import { useCallback, useState } from 'react'
 
 interface ToggleButtonProps {
-  disabled?: boolean;
-  className?: string;
-  label?: string;
+  disabled?: boolean
+  className?: string
+  label?: string
   state: boolean
   onChange?: Function
 }
 
-const ToggleButton = ({ className, disabled, label, state, onChange }: ToggleButtonProps) => {
+const ToggleButton = ({
+  className,
+  disabled,
+  label,
+  state,
+  onChange,
+}: ToggleButtonProps) => {
   const [isChecked, setChecked] = useState<boolean>(state)
-  const onClick = useCallback((e: any) => {
-    setChecked(!isChecked)
-    if(onChange) onChange(e)
-  }, [isChecked, onChange])
+  const onClick = useCallback(
+    (e: any) => {
+      setChecked(!isChecked)
+      if (onChange) onChange(e)
+    },
+    [isChecked, onChange]
+  )
 
   return (
     <StyledToggleButton className={className}>
-      <label className={cn("ToggleButton__switch", { Disabled: disabled })}>
-        <input type="checkbox" checked={isChecked} disabled={disabled} onClick={onClick} />
+      <label className={cn('ToggleButton__switch', { Disabled: disabled })}>
+        <input
+          type="checkbox"
+          checked={isChecked}
+          disabled={disabled}
+          onClick={onClick}
+        />
         <span className="ToggleButton__slider Round"></span>
       </label>
       {label && <span className="ToggleButton__label">{label}</span>}
     </StyledToggleButton>
-  );
-};
+  )
+}
 
 const StyledToggleButton = styled.div`
   .Disabled {
@@ -64,7 +78,7 @@ const StyledToggleButton = styled.div`
 
   .ToggleButton__slider:before {
     position: absolute;
-    content: "";
+    content: '';
     height: 16px;
     width: 16px;
     left: 2.5px;
@@ -105,10 +119,10 @@ const StyledToggleButton = styled.div`
     .ToggleButton__slider {
       background: #fff;
       &:before {
-        background: #EEF1F5;
+        background: #eef1f5;
       }
     }
   }
-`;
+`
 
-export { ToggleButton };
+export { ToggleButton }

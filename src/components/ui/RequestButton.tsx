@@ -1,20 +1,20 @@
-import cn from "classnames";
-import { ButtonHTMLAttributes, MouseEvent, ReactNode, useState } from "react";
-import styled from "styled-components";
+import cn from 'classnames'
+import { ButtonHTMLAttributes, MouseEvent, ReactNode, useState } from 'react'
+import styled from 'styled-components'
 
 interface RequestButtonProps {
-  className?: string;
-  onClick?: (e: MouseEvent<HTMLElement>) => void;
-  href?: string;
-  type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
-  compact?: boolean;
-  narrow?: boolean;
-  ariaLabel?: string;
-  children?: ReactNode;
-  disabled?: boolean;
-  active?: boolean;
-  ranged?: boolean;
-  activeBlue?: boolean;
+  className?: string
+  onClick?: (e: MouseEvent<HTMLElement>) => void
+  href?: string
+  type?: ButtonHTMLAttributes<HTMLButtonElement>['type']
+  compact?: boolean
+  narrow?: boolean
+  ariaLabel?: string
+  children?: ReactNode
+  disabled?: boolean
+  active?: boolean
+  ranged?: boolean
+  activeBlue?: boolean
 }
 
 const RequestButton = ({
@@ -31,12 +31,12 @@ const RequestButton = ({
   active,
   activeBlue,
 }: RequestButtonProps) => {
-  const [isActive, setIsActive] = useState(false);
-  const [isActiveBlue, setIsActiveBlue] = useState(false);
+  const [isActive, setIsActive] = useState(false)
+  const [isActiveBlue, setIsActiveBlue] = useState(false)
 
   const handleActive = () => {
-    setIsActive(!isActive);
-  };
+    setIsActive(!isActive)
+  }
 
   if (disabled) {
     return (
@@ -51,7 +51,7 @@ const RequestButton = ({
       >
         {children && <span className="[ Button__label ]">{children}</span>}
       </StyledButton>
-    );
+    )
   }
 
   return (
@@ -73,8 +73,8 @@ const RequestButton = ({
     >
       {children && <span className="[ Button__label ]">{children}</span>}
     </StyledButton>
-  );
-};
+  )
+}
 
 const StyledButton = styled.a`
   display: flex;
@@ -91,8 +91,8 @@ const StyledButton = styled.a`
   }
 
   &.isActive {
-    background: ${({theme}) => theme.colors.button.request.bg.active};
-    color: ${({theme}) => theme.colors.button.request.text.active};
+    background: ${({ theme }) => theme.colors.button.request.bg.active};
+    color: ${({ theme }) => theme.colors.button.request.text.active};
   }
 
   &.isActiveBlue {
@@ -114,16 +114,16 @@ const StyledButton = styled.a`
   }
 
   &.RequestButton {
-    background: ${({theme}) => theme.colors.button.request.bg.default};
-    color: ${({theme}) => theme.colors.button.request.text.default};
+    background: ${({ theme }) => theme.colors.button.request.bg.default};
+    color: ${({ theme }) => theme.colors.button.request.text.default};
 
     &.isActive {
-      background: ${({theme}) => theme.colors.button.request.bg.active};
-      color: ${({theme}) => theme.colors.button.request.text.active};
+      background: ${({ theme }) => theme.colors.button.request.bg.active};
+      color: ${({ theme }) => theme.colors.button.request.text.active};
     }
 
     &:hover {
-      background: ${({theme}) => theme.colors.button.request.bg.hover};
+      background: ${({ theme }) => theme.colors.button.request.bg.hover};
     }
   }
 
@@ -141,22 +141,22 @@ const StyledButton = styled.a`
   }
 
   &.RequestButton:hover {
-    background: ${({ theme }) => theme.colors.button.request["hover"]};
+    background: ${({ theme }) => theme.colors.button.request['hover']};
   }
 
   &.RequestButton:active {
-    background: ${({ theme }) => theme.colors.button.request["active"]};
+    background: ${({ theme }) => theme.colors.button.request['active']};
   }
 
   &.RequestButton:focus-visible {
-    background: ${({ theme }) => theme.colors.button.request["focused"]};
+    background: ${({ theme }) => theme.colors.button.request['focused']};
     outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
   }
 
   .Button__label {
     text-align: center;
   }
-`;
+`
 
-export { RequestButton };
-export type { RequestButtonProps as ButtonProps };
+export { RequestButton }
+export type { RequestButtonProps as ButtonProps }

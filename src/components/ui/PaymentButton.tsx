@@ -1,23 +1,23 @@
-import cn from "classnames";
-import { ButtonHTMLAttributes, MouseEvent, ReactNode } from "react";
-import styled from "styled-components";
-import { Checkbox } from "./CheckBox";
+import cn from 'classnames'
+import { ButtonHTMLAttributes, MouseEvent, ReactNode } from 'react'
+import styled from 'styled-components'
+import { Checkbox } from './CheckBox'
 
 interface PaymentButtonProps {
-  className?: string;
-  onClick?: (e: MouseEvent<HTMLElement>) => void;
-  href?: string;
-  type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
-  ariaLabel?: string;
-  buttonTitle?: ReactNode;
-  buttonText?: ReactNode;
-  disabled?: boolean;
-  tax?: number;
-  active?: boolean;
-  onChange?: () => void;
+  className?: string
+  onClick?: (e: MouseEvent<HTMLElement>) => void
+  href?: string
+  type?: ButtonHTMLAttributes<HTMLButtonElement>['type']
+  ariaLabel?: string
+  buttonTitle?: ReactNode
+  buttonText?: ReactNode
+  disabled?: boolean
+  tax?: number
+  active?: boolean
+  onChange?: () => void
 }
 
-const baseClass = "PaymentButton"
+const baseClass = 'PaymentButton'
 
 const PaymentButton = ({
   className,
@@ -31,15 +31,15 @@ const PaymentButton = ({
 }: PaymentButtonProps) => {
   const handleButtonClick = (e: React.MouseEvent<HTMLElement>) => {
     if (onClick) {
-      onClick(e);
+      onClick(e)
     }
-  };
+  }
 
   const handleCheckboxChange = () => {
     if (onChange) {
-      onChange();
+      onChange()
     }
-  };
+  }
 
   return (
     <StyledButton
@@ -54,8 +54,8 @@ const PaymentButton = ({
           onChange={handleCheckboxChange}
           checked={active}
           className={`${baseClass}__checkbox`}
-          onClick={(e) => {
-            e.stopPropagation(); // Остановить всплытие клика, чтобы не вызывался handleButtonClick
+          onClick={e => {
+            e.stopPropagation() // Остановить всплытие клика, чтобы не вызывался handleButtonClick
           }}
         />
         {tax && (
@@ -69,8 +69,8 @@ const PaymentButton = ({
         </div>
       )}
     </StyledButton>
-  );
-};
+  )
+}
 
 const StyledButton = styled.div`
   display: flex;
@@ -123,7 +123,7 @@ const StyledButton = styled.div`
     cursor: unset;
     background: ${({ theme }) =>
       theme.colors.button.disabled.background} !important;
-    color: ${({ theme }) => theme.colors.grey["disabled"]} !important;
+    color: ${({ theme }) => theme.colors.grey['disabled']} !important;
   }
 
   &.PaymentButton {
@@ -132,15 +132,15 @@ const StyledButton = styled.div`
   }
 
   &.PaymentButton:hover {
-    background: ${({ theme }) => theme.colors.button.pay["hover"]};
+    background: ${({ theme }) => theme.colors.button.pay['hover']};
   }
 
   &.PaymentButton:active {
-    background: ${({ theme }) => theme.colors.button.pay["active"]};
+    background: ${({ theme }) => theme.colors.button.pay['active']};
   }
 
   &.PaymentButton:focus-visible {
-    background: ${({ theme }) => theme.colors.button.pay["focused"]};
+    background: ${({ theme }) => theme.colors.button.pay['focused']};
     outline: 2px solid ${({ theme }) => theme.colors.stroke.purple};
   }
 
@@ -151,7 +151,7 @@ const StyledButton = styled.div`
       margin-top: 5px;
     }
   }
-`;
+`
 
-export { PaymentButton };
-export type { PaymentButtonProps as ButtonProps };
+export { PaymentButton }
+export type { PaymentButtonProps as ButtonProps }

@@ -22,7 +22,7 @@ const TextAreaInput = ({
   label,
   className,
   message,
-  onChange
+  onChange,
 }: Props) => {
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
@@ -33,7 +33,7 @@ const TextAreaInput = ({
       return
     }
     setValue(inputValue)
-    if(onChange) onChange(event)
+    if (onChange) onChange(event)
   }
 
   const handleFocus = () => {

@@ -1,18 +1,18 @@
-import { WarningIcon } from "@/icons";
-import cn from "classnames";
-import React, { ReactNode, useState } from "react";
-import styled from "styled-components";
+import { WarningIcon } from '@/icons'
+import cn from 'classnames'
+import React, { ReactNode, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  maxLength?: number;
-  warning?: boolean;
-  error?: boolean;
-  icon?: ReactNode;
-  disabled?: boolean;
-  label?: string;
-  className?: string;
-  value?: string;
-  onChange?: any;
+  maxLength?: number
+  warning?: boolean
+  error?: boolean
+  icon?: ReactNode
+  disabled?: boolean
+  label?: string
+  className?: string
+  value?: string
+  onChange?: any
 }
 
 const NumberInput = ({
@@ -26,19 +26,19 @@ const NumberInput = ({
   value,
   onChange,
 }: Props) => {
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState(false)
 
   const handleFocus = () => {
     if (!disabled) {
-      setIsFocused(true);
+      setIsFocused(true)
     }
-  };
+  }
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (!disabled) {
-      setIsFocused(!!event.target.value);
+      setIsFocused(!!event.target.value)
     }
-  };
+  }
 
   return (
     <StyledNumberInput className={className}>
@@ -71,8 +71,8 @@ const NumberInput = ({
       )}
       {error && <div className="Error__message Text_12_16">Error</div>}
     </StyledNumberInput>
-  );
-};
+  )
+}
 
 const StyledNumberInput = styled.div`
   position: relative;
@@ -143,13 +143,13 @@ const StyledNumberInput = styled.div`
       background-color: #fff5f5;
     }
   }
-`;
+`
 
 const StyledNumberInputField = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-`;
+`
 
 const StyledNumberInputInput = styled.input`
   width: 100%;
@@ -170,20 +170,20 @@ const StyledNumberInputInput = styled.input`
   &:focus {
     box-shadow: 0 0 0 2px #4e6af3 inset;
   }
-`;
+`
 
 const StyledNumberInputLabel = styled.label<{ isFocused: boolean }>`
   position: absolute;
-  top: ${({ isFocused }) => (isFocused ? "6px" : "50%")};
-  left: ${({ isFocused }) => (isFocused ? "20px" : "20px")};
+  top: ${({ isFocused }) => (isFocused ? '6px' : '50%')};
+  left: ${({ isFocused }) => (isFocused ? '20px' : '20px')};
   transform: ${({ isFocused }) =>
-    isFocused ? "translateY(0)" : "translateY(-50%)"};
-  font-size: ${({ isFocused }) => (isFocused ? "12px" : "16px")};
+    isFocused ? 'translateY(0)' : 'translateY(-50%)'};
+  font-size: ${({ isFocused }) => (isFocused ? '12px' : '16px')};
   line-height: 20px;
   color: #7786a5;
   pointer-events: none;
   transition: 0.1s;
-`;
+`
 
 const StyledNumberInputCounter = styled.div`
   position: absolute;
@@ -194,6 +194,6 @@ const StyledNumberInputCounter = styled.div`
   align-self: flex-end;
   font-size: 12px;
   color: #808080;
-`;
+`
 
-export { NumberInput };
+export { NumberInput }

@@ -5,29 +5,29 @@ import {
   VisaIcon,
   WebMoneyIcon,
   YouMoneyIcon,
-} from "@/icons";
-import { useCallback, useState } from "react";
-import styled from "styled-components";
-import { PayButton } from "../PayButton";
+} from '@/icons'
+import { useCallback, useState } from 'react'
+import styled from 'styled-components'
+import { PayButton } from '../PayButton'
 
 interface Props {
-  className?: string;
-  totalTax?: any;
-  additionalRequests?: any;
-  openToEveryone?: any;
-  getUp?: any;
-  setTotalPay?: any;
-  onOptionSelect?: any;
+  className?: string
+  totalTax?: any
+  additionalRequests?: any
+  openToEveryone?: any
+  getUp?: any
+  setTotalPay?: any
+  onOptionSelect?: any
 }
 
 const payOptions = [
-  { label: "Банковская карта", icon: <VisaIcon />, tax: 3.5 },
-  { label: "Юmoney", icon: <YouMoneyIcon />, tax: 3.5 },
-  { label: "Webmoney", icon: <WebMoneyIcon />, tax: 6 },
-  { label: "QIWI Кошелёк", icon: <QiwiIcon />, tax: 6 },
-  { label: "Apple Pay", icon: <ApplePayIcon />, tax: 4 },
-  { label: "Выставить счёт (B2B)", icon: <CreditCardPlusIcon /> },
-];
+  { label: 'Банковская карта', icon: <VisaIcon />, tax: 3.5 },
+  { label: 'Юmoney', icon: <YouMoneyIcon />, tax: 3.5 },
+  { label: 'Webmoney', icon: <WebMoneyIcon />, tax: 6 },
+  { label: 'QIWI Кошелёк', icon: <QiwiIcon />, tax: 6 },
+  { label: 'Apple Pay', icon: <ApplePayIcon />, tax: 4 },
+  { label: 'Выставить счёт (B2B)', icon: <CreditCardPlusIcon /> },
+]
 
 const PayFormContent = ({
   className,
@@ -38,27 +38,27 @@ const PayFormContent = ({
   onOptionSelect,
   setTotalPay,
 }: Props) => {
-  const [isShow, setIsShow] = useState(false);
+  const [isShow, setIsShow] = useState(false)
 
   const handleShow = useCallback(() => {
-    setIsShow(!isShow);
-  }, [isShow]);
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedTax, setSelectedTax] = useState(null);
+    setIsShow(!isShow)
+  }, [isShow])
+  const [selectedOption, setSelectedOption] = useState(null)
+  const [selectedTax, setSelectedTax] = useState(null)
   const handleSelect = useCallback(
     (option: any) => {
       if (selectedOption !== option) {
-        setSelectedOption(option);
-        setSelectedTax(option.tax);
+        setSelectedOption(option)
+        setSelectedTax(option.tax)
         const totalPay =
-          totalTax + (option.tax ? (totalTax * option.tax) / 100 : 0);
-        setTotalPay(totalPay);
+          totalTax + (option.tax ? (totalTax * option.tax) / 100 : 0)
+        setTotalPay(totalPay)
       }
 
-      onOptionSelect?.(option);
+      onOptionSelect?.(option)
     },
     [selectedOption, onOptionSelect, totalTax, setTotalPay]
-  );
+  )
 
   return (
     <StyledPayFormContent className={className}>
@@ -122,12 +122,12 @@ const PayFormContent = ({
         </ul>
         {isShow && <div>Другие способы оплаты</div>}
         <button onClick={handleShow} className="PayFormContent__payVariants">
-          {isShow ? "Скрыть способы оплаты" : "Открыть ещё способы"}
+          {isShow ? 'Скрыть способы оплаты' : 'Открыть ещё способы'}
         </button>
       </div>
     </StyledPayFormContent>
-  );
-};
+  )
+}
 
 const StyledPayFormContent = styled.div`
   .PayFormContent__body {
@@ -196,6 +196,6 @@ const StyledPayFormContent = styled.div`
     width: 100%;
     color: #4e6af3;
   }
-`;
+`
 
-export { PayFormContent };
+export { PayFormContent }

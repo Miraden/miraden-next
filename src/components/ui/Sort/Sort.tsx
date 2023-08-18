@@ -1,42 +1,42 @@
-import { ArrowIcon } from "@/icons";
-import cn from "classnames";
-import { FC, useState } from "react";
-import styled from "styled-components";
-import { SortDropdown } from "./SortDropdown";
-import {ArrowsIcon} from "@/icons/ArrowsIcon";
+import { ArrowIcon } from '@/icons'
+import cn from 'classnames'
+import { FC, useState } from 'react'
+import styled from 'styled-components'
+import { SortDropdown } from './SortDropdown'
+import { ArrowsIcon } from '@/icons/ArrowsIcon'
 
 interface Props {
-  className?: string;
+  className?: string
 }
 
 const Sort: FC<Props> = ({ className }) => {
-  const [showDropDown, setShowDropDown] = useState<boolean>(true);
-  const [selectOption, setSelectOption] = useState<string>("");
-  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [showDropDown, setShowDropDown] = useState<boolean>(true)
+  const [selectOption, setSelectOption] = useState<string>('')
+  const [selectedOption, setSelectedOption] = useState<string>('')
   const options = () => {
     return [
-      "Диапазон 1 км",
-      "Диапазон 5 км",
-      "Диапазон 10 км",
-      "Диапазон 15 км",
-      "Диапазон 20 км",
-      "Диапазон 30 км",
-    ];
-  };
+      'Диапазон 1 км',
+      'Диапазон 5 км',
+      'Диапазон 10 км',
+      'Диапазон 15 км',
+      'Диапазон 20 км',
+      'Диапазон 30 км',
+    ]
+  }
 
   const toggleDropDown = () => {
-    setShowDropDown(!showDropDown);
-  };
+    setShowDropDown(!showDropDown)
+  }
 
   const dismissHandler = (event: React.FocusEvent<HTMLButtonElement>): void => {
     if (event.currentTarget === event.target) {
-      setShowDropDown(true);
+      setShowDropDown(true)
     }
-  };
+  }
   const optionSelection = (option: string, index: number): void => {
-    setSelectedOption(option);
-    setSelectOption(option);
-  };
+    setSelectedOption(option)
+    setSelectOption(option)
+  }
 
   return (
     <StyledDropdownInput
@@ -54,7 +54,7 @@ const Sort: FC<Props> = ({ className }) => {
         }
       >
         <div className="DropdownInput_selectLabel Text_14_16">
-          {selectedOption ? selectedOption : "Без диапазона"}
+          {selectedOption ? selectedOption : 'Без диапазона'}
           <ArrowsIcon bottom />
         </div>
         {showDropDown && (
@@ -70,8 +70,8 @@ const Sort: FC<Props> = ({ className }) => {
         )}
       </button>
     </StyledDropdownInput>
-  );
-};
+  )
+}
 const StyledDropdownInput = styled.div<Props>`
   max-width: fit-content;
   position: relative;
@@ -151,6 +151,6 @@ const StyledDropdownInput = styled.div<Props>`
     background: rgba(255, 255, 255, 0.85);
     border-radius: 3px;
   }
-`;
+`
 
-export { Sort };
+export { Sort }

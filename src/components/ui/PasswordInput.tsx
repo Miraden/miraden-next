@@ -1,52 +1,64 @@
-import {WarningIcon} from "@/icons";
-import cn from "classnames";
-import React, {ReactNode, useState} from "react";
-import styled from "styled-components";
-import {HideIcon} from "@/icons/HideIcon";
-import {EyeIcon} from "@/icons/EyeIcon";
+import { WarningIcon } from '@/icons'
+import cn from 'classnames'
+import React, { ReactNode, useState } from 'react'
+import styled from 'styled-components'
+import { HideIcon } from '@/icons/HideIcon'
+import { EyeIcon } from '@/icons/EyeIcon'
 
 interface Props {
-  warning?: boolean;
-  error?: boolean;
-  icon?: ReactNode;
-  disabled?: boolean;
-  className?: string;
-  label?: string;
-  onChange?: any;
+  warning?: boolean
+  error?: boolean
+  icon?: ReactNode
+  disabled?: boolean
+  className?: string
+  label?: string
+  onChange?: any
   name?: string
   message?: string
 }
 
-const PasswordInput = ({ warning, error, icon, disabled, className, label, onChange, name, message }: Props) => {
-  const [value, setValue] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+const PasswordInput = ({
+  warning,
+  error,
+  icon,
+  disabled,
+  className,
+  label,
+  onChange,
+  name,
+  message,
+}: Props) => {
+  const [value, setValue] = useState('')
+  const [isFocused, setIsFocused] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    if(onChange) onChange(event)
+    const inputValue = event.target.value
+    if (onChange) onChange(event)
 
-    setValue(inputValue);
-  };
+    setValue(inputValue)
+  }
 
   const handleFocus = () => {
     if (!disabled) {
-      setIsFocused(true);
+      setIsFocused(true)
     }
-  };
+  }
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (!disabled) {
-      setIsFocused(!!event.target.value);
+      setIsFocused(!!event.target.value)
     }
-  };
+  }
 
   const togglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+    setShowPassword(!showPassword)
+  }
 
   return (
-    <StyledPasswordInput className={cn(className, (label ? "" : "PasswordInput__noLabel"))}>
+    <StyledPasswordInput
+      className={cn(className, label ? '' : 'PasswordInput__noLabel')}
+    >
       <StyledPasswordInputField
         className={cn({
           PasswordInput__labelWarning: warning,
@@ -59,13 +71,17 @@ const PasswordInput = ({ warning, error, icon, disabled, className, label, onCha
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          type={showPassword ? "text" : "password"}
+          type={showPassword ? 'text' : 'password'}
           disabled={disabled}
           name={name}
           isPasswordView={showPassword}
         />
-        <button onClick={togglePassword} type={"button"} className="Icon__container">
-          {showPassword ? (<EyeIcon />) : (<HideIcon/>)}
+        <button
+          onClick={togglePassword}
+          type={'button'}
+          className="Icon__container"
+        >
+          {showPassword ? <EyeIcon /> : <HideIcon />}
         </button>
         {label && (
           <StyledPasswordInputLabel disabled isFocused={isFocused}>
@@ -74,7 +90,7 @@ const PasswordInput = ({ warning, error, icon, disabled, className, label, onCha
         )}
       </StyledPasswordInputField>
       <div
-        className={cn("PasswordInput__bottom", {
+        className={cn('PasswordInput__bottom', {
           PasswordInput__labelWarning: warning,
           PasswordInput__labelError: error,
           PasswordInput__disabled: disabled,
@@ -86,11 +102,15 @@ const PasswordInput = ({ warning, error, icon, disabled, className, label, onCha
             <span className="Font_fields_description">{message}</span>
           </div>
         )}
-        {error && <div className="Error__message Font_fields_description">{message}</div>}
+        {error && (
+          <div className="Error__message Font_fields_description">
+            {message}
+          </div>
+        )}
       </div>
     </StyledPasswordInput>
-  );
-};
+  )
+}
 
 const StyledPasswordInput = styled.div`
   position: relative;
@@ -130,7 +150,7 @@ const StyledPasswordInput = styled.div`
   }
 
   .Icon__container {
-    width: 18px!important;
+    width: 18px !important;
     height: 18px;
     position: absolute;
     right: 20px;
@@ -148,7 +168,7 @@ const StyledPasswordInput = styled.div`
   }
 
   .RestorePassword {
-    color: ${({ theme }) => theme.colors.blue["default"]};
+    color: ${({ theme }) => theme.colors.blue['default']};
   }
 
   .Warning__message {
@@ -178,15 +198,15 @@ const StyledPasswordInput = styled.div`
       background-color: ${({ theme }) => theme.colors.fields.strokeErrorBg};
     }
   }
-`;
+`
 
 const StyledPasswordInputField = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-`;
+`
 
-const StyledPasswordInputInput = styled.input<{isPasswordView: boolean}>`
+const StyledPasswordInputInput = styled.input<{ isPasswordView: boolean }>`
   position: relative;
   border: none;
   outline: 2px solid ${({ theme }) => theme.colors.fields.stroke};
@@ -202,22 +222,23 @@ const StyledPasswordInputInput = styled.input<{isPasswordView: boolean}>`
   &:hover {
     outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
   }
-`;
+`
 
 const StyledPasswordInputLabel = styled.label<{
-  isFocused: boolean;
-  disabled?: boolean;
+  isFocused: boolean
+  disabled?: boolean
 }>`
   max-width: 270px;
   position: absolute;
-  top: ${({ isFocused }) => (isFocused ? "6px" : "50%")};
-  left: ${({ isFocused }) => (isFocused ? "20px" : "20px")};
-  transform: ${({ isFocused }) => isFocused ? "translateY(0)" : "translateY(-50%)"};
-  font-size: ${({ isFocused }) => (isFocused ? "12px" : "16px")};
+  top: ${({ isFocused }) => (isFocused ? '6px' : '50%')};
+  left: ${({ isFocused }) => (isFocused ? '20px' : '20px')};
+  transform: ${({ isFocused }) =>
+    isFocused ? 'translateY(0)' : 'translateY(-50%)'};
+  font-size: ${({ isFocused }) => (isFocused ? '12px' : '16px')};
   line-height: 24px;
   color: ${({ theme }) => theme.colors.fields.title};
   pointer-events: none;
   transition: 0.1s;
-`;
+`
 
-export { PasswordInput };
+export { PasswordInput }

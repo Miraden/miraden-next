@@ -1,14 +1,14 @@
-import { DropzoneIcon } from "@/icons";
-import React, { useCallback } from "react";
-import { useDropzone } from "react-dropzone";
-import styled from "styled-components";
-import Image from "next/image";
+import { DropzoneIcon } from '@/icons'
+import React, { useCallback } from 'react'
+import { useDropzone } from 'react-dropzone'
+import styled from 'styled-components'
+import Image from 'next/image'
 
 const ImageUploader: React.FC = () => {
-  const onDrop = useCallback((acceptedFiles: any) => {}, []);
+  const onDrop = useCallback((acceptedFiles: any) => {}, [])
 
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
-    useDropzone({ onDrop, accept: {}, maxSize: 5000000 });
+    useDropzone({ onDrop, accept: {}, maxSize: 5000000 })
 
   return (
     <div {...getRootProps()}>
@@ -29,15 +29,15 @@ const ImageUploader: React.FC = () => {
         </StyledDropzone>
       )}
       <div className="ImageUploader__imagesList">
-        {acceptedFiles.map((file) => (
+        {acceptedFiles.map(file => (
           <div key={file.name}>
             <Image src={URL.createObjectURL(file)} alt={file.name} />
           </div>
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
 const StyledDropzone = styled.div`
   padding-top: 48px;
@@ -68,6 +68,6 @@ const StyledDropzone = styled.div`
     grid-template-columns: repeat(4, 1fr) !important;
     grid-gap: 16px;
   }
-`;
+`
 
-export { ImageUploader };
+export { ImageUploader }

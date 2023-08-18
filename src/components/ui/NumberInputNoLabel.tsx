@@ -1,18 +1,18 @@
-import { WarningIcon } from "@/icons";
-import cn from "classnames";
-import React, { ReactNode, useState } from "react";
-import styled from "styled-components";
+import { WarningIcon } from '@/icons'
+import cn from 'classnames'
+import React, { ReactNode, useState } from 'react'
+import styled from 'styled-components'
 
 interface Props {
-  maxLength?: number;
-  warning?: boolean;
-  error?: boolean;
-  icon?: ReactNode;
-  disabled?: boolean;
-  label?: string;
-  className?: string;
-  value?: string;
-  onChange?: any;
+  maxLength?: number
+  warning?: boolean
+  error?: boolean
+  icon?: ReactNode
+  disabled?: boolean
+  label?: string
+  className?: string
+  value?: string
+  onChange?: any
 }
 
 const NumberInputNoLabel = ({
@@ -26,19 +26,19 @@ const NumberInputNoLabel = ({
   value,
   onChange,
 }: Props) => {
-  const [isFocused, setIsFocused] = useState(false);
+  const [isFocused, setIsFocused] = useState(false)
 
   const handleFocus = () => {
     if (!disabled) {
-      setIsFocused(true);
+      setIsFocused(true)
     }
-  };
+  }
 
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (!disabled) {
-      setIsFocused(!!event.target.value);
+      setIsFocused(!!event.target.value)
     }
-  };
+  }
 
   return (
     <StyledNumberInputNoLabel className={className}>
@@ -71,8 +71,8 @@ const NumberInputNoLabel = ({
       )}
       {error && <div className="Error__message Text_12_16">Error</div>}
     </StyledNumberInputNoLabel>
-  );
-};
+  )
+}
 
 const StyledNumberInputNoLabel = styled.div`
   position: relative;
@@ -143,13 +143,13 @@ const StyledNumberInputNoLabel = styled.div`
       background-color: #fff5f5;
     }
   }
-`;
+`
 
 const StyledNumberInputNoLabelField = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-`;
+`
 
 const StyledNumberInputNoLabelInput = styled.input`
   width: 100%;
@@ -170,20 +170,20 @@ const StyledNumberInputNoLabelInput = styled.input`
   &:focus {
     box-shadow: 0 0 0 2px #4e6af3 inset;
   }
-`;
+`
 
 const StyledNumberInputNoLabelLabel = styled.label<{ isFocused: boolean }>`
   position: absolute;
-  top: ${({ isFocused }) => (isFocused ? "6px" : "50%")};
-  left: ${({ isFocused }) => (isFocused ? "20px" : "20px")};
+  top: ${({ isFocused }) => (isFocused ? '6px' : '50%')};
+  left: ${({ isFocused }) => (isFocused ? '20px' : '20px')};
   transform: ${({ isFocused }) =>
-    isFocused ? "translateY(0)" : "translateY(-50%)"};
-  font-size: ${({ isFocused }) => (isFocused ? "12px" : "16px")};
+    isFocused ? 'translateY(0)' : 'translateY(-50%)'};
+  font-size: ${({ isFocused }) => (isFocused ? '12px' : '16px')};
   line-height: 20px;
   color: #7786a5;
   pointer-events: none;
   transition: 0.1s;
-  opacity: ${({ isFocused }) => (isFocused ? "0" : "1")};
-`;
+  opacity: ${({ isFocused }) => (isFocused ? '0' : '1')};
+`
 
-export { NumberInputNoLabel };
+export { NumberInputNoLabel }

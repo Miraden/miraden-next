@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 interface TooltipProps {
-  visible: boolean;
-  placement?: "top" | "bottom" | "right" | "left";
+  visible: boolean
+  placement?: 'top' | 'bottom' | 'right' | 'left'
 }
 
 const Tooltip = styled.div<TooltipProps>`
@@ -19,11 +19,11 @@ const Tooltip = styled.div<TooltipProps>`
   font-size: 12px;
   line-height: 16px;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
-  pointer-events: ${({ visible }) => (visible ? "auto" : "none")};
+  pointer-events: ${({ visible }) => (visible ? 'auto' : 'none')};
   transition: opacity 0.2s ease-in-out;
 
   ::after {
-    content: "";
+    content: '';
     z-index: -10;
     position: absolute;
     width: 24px;
@@ -35,6 +35,6 @@ const Tooltip = styled.div<TooltipProps>`
     background-color: #2a344a;
     animation: fade-in 300ms;
   }
-`;
+`
 
-export { Tooltip };
+export { Tooltip }

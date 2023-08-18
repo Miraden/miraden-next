@@ -1,17 +1,17 @@
-import { CheckIcon } from "@/icons/CheckIcon";
-import cn from "classnames";
-import { FC } from "react";
-import styled from "styled-components";
+import { CheckIcon } from '@/icons/CheckIcon'
+import cn from 'classnames'
+import { FC } from 'react'
+import styled from 'styled-components'
 
 type Props = {
-  selectedOption: string;
-  setSelectedOption: (option: string) => void;
-  options: string[];
-  showDropDown: boolean;
-  toggleDropDown: Function;
-  optionSelection: Function;
-  className?: string;
-};
+  selectedOption: string
+  setSelectedOption: (option: string) => void
+  options: string[]
+  showDropDown: boolean
+  toggleDropDown: Function
+  optionSelection: Function
+  className?: string
+}
 
 const SortAppsDropdown: FC<Props> = ({
   selectedOption,
@@ -26,8 +26,8 @@ const SortAppsDropdown: FC<Props> = ({
       <div
         className={
           showDropDown
-            ? "SortAppsDropdown__menu_active"
-            : "SortAppsDropdown__menu"
+            ? 'SortAppsDropdown__menu_active'
+            : 'SortAppsDropdown__menu'
         }
       >
         {options.map((option: string, index: number): JSX.Element => {
@@ -35,21 +35,21 @@ const SortAppsDropdown: FC<Props> = ({
             <div
               key={index}
               onClick={(): void => {
-                setSelectedOption(option);
+                setSelectedOption(option)
               }}
-              className={cn(`${selectedOption === option ? "selected" : ""}`)}
+              className={cn(`${selectedOption === option ? 'selected' : ''}`)}
             >
               <span className="SortAppsDropdown__menuItem">
                 <p>{option}</p>
-                <CheckIcon/>
+                <CheckIcon />
               </span>
             </div>
-          );
+          )
         })}
       </div>
     </StyledSortAppsDropdown>
-  );
-};
+  )
+}
 
 const StyledSortAppsDropdown = styled.div`
   .SortAppsDropdownMenu {
@@ -115,6 +115,6 @@ const StyledSortAppsDropdown = styled.div`
       display: none;
     }
   }
-`;
+`
 
-export { SortAppsDropdown };
+export { SortAppsDropdown }

@@ -1,26 +1,26 @@
-import {ApiRequestMethods} from "@/infrastructure/Network/Http/ApiRequest";
-import React, {ReactNode} from "react";
-import styled from "styled-components";
-import cn from "classnames";
-import {Preloader} from "@/components/ui/Preloader";
+import { ApiRequestMethods } from '@/infrastructure/Network/Http/ApiRequest'
+import React, { ReactNode } from 'react'
+import styled from 'styled-components'
+import cn from 'classnames'
+import { Preloader } from '@/components/ui/Preloader'
 
 const baseClassName = 'form'
 
 interface Props {
   className?: string
-  method: ApiRequestMethods,
-  action: string,
-  name: string,
-  children?: ReactNode,
-  noValidate?: boolean,
-  isSubmitted?: boolean,
+  method: ApiRequestMethods
+  action: string
+  name: string
+  children?: ReactNode
+  noValidate?: boolean
+  isSubmitted?: boolean
 }
 
 const DefaultProps: Props = {
   className: baseClassName,
   method: ApiRequestMethods.POST,
-  action: "",
-  name: "",
+  action: '',
+  name: '',
   children: null,
   noValidate: true,
   isSubmitted: false,
@@ -33,7 +33,11 @@ const Form = (args: Props) => {
     <StyledContainer>
       <StyledForm
         id={props.name}
-        className={cn(baseClassName, props.className, (props.isSubmitted) ? "formIsSubmitted" : "")}
+        className={cn(
+          baseClassName,
+          props.className,
+          props.isSubmitted ? 'formIsSubmitted' : ''
+        )}
         action={props.action}
         method={props.method}
         name={props.name}
@@ -41,7 +45,7 @@ const Form = (args: Props) => {
       >
         {props.children}
       </StyledForm>
-      {props.isSubmitted && <Preloader/>}
+      {props.isSubmitted && <Preloader />}
     </StyledContainer>
   )
 }
@@ -53,7 +57,7 @@ const StyledForm = styled.form`
     filter: blur(2px);
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       top: 0;
