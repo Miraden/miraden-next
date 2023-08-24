@@ -5,6 +5,7 @@ import styled from 'styled-components'
 
 interface Props {
   className?: string
+  leadId: number
 }
 
 const paymentOptions = [
@@ -28,7 +29,7 @@ const paymentOptions = [
   },
 ]
 
-const SingleApplicationSideBar = ({ className }: Props) => {
+const SingleApplicationSideBar = ({ className, leadId }: Props) => {
   const [activeButtons, setActiveButtons] = useState(
     paymentOptions.map((option, index) => index === 0)
   )

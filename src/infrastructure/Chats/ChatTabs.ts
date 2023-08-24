@@ -4,3 +4,11 @@ export enum ChatTabs {
   Executants = 'executants',
   Support = 'support',
 }
+
+export enum ChatLeadTabs {
+  Chat = 'chat',
+  Lead = 'lead',
+  Contacts = 'contacts',
+  Reviews = 'reviews',
+  Info = 'info',
+}

@@ -20,6 +20,7 @@ import {
   ApiResponseStructure,
 } from '@/infrastructure/Network/Http/ApiResponse'
 import FavoritesProvider from '@/modules/Favorites/FavoritesProvider'
+import { useRouter } from 'next/router'
 
 interface LeadOwnerProps {
   leadId: number
@@ -186,7 +187,7 @@ const LeadOwnerCard = (props: LeadOwnerProps): JSX.Element => {
           </div>
         </div>
         <div className="LeadSidebar--response">
-          <Button>Предложить</Button>
+          <Button href={'/lead/' + props.leadId + '/chat'}>Предложить</Button>
         </div>
         <div className="LeadSidebar--description Font_body_alt">
           <p>
@@ -198,7 +199,9 @@ const LeadOwnerCard = (props: LeadOwnerProps): JSX.Element => {
       </div>
 
       <div className="SideBar__section">
-        <Button tertiary>Задать вопрос в чате</Button>
+        <Button href={'/lead/' + props.leadId + '/chat/' + owner.id} tertiary>
+          Задать вопрос в чате
+        </Button>
         {props.isUserAuth && !owner?.inFavorite && (
           <Button onClick={onClickFavorites} tertiary>
             В избранное

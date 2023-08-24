@@ -54,13 +54,14 @@ const Chats = (props: Props) => {
     const iam = Security.parseJWT(String(localStorage.getItem('token')))
     if (!event) return
     const r = JSON.parse(event.data) as ApiResponseType
+    const token = String(localStorage.getItem('token'))
 
     if (r.metadata?.event === ChatEvents.onRoomJoin) {
       const payload: any = r.payload as Object
       const roomId: number = Number(payload.roomId)
-      socketManager.queryHistory()
-      setActiveRoom(roomId)
       const token = String(localStorage.getItem('token'))
+      socketManager.queryHistory(token, roomId)
+      setActiveRoom(roomId)
       socketManager.getCompanionsForRoom(token, roomId)
     }
 
@@ -161,7 +162,7 @@ const Chats = (props: Props) => {
     const token = localStorage.getItem('token')
     if (!token) return
     if (!socketManager) return
-    socketManager.joinToRoom(room, token, lead)
+    socketManager.joinToRoom(room, token)
     setMessages([])
     setActiveRoom(room)
     setActiveLead(lead)

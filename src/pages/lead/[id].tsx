@@ -34,7 +34,7 @@ const urlManager = new UrlManager()
 const tabsManager = new TabsManager()
 const langManager = new LangManager()
 
-const LeadEntry = () => {
+const LeadEntry = (): JSX.Element => {
   const router: NextRouter = useRouter()
   const query = router.query
   const leadId: number = parseInt(query['id'] as string) as number
@@ -259,23 +259,27 @@ const LeadEntry = () => {
                 {selected == TabsMenuState.Lead && leadDataProvider.render()}
                 {selected == TabsMenuState.Requests && (
                   <div className={'PageLead'}>
-                    {renderUsers(sellersRequests)}
+                    {renderUsers(sellersRequests, leadId)}
                   </div>
                 )}
                 {selected == TabsMenuState.Executants && (
-                  <div className={'PageLead'}>{renderUsers(executants)}</div>
+                  <div className={'PageLead'}>
+                    {renderUsers(executants, leadId)}
+                  </div>
                 )}
                 {selected == TabsMenuState.Rejected && (
-                  <div className={'PageLead'}>{renderUsers(rejectedUsers)}</div>
+                  <div className={'PageLead'}>
+                    {renderUsers(rejectedUsers, leadId)}
+                  </div>
                 )}
                 {selected == TabsMenuState.Recommended && (
                   <div className={'PageLead'}>
-                    {renderUsers(recommendedUsers)}
+                    {renderUsers(recommendedUsers, leadId)}
                   </div>
                 )}
               </div>
             </div>
-            {showOwnerSidebar && renderLeadPaymentOptions()}
+            {showOwnerSidebar && renderLeadPaymentOptions(leadId)}
             {showGuestSidebar && (
               <LeadOwnerCard
                 leadId={leadId}
@@ -306,12 +310,13 @@ const LeadEntry = () => {
   )
 }
 
-function renderUsers(data: any): JSX.Element {
+function renderUsers(data: any, leadId: number): JSX.Element {
   return (
     <ul className="Applications__list">
       {data.map((performer: any, index: number) => (
         <li key={index}>
           <SellerCard
+            href={'/lead/' + leadId + '/chat/' + performer.id}
             isPerformer={true}
             name={performer.name}
             surname={performer.surname}
@@ -340,10 +345,13 @@ function renderFilter(handler: Function, tabHandler: Function): JSX.Element {
   )
 }
 
-function renderLeadPaymentOptions(): JSX.Element {
+function renderLeadPaymentOptions(leadId: number): JSX.Element {
   return (
     <>
-      <SingleApplicationSideBar className="SingleApplicationSideBar" />
+      <SingleApplicationSideBar
+        leadId={leadId}
+        className="SingleApplicationSideBar"
+      />
     </>
   )
 }

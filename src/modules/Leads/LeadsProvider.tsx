@@ -64,6 +64,10 @@ class LeadsDataProvider {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
+    if (localStorage.getItem('token')) {
+      headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+    }
+
     const apiResponse: ApiResponse = new ApiResponse()
 
     const response = apiRequest
@@ -405,6 +409,7 @@ function renderLead(
               isPinned={item.isPinned}
               responseState={item.responseState}
               windowSize={windowSize}
+              owner={item.owner}
             />
           </li>
         ))}

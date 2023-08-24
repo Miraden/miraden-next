@@ -1,6 +1,7 @@
 declare interface ApiResponseMetadata {
   pages: object
   event: string
+  requestId?: string
 }
 
 declare interface ApiResponseType {

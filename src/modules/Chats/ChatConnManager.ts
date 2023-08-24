@@ -1,5 +1,6 @@
 import SocketConnManager from '@/infrastructure/Network/Websockets/SocketConnManager'
 import commander from 'commander'
+import { ChatEvents } from '@/modules/Chats/ChatEvents'
 
 class ChatConnManager extends SocketConnManager {
   private leadId: number
@@ -13,25 +14,37 @@ class ChatConnManager extends SocketConnManager {
     this.roomId = 0
   }
 
-  public joinToRoom(id: number, token: string, leadId: number): void {
+  public joinToRoom(id: number, token: string, callback?: Function): void {
+    const requestId = crypto.randomUUID()
     const request: Chat.SocketRequestType = {
       command: 'joinRoom',
       token: token,
+      requestId: requestId,
       payload: {
         roomId: id,
-        leadId: leadId,
       },
     }
-    this.leadId = leadId
     this.roomId = id
     this.token = token
     this.send(JSON.stringify(request))
+
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onRoomJoin],
+      requestId
+    )
   }
 
-  public sendMessage(msg: string): void {
+  public sendMessage(msg: string, callback?: Function): void {
+    const requestId = crypto.randomUUID()
     const request: Chat.SocketRequestType = {
       command: 'sendMessage',
       token: this.token,
+      requestId: requestId,
       payload: {
         msg: msg,
         roomId: this.roomId,
@@ -40,55 +53,203 @@ class ChatConnManager extends SocketConnManager {
     }
 
     this.send(JSON.stringify(request))
+
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onMessageDelivered],
+      requestId
+    )
   }
 
-  public queryHistory(): void {
+  public queryHistory(
+    token: string = '',
+    roomId: number = 0,
+    callback?: Function
+  ): void {
+    const requestId = crypto.randomUUID()
     const request: Chat.SocketRequestType = {
       command: 'getHistory',
-      token: this.token,
+      token: token,
+      requestId: requestId,
       payload: {
-        roomId: this.roomId,
+        roomId: roomId,
       },
     }
     this.send(JSON.stringify(request))
+
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onHistoryPageUpdate],
+      requestId
+    )
   }
 
   public getRoomsList(
     leads: number[] = [],
     token: string = '',
-    view: string = ''
+    view: string = '',
+    callback?: Function
   ): void {
+    const requestId = crypto.randomUUID()
     const request: Chat.SocketRequestType = {
       command: 'getRoomsList',
       token: token,
+      requestId: requestId,
       payload: {
         leads: leads,
         view: view,
       },
     }
     this.send(JSON.stringify(request))
+
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onGetRoomsList],
+      requestId
+    )
   }
 
-  public getLeadsList(token: string = '', view: string = ''): void {
+  public getLeadsList(
+    token: string = '',
+    view: string = '',
+    callback?: Function
+  ): void {
+    const requestId = crypto.randomUUID()
     const request: Chat.SocketRequestType = {
       command: 'getLeadsList',
       token: token,
+      requestId: requestId,
       payload: {
         view: view,
       },
     }
     this.send(JSON.stringify(request))
+
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onGetLeadsList],
+      requestId
+    )
   }
 
-  public getCompanionsForRoom(token: string, roomId: number): void {
+  public getCompanionsForRoom(
+    token: string,
+    roomId: number,
+    callback?: Function
+  ): void {
+    const requestId = crypto.randomUUID()
     const request: Chat.SocketRequestType = {
       command: 'getCompanions',
       token: token,
+      requestId: requestId,
       payload: {
         roomId: roomId,
       },
     }
     this.send(JSON.stringify(request))
+
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onGetCompanions],
+      requestId
+    )
+  }
+
+  public getCompanionsByLead(
+    token: string,
+    leadId: number,
+    callback?: Function
+  ): void {
+    const requestId = crypto.randomUUID()
+    const request: Chat.SocketRequestType = {
+      command: 'getCompanions',
+      token: token,
+      requestId: requestId,
+      payload: {
+        leadId: leadId,
+      },
+    }
+    this.send(JSON.stringify(request))
+
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onGetCompanions],
+      requestId
+    )
+  }
+
+  public getLead(token: string, leadId: number, callback?: Function): void {
+    const requestId = crypto.randomUUID()
+    const request: Chat.SocketRequestType = {
+      command: 'getLead',
+      token: token,
+      requestId: requestId,
+      payload: {
+        leadId: leadId,
+      },
+    }
+    this.send(JSON.stringify(request))
+
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onGetLead],
+      requestId
+    )
+  }
+
+  public getPublicProfile(
+    token: string,
+    userId: number,
+    callback?: Function
+  ): void {
+    const requestId = crypto.randomUUID()
+    const request: Chat.SocketRequestType = {
+      command: 'getPublicProfile',
+      token: token,
+      requestId: requestId,
+      payload: {
+        userId: userId,
+      },
+    }
+    this.send(JSON.stringify(request))
+
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onGetUserPublicProfile],
+      requestId
+    )
   }
 }
 

@@ -18,6 +18,7 @@ import cn from 'classnames'
 import { PinIcon } from '@/icons/PinIcon'
 import { WindowSize } from '@/hooks/useWindowSize'
 
+// @deprecated
 export enum CustomerState {
   NEWBIE = 'NEWBIE',
   CANDIDATE = 'CANDIDATE',
@@ -61,6 +62,7 @@ interface LeadProps {
   isPinned: boolean
   responseState?: CustomerState
   windowSize: WindowSize
+  owner: number
 }
 
 const mobile = theme.breakpoints.mobile.max + 'px'
@@ -196,11 +198,16 @@ const LeadCard = (props: LeadProps) => {
         <div className="Leads__footer-right">
           {!isMobile && <LeadStats />}
           {props.responseState === undefined && (
-            <Button className={'Leads__button_action'}>Предложить</Button>
+            <Button
+              href={'/lead/' + props.id.toString() + '/chat/' + props.owner}
+              className={'Leads__button_action'}
+            >
+              Предложить
+            </Button>
           )}
           {props.responseState === CustomerState.CANDIDATE && (
             <Button
-              href={'/chats'}
+              href={'/lead/' + props.id.toString() + '/chat/' + props.owner}
               secondary
               className={'Leads__button_action'}
             >
@@ -209,7 +216,7 @@ const LeadCard = (props: LeadProps) => {
           )}
           {props.responseState === CustomerState.NEWBIE && (
             <Button
-              href={'/chats'}
+              href={'/lead/' + props.id.toString() + '/chat/' + props.owner}
               secondary
               className={'Leads__button_action'}
             >
@@ -218,7 +225,7 @@ const LeadCard = (props: LeadProps) => {
           )}
           {props.responseState === CustomerState.EXECUTANT && (
             <Button
-              href={'/chats'}
+              href={'/lead/' + props.id.toString() + '/chat/' + props.owner}
               secondary
               className={'Leads__button_action Leads__customer-executant'}
             >

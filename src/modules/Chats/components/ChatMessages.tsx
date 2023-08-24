@@ -8,13 +8,14 @@ import { useCallback, useState } from 'react'
 import useUpdater from '@/hooks/useUpdater'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
 import { theme } from '../../../../styles/tokens'
+import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
 
 interface Props {
   className?: string
   onTouchStart?: any
   onTouchEnd?: any
   onStateChange?: () => void
-  inMobileMode: boolean
+  inMobileMode?: boolean
   messages: Chat.Message[]
   onSend?: (msg: string) => void
   myProfile?: Chat.UserProfile
@@ -50,6 +51,10 @@ const ChatMessages = ({
     },
     [onSend, updater]
   )
+
+  useWindowSize((size: WindowSize) => {
+    inMobileMode = size.width < tablet
+  })
 
   return (
     <StyledChatContainer

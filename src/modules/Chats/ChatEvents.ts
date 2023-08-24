@@ -3,8 +3,10 @@ export enum ChatEvents {
   onHistoryPageUpdate = 'onHistoryPageUpdate',
   onNewMessage = 'onNewMessage',
   onGetMyProfile = 'onGetMyProfile',
+  onGetUserPublicProfile = 'onGetUserPublicProfile',
   onMessageDelivered = 'onMessageDelivered',
   onGetRoomsList = 'onGetRoomsList',
   onGetLeadsList = 'onGetLeadsList',
   onGetCompanions = 'onGetCompanions',
+  onGetLead = 'onGetLead',
 }

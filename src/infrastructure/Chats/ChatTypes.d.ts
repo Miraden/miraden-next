@@ -36,6 +36,7 @@ declare namespace Chat {
     token: string
     payload?: Object
     command: string
+    requestId?: string
   }
 
   interface UserProfile {
@@ -73,5 +74,9 @@ declare namespace Chat {
     }
     seller_state: string
     myCompanion: UserProfile
+  }
+
+  interface Room {
+    roomId: number
   }
 }

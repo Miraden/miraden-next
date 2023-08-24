@@ -6,7 +6,6 @@ import React, {
 } from 'react'
 import { Button } from '@/components/ui'
 import cn from 'classnames'
-import ChatLeadsProvider from '@/infrastructure/Chats/ChatLeadsProvider'
 import styled from 'styled-components'
 import { theme } from '../../../styles/tokens'
 import { ChatTabs } from '@/infrastructure/Chats/ChatTabs'
@@ -94,67 +93,6 @@ const ChatRoomsTabs = (props: PropsWithChildren<Props>): JSX.Element => {
   )
 }
 
-const StyledTabs = styled.div`
-  background: ${({ theme }) => theme.colors.black};
-  border-radius: ${({ theme }) => theme.border.radius};
-  padding: 20px 20px 10px 20px;
-  color: ${({ theme }) => theme.colors.white};
-  gap: 20px;
-  display: flex;
-  flex-direction: column;
-
-  @media (max-width: ${tablet}px) {
-    border-radius: 0 0 ${({ theme }) => theme.border.radius}
-      ${({ theme }) => theme.border.radius};
-  }
-
-  .ChatTabs {
-    &__headTabs {
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      flex-wrap: nowrap;
-      overflow-x: auto;
-
-      button {
-        white-space: nowrap;
-        background: transparent;
-        padding: 0 0 12px;
-        position: relative;
-
-        &.active {
-          &:after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            height: 4px;
-            background: #fff;
-            left: 0;
-            width: 100%;
-            border-radius: ${({ theme }) => theme.border.radius};
-          }
-        }
-
-        &.active,
-        &:hover {
-          color: #fff;
-          background: transparent;
-        }
-      }
-    }
-
-    &__links {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-    }
-
-    &__headTabsBar {
-      height: 4px;
-      background: ${({ theme }) => theme.colors.text.grey};
-      border-radius: ${({ theme }) => theme.border.radius};
-    }
-  }
-`
+const StyledTabs = styled.div``
 
 export default ChatRoomsTabs

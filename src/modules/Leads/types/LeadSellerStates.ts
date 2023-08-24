@@ -1,0 +1,6 @@
+export enum SellerStates {
+  NEWBIE = 'NEWBIE',
+  CANDIDATE = 'CANDIDATE',
+  EXECUTANT = 'EXECUTANT',
+  REJECTED = 'REJECTED',
+}
