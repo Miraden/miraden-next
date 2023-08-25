@@ -45,6 +45,7 @@ const LeadChat = (): JSX.Element => {
   const [currentTab, setCurrentTab] = useState<ChatLeadTabs>(ChatLeadTabs.Lead)
   const [showChat, setShowChat] = useState<boolean>(false)
   const [leadOwnerProfile, setLeadOwnerProfile] = useState<User.PublicProfile>()
+  const [isComponentReady, setComponentReady] = useState<boolean>(false)
 
   useAuth({
     onSuccess: (): void => {
@@ -123,6 +124,7 @@ const LeadChat = (): JSX.Element => {
     const token = String(localStorage.getItem('token'))
     const room = response.payload as Chat.Room
     socketManager.queryHistory(token, room.roomId, onRoomHistory)
+    setComponentReady(true)
   }
 
   function onGetCompanions(event: MessageEvent): void {
@@ -216,7 +218,7 @@ const LeadChat = (): JSX.Element => {
           >
             <ChatLayout>
               <div className="ChatSidebar ChatSection">
-                {iamIsOwner && (
+                {iamIsOwner && isComponentReady && (
                   <LeadSidebarBuyer
                     className={'SidebarBuyer'}
                     socketManager={socketManager}
@@ -225,7 +227,7 @@ const LeadChat = (): JSX.Element => {
                     onTabSelect={onTabChanged}
                   />
                 )}
-                {!iamIsOwner && leadData && (
+                {!iamIsOwner && leadData && isComponentReady && (
                   <LeadSidebarSeller
                     className={'SidebarSeller'}
                     lead={leadData}

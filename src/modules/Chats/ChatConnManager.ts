@@ -251,6 +251,50 @@ class ChatConnManager extends SocketConnManager {
       requestId
     )
   }
+
+  public getFullProfile(token: string, userId: number, callback?: Function): void {
+    const requestId = crypto.randomUUID()
+    const request: Chat.SocketRequestType = {
+      command: 'getFullProfile',
+      token: token,
+      requestId: requestId,
+      payload: {
+        userId: userId,
+      },
+    }
+
+    this.send(JSON.stringify(request))
+
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onGetUserFullProfile],
+      requestId
+    )
+  }
+
+  public openContact(token: string, companionId: number, roomId: number, callback?: Function): void {
+    const requestId = crypto.randomUUID()
+    const request: Chat.SocketRequestType = {
+      command: 'openFullContacts',
+      token: token,
+      requestId: requestId,
+      payload: {
+        roomId: roomId,
+        companionId: companionId,
+      },
+    }
+    this.send(JSON.stringify(request))
+
+    this.subscribe((event: MessageEvent) => {
+      const response = JSON.parse(event.data) as ApiResponseType
+      if (response.metadata?.requestId !== requestId) return
+      if (callback) callback(event)
+    }, [ChatEvents.onContactOpened], requestId)
+  }
 }
 
 export default ChatConnManager

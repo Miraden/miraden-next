@@ -23,17 +23,28 @@ const tablet = theme.breakpoints.tablet.max
 let inMobileMode: boolean = false
 
 const LeadSidebarBuyer = (props: Props): JSX.Element => {
-  const [selectedTab, setSelectedTab] = useState<ChatLeadTabs>(
-    ChatLeadTabs.Contacts
-  )
+  const [selectedTab, setSelectedTab] = useState<ChatLeadTabs>(ChatLeadTabs.Contacts)
   const [isContactOpened, setIsContactOpened] = useState<boolean>(false)
-  const [userPublicProfile, setUserPublicProfile] =
-    useState<User.PublicProfile>()
+  const [userPublicProfile, setUserPublicProfile] = useState<User.PublicProfile>()
+  const [userFullProfile, setUserFullProfile] = useState<User.FullProfile>()
+  const [isComponentReady, setComponentReady] = useState<boolean>(false)
 
-  function onPublicProfile(event: MessageEvent): void {
+  function onGetCompanionPublicProfile(event: MessageEvent): void {
     const response = JSON.parse(event.data) as ApiResponseType
     const profile = response.payload as User.PublicProfile
     setUserPublicProfile(profile)
+    setComponentReady(true)
+  }
+
+  const onGetCompanionFullProfile = useCallback((event: MessageEvent) => {
+    const response = JSON.parse(event.data) as ApiResponseType
+    const profile = response.payload as User.FullProfile
+    setUserFullProfile(profile)
+    console.log(profile)
+  }, [])
+
+  function onContactOpened(event: MessageEvent): void {
+    const response = JSON.parse(event.data) as ApiResponseType
   }
 
   useEffect(() => {
@@ -47,30 +58,38 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
     }
   }, [isContactOpened, props, props.companions?.seller_state, selectedTab])
 
+  // Contact tab actions
   useEffect(() => {
-    if (!isContactOpened && selectedTab === ChatLeadTabs.Contacts) {
-      const token = String(localStorage.getItem('token'))
-      const id = Number(props.companions?.myCompanion.id)
-      props.socketManager.getPublicProfile(token, id, onPublicProfile)
+    if(selectedTab !== ChatLeadTabs.Contacts) return
+    const token = String(localStorage.getItem('token'))
+    const id = Number(props.companions?.myCompanion.id)
+    if (!isContactOpened) {
+      props.socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
     }
-  }, [
-    isContactOpened,
-    props.companions?.myCompanion.id,
-    props.socketManager,
-    selectedTab,
-  ])
+
+    if(isContactOpened) {
+      props.socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
+    }
+  }, [isContactOpened, onGetCompanionFullProfile, props.companions?.myCompanion.id, props.socketManager, selectedTab])
 
   useWindowSize((size: WindowSize) => {
     inMobileMode = size.width < tablet
   })
 
-  const handleSelect = useCallback(
+  const onTabSelect = useCallback(
     (tab: ChatLeadTabs) => {
       setSelectedTab(tab)
       if (props.onTabSelect) props.onTabSelect(tab)
     },
     [props]
   )
+
+  const onOpenContact = useCallback((e: any) =>  {
+    const token = String(localStorage.getItem('token'))
+    const companionId = Number(props.companions?.myCompanion.id)
+    const roomId = Number(props.companions?.roomid)
+    props.socketManager.openContact(token, companionId, roomId, onContactOpened)
+  }, [props.companions?.myCompanion.id, props.companions?.roomid, props.socketManager])
 
   return (
     <>
@@ -91,7 +110,7 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
           </div>
           <div className="ChatTabs__title">
             <h2 className="Font_headline_h4">Заявка #{props.lead?.id}</h2>
-            <div className="ChatTabs__titleText Font_fields_description">
+            <div className="ChatTabs__titleText Font_body_base">
               {props.lead?.title}
             </div>
           </div>
@@ -106,7 +125,7 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
                 className={cn('', {
                   ChatTabs__headTabButton: selectedTab === ChatLeadTabs.Chat,
                 })}
-                onClick={() => handleSelect(ChatLeadTabs.Chat)}
+                onClick={() => onTabSelect(ChatLeadTabs.Chat)}
                 active={selectedTab === ChatLeadTabs.Chat}
                 tertiary
                 compact
@@ -118,7 +137,7 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
               className={cn('', {
                 ChatTabs__headTabButton: selectedTab === ChatLeadTabs.Contacts,
               })}
-              onClick={() => handleSelect(ChatLeadTabs.Contacts)}
+              onClick={() => onTabSelect(ChatLeadTabs.Contacts)}
               active={selectedTab === ChatLeadTabs.Contacts}
               tertiary
               compact
@@ -129,7 +148,7 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
               className={cn('', {
                 ChatTabs__headTabButton: selectedTab === ChatLeadTabs.Reviews,
               })}
-              onClick={() => handleSelect(ChatLeadTabs.Reviews)}
+              onClick={() => onTabSelect(ChatLeadTabs.Reviews)}
               active={selectedTab === ChatLeadTabs.Reviews}
               tertiary
               compact
@@ -144,10 +163,10 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
       <StyledTabContent>
         {selectedTab === ChatLeadTabs.Contacts && (
           <>
-            {isContactOpened && <OpenedContacts />}
-            {!isContactOpened && (
+            {isContactOpened && isComponentReady && <OpenedContacts profile={userFullProfile} />}
+            {!isContactOpened && isComponentReady && (
               <ClosedContacts user={userPublicProfile}>
-                <Button className={'Contacts__actionOpen'}>
+                <Button onClick={onOpenContact} className={'Contacts__actionOpen'}>
                   Открыть контакты
                 </Button>
                 <div className="Contacts__actionMessage">
@@ -179,7 +198,7 @@ const StyledTabs = styled.div`
 
   .ChatTabs__head {
     display: flex;
-    align-items: center;
+    align-items: baseline;
   }
 
   .ChatTabs__titleText {

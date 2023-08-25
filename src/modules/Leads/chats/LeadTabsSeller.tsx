@@ -32,10 +32,14 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
   const [userPublicProfile, setUserPublicProfile] =
     useState<User.PublicProfile>()
 
-  const onGetContact = useCallback((event: MessageEvent) => {
+  const onGetCompanionPublicProfile = useCallback((event: MessageEvent) => {
     const response = JSON.parse(event.data) as ApiResponseType
     const user = response.payload as User.PublicProfile
     setUserPublicProfile(user)
+  }, [])
+
+  const onGetCompanionFullProfile = useCallback((event: MessageEvent) => {
+    const response = JSON.parse(event.data) as ApiResponseType
   }, [])
 
   const handleSelect = useCallback(
@@ -47,9 +51,7 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
   )
 
   useEffect(() => {
-    setIsContactOpened(
-      props.companions?.seller_state === SellerStates.EXECUTANT
-    )
+    setIsContactOpened(props.companions?.seller_state === SellerStates.EXECUTANT)
     if (props.onTabChange) props.onTabChange(selectedTab)
     if (!inMobileMode && selectedTab === ChatLeadTabs.Chat) {
       setSelectedTab(ChatLeadTabs.Lead)
@@ -57,19 +59,18 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
     if (props.leadOwner) setUserPublicProfile(props.leadOwner)
   }, [isContactOpened, props, props.companions?.seller_state, selectedTab])
 
+  // Contact tab actions
   useEffect(() => {
-    if (!isContactOpened && selectedTab === ChatLeadTabs.Contacts) {
-      const token = String(localStorage.getItem('token'))
-      const id = Number(props.companions?.myCompanion.id)
-      props.socketManager.getPublicProfile(token, id, onGetContact)
+    if(selectedTab !== ChatLeadTabs.Contacts) return
+    const token = String(localStorage.getItem('token'))
+    const id = Number(props.companions?.myCompanion.id)
+    if (!isContactOpened) {
+      props.socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
     }
-  }, [
-    isContactOpened,
-    onGetContact,
-    props.companions?.myCompanion.id,
-    props.socketManager,
-    selectedTab,
-  ])
+    if(isContactOpened) {
+      props.socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
+    }
+  }, [isContactOpened, onGetCompanionFullProfile, onGetCompanionPublicProfile, props.companions?.myCompanion.id, props.socketManager, selectedTab])
 
   useWindowSize((size: WindowSize) => {
     inMobileMode = size.width < tablet
@@ -94,7 +95,7 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
           </div>
           <div className="ChatTabs__title">
             <h2 className="Font_headline_h4">Заявка #{props.lead?.id}</h2>
-            <div className="ChatTabs__titleText">{props.lead?.title}</div>
+            <div className="ChatTabs__titleText Font_body_base">{props.lead?.title}</div>
           </div>
           <div className="ChatTabs__back">
             {props.lead?.isTrue && <Sticker theme="black">true</Sticker>}
@@ -197,6 +198,10 @@ const StyledTabs = styled.aside`
 
   .ChatTabs__title {
     flex-grow: 1;
+  }
+
+  .ChatTabs__titleText {
+    color: ${({ theme }) => theme.colors.text.disabled};
   }
 
   .Menu__header {

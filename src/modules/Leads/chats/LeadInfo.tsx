@@ -4,6 +4,7 @@ import { theme } from '../../../../styles/tokens'
 import { Sticker } from '@/components/ui'
 import { StarIconFilled } from '@/icons/StarIconFilled'
 import React from 'react'
+import UserPublicProfile from '@/modules/Leads/chats/UserPublicProfile'
 
 interface Props {
   lead: Leads.LeadEntryType
@@ -18,7 +19,15 @@ const LeadInfo = (props: Props): JSX.Element => {
           <p>Пользователь</p>
         </div>
         <div className={'LeadSectionInfo'}>
-          {props.owner && RenderUserProfile(props.owner)}
+          {props.owner && (
+            <UserPublicProfile
+              profile={props.owner}
+              onlineStatus={{
+                isOnline: true,
+                lastOnlineDate: '2000',
+              }}
+            />
+          )}
         </div>
       </div>
       <div className="LeadSection">
@@ -161,7 +170,7 @@ const StyledInfo = styled.div`
     padding: 20px 20px 19px;
     border-bottom: 1px solid #e1edfd;
 
-    div {
+    & > div {
       display: flex;
       align-items: center;
     }
@@ -200,42 +209,6 @@ const StyledInfo = styled.div`
 
   .Lead__createdAt {
     color: ${theme.colors.text.grey};
-  }
-
-  .LeadSection .LeadOwner {
-    flex-direction: row;
-    min-width: auto;
-    padding: 0;
-    margin: 0;
-    gap: 15px;
-
-    &--name {
-      margin: 0;
-      color: ${({ theme }) => theme.colors.black};
-    }
-
-    &--info {
-      margin: 0;
-    }
-
-    &--onlineStatus {
-      width: 100%;
-    }
-
-    &--user {
-      flex-wrap: wrap;
-    }
-
-    div&--photo:first-child {
-      width: 48px;
-      min-width: 48px;
-      height: 48px;
-
-      img {
-        width: 48px;
-        height: 48px;
-      }
-    }
   }
 `
 
