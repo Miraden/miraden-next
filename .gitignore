@@ -38,3 +38,5 @@ next-env.d.ts
 /cypress/fixtures/
 /public/u/
 /cypress/screenshots/
+/.nvim.lua
+/.nvim/

@@ -9,6 +9,7 @@ import UserPublicProfile from '@/modules/Leads/chats/UserPublicProfile'
 interface Props {
   lead: Leads.LeadEntryType
   owner?: User.PublicProfile
+  onlineStatus: User.OnlineStatus
 }
 
 const LeadInfo = (props: Props): JSX.Element => {
@@ -22,10 +23,7 @@ const LeadInfo = (props: Props): JSX.Element => {
           {props.owner && (
             <UserPublicProfile
               profile={props.owner}
-              onlineStatus={{
-                isOnline: true,
-                lastOnlineDate: '2000',
-              }}
+              onlineStatus={props.onlineStatus}
             />
           )}
         </div>

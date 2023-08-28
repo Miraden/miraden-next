@@ -6,10 +6,7 @@ import UserRating from '@/components/ui/Customer/UserRating'
 
 interface Props {
   profile?: User.PublicProfile
-  onlineStatus: {
-    isOnline: boolean
-    lastOnlineDate?: string
-  }
+  onlineStatus: User.OnlineStatus
 }
 
 const UserPublicProfile = (props: Props): JSX.Element => {

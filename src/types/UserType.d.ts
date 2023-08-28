@@ -17,19 +17,22 @@ declare namespace User {
   }
 
   interface FullProfile extends PublicProfile {
-    email: string,
-    mobile: string | null,
-    whatsapp: string | null,
-    skype: string | null,
-    facebook: string | null,
-    telegram: string | null,
-    viber: string | null,
-    zoom: string | null,
-    instagram: string | null,
-    site: string | null,
-    youtube: string | null,
+    email: string
+    mobile: string | null
+    whatsapp: string | null
+    skype: string | null
+    facebook: string | null
+    telegram: string | null
+    viber: string | null
+    zoom: string | null
+    instagram: string | null
+    site: string | null
+    youtube: string | null
     about: string | null
   }
 
-  interface FullProfile {}
+  interface OnlineStatus {
+    isOnline: boolean
+    lastOnlineDate?: string
+  }
 }

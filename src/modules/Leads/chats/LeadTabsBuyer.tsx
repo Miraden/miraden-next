@@ -23,11 +23,15 @@ const tablet = theme.breakpoints.tablet.max
 let inMobileMode: boolean = false
 
 const LeadSidebarBuyer = (props: Props): JSX.Element => {
-  const [selectedTab, setSelectedTab] = useState<ChatLeadTabs>(ChatLeadTabs.Contacts)
+  const [selectedTab, setSelectedTab] = useState<ChatLeadTabs>(
+    ChatLeadTabs.Contacts
+  )
   const [isContactOpened, setIsContactOpened] = useState<boolean>(false)
-  const [userPublicProfile, setUserPublicProfile] = useState<User.PublicProfile>()
+  const [userPublicProfile, setUserPublicProfile] =
+    useState<User.PublicProfile>()
   const [userFullProfile, setUserFullProfile] = useState<User.FullProfile>()
   const [isComponentReady, setComponentReady] = useState<boolean>(false)
+  const [isCompanionOnline, setCompanionOnline] = useState<boolean>(false)
 
   function onGetCompanionPublicProfile(event: MessageEvent): void {
     const response = JSON.parse(event.data) as ApiResponseType
@@ -40,11 +44,25 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
     const response = JSON.parse(event.data) as ApiResponseType
     const profile = response.payload as User.FullProfile
     setUserFullProfile(profile)
-    console.log(profile)
   }, [])
 
   function onContactOpened(event: MessageEvent): void {
     const response = JSON.parse(event.data) as ApiResponseType
+  }
+
+  function onUsersOnlineStatus(event?: MessageEvent): void {
+    const response = JSON.parse(event?.data) as ApiResponseType
+    const payload = response.payload as any
+    const userOnline = Number(payload['online'])
+    const userOffline = Number(payload['offline'])
+
+    if (props.companions?.myCompanion.id === userOnline) {
+      setCompanionOnline(true)
+    }
+
+    if (props.companions?.myCompanion.id === userOffline) {
+      setCompanionOnline(false)
+    }
   }
 
   useEffect(() => {
@@ -60,17 +78,29 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
 
   // Contact tab actions
   useEffect(() => {
-    if(selectedTab !== ChatLeadTabs.Contacts) return
+    if (selectedTab !== ChatLeadTabs.Contacts) return
     const token = String(localStorage.getItem('token'))
     const id = Number(props.companions?.myCompanion.id)
     if (!isContactOpened) {
-      props.socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
+      props.socketManager.getPublicProfile(
+        token,
+        id,
+        onGetCompanionPublicProfile
+      )
     }
 
-    if(isContactOpened) {
+    if (isContactOpened) {
       props.socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
     }
-  }, [isContactOpened, onGetCompanionFullProfile, props.companions?.myCompanion.id, props.socketManager, selectedTab])
+  }, [
+    isContactOpened,
+    onGetCompanionFullProfile,
+    props.companions?.myCompanion.id,
+    props.socketManager,
+    selectedTab,
+  ])
+
+  props.socketManager.OnMessage(onUsersOnlineStatus)
 
   useWindowSize((size: WindowSize) => {
     inMobileMode = size.width < tablet
@@ -84,12 +114,24 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
     [props]
   )
 
-  const onOpenContact = useCallback((e: any) =>  {
-    const token = String(localStorage.getItem('token'))
-    const companionId = Number(props.companions?.myCompanion.id)
-    const roomId = Number(props.companions?.roomid)
-    props.socketManager.openContact(token, companionId, roomId, onContactOpened)
-  }, [props.companions?.myCompanion.id, props.companions?.roomid, props.socketManager])
+  const onOpenContact = useCallback(
+    (e: any) => {
+      const token = String(localStorage.getItem('token'))
+      const companionId = Number(props.companions?.myCompanion.id)
+      const roomId = Number(props.companions?.roomid)
+      props.socketManager.openContact(
+        token,
+        companionId,
+        roomId,
+        onContactOpened
+      )
+    },
+    [
+      props.companions?.myCompanion.id,
+      props.companions?.roomid,
+      props.socketManager,
+    ]
+  )
 
   return (
     <>
@@ -163,10 +205,21 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
       <StyledTabContent>
         {selectedTab === ChatLeadTabs.Contacts && (
           <>
-            {isContactOpened && isComponentReady && <OpenedContacts profile={userFullProfile} />}
+            {isContactOpened && isComponentReady && (
+              <OpenedContacts
+                profile={userFullProfile}
+                onlineStatus={{
+                  isOnline: isCompanionOnline,
+                  lastOnlineDate: '4 часа назад',
+                }}
+              />
+            )}
             {!isContactOpened && isComponentReady && (
               <ClosedContacts user={userPublicProfile}>
-                <Button onClick={onOpenContact} className={'Contacts__actionOpen'}>
+                <Button
+                  onClick={onOpenContact}
+                  className={'Contacts__actionOpen'}
+                >
                   Открыть контакты
                 </Button>
                 <div className="Contacts__actionMessage">

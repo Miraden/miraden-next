@@ -7,8 +7,8 @@ class ChatConnManager extends SocketConnManager {
   private token: string
   private roomId: number
 
-  constructor() {
-    super()
+  constructor(url?: string) {
+    super(url)
     this.leadId = 0
     this.token = ''
     this.roomId = 0
@@ -252,7 +252,11 @@ class ChatConnManager extends SocketConnManager {
     )
   }
 
-  public getFullProfile(token: string, userId: number, callback?: Function): void {
+  public getFullProfile(
+    token: string,
+    userId: number,
+    callback?: Function
+  ): void {
     const requestId = crypto.randomUUID()
     const request: Chat.SocketRequestType = {
       command: 'getFullProfile',
@@ -276,7 +280,12 @@ class ChatConnManager extends SocketConnManager {
     )
   }
 
-  public openContact(token: string, companionId: number, roomId: number, callback?: Function): void {
+  public openContact(
+    token: string,
+    companionId: number,
+    roomId: number,
+    callback?: Function
+  ): void {
     const requestId = crypto.randomUUID()
     const request: Chat.SocketRequestType = {
       command: 'openFullContacts',
@@ -289,11 +298,15 @@ class ChatConnManager extends SocketConnManager {
     }
     this.send(JSON.stringify(request))
 
-    this.subscribe((event: MessageEvent) => {
-      const response = JSON.parse(event.data) as ApiResponseType
-      if (response.metadata?.requestId !== requestId) return
-      if (callback) callback(event)
-    }, [ChatEvents.onContactOpened], requestId)
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onContactOpened],
+      requestId
+    )
   }
 }
 

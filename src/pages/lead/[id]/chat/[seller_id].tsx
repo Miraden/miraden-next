@@ -3,7 +3,6 @@ import ChatLayout, { ViewStates } from '@/modules/Chats/ChatLayout'
 import { NextRouter, useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { theme } from '../../../../../styles/tokens'
-import ChatConnManager from '@/modules/Chats/ChatConnManager'
 import useAuth from '@/hooks/useAuth'
 import Head from 'next/head'
 import { Header } from '@/modules/Base/Header/Header'
@@ -22,15 +21,15 @@ import LeadSidebarSeller from '@/modules/Leads/chats/LeadTabsSeller'
 import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
 import cn from 'classnames'
 import { ChatEvents } from '@/modules/Chats/ChatEvents'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 const tablet = theme.breakpoints.tablet.max
-let isSocketReady = false
 let inTabletSize = false
-
-const socketManager = new ChatConnManager()
 
 const LeadChat = (): JSX.Element => {
   const router: NextRouter = useRouter()
+  const context = useAppContext()
+  const socketManager = context.chatConnManager
 
   const [isUserAuth, setUserAuth] = useState<boolean>(false)
   const [userReady, setUserReady] = useState<boolean>(false)
@@ -66,13 +65,11 @@ const LeadChat = (): JSX.Element => {
   })
 
   useEffect(() => {
-    setIsRouterReady(router.isReady)
     if (!router.isReady) return
-    if (!isUserAuth && isSocketReady) return
-    const url: string | undefined = process.env.NEXT_PUBLIC_CHAT_URL
-    socketManager.create(url)
-    isSocketReady = true
-  }, [isUserAuth, router.isReady])
+    setIsRouterReady(router.isReady)
+    if (!isUserAuth) return
+    socketManager.connect()
+  }, [isUserAuth, router.isReady, socketManager])
 
   socketManager.OnOpen(() => {
     const query = router.query
@@ -186,9 +183,12 @@ const LeadChat = (): JSX.Element => {
     }
   }, [])
 
-  const onSendMessage = useCallback((msg: string) => {
-    socketManager.sendMessage(msg)
-  }, [])
+  const onSendMessage = useCallback(
+    (msg: string) => {
+      socketManager.sendMessage(msg)
+    },
+    [socketManager]
+  )
 
   return (
     <>

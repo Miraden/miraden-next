@@ -3,6 +3,7 @@ import UserPublicProfile from '@/modules/Leads/chats/UserPublicProfile'
 
 interface Props {
   profile?: User.FullProfile
+  onlineStatus: User.OnlineStatus
 }
 
 const OpenedContacts = (props: Props): JSX.Element => {
@@ -13,10 +14,7 @@ const OpenedContacts = (props: Props): JSX.Element => {
         <div className="ContactSection__value">
           <UserPublicProfile
             profile={props.profile}
-            onlineStatus={{
-              isOnline: false,
-              lastOnlineDate: '5 часов назад',
-            }}
+            onlineStatus={props.onlineStatus}
           />
         </div>
       </div>

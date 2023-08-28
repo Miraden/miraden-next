@@ -10,16 +10,10 @@ import {
 const tokenName: string = 'token'
 
 class AuthManager {
-  constructor() {}
+  private _isUserAuth: boolean
 
-  isUserHasToken(): boolean {
-    const token: string | null = localStorage.getItem(tokenName)
-
-    if (!token) {
-      return false
-    }
-
-    return true
+  constructor() {
+    this._isUserAuth = false
   }
 
   async isTokenValid(): Promise<boolean> {
@@ -67,6 +61,14 @@ class AuthManager {
 
   logout(): void {
     localStorage.removeItem(tokenName)
+  }
+
+  public isUserAuth(): boolean {
+    return this._isUserAuth
+  }
+
+  public setUserAuth(val: boolean): void {
+    this._isUserAuth = val
   }
 }
 

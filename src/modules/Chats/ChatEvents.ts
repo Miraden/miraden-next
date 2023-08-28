@@ -10,5 +10,6 @@ export enum ChatEvents {
   onGetLeadsList = 'onGetLeadsList',
   onGetCompanions = 'onGetCompanions',
   onGetLead = 'onGetLead',
-  onContactOpened = 'onContactOpened'
+  onContactOpened = 'onContactOpened',
+  onRoomUserUpdatedStatus = 'onRoomUserUpdatedStatus',
 }

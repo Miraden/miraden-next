@@ -40,4 +40,62 @@ declare namespace Leads {
     owner: number
     description: string
   }
+
+  interface LeadEntryCrudType {
+    id: number
+    createdAt: string
+    locationDistance: number
+    format: string
+    status: string
+    areas: {
+      total: {
+        value: number
+        unit: string
+      }
+      living: {
+        value: number
+        unit: string
+      }
+    }
+    rooms: {
+      total: number
+      beds: number
+      bathroom: number
+    }
+    purpose: string
+    readyDeal: string
+    purchaseType: string
+    wishes: {
+      title: string
+      text: string
+    }
+    paidOptions: {
+      accessAny: boolean
+      pin: boolean
+      autoTop: boolean
+    }
+    tags: string[]
+    iamOwner: boolean
+    isTrue: boolean
+    location: {
+      city: string
+      country: string
+    }
+    type: Object
+    deadlineAt: string
+    budget: {
+      startFrom: number
+      endAt: number
+      currency: {
+        id: number
+        code: string
+        symbol: string
+      }
+    }
+    author: string
+    rentPeriod: {
+      startAt: string
+      endAt: string
+    }
+  }
 }

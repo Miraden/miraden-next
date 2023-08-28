@@ -12,8 +12,8 @@ class SocketConnManager {
   private onMessage: (event?: MessageEvent) => void
   private subscribers: Subscriber[]
 
-  constructor() {
-    this.url = ''
+  constructor(url?: string) {
+    this.url = url
     this.socket = null
     this.onOpen = (): void => {}
     this.onMessage = (event?: MessageEvent) => {}
@@ -24,7 +24,14 @@ class SocketConnManager {
   public create(url?: string): void {
     if (!url) return
     if (this.socket) return
-    this.socket = new WebSocket(url)
+    this.url = url
+    this.socket = new WebSocket(this.url)
+    this.makeEvents()
+  }
+
+  public connect(): void {
+    if (!this.url) return
+    this.socket = new WebSocket(this.url)
     this.makeEvents()
   }
 
@@ -34,7 +41,7 @@ class SocketConnManager {
       this.pingPong(5000)
     })
     this.socket?.addEventListener('close', () => {
-      this.reconnectEvery(2000)
+      // this.reconnectEvery(2000)
     })
     this.socket?.addEventListener('message', (event: MessageEvent) => {
       const response = JSON.parse(event.data) as ApiResponseType
@@ -54,7 +61,6 @@ class SocketConnManager {
 
   public reconnectEvery(timeout: number): void {
     setTimeout(() => {
-      this.onClose()
       this.socket = null
       this.create(this.url)
     }, timeout)
