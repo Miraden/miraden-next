@@ -5,34 +5,31 @@ import React, { useCallback, useEffect, useState } from 'react'
 import cn from 'classnames'
 import { ChatLeadTabs } from '@/infrastructure/Chats/ChatTabs'
 import LeadInfo from '@/modules/Leads/chats/LeadInfo'
-import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
 import { theme } from '../../../../styles/tokens'
-import { SellerStates } from '@/modules/Leads/types/LeadSellerStates'
-import ChatConnManager from '@/modules/Chats/ChatConnManager'
 import OpenedContacts from '@/modules/Leads/chats/OpenedContacts'
 import ClosedContacts from '@/modules/Leads/chats/ClosedContacts'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
+import { useChatContext } from '@/infrastructure/Chats/UseChatContext'
 import { ChatEvents } from '@/modules/Chats/ChatEvents'
 
 interface Props {
   className?: string
-  lead: Leads.LeadEntryType
-  companions?: Chat.Companions
   onTabChange?: (state: ChatLeadTabs) => void
-  socketManager: ChatConnManager
   leadOwner?: User.PublicProfile
 }
 
-let inMobileMode: boolean = false
 const tablet = theme.breakpoints.tablet.max
 
 const LeadTabsSeller = (props: Props): JSX.Element => {
+  const appContext = useAppContext()
+  const socketManager = appContext.chatConnManager
+  const chatContext: Chat.LeadContext = useChatContext()
+
   const [selectedTab, setSelectedTab] = useState<ChatLeadTabs>(
     ChatLeadTabs.Lead
   )
-  const [isContactOpened, setIsContactOpened] = useState<boolean>(false)
   const [userPublicProfile, setUserPublicProfile] =
     useState<User.PublicProfile>()
-  const [isCompanionOnline, setCompanionOnline] = useState<boolean>(false)
   const [userFullProfile, setUserFullProfile] = useState<User.FullProfile>()
 
   const onGetCompanionPublicProfile = useCallback((event: MessageEvent) => {
@@ -53,62 +50,69 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
     const userOnline = Number(payload['online'])
     const userOffline = Number(payload['offline'])
 
-    if (props.companions?.myCompanion.id === userOnline) {
-      setCompanionOnline(true)
+    if (chatContext.companions?.myCompanion.id === userOnline) {
+      chatContext.companionsOnlineStatus.isOnline = true
     }
 
-    if (props.companions?.myCompanion.id === userOffline) {
-      setCompanionOnline(false)
+    if (chatContext.companions?.myCompanion.id === userOffline) {
+      chatContext.companionsOnlineStatus.isOnline = false
+      chatContext.companionsOnlineStatus.lastOnlineDate = '5 часов назад'
     }
   }
 
   const handleSelect = useCallback(
     (tab: ChatLeadTabs) => {
       setSelectedTab(tab)
-      if (props.onTabChange) props.onTabChange(tab)
+      chatContext.tab.callback(tab)
+      chatContext.tab.current = tab
     },
-    [props]
+    [chatContext]
   )
 
-  props.socketManager.OnMessage(onUsersOnlineStatus)
-
   useEffect(() => {
-    setIsContactOpened(
-      props.companions?.seller_state === SellerStates.EXECUTANT
-    )
-    if (props.onTabChange) props.onTabChange(selectedTab)
-    if (!inMobileMode && selectedTab === ChatLeadTabs.Chat) {
+    if (
+      !chatContext.inTabletSize &&
+      chatContext.tab.current === ChatLeadTabs.Chat
+    ) {
       setSelectedTab(ChatLeadTabs.Lead)
     }
     if (props.leadOwner) setUserPublicProfile(props.leadOwner)
-  }, [isContactOpened, props, props.companions?.seller_state, selectedTab])
-
-  // Contact tab actions
-  useEffect(() => {
-    if (selectedTab !== ChatLeadTabs.Contacts) return
-    const token = String(localStorage.getItem('token'))
-    const id = Number(props.companions?.myCompanion.id)
-    if (!isContactOpened) {
-      props.socketManager.getPublicProfile(
-        token,
-        id,
-        onGetCompanionPublicProfile
-      )
-    }
-    if (isContactOpened) {
-      props.socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
-    }
   }, [
-    isContactOpened,
-    onGetCompanionFullProfile,
-    onGetCompanionPublicProfile,
-    props.companions?.myCompanion.id,
-    props.socketManager,
+    chatContext.companions?.seller_state,
+    chatContext.inTabletSize,
+    chatContext.tab,
+    props,
     selectedTab,
   ])
 
-  useWindowSize((size: WindowSize) => {
-    inMobileMode = size.width < tablet
+  // Contact tab actions
+  useEffect(() => {
+    if (chatContext.tab.current !== ChatLeadTabs.Contacts) return
+    const token = String(localStorage.getItem('token'))
+    const id = Number(chatContext.companions?.myCompanion.id)
+    if (!chatContext.isContactOpened) {
+      socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
+    }
+    if (chatContext.isContactOpened) {
+      socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
+    }
+  }, [
+    chatContext.companions?.myCompanion.id,
+    chatContext.isContactOpened,
+    chatContext.tab,
+    onGetCompanionFullProfile,
+    onGetCompanionPublicProfile,
+    selectedTab,
+    socketManager,
+  ])
+
+  socketManager.OnMessage((event?: MessageEvent) => {
+    if (!event) return
+    const response = JSON.parse(event.data) as ApiResponseType
+    if (response.metadata?.event === ChatEvents.onContactOpened) {
+      chatContext.isContactOpened = true
+      onGetCompanionFullProfile(event)
+    }
   })
 
   return (
@@ -118,7 +122,7 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
           <div className="ChatTabs__back">
             <Button
               secondary
-              href={'/lead/' + props.lead?.id}
+              href={'/lead/' + chatContext.lead.id}
               className="Menu__header_backButton"
             >
               <BackIcon20
@@ -129,18 +133,18 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
             </Button>
           </div>
           <div className="ChatTabs__title">
-            <h2 className="Font_headline_h4">Заявка #{props.lead?.id}</h2>
+            <h2 className="Font_headline_h4">Заявка #{chatContext.lead.id}</h2>
             <div className="ChatTabs__titleText Font_body_base">
-              {props.lead?.title}
+              {chatContext.lead.title}
             </div>
           </div>
           <div className="ChatTabs__back">
-            {props.lead?.isTrue && <Sticker theme="black">true</Sticker>}
+            {chatContext.lead.isTrue && <Sticker theme="black">true</Sticker>}
           </div>
         </div>
         <div className="ChatTabs__headTabs">
           <div className="ChatTabs__links">
-            {inMobileMode && (
+            {chatContext.inTabletSize && (
               <Button
                 className={cn('', {
                   ChatTabs__headTabButton: selectedTab === ChatLeadTabs.Chat,
@@ -205,28 +209,22 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
       {selectedTab === ChatLeadTabs.Lead && (
         <StyledTabContent className={'ChatTabContent'}>
           <LeadInfo
-            lead={props.lead}
+            lead={chatContext.lead}
             owner={userPublicProfile}
-            onlineStatus={{
-              isOnline: isCompanionOnline,
-              lastOnlineDate: '5 часов назад',
-            }}
+            onlineStatus={chatContext.companionsOnlineStatus}
           />
         </StyledTabContent>
       )}
 
       {selectedTab === ChatLeadTabs.Contacts && (
         <StyledTabContent>
-          {isContactOpened && (
+          {chatContext.isContactOpened && (
             <OpenedContacts
               profile={userFullProfile}
-              onlineStatus={{
-                isOnline: isCompanionOnline,
-                lastOnlineDate: '4 часа назад',
-              }}
+              onlineStatus={chatContext.companionsOnlineStatus}
             />
           )}
-          {!isContactOpened && (
+          {!chatContext.isContactOpened && (
             <ClosedContacts user={userPublicProfile}>
               <div className="Contacts__actionMessage">
                 <p>

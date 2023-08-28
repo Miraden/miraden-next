@@ -113,11 +113,14 @@ class SocketConnManager {
   }
 
   private findSubscriber(response: ApiResponseType): Subscriber | null {
-    const found = this.subscribers.find(
-      el =>
+    const found = this.subscribers.find(el => {
+      if (!el.requestId) return el.event === response.metadata?.event
+
+      return (
         el.requestId === response.metadata?.requestId &&
         el.event === response.metadata?.event
-    )
+      )
+    })
 
     if (!found) return null
 

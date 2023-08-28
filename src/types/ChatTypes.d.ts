@@ -79,4 +79,17 @@ declare namespace Chat {
   interface Room {
     roomId: number
   }
+
+  interface LeadContext {
+    isContactOpened: boolean
+    tab: {
+      callback: Function
+      OnChanged: Function
+      current: string
+    }
+    lead?: LeadEntryType
+    companions?: Companions
+    companionsOnlineStatus: User.OnlineStatus
+    inTabletSize: boolean
+  }
 }

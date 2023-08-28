@@ -5,28 +5,28 @@ import { BackIcon20 } from '@/icons'
 import cn from 'classnames'
 import styled from 'styled-components'
 import { SellerStates } from '@/modules/Leads/types/LeadSellerStates'
-import ChatConnManager from '@/modules/Chats/ChatConnManager'
 import { theme } from '../../../../styles/tokens'
 import OpenedContacts from '@/modules/Leads/chats/OpenedContacts'
 import ClosedContacts from '@/modules/Leads/chats/ClosedContacts'
-import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
+import { useChatContext } from '@/infrastructure/Chats/UseChatContext'
 
 interface Props {
   className?: string
-  lead?: Leads.LeadEntryType
   companions?: Chat.Companions
   onTabSelect?: (selected: ChatLeadTabs) => void
-  socketManager: ChatConnManager
 }
 
 const tablet = theme.breakpoints.tablet.max
-let inMobileMode: boolean = false
 
 const LeadSidebarBuyer = (props: Props): JSX.Element => {
+  const appContext = useAppContext()
+  const socketManager = appContext.chatConnManager
+  const chatContext: Chat.LeadContext = useChatContext()
+
   const [selectedTab, setSelectedTab] = useState<ChatLeadTabs>(
     ChatLeadTabs.Contacts
   )
-  const [isContactOpened, setIsContactOpened] = useState<boolean>(false)
   const [userPublicProfile, setUserPublicProfile] =
     useState<User.PublicProfile>()
   const [userFullProfile, setUserFullProfile] = useState<User.FullProfile>()
@@ -44,10 +44,15 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
     const response = JSON.parse(event.data) as ApiResponseType
     const profile = response.payload as User.FullProfile
     setUserFullProfile(profile)
+    setComponentReady(true)
   }, [])
 
   function onContactOpened(event: MessageEvent): void {
     const response = JSON.parse(event.data) as ApiResponseType
+    const profile = response.payload as User.FullProfile
+    setComponentReady(true)
+    chatContext.isContactOpened = true
+    setUserFullProfile(profile)
   }
 
   function onUsersOnlineStatus(event?: MessageEvent): void {
@@ -56,80 +61,85 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
     const userOnline = Number(payload['online'])
     const userOffline = Number(payload['offline'])
 
-    if (props.companions?.myCompanion.id === userOnline) {
+    if (chatContext.companions?.myCompanion.id === userOnline) {
       setCompanionOnline(true)
     }
 
-    if (props.companions?.myCompanion.id === userOffline) {
+    if (chatContext.companions?.myCompanion.id === userOffline) {
       setCompanionOnline(false)
     }
   }
 
   useEffect(() => {
-    if (props.onTabSelect) props.onTabSelect(selectedTab)
-    setIsContactOpened(
-      props.companions?.seller_state === SellerStates.EXECUTANT
-    )
-    if (props.onTabSelect) props.onTabSelect(selectedTab)
-    if (!inMobileMode && selectedTab === ChatLeadTabs.Chat) {
+    if (
+      !chatContext.inTabletSize &&
+      chatContext.tab.current === ChatLeadTabs.Chat
+    ) {
+      chatContext.tab.current = ChatLeadTabs.Contacts
       setSelectedTab(ChatLeadTabs.Contacts)
     }
-  }, [isContactOpened, props, props.companions?.seller_state, selectedTab])
+  }, [chatContext, chatContext.companions?.seller_state, props])
 
   // Contact tab actions
   useEffect(() => {
     if (selectedTab !== ChatLeadTabs.Contacts) return
     const token = String(localStorage.getItem('token'))
-    const id = Number(props.companions?.myCompanion.id)
-    if (!isContactOpened) {
-      props.socketManager.getPublicProfile(
-        token,
-        id,
-        onGetCompanionPublicProfile
-      )
+    const id = Number(chatContext.companions?.myCompanion.id)
+    if (!chatContext.isContactOpened) {
+      socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
     }
 
-    if (isContactOpened) {
-      props.socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
+    if (chatContext.isContactOpened) {
+      socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
     }
   }, [
-    isContactOpened,
+    chatContext.companions?.myCompanion.id,
+    chatContext.isContactOpened,
+    chatContext.tab,
     onGetCompanionFullProfile,
-    props.companions?.myCompanion.id,
-    props.socketManager,
     selectedTab,
+    socketManager,
   ])
 
-  props.socketManager.OnMessage(onUsersOnlineStatus)
-
-  useWindowSize((size: WindowSize) => {
-    inMobileMode = size.width < tablet
-  })
-
-  const onTabSelect = useCallback(
+  const onTabSwitched = useCallback(
     (tab: ChatLeadTabs) => {
+      chatContext.tab.callback(tab)
+      chatContext.tab.current = tab
       setSelectedTab(tab)
-      if (props.onTabSelect) props.onTabSelect(tab)
-    },
-    [props]
-  )
 
-  const onOpenContact = useCallback(
-    (e: any) => {
-      const token = String(localStorage.getItem('token'))
-      const companionId = Number(props.companions?.myCompanion.id)
-      const roomId = Number(props.companions?.roomid)
-      props.socketManager.openContact(
-        token,
-        companionId,
-        roomId,
-        onContactOpened
-      )
+      if (chatContext.tab.current === ChatLeadTabs.Contacts) {
+        const token = String(localStorage.getItem('token'))
+        const id = Number(chatContext.companions?.myCompanion.id)
+        if (!chatContext.isContactOpened) {
+          socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
+        }
+
+        if (chatContext.isContactOpened) {
+          socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
+        }
+      }
     },
     [
-      props.companions?.myCompanion.id,
-      props.companions?.roomid,
-      props.socketManager,
+      chatContext.companions?.myCompanion.id,
+      chatContext.isContactOpened,
+      chatContext.tab,
+      onGetCompanionFullProfile,
+      socketManager,
+    ]
+  )
+
+  const tryOpenContact = useCallback(
+    (e: any) => {
+      const token = String(localStorage.getItem('token'))
+      const companionId = Number(chatContext.companions?.myCompanion.id)
+      const roomId = Number(chatContext.companions?.roomid)
+      socketManager.openContact(token, companionId, roomId, onContactOpened)
+    },
+    [
+      chatContext.companions?.myCompanion.id,
+      chatContext.companions?.roomid,
+      onContactOpened,
+      socketManager,
     ]
   )
 
@@ -140,7 +150,7 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
           <div className="ChatTabs__back">
             <Button
               secondary
-              href={'/lead/' + props.lead?.id}
+              href={'/lead/' + chatContext.lead.id}
               className="Menu__header_backButton"
             >
               <BackIcon20
@@ -151,23 +161,23 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
             </Button>
           </div>
           <div className="ChatTabs__title">
-            <h2 className="Font_headline_h4">Заявка #{props.lead?.id}</h2>
+            <h2 className="Font_headline_h4">Заявка #{chatContext.lead.id}</h2>
             <div className="ChatTabs__titleText Font_body_base">
-              {props.lead?.title}
+              {chatContext.lead.title}
             </div>
           </div>
           <div className="ChatTabs__back">
-            {props.lead?.isTrue && <Sticker theme="black">true</Sticker>}
+            {chatContext.lead.isTrue && <Sticker theme="black">true</Sticker>}
           </div>
         </div>
         <div className="ChatTabs__headTabs">
           <div className="ChatTabs__links">
-            {inMobileMode && (
+            {chatContext.inTabletSize && (
               <Button
                 className={cn('', {
                   ChatTabs__headTabButton: selectedTab === ChatLeadTabs.Chat,
                 })}
-                onClick={() => onTabSelect(ChatLeadTabs.Chat)}
+                onClick={() => onTabSwitched(ChatLeadTabs.Chat)}
                 active={selectedTab === ChatLeadTabs.Chat}
                 tertiary
                 compact
@@ -179,7 +189,7 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
               className={cn('', {
                 ChatTabs__headTabButton: selectedTab === ChatLeadTabs.Contacts,
               })}
-              onClick={() => onTabSelect(ChatLeadTabs.Contacts)}
+              onClick={() => onTabSwitched(ChatLeadTabs.Contacts)}
               active={selectedTab === ChatLeadTabs.Contacts}
               tertiary
               compact
@@ -190,7 +200,7 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
               className={cn('', {
                 ChatTabs__headTabButton: selectedTab === ChatLeadTabs.Reviews,
               })}
-              onClick={() => onTabSelect(ChatLeadTabs.Reviews)}
+              onClick={() => onTabSwitched(ChatLeadTabs.Reviews)}
               active={selectedTab === ChatLeadTabs.Reviews}
               tertiary
               compact
@@ -205,7 +215,7 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
       <StyledTabContent>
         {selectedTab === ChatLeadTabs.Contacts && (
           <>
-            {isContactOpened && isComponentReady && (
+            {chatContext.isContactOpened && isComponentReady && (
               <OpenedContacts
                 profile={userFullProfile}
                 onlineStatus={{
@@ -214,10 +224,10 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
                 }}
               />
             )}
-            {!isContactOpened && isComponentReady && (
+            {!chatContext.isContactOpened && isComponentReady && (
               <ClosedContacts user={userPublicProfile}>
                 <Button
-                  onClick={onOpenContact}
+                  onClick={tryOpenContact}
                   className={'Contacts__actionOpen'}
                 >
                   Открыть контакты

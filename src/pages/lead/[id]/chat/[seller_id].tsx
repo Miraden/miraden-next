@@ -22,14 +22,18 @@ import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
 import cn from 'classnames'
 import { ChatEvents } from '@/modules/Chats/ChatEvents'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
+import { useChatContext } from '@/infrastructure/Chats/UseChatContext'
+import { AppState } from '@/types/App'
+import { SellerStates } from '@/modules/Leads/types/LeadSellerStates'
 
 const tablet = theme.breakpoints.tablet.max
 let inTabletSize = false
 
 const LeadChat = (): JSX.Element => {
   const router: NextRouter = useRouter()
-  const context = useAppContext()
-  const socketManager = context.chatConnManager
+  const appContext: AppState = useAppContext()
+  const chatContext: Chat.LeadContext = useChatContext()
+  const socketManager = appContext.chatConnManager
 
   const [isUserAuth, setUserAuth] = useState<boolean>(false)
   const [userReady, setUserReady] = useState<boolean>(false)
@@ -38,7 +42,6 @@ const LeadChat = (): JSX.Element => {
   const [myProfile, setMyProfile] = useState<Chat.UserProfile>()
   const [messages, setMessages] = useState<Chat.Message[]>([])
   const [activeRoom, setActiveRoom] = useState<number>(0)
-  const [leadData, setLeadData] = useState<Leads.LeadEntryType>()
   const [iamIsOwner, setIamIsOwner] = useState<boolean>(false)
   const [companions, setCompanions] = useState<Chat.Companions>()
   const [currentTab, setCurrentTab] = useState<ChatLeadTabs>(ChatLeadTabs.Lead)
@@ -62,6 +65,7 @@ const LeadChat = (): JSX.Element => {
 
   useWindowSize((size: WindowSize) => {
     inTabletSize = size.width <= tablet
+    chatContext.inTabletSize = inTabletSize
   })
 
   useEffect(() => {
@@ -88,7 +92,7 @@ const LeadChat = (): JSX.Element => {
   function onGetLead(event: MessageEvent): void {
     const response = JSON.parse(event.data) as ApiResponseType
     const lead = response.payload as Leads.LeadEntryType
-    setLeadData(lead)
+    chatContext.lead = lead
     const token = String(localStorage.getItem('token'))
     socketManager.getPublicProfile(token, lead.owner, onPublicProfile)
     socketManager.getCompanionsByLead(token, lead.id, onGetCompanions)
@@ -133,6 +137,9 @@ const LeadChat = (): JSX.Element => {
     if (iam.id === companions.companions.buyer.id) {
       setIamIsOwner(true)
     }
+    chatContext.companions = companions
+    chatContext.isContactOpened =
+      chatContext.companions?.seller_state === SellerStates.EXECUTANT
     socketManager.joinToRoom(Number(companions.roomid), token, onRoomJoined)
   }
 
@@ -165,9 +172,14 @@ const LeadChat = (): JSX.Element => {
     setViewState(ViewStates.List)
   }, [])
 
-  const onTabChanged = useCallback((tab: ChatLeadTabs) => {
-    setCurrentTab(tab)
+  const onSendMessage = useCallback(
+    (msg: string) => {
+      socketManager.sendMessage(msg)
+    },
+    [socketManager]
+  )
 
+  chatContext.tab.OnChanged((tab: ChatLeadTabs) => {
     if (inTabletSize) {
       if (tab === ChatLeadTabs.Chat) {
         setShowChat(true)
@@ -181,14 +193,7 @@ const LeadChat = (): JSX.Element => {
     if (!inTabletSize) {
       setShowChat(true)
     }
-  }, [])
-
-  const onSendMessage = useCallback(
-    (msg: string) => {
-      socketManager.sendMessage(msg)
-    },
-    [socketManager]
-  )
+  })
 
   return (
     <>
@@ -221,19 +226,12 @@ const LeadChat = (): JSX.Element => {
                 {iamIsOwner && isComponentReady && (
                   <LeadSidebarBuyer
                     className={'SidebarBuyer'}
-                    socketManager={socketManager}
-                    lead={leadData}
                     companions={companions}
-                    onTabSelect={onTabChanged}
                   />
                 )}
-                {!iamIsOwner && leadData && isComponentReady && (
+                {!iamIsOwner && chatContext.lead && isComponentReady && (
                   <LeadSidebarSeller
                     className={'SidebarSeller'}
-                    lead={leadData}
-                    socketManager={socketManager}
-                    companions={companions}
-                    onTabChange={onTabChanged}
                     leadOwner={leadOwnerProfile}
                   />
                 )}
@@ -302,4 +300,5 @@ const StyledChatPage = styled.div`
     }
   }
 `
+
 export default LeadChat

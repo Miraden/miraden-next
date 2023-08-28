@@ -297,6 +297,7 @@ class ChatConnManager extends SocketConnManager {
       },
     }
     this.send(JSON.stringify(request))
+    console.log('open contact request')
 
     this.subscribe(
       (event: MessageEvent) => {
