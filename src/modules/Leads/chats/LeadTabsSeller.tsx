@@ -50,13 +50,14 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
     const payload = response.payload as any
     const userOnline = Number(payload['online'])
     const userOffline = Number(payload['offline'])
+    const lastOnlineDate = String(payload['lastOnlineDate'])
 
     if (chatContext.companions?.myCompanion.id === userOnline) {
       setUserOnlineStatus({isOnline: true})
     }
 
     if (chatContext.companions?.myCompanion.id === userOffline) {
-      setUserOnlineStatus({isOnline: false, lastOnlineDate: '5 часов назад'})
+      setUserOnlineStatus({isOnline: false, lastOnlineDate: lastOnlineDate})
     }
     update()
   }
