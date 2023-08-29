@@ -22,9 +22,8 @@ import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
 import cn from 'classnames'
 import { ChatEvents } from '@/modules/Chats/ChatEvents'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
-import { useChatContext } from '@/infrastructure/Chats/UseChatContext'
+import { ChatCtx, useChatContext } from '@/infrastructure/Chats/UseChatContext'
 import { AppState } from '@/types/App'
-import { SellerStates } from '@/modules/Leads/types/LeadSellerStates'
 
 const tablet = theme.breakpoints.tablet.max
 let inTabletSize = false
@@ -138,8 +137,7 @@ const LeadChat = (): JSX.Element => {
       setIamIsOwner(true)
     }
     chatContext.companions = companions
-    chatContext.isContactOpened =
-      chatContext.companions?.seller_state === SellerStates.EXECUTANT
+    chatContext.isContactOpened = ChatCtx.isContactOpened(companions)
     socketManager.joinToRoom(Number(companions.roomid), token, onRoomJoined)
   }
 

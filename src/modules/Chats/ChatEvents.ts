@@ -12,4 +12,5 @@ export enum ChatEvents {
   onGetLead = 'onGetLead',
   onContactOpened = 'onFullContactsOpen',
   onRoomUserUpdatedStatus = 'onRoomUserUpdatedStatus',
+  onUserOnlineStatus = 'onUserOnlineStatus',
 }

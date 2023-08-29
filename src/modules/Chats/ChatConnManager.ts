@@ -1,5 +1,4 @@
 import SocketConnManager from '@/infrastructure/Network/Websockets/SocketConnManager'
-import commander from 'commander'
 import { ChatEvents } from '@/modules/Chats/ChatEvents'
 
 class ChatConnManager extends SocketConnManager {
@@ -297,7 +296,6 @@ class ChatConnManager extends SocketConnManager {
       },
     }
     this.send(JSON.stringify(request))
-    console.log('open contact request')
 
     this.subscribe(
       (event: MessageEvent) => {
@@ -306,6 +304,29 @@ class ChatConnManager extends SocketConnManager {
         if (callback) callback(event)
       },
       [ChatEvents.onContactOpened],
+      requestId
+    )
+  }
+
+  public getUserOnlineStatus(token: string, userId: number, callback?: Function): void {
+    const requestId = crypto.randomUUID()
+    const request: Chat.SocketRequestType = {
+      command: 'getUserOnlineStatus',
+      token: token,
+      requestId: requestId,
+      payload: {
+        userId: userId
+      },
+    }
+    this.send(JSON.stringify(request))
+
+    this.subscribe(
+      (event: MessageEvent) => {
+        const response = JSON.parse(event.data) as ApiResponseType
+        if (response.metadata?.requestId !== requestId) return
+        if (callback) callback(event)
+      },
+      [ChatEvents.onUserOnlineStatus],
       requestId
     )
   }

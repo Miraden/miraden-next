@@ -6,7 +6,7 @@ declare interface ApiResponseMetadata {
 
 declare interface ApiResponseType {
   code: number
-  payload?: object | null | Array<any>
+  payload?: object | null | Array<any> | boolean
   errors?: object | null
   metadata?: ApiResponseMetadata | null
 }
