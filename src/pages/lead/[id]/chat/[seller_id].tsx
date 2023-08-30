@@ -66,7 +66,7 @@ const LeadChat = (): JSX.Element => {
   useWindowSize((size: WindowSize) => {
     inTabletSize = size.width <= tablet
     chatContext.inTabletSize = inTabletSize
-    if(inTabletSize) {
+    if (inTabletSize) {
       if (chatContext.tab.current === ChatLeadTabs.Chat) {
         setShowChat(true)
       }
@@ -150,6 +150,10 @@ const LeadChat = (): JSX.Element => {
     setCompanions(companions)
     if (iam.id === companions.companions.buyer.id) {
       setIamIsOwner(true)
+      setMyProfile(companions.companions.buyer)
+    }
+    if (companions.companions.seller.id === iam.id) {
+      setMyProfile(companions.companions.seller)
     }
     chatContext.companions = companions
     chatContext.isContactOpened = ChatCtx.isContactOpened(companions)
@@ -192,13 +196,14 @@ const LeadChat = (): JSX.Element => {
     (msg: string) => {
       socketManager.sendMessage(msg)
       let _messages: Chat.Message[] = messages
+      const now = new Date()
       _messages.push({
         owner: {
-          avatar: '/u/users/1.jpg',
+          avatar: '/u/users/' + myProfile?.photo,
         },
         message: msg,
         direction: MessageDirection.Out,
-        createdAt: '2022-01-01 00:00:00',
+        createdAt: new Date().toISOString(),
         isRead: false,
         roomId: 0,
       })
