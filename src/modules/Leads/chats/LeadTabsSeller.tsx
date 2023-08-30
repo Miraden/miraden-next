@@ -35,17 +35,20 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
   const [userOnlineStatus, setUserOnlineStatus] = useState<User.OnlineStatus>({
     isOnline: false,
   })
+  const [isComponentReady, setComponentReady] = useState<boolean>(false)
 
   const onGetCompanionPublicProfile = useCallback((event: MessageEvent) => {
     const response = JSON.parse(event.data) as ApiResponseType
     const user = response.payload as User.PublicProfile
     setUserPublicProfile(user)
+    setComponentReady(true)
   }, [])
 
   const onGetCompanionFullProfile = useCallback((event: MessageEvent) => {
     const response = JSON.parse(event.data) as ApiResponseType
     const profile = response.payload as User.FullProfile
     setUserFullProfile(profile)
+    setComponentReady(true)
   }, [])
 
   function onUsersOnlineStatus(event: MessageEvent): void {
@@ -79,6 +82,21 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
     const token = String(localStorage.getItem('token'))
     const userId = companions.myCompanion.id
     socketManager.getUserOnlineStatus(token, userId, onUserOnlineStatus)
+  }
+
+  function onContactOpened(event: MessageEvent): void {
+    const response = JSON.parse(event.data) as ApiResponseType
+    const profile = response.payload as User.FullProfile | null
+    if (!profile) {
+      chatContext.isContactOpened = false
+      setIsContactOpened(false)
+      setComponentReady(true)
+      return
+    }
+    chatContext.isContactOpened = true
+    setIsContactOpened(true)
+    setUserFullProfile(profile)
+    setComponentReady(true)
   }
 
   const handleSelect = useCallback(
@@ -142,6 +160,11 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
   socketManager.subscribe(
     (event: MessageEvent) => onUsersOnlineStatus(event),
     [ChatEvents.onRoomUserUpdatedStatus]
+  )
+
+  socketManager.subscribe(
+    (event: MessageEvent) => onContactOpened(event),
+    [ChatEvents.onContactOpened]
   )
 
   return (

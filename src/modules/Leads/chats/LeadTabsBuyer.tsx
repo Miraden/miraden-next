@@ -40,25 +40,41 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
     const response = JSON.parse(event.data) as ApiResponseType
     const profile = response.payload as User.PublicProfile
     setUserPublicProfile(profile)
+    setIsContactOpened(false)
     setComponentReady(true)
   }
 
-  const onGetCompanionFullProfile = useCallback((event: MessageEvent) => {
-    const response = JSON.parse(event.data) as ApiResponseType
-    const profile = response.payload as User.FullProfile
-    setUserFullProfile(profile)
-    setComponentReady(true)
-  }, [])
+  const onGetCompanionFullProfile = useCallback(
+    (event: MessageEvent) => {
+      const response = JSON.parse(event.data) as ApiResponseType
+      const profile = response.payload as User.FullProfile | null
+      if (!profile) {
+        chatContext.isContactOpened = false
+        setIsContactOpened(false)
+        const token = String(localStorage.getItem('token'))
+        const id = Number(chatContext.companions?.myCompanion.id)
+        socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
+        return
+      }
+      chatContext.isContactOpened = true
+      setIsContactOpened(true)
+      setUserFullProfile(profile)
+      setComponentReady(true)
+    },
+    [chatContext, socketManager]
+  )
 
   function onContactOpened(event: MessageEvent): void {
     const response = JSON.parse(event.data) as ApiResponseType
     const profile = response.payload as User.FullProfile | null
     if (!profile) {
       chatContext.isContactOpened = false
+      setIsContactOpened(false)
       setComponentReady(true)
       return
     }
     chatContext.isContactOpened = true
+    setIsContactOpened(true)
     setUserFullProfile(profile)
     setComponentReady(true)
   }
@@ -82,11 +98,23 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
   function onGetCompanions(event: MessageEvent): void {
     const response = JSON.parse(event.data) as ApiResponseType
     const companions = response.payload as Chat.Companions
-    setIsContactOpened(ChatCtx.isContactOpened(companions))
+    const isContactsOpnd = ChatCtx.isContactOpened(companions)
+    setIsContactOpened(isContactsOpnd)
 
     const token = String(localStorage.getItem('token'))
     const userId = companions.myCompanion.id
     socketManager.getUserOnlineStatus(token, userId, onUserOnlineStatus)
+
+    if (selectedTab !== ChatLeadTabs.Contacts) return
+    const id = Number(chatContext.companions?.myCompanion.id)
+    const roomId = Number(chatContext.companions?.roomid)
+    if (!isContactsOpnd) {
+      socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
+    }
+
+    if (isContactsOpnd) {
+      socketManager.getFullProfile(token, id, roomId, onGetCompanionFullProfile)
+    }
   }
 
   function onUserOnlineStatus(event: MessageEvent): void {
@@ -109,28 +137,6 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
   useEffect(() => {
     chatContext.tab.callback(selectedTab)
   }, [chatContext.tab, selectedTab])
-
-  // Contact tab actions
-  useEffect(() => {
-    if (selectedTab !== ChatLeadTabs.Contacts) return
-    const token = String(localStorage.getItem('token'))
-    const id = Number(chatContext.companions?.myCompanion.id)
-    const roomId = Number(chatContext.companions?.roomid)
-    if (!chatContext.isContactOpened) {
-      socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
-    }
-
-    if (chatContext.isContactOpened) {
-      socketManager.getFullProfile(token, id, roomId, onGetCompanionFullProfile)
-    }
-  }, [
-    chatContext.companions?.myCompanion.id,
-    chatContext.isContactOpened,
-    chatContext.tab,
-    onGetCompanionFullProfile,
-    selectedTab,
-    socketManager,
-  ])
 
   const onTabSwitched = useCallback(
     (tab: ChatLeadTabs) => {
