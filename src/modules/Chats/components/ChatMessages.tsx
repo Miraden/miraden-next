@@ -4,11 +4,12 @@ import { StarIconFilled } from '@/icons/StarIconFilled'
 import Image from 'next/image'
 import styled from 'styled-components'
 import cn from 'classnames'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import useUpdater from '@/hooks/useUpdater'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
 import { theme } from '../../../../styles/tokens'
 import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
+import { useChatContext } from '@/infrastructure/Chats/UseChatContext'
 
 interface Props {
   className?: string
@@ -16,10 +17,8 @@ interface Props {
   onTouchEnd?: any
   onStateChange?: () => void
   inMobileMode?: boolean
-  messages: Chat.Message[]
   onSend?: (msg: string) => void
   myProfile?: Chat.UserProfile
-  activeRoom: number
 }
 
 const mobile = theme.breakpoints.mobile.max
@@ -36,12 +35,13 @@ const ChatMessages = ({
   onTouchStart,
   onStateChange,
   inMobileMode,
-  messages,
   onSend,
   myProfile,
-  activeRoom,
 }: Props) => {
+  const chatContext: Chat.LeadContext = useChatContext()
+
   const [showOpenContacts, setShowContactsButton] = useState<boolean>(false)
+  const [messages, setMessages] = useState<Chat.Message[]>([])
   const updater = useUpdater()
 
   const onSendMessage = useCallback(
@@ -52,8 +52,17 @@ const ChatMessages = ({
     [onSend, updater]
   )
 
+  useEffect(() => {
+    setMessages(chatContext.messages.history)
+  }, [chatContext.messages])
+
   useWindowSize((size: WindowSize) => {
     inMobileMode = size.width < tablet
+  })
+
+  chatContext.messages.onNew(() => {
+    setMessages(chatContext.messages.history)
+    updater()
   })
 
   return (

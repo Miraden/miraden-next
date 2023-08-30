@@ -91,5 +91,10 @@ declare namespace Chat {
     companions?: Companions
     companionsOnlineStatus: User.OnlineStatus
     inTabletSize: boolean
+    messages: {
+      history: Chat.Message[]
+      newCallback: Function
+      onNew: Function
+    }
   }
 }

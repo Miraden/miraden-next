@@ -24,6 +24,7 @@ import { ChatEvents } from '@/modules/Chats/ChatEvents'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 import { ChatCtx, useChatContext } from '@/infrastructure/Chats/UseChatContext'
 import { AppState } from '@/types/App'
+import useUpdater from '@/hooks/useUpdater'
 
 const tablet = theme.breakpoints.tablet.max
 let inTabletSize = false
@@ -33,6 +34,7 @@ const LeadChat = (): JSX.Element => {
   const appContext: AppState = useAppContext()
   const chatContext: Chat.LeadContext = useChatContext()
   const socketManager = appContext.chatConnManager
+  const update = useUpdater()
 
   const [isUserAuth, setUserAuth] = useState<boolean>(false)
   const [userReady, setUserReady] = useState<boolean>(false)
@@ -116,7 +118,9 @@ const LeadChat = (): JSX.Element => {
         roomId: msg.roomId,
       })
     })
+    chatContext.messages.history = _messages
     setMessages(_messages)
+    update()
   }
 
   function onRoomJoined(event: MessageEvent): void {
@@ -147,7 +151,7 @@ const LeadChat = (): JSX.Element => {
       const payload = response.payload as Chat.MessageSocketResponse
       const token = String(localStorage.getItem('token'))
       const iam = Security.parseJWT(token)
-      let _messages: Chat.Message[] = messages
+      let _messages: Chat.Message[] = chatContext.messages.history
       _messages.push({
         owner: {
           avatar: '/u/users/' + payload.owner_photo,
@@ -161,7 +165,10 @@ const LeadChat = (): JSX.Element => {
         isRead: payload.message_is_guest_reading,
         roomId: payload.roomId,
       })
-      setMessages(_messages)
+      chatContext.messages.history = _messages
+      setMessages(chatContext.messages.history)
+      update()
+      chatContext.messages.newCallback()
     },
     [ChatEvents.onNewMessage]
   )
@@ -173,8 +180,20 @@ const LeadChat = (): JSX.Element => {
   const onSendMessage = useCallback(
     (msg: string) => {
       socketManager.sendMessage(msg)
+      let _messages: Chat.Message[] = messages
+      _messages.push({
+        owner: {
+          avatar: '/u/users/1.jpg',
+        },
+        message: msg,
+        direction: MessageDirection.Out,
+        createdAt: '2022-01-01 00:00:00',
+        isRead: false,
+        roomId: 0,
+      })
+      setMessages(_messages)
     },
-    [socketManager]
+    [messages, socketManager]
   )
 
   chatContext.tab.OnChanged((tab: ChatLeadTabs) => {
@@ -238,10 +257,8 @@ const LeadChat = (): JSX.Element => {
                 <div className={'ChatMessages ChatSection'}>
                   <ChatMessages
                     myProfile={myProfile}
-                    messages={messages}
                     onStateChange={onStateChanged}
                     onSend={onSendMessage}
-                    activeRoom={activeRoom}
                   />
                 </div>
               )}

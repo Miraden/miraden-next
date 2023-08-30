@@ -308,14 +308,18 @@ class ChatConnManager extends SocketConnManager {
     )
   }
 
-  public getUserOnlineStatus(token: string, userId: number, callback?: Function): void {
+  public getUserOnlineStatus(
+    token: string,
+    userId: number,
+    callback?: Function
+  ): void {
     const requestId = crypto.randomUUID()
     const request: Chat.SocketRequestType = {
       command: 'getUserOnlineStatus',
       token: token,
       requestId: requestId,
       payload: {
-        userId: userId
+        userId: userId,
       },
     }
     this.send(JSON.stringify(request))

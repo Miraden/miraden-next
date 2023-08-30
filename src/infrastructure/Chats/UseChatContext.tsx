@@ -11,13 +11,22 @@ const Default: Chat.LeadContext = {
   lead: undefined,
   companions: undefined,
   companionsOnlineStatus: { isOnline: false },
-  inTabletSize: false
+  inTabletSize: false,
+  messages: {
+    history: [],
+    onNew: Function,
+    newCallback: Function,
+  },
 }
 
 const ChatContext = createContext<Chat.LeadContext>(Default)
 
 Default.tab.OnChanged = (callback: Function) => {
   Default.tab.callback = callback
+}
+
+Default.messages.onNew = (callback: Function) => {
+  Default.messages.newCallback = callback
 }
 
 interface Props {}

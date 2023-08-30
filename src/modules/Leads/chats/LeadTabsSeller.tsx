@@ -11,7 +11,6 @@ import ClosedContacts from '@/modules/Leads/chats/ClosedContacts'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 import { ChatCtx, useChatContext } from '@/infrastructure/Chats/UseChatContext'
 import { ChatEvents } from '@/modules/Chats/ChatEvents'
-import useUpdater from '@/hooks/useUpdater'
 
 interface Props {
   className?: string
@@ -25,13 +24,17 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
   const appContext = useAppContext()
   const socketManager = appContext.chatConnManager
   const chatContext: Chat.LeadContext = useChatContext()
-  const update = useUpdater()
 
-  const [selectedTab, setSelectedTab] = useState<ChatLeadTabs>(ChatLeadTabs.Lead)
-  const [userPublicProfile, setUserPublicProfile] = useState<User.PublicProfile>()
+  const [selectedTab, setSelectedTab] = useState<ChatLeadTabs>(
+    ChatLeadTabs.Lead
+  )
+  const [userPublicProfile, setUserPublicProfile] =
+    useState<User.PublicProfile>()
   const [userFullProfile, setUserFullProfile] = useState<User.FullProfile>()
   const [isContactOpened, setIsContactOpened] = useState<boolean>(false)
-  const [userOnlineStatus, setUserOnlineStatus] = useState<User.OnlineStatus>({isOnline: false})
+  const [userOnlineStatus, setUserOnlineStatus] = useState<User.OnlineStatus>({
+    isOnline: false,
+  })
 
   const onGetCompanionPublicProfile = useCallback((event: MessageEvent) => {
     const response = JSON.parse(event.data) as ApiResponseType
@@ -53,13 +56,12 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
     const lastOnlineDate = String(payload['lastOnlineDate'])
 
     if (chatContext.companions?.myCompanion.id === userOnline) {
-      setUserOnlineStatus({isOnline: true})
+      setUserOnlineStatus({ isOnline: true })
     }
 
     if (chatContext.companions?.myCompanion.id === userOffline) {
-      setUserOnlineStatus({isOnline: false, lastOnlineDate: lastOnlineDate})
+      setUserOnlineStatus({ isOnline: false, lastOnlineDate: lastOnlineDate })
     }
-    update()
   }
 
   function onUserOnlineStatus(event: MessageEvent): void {
@@ -104,6 +106,10 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
     selectedTab,
   ])
 
+  useEffect(() => {
+    chatContext.tab.callback(selectedTab)
+  }, [chatContext.tab, selectedTab])
+
   // Contact tab actions
   useEffect(() => {
     if (chatContext.tab.current !== ChatLeadTabs.Contacts) return
@@ -115,7 +121,15 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
     if (isContactOpened) {
       socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
     }
-  }, [chatContext.companions?.myCompanion.id, chatContext.tab, isContactOpened, onGetCompanionFullProfile, onGetCompanionPublicProfile, selectedTab, socketManager])
+  }, [
+    chatContext.companions?.myCompanion.id,
+    chatContext.tab,
+    isContactOpened,
+    onGetCompanionFullProfile,
+    onGetCompanionPublicProfile,
+    selectedTab,
+    socketManager,
+  ])
 
   useEffect(() => {
     const token = String(localStorage.getItem('token'))
@@ -123,7 +137,10 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
     socketManager.getCompanionsByLead(token, leadId, onGetCompanions)
   }, [chatContext.lead.id, socketManager])
 
-  socketManager.subscribe((event: MessageEvent) => onUsersOnlineStatus(event), [ChatEvents.onRoomUserUpdatedStatus])
+  socketManager.subscribe(
+    (event: MessageEvent) => onUsersOnlineStatus(event),
+    [ChatEvents.onRoomUserUpdatedStatus]
+  )
 
   return (
     <>

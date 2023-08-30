@@ -44,11 +44,12 @@ const UserPublicProfile = (props: Props): JSX.Element => {
             {props.onlineStatus.isOnline && (
               <div className={'UserPublicProfile--online'}>Online</div>
             )}
-            {!props.onlineStatus.isOnline && props.onlineStatus.lastOnlineDate != '' && (
-              <div className={'UserPublicProfile--offline'}>
-                В сети {props.onlineStatus.lastOnlineDate}
-              </div>
-            )}
+            {!props.onlineStatus.isOnline &&
+              props.onlineStatus.lastOnlineDate != '' && (
+                <div className={'UserPublicProfile--offline'}>
+                  В сети {props.onlineStatus.lastOnlineDate}
+                </div>
+              )}
           </div>
         </div>
       </div>

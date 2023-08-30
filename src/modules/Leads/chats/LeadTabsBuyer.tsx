@@ -4,12 +4,12 @@ import { Button, Sticker } from '@/components/ui'
 import { BackIcon20 } from '@/icons'
 import cn from 'classnames'
 import styled from 'styled-components'
-import { SellerStates } from '@/modules/Leads/types/LeadSellerStates'
 import { theme } from '../../../../styles/tokens'
 import OpenedContacts from '@/modules/Leads/chats/OpenedContacts'
 import ClosedContacts from '@/modules/Leads/chats/ClosedContacts'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
-import { useChatContext } from '@/infrastructure/Chats/UseChatContext'
+import { ChatCtx, useChatContext } from '@/infrastructure/Chats/UseChatContext'
+import { ChatEvents } from '@/modules/Chats/ChatEvents'
 
 interface Props {
   className?: string
@@ -31,7 +31,10 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
     useState<User.PublicProfile>()
   const [userFullProfile, setUserFullProfile] = useState<User.FullProfile>()
   const [isComponentReady, setComponentReady] = useState<boolean>(false)
-  const [isCompanionOnline, setCompanionOnline] = useState<boolean>(false)
+  const [userOnlineStatus, setUserOnlineStatus] = useState<User.OnlineStatus>({
+    isOnline: false,
+  })
+  const [isContactOpened, setIsContactOpened] = useState<boolean>(false)
 
   function onGetCompanionPublicProfile(event: MessageEvent): void {
     const response = JSON.parse(event.data) as ApiResponseType
@@ -60,14 +63,32 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
     const payload = response.payload as any
     const userOnline = Number(payload['online'])
     const userOffline = Number(payload['offline'])
+    const lastOnlineDate = String(payload['lastOnlineDate'])
 
     if (chatContext.companions?.myCompanion.id === userOnline) {
-      setCompanionOnline(true)
+      setUserOnlineStatus({ isOnline: true })
     }
 
     if (chatContext.companions?.myCompanion.id === userOffline) {
-      setCompanionOnline(false)
+      setUserOnlineStatus({ isOnline: false, lastOnlineDate: lastOnlineDate })
     }
+  }
+
+  function onGetCompanions(event: MessageEvent): void {
+    const response = JSON.parse(event.data) as ApiResponseType
+    const companions = response.payload as Chat.Companions
+    setIsContactOpened(ChatCtx.isContactOpened(companions))
+
+    const token = String(localStorage.getItem('token'))
+    const userId = companions.myCompanion.id
+    socketManager.getUserOnlineStatus(token, userId, onUserOnlineStatus)
+  }
+
+  function onUserOnlineStatus(event: MessageEvent): void {
+    const response = JSON.parse(event?.data) as ApiResponseType
+    const payload = response.payload as User.OnlineStatus
+
+    setUserOnlineStatus(payload)
   }
 
   useEffect(() => {
@@ -75,10 +96,13 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
       !chatContext.inTabletSize &&
       chatContext.tab.current === ChatLeadTabs.Chat
     ) {
-      chatContext.tab.current = ChatLeadTabs.Contacts
       setSelectedTab(ChatLeadTabs.Contacts)
     }
   }, [chatContext, chatContext.companions?.seller_state, props])
+
+  useEffect(() => {
+    chatContext.tab.callback(selectedTab)
+  }, [chatContext.tab, selectedTab])
 
   // Contact tab actions
   useEffect(() => {
@@ -103,9 +127,9 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
 
   const onTabSwitched = useCallback(
     (tab: ChatLeadTabs) => {
+      setSelectedTab(tab)
       chatContext.tab.callback(tab)
       chatContext.tab.current = tab
-      setSelectedTab(tab)
 
       if (chatContext.tab.current === ChatLeadTabs.Contacts) {
         const token = String(localStorage.getItem('token'))
@@ -141,6 +165,17 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
       onContactOpened,
       socketManager,
     ]
+  )
+
+  useEffect(() => {
+    const token = String(localStorage.getItem('token'))
+    const leadId = Number(chatContext.lead.id)
+    socketManager.getCompanionsByLead(token, leadId, onGetCompanions)
+  }, [chatContext.lead.id, socketManager])
+
+  socketManager.subscribe(
+    (event: MessageEvent) => onUsersOnlineStatus(event),
+    [ChatEvents.onRoomUserUpdatedStatus]
   )
 
   return (
@@ -215,16 +250,13 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
       <StyledTabContent>
         {selectedTab === ChatLeadTabs.Contacts && (
           <>
-            {chatContext.isContactOpened && isComponentReady && (
+            {isContactOpened && isComponentReady && (
               <OpenedContacts
                 profile={userFullProfile}
-                onlineStatus={{
-                  isOnline: isCompanionOnline,
-                  lastOnlineDate: '4 часа назад',
-                }}
+                onlineStatus={userOnlineStatus}
               />
             )}
-            {!chatContext.isContactOpened && isComponentReady && (
+            {!isContactOpened && isComponentReady && (
               <ClosedContacts user={userPublicProfile}>
                 <Button
                   onClick={tryOpenContact}
