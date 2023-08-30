@@ -11,6 +11,7 @@ import { ChatEvents } from '@/modules/Chats/ChatEvents'
 import { ChatTabs } from '@/infrastructure/Chats/ChatTabs'
 import ChatLayout, { ViewStates } from '@/modules/Chats/ChatLayout'
 import cn from 'classnames'
+import { useChatContext } from '@/infrastructure/Chats/UseChatContext'
 
 interface Props {
   className?: string
@@ -25,6 +26,8 @@ const socketManager = new ChatConnManager()
 let isSocketActive = false
 
 const Chats = (props: Props) => {
+  const chatContext: Chat.LeadContext = useChatContext()
+
   const [viewState, setViewState] = useState<ViewStates>(ViewStates.List)
   const [messages, setMessages] = useState<Chat.Message[]>([])
   const [myProfile, setMyProfile] = useState<Chat.UserProfile>()
@@ -84,7 +87,9 @@ const Chats = (props: Props) => {
           roomId: msg.roomId,
         })
       })
+      chatContext.messages.history = msgs
       setMessages(msgs)
+      chatContext.messages.newCallback()
     }
 
     if (r.metadata?.event === ChatEvents.onGetRoomsList) {
@@ -122,7 +127,9 @@ const Chats = (props: Props) => {
         roomId: payload.roomId,
       })
       setMessages(msgs)
-      update()
+      chatContext.messages.history = msgs
+      setMessages(msgs)
+      chatContext.messages.newCallback()
     }
 
     if (r.metadata?.event === ChatEvents.onGetCompanions) {
