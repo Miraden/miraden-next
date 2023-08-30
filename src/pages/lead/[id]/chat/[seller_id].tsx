@@ -131,7 +131,7 @@ const LeadChat = (): JSX.Element => {
     })
     chatContext.messages.history = _messages
     setMessages(_messages)
-    update()
+    chatContext.messages.newCallback()
   }
 
   function onRoomJoined(event: MessageEvent): void {
