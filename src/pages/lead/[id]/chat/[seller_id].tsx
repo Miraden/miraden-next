@@ -42,7 +42,6 @@ const LeadChat = (): JSX.Element => {
   const [viewState, setViewState] = useState<ViewStates>(ViewStates.List)
   const [myProfile, setMyProfile] = useState<Chat.UserProfile>()
   const [messages, setMessages] = useState<Chat.Message[]>([])
-  const [activeRoom, setActiveRoom] = useState<number>(0)
   const [iamIsOwner, setIamIsOwner] = useState<boolean>(false)
   const [companions, setCompanions] = useState<Chat.Companions>()
   const [currentTab, setCurrentTab] = useState<ChatLeadTabs>(ChatLeadTabs.Lead)
@@ -67,6 +66,18 @@ const LeadChat = (): JSX.Element => {
   useWindowSize((size: WindowSize) => {
     inTabletSize = size.width <= tablet
     chatContext.inTabletSize = inTabletSize
+    if(inTabletSize) {
+      if (chatContext.tab.current === ChatLeadTabs.Chat) {
+        setShowChat(true)
+      }
+
+      if (chatContext.tab.current !== ChatLeadTabs.Chat) {
+        setShowChat(false)
+      }
+    }
+    if (!inTabletSize) {
+      setShowChat(true)
+    }
   })
 
   useEffect(() => {

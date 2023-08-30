@@ -97,6 +97,7 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
       chatContext.tab.current === ChatLeadTabs.Chat
     ) {
       setSelectedTab(ChatLeadTabs.Contacts)
+      chatContext.tab.current = ChatLeadTabs.Contacts
     }
   }, [chatContext, chatContext.companions?.seller_state, props])
 

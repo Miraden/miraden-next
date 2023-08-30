@@ -60,8 +60,8 @@ const LeadInfo = (props: Props): JSX.Element => {
           <p>Тип</p>
         </div>
         <div className="LeadSectionInfo">
-          <p>{Object.keys(props.lead.type)[0]}</p>
-          <p>{Object.values(props.lead.type)[0]}</p>
+          <p>{props.lead.type}</p>
+          <p>{props.lead.typeEstate}</p>
         </div>
       </div>
       <div className="LeadSection">
@@ -167,6 +167,7 @@ const StyledInfo = styled.div`
     display: flex;
     padding: 20px 20px 19px;
     border-bottom: 1px solid #e1edfd;
+    align-items: flex-start;
 
     & > div {
       display: flex;

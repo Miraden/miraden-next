@@ -96,6 +96,7 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
       chatContext.tab.current === ChatLeadTabs.Chat
     ) {
       setSelectedTab(ChatLeadTabs.Lead)
+      chatContext.tab.current = ChatLeadTabs.Lead
     }
     if (props.leadOwner) setUserPublicProfile(props.leadOwner)
   }, [
