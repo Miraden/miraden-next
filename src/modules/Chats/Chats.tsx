@@ -207,11 +207,9 @@ const Chats = (props: Props) => {
         />
         <ChatMessages
           myProfile={myProfile}
-          messages={messages}
           inMobileMode={inMobileMode}
           onStateChange={onStateChanged}
           onSend={onSendMessage}
-          activeRoom={activeRoom}
         />
       </ChatLayout>
     </StyledPage>

@@ -53,7 +53,7 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
   function onContactOpened(event: MessageEvent): void {
     const response = JSON.parse(event.data) as ApiResponseType
     const profile = response.payload as User.FullProfile | null
-    if(!profile) {
+    if (!profile) {
       chatContext.isContactOpened = false
       setComponentReady(true)
       return
@@ -147,7 +147,12 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
         }
 
         if (chatContext.isContactOpened) {
-          socketManager.getFullProfile(token, id, roomId, onGetCompanionFullProfile)
+          socketManager.getFullProfile(
+            token,
+            id,
+            roomId,
+            onGetCompanionFullProfile
+          )
         }
       }
     },

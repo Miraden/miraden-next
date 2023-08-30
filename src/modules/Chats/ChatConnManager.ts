@@ -264,7 +264,7 @@ class ChatConnManager extends SocketConnManager {
       requestId: requestId,
       payload: {
         userId: userId,
-        roomId:roomId
+        roomId: roomId,
       },
     }
 

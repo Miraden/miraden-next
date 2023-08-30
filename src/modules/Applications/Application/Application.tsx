@@ -7,7 +7,6 @@ import cn from 'classnames'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { SellerCard } from './components/SellerCard'
-import { SingleApplication } from './components/SingleApplication'
 import { SingleApplicationSideBar } from './components/SingleApplicationSideBar'
 import { TabMenuItem, TabsManager, StyledMenu } from '@/components/ui/TabsMenu'
 import { ApplicationsFilter } from '@/components/ui/ApplicationsFilter'
@@ -334,7 +333,10 @@ function renderRequests(selected: string): JSX.Element {
 function renderLeadPaymentOptions(): JSX.Element {
   return (
     <>
-      <SingleApplicationSideBar className="SingleApplicationSideBar" />
+      <SingleApplicationSideBar
+        leadId={0}
+        className="SingleApplicationSideBar"
+      />
     </>
   )
 }

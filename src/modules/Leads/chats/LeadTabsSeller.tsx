@@ -121,7 +121,7 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
       socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
     }
     if (isContactOpened) {
-      socketManager.getFullProfile(token, id, roomId,onGetCompanionFullProfile)
+      socketManager.getFullProfile(token, id, roomId, onGetCompanionFullProfile)
     }
   }, [
     chatContext.companions?.myCompanion.id,

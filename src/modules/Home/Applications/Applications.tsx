@@ -59,6 +59,7 @@ const Applications = () => {
         isPinned={item.isPinned}
         responseState={item.responseState}
         windowSize={windowSize}
+        owner={item.owner}
       />
     ))
   }

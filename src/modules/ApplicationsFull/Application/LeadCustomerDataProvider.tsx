@@ -151,6 +151,7 @@ function renderLead(
             author={item.author}
             isPinned={item.isPinned}
             windowSize={windowSize}
+            owner={item.owner}
           />
         </li>
       ))}
