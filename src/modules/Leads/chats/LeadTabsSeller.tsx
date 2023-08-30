@@ -116,11 +116,12 @@ const LeadTabsSeller = (props: Props): JSX.Element => {
     if (chatContext.tab.current !== ChatLeadTabs.Contacts) return
     const token = String(localStorage.getItem('token'))
     const id = Number(chatContext.companions?.myCompanion.id)
+    const roomId = Number(chatContext.companions?.roomid)
     if (!isContactOpened) {
       socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
     }
     if (isContactOpened) {
-      socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
+      socketManager.getFullProfile(token, id, roomId,onGetCompanionFullProfile)
     }
   }, [
     chatContext.companions?.myCompanion.id,

@@ -52,10 +52,15 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
 
   function onContactOpened(event: MessageEvent): void {
     const response = JSON.parse(event.data) as ApiResponseType
-    const profile = response.payload as User.FullProfile
-    setComponentReady(true)
+    const profile = response.payload as User.FullProfile | null
+    if(!profile) {
+      chatContext.isContactOpened = false
+      setComponentReady(true)
+      return
+    }
     chatContext.isContactOpened = true
     setUserFullProfile(profile)
+    setComponentReady(true)
   }
 
   function onUsersOnlineStatus(event?: MessageEvent): void {
@@ -110,12 +115,13 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
     if (selectedTab !== ChatLeadTabs.Contacts) return
     const token = String(localStorage.getItem('token'))
     const id = Number(chatContext.companions?.myCompanion.id)
+    const roomId = Number(chatContext.companions?.roomid)
     if (!chatContext.isContactOpened) {
       socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
     }
 
     if (chatContext.isContactOpened) {
-      socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
+      socketManager.getFullProfile(token, id, roomId, onGetCompanionFullProfile)
     }
   }, [
     chatContext.companions?.myCompanion.id,
@@ -135,12 +141,13 @@ const LeadSidebarBuyer = (props: Props): JSX.Element => {
       if (chatContext.tab.current === ChatLeadTabs.Contacts) {
         const token = String(localStorage.getItem('token'))
         const id = Number(chatContext.companions?.myCompanion.id)
+        const roomId = Number(chatContext.companions?.roomid)
         if (!chatContext.isContactOpened) {
           socketManager.getPublicProfile(token, id, onGetCompanionPublicProfile)
         }
 
         if (chatContext.isContactOpened) {
-          socketManager.getFullProfile(token, id, onGetCompanionFullProfile)
+          socketManager.getFullProfile(token, id, roomId, onGetCompanionFullProfile)
         }
       }
     },

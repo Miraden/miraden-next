@@ -254,6 +254,7 @@ class ChatConnManager extends SocketConnManager {
   public getFullProfile(
     token: string,
     userId: number,
+    roomId: number,
     callback?: Function
   ): void {
     const requestId = crypto.randomUUID()
@@ -263,6 +264,7 @@ class ChatConnManager extends SocketConnManager {
       requestId: requestId,
       payload: {
         userId: userId,
+        roomId:roomId
       },
     }
 

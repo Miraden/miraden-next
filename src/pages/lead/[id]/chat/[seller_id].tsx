@@ -196,7 +196,6 @@ const LeadChat = (): JSX.Element => {
     (msg: string) => {
       socketManager.sendMessage(msg)
       let _messages: Chat.Message[] = messages
-      const now = new Date()
       _messages.push({
         owner: {
           avatar: '/u/users/' + myProfile?.photo,
