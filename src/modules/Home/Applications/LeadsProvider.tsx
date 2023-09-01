@@ -21,11 +21,20 @@ class LeadsLastProvider {
 
   public fetchData(): Promise<any> {
     const apiRequest: ApiRequest = new ApiRequest()
+    const token: String | null = localStorage.getItem('token')
+
+    let headers: HeadersInit = {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    }
+
+    if (token) {
+      headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+    }
 
     return apiRequest
       .fetch({
         method: ApiRequestMethods.GET,
-        headers: {},
+        headers: headers,
         endpoint: '/leads/last',
       })
       .then(async res => {

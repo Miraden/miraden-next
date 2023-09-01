@@ -17,6 +17,7 @@ import { PricingSelect } from '@/components/ui/PricingDropdown/PricingSelect'
 import cn from 'classnames'
 import { PinIcon } from '@/icons/PinIcon'
 import { WindowSize } from '@/hooks/useWindowSize'
+import { Security } from '@/infrastructure/Security/JWT/JWTManager'
 
 // @deprecated
 export enum CustomerState {
@@ -74,6 +75,16 @@ const LeadCard = (props: LeadProps) => {
 
   const [isMobile, setIsMobile] = useState<boolean>(false)
   const [cardWidth, setCardWidth] = useState<number>(0)
+  const [iamOwner, setIamOwner] = useState<boolean>(false)
+  const [iamId, setIamId] = useState<number>(0)
+
+  useEffect(() => {
+    const token = String(localStorage.getItem('token'))
+    const iam = Security.parseJWT(token)
+    setIamOwner(iam.id === props.owner)
+    setIamId(iam.id)
+  }, [props.owner])
+
   useEffect(() => {
     const list = document.getElementsByClassName('LeadsList')[0]
     const itemWidth = list.getBoundingClientRect().width
@@ -197,40 +208,44 @@ const LeadCard = (props: LeadProps) => {
         </div>
         <div className="Leads__footer-right">
           {!isMobile && <LeadStats />}
-          {props.responseState === undefined && (
-            <Button
-              href={'/lead/' + props.id.toString() + '/chat/' + props.owner}
-              className={'Leads__button_action'}
-            >
-              Предложить
-            </Button>
-          )}
-          {props.responseState === CustomerState.CANDIDATE && (
-            <Button
-              href={'/lead/' + props.id.toString() + '/chat/' + props.owner}
-              secondary
-              className={'Leads__button_action'}
-            >
-              Написать в чат
-            </Button>
-          )}
-          {props.responseState === CustomerState.NEWBIE && (
-            <Button
-              href={'/lead/' + props.id.toString() + '/chat/' + props.owner}
-              secondary
-              className={'Leads__button_action'}
-            >
-              Написать в чат
-            </Button>
-          )}
-          {props.responseState === CustomerState.EXECUTANT && (
-            <Button
-              href={'/lead/' + props.id.toString() + '/chat/' + props.owner}
-              secondary
-              className={'Leads__button_action Leads__customer-executant'}
-            >
-              Написать в чат
-            </Button>
+          {!iamOwner && (
+            <>
+              {props.responseState === undefined && (
+                <Button
+                  href={'/lead/' + props.id.toString() + '/chat/' + iamId}
+                  className={'Leads__button_action'}
+                >
+                  Предложить
+                </Button>
+              )}
+              {props.responseState === CustomerState.CANDIDATE && (
+                <Button
+                  href={'/lead/' + props.id.toString() + '/chat/' + iamId}
+                  secondary
+                  className={'Leads__button_action'}
+                >
+                  Написать в чат
+                </Button>
+              )}
+              {props.responseState === CustomerState.NEWBIE && (
+                <Button
+                  href={'/lead/' + props.id.toString() + '/chat/' + iamId}
+                  secondary
+                  className={'Leads__button_action'}
+                >
+                  Написать в чат
+                </Button>
+              )}
+              {props.responseState === CustomerState.EXECUTANT && (
+                <Button
+                  href={'/lead/' + props.id.toString() + '/chat/' + iamId}
+                  secondary
+                  className={'Leads__button_action Leads__customer-executant'}
+                >
+                  Написать в чат
+                </Button>
+              )}
+            </>
           )}
         </div>
       </div>
