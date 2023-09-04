@@ -1,5 +1,14 @@
+const Default: JWTPayload = {
+  email: '',
+  exp: 0,
+  iat: 0,
+  id: 0,
+  roles: [],
+}
+
 export namespace Security {
   export function parseJWT(token: string): JWTPayload {
+    if (token === 'null') return Default
     const base64Url = token.split('.')[1]
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
     const jsonPayload = decodeURIComponent(

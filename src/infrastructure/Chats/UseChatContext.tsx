@@ -2,6 +2,7 @@ import { createContext, PropsWithChildren, useContext } from 'react'
 import { SellerStates } from '@/modules/Leads/types/LeadSellerStates'
 
 const Default: Chat.LeadContext = {
+  events: {},
   tab: {
     current: '',
     callback: Function,

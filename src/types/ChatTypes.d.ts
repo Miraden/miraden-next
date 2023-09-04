@@ -89,6 +89,12 @@ declare namespace Chat {
     }
     lead?: LeadEntryType
     companions?: Companions
+    events: {
+      companions?: {
+        callback: Function
+        onGet: Function
+      }
+    }
     companionsOnlineStatus: User.OnlineStatus
     inTabletSize: boolean
     messages: {

@@ -20,6 +20,9 @@ import LangManager from '@/infrastructure/Intl/LangManager'
 import { theme } from '../../../styles/tokens'
 import LeadOwnerCard from '@/modules/Leads/LeadOwnerCard'
 import useAuth from '@/hooks/useAuth'
+import { useChatContext } from '@/infrastructure/Chats/UseChatContext'
+import { AppState } from '@/types/App'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 enum TabsMenuState {
   Lead = 0,
@@ -39,8 +42,15 @@ const LeadEntry = (): JSX.Element => {
   const query = router.query
   const leadId: number = parseInt(query['id'] as string) as number
 
+  const appContext: AppState = useAppContext()
+  const socketManager = appContext.chatConnManager
+  const chatContext = useChatContext()
+
   const [isUserAuth, setUserAuth] = useState(false)
   const [isUserReady, setUserReady] = useState<boolean>(false)
+  const [isRouterReady, setIsRouterReady] = useState<boolean>(false)
+  const [companions, setCompanions] = useState<Chat.Companions>()
+
   useAuth({
     onSuccess: (): void => {
       setUserAuth(true)
@@ -84,11 +94,26 @@ const LeadEntry = (): JSX.Element => {
   const [showOwnerSidebar, setShowOwnerSidebar] = useState<boolean>(false)
   const [showGuestSidebar, setGuestSidebar] = useState<boolean>(false)
 
+  function onGetCompanions(event: MessageEvent): void {
+    const response = JSON.parse(event.data) as ApiResponseType
+    const companions = response.payload as Chat.Companions
+    setCompanions(companions)
+    chatContext.companions = companions
+    chatContext.events.companions?.callback()
+  }
+
   useEffect(() => {
     let mediaQuery = window.matchMedia('(max-width: 1440px)')
     mediaQuery.addEventListener('change', handleChange)
     return () => mediaQuery.removeEventListener('change', handleChange)
   }, [handleChange])
+
+  useEffect(() => {
+    if (!router.isReady) return
+    setIsRouterReady(router.isReady)
+    if (!isUserAuth) return
+    socketManager.connect()
+  }, [isUserAuth, router.isReady, socketManager])
 
   useLockBodyScroll(showFilter && mQuery.matches)
 
@@ -100,6 +125,13 @@ const LeadEntry = (): JSX.Element => {
     tabsManager.addItem(new TabMenuItem('Отказы'))
     tabsManager.addItem(new TabMenuItem('Рекомендуемые'))
   }, [handleSelect])
+
+  socketManager.OnOpen(() => {
+    const query = router.query
+    const leadId: number = Number(query['id'])
+    const token = String(localStorage.getItem('token'))
+    socketManager.getCompanionsByLead(token, leadId, onGetCompanions)
+  })
 
   const [leadsData, setLeadsAllData] = useState<Object>({})
   const [notifyVisible, setNotifyVisible] = useState<boolean>(false)

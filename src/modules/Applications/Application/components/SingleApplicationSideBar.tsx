@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui'
 import { PaymentButton } from '@/components/ui/PaymentButton'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import styled from 'styled-components'
 
 interface Props {

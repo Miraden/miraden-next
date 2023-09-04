@@ -21,6 +21,9 @@ import {
 } from '@/infrastructure/Network/Http/ApiResponse'
 import FavoritesProvider from '@/modules/Favorites/FavoritesProvider'
 import { useRouter } from 'next/router'
+import { Security } from '@/infrastructure/Security/JWT/JWTManager'
+import { useChatContext } from '@/infrastructure/Chats/UseChatContext'
+import { CustomerState } from '@/modules/Leads/components/LeadCard'
 
 interface LeadOwnerProps {
   leadId: number
@@ -121,12 +124,34 @@ const dataProvider: OwnerProvider = new OwnerProvider()
 const favoritesProvider: FavoritesProvider = new FavoritesProvider()
 
 const LeadOwnerCard = (props: LeadOwnerProps): JSX.Element => {
+  const router = useRouter()
+  const query = router.query
   const [owner, setOwner] = useState<OwnerStruct>(OwnerStructDefault)
+  const [iamId, setIamId] = useState<number>(0)
+  const [iamOwner, setIamOwner] = useState<boolean>(false)
+  const [leadId, setLeadId] = useState<number>(0)
+  const chatContext = useChatContext()
+
+  useEffect(() => {
+    if (!router.isReady) return
+
+    const leadId: number = Number(query['id'])
+    setLeadId(leadId)
+  }, [query, router.isReady])
+
   useEffect(() => {
     dataProvider.fetchByLeadId(props.leadId).then(res => {
       setOwner(dataProvider.getOwner())
     })
+    console.log(chatContext.companions?.seller_state)
   }, [props.leadId])
+
+  useEffect(() => {
+    const token = String(localStorage.getItem('token'))
+    const iam = Security.parseJWT(token)
+    setIamOwner(iam.id === owner.id)
+    setIamId(iam.id)
+  }, [owner.id])
 
   const onClickFavorites = useCallback(
     (e: any) => {
@@ -186,9 +211,41 @@ const LeadOwnerCard = (props: LeadOwnerProps): JSX.Element => {
             </div>
           </div>
         </div>
-        <div className="LeadSidebar--response">
-          <Button href={'/lead/' + props.leadId + '/chat'}>Предложить</Button>
-        </div>
+        {chatContext.companions?.seller_state === undefined && (
+          <Button
+            href={'/lead/' + leadId + '/chat/' + iamId}
+            className={'Leads__button_action'}
+          >
+            Предложить
+          </Button>
+        )}
+        {chatContext.companions?.seller_state === CustomerState.CANDIDATE && (
+          <Button
+            href={'/lead/' + leadId + '/chat/' + iamId}
+            secondary
+            className={'LeadSidebar--response'}
+          >
+            Написать в чат
+          </Button>
+        )}
+        {chatContext.companions?.seller_state === CustomerState.NEWBIE && (
+          <Button
+            href={'/lead/' + leadId + '/chat/' + iamId}
+            secondary
+            className={'LeadSidebar--response'}
+          >
+            Написать в чат
+          </Button>
+        )}
+        {chatContext.companions?.seller_state === CustomerState.EXECUTANT && (
+          <Button
+            href={'/lead/' + leadId + '/chat/' + iamId}
+            secondary
+            className={'LeadSidebar--response'}
+          >
+            Написать в чат
+          </Button>
+        )}
         <div className="LeadSidebar--description Font_body_alt">
           <p>
             Сделайте предложение — это бесплатно. Если пользователь решит
@@ -199,9 +256,6 @@ const LeadOwnerCard = (props: LeadOwnerProps): JSX.Element => {
       </div>
 
       <div className="SideBar__section">
-        <Button href={'/lead/' + props.leadId + '/chat/' + owner.id} tertiary>
-          Задать вопрос в чате
-        </Button>
         {props.isUserAuth && !owner?.inFavorite && (
           <Button onClick={onClickFavorites} tertiary>
             В избранное
