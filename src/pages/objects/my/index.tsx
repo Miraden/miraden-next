@@ -150,7 +150,10 @@ function renderFilter(handler: Function, tabHandler: Function): JSX.Element {
 }
 
 export async function getServerSideProps(context: any) {
-  const tokenCookie = context.req.cookies.token
+  const tokenCookie: string | undefined = context.req.cookies.token
+  if (!tokenCookie) {
+    return { props: { isUserAuth: false, userToken: '' } }
+  }
   const authManager = new AuthManagerServer()
   const isUserAuth = await authManager.validateToken(tokenCookie)
   return { props: { isUserAuth: isUserAuth } }
