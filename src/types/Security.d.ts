@@ -5,3 +5,7 @@ declare interface JWTPayload {
   id: number
   roles: string[]
 }
+
+declare interface TokenValidatorType {
+  token: string
+}

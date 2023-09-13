@@ -6,8 +6,13 @@ import { HowItWorks } from '@/modules/Home/HowItWorks'
 import { Reviews } from '@/modules/Home/Reviews'
 import Head from 'next/head'
 import { Layout } from '@/modules/Base/Layout'
+import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
-export default function Home() {
+export default function Home(pageProps: any) {
+  const app = useAppContext()
+  app.isUserAuth = pageProps.isUserAuth
+  app.userToken = pageProps.userToken
   return (
     <>
       <Head>
@@ -24,4 +29,11 @@ export default function Home() {
       </Layout>
     </>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const tokenCookie = context.req.cookies.token
+  const authManager = new AuthManagerServer()
+  const isUserAuth = await authManager.validateToken(tokenCookie)
+  return { props: { isUserAuth: isUserAuth, userToken: tokenCookie } }
 }

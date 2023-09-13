@@ -18,6 +18,8 @@ import { LeadMakerProvider } from '@/modules/Leads/Maker/LeadMakerProvider'
 import Modal from '@/components/ui/Modal'
 import PaySuccessModal from '@/modules/Leads/components/PaySuccessModal'
 import AuthFormLayout from '@/modules/Security/AuthFormLayout'
+import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
@@ -25,19 +27,12 @@ const mobile: string = theme.breakpoints.mobile.max + 'px'
 
 let isNeedUpdate = true
 
-export default function AddLead(): JSX.Element {
-  const [isUserAuth, setUserAuth] = useState<boolean>(false)
-  const [isAuthServerResponse, setAuthServerResponse] = useState<boolean>(false)
-
-  useAuth({
-    onFailure: () => {},
-    onResponse: () => {
-      setAuthServerResponse(true)
-    },
-    onSuccess: () => {
-      setUserAuth(true)
-    },
-  })
+export default function AddLead(pageProps: any): JSX.Element {
+  const app = useAppContext()
+  app.isUserAuth = pageProps.isUserAuth
+  app.userToken = pageProps.userToken
+  const [isUserAuth, setUserAuth] = useState<boolean>(app.isUserAuth)
+  const [isAuthServerResponse, setAuthServerResponse] = useState<boolean>(true)
 
   const onLoginSuccess = useCallback(() => {
     setAuthServerResponse(true)
@@ -240,6 +235,13 @@ const RenderStep = (): JSX.Element => {
       )}
     </>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const tokenCookie = context.req.cookies.token
+  const authManager = new AuthManagerServer()
+  const isUserAuth = await authManager.validateToken(tokenCookie)
+  return { props: { isUserAuth: isUserAuth, userToken: tokenCookie } }
 }
 
 const StyledPage = styled.div`

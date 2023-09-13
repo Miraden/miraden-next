@@ -5,23 +5,15 @@ import { Header } from '@/modules/Base/Header'
 import styled from 'styled-components'
 import cn from 'classnames'
 import useAuth from '@/hooks/useAuth'
+import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
-export default function ObjectEntry(): JSX.Element {
-  const [isUserAuth, setUserAuth] = useState(false)
-  const [userReady, setUserReady] = useState<boolean>(false)
-  useAuth({
-    onSuccess: (): void => {
-      setUserAuth(true)
-    },
+export default function ObjectEntry(pageProps: any): JSX.Element {
+  const appContext = useAppContext()
+  appContext.isUserAuth = pageProps.isUserAuth
 
-    onFailure: (): void => {
-      setUserAuth(false)
-    },
-
-    onResponse: (): void => {
-      setUserReady(true)
-    },
-  })
+  const [isUserAuth, setUserAuth] = useState(appContext.isUserAuth)
+  const [userReady, setUserReady] = useState<boolean>(true)
 
   return (
     <>
@@ -38,6 +30,13 @@ export default function ObjectEntry(): JSX.Element {
       </BlankLayout>
     </>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const tokenCookie = context.req.cookies.token
+  const authManager = new AuthManagerServer()
+  const isUserAuth = await authManager.validateToken(tokenCookie)
+  return { props: { isUserAuth: isUserAuth } }
 }
 
 const StyledPage = styled.div`

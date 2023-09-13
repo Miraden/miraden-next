@@ -23,4 +23,14 @@ export namespace Security {
 
     return JSON.parse(jsonPayload) as JWTPayload
   }
+
+  export function parseJWTServer(token: string): JWTPayload {
+    if (token === 'null') return Default
+
+    try {
+      return JSON.parse(atob(token.split('.')[1]))
+    } catch (e) {
+      return Default
+    }
+  }
 }

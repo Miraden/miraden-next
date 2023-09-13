@@ -7,7 +7,7 @@ import cn from 'classnames'
 import { LeadCard } from '@/modules/Leads/components/LeadCard'
 import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
 
-const Applications = () => {
+const Applications = (pageProps: any) => {
   const [location, setLocation] = useState<string>('')
 
   const handleButtonClick = (location: SetStateAction<string>) => {

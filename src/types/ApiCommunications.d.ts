@@ -17,3 +17,8 @@ declare interface ApiRequestType {
   body?: string | FormData
   endpoint: string
 }
+
+declare interface UserAuthPayload {
+  token: string
+  ttl: number
+}

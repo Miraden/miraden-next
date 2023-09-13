@@ -11,6 +11,8 @@ import { Search } from '@/components/ui'
 import { ObjectsDataProvider } from '@/modules/Objects/ObjectsDataProvider'
 import { ObjectCard } from '@/modules/Applications/Application/components/ObjectCard'
 import useAuth from '@/hooks/useAuth'
+import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 enum TabsMenuState {
   All = 0,
@@ -18,27 +20,16 @@ enum TabsMenuState {
   Archived = 2,
 }
 
-export default function MyObjectsPage(): JSX.Element {
+export default function MyObjectsPage(pageProps: any): JSX.Element {
+  const appContext = useAppContext()
+  appContext.isUserAuth = pageProps.isUserAuth
+
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.All)
   const handleSelect = useCallback((option: TabsMenuState) => {
     setSelected(option)
   }, [])
 
-  const [isUserAuth, setUserAuth] = useState(false)
-  const [userReady, setUserReady] = useState<boolean>(false)
-  useAuth({
-    onSuccess: (): void => {
-      setUserAuth(true)
-    },
-
-    onFailure: (): void => {
-      setUserAuth(false)
-    },
-
-    onResponse: (): void => {
-      setUserReady(true)
-    },
-  })
+  const [isUserAuth, setUserAuth] = useState(appContext.isUserAuth)
 
   const [showFilter, setShowFilter] = useState(false)
   const handleShowFilter = useCallback(() => {
@@ -79,7 +70,7 @@ export default function MyObjectsPage(): JSX.Element {
         <title>Miraden - Мои объекты</title>
       </Head>
       <BlankLayout>
-        <Header isAuthorized={isUserAuth} isReady={userReady} />
+        <Header isAuthorized={isUserAuth} isReady={true} />
         <StyledObjects className={'ContainerFull'}>
           <div className={'ObjectsWrapper'}>
             <div
@@ -156,6 +147,13 @@ function renderFilter(handler: Function, tabHandler: Function): JSX.Element {
       </div>
     </>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const tokenCookie = context.req.cookies.token
+  const authManager = new AuthManagerServer()
+  const isUserAuth = await authManager.validateToken(tokenCookie)
+  return { props: { isUserAuth: isUserAuth } }
 }
 
 const StyledObjects = styled.div`

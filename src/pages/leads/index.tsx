@@ -15,6 +15,8 @@ import LangManager from '@/infrastructure/Intl/LangManager'
 import { useWindowSize } from '@/hooks/useWindowSize'
 import { ApplicationsFooter } from '@/modules/Base/ApplicationsFooter'
 import useAuth from '@/hooks/useAuth'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
+import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
 
 enum TabsMenuState {
   All = 0,
@@ -31,7 +33,9 @@ const tabsManager = new TabsManager()
 const urlManager = new UrlManager()
 const langManager = new LangManager()
 
-export default function LeadsPage(): JSX.Element {
+export default function LeadsPage(pageProps: any): JSX.Element {
+  const appContext = useAppContext()
+  appContext.isUserAuth = pageProps.isUserAuth
   const [itemPage, setItemPage] = useState<number>(1)
   const [isUserAuth, setIsUserAuth] = useState<boolean>(false)
   const [isUserReady, setUserReady] = useState<boolean>(false)
@@ -39,21 +43,13 @@ export default function LeadsPage(): JSX.Element {
     leadsProvider.setLang(langManager.getClientLang())
   }, [])
 
-  useAuth({
-    onSuccess: (): void => {
-      setIsUserAuth(true)
+  useEffect(() => {
+    if (appContext.isUserAuth) {
       leadsProvider.setUserAuthState(true)
-    },
-
-    onFailure: (): void => {
-      setIsUserAuth(false)
-      leadsProvider.setUserAuthState(false)
-    },
-
-    onResponse: (): void => {
       setUserReady(true)
-    },
-  })
+    }
+    setIsUserAuth(appContext.isUserAuth)
+  }, [appContext.isUserAuth])
 
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.All)
   const handleSelect = useCallback((option: TabsMenuState) => {
@@ -279,6 +275,13 @@ export default function LeadsPage(): JSX.Element {
       </BlankLayout>
     </>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const tokenCookie = context.req.cookies.token
+  const authManager = new AuthManagerServer()
+  const isUserAuth = await authManager.validateToken(tokenCookie)
+  return { props: { isUserAuth: isUserAuth } }
 }
 
 const StyledLeads = styled.div`

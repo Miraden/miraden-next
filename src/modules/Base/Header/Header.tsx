@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { HeaderDesktop, HeaderMobile } from './components'
 import cn from 'classnames'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 interface HeaderProps {
   isAuthorized: boolean
@@ -9,6 +10,7 @@ interface HeaderProps {
 }
 
 const Header = ({ isAuthorized, className, isReady }: HeaderProps) => {
+  const app = useAppContext()
   return (
     <StyledHeader
       className={cn('Header__main', className, { isReady: isReady })}
@@ -17,9 +19,12 @@ const Header = ({ isAuthorized, className, isReady }: HeaderProps) => {
       <div className="Header">
         <HeaderDesktop
           className="Header__desktop"
-          isAuthorized={isAuthorized}
+          isAuthorized={app.isUserAuth}
         />
-        <HeaderMobile className="Header__mobile" isAuthorized={isAuthorized} />
+        <HeaderMobile
+          className="Header__mobile"
+          isAuthorized={app.isUserAuth}
+        />
       </div>
     </StyledHeader>
   )

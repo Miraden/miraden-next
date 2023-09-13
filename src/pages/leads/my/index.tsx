@@ -5,24 +5,13 @@ import styled from 'styled-components'
 import React, { useState } from 'react'
 import { ApplicationFull } from '@/modules/ApplicationsFull/Application'
 import useAuth from '@/hooks/useAuth'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
+import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
 
-export default function MyLeadsPage(): JSX.Element {
-  const [isUserAuth, setUserAuth] = useState<boolean>(false)
-  const [userReady, setUserReady] = useState<boolean>(false)
-
-  useAuth({
-    onSuccess: (): void => {
-      setUserAuth(true)
-    },
-
-    onFailure: (): void => {
-      setUserAuth(false)
-    },
-
-    onResponse: (): void => {
-      setUserReady(true)
-    },
-  })
+export default function MyLeadsPage(pageProps: any): JSX.Element {
+  const appContext = useAppContext()
+  appContext.isUserAuth = pageProps.isUserAuth
+  const [isUserAuth, setUserAuth] = useState<boolean>(appContext.isUserAuth)
 
   return (
     <>
@@ -30,13 +19,20 @@ export default function MyLeadsPage(): JSX.Element {
         <title>Miraden - Мои Заявки</title>
       </Head>
       <BlankLayout>
-        <Header isAuthorized={isUserAuth} isReady={userReady} />
+        <Header isAuthorized={isUserAuth} isReady={true} />
         <StyledMyLeads className={'ContainerFull'}>
           <ApplicationFull className="Application" />
         </StyledMyLeads>
       </BlankLayout>
     </>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const tokenCookie = context.req.cookies.token
+  const authManager = new AuthManagerServer()
+  const isUserAuth = await authManager.validateToken(tokenCookie)
+  return { props: { isUserAuth: isUserAuth } }
 }
 
 const StyledMyLeads = styled.div`

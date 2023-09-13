@@ -4,32 +4,18 @@ import { Footer } from './Footer'
 import { Header } from './Header/Header'
 import { theme } from '../../../styles/tokens'
 import useAuth from '@/hooks/useAuth'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 interface LayoutProps {
   children?: ReactNode
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  const [isUserAuth, setUserAuth] = useState<boolean>(false)
-  const [userReady, setUserReady] = useState<boolean>(false)
-
-  useAuth({
-    onSuccess: (): void => {
-      setUserAuth(true)
-    },
-
-    onFailure: (): void => {
-      setUserAuth(false)
-    },
-
-    onResponse: (): void => {
-      setUserReady(true)
-    },
-  })
+  const app = useAppContext()
 
   return (
     <StyledHomePage>
-      <Header isAuthorized={isUserAuth} isReady={userReady} />
+      <Header isAuthorized={app.isUserAuth} isReady={true} />
       <main>{children}</main>
       <Footer />
     </StyledHomePage>

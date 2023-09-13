@@ -8,7 +8,7 @@ export default function App({ Component, pageProps }: AppProps) {
     window.Miraden = window.Miraden || {}
   }, [])
   return (
-    <AppWrapper>
+    <AppWrapper pageProps={pageProps}>
       <StylesProvider>
         <Component {...pageProps} />
       </StylesProvider>

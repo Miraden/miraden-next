@@ -18,6 +18,7 @@ import cn from 'classnames'
 import { PinIcon } from '@/icons/PinIcon'
 import { WindowSize } from '@/hooks/useWindowSize'
 import { Security } from '@/infrastructure/Security/JWT/JWTManager'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 // @deprecated
 export enum CustomerState {
@@ -70,6 +71,7 @@ const mobile = theme.breakpoints.mobile.max + 'px'
 const tablet = theme.breakpoints.tablet.max + 'px'
 
 const LeadCard = (props: LeadProps) => {
+  const app = useAppContext()
   const price: string = props.budget.startFrom + ' – ' + props.budget.endTo
   const shortPrice: string = props.budget.endTo + ' ' + props.budget.currency
 

@@ -23,6 +23,7 @@ import useAuth from '@/hooks/useAuth'
 import { useChatContext } from '@/infrastructure/Chats/UseChatContext'
 import { AppState } from '@/types/App'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
+import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
 
 enum TabsMenuState {
   Lead = 0,
@@ -37,33 +38,20 @@ const urlManager = new UrlManager()
 const tabsManager = new TabsManager()
 const langManager = new LangManager()
 
-const LeadEntry = (): JSX.Element => {
+const LeadEntry = (pageProps: any): JSX.Element => {
   const router: NextRouter = useRouter()
   const query = router.query
   const leadId: number = parseInt(query['id'] as string) as number
 
   const appContext: AppState = useAppContext()
+  appContext.isUserAuth = pageProps.isUserAuth
   const socketManager = appContext.chatConnManager
   const chatContext = useChatContext()
 
-  const [isUserAuth, setUserAuth] = useState(false)
+  const [isUserAuth, setUserAuth] = useState(appContext.isUserAuth)
   const [isUserReady, setUserReady] = useState<boolean>(false)
   const [isRouterReady, setIsRouterReady] = useState<boolean>(false)
   const [companions, setCompanions] = useState<Chat.Companions>()
-
-  useAuth({
-    onSuccess: (): void => {
-      setUserAuth(true)
-    },
-
-    onFailure: (): void => {
-      setUserAuth(false)
-    },
-
-    onResponse: (): void => {
-      setUserReady(true)
-    },
-  })
 
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.Lead)
   const handleSelect = useCallback((option: TabsMenuState) => {
@@ -386,6 +374,13 @@ function renderLeadPaymentOptions(leadId: number): JSX.Element {
       />
     </>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const tokenCookie = context.req.cookies.token
+  const authManager = new AuthManagerServer()
+  const isUserAuth = await authManager.validateToken(tokenCookie)
+  return { props: { isUserAuth: isUserAuth } }
 }
 
 const StyledLead = styled.div`

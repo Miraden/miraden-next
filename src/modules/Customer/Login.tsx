@@ -92,6 +92,41 @@ const Login = ({ className, onFailure, onResponse, onSuccess }: Props) => {
       })
   }
 
+  async function loginSsr(email: string, password: string): Promise<void> {
+    setFormSubmitted(true)
+
+    const headers: HeadersInit = {
+      'Content-Type': 'application/json',
+    }
+    const data = {
+      email: email,
+      password: password,
+    }
+
+    const url: string = '/api/user'
+    const payload: RequestInit = {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify(data),
+    }
+
+    const response = await fetch(url, payload)
+    const j = response.json()
+    const result: ApiResponseType = await j.then(res => res)
+
+    if (result.code === HttpCodes.OK) {
+      setLoginHasErrors(false)
+      if (!result.payload) return
+      const validator = result.payload as TokenValidatorType
+      authManager.authUser(validator.token)
+      if (onSuccess) onSuccess()
+      setFormSubmitted(false)
+      return
+    }
+
+    setFormSubmitted(false)
+  }
+
   return (
     <StyledRegStep1 className={className}>
       <div className="Reg__headContainer">
@@ -166,7 +201,7 @@ const Login = ({ className, onFailure, onResponse, onSuccess }: Props) => {
           <Button
             type="submit"
             disabled={valid}
-            onClick={async e => await loginAction(email, password)}
+            onClick={e => loginSsr(email, password)}
           >
             Далее
           </Button>

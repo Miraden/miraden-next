@@ -25,19 +25,22 @@ import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 import { ChatCtx, useChatContext } from '@/infrastructure/Chats/UseChatContext'
 import { AppState } from '@/types/App'
 import useUpdater from '@/hooks/useUpdater'
+import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
 
 const tablet = theme.breakpoints.tablet.max
 let inTabletSize = false
 
-const LeadChat = (): JSX.Element => {
+const LeadChat = (pageProps: any): JSX.Element => {
   const router: NextRouter = useRouter()
   const appContext: AppState = useAppContext()
   const chatContext: Chat.LeadContext = useChatContext()
   const socketManager = appContext.chatConnManager
   const update = useUpdater()
+  appContext.isUserAuth = pageProps.isUserAuth
+  appContext.userToken = pageProps.userToken
 
-  const [isUserAuth, setUserAuth] = useState<boolean>(false)
-  const [userReady, setUserReady] = useState<boolean>(false)
+  const [isUserAuth, setUserAuth] = useState<boolean>(pageProps.isUserAuth)
+  const [userReady, setUserReady] = useState<boolean>(true)
   const [isRouterReady, setIsRouterReady] = useState<boolean>(false)
   const [viewState, setViewState] = useState<ViewStates>(ViewStates.List)
   const [myProfile, setMyProfile] = useState<Chat.UserProfile>()
@@ -48,20 +51,6 @@ const LeadChat = (): JSX.Element => {
   const [showChat, setShowChat] = useState<boolean>(false)
   const [leadOwnerProfile, setLeadOwnerProfile] = useState<User.PublicProfile>()
   const [isComponentReady, setComponentReady] = useState<boolean>(false)
-
-  useAuth({
-    onSuccess: (): void => {
-      setUserAuth(true)
-    },
-
-    onFailure: (): void => {
-      setUserAuth(false)
-    },
-
-    onResponse: (): void => {
-      setUserReady(true)
-    },
-  })
 
   useWindowSize((size: WindowSize) => {
     inTabletSize = size.width <= tablet
@@ -283,6 +272,13 @@ const LeadChat = (): JSX.Element => {
       </StyledMainContainer>
     </>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const tokenCookie = context.req.cookies.token
+  const authManager = new AuthManagerServer()
+  const isUserAuth = await authManager.validateToken(tokenCookie)
+  return { props: { isUserAuth: isUserAuth } }
 }
 
 const StyledMainContainer = styled.main`
