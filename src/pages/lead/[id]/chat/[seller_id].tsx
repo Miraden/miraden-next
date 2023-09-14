@@ -296,12 +296,12 @@ const StyledChatPage = styled.div`
   padding: 20px;
   height: 100%;
 
-  &.ChatInSidebar .ChatSidebar {
-    height: auto;
-  }
-
   @media (max-width: ${tablet}px) {
     padding: 0;
+
+    &.ChatInSidebar .ChatSidebar {
+      height: auto;
+    }
 
     .ChatTabs {
       padding-left: 0;

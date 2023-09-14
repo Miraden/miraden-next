@@ -325,7 +325,7 @@ const StyledTabs = styled.aside`
 const StyledTabContent = styled.div`
   background: #fff;
   display: flex;
-  overflow: hidden;
+  overflow: auto;
   border-radius: 10px;
   height: 100%;
   position: relative;
