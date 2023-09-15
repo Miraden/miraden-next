@@ -11,11 +11,9 @@ import {
   StateDirectionsEnum,
   SupportStatesEnum,
 } from '@/modules/Leads/Maker/StatesTypes'
-import useAuth from '@/hooks/useAuth'
 import { Login } from '@/modules/Customer'
 import { Preloader } from '@/components/ui/Preloader'
 import { LeadMakerProvider } from '@/modules/Leads/Maker/LeadMakerProvider'
-import Modal from '@/components/ui/Modal'
 import PaySuccessModal from '@/modules/Leads/components/PaySuccessModal'
 import AuthFormLayout from '@/modules/Security/AuthFormLayout'
 import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'

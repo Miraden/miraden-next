@@ -3,7 +3,11 @@ import { theme } from '../../../styles/tokens'
 import cn from 'classnames'
 import RegisterWorkFlow from '@/modules/Security/Register/RegisterWorkFlow'
 import { useCallback, useEffect, useState } from 'react'
-import { RegisterStateDirectionsEnum, RegisterStates, RegisterSupportStatesEnum } from '@/modules/Security/Register/RegisterStates'
+import {
+  RegisterStateDirectionsEnum,
+  RegisterStates,
+  RegisterSupportStatesEnum,
+} from '@/modules/Security/Register/RegisterStates'
 import { Button } from '@/components/ui/Button'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
 import RegisterManager from '@/infrastructure/Security/Register/RegisterManager'
@@ -17,7 +21,9 @@ let isNeedUpdate = true
 
 const workflow = new RegisterWorkFlow()
 export default function RegisterPage(): JSX.Element {
-  const [currentState, setCurrentState] = useState<number | string>(RegisterStates.Status)
+  const [currentState, setCurrentState] = useState<number | string>(
+    RegisterStates.Status
+  )
   const [render, forceRender] = useState<boolean>(false)
 
   const forceUpdate = (): void => {
@@ -41,36 +47,41 @@ export default function RegisterPage(): JSX.Element {
     forceUpdate()
   }, [currentState, workflow, render])
 
-  const onPrevClick = useCallback((e: any) => {
-    if (workflow.getPrevState() === RegisterSupportStatesEnum.Home) {
-      window.location.href = '/'
-      return
-    }
+  const onPrevClick = useCallback(
+    (e: any) => {
+      if (workflow.getPrevState() === RegisterSupportStatesEnum.Home) {
+        window.location.href = '/'
+        return
+      }
 
-    if (workflow.getPrevState() === RegisterSupportStatesEnum.Profile) {
-      window.location.href = '/profile'
-      return
-    }
-    workflow.onPrev(e)
-  }, [workflow])
+      if (workflow.getPrevState() === RegisterSupportStatesEnum.Profile) {
+        window.location.href = '/profile'
+        return
+      }
+      workflow.onPrev(e)
+    },
+    [workflow]
+  )
 
-  const onNextClick = useCallback(async (e: any) => {
-    const isLastStep = workflow.isLastStep(workflow.getCurrentState())
-    if (isLastStep) {
-      const data = workflow.getDataToSubmit()
-      const manager = new RegisterManager()
-      const result: ApiResponseType = await manager.newUser(data)
-      console.log('ok')
-      if (result.code === HttpCodes.OK) {
+  const onNextClick = useCallback(
+    async (e: any) => {
+      const isLastStep = workflow.isLastStep(workflow.getCurrentState())
+      if (isLastStep) {
+        const data = workflow.getDataToSubmit()
+        const manager = new RegisterManager()
+        const result: ApiResponseType = await manager.newUser(data)
+        console.log('ok')
+        if (result.code === HttpCodes.OK) {
+          workflow.onNext(e)
+        }
+      }
+
+      if (!isLastStep) {
         workflow.onNext(e)
       }
-    }
-
-    if (!isLastStep) {
-      workflow.onNext(e)
-    }
-
-  }, [workflow])
+    },
+    [workflow]
+  )
 
   return (
     <StyledPage className="ContainerFull">
@@ -123,14 +134,15 @@ export default function RegisterPage(): JSX.Element {
                   )}
                 </div>
                 <div className="Steps__footerRight">
-                  {workflow.isNextButtonVisible(currentState) &&
+                  {workflow.isNextButtonVisible(currentState) && (
                     <Button
                       className={'ButtonForward'}
                       onClick={onNextClick}
                       disabled={workflow.isNextTransitionLocked()}
                     >
                       {workflow.findData(currentState).nextUrlLabel}
-                    </Button>}
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>

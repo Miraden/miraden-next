@@ -1,5 +1,8 @@
-import { ApiRequest, ApiRequestMethods } from "@/infrastructure/Network/Http/ApiRequest"
-import { ApiResponse } from "@/infrastructure/Network/Http/ApiResponse"
+import {
+  ApiRequest,
+  ApiRequestMethods,
+} from '@/infrastructure/Network/Http/ApiRequest'
+import { ApiResponse } from '@/infrastructure/Network/Http/ApiResponse'
 
 export interface RegisterSubmitData {
   email: string
@@ -8,9 +11,7 @@ export interface RegisterSubmitData {
 }
 
 class RegisterManager {
-  constructor() {
-
-  }
+  constructor() {}
 
   public async newUser(data: RegisterSubmitData): Promise<ApiResponseType> {
     const apiRequest: ApiRequest = new ApiRequest()
@@ -25,7 +26,7 @@ class RegisterManager {
       method: ApiRequestMethods.POST,
       headers: headers,
       endpoint: '/user/register',
-      body: body
+      body: body,
     })
 
     return res as ApiResponseType
