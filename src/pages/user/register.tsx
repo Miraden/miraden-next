@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/Button'
 import { ArrowsIcon } from '@/icons/ArrowsIcon'
 import RegisterManager from '@/infrastructure/Security/Register/RegisterManager'
 import { HttpCodes } from '@/infrastructure/Network/Http/ApiResponse'
+import { Preloader } from '@/components/ui/Preloader'
 
 const desktop: string = theme.breakpoints.desktop.max + 'px'
 const tablet: string = theme.breakpoints.tablet.max + 'px'
@@ -25,6 +26,7 @@ export default function RegisterPage(): JSX.Element {
     RegisterStates.Status
   )
   const [render, forceRender] = useState<boolean>(false)
+  const [isBusy, setBusy] = useState<boolean>(true)
 
   const forceUpdate = (): void => {
     if (isNeedUpdate) {
@@ -35,6 +37,7 @@ export default function RegisterPage(): JSX.Element {
 
   useEffect(() => {
     workflow.transitionRules(currentState)
+    setBusy(false)
     workflow.onState((direction: RegisterStateDirectionsEnum): void => {
       isNeedUpdate = !isNeedUpdate
       setCurrentState(workflow.getCurrentState())
@@ -67,10 +70,11 @@ export default function RegisterPage(): JSX.Element {
     async (e: any) => {
       const isLastStep = workflow.isLastStep(workflow.getCurrentState())
       if (isLastStep) {
+        setBusy(true)
         const data = workflow.getDataToSubmit()
         const manager = new RegisterManager()
         const result: ApiResponseType = await manager.newUser(data)
-        console.log('ok')
+        setBusy(false)
         if (result.code === HttpCodes.OK) {
           workflow.onNext(e)
         }
@@ -88,64 +92,69 @@ export default function RegisterPage(): JSX.Element {
       <div className={cn('PageWrapper')}>
         <div className={cn('PageContent')}>
           <div id={'StepsWrapper'} className="StepsWrapper">
-            <div className="Steps__header">
-              <h1 className={'Font_headline_3'}>
-                {workflow.findData(currentState).title}
-              </h1>
-            </div>
-            <div className="Steps__body">
-              {workflow.findData(currentState).body}
-            </div>
-            <div className="Steps__footer">
-              <div className="Steps__progressBar">
-                {workflow.isCurrentProgressBarVisible(currentState) && (
-                  <div
-                    className="Steps__progressCurrent"
-                    style={{
-                      width: workflow.calcProgress(currentState) + '%',
-                    }}
-                  ></div>
-                )}
-              </div>
-              <div className="Steps__footerBody">
-                <div className="Steps__footerLeft">
-                  <Button
-                    secondary
-                    onClick={onPrevClick}
-                    disabled={workflow.isPrevTransitionLocked()}
-                    className="Step__goBackButton"
-                    leftIcon={<ArrowsIcon left={true} />}
-                  >
-                    {workflow.findData(currentState).prevUrlLabel}
-                  </Button>
-                  {workflow.isStepsStatsVisible(currentState) && (
-                    <div className="Reg__footerSteps">
-                      <span className="Font_16_24">Шаг</span>
-                      <div className="Reg__stepCounts">
-                        <span className="Reg__footerCount Font_16_140 Color_blue_primary">
-                          {currentState}
-                        </span>
-                        <span>&nbsp;/&nbsp;</span>
-                        <span className="Font_16_140 Color_text_grey">
-                          {workflow.getTotalSteps()}
-                        </span>
-                      </div>
+            {isBusy && <Preloader />}
+            {!isBusy && (
+              <>
+                <div className="Steps__header">
+                  <h1 className={'Font_headline_3'}>
+                    {workflow.findData(currentState).title}
+                  </h1>
+                </div>
+                <div className="Steps__body">
+                  {workflow.findData(currentState).body}
+                </div>
+                <div className="Steps__footer">
+                  <div className="Steps__progressBar">
+                    {workflow.isCurrentProgressBarVisible(currentState) && (
+                      <div
+                        className="Steps__progressCurrent"
+                        style={{
+                          width: workflow.calcProgress(currentState) + '%',
+                        }}
+                      ></div>
+                    )}
+                  </div>
+                  <div className="Steps__footerBody">
+                    <div className="Steps__footerLeft">
+                      <Button
+                        secondary
+                        onClick={onPrevClick}
+                        disabled={workflow.isPrevTransitionLocked()}
+                        className="Step__goBackButton"
+                        leftIcon={<ArrowsIcon left={true} />}
+                      >
+                        {workflow.findData(currentState).prevUrlLabel}
+                      </Button>
+                      {workflow.isStepsStatsVisible(currentState) && (
+                        <div className="Reg__footerSteps">
+                          <span className="Font_16_24">Шаг</span>
+                          <div className="Reg__stepCounts">
+                            <span className="Reg__footerCount Font_16_140 Color_blue_primary">
+                              {currentState}
+                            </span>
+                            <span>&nbsp;/&nbsp;</span>
+                            <span className="Font_16_140 Color_text_grey">
+                              {workflow.getTotalSteps()}
+                            </span>
+                          </div>
+                        </div>
+                      )}
                     </div>
-                  )}
+                    <div className="Steps__footerRight">
+                      {workflow.isNextButtonVisible(currentState) && (
+                        <Button
+                          className={'ButtonForward'}
+                          onClick={onNextClick}
+                          disabled={workflow.isNextTransitionLocked()}
+                        >
+                          {workflow.findData(currentState).nextUrlLabel}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
                 </div>
-                <div className="Steps__footerRight">
-                  {workflow.isNextButtonVisible(currentState) && (
-                    <Button
-                      className={'ButtonForward'}
-                      onClick={onNextClick}
-                      disabled={workflow.isNextTransitionLocked()}
-                    >
-                      {workflow.findData(currentState).nextUrlLabel}
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </div>
+              </>
+            )}
           </div>
         </div>
       </div>
