@@ -65,7 +65,7 @@ const ReviewCard = ({
       </div>
       <div className="Card__text">
         <h3 className="Font_22_120_600 sm:Font_18_120_600">{title}</h3>
-        <p className="Font_16_24 sm:Font_16_24 Color_grey_dark">{text}</p>
+        <p className="Font_16_24 sm:Font_16_24 Color_grey_dark" dangerouslySetInnerHTML={{ __html: text }}></p>
       </div>
     </StyledReviewCard>
   )
