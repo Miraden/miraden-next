@@ -78,6 +78,10 @@ const StyledHeader = styled.header`
       padding: 8px 20px 12px 20px;
       top: 0;
       border-radius: 0 0 10px 10px;
+
+      &__topBlock {
+        height: 0;
+      }
     }
 
     .Header__mobile {
