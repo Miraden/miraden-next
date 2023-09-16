@@ -171,10 +171,7 @@ const Login = ({ className, onFailure, onResponse, onSuccess }: Props) => {
                 onPasswordChange(event)
               }
             />
-            <Link
-              href="/customer/pass-recover-1"
-              className="Font_14_16 Reg__restorePass"
-            >
+            <Link href="/user/restore" className="Font_14_16 Reg__restorePass">
               Напомнить пароль
             </Link>
             {isLoginHasError && (

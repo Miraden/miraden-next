@@ -312,7 +312,8 @@ const StyledReviews = styled.section`
     transform: rotate(180deg);
   }
 
-  @media (min-width: ${theme.breakpoints.tablet.min + 'px'}) and (max-width: ${theme.breakpoints.tablet.max + 'px'}) {
+  @media (min-width: ${theme.breakpoints.tablet.min +
+    'px'}) and (max-width: ${theme.breakpoints.tablet.max + 'px'}) {
     margin-top: 0;
 
     .Reviews__head {
@@ -376,7 +377,8 @@ const StyledReviews = styled.section`
     }
   }
 
-  @media (min-width: ${theme.breakpoints.mobile.min + 'px'}) and (max-width: ${theme.breakpoints.mobile.max + 'px'}) {
+  @media (min-width: ${theme.breakpoints.mobile.min +
+    'px'}) and (max-width: ${theme.breakpoints.mobile.max + 'px'}) {
     padding-top: 65px;
     margin-top: 0;
 

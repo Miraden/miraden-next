@@ -1,6 +1,6 @@
 import { WarningIcon } from '@/icons'
 import cn from 'classnames'
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useCallback, useState } from 'react'
 import styled from 'styled-components'
 
 interface Props {
@@ -26,6 +26,7 @@ const NumberInput = ({
   value,
   onChange,
 }: Props) => {
+  const [val, setValue] = useState<string | undefined>(value)
   const [isFocused, setIsFocused] = useState(false)
 
   const handleFocus = () => {
@@ -40,6 +41,15 @@ const NumberInput = ({
     }
   }
 
+  const onChangeCallback = useCallback(
+    (e: any) => {
+      const value = e.target.value.replace(/\D+/g, '')
+      setValue(value)
+      onChange(e)
+    },
+    [onChange]
+  )
+
   return (
     <StyledNumberInput className={className}>
       <StyledNumberInputField
@@ -50,8 +60,8 @@ const NumberInput = ({
         })}
       >
         <StyledNumberInputInput
-          value={value}
-          onChange={onChange}
+          value={val}
+          onChange={onChangeCallback}
           onFocus={handleFocus}
           onBlur={handleBlur}
           maxLength={maxLength}
@@ -83,7 +93,6 @@ const StyledNumberInput = styled.div`
   .FieldInput__disabled {
     input {
       background: #eff3fb !important;
-      box-shadow: none;
       pointer-events: none;
     }
     label {
@@ -155,20 +164,20 @@ const StyledNumberInputInput = styled.input`
   width: 100%;
   position: relative;
   border: none;
-  box-shadow: 0 0 0 2px #e1edfd inset;
   border-radius: 10px;
   padding: 18px 58px 4px 20px;
   font-size: 16px;
   line-height: 24px;
   height: 60px;
-  outline: none;
   transition: 0.1s;
+  outline: 2px solid ${({ theme }) => theme.colors.fields.stroke};
+
   &:hover {
     cursor: text;
-    box-shadow: 0 0 0 2px #cddef4 inset;
+    outline: 2px solid ${({ theme }) => theme.colors.fields.strokeHover};
   }
   &:focus {
-    box-shadow: 0 0 0 2px #4e6af3 inset;
+    outline: 2px solid ${({ theme }) => theme.colors.fields.strokeFocused};
   }
 `
 
