@@ -194,18 +194,7 @@ const LeadCard = (props: LeadProps) => {
       <div className="Leads__footer">
         <div className="Leads__footer-left">
           <div className="Leads__price_range Font_Accent_20_B">
-            {!isMobile && (
-              <PricingSelect
-                options={['€', '$', '£', '₽']}
-                price={price}
-                yieldCount={8}
-                yieldCountPercent={30}
-                firstInstallment={'30'}
-                firstInstallmentPercent={'30'}
-                singleCost={'30'}
-              />
-            )}
-            {isMobile && price + ' ' + props.budget.currency}
+            {price + ' ' + props.budget.currency}
           </div>
         </div>
         <div className="Leads__footer-right">

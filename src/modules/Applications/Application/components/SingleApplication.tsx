@@ -116,15 +116,7 @@ const SingleApplication = (props: LeadEntryStruct) => {
       </div>
       <div className="SingleApplication__pricing">
         <div className="SingleApplication__pricingSelect Font_24_120">
-          <PricingSelect
-            options={currencyOptions}
-            price={price}
-            yieldCount={yieldCount}
-            yieldCountPercent={yieldCount}
-            firstInstallment={firstInstallment}
-            firstInstallmentPercent={firstInstallmentPercent}
-            singleCost={singleCost}
-          />
+          {price + ' ' + props.budget.currency}
         </div>
         <div className="SingleApplication__pricingInfo">
           <div>
