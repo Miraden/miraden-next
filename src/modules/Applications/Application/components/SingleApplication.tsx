@@ -133,190 +133,227 @@ const SingleApplication = (props: LeadEntryStruct) => {
         </div>
       </div>
       <div className="SingleApplication__pricingSelectMobile Font_24_120">
-        <PricingSelect
-          options={currencyOptions}
-          price={price}
-          yieldCount={yieldCount}
-          yieldCountPercent={yieldCount}
-          firstInstallment={firstInstallment}
-          firstInstallmentPercent={firstInstallmentPercent}
-          singleCost={singleCost}
-        />
+        {price + ' ' + props.budget.currency}
       </div>
 
       <div className="SingleApplication__structureInfo_scrollable">
         <div className="SingleApplication__structureInfo">
-          <div className="SingleApplication__structureInfoContent">
-            <div className="SingleApplication__structureInfoContent__head">
-              <BuildYearIcon width={18} height={18} />
-              <div className={'Font_headline_4'}>
-                {props.deadlineAt
-                  ? formatDeadlineDate(props.deadlineAt)
-                  : formatDeadlineDate(props.buildYear)}
+          {props.deadlineAt && (
+            <div className="SingleApplication__structureInfoContent">
+              <div className="SingleApplication__structureInfoContent__head">
+                <BuildYearIcon width={18} height={18} />
+                <div className={'Font_headline_4'}>
+                  {props.deadlineAt
+                    ? formatDeadlineDate(props.deadlineAt)
+                    : formatDeadlineDate(props.buildYear)}
+                </div>
+              </div>
+              <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+                Год постройки
               </div>
             </div>
-            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
-              Год постройки
-            </div>
-          </div>
+          )}
 
-          <div className="SingleApplication__structureInfoContent">
-            <div className="SingleApplication__structureInfoContent__head">
-              <SquareIcon width={18} height={18} />
-              <div className="Font_headline_4">
-                {props.areas.total.value} {props.areas.total.unit}
+          {props.areas.total.value > 0 && (
+            <div className="SingleApplication__structureInfoContent">
+              <div className="SingleApplication__structureInfoContent__head">
+                <SquareIcon width={18} height={18} />
+                <div className="Font_headline_4">
+                  {props.areas.total.value} {props.areas.total.unit}
+                </div>
+              </div>
+              <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+                Общая площадь
               </div>
             </div>
-            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
-              Общая площадь
-            </div>
-          </div>
+          )}
 
-          <div className="SingleApplication__structureInfoContent">
-            <div className="SingleApplication__structureInfoContent__head">
-              <LivingSquareIcon width={18} height={18} />
-              <div className="Font_headline_4">
-                {props.areas.living.value} {props.areas.living.unit}
+          {props.areas.living.value > 0 && (
+            <div className="SingleApplication__structureInfoContent">
+              <div className="SingleApplication__structureInfoContent__head">
+                <LivingSquareIcon width={18} height={18} />
+                <div className="Font_headline_4">
+                  {props.areas.living.value} {props.areas.living.unit}
+                </div>
+              </div>
+              <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+                Жилая площадь
               </div>
             </div>
-            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
-              Жилая площадь
-            </div>
-          </div>
+          )}
 
-          <div className="SingleApplication__structureInfoContent">
-            <div className="SingleApplication__structureInfoContent__head">
-              <RoomsIcon width={18} height={18} />
-              <div className="Font_headline_4">{props.rooms.total}</div>
+          {props.rooms.total > 0 && (
+            <div className="SingleApplication__structureInfoContent">
+              <div className="SingleApplication__structureInfoContent__head">
+                <RoomsIcon width={18} height={18} />
+                <div className="Font_headline_4">{props.rooms.total}</div>
+              </div>
+              <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+                Комнат
+              </div>
             </div>
-            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
-              Комнат
+          )}
+
+          {props.rooms.beds > 0 && (
+            <div className="SingleApplication__structureInfoContent">
+              <div className="SingleApplication__structureInfoContent__head">
+                <RoomsIcon width={18} height={18} />
+                <p className="Font_headline_4">{props.rooms.beds}</p>
+              </div>
+              <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+                Спален
+              </div>
             </div>
-          </div>
-          <div className="SingleApplication__structureInfoContent">
-            <div className="SingleApplication__structureInfoContent__head">
-              <RoomsIcon width={18} height={18} />
-              <p className="Font_headline_4">{props.rooms.beds}</p>
+          )}
+
+          {props.rooms.bathroom > 0 && (
+            <div className="SingleApplication__structureInfoContent">
+              <div className="SingleApplication__structureInfoContent__head">
+                <RoomsIcon width={18} height={18} />
+                <div className="Font_headline_4">{props.rooms.bathroom}</div>
+              </div>
+              <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
+                Санузлов
+              </div>
             </div>
-            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
-              Спален
-            </div>
-          </div>
-          <div className="SingleApplication__structureInfoContent">
-            <div className="SingleApplication__structureInfoContent__head">
-              <RoomsIcon width={18} height={18} />
-              <div className="Font_headline_4">{props.rooms.bathroom}</div>
-            </div>
-            <div className="Font_16_150 Color_text_grey SingleApplication__structureInfoContent__label">
-              Санузлов
-            </div>
-          </div>
+          )}
         </div>
       </div>
       <div className="Divider"></div>
       <div className="SingleApplication__fullInfo Font_16_24">
-        <div className="SingleApplication__location">
-          <div>
-            <PointIconFooter width={18} height={18} />
-            <p>Локация</p>
+        {props.location && (
+          <div className="SingleApplication__location">
+            <div>
+              <PointIconFooter width={18} height={18} />
+              <p>Локация</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>{props.location.country}</p>
+              <p>{props.location.city}</p>
+            </div>
           </div>
-          <div className="SingleApplication__locationInfo">
-            <p>{props.location.country}</p>
-            <p>{props.location.city}</p>
+        )}
+
+        {props.format && (
+          <div className="SingleApplication__location">
+            <div>
+              <CashIcon width={18} height={18} />
+              <p>Формат сделки</p>
+            </div>
+            <div>
+              <p className="SingleApplication__locationInfo">{props.format}</p>
+            </div>
           </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <CashIcon width={18} height={18} />
-            <p>Формат сделки</p>
+        )}
+
+        {props.type && (
+          <div className="SingleApplication__location">
+            <div>
+              <ApartmentIcon />
+              <p>Тип</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>{Object.keys(props.type)[0]}</p>
+              <p>{Object.values(props.type)[0]}</p>
+            </div>
           </div>
-          <div>
-            <p className="SingleApplication__locationInfo">{props.format}</p>
+        )}
+
+        {props.status && (
+          <div className="SingleApplication__location">
+            <div>
+              <BuildYearIcon width={18} height={18} />
+              <p>Состояние</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>{props.status}</p>
+            </div>
           </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <ApartmentIcon />
-            <p>Тип</p>
+        )}
+
+        {props.areas.total.value > 0 && props.areas.living.value > 0 && (
+          <div className="SingleApplication__location">
+            <div>
+              <SquareIcon width={18} height={18} />
+              <p>Площадь</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>
+                Общая — {props.areas.total.value} {props.areas.total.unit}
+              </p>
+              <p>
+                Жилая — {props.areas.living.value} {props.areas.living.unit}
+              </p>
+            </div>
           </div>
-          <div className="SingleApplication__locationInfo">
-            <p>{Object.keys(props.type)[0]}</p>
-            <p>{Object.values(props.type)[0]}</p>
+        )}
+
+        {props.rooms.total > 0 &&
+          props.rooms.beds > 0 &&
+          props.rooms.bathroom > 0 && (
+            <div className="SingleApplication__location">
+              <div>
+                <RoomsIcon width={18} height={18} />
+                <p>Комнаты</p>
+              </div>
+              <div className="SingleApplication__locationInfo">
+                <p>Всего — {props.rooms.total}</p>
+                <p>Спальни — {props.rooms.beds}</p>
+                <p>Санузлы — {props.rooms.bathroom}</p>
+              </div>
+            </div>
+          )}
+
+        {props.purpose && (
+          <div className="SingleApplication__location">
+            <div>
+              <PurposeCheckIcon width={18} height={18} />
+              <p>Цель покупки</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>{props.purpose}</p>
+            </div>
           </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <BuildYearIcon width={18} height={18} />
-            <p>Состояние</p>
+        )}
+
+        {props.readyDeal && (
+          <div className="SingleApplication__location">
+            <div>
+              <TimerIcon />
+              <p>Срочность</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>{props.readyDeal}</p>
+            </div>
           </div>
-          <div className="SingleApplication__locationInfo">
-            <p>{props.status}</p>
+        )}
+
+        {props.purchaseType && (
+          <div className="SingleApplication__location">
+            <div>
+              <CreditCardIcon attr={{ width: 18, height: 18 }} />
+              <p>Способ покупки</p>
+            </div>
+            <div className="SingleApplication__locationInfo">
+              <p>{props.purchaseType}</p>
+            </div>
           </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <SquareIcon width={18} height={18} />
-            <p>Площадь</p>
+        )}
+
+        {props.description && (
+          <div className="SingleApplication__location">
+            <div>
+              <LikeIcon width={18} height={18} />
+              <p>Пожелания</p>
+            </div>
+            <div className="SingleApplication__locationInfoText">
+              <div
+                className="SingleApplication__locationInfo"
+                dangerouslySetInnerHTML={{ __html: props.description }}
+              ></div>
+            </div>
           </div>
-          <div className="SingleApplication__locationInfo">
-            <p>
-              Общая — {props.areas.total.value} {props.areas.total.unit}
-            </p>
-            <p>
-              Жилая — {props.areas.living.value} {props.areas.living.unit}
-            </p>
-          </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <RoomsIcon width={18} height={18} />
-            <p>Комнаты</p>
-          </div>
-          <div className="SingleApplication__locationInfo">
-            <p>Всего — {props.rooms.total}</p>
-            <p>Спальни — {props.rooms.beds}</p>
-            <p>Санузлы — {props.rooms.bathroom}</p>
-          </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <PurposeCheckIcon width={18} height={18} />
-            <p>Цель покупки</p>
-          </div>
-          <div className="SingleApplication__locationInfo">
-            <p>{props.purpose}</p>
-          </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <TimerIcon />
-            <p>Срочность</p>
-          </div>
-          <div className="SingleApplication__locationInfo">
-            <p>{props.readyDeal}</p>
-          </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <CreditCardIcon attr={{ width: 18, height: 18 }} />
-            <p>Способ покупки</p>
-          </div>
-          <div className="SingleApplication__locationInfo">
-            <p>{props.purchaseType}</p>
-          </div>
-        </div>
-        <div className="SingleApplication__location">
-          <div>
-            <LikeIcon width={18} height={18} />
-            <p>Пожелания</p>
-          </div>
-          <div className="SingleApplication__locationInfoText">
-            <div
-              className="SingleApplication__locationInfo"
-              dangerouslySetInnerHTML={{ __html: props.description }}
-            ></div>
-          </div>
-        </div>
+        )}
       </div>
     </StyledSingleApplication>
   )
@@ -436,7 +473,6 @@ const StyledSingleApplication = styled.div`
     align-items: center;
     padding: 20px 20px 18px;
     margin-bottom: 3px;
-    justify-content: space-between;
     gap: 40px;
   }
 

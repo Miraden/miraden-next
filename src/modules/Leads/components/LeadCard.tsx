@@ -115,11 +115,14 @@ const LeadCard = (props: LeadProps) => {
           </p>
         </div>
       </div>
-      <div className="Leads__head">
-        <h5 className={'Font_headline_5'}>
-          <Link href={'/lead/' + props.id.toString()}>{props.title}</Link>
-        </h5>
-      </div>
+      {props.title && (
+        <div className="Leads__head">
+          <h5 className={'Font_headline_5'}>
+            <Link href={'/lead/' + props.id.toString()}>{props.title}</Link>
+          </h5>
+        </div>
+      )}
+
       <div className="Leads__location Font_body_alt">
         <LocationIcon />
         <p>{props.location}</p>
@@ -171,24 +174,35 @@ const LeadCard = (props: LeadProps) => {
               : props.buildYear}
           </span>
         </p>
-        <p>
-          <AreaIcon />
-          <span>
-            {props.areas.total} м <sup>2</sup>
-          </span>
-        </p>
-        <p>
-          <PlanningIcon />
-          <span>{props.areas.living}</span>
-        </p>
-        <p>
-          <BedIcon />
-          <span>{props.rooms.beds}</span>
-        </p>
-        <p>
-          <BathsIcon />
-          <span>{props.rooms.bathroom}</span>
-        </p>
+        {Number(props.areas.total) > 0 && (
+          <p>
+            <AreaIcon />
+            <span>
+              {props.areas.total} м <sup>2</sup>
+            </span>
+          </p>
+        )}
+
+        {Number(props.areas.living) > 0 && props.areas.living && (
+          <p>
+            <PlanningIcon />
+            <span>{props.areas.living}</span>
+          </p>
+        )}
+
+        {Number(props.rooms.beds) > 0 && (
+          <p>
+            <BedIcon />
+            <span>{props.rooms.beds}</span>
+          </p>
+        )}
+
+        {Number(props.rooms.bathroom) > 0 && (
+          <p>
+            <BathsIcon />
+            <span>{props.rooms.bathroom}</span>
+          </p>
+        )}
       </div>
 
       <div className="Leads__footer">

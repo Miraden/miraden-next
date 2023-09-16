@@ -49,6 +49,8 @@ const Applications = (pageProps: any) => {
         isPublished={item.isPublished}
         rooms={item.rooms}
         rentPeriod={item.rentPeriod}
+        deadlineAt={item.deadlineAt}
+        buildYear={item.buildYear}
         budget={{
           currency: item.budget.currency.symbol,
           startFrom: new Intl.NumberFormat('ru').format(item.budget.startFrom),
