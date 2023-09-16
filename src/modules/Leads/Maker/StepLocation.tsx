@@ -105,51 +105,14 @@ const StepLocation = (props: Props): JSX.Element => {
 
   return (
     <StyledStep>
-      <div className="StepHeader">
-        <div className="StepHeader__left">
-          {view === Views.Map && (
-            <>
-              <RenderSearch onResult={onSearchResult} />
-              <SearchAutoComplete
-                show={autocompleteVisible}
-                items={searchResult}
-                onSelect={(e: google.maps.GeocoderResult) => {
-                  setSelectedPlace(e)
-                  setAutocompleteVisibility(false)
-                }}
-              />
-            </>
-          )}
-          {view === Views.List && <SearchLocations />}
-        </div>
-
-        <div className="StepHeader__right">
-          <div className="CountriesMap" onClick={OnStateToggle}>
-            <MapIcon />
-            <span className={'CountriesMap__label'}>{getViewLabel(view)}</span>
-          </div>
-        </div>
-      </div>
-
       <div className="StepBody">
-        {view === Views.List && (
-          <StepCommonLayout>
-            <RenderLocations
-              className={'Locations'}
-              locations={locations}
-              onChanged={onLocations}
-            />
-          </StepCommonLayout>
-        )}
-        {view === Views.Map && (
-          <StepBlankLayout>
-            <RenderMap
-              onLoad={onMapLoad}
-              place={selectedPlace}
-              onRadius={onRadius}
-            />
-          </StepBlankLayout>
-        )}
+        <StepCommonLayout>
+          <RenderLocations
+            className={'Locations'}
+            locations={locations}
+            onChanged={onLocations}
+          />
+        </StepCommonLayout>
       </div>
     </StyledStep>
   )
