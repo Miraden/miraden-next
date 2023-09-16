@@ -124,6 +124,9 @@ const Login = ({ className, onFailure, onResponse, onSuccess }: Props) => {
       return
     }
 
+    const errors = result.errors as string[]
+    const errorMsg = Object.values(errors)
+    if (onFailure) onFailure(errorMsg[0])
     setFormSubmitted(false)
   }
 
