@@ -1,4 +1,4 @@
-import { Applications } from '@/modules/Home/Applications'
+import { LeadsList } from '@/modules/Home/Leads/LeadsList'
 import { FAQ } from '@/modules/Home/FAQ'
 import { Features } from '@/modules/Home/Features'
 import { Hero } from '@/modules/Home/Hero/Hero'
@@ -21,7 +21,7 @@ export default function Home(pageProps: any) {
       </Head>
       <Layout>
         <Hero />
-        <Applications />
+        <LeadsList />
         <HowItWorks />
         <Features />
         <Reviews />

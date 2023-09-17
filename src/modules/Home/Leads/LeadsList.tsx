@@ -1,13 +1,13 @@
 import { Button } from '@/components/ui'
 import { SetStateAction, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { LeadsLastProvider } from '@/modules/Home/Applications/LeadsProvider'
+import { LeadsLastProvider } from '@/modules/Home/Leads/LeadsProvider'
 import { theme } from '../../../../styles/tokens'
 import cn from 'classnames'
 import { LeadCard } from '@/modules/Leads/components/LeadCard'
 import { useWindowSize, WindowSize } from '@/hooks/useWindowSize'
 
-const Applications = (pageProps: any) => {
+const LeadsList = (pageProps: any) => {
   const [location, setLocation] = useState<string>('')
 
   const handleButtonClick = (location: SetStateAction<string>) => {
@@ -357,4 +357,4 @@ const StyledApplications = styled.section`
   }
 `
 
-export { Applications }
+export { LeadsList }
