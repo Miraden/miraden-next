@@ -6,7 +6,7 @@ import React, { useState } from 'react'
 import useAuth from '@/hooks/useAuth'
 import { theme } from '../../styles/tokens'
 import Modal from '@/components/ui/Modal'
-import { Login } from '@/modules/Customer'
+import { Login } from '@/modules/Security/Login/Login'
 import { Preloader } from '@/components/ui/Preloader'
 import AuthFormLayout from '@/modules/Security/AuthFormLayout'
 

@@ -1,4 +1,4 @@
-import { Login } from '@/modules/Customer'
+import { Login } from '@/modules/Security/Login/Login'
 import Head from 'next/head'
 import styled from 'styled-components'
 import React, { useCallback, useState } from 'react'

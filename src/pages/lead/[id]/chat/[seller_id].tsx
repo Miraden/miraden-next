@@ -9,7 +9,7 @@ import { Header } from '@/modules/Base/Header/Header'
 import { Preloader } from '@/components/ui/Preloader'
 import Modal from '@/components/ui/Modal'
 import AuthFormLayout from '@/modules/Security/AuthFormLayout'
-import { Login } from '@/modules/Customer'
+import { Login } from '@/modules/Security/Login/Login'
 import {
   ChatMessages,
   MessageDirection,
