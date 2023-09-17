@@ -3,7 +3,6 @@ import Head from 'next/head'
 import styled from 'styled-components'
 import { Chats } from '@/modules/Chats/Chats'
 import React, { useEffect, useState } from 'react'
-import useAuth from '@/hooks/useAuth'
 import { theme } from '../../styles/tokens'
 import Modal from '@/components/ui/Modal'
 import { Login } from '@/modules/Security/Login/Login'
@@ -19,8 +18,6 @@ export default function ApplicationsChatsAllPage(pageProps: any) {
   const [isUserAuth, setUserAuth] = useState<boolean>(false)
   const [userReady, setUserReady] = useState<boolean>(false)
   const appContext = useAppContext()
-  appContext.isUserAuth = pageProps.isUserAuth
-  appContext.userProfile = pageProps.userProfile
 
   useEffect(() => {}, [])
 

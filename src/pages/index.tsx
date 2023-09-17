@@ -7,13 +7,8 @@ import { Reviews } from '@/modules/Home/Reviews'
 import Head from 'next/head'
 import { Layout } from '@/modules/Base/Layout'
 import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
-import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
-export default function Home(pageProps: any) {
-  const app = useAppContext()
-  app.isUserAuth = pageProps.isUserAuth
-  app.userToken = pageProps.userToken
-  app.userProfile = pageProps.userProfile
+export default function Home() {
   return (
     <>
       <Head>

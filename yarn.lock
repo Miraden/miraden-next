@@ -545,6 +545,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/js-cookie@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@types/js-cookie@npm:3.0.4"
+  checksum: 46ac93974776a256f3cedadf60b45ded4d905a5e69986882d8c17baa351cb2e81a691864a1f19c3ca90eaa2cb3eeb7cb5426416b487a7d54cf5ff278d39d7870
+  languageName: node
+  linkType: hard
+
 "@types/json5@npm:^0.0.29":
   version: 0.0.29
   resolution: "@types/json5@npm:0.0.29"
@@ -2843,6 +2850,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-cookie@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "js-cookie@npm:3.0.5"
+  checksum: 2dbd2809c6180fbcf060c6957cb82dbb47edae0ead6bd71cbeedf448aa6b6923115003b995f7d3e3077bfe2cb76295ea6b584eb7196cca8ba0a09f389f64967a
+  languageName: node
+  linkType: hard
+
 "js-sdsl@npm:^4.1.4":
   version: 4.4.0
   resolution: "js-sdsl@npm:4.4.0"
@@ -3160,6 +3174,7 @@ __metadata:
   dependencies:
     "@googlemaps/js-api-loader": ^1.16.2
     "@types/google.maps": ^3.53.5
+    "@types/js-cookie": ^3.0.4
     "@types/node": 18.16.0
     "@types/react": 18.0.38
     "@types/react-datepicker": ^4.11.2
@@ -3169,6 +3184,7 @@ __metadata:
     cypress: ^12.17.3
     eslint: 8.39.0
     eslint-config-next: 13.3.1
+    js-cookie: ^3.0.5
     keen-slider: ^6.8.5
     next: 13.3.1
     prettier: 2.8.8

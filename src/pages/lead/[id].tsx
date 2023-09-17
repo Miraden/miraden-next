@@ -19,7 +19,6 @@ import { NextRouter, useRouter } from 'next/router'
 import LangManager from '@/infrastructure/Intl/LangManager'
 import { theme } from '../../../styles/tokens'
 import LeadOwnerCard from '@/modules/Leads/LeadOwnerCard'
-import useAuth from '@/hooks/useAuth'
 import { useChatContext } from '@/infrastructure/Chats/UseChatContext'
 import { AppState } from '@/types/App'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
@@ -44,8 +43,6 @@ const LeadEntry = (pageProps: any): JSX.Element => {
   const leadId: number = parseInt(query['id'] as string) as number
 
   const appContext: AppState = useAppContext()
-  appContext.isUserAuth = pageProps.isUserAuth
-  appContext.userProfile = pageProps.userProfile
   const socketManager = appContext.chatConnManager
   const chatContext = useChatContext()
 

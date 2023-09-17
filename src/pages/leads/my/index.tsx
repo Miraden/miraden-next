@@ -4,14 +4,11 @@ import { Header } from '@/modules/Base/Header'
 import styled from 'styled-components'
 import React, { useState } from 'react'
 import { ApplicationFull } from '@/modules/ApplicationsFull/Application'
-import useAuth from '@/hooks/useAuth'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
 
 export default function MyLeadsPage(pageProps: any): JSX.Element {
   const appContext = useAppContext()
-  appContext.isUserAuth = pageProps.isUserAuth
-  appContext.userProfile = pageProps.userProfile
   const [isUserAuth, setUserAuth] = useState<boolean>(appContext.isUserAuth)
 
   return (

@@ -27,8 +27,6 @@ let isNeedUpdate = true
 
 export default function AddLead(pageProps: any): JSX.Element {
   const app = useAppContext()
-  app.isUserAuth = pageProps.isUserAuth
-  app.userToken = pageProps.userToken
   const [isUserAuth, setUserAuth] = useState<boolean>(app.isUserAuth)
   const [isAuthServerResponse, setAuthServerResponse] = useState<boolean>(true)
 

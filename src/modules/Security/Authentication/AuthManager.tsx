@@ -6,6 +6,7 @@ import {
   ApiResponse,
   HttpCodes,
 } from '@/infrastructure/Network/Http/ApiResponse'
+import Cookies from 'js-cookie'
 
 const tokenName: string = 'token'
 
@@ -56,11 +57,13 @@ class AuthManager {
   }
 
   findToken(): string | null {
-    return localStorage.getItem(tokenName)
+    const token = Cookies.get(tokenName)
+    if (!token) return null
+    return token
   }
 
   logout(): void {
-    localStorage.removeItem(tokenName)
+    Cookies.remove(tokenName)
   }
 
   public isUserAuth(): boolean {

@@ -1,10 +1,4 @@
-import {
-  createContext,
-  PropsWithChildren,
-  useContext,
-  useEffect,
-  useState,
-} from 'react'
+import { createContext, PropsWithChildren, useContext } from 'react'
 import ChatConnManager from '@/modules/Chats/ChatConnManager'
 import { AppState } from '@/types/App'
 
@@ -25,8 +19,8 @@ export function AppWrapper(props: PropsWithChildren<Props>): JSX.Element {
     <AppContext.Provider
       value={{
         chatConnManager: socketManager,
-        isUserAuth: false,
-        userProfile: null,
+        isUserAuth: props.pageProps.isUserAuth,
+        userProfile: props.pageProps.userProfile,
       }}
     >
       {props.children}

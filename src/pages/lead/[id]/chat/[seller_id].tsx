@@ -3,7 +3,6 @@ import ChatLayout, { ViewStates } from '@/modules/Chats/ChatLayout'
 import { NextRouter, useRouter } from 'next/router'
 import { useCallback, useEffect, useState } from 'react'
 import { theme } from '../../../../../styles/tokens'
-import useAuth from '@/hooks/useAuth'
 import Head from 'next/head'
 import { Header } from '@/modules/Base/Header/Header'
 import { Preloader } from '@/components/ui/Preloader'
@@ -36,9 +35,6 @@ const LeadChat = (pageProps: any): JSX.Element => {
   const chatContext: Chat.LeadContext = useChatContext()
   const socketManager = appContext.chatConnManager
   const update = useUpdater()
-  appContext.isUserAuth = pageProps.isUserAuth
-  appContext.userToken = pageProps.userToken
-  appContext.userProfile = pageProps.userProfile
 
   const [isUserAuth, setUserAuth] = useState<boolean>(pageProps.isUserAuth)
   const [userReady, setUserReady] = useState<boolean>(true)

@@ -2,15 +2,11 @@ import { Header } from '@/modules/Base/Header'
 import { FavouritesFullLayout } from '@/modules/FavouritesFull/FavouritesFullLayout'
 import Head from 'next/head'
 import styled from 'styled-components'
-import { useState } from 'react'
-import useAuth from '@/hooks/useAuth'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
 
 export default function FavoritesPage(pageProps: any) {
   const appContext = useAppContext()
-  appContext.isUserAuth = pageProps.isUserAuth
-  appContext.userProfile = pageProps.userProfile
 
   return (
     <>

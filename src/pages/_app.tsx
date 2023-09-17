@@ -7,6 +7,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     window.Miraden = window.Miraden || {}
   }, [])
+
   return (
     <AppWrapper pageProps={pageProps}>
       <StylesProvider>

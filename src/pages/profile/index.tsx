@@ -1,18 +1,14 @@
 import Head from 'next/head'
-import React, { useState } from 'react'
+import React from 'react'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import cn from 'classnames'
 import styled from 'styled-components'
 import { Header } from '@/modules/Base/Header'
-import useAuth from '@/hooks/useAuth'
 import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 export default function ProfilePage(pageProps: any): JSX.Element {
   const app = useAppContext()
-  app.isUserAuth = pageProps.isUserAuth
-  app.userToken = pageProps.userToken
-  app.userProfile = pageProps.userProfile
 
   return (
     <>

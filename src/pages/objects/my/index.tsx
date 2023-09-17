@@ -21,8 +21,6 @@ enum TabsMenuState {
 
 export default function MyObjectsPage(pageProps: any): JSX.Element {
   const appContext = useAppContext()
-  appContext.isUserAuth = pageProps.isUserAuth
-  appContext.userProfile = pageProps.userProfile
 
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.All)
   const handleSelect = useCallback((option: TabsMenuState) => {

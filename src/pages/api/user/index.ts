@@ -4,6 +4,8 @@ import {
 } from '@/infrastructure/Network/Http/ApiRequest'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { HttpCodes } from '@/infrastructure/Network/Http/ApiResponse'
+import { Security } from '@/infrastructure/Security/JWT/JWTManager'
+import parseJWTServer = Security.parseJWTServer
 
 export default async function handler(
   req: NextApiRequest,
@@ -33,6 +35,8 @@ export default async function handler(
   const payload = response.payload as UserAuthPayload
   const token = payload.token
 
+  const parsedToken = parseJWTServer(token)
+
   const result: ApiResponseType = {
     code: 200,
     payload: {
@@ -40,14 +44,14 @@ export default async function handler(
     },
   }
 
-  res.setHeader('set-cookie', makeCookie(7, token))
+  res.setHeader('set-cookie', makeCookie(parsedToken.exp, token))
 
   res.status(200).json(result)
 }
 
-function makeCookie(expiredDays: number, token: string): string {
+function makeCookie(expiredSeconds: number, token: string): string {
   const expiredAt = new Date()
-  expiredAt.setDate(expiredAt.getDate() + 7)
+  expiredAt.setTime(expiredSeconds * 1000)
 
   return 'token=' + token + '; Path=/; Expires=' + expiredAt.toUTCString() + ';'
 }

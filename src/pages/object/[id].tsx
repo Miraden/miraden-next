@@ -4,13 +4,11 @@ import { BlankLayout } from '@/modules/Base/BlankLayout'
 import { Header } from '@/modules/Base/Header'
 import styled from 'styled-components'
 import cn from 'classnames'
-import useAuth from '@/hooks/useAuth'
 import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 export default function ObjectEntry(pageProps: any): JSX.Element {
   const appContext = useAppContext()
-  appContext.isUserAuth = pageProps.isUserAuth
 
   const [isUserAuth, setUserAuth] = useState(appContext.isUserAuth)
   const [userReady, setUserReady] = useState<boolean>(true)

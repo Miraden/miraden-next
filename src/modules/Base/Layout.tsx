@@ -1,9 +1,8 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode } from 'react'
 import styled from 'styled-components'
 import { Footer } from './Footer'
 import { Header } from './Header/Header'
 import { theme } from '../../../styles/tokens'
-import useAuth from '@/hooks/useAuth'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 interface LayoutProps {
