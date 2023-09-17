@@ -5,23 +5,14 @@ import cn from 'classnames'
 import styled from 'styled-components'
 import { Header } from '@/modules/Base/Header'
 import useAuth from '@/hooks/useAuth'
+import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
-export default function ProfilePage(): JSX.Element {
-  const [isUserAuth, setUserAuth] = useState(false)
-  const [userReady, setUserReady] = useState<boolean>(false)
-  useAuth({
-    onSuccess: (): void => {
-      setUserAuth(true)
-    },
-
-    onFailure: (): void => {
-      setUserAuth(false)
-    },
-
-    onResponse: (): void => {
-      setUserReady(true)
-    },
-  })
+export default function ProfilePage(pageProps: any): JSX.Element {
+  const app = useAppContext()
+  app.isUserAuth = pageProps.isUserAuth
+  app.userToken = pageProps.userToken
+  app.userProfile = pageProps.userProfile
 
   return (
     <>
@@ -29,7 +20,7 @@ export default function ProfilePage(): JSX.Element {
         <title>Miraden - Личный кабинет</title>
       </Head>
       <BlankLayout>
-        <Header isAuthorized={isUserAuth} isReady={userReady} />
+        <Header isAuthorized={app.isUserAuth} isReady={true} />
         <StyledPage className={'ContainerFull'}>
           <div className={cn('PageWrapper')}>
             <div className={cn('PageContent')}>Profile page</div>
@@ -38,6 +29,26 @@ export default function ProfilePage(): JSX.Element {
       </BlankLayout>
     </>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const tokenCookie: string | undefined = context.req.cookies.token
+  if (!tokenCookie) {
+    return { props: { isUserAuth: false, userToken: '' } }
+  }
+  const authManager = new AuthManagerServer()
+  const isUserAuth = await authManager.validateToken(tokenCookie)
+  let userProfile: User.PublicProfile | null = null
+  if (isUserAuth) {
+    userProfile = await authManager.getMyProfile(tokenCookie)
+  }
+  return {
+    props: {
+      isUserAuth: isUserAuth,
+      userToken: tokenCookie,
+      userProfile: userProfile,
+    },
+  }
 }
 
 const StyledPage = styled.div`

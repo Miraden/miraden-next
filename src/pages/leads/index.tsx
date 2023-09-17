@@ -36,6 +36,7 @@ const langManager = new LangManager()
 export default function LeadsPage(pageProps: any): JSX.Element {
   const appContext = useAppContext()
   appContext.isUserAuth = pageProps.isUserAuth
+  appContext.userProfile = pageProps.userProfile
   const [itemPage, setItemPage] = useState<number>(1)
   const [isUserAuth, setIsUserAuth] = useState<boolean>(false)
   const [isUserReady, setUserReady] = useState<boolean>(false)
@@ -284,7 +285,17 @@ export async function getServerSideProps(context: any) {
   }
   const authManager = new AuthManagerServer()
   const isUserAuth = await authManager.validateToken(tokenCookie)
-  return { props: { isUserAuth: isUserAuth } }
+  let userProfile: User.PublicProfile | null = null
+  if (isUserAuth) {
+    userProfile = await authManager.getMyProfile(tokenCookie)
+  }
+  return {
+    props: {
+      isUserAuth: isUserAuth,
+      userToken: tokenCookie,
+      userProfile: userProfile,
+    },
+  }
 }
 
 const StyledLeads = styled.div`

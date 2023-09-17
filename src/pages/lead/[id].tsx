@@ -45,6 +45,7 @@ const LeadEntry = (pageProps: any): JSX.Element => {
 
   const appContext: AppState = useAppContext()
   appContext.isUserAuth = pageProps.isUserAuth
+  appContext.userProfile = pageProps.userProfile
   const socketManager = appContext.chatConnManager
   const chatContext = useChatContext()
 
@@ -383,7 +384,17 @@ export async function getServerSideProps(context: any) {
   }
   const authManager = new AuthManagerServer()
   const isUserAuth = await authManager.validateToken(tokenCookie)
-  return { props: { isUserAuth: isUserAuth } }
+  let userProfile: User.PublicProfile | null = null
+  if (isUserAuth) {
+    userProfile = await authManager.getMyProfile(tokenCookie)
+  }
+  return {
+    props: {
+      isUserAuth: isUserAuth,
+      userToken: tokenCookie,
+      userProfile: userProfile,
+    },
+  }
 }
 
 const StyledLead = styled.div`

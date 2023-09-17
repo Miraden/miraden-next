@@ -11,6 +11,7 @@ import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServ
 export default function MyLeadsPage(pageProps: any): JSX.Element {
   const appContext = useAppContext()
   appContext.isUserAuth = pageProps.isUserAuth
+  appContext.userProfile = pageProps.userProfile
   const [isUserAuth, setUserAuth] = useState<boolean>(appContext.isUserAuth)
 
   return (
@@ -35,7 +36,17 @@ export async function getServerSideProps(context: any) {
   }
   const authManager = new AuthManagerServer()
   const isUserAuth = await authManager.validateToken(tokenCookie)
-  return { props: { isUserAuth: isUserAuth } }
+  let userProfile: User.PublicProfile | null = null
+  if (isUserAuth) {
+    userProfile = await authManager.getMyProfile(tokenCookie)
+  }
+  return {
+    props: {
+      isUserAuth: isUserAuth,
+      userToken: tokenCookie,
+      userProfile: userProfile,
+    },
+  }
 }
 
 const StyledMyLeads = styled.div`

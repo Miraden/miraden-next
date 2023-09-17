@@ -3,10 +3,15 @@ import { MessagesIcon, PlusIcon, StarIcon } from '@/icons'
 import { WalletIcon } from '@/icons/WalletIcon'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
+import React from 'react'
+import Image from 'next/image'
 
 const HeaderUserMenu = () => {
   const router = useRouter()
   const currentUrl = router.pathname
+  const app = useAppContext()
+
   return (
     <StyledHeaderUserMenu>
       <div className="HeaderUserMenu">
@@ -32,7 +37,7 @@ const HeaderUserMenu = () => {
             className="HeaderUserMenu__linkButton"
             leftIcon={<WalletIcon />}
           >
-            0 €
+            {app.userProfile?.balance} €
           </Button>
         </div>
 
@@ -46,7 +51,14 @@ const HeaderUserMenu = () => {
           </Button>
           <Button href={'/profile'} className={'UserName'}>
             <div className="User Font_16_140 Color_white">
-              <span>A</span>
+              {app.userProfile && (
+                <Image
+                  src={app.userProfile?.photo}
+                  alt={'user_photo'}
+                  width={40}
+                  height={40}
+                />
+              )}
             </div>
           </Button>
         </div>
@@ -90,6 +102,7 @@ const StyledHeaderUserMenu = styled.div`
 
   .HeaderUserMenu__buttons {
     margin-left: 10px;
+
     button:not(:first-child) {
       margin-left: 20px;
     }

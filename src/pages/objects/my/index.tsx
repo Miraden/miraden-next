@@ -10,7 +10,6 @@ import { FilterIcon } from '@/icons/FilterIcon'
 import { Search } from '@/components/ui'
 import { ObjectsDataProvider } from '@/modules/Objects/ObjectsDataProvider'
 import { ObjectCard } from '@/modules/Applications/Application/components/ObjectCard'
-import useAuth from '@/hooks/useAuth'
 import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
@@ -23,6 +22,7 @@ enum TabsMenuState {
 export default function MyObjectsPage(pageProps: any): JSX.Element {
   const appContext = useAppContext()
   appContext.isUserAuth = pageProps.isUserAuth
+  appContext.userProfile = pageProps.userProfile
 
   const [selected, setSelected] = useState<TabsMenuState>(TabsMenuState.All)
   const handleSelect = useCallback((option: TabsMenuState) => {
@@ -156,7 +156,17 @@ export async function getServerSideProps(context: any) {
   }
   const authManager = new AuthManagerServer()
   const isUserAuth = await authManager.validateToken(tokenCookie)
-  return { props: { isUserAuth: isUserAuth } }
+  let userProfile: User.PublicProfile | null = null
+  if (isUserAuth) {
+    userProfile = await authManager.getMyProfile(tokenCookie)
+  }
+  return {
+    props: {
+      isUserAuth: isUserAuth,
+      userToken: tokenCookie,
+      userProfile: userProfile,
+    },
+  }
 }
 
 const StyledObjects = styled.div`

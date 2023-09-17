@@ -29,6 +29,21 @@ class AuthManagerServer {
 
     return response.code === HttpCodes.OK
   }
+
+  public async getMyProfile(token: string): Promise<User.PublicProfile> {
+    const apiRequest: ApiRequest = new ApiRequest()
+    let headers: HeadersInit = {
+      Authorization: 'Bearer ' + token,
+    }
+    const response = (await apiRequest.fetch({
+      method: ApiRequestMethods.GET,
+      endpoint: '/user/profile/personal',
+      body: '',
+      headers: headers,
+    })) as ApiResponseType
+
+    return response.payload as User.PublicProfile
+  }
 }
 
 export default AuthManagerServer

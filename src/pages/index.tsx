@@ -13,6 +13,7 @@ export default function Home(pageProps: any) {
   const app = useAppContext()
   app.isUserAuth = pageProps.isUserAuth
   app.userToken = pageProps.userToken
+  app.userProfile = pageProps.userProfile
   return (
     <>
       <Head>
@@ -38,5 +39,15 @@ export async function getServerSideProps(context: any) {
   }
   const authManager = new AuthManagerServer()
   const isUserAuth = await authManager.validateToken(tokenCookie)
-  return { props: { isUserAuth: isUserAuth, userToken: tokenCookie } }
+  let userProfile: User.PublicProfile | null = null
+  if (isUserAuth) {
+    userProfile = await authManager.getMyProfile(tokenCookie)
+  }
+  return {
+    props: {
+      isUserAuth: isUserAuth,
+      userToken: tokenCookie,
+      userProfile: userProfile,
+    },
+  }
 }

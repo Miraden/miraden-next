@@ -14,6 +14,7 @@ declare namespace User {
       days: string
       years?: string
     }
+    balance: number
   }
 
   interface FullProfile extends PublicProfile {

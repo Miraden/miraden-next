@@ -4,24 +4,13 @@ import Head from 'next/head'
 import styled from 'styled-components'
 import { useState } from 'react'
 import useAuth from '@/hooks/useAuth'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
+import AuthManagerServer from '@/modules/Security/Authentication/AuthManagerServer.server'
 
-export default function FavoritesPage() {
-  const [isUserAuth, setUserAuth] = useState<boolean>(false)
-  const [userReady, setUserReady] = useState<boolean>(false)
-
-  useAuth({
-    onSuccess: (): void => {
-      setUserAuth(true)
-    },
-
-    onFailure: (): void => {
-      setUserAuth(false)
-    },
-
-    onResponse: (): void => {
-      setUserReady(true)
-    },
-  })
+export default function FavoritesPage(pageProps: any) {
+  const appContext = useAppContext()
+  appContext.isUserAuth = pageProps.isUserAuth
+  appContext.userProfile = pageProps.userProfile
 
   return (
     <>
@@ -29,11 +18,31 @@ export default function FavoritesPage() {
         <title>Miraden - Избранное</title>
       </Head>
       <StyledMainApplications>
-        <Header isAuthorized={isUserAuth} isReady={userReady} />
+        <Header isAuthorized={pageProps.isUserAuth} isReady={true} />
         <FavouritesFullLayout />
       </StyledMainApplications>
     </>
   )
+}
+
+export async function getServerSideProps(context: any) {
+  const tokenCookie: string | undefined = context.req.cookies.token
+  if (!tokenCookie) {
+    return { props: { isUserAuth: false, userToken: '' } }
+  }
+  const authManager = new AuthManagerServer()
+  const isUserAuth = await authManager.validateToken(tokenCookie)
+  let userProfile: User.PublicProfile | null = null
+  if (isUserAuth) {
+    userProfile = await authManager.getMyProfile(tokenCookie)
+  }
+  return {
+    props: {
+      isUserAuth: isUserAuth,
+      userToken: tokenCookie,
+      userProfile: userProfile,
+    },
+  }
 }
 
 const StyledMainApplications = styled.main`

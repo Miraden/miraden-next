@@ -38,6 +38,7 @@ const LeadChat = (pageProps: any): JSX.Element => {
   const update = useUpdater()
   appContext.isUserAuth = pageProps.isUserAuth
   appContext.userToken = pageProps.userToken
+  appContext.userProfile = pageProps.userProfile
 
   const [isUserAuth, setUserAuth] = useState<boolean>(pageProps.isUserAuth)
   const [userReady, setUserReady] = useState<boolean>(true)
@@ -281,7 +282,17 @@ export async function getServerSideProps(context: any) {
   }
   const authManager = new AuthManagerServer()
   const isUserAuth = await authManager.validateToken(tokenCookie)
-  return { props: { isUserAuth: isUserAuth } }
+  let userProfile: User.PublicProfile | null = null
+  if (isUserAuth) {
+    userProfile = await authManager.getMyProfile(tokenCookie)
+  }
+  return {
+    props: {
+      isUserAuth: isUserAuth,
+      userToken: tokenCookie,
+      userProfile: userProfile,
+    },
+  }
 }
 
 const StyledMainContainer = styled.main`

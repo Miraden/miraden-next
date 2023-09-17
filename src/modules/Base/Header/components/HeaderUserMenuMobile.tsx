@@ -3,9 +3,11 @@ import { MessagesIcon, MiradenLogoMobile, StarIcon } from '@/icons'
 import { WalletIcon } from '@/icons/WalletIcon'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useCallback, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import { HeaderMenu } from './HeaderMenu'
+import Image from 'next/image'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 interface Props {
   isAuth: boolean
@@ -20,6 +22,7 @@ const HeaderUserMenuMobile = (props: Props) => {
 
   const router = useRouter()
   const currentUrl = router.pathname
+  const app = useAppContext()
   return (
     <StyledHeaderUserMenuMobile>
       <Link href="/" className="HeaderMobile__logoLink">
@@ -32,7 +35,7 @@ const HeaderUserMenuMobile = (props: Props) => {
             header
             className="HeaderUserMenu__linkButton"
             leftIcon={<MessagesIcon />}
-            active={currentUrl.includes('all')}
+            active={currentUrl === '/chats'}
           ></Button>
           <Button
             header
@@ -48,12 +51,19 @@ const HeaderUserMenuMobile = (props: Props) => {
             className="HeaderUserMenu__linkButton"
             leftIcon={<WalletIcon />}
           >
-            0 €
+            {app.userProfile?.balance} €
           </Button>
         </div>
         <button onClick={handleOpenMenu}>
           <div className="User Font_16_140 Color_white">
-            <span>A</span>
+            {app.userProfile && (
+              <Image
+                src={app.userProfile?.photo}
+                alt={'user_photo'}
+                width={40}
+                height={40}
+              />
+            )}
           </div>
         </button>
         {isOpen && <HeaderMenu isOpen={isOpen} isAuth={props.isAuth} />}
