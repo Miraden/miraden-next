@@ -11,7 +11,7 @@ import {
   StateDirectionsEnum,
   SupportStatesEnum,
 } from '@/modules/Leads/Maker/StatesTypes'
-import { Login } from '@/modules/Customer'
+import { Login } from '@/modules/Security/Login/Login'
 import { Preloader } from '@/components/ui/Preloader'
 import { LeadMakerProvider } from '@/modules/Leads/Maker/LeadMakerProvider'
 import PaySuccessModal from '@/modules/Leads/components/PaySuccessModal'
@@ -205,14 +205,6 @@ const RenderStep = (): JSX.Element => {
               )}
             </div>
             <div className="Steps__footerRight">
-              {workflow.isSellersStatsVisible() && (
-                <div className="Steps__sellers">
-                  <span className="Color_text_grey Font_16_24">
-                    Найдено продавцов
-                  </span>
-                  <p className="Color_blue_primary Font_16_140">317</p>
-                </div>
-              )}
               <Button
                 className={'ButtonForward'}
                 onClick={onNextClick}
