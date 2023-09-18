@@ -2,12 +2,14 @@ import styled from 'styled-components'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 import Image from 'next/image'
 import { StarIcon } from '@/icons'
+import ProfileTabLayout from '@/modules/Customer/Profile/ProfileTabLayout'
+import ProfileCommonSection from './ProfileCommonSection'
 
 const PersonalTab = (): JSX.Element => {
   const appContext = useAppContext()
 
   return (
-    <StyledTab>
+    <ProfileTabLayout>
       <StyledSection className="baseSection">
         <div className="baseSection--left">
           {appContext.userProfile && (
@@ -36,7 +38,7 @@ const PersonalTab = (): JSX.Element => {
           </div>
         </div>
       </StyledSection>
-      <StyledSection>
+      <ProfileCommonSection>
         <h2 className={'SectionTitle'}>Личные данные</h2>
         <div className="table">
           <div className="table-item">
@@ -96,9 +98,9 @@ const PersonalTab = (): JSX.Element => {
             </div>
           </div>
         </div>
-      </StyledSection>
+      </ProfileCommonSection>
 
-      <StyledSection>
+      <ProfileCommonSection>
         <h2 className={'SectionTitle'}>Контакты</h2>
         <div className="table">
           <div className="table-item">
@@ -182,16 +184,10 @@ const PersonalTab = (): JSX.Element => {
             </div>
           </div>
         </div>
-      </StyledSection>
-    </StyledTab>
+      </ProfileCommonSection>
+    </ProfileTabLayout>
   )
 }
-
-const StyledTab = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`
 
 const StyledSection = styled.section`
   background: #fff;
@@ -229,43 +225,6 @@ const StyledSection = styled.section`
 
   .infoDateRegister {
     color: ${({ theme }) => theme.colors.grey.textGrey};
-  }
-
-  .SectionTitle {
-    border-bottom: 2px solid ${({ theme }) => theme.colors.stroke.divider};
-    padding: 20px;
-  }
-
-  .table {
-    display: flex;
-    flex-direction: column;
-
-    &-item {
-      padding: 20px;
-      display: flex;
-      flex-direction: row;
-      border-bottom: 1px solid ${({ theme }) => theme.colors.stroke.divider};
-
-      &:last-of-type {
-        border-bottom: none;
-      }
-
-      &-key {
-        width: 217px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        color: ${({ theme }) => theme.colors.grey.textGrey};
-
-        svg path {
-          fill: ${({ theme }) => theme.colors.grey.textGrey};
-        }
-      }
-
-      &-value {
-        flex-grow: 1;
-      }
-    }
   }
 `
 
