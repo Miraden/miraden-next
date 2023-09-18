@@ -4,8 +4,10 @@ import cn from 'classnames'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 interface HeaderProps {
+  /** @deprecated */
   isAuthorized: boolean
   className?: string
+  /** @deprecated */
   isReady: boolean
 }
 

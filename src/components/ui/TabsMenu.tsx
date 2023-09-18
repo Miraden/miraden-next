@@ -118,6 +118,10 @@ class TabsManager {
     this.items.push(item)
   }
 
+  public getAll(): TabMenuItem[] {
+    return this.items
+  }
+
   public getItem(selected: number): TabMenuItem | undefined {
     return this.items.at(selected)
   }

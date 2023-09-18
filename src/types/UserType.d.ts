@@ -3,7 +3,11 @@ declare namespace User {
     id: number
     name: string
     surname: string
+    patronymic: string
     sellerStatus: string
+    sex: string
+    birthDay: string
+    language: string
     photo: string
     isPassportVerified: boolean
     isPro: boolean

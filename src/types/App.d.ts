@@ -4,5 +4,5 @@ declare interface AppState {
   chatConnManager: ChatConnManager
   isUserAuth: boolean
   userToken?: string
-  userProfile: User.PublicProfile | null
+  userProfile: User.FullProfile | null
 }

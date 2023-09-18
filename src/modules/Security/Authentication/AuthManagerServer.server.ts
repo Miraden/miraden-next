@@ -42,7 +42,7 @@ class AuthManagerServer {
       headers: headers,
     })) as ApiResponseType
 
-    return response.payload as User.PublicProfile
+    return response.payload as User.FullProfile
   }
 }
 
