@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useTransition } from 'react'
 import { BlankLayout } from '@/modules/Base/BlankLayout'
 import cn from 'classnames'
 import styled from 'styled-components'
@@ -72,9 +72,13 @@ const RenderLogin = (props: LoginProps): JSX.Element => {
 }
 
 const RenderProfilePage = (): JSX.Element => {
-  const [selected, setSelected] = useState<number>(TabsEnum.Personal)
+  const [isPending, startTransition] = useTransition()
+  const [selectedTab, setSelectedTab] = useState<number>(TabsEnum.Personal)
+
   const onSelect = useCallback((id: number) => {
-    setSelected(id)
+    startTransition(() => {
+      setSelectedTab(id)
+    })
   }, [])
 
   return (
@@ -90,7 +94,7 @@ const RenderProfilePage = (): JSX.Element => {
                 return (
                   <TabsMenuLink
                     onClick={(e: any) => onSelect(id)}
-                    isActive={selected === id}
+                    isActive={selectedTab === id}
                     key={id}
                   >
                     {item.getLabel()}
@@ -100,7 +104,7 @@ const RenderProfilePage = (): JSX.Element => {
             </TabMenuLinks>
           </TabsMenuLayout>
           <div className="UserContent">
-            {tabsManager.getItem(selected)?.getContent()}
+            {tabsManager.getItem(selectedTab)?.getContent()}
           </div>
         </div>
       </div>

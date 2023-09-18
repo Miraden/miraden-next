@@ -4,188 +4,204 @@ import Image from 'next/image'
 import { StarIcon } from '@/icons'
 import ProfileTabLayout from '@/modules/Customer/Profile/ProfileTabLayout'
 import ProfileCommonSection from './ProfileCommonSection'
+import { TextAreaInput } from '@/components/ui'
 
 const PersonalTab = (): JSX.Element => {
   const appContext = useAppContext()
 
   return (
-    <ProfileTabLayout>
-      <StyledSection className="baseSection">
-        <div className="baseSection--left">
-          {appContext.userProfile && (
-            <Image
-              src={appContext.userProfile?.photo}
-              width={170}
-              height={170}
-              alt={'user_photo'}
-            />
-          )}
-        </div>
-        <div className="baseSection--right">
-          <div className="baseSection--infoTop">
-            <div className="userName Font_headline_4">
-              {appContext.userProfile?.name} {appContext.userProfile?.surname}
-            </div>
-            <div className="userId Font_body_base">
-              ID {appContext.userProfile?.id}
-            </div>
+    <StyledTab>
+      <ProfileTabLayout>
+        <StyledSection className="baseSection">
+          <div className="baseSection--left">
+            {appContext.userProfile && (
+              <Image
+                src={appContext.userProfile?.photo}
+                width={170}
+                height={170}
+                alt={'user_photo'}
+              />
+            )}
           </div>
-          <div className="infoDateRegister Font_body_alt">
-            На Miraden с {appContext.userProfile?.registeredAt}
-          </div>
-          <div className="userStatus Font_body_base">
-            {appContext.userProfile?.sellerStatus}
-          </div>
-        </div>
-      </StyledSection>
-      <ProfileCommonSection>
-        <h2 className={'SectionTitle'}>Личные данные</h2>
-        <div className="table">
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Статус
+          <div className="baseSection--right">
+            <div className="baseSection--infoTop">
+              <div className="userName Font_headline_4">
+                {appContext.userProfile?.name} {appContext.userProfile?.surname}
+              </div>
+              <div className="userId Font_body_base">
+                ID {appContext.userProfile?.id}
+              </div>
             </div>
-            <div className="table-item-value">
+            <div className="infoDateRegister Font_body_alt">
+              На Miraden с {appContext.userProfile?.registeredAt}
+            </div>
+            <div className="userStatus Font_body_base">
               {appContext.userProfile?.sellerStatus}
             </div>
           </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Имя
+        </StyledSection>
+        <ProfileCommonSection>
+          <h2 className={'SectionTitle'}>Личные данные</h2>
+          <div className="table">
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Статус
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.sellerStatus}
+              </div>
             </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.name}
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Имя
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.name}
+              </div>
             </div>
-          </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Фамилия
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Фамилия
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.surname}
+              </div>
             </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.surname}
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Отчество
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.patronymic}
+              </div>
             </div>
-          </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Отчество
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Пол
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.sex}
+              </div>
             </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.patronymic}
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Дата рождения
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.birthDay}
+              </div>
             </div>
-          </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Пол
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.sex}
-            </div>
-          </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Дата рождения
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.birthDay}
-            </div>
-          </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Язык
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.language}
-            </div>
-          </div>
-        </div>
-      </ProfileCommonSection>
-
-      <ProfileCommonSection>
-        <h2 className={'SectionTitle'}>Контакты</h2>
-        <div className="table">
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Электронная почта
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.email}
-            </div>
-          </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Телефон
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.mobile}
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Язык
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.language}
+              </div>
             </div>
           </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> WhatsApp
+        </ProfileCommonSection>
+        <ProfileCommonSection>
+          <h2 className={'SectionTitle'}>Контакты</h2>
+          <div className="table">
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Электронная почта
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.email}
+              </div>
             </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.whatsapp}
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Телефон
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.mobile}
+              </div>
+            </div>
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> WhatsApp
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.whatsapp}
+              </div>
+            </div>
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Telegram
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.telegram}
+              </div>
+            </div>
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Viber
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.viber}
+              </div>
+            </div>
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Zoom
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.zoom}
+              </div>
+            </div>
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Instagram
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.instagram}
+              </div>
+            </div>
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Facebook
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.facebook}
+              </div>
+            </div>
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> YouTube
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.youtube}
+              </div>
+            </div>
+            <div className="table-item">
+              <div className="table-item-key">
+                <StarIcon /> Сайт
+              </div>
+              <div className="table-item-value">
+                {appContext.userProfile?.site}
+              </div>
             </div>
           </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Telegram
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.telegram}
-            </div>
+        </ProfileCommonSection>
+        <ProfileCommonSection className={'AboutSection'}>
+          <h2 className={'SectionTitle'}>О себе</h2>
+          <div className="AboutSection__strip">
+            Напишите коротко о ваших сильных сторонах и важных качествах. Про
+            услуги и опыт напишите в специальных полях
           </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Viber
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.viber}
-            </div>
+          <div className="AboutSection__textarea">
+            <TextAreaInput
+              maxLength={500}
+              label={'О себе'}
+              text={appContext.userProfile?.about}
+            />
           </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Zoom
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.zoom}
-            </div>
-          </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Instagram
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.instagram}
-            </div>
-          </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Facebook
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.facebook}
-            </div>
-          </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> YouTube
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.youtube}
-            </div>
-          </div>
-          <div className="table-item">
-            <div className="table-item-key">
-              <StarIcon /> Сайт
-            </div>
-            <div className="table-item-value">
-              {appContext.userProfile?.site}
-            </div>
-          </div>
-        </div>
-      </ProfileCommonSection>
-    </ProfileTabLayout>
+        </ProfileCommonSection>
+      </ProfileTabLayout>
+    </StyledTab>
   )
 }
 
@@ -230,7 +246,7 @@ const StyledSection = styled.section`
       margin-top: 3px;
 
       &:before {
-        content: "";
+        content: '';
         display: inline-block;
         vertical-align: middle;
         width: 4px;
@@ -244,6 +260,26 @@ const StyledSection = styled.section`
 
   .infoDateRegister {
     color: ${({ theme }) => theme.colors.grey.textGrey};
+  }
+`
+
+const StyledTab = styled.div`
+  .AboutSection {
+    .SectionTitle {
+      border: none;
+    }
+
+    &__textarea {
+      padding: 30px 20px 20px;
+      width: 82%;
+    }
+
+    &__strip {
+      font-size: 14px;
+      padding: 5px 20px;
+      color: ${({ theme }) => theme.colors.main};
+      background: ${({ theme }) => theme.colors.background.lightBlue};
+    }
   }
 `
 
