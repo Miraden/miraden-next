@@ -220,10 +220,25 @@ const StyledSection = styled.section`
   .baseSection--infoTop {
     display: flex;
     align-items: center;
-    gap: 20px;
+    gap: 15px;
 
     .userId {
       color: ${({ theme }) => theme.colors.grey.textGrey};
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      margin-top: 3px;
+
+      &:before {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        width: 4px;
+        height: 4px;
+        background: ${({ theme }) => theme.colors.text.disabled};
+        border-radius: 100%;
+        margin-top: 1px;
+      }
     }
   }
 
