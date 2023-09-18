@@ -203,6 +203,10 @@ const StyledSection = styled.section`
     &--left {
       width: 170px;
       height: 170px;
+
+      img {
+        border-radius: ${({ theme }) => theme.border.radius};
+      }
     }
 
     &--right {

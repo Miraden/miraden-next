@@ -15,17 +15,18 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { HeaderLocalization } from './HeaderLocalization'
 import { HeaderUserMenu } from './HeaderUserMenu'
-import { More } from './MoreDropdown/More'
-import { useState } from 'react'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 interface Props {
   className?: string
+  /** @deprecated */
   isAuthorized?: boolean
 }
 
 const HeaderDesktop = ({ className, isAuthorized }: Props) => {
   const router = useRouter()
   const currentUrl = router.pathname
+  const app = useAppContext()
   return (
     <StyledHeaderDesktop className={className}>
       <div>
@@ -43,7 +44,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
           >
             лента заявок
           </Button>
-          {isAuthorized ? (
+          {app.isUserAuth ? (
             <>
               <Button
                 href="/leads/my"
@@ -95,7 +96,7 @@ const HeaderDesktop = ({ className, isAuthorized }: Props) => {
       </div>
 
       <div className="Header__userButtons">
-        {isAuthorized ? (
+        {app.isUserAuth ? (
           <HeaderUserMenu />
         ) : (
           <>

@@ -114,8 +114,12 @@ const StyledHeaderUserMenuMobile = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 10px;
+    border-radius: ${({ theme }) => theme.border.radius};
     background: #8ec2b9;
+
+    img {
+      border-radius: ${({ theme }) => theme.border.radius};
+    }
   }
 `
 

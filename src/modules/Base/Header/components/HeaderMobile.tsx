@@ -8,13 +8,16 @@ import { HeaderMenu } from './HeaderMenu'
 import { HeaderUserMenuMobile } from './HeaderUserMenuMobile'
 import { Cross24Icon } from '@/icons/CrossIcon'
 import { Burger24Icon } from '@/icons/BurgerIcon'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 interface Props {
   className?: string
+  /** @deprecated */
   isAuthorized: boolean
 }
 
 const HeaderMobile = ({ className, isAuthorized }: Props) => {
+  const app = useAppContext()
   const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const handleOpenMenu = useCallback(() => {
@@ -26,7 +29,7 @@ const HeaderMobile = ({ className, isAuthorized }: Props) => {
   return (
     <StyledHeaderMobile className={className}>
       <div className="Header__mobile">
-        {isAuthorized ? (
+        {app.isUserAuth ? (
           <HeaderUserMenuMobile isAuth={true} />
         ) : (
           <>

@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import { HeaderAccordion } from './HeaderAccordion'
 import { HeaderLanguageAccordion } from './HeaderLanguageAccordion'
 import AuthManager from '@/modules/Security/Authentication/AuthManager'
+import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 
 interface Props {
   className?: string
@@ -19,6 +20,7 @@ interface Props {
 const HeaderMenu = ({ className, isOpen, isAuth }: Props) => {
   const [expanded, setExpanded] = useState()
   const [isUserAuth, setUserAuth] = useState<boolean>(isAuth)
+  const app = useAppContext()
 
   const handleChange = useCallback(
     (panelId: any) => (isExpanded: boolean) =>
@@ -51,12 +53,12 @@ const HeaderMenu = ({ className, isOpen, isAuth }: Props) => {
         <Link href="/lead/add">Создать заявку</Link>
         <Link href="/">ПОДПИСАТЬСЯ НА РАССЫЛКУ</Link>
         <Link href="/user/register">РЕГИСТРАЦИЯ</Link>
-        {isUserAuth && (
+        {app.isUserAuth && (
           <Link onClick={onLogout} href="#">
             Выход
           </Link>
         )}
-        {!isUserAuth && <Link href="/user/login">Вход</Link>}
+        {!app.isUserAuth && <Link href="/user/login">Вход</Link>}
         <HeaderLanguageAccordion />
       </div>
       <div className="HeaderMenu__contacts">

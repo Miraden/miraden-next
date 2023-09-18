@@ -65,12 +65,12 @@ const StyledTab = styled.div`
   }
 
   .DeleteAccount {
-    background: ${({ theme }) => theme.colors.text.error};
+    background: ${({ theme }) => theme.colors.error};
 
     margin-top: 30px;
 
     &:hover {
-      background: ${({ theme }) => theme.colors.text.error};
+      background: ${({ theme }) => theme.colors.error};
     }
   }
 `
