@@ -12,6 +12,7 @@ interface Props {
   className?: string
   message?: string
   onChange?: (event: any) => void
+  text?: string | null
 }
 
 const TextAreaInput = ({
@@ -23,8 +24,9 @@ const TextAreaInput = ({
   className,
   message,
   onChange,
+  text,
 }: Props) => {
-  const [value, setValue] = useState('')
+  const [value, setValue] = useState(text ? text : '')
   const [isFocused, setIsFocused] = useState(false)
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
