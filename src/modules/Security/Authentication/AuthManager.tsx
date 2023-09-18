@@ -18,7 +18,7 @@ class AuthManager {
   }
 
   async isTokenValid(): Promise<boolean> {
-    const token = this.findToken()
+    const token = AuthManager.FindToken()
     if (token === null) {
       return Promise.resolve(false)
     }
@@ -46,7 +46,7 @@ class AuthManager {
     if (p.code === HttpCodes.OK) {
       res2 = true
     } else {
-      this.logout()
+      AuthManager.Logout()
       res2 = false
     }
     return res2
@@ -56,14 +56,17 @@ class AuthManager {
     localStorage.setItem(tokenName, token)
   }
 
-  findToken(): string | null {
+  static FindToken(): string | null {
     const token = Cookies.get(tokenName)
     if (!token) return null
     return token
   }
 
-  logout(): void {
+  static Logout(): void {
     Cookies.remove(tokenName)
+    if (localStorage.getItem(tokenName)) {
+      localStorage.removeItem(tokenName)
+    }
   }
 
   public isUserAuth(): boolean {

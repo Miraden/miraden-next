@@ -19,9 +19,7 @@ const Header = ({ isAuthorized, className, isReady }: HeaderProps) => {
     >
       <div className="Header__topBlock" />
       <div className="Header">
-        <HeaderDesktop
-          className="Header__desktop"
-        />
+        <HeaderDesktop className="Header__desktop" />
         <HeaderMobile
           className="Header__mobile"
           isAuthorized={app.isUserAuth}

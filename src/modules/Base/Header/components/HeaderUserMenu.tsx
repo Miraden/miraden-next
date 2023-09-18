@@ -4,13 +4,35 @@ import { WalletIcon } from '@/icons/WalletIcon'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import Image from 'next/image'
+import MenuDropDownLayout from '@/modules/Base/Header/components/CommonDropdown/MenuDropDownLayout'
+import MenuDropDownLinks from '@/modules/Base/Header/components/CommonDropdown/MenuDropDownLinks'
+import MenuDropDownItem from '@/modules/Base/Header/components/CommonDropdown/MenuDropDownItem'
+import AuthManager from '@/modules/Security/Authentication/AuthManager'
 
 const HeaderUserMenu = () => {
   const router = useRouter()
   const currentUrl = router.pathname
   const app = useAppContext()
+
+  const [userMenuShow, setUserMenuShow] = useState<boolean>(false)
+
+  const onAvatarClick = useCallback(
+    (e: any) => {
+      setUserMenuShow(!userMenuShow)
+    },
+    [userMenuShow]
+  )
+
+  const onProfileItemClick = useCallback((e: any) => {
+    window.location.href = '/profile'
+  }, [])
+
+  const onLogoutItemClick = useCallback((e: any) => {
+    AuthManager.Logout()
+    window.location.reload()
+  }, [])
 
   return (
     <StyledHeaderUserMenu>
@@ -49,7 +71,7 @@ const HeaderUserMenu = () => {
           >
             создать
           </Button>
-          <Button href={'/profile'} className={'UserName'}>
+          <Button className={'UserName'} onClick={onAvatarClick}>
             <div className="User Font_16_140 Color_white">
               {app.userProfile && (
                 <Image
@@ -58,6 +80,18 @@ const HeaderUserMenu = () => {
                   width={40}
                   height={40}
                 />
+              )}
+              {userMenuShow && (
+                <MenuDropDownLayout>
+                  <MenuDropDownLinks>
+                    <MenuDropDownItem onClick={onProfileItemClick}>
+                      Профиль
+                    </MenuDropDownItem>
+                    <MenuDropDownItem onClick={onLogoutItemClick}>
+                      Выход
+                    </MenuDropDownItem>
+                  </MenuDropDownLinks>
+                </MenuDropDownLayout>
               )}
             </div>
           </Button>
@@ -127,6 +161,7 @@ const StyledHeaderUserMenu = styled.div`
     align-items: center;
     border-radius: ${({ theme }) => theme.border.radius};
     background: #8ec2b9;
+    position: relative;
 
     img {
       border-radius: ${({ theme }) => theme.border.radius};

@@ -29,8 +29,7 @@ const HeaderMenu = ({ className, isOpen, isAuth }: Props) => {
   )
 
   const onLogout = useCallback((e: any) => {
-    const authManager = new AuthManager()
-    authManager.logout()
+    AuthManager.Logout()
     setUserAuth(false)
   }, [])
 
