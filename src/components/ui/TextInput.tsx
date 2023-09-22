@@ -1,6 +1,6 @@
 import { WarningIcon } from '@/icons'
 import cn from 'classnames'
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode, useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 
 interface Props {
@@ -14,6 +14,7 @@ interface Props {
   values?: any
   onChange?: any
   onKeyPress?: any
+  onBlur?: Function
   isRequired?: boolean
   name?: string
   message?: string
@@ -35,10 +36,16 @@ const TextInput = ({
   name,
   message,
   placeholder,
+  onBlur,
 }: Props) => {
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
   const hasLabel: boolean = label !== undefined
+  const ref = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    ref.current?.focus()
+  }, [])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value
@@ -58,6 +65,7 @@ const TextInput = ({
   const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     if (!disabled) {
       setIsFocused(!!event.target.value)
+      if (onBlur) onBlur(event)
     }
   }
 
@@ -93,6 +101,7 @@ const TextInput = ({
           isRequired={isRequired}
           hasLabel={hasLabel}
           placeholder={placeholder}
+          ref={ref}
         />
         {icon && <div className="Icon__container">{icon}</div>}
         <StyledTextInputLabel isFocused={isFocused} className="TextInput">

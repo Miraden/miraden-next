@@ -33,9 +33,6 @@ const Notification = ({
               <WarningIcon className="Notification__warningIcon" />
               <p>{title}</p>
             </div>
-            <button className="Notification__button">
-              <KebabIcon />
-            </button>
           </div>
         ) : (
           <div className="Notification__large">
@@ -50,9 +47,6 @@ const Notification = ({
               </div>
               <p className="Notification__description">{message}</p>
             </div>
-            <button className="Notification__button">
-              <KebabIcon />
-            </button>
           </div>
         )}
       </div>

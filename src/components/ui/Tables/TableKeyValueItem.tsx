@@ -49,9 +49,12 @@ const StyledTable = styled.div<{ baseClass: string }>`
 
   // Item Value
   .${({ baseClass }) => baseClass}-item-value {
-    padding: 20px 0 20px 20px;
+    padding: 20px;
     flex-grow: 1;
     position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile.max}px) {
