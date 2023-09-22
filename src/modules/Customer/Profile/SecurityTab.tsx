@@ -1,36 +1,53 @@
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 import ProfileTabLayout from '@/modules/Customer/Profile/ProfileTabLayout'
 import ProfileCommonSection from '@/modules/Customer/Profile/ProfileCommonSection'
-import { StarIcon } from '@/icons'
 import { Button } from '@/components/ui'
 import styled from 'styled-components'
+import TableKeyValue from '@/components/ui/Tables/TableKeyValue'
+import { UserSecurityDataProvider } from '@/modules/Customer/Profile/UserProfileDataProvider'
+import { useCallback, useState } from 'react'
+import { ProfilePersistPersonalData } from '@/modules/Customer/Profile/ProfilePersistManager'
+import ProfileTableItem from '@/modules/Customer/Profile/components/ProfileTableItem'
 
 const SecurityTab = (): JSX.Element => {
   const appContext = useAppContext()
+  const [selectedTableItem, setSelectedTableItem] = useState<number>(-1)
+  const [savePending, setSavePending] = useState<boolean>(false)
+
+  const personalData = new UserSecurityDataProvider(appContext.userProfile)
+
+  const onTableItemSelect = useCallback((id: number) => {
+    setSelectedTableItem(id)
+  }, [])
+
+  const saveNewValue = useCallback(async (value: Profile.PersistStruct) => {
+    setSavePending(true)
+    const persistManager = new ProfilePersistPersonalData()
+    persistManager.update(value)
+    const isSuccess = await persistManager.flush()
+    setSavePending(false)
+  }, [])
 
   return (
     <StyledTab>
       <ProfileTabLayout>
         <ProfileCommonSection>
           <h2 className={'SectionTitle'}>Данные для авторизации</h2>
-          <div className="table">
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Логин
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.email}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Номер телефона
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.mobile}
-              </div>
-            </div>
-          </div>
+          <TableKeyValue>
+            {personalData.getAll().map((item, id) => {
+              return (
+                <ProfileTableItem
+                  key={id}
+                  active={id === selectedTableItem}
+                  OnSaveReady={saveNewValue}
+                  onValueSelect={(e: any) => onTableItemSelect(id)}
+                  savePending={savePending}
+                  item={item}
+                  isServerResponse={savePending}
+                />
+              )
+            })}
+          </TableKeyValue>
         </ProfileCommonSection>
         <ProfileCommonSection className={'RemoveSection'}>
           <h2 className={'SectionTitle'}>Удалить аккаунт</h2>
@@ -72,6 +89,14 @@ const StyledTab = styled.div`
     &:hover {
       background: ${({ theme }) => theme.colors.error};
     }
+  }
+
+  .Notifications {
+    position: fixed;
+    z-index: 1000;
+    top: 20px;
+    right: 20px;
+    transform: translateX(-50%);
   }
 `
 

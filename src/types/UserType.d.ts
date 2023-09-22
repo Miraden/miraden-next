@@ -41,3 +41,10 @@ declare namespace User {
     lastOnlineDate?: string
   }
 }
+
+declare namespace Profile {
+  interface PersistStruct {
+    label: string
+    value: string
+  }
+}

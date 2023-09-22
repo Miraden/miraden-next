@@ -1,13 +1,42 @@
 import styled from 'styled-components'
 import { useAppContext } from '@/infrastructure/nextjs/useAppContext'
 import Image from 'next/image'
-import { StarIcon } from '@/icons'
 import ProfileTabLayout from '@/modules/Customer/Profile/ProfileTabLayout'
 import ProfileCommonSection from './ProfileCommonSection'
 import { TextAreaInput } from '@/components/ui'
+import TableKeyValue from '@/components/ui/Tables/TableKeyValue'
+import ProfileTableItem from '@/modules/Customer/Profile/components/ProfileTableItem'
+import {
+  UserContactsDataProvider,
+  UserPersonalDataProvider,
+} from '@/modules/Customer/Profile/UserProfileDataProvider'
+import { useCallback, useState } from 'react'
+import { ProfilePersistPersonalData } from '@/modules/Customer/Profile/ProfilePersistManager'
 
 const PersonalTab = (): JSX.Element => {
   const appContext = useAppContext()
+  const [selectedPersonalItem, setSelectedPersonalItem] = useState<number>(-1)
+  const [selectedContactsItem, setSelectedContactsItem] = useState<number>(-1)
+  const [savePending, setSavePending] = useState<boolean>(false)
+
+  const personalData = new UserPersonalDataProvider(appContext.userProfile)
+  const contactsData = new UserContactsDataProvider(appContext.userProfile)
+
+  const onPersonalItemSelect = useCallback((id: number) => {
+    setSelectedPersonalItem(id)
+  }, [])
+
+  const onContactsItemSelect = useCallback((id: number) => {
+    setSelectedContactsItem(id)
+  }, [])
+
+  const OnSaveReady = useCallback(async (value: Profile.PersistStruct) => {
+    setSavePending(true)
+    const persistManager = new ProfilePersistPersonalData()
+    persistManager.update(value)
+    const isSuccess = await persistManager.flush()
+    setSavePending(false)
+  }, [])
 
   return (
     <StyledTab>
@@ -42,149 +71,37 @@ const PersonalTab = (): JSX.Element => {
         </StyledSection>
         <ProfileCommonSection>
           <h2 className={'SectionTitle'}>Личные данные</h2>
-          <div className="table">
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Статус
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.sellerStatus}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Имя
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.name}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Фамилия
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.surname}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Отчество
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.patronymic}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Пол
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.sex}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Дата рождения
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.birthDay}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Язык
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.language}
-              </div>
-            </div>
-          </div>
+          <TableKeyValue>
+            {personalData.getAll().map((item, id) => {
+              return (
+                <ProfileTableItem
+                  active={selectedPersonalItem === id}
+                  key={id}
+                  onValueSelect={(e: any) => onPersonalItemSelect(id)}
+                  OnSaveReady={OnSaveReady}
+                  item={item}
+                  isServerResponse={savePending}
+                />
+              )
+            })}
+          </TableKeyValue>
         </ProfileCommonSection>
         <ProfileCommonSection>
           <h2 className={'SectionTitle'}>Контакты</h2>
-          <div className="table">
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Электронная почта
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.email}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Телефон
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.mobile}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> WhatsApp
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.whatsapp}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Telegram
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.telegram}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Viber
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.viber}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Zoom
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.zoom}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Instagram
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.instagram}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Facebook
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.facebook}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> YouTube
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.youtube}
-              </div>
-            </div>
-            <div className="table-item">
-              <div className="table-item-key">
-                <StarIcon /> Сайт
-              </div>
-              <div className="table-item-value">
-                {appContext.userProfile?.site}
-              </div>
-            </div>
-          </div>
+          <TableKeyValue>
+            {contactsData.getAll().map((item, id) => {
+              return (
+                <ProfileTableItem
+                  active={id === selectedContactsItem}
+                  key={id}
+                  onValueSelect={(e: any) => onContactsItemSelect(id)}
+                  OnSaveReady={OnSaveReady}
+                  item={item}
+                  isServerResponse={savePending}
+                />
+              )
+            })}
+          </TableKeyValue>
         </ProfileCommonSection>
         <ProfileCommonSection className={'AboutSection'}>
           <h2 className={'SectionTitle'}>О себе</h2>
