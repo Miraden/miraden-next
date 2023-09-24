@@ -11,6 +11,7 @@ import {
 import { LeadCard } from '@/modules/Leads/components/LeadCard'
 import Image from 'next/image'
 import { WindowSize } from '@/hooks/useWindowSize'
+import AuthManager from '@/modules/Security/Authentication/AuthManager'
 
 class MyLeadsCustomerDataProvider {
   private isFetchCompleted: boolean
@@ -33,9 +34,14 @@ class MyLeadsCustomerDataProvider {
 
   public fetchData(url: string): Promise<any> {
     const apiRequest: ApiRequest = new ApiRequest()
+    const token: string | null = AuthManager.FindToken()
+
     const headers: HeadersInit = {
       'Content-Type': 'application/x-www-form-urlencoded',
-      Authorization: 'Bearer ' + localStorage.getItem('token'),
+    }
+
+    if (token) {
+      headers['Authorization'] = 'Bearer ' + token
     }
 
     return apiRequest
@@ -101,7 +107,8 @@ function isAccessDenied(
   if ('security' in data.errors) {
     return (
       data.errors.security === 'Expired JWT token' ||
-      data.errors.security === 'Invalid JWT token'
+      data.errors.security === 'Invalid JWT token' ||
+      data.errors.security === 'Missing JWT token'
     )
   }
 

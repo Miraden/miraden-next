@@ -41,7 +41,4 @@ class ProfilePersistPersonalData implements ProfilePersistManager {
   }
 }
 
-export {
-  ProfilePersistManager,
-  ProfilePersistPersonalData,
-}
+export { ProfilePersistManager, ProfilePersistPersonalData }

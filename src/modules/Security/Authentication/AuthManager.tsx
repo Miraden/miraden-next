@@ -7,6 +7,7 @@ import {
   HttpCodes,
 } from '@/infrastructure/Network/Http/ApiResponse'
 import Cookies from 'js-cookie'
+import { Security } from '@/infrastructure/Security/JWT/JWTManager'
 
 const tokenName: string = 'token'
 
@@ -59,6 +60,8 @@ class AuthManager {
   static FindToken(): string | null {
     const token = Cookies.get(tokenName)
     if (!token) return null
+    const isJWTValid = Security.isStringJWT(token)
+    if (!isJWTValid) return null
     return token
   }
 

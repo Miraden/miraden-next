@@ -7,6 +7,7 @@ import {
   ApiRequest,
   ApiRequestMethods,
 } from '@/infrastructure/Network/Http/ApiRequest'
+import AuthManager from '@/modules/Security/Authentication/AuthManager'
 
 class LeadsLastProvider {
   private isFetchCompleted: boolean
@@ -21,14 +22,14 @@ class LeadsLastProvider {
 
   public fetchData(): Promise<any> {
     const apiRequest: ApiRequest = new ApiRequest()
-    const token: String | null = localStorage.getItem('token')
+    const token: string | null = AuthManager.FindToken()
 
     let headers: HeadersInit = {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
     if (token) {
-      headers['Authorization'] = 'Bearer ' + localStorage.getItem('token')
+      headers['Authorization'] = 'Bearer ' + token
     }
 
     return apiRequest
