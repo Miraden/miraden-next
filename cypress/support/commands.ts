@@ -1,37 +1,40 @@
-/// <reference types="cypress" />
-// ***********************************************
-// This example commands.ts shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-//
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+Cypress.Commands.add('loginApi', (email: string, password: string): void => {
+  const data: string = new URLSearchParams({
+    email: email,
+    password: password,
+  }).toString()
+
+  const headers: HeadersInit = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+  }
+
+  cy.request({
+    url: '/user/login',
+    method: 'POST',
+    body: data,
+    headers: headers,
+  })
+})
+
+export const TestUser = {
+  email: 'test@email.com',
+  password: '654321',
+}
+
+Cypress.Commands.add('loginUI', (email: string, password: string): void => {
+  cy.visit('/user/login')
+  cy.get('input[name="Login_form[email]"]').type(email)
+  cy.get('input[name="Login_form[password]"]').type(password)
+  cy.get('Button[type=submit]').click()
+})
+
+Cypress.Commands.add('badToken', (token: string): void => {
+  window.localStorage.setItem('token', token)
+  cy.setCookie('token', token)
+})
+
+Cypress.Commands.add('waitApiServer', (props: Cypress.InterceptProps): void => {
+  const url = Cypress.env('API_HOST') + props.uri
+  cy.intercept(props.method, url).as(props.alias)
+  cy.wait('@' + props.alias)
+})
